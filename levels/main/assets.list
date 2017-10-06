@@ -1,0 +1,10 @@
+sound/buttonSelected.wav
+textures/menu.png
+textures/buttonNewGame.png
+textures/buttonNewGameSelected.png
+textures/buttonSettings.png
+textures/buttonSettingsSelected.png
+textures/buttonExit.png
+textures/buttonExitSelected.png
+fonts/font1.ttf 100
+

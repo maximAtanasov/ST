@@ -1,0 +1,9 @@
+crate = object:new()
+crate.texture = "textures/crate.png"
+crate.texWidth = 150
+crate.texHeight = 150
+crate.colX = 150
+crate.colY = 150
+crate.isVisible = true
+crate.affectedByPhysics = true
+crate.mass = 2

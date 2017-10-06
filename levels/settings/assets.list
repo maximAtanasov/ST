@@ -1,0 +1,11 @@
+fonts/font1.ttf 100
+textures/menu.png
+textures/buttonBack.png
+textures/buttonBackSelected.png
+textures/buttonSound.png
+textures/buttonSoundSelected.png
+textures/buttonOn.png
+textures/buttonOff.png
+textures/buttonVsync.png
+textures/buttonVsyncSelected.png
+sound/buttonSelected.wav
