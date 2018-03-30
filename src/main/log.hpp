@@ -1,0 +1,12 @@
+#ifndef LOG_HPP
+#define LOG_HPP
+
+#include "console_log.hpp"
+
+#ifdef __DEBUG
+    #define log(TYPE, MSG) gMessage_bus->send_msg(make_msg(CONSOLE_WRITE, make_data<console_log>(console_log(log_type ::TYPE, MSG))));
+#elif defined(__RELEASE)
+    #define log(TYPE, MSG)
+#endif
+
+#endif
