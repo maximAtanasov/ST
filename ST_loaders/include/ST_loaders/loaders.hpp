@@ -18,7 +18,7 @@ namespace ST {
         std::unordered_map<std::string, Mix_Music *> music;
     };
 
-    assets *unpack_binary(const std::string &path);
+    ST::assets_named *unpack_binary(const std::string &path);
     void pack_to_binary(const std::string &path, std::vector<std::string> args);
     int unpack_binary_to_disk(const std::string &path);
     std::string get_file_extension(const std::string &filename);

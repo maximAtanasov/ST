@@ -1,3 +1,4 @@
+#include <ST_loaders/loaders.hpp>
 #include "assets_manager.hpp"
 #include "../console/log.hpp"
 
@@ -12,6 +13,7 @@ int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(UNLOAD_LIST, msg_sub);
     gMessage_bus->subscribe(LOAD_ASSET, msg_sub);
     gMessage_bus->subscribe(UNLOAD_ASSET, msg_sub);
+    gMessage_bus->subscribe(LOAD_BINARY, msg_sub);
 
     //load the global assets
     load_assets_from_list("levels/assets_global.list");
@@ -47,63 +49,18 @@ void assets_manager::handle_messages(){
             auto path = *(std::string*)temp->get_data();
             unload_asset(path);
         }
+        else if(temp->msg_name == LOAD_BINARY){
+            auto path = *(std::string*)temp->get_data();
+            load_assets_from_binary(path);
+        }
         destroy_msg(temp);
         temp = msg_sub->get_next_message();
     }
 }
 
-//Will unload all assets contained within a binary - this method could be optimized
-int assets_manager::unload_assets_from_binary(const std::string& path){
-    /*ST::assets_named* assets1 = ST::unpack_binary(path);
-    if(assets1 != nullptr){
-        for(auto surface : assets1->surfaces){
-            if(count[surface.first] > 1){
-                count[surface.first]--;
-                SDL_FreeSurface(surface.second);
-            }else{
-                count[surface.first]--;
-                log(INFO, "Unloading " + surface.first);
-                std::hash<std::string> hash_f;
-                size_t hashed = hash_f(surface.first);
-                SDL_FreeSurface(all_assets.surfaces[hashed]);
-                all_assets.surfaces[hashed] = nullptr;
-            }
-        }
-        for(auto chunk : assets1->chunks){
-            if(count[chunk.first] > 1){
-                count[chunk.first]--;
-                Mix_FreeChunk(chunk.second);
-            }else{
-                count[chunk.first]--;
-                log(INFO, "Unloading " + chunk.first);
-                std::hash<std::string> hash_f;
-                size_t hashed = hash_f(chunk.first);
-                Mix_FreeChunk(all_assets.chunks[hashed]);
-                all_assets.chunks[hashed] = nullptr;
-            }
-        }
-        for(auto music : assets1->music){
-            if(count[music.first] > 1){
-                count[music.first]--;
-                Mix_FreeMusic(music.second);
-            }else{
-                count[music.first]--;
-                log(INFO, "Unloading " + music.first);
-                std::hash<std::string> hash_f;
-                size_t hashed = hash_f(music.first);
-                Mix_FreeMusic(all_assets.music[hashed]);
-                all_assets.music[hashed] = nullptr;
-            }
-        }
-    }else{
-        return -1;
-    }
-    return 0;*/
-}
-
 //Loads assets contained within a binary
 int assets_manager::load_assets_from_binary(const std::string& path) {
-    /*ST::assets* assets1 = ST::unpack_binary(path);
+    ST::assets_named* assets1 = ST::unpack_binary(path);
     if(assets1 != nullptr){
         for(auto surface : assets1->surfaces){
             if(count[surface.first] > 0){
@@ -144,7 +101,7 @@ int assets_manager::load_assets_from_binary(const std::string& path) {
     }else{
         return -1;
     }
-    return 0;*/
+    return 0;
 }
 
 //loads an asset given a path to it
@@ -326,7 +283,7 @@ int assets_manager::unload_asset(std::string path){
         Mix_FreeMusic(all_assets.music[string_hash]);
         count[path]--;
     }else if(strcmp(extention, "bin") == 0){
-        unload_assets_from_binary(path);
+        return 0;
     }else{ //if file is a font
         TTF_CloseFont(all_assets.fonts[path]);
         count[path]--;

@@ -9,7 +9,6 @@
 #include "../defs.hpp"
 #include "../manager.hpp"
 #include "../message_bus/message_bus.hpp"
-#include "../loaders.hpp"
 
 
 class assets_manager : public virtual manager{
@@ -27,7 +26,6 @@ private:
         int unload_assets_from_list(std::string path);
         int load_assets_from_list(std::string path);
         int load_assets_from_binary(const std::string& path);
-        int unload_assets_from_binary(const std::string& path);
         void handle_messages() override;
         static void update_task(void* arg);
 
