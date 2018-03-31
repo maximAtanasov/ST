@@ -52,7 +52,7 @@ void renderer_sdl::draw_lights(Uint8 arg[1080][1920], const int w, const int h){
     int k = 0;
     for(Uint16 i = 0; i < w; i++){
         for(Uint16 j = 0; j < h; j++){
-            pixels[k] = arg[i][j] << 24;
+            pixels[k] = arg[i][j] << (Uint8)24;
             k++;
         };
     }

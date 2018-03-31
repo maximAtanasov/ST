@@ -1,4 +1,5 @@
-#include "../../include/ST_loaders/loaders.hpp"
+#include <string>
+#include <ST_loaders/loaders.hpp>
 
 bool ST::replace_string(std::string& str, const std::string& from, const std::string& to){
     size_t start_pos = str.find(from);
@@ -29,7 +30,8 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     SDL_RWops *output = SDL_RWFromFile(binary.c_str(), "a+");
 
     std::vector<std::string> surfaces_names;
-    std::vector<SDL_Surface*> surfaces;
+    std::vector<char*> surfaces;
+    std::vector<size_t> surfaces_sizes;
 
     std::vector<std::string> chunks_names;
     std::vector<char*> chunks;
@@ -47,8 +49,10 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
             std::string ext = get_file_extension(filename);
             if(ext == "png") {
                 surfaces_names.emplace_back(h_filename);
-                SDL_Surface* temp = IMG_Load_RW(input, 0);
+                auto temp = (char*)malloc((size_t)input->size(input));
+                input->read(input, temp, 1, (size_t)input->size(input));
                 surfaces.emplace_back(temp);
+                surfaces_sizes.emplace_back((size_t)input->size(input));
             }else if(ext == "wav") {
                 chunks_names.emplace_back(h_filename);
                 auto temp = (char*)malloc((size_t)input->size(input));
@@ -75,14 +79,15 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     std::string total_num = "total:" + std::to_string(total_size) + "\n";
     output->write(output, total_num.c_str(), 1, total_num.size());
 
-    //their names
-    for(const std::string& i : surfaces_names) {
-        output->write(output, i.c_str(), 1, i.size());
-        std::string size = "size: null(size not needed)\n";
+
+
+    //Names and sizes for surfaces, chunks and music
+    for(Uint64 i = 0; i < surfaces_sizes.size(); i++) {
+        output->write(output, surfaces_names[i].c_str(), 1, surfaces_names[i].size());
+        std::string size = "size:" + std::to_string(surfaces_sizes[i]) + "\n";
         output->write(output, size.c_str(), 1, size.size());
     }
 
-    //Names and sizes for chunks and music
     for(Uint64 i = 0; i < chunk_sizes.size(); i++) {
         output->write(output, chunks_names[i].c_str(), 1, chunks_names[i].size());
         std::string size = "size:" + std::to_string(chunk_sizes[i]) + "\n";
@@ -96,9 +101,8 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     }
 
     //Write image data
-    for (auto surface : surfaces) {
-        IMG_SavePNG_RW(surface, output, 0);
-        SDL_FreeSurface(surface);
+    for(Uint64 i = 0; i < surfaces.size(); i++) {
+        output->write(output, surfaces[i], 1, surfaces_sizes[i]);
     }
 
     //Write chunks data
@@ -166,11 +170,15 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
             for (const std::string &filename : file_names) {
                 std::string ext = get_file_extension(filename);
                 if(ext == "png") {
-                    SDL_Surface *temp_surface = IMG_Load_RW(input, 0);
-                    if (temp_surface != nullptr) {
+                    seek += sizes.at(i);
+                    auto to_write = (char*)malloc(sizes.at(i));
+                    input->read(input, to_write, 1, sizes.at(i));
+                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
+                    SDL_Surface* temp_surface = IMG_LoadPNG_RW(output);
+                    if(temp_surface != nullptr) {
                         assets->surfaces[filename] = temp_surface;
                     }
-                    seek += SDL_RWtell(input) - seek + 16;
+                    free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == "wav"){
                     seek += sizes.at(i);

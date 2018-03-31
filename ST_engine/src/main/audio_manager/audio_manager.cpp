@@ -11,7 +11,7 @@ int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
         fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", SDL_GetError());
         return -1;
     }
-    Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_OGG);
+    Mix_Init(MIX_INIT_OGG);
     if(Mix_OpenAudio(22050,AUDIO_S16SYS,2,640) == -1){
         fprintf(stderr, "Failiure to initialize audio\n");
 		return -1;

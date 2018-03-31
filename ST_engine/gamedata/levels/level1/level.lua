@@ -23,8 +23,6 @@ darkness = 195
 setGravity(gravity)
 setLevelFloor(1050)
 setDarkness(darkness)
-unloadLevel("main")
-unloadLevel("main_menu")
 hideMouseCursor()
 
 --Load the appropriate language configuration

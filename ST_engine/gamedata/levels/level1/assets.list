@@ -1,28 +1,8 @@
-assets/barrel1.png
-assets/barrel2.png
-assets/buttonSelected.wav
-assets/coin.wav
-assets/coin.png
-assets/crate.png
-assets/crystal_green.png
-assets/death.wav
-assets/fortress.png
-assets/grass.png
-assets/house1.png
-assets/house2.png
-assets/player2.png
-assets/rain.wav
-assets/rain.png
-assets/torch.png
-assets/tree1oil.png
-assets/wolf.png
-assets/Shades.ogg
-assets/thunderclap.wav
-assets/rain.wav
-assets/thunderclap2.wav
 fonts/font1.ttf 80
 fonts/font1.ttf 50
 fonts/font1.ttf 70
 fonts/font2.ttf 80
 fonts/font2.ttf 50
 fonts/font2.ttf 70
+assets/assets_level1.bin
+assets/Shades.ogg

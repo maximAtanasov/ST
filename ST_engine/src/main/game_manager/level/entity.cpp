@@ -143,8 +143,8 @@ bool entity::is_affected_by_physics(){
 }
 
 bool entity::collides(entity other){
-    return !((collision.bottom < other.collision.top) | (collision.top > other.collision.bottom)
-    | (collision.left > other.collision.right) | (collision.right < other.collision.left));
+    return !((collision.bottom < other.collision.top) || (collision.top > other.collision.bottom)
+    || (collision.left > other.collision.right) || (collision.right < other.collision.left));
 }
 
 void entity::set_mass(int arg){
