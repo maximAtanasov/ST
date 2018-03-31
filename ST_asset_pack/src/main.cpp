@@ -5,9 +5,9 @@
 #include <ST_loaders/loaders.hpp>
 
 /*
- * A small program that will combine multiple png images into a single file that can
+ * A small program that will combine multiple png, wav and ogg files into a single file that can
  * then be read by the slavicTales game engine.
- * File format version: v0.1
+ * File format version: v0.5
  * Maxim Atanasov
  */
 
