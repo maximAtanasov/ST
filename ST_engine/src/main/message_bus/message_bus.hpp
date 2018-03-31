@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <memory>
+#include <vector>
+#include <cstring>
 
 //all the different messages are defined in this enum
 //to define a new one just add its name here - they are all used as integers

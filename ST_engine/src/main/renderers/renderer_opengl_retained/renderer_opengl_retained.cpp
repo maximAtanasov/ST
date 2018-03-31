@@ -287,7 +287,7 @@ void renderer_opengl_retained::draw_texture(size_t arg, int x, int y){
 	vbo_buffer[9+vbo_index] = -1.0f + scale_y*(Texture->height) + y*scale_y;
 	vbo_buffer[10+vbo_index] = -1.0f + scale_x*(Texture->width) + x*scale_x;
 	vbo_buffer[11+vbo_index] = -1.0f + scale_y*(Texture->height) + y*scale_y;
-	glNamedBufferSubData(main_vbo, vbo_index, 12, &vbo_buffer[vbo_index]);
+	//glNamedBufferSubData(main_vbo, vbo_index, 12, &vbo_buffer[vbo_index]);
 	vbo_index += 12;
 }
 
@@ -360,7 +360,7 @@ void renderer_opengl_retained::draw_background(size_t arg){
 	vbo_buffer[9+vbo_index] = -1.0f + scale_y*(1080);
 	vbo_buffer[10+vbo_index] = -1.0f + scale_x*(1920);
 	vbo_buffer[11+vbo_index] = -1.0f + scale_y*(1080);
-	glNamedBufferSubData(main_vbo, vbo_index, 12, vbo_buffer);
+	//glNamedBufferSubData(main_vbo, vbo_index, 12, vbo_buffer);
 	vbo_index += 12;
 
 }
@@ -487,7 +487,7 @@ texture* renderer_opengl_retained::add_to_atlas(SDL_Surface* arg){
     if(arg->format->BytesPerPixel == 4) {
         Mode = GL_RGBA;
     }
-    glTextureSubImage2D(atlases_used , 0, atlas_offset_x, 0, arg->w, arg->h, GL_RGBA, GL_UNSIGNED_BYTE, arg->pixels);
+    //glTextureSubImage2D(atlases_used , 0, atlas_offset_x, 0, arg->w, arg->h, GL_RGBA, GL_UNSIGNED_BYTE, arg->pixels);
 	atlas_offset_x += arg->w;
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

@@ -18,10 +18,9 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(Lua 5.3 REQUIRED)
 find_package(GTest REQUIRED)
+find_package(SDL2_test REQUIRED)
 
-
-
-set(INCLUDE_DIRS ${LUA_INCLUDE_DIR} ${GTEST_INCLUDE_DIR})
+set(INCLUDE_DIRS ${SDL2_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${GTEST_INCLUDE_DIR})
 
 add_definitions(-DLUA)
 
@@ -90,8 +89,17 @@ add_executable(ST_engine
         src/main/console/log.hpp
         src/main/game_manager/level/text.cpp)
 
-target_link_libraries(ST_engine ST_loaders ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_TEST_LIBRARY} ${SDL2_TTF_LIBRARY} ${SDL2_MIXER_LIBRARY} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${LUA_LIBRARY})
 
+target_link_libraries(ST_engine
+        ST_loaders
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TEST_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY}
+        ${GLEW_LIBRARIES}
+        ${OPENGL_LIBRARIES}
+        ${LUA_LIBRARY})
 
 add_executable(asset_manager_test
         src/main/assets_manager/assets.hpp
@@ -107,29 +115,31 @@ add_executable(asset_manager_test
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
         src/main/console/log.hpp
-        src/test/assets_manager/assets_manager_tests.cpp src/test/test_util.cpp src/test/test_util.hpp)
+        src/test/assets_manager/assets_manager_tests.cpp
+        src/test/test_util.cpp
+        src/test/test_util.hpp)
 
-gtest_add_tests(TARGET asset_manager_test)
+
 
 target_link_libraries(asset_manager_test
+        ST_loaders
         ${GTEST_LIBRARIES}
+        ${SDL2_TEST_LIBRARY}
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
         ${GLEW_LIBRARIES}
         ${OPENGL_LIBRARIES}
-        ${LUA_LIBRARY}
-        SDL2_test
-        ST_loaders)
+        ${LUA_LIBRARY})
+
+gtest_add_tests(TARGET asset_manager_test)
 
 #Run all our tests on every build
 set(ALL_TESTS asset_manager_test)
 
-add_custom_command(TARGET ST_engine
-        POST_BUILD
-        COMMAND make ${ALL_TEST})
+add_dependencies(ST_engine ${ALL_TESTS})
 
 add_custom_command(TARGET ST_engine
         POST_BUILD
-        COMMAND ctest)
+        COMMAND ${ALL_TESTS})
