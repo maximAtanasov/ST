@@ -64,7 +64,10 @@ TEST_F(asset_manager_test, loadWAV) {
     Mix_Chunk* result_chunk = get_assets().chunks[hash_f("test_sound.wav")];
     ASSERT_EQ(true, static_cast<bool>(expected_chunk));
     ASSERT_EQ(true, static_cast<bool>(result_chunk));
-    EXPECT_EQ(expected_chunk->alen, result_chunk->alen);
+    ASSERT_EQ(expected_chunk->alen, result_chunk->alen);
+    for(Uint32 i = 0; i < expected_chunk->alen; i++){
+        ASSERT_EQ(expected_chunk->abuf[i], result_chunk->abuf[i]);
+    }
 }
 
 TEST_F(asset_manager_test, loadOGG_nonExistant) {
@@ -127,7 +130,10 @@ TEST_F(asset_manager_test, loadBinary_WAV) {
     Mix_Chunk* result_chunk = get_assets().chunks[hash_f("test_sound.wav")];
     ASSERT_EQ(true, static_cast<bool>(expected_chunk));
     ASSERT_EQ(true, static_cast<bool>(result_chunk));
-    EXPECT_EQ(expected_chunk->alen, result_chunk->alen);
+    ASSERT_EQ(expected_chunk->alen, result_chunk->alen);
+    for(Uint32 i = 0; i < expected_chunk->alen; i++){
+        ASSERT_EQ(expected_chunk->abuf[i], result_chunk->abuf[i]);
+    }
 }
 
 TEST_F(asset_manager_test, loadBinary_OGG) {
@@ -161,14 +167,20 @@ TEST_F(asset_manager_test, loadBinary_complex) {
     Mix_Chunk* result_chunk_1 = get_assets().chunks[hash_f("test_sound_1.wav")];
     ASSERT_EQ(true, static_cast<bool>(expected_chunk_1));
     ASSERT_EQ(true, static_cast<bool>(result_chunk_1));
-    EXPECT_EQ(expected_chunk_1->alen, result_chunk_1->alen);
+    ASSERT_EQ(expected_chunk_1->alen, result_chunk_1->alen);
+    for(Uint32 i = 0; i < expected_chunk_1->alen; i++){
+        ASSERT_EQ(expected_chunk_1->abuf[i], result_chunk_1->abuf[i]);
+    }
 
     //Test sound_2
     Mix_Chunk* expected_chunk_2 = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound_2.wav");
     Mix_Chunk* result_chunk_2 = get_assets().chunks[hash_f("test_sound_2.wav")];
     ASSERT_EQ(true, static_cast<bool>(expected_chunk_2));
     ASSERT_EQ(true, static_cast<bool>(result_chunk_2));
-    EXPECT_EQ(expected_chunk_2->alen, result_chunk_2->alen);
+    ASSERT_EQ(expected_chunk_2->alen, result_chunk_2->alen);
+    for(Uint32 i = 0; i < expected_chunk_2->alen; i++){
+        ASSERT_EQ(expected_chunk_2->abuf[i], result_chunk_2->abuf[i]);
+    }
 
     //Test image_1
     SDL_Surface* test_surface_1 = IMG_Load("../../ST_engine/src/test/assets_manager/test_image_1.png");
