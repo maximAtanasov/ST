@@ -87,7 +87,14 @@ add_executable(ST_engine
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
         src/main/console/log.hpp
-        src/main/game_manager/level/text.cpp)
+        src/main/game_manager/level/text.cpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.cpp
+        src/main/message_bus/message.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_types.hpp)
 
 
 target_link_libraries(ST_engine
@@ -117,7 +124,14 @@ add_executable(asset_manager_test
         src/main/console/log.hpp
         src/test/assets_manager/assets_manager_tests.cpp
         src/test/test_util.cpp
-        src/test/test_util.hpp)
+        src/test/test_util.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.cpp
+        src/main/message_bus/message.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_types.hpp)
 
 
 

@@ -1,7 +1,6 @@
 #ifndef MNGR_INTERFACE
 #define MNGR_INTERFACE
 
-#include "message_bus/message_bus.hpp"
 #include "task_manager/task_manager.hpp"
 
 class manager{

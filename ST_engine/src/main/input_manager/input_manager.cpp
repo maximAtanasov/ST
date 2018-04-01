@@ -63,7 +63,6 @@ void input_manager::take_input(){
     if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT))
         controls.mouseClicks[2] = 1;
 
-
     while(SDL_PollEvent(&event) != 0){
         if(event.type == SDL_QUIT){
             gMessage_bus->send_msg(make_msg(END_GAME, nullptr));

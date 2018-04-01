@@ -19,11 +19,9 @@ protected:
     void SetUp() override{
         initialize_SDL();
         msg_bus.initialize();
-        test_mngr.initialize(&msg_bus, nullptr);
     }
 
     void TearDown() override{
-        test_mngr.close();
         msg_bus.close();
         close_SDL();
     }
@@ -34,30 +32,33 @@ protected:
 };
 
 TEST_F(asset_manager_test, loadPNG_nonExistant) {
-    get_assets().surfaces.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("nothing.png")));
     update_task(&test_mngr);
     EXPECT_EQ(nullptr, get_assets().surfaces[hash_f("nothing.png")]);
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadPNG) {
-    get_assets().surfaces.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_image.png")));
     update_task(&test_mngr);
     SDL_Surface* test_surface = IMG_Load("../../ST_engine/src/test/assets_manager/test_image.png");
     ASSERT_EQ(true, static_cast<bool>(test_surface));
     EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")], 0));
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadWAV_nonExistant) {
-    get_assets().chunks.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("nothing.wav")));
     update_task(&test_mngr);
     EXPECT_EQ(nullptr, get_assets().chunks[hash_f("nothing.png")]);
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadWAV) {
-    get_assets().chunks.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_sound.wav")));
     update_task(&test_mngr);
     Mix_Chunk* expected_chunk = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound.wav");
@@ -68,40 +69,45 @@ TEST_F(asset_manager_test, loadWAV) {
     for(Uint32 i = 0; i < expected_chunk->alen; i++){
         ASSERT_EQ(expected_chunk->abuf[i], result_chunk->abuf[i]);
     }
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadOGG_nonExistant) {
-    get_assets().music.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("nothing.ogg")));
     update_task(&test_mngr);
     EXPECT_EQ(nullptr, get_assets().music[hash_f("nothing.ogg")]);
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadOGG) {
-    get_assets().music.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_music.ogg")));
     update_task(&test_mngr);
     Mix_Music* result_music = get_assets().music[hash_f("test_music.ogg")];
     ASSERT_EQ(true, static_cast<bool>(result_music));
     EXPECT_EQ(MUS_OGG, Mix_GetMusicType(result_music));
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadTTF_nonExistant) {
-    get_assets().fonts.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("nothing.ttf 50")));
     update_task(&test_mngr);
     EXPECT_EQ(nullptr, get_assets().fonts["test_font.ttf"]);
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadTTF_noSize) {
-    get_assets().fonts.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_font.ttf")));
     update_task(&test_mngr);
     EXPECT_EQ(nullptr, get_assets().fonts["test_font.ttf"]);
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadTTF){
-    get_assets().fonts.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_font.ttf 50")));
     update_task(&test_mngr);
     TTF_Font* expected_font = TTF_OpenFont("../../ST_engine/src/test/assets_manager/test_font.ttf", 50);
@@ -111,19 +117,21 @@ TEST_F(asset_manager_test, loadTTF){
     SDL_Surface* expected_render = TTF_RenderText_Blended(result_font, "TEST", {200,200,200,255});
     SDL_Surface* result_render = TTF_RenderText_Blended(result_font, "TEST", {200,200,200,255});
     EXPECT_EQ(0, SDLTest_CompareSurfaces(expected_render, result_render, 0));
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadBinary_PNG) {
-    get_assets().surfaces.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_BINARY, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_binary_png.bin")));
     update_task(&test_mngr);
     SDL_Surface* test_surface = IMG_Load("../../ST_engine/src/test/assets_manager/test_image.png");
     ASSERT_EQ(true, static_cast<bool>(test_surface));
     EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")], 0));
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadBinary_WAV) {
-    get_assets().chunks.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_BINARY, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_binary_wav.bin")));
     update_task(&test_mngr);
     Mix_Chunk* expected_chunk = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound.wav");
@@ -134,21 +142,21 @@ TEST_F(asset_manager_test, loadBinary_WAV) {
     for(Uint32 i = 0; i < expected_chunk->alen; i++){
         ASSERT_EQ(expected_chunk->abuf[i], result_chunk->abuf[i]);
     }
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadBinary_OGG) {
-    get_assets().music.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_BINARY, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_binary_ogg.bin")));
     update_task(&test_mngr);
     auto result_music = get_assets().music[hash_f("test_music.ogg")];
     ASSERT_EQ(true, static_cast<bool>(result_music));
     EXPECT_EQ(MUS_OGG, Mix_GetMusicType(result_music));
+    test_mngr.close();
 }
 
 TEST_F(asset_manager_test, loadBinary_complex) {
-    get_assets().music.clear();
-    get_assets().chunks.clear();
-    get_assets().surfaces.clear();
+    test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_BINARY, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_binary_complex.bin")));
     update_task(&test_mngr);
 
@@ -191,6 +199,7 @@ TEST_F(asset_manager_test, loadBinary_complex) {
     SDL_Surface* test_surface_2 = IMG_Load("../../ST_engine/src/test/assets_manager/test_image_2.png");
     ASSERT_EQ(true, static_cast<bool>(test_surface_2));
     EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface_2, get_assets().surfaces[hash_f("test_image_2.png")], 0));
+    test_mngr.close();
 }
 
 int main(int argc, char **argv) {
