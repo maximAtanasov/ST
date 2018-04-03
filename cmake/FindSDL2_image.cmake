@@ -88,25 +88,6 @@
 # (To distribute this file outside of CMake, substitute the full
 # License text for the above reference.)
 
-FIND_PATH(SDL2_IMAGE_INCLUDE_DIR SDL_image.h
-	HINTS
-	${SDL2}
-	$ENV{SDL2}
-	$ENV{SDL2_IMAGE}
-	PATH_SUFFIXES include/SDL2 include SDL2
-	i686-w64-mingw32/include/SDL2
-	x86_64-w64-mingw32/include/SDL2
-	PATHS
-	~/Library/Frameworks
-	/Library/Frameworks
-	/usr/local/include/SDL2
-	/usr/include/SDL2
-	/sw # Fink
-	/opt/local # DarwinPorts
-	/opt/csw # Blastwave
-	/opt
-)
-
 # Lookup the 64 bit libs on x64
 IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 	FIND_LIBRARY(SDL2_IMAGE_LIBRARY_TEMP
@@ -123,6 +104,7 @@ IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		/opt/local
 		/opt/csw
 		/opt
+			${PROJECT_SOURCE_DIR}/../libs
 	)
 # On 32bit build find the 32bit libs
 ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -140,6 +122,7 @@ ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		/opt/local
 		/opt/csw
 		/opt
+			${PROJECT_SOURCE_DIR}/../libs
 	)
 ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
@@ -154,5 +137,5 @@ ENDIF(SDL2_IMAGE_LIBRARY_TEMP)
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2_IMAGE REQUIRED_VARS SDL2_IMAGE_LIBRARY SDL2_IMAGE_INCLUDE_DIR)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2_IMAGE REQUIRED_VARS SDL2_IMAGE_LIBRARY)
 

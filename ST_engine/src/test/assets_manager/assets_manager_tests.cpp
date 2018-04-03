@@ -1,9 +1,8 @@
 #include <gtest/gtest.h>
-#include <SDL2/SDL_test_compare.h>
 #include "../../main/assets_manager/assets_manager.hpp"
 #include "../test_util.hpp"
-#include <SDL2/SDL_test.h>
 
+/// Tests fixture for the assets_manager
 class asset_manager_test : public ::testing::Test {
 
 public:
@@ -44,8 +43,12 @@ TEST_F(asset_manager_test, loadPNG) {
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_image.png")));
     update_task(&test_mngr);
     SDL_Surface* test_surface = IMG_Load("../../ST_engine/src/test/assets_manager/test_image.png");
+    if(test_surface == nullptr){
+        const char* s = IMG_GetError();
+        printf("%s\n", s);
+    }
     ASSERT_EQ(true, static_cast<bool>(test_surface));
-    EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")], 0));
+    EXPECT_EQ(true, compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")]));
     test_mngr.close();
 }
 
@@ -85,6 +88,10 @@ TEST_F(asset_manager_test, loadOGG) {
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_music.ogg")));
     update_task(&test_mngr);
     Mix_Music* result_music = get_assets().music[hash_f("test_music.ogg")];
+    if(result_music == nullptr){
+        const char* s = Mix_GetError();
+        printf("%s\n", s);
+    }
     ASSERT_EQ(true, static_cast<bool>(result_music));
     EXPECT_EQ(MUS_OGG, Mix_GetMusicType(result_music));
     test_mngr.close();
@@ -116,7 +123,7 @@ TEST_F(asset_manager_test, loadTTF){
     ASSERT_EQ(true, static_cast<bool>(result_font));
     SDL_Surface* expected_render = TTF_RenderText_Blended(result_font, "TEST", {200,200,200,255});
     SDL_Surface* result_render = TTF_RenderText_Blended(result_font, "TEST", {200,200,200,255});
-    EXPECT_EQ(0, SDLTest_CompareSurfaces(expected_render, result_render, 0));
+    EXPECT_EQ(true, compare_surfaces(expected_render, result_render));
     test_mngr.close();
 }
 
@@ -126,7 +133,7 @@ TEST_F(asset_manager_test, loadBinary_PNG) {
     update_task(&test_mngr);
     SDL_Surface* test_surface = IMG_Load("../../ST_engine/src/test/assets_manager/test_image.png");
     ASSERT_EQ(true, static_cast<bool>(test_surface));
-    EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")], 0));
+    EXPECT_EQ(true, compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")]));
     test_mngr.close();
 }
 
@@ -193,12 +200,12 @@ TEST_F(asset_manager_test, loadBinary_complex) {
     //Test image_1
     SDL_Surface* test_surface_1 = IMG_Load("../../ST_engine/src/test/assets_manager/test_image_1.png");
     ASSERT_EQ(true, static_cast<bool>(test_surface_1));
-    EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface_1, get_assets().surfaces[hash_f("test_image_1.png")], 0));
+    EXPECT_EQ(true, compare_surfaces(test_surface_1, get_assets().surfaces[hash_f("test_image_1.png")]));
 
     //Test image_2
     SDL_Surface* test_surface_2 = IMG_Load("../../ST_engine/src/test/assets_manager/test_image_2.png");
     ASSERT_EQ(true, static_cast<bool>(test_surface_2));
-    EXPECT_EQ(0, SDLTest_CompareSurfaces(test_surface_2, get_assets().surfaces[hash_f("test_image_2.png")], 0));
+    EXPECT_EQ(true, compare_surfaces(test_surface_2, get_assets().surfaces[hash_f("test_image_2.png")]));
     test_mngr.close();
 }
 

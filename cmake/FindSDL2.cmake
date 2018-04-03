@@ -103,24 +103,6 @@
 # (To distribute this file outside of CMake, substitute the full
 # License text for the above reference.)
 
-FIND_PATH(SDL2_INCLUDE_DIR SDL.h
-	HINTS
-	${SDL2}
-	$ENV{SDL2}
-	PATH_SUFFIXES include/SDL2 include SDL2
-	i686-w64-mingw32/include/SDL2
-	x86_64-w64-mingw32/include/SDL2
-	PATHS
-	~/Library/Frameworks
-	/Library/Frameworks
-	/usr/local/include/SDL2
-	/usr/include/SDL2
-	/sw # Fink
-	/opt/local # DarwinPorts
-	/opt/csw # Blastwave
-	/opt
-)
-
 # Lookup the 64 bit libs on x64
 IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 	FIND_LIBRARY(SDL2_LIBRARY_TEMP SDL2
@@ -131,10 +113,7 @@ IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		lib/x64
 		x86_64-w64-mingw32/lib
 		PATHS
-		/sw
-		/opt/local
-		/opt/csw
-		/opt
+			${PROJECT_SOURCE_DIR}/../libs
 	)
 # On 32bit build find the 32bit libs
 ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -146,10 +125,7 @@ ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		lib/x86
 		i686-w64-mingw32/lib
 		PATHS
-		/sw
-		/opt/local
-		/opt/csw
-		/opt
+			${PROJECT_BINARY_DIR}/SDL2-prefix/src/SDL2-build
 	)
 ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
@@ -170,10 +146,7 @@ IF(NOT SDL2_BUILDING_LIBRARY)
 				lib/x64
 				x86_64-w64-mingw32/lib
 				PATHS
-				/sw
-				/opt/local
-				/opt/csw
-				/opt
+					${PROJECT_SOURCE_DIR}/../libs
 				)
 			# On 32bit build find the 32bit libs
 		ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -186,10 +159,7 @@ IF(NOT SDL2_BUILDING_LIBRARY)
 				lib/x86
 				i686-w64-mingw32/lib
 				PATHS
-				/sw
-				/opt/local
-				/opt/csw
-				/opt
+					${PROJECT_SOURCE_DIR}/../libs
 				)
 		ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 	ENDIF(NOT ${SDL2_INCLUDE_DIR} MATCHES ".framework")
@@ -251,5 +221,7 @@ ENDIF(SDL2_LIBRARY_TEMP)
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2 REQUIRED_VARS SDL2_LIBRARY SDL2_INCLUDE_DIR)
+
+set(SDL2_LIBRARY ${PROJECT_SOURCE_DIR}/../libs/lib/libSDL2.so -lpthread)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2 REQUIRED_VARS SDL2_LIBRARY)
 

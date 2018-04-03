@@ -36,3 +36,26 @@ void close_SDL(){
     IMG_Quit();
     SDL_Quit();
 }
+
+bool compare_surfaces(SDL_Surface* expected, SDL_Surface* result) {
+    if(expected->flags != result->flags){
+        return false;
+    }
+    if(expected->w != result->w){
+        return false;
+    }
+    if(expected->h != result->h){
+        return false;
+    }
+    if(expected->pitch != result->pitch){
+        return false;
+    }
+    auto temp1 = (char*)expected->pixels;
+    auto temp2 = (char*)result->pixels;
+    for(int i = 0; i < expected->h*expected->w; i++){
+        if(temp1[i] != temp2[i]){
+            return false;
+        }
+    }
+    return true;
+}

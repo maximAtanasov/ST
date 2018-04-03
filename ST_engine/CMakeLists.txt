@@ -2,25 +2,39 @@ cmake_minimum_required(VERSION 3.9)
 project(ST_engine)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS_DEBUG  "${CMAKE_CXX_FLAGS} -Wall -Wextra -g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra -flto")
+
+if(UNIX AND NOT APPLE)
+    set(CMAKE_CXX_FLAGS_DEBUG  "${CMAKE_CXX_FLAGS} -Wall -Wextra -g")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra -flto")
+endif()
 
 include_directories(../ST_loaders/include)
+include_directories(${PROJECT_SOURCE_DIR}/../libs/include)
+link_directories(${PROJECT_SOURCE_DIR}/../libs/lib)
 
 enable_testing()
 
-set(CMAKE_MODULE_PATH ../cmake)
-find_package(SDL2 REQUIRED)
-find_package(SDL2_mixer REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
+
+#set(CMAKE_MODULE_PATH ../cmake)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
-find_package(Lua 5.3 REQUIRED)
-find_package(GTest REQUIRED)
-find_package(SDL2_test REQUIRED)
 
-set(INCLUDE_DIRS ${SDL2_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${GTEST_INCLUDE_DIR})
+set(GTEST_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/../libs/include)
+find_package(GTest REQUIRED)
+if(UNIX AND NOT APPLE)
+    set(SDL2_LIBRARY -lSDL2 -lpthread)
+    set(SDL2_IMAGE_LIBRARY -lSDL2_image)
+    set(SDL2_MIXER_LIBRARY -lSDL2_mixer)
+    set(SDL2_TTF_LIBRARY -lSDL2_ttf)
+    set(GTEST_LIBRARIES -lgtest -lgtest_main -lgmock -lgmock_main)
+    set(LUA_LIBRARY -llua)
+endif()
+
+##Yes, we use find_package so that cmake defines some GTest specific commands
+##But now we have to tell cmake what to really link against
+
+
+set(INCLUDE_DIRS ${LUA_INCLUDE_DIR})
 
 add_definitions(-DLUA)
 
@@ -96,17 +110,23 @@ add_executable(ST_engine
         src/main/message_bus/message_allocator.hpp
         src/main/message_bus/message_types.hpp)
 
+add_dependencies(ST_engine
+        SDL2
+        SDL2_ttf
+        SDL2_image
+        SDL2_mixer
+        lua5.3)
 
 target_link_libraries(ST_engine
+        ${LUA_LIBRARY}
         ST_loaders
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TEST_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
         ${GLEW_LIBRARIES}
         ${OPENGL_LIBRARIES}
-        ${LUA_LIBRARY})
+       )
 
 add_executable(asset_manager_test
         src/main/assets_manager/assets.hpp
@@ -133,12 +153,9 @@ add_executable(asset_manager_test
         src/main/message_bus/message_allocator.hpp
         src/main/message_bus/message_types.hpp)
 
-
-
 target_link_libraries(asset_manager_test
         ST_loaders
         ${GTEST_LIBRARIES}
-        ${SDL2_TEST_LIBRARY}
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -146,6 +163,14 @@ target_link_libraries(asset_manager_test
         ${GLEW_LIBRARIES}
         ${OPENGL_LIBRARIES}
         ${LUA_LIBRARY})
+
+add_dependencies(asset_manager_test
+        gtest
+        SDL2
+        SDL2_ttf
+        SDL2_image
+        SDL2_mixer
+        lua5.3)
 
 gtest_add_tests(TARGET asset_manager_test)
 
