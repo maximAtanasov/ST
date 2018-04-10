@@ -62,4 +62,76 @@ public:
     ~renderer_sdl();
 };
 
+//INLINED METHODS
+
+inline void renderer_sdl::draw_texture(size_t arg, int x, int y) {
+	SDL_Texture *temp = textures[arg];
+	if (temp != nullptr) {
+		int tex_w, tex_h;
+		SDL_QueryTexture(temp, nullptr, nullptr, &tex_w, &tex_h);
+		SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
+		SDL_RenderCopy(sdl_renderer, temp, nullptr, &src_rect);
+	}
+}
+
+inline void renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color){
+	SDL_Rect Rect = {x, y, w, h};
+	SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderFillRect(sdl_renderer, &Rect);
+	SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+}
+
+inline void renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color color){
+	SDL_Rect Rect = {x, y, w, h};
+	SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawRect(sdl_renderer, &Rect);
+	SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+}
+
+inline void renderer_sdl::draw_background(size_t arg){
+	SDL_Texture* temp = textures[arg];
+	if(temp != nullptr){
+		SDL_RenderCopy(sdl_renderer, temp, nullptr, nullptr);
+	}
+}
+
+inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num){
+	SDL_Texture* temp = textures[arg];
+	if(temp != nullptr){
+		int tex_w, tex_h;
+		SDL_QueryTexture(temp, nullptr, nullptr, &tex_w, &tex_h);
+		int temp1 = tex_h/animation_num;
+		int temp2 = tex_w/sprite_num;
+		SDL_Rect src_rect = {x, y - temp1, temp2, temp1};
+		SDL_Rect dst_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
+		SDL_RenderCopy(sdl_renderer, temp, &dst_rect, &src_rect);
+	}
+}
+
+inline void renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num){
+	int animation_num = 1;
+	int animation = 1;
+	SDL_Texture* temp = textures[arg];
+	if(temp != nullptr){
+		int tex_w, tex_h;
+		SDL_QueryTexture(temp, nullptr, nullptr, &tex_w, &tex_h);
+		int temp1 = tex_h/animation_num;
+		int temp2 = tex_w/sprite_num;
+		SDL_Rect dst_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
+		SDL_RenderCopy(sdl_renderer, temp, &dst_rect, nullptr);
+	}
+}
+
+inline void renderer_sdl::clear_screen(){
+	SDL_RenderClear(sdl_renderer);
+}
+
+inline void renderer_sdl::set_draw_color(Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+	SDL_SetRenderDrawColor(sdl_renderer, r, g, b, a);
+}
+
+inline void renderer_sdl::present(){
+	SDL_RenderPresent(sdl_renderer);
+}
+
 #endif
