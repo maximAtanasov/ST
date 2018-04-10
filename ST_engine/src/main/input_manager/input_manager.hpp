@@ -2,8 +2,9 @@
 #define INPUT_DEF
 
 #include <defs.hpp>
-#include <manager.hpp>
 #include <input_manager/key_definitions.hpp>
+#include <message_bus/message_bus.hpp>
+#include <task_manager/task_manager.hpp>
 
 typedef struct game_controls{
     Uint8* keyboardFramePrev;
@@ -15,7 +16,7 @@ typedef struct game_controls{
     int mouse_scroll;
 } game_controls;
 
-class input_manager : public virtual manager{
+class input_manager{
 	private:
 		int v_width = 1, v_height = 1;
 		int r_width = 1, r_height = 1;
@@ -35,15 +36,15 @@ class input_manager : public virtual manager{
 		bool keypress(key);
 		bool keyheld(key);
 		bool keyrelease(key);
-		void handle_messages() override;
+		void handle_messages();
         void take_input();
         static void update_task(void* mngr);
 
     public:
         input_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr) override;
-        void close() override;
-        void update() override;
+        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        void close();
+        void update();
 
 };
 

@@ -66,15 +66,14 @@ int main(int argc, char** argv){
         total_time += frame_time;
 
         if(total_time >= UPDATE_RATE){
-
             //will start an update task
             gInput_manager.update();
-
-            while (total_time >= UPDATE_RATE) {
+            do{
                 gPhysics_manager.update(gGame_manager.get_level_data());
                 gGame_manager.update();
                 total_time -= UPDATE_RATE;
             }
+            while (total_time >= UPDATE_RATE);
             //All three start their own update tasks which run in the background
             gAudio_manager.update();
             gAssets_manager.update();

@@ -12,7 +12,7 @@
 #include <game_manager/level/camera.hpp>
 #include <renderers/renderer_sdl/renderer_sdl.hpp>
 
-class drawing_manager : public virtual manager{
+class drawing_manager{
     private:
         //external dependencies - injected through main or the message bus
         message_bus* gMessage_bus{};
@@ -66,7 +66,7 @@ class drawing_manager : public virtual manager{
         bool is_onscreen(entity* i);
 
         //Other functions
-        void handle_messages() override;
+        void handle_messages();
         void show_collisions();
         void hide_collisions();
         void set_darkness(Uint8 arg);
@@ -76,11 +76,7 @@ class drawing_manager : public virtual manager{
         drawing_manager() = default; //empty constructor
         int initialize(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
         void update(level temp, double, console* gConsole);
-
-        //Yes, this manager is bit special in that it overloads the initialize and update methods
-        int initialize(message_bus*, task_manager*) override {return 0;};
-        void update() override {};
-        void close() override;
+        void close();
 };
 
 #endif

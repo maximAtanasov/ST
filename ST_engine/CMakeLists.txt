@@ -70,7 +70,6 @@ add_executable(ST_engine
         src/main/game_manager/level/light.hpp
         src/main/main/main.cpp
         src/main/main/main.hpp
-        src/main/manager.hpp
         src/main/util/math.cpp
         src/main/util/math.hpp
         src/main/message_bus/message_bus.cpp
@@ -134,7 +133,6 @@ add_executable(asset_manager_test
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
         src/main/defs.hpp
-        src/main/manager.hpp
         src/main/message_bus/message_bus.cpp
         src/main/message_bus/message_bus.hpp
         src/main/task_manager/task.hpp

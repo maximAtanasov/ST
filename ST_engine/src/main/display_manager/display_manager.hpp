@@ -5,9 +5,8 @@
 #include <defs.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
-#include <manager.hpp>
 
-class display_manager : public virtual manager{
+class display_manager{
     private:
         SDL_Surface* icon{};
         SDL_Window* window{};
@@ -19,15 +18,15 @@ class display_manager : public virtual manager{
         subscriber* msg_sub{};
 
         void set_fullscreen(bool arg);
-        void handle_messages() override;
+        void handle_messages();
         void set_brightness(float arg);
         static void update_task(void* mngr);
 
     public:
         display_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr) override;
-        void update() override;
-        void close() override;
+        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        void update();
+        void close();
 
         SDL_Window* get_window();
 };

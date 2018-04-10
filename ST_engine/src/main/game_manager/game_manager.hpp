@@ -3,11 +3,10 @@
 
 #include <defs.hpp>
 #include <game_manager/level/level.hpp>
-#include <manager.hpp>
 #include <message_bus/message_bus.hpp>
 #include <game_manager/lua_backend/lua_backend.hpp>
 
-class game_manager : public virtual manager{
+class game_manager{
     private:
         std::vector<level*> levels;
         std::string active_level;
@@ -27,7 +26,7 @@ class game_manager : public virtual manager{
         task_id update_id{};
 
         //methods
-        void handle_messages() override;
+        void handle_messages();
         void load_level(const std::string&);
         void unload_level(const std::string&);
         void start_level(const std::string&);
@@ -47,9 +46,9 @@ class game_manager : public virtual manager{
         bool key_released(size_t arg);
         int get_mouse_x();
         int get_mouse_y();
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr) override;
-        void update() override;
-        void close() override;
+        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        void update();
+        void close();
         bool game_is_running();
 		level get_level();
 };

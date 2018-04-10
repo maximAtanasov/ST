@@ -7,11 +7,11 @@
 #include <sstream>
 #include <unordered_map>
 #include <defs.hpp>
-#include <manager.hpp>
 #include <message_bus/message_bus.hpp>
+#include <task_manager/task_manager.hpp>
 
 
-class assets_manager : public virtual manager{
+class assets_manager{
     friend class asset_manager_test;
 private:
 
@@ -26,14 +26,14 @@ private:
         int unload_assets_from_list(std::string path);
         int load_assets_from_list(std::string path);
         int load_assets_from_binary(const std::string& path);
-        void handle_messages() override;
+        void handle_messages();
         static void update_task(void* arg);
 
     public:
         assets_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr) override;
-        void close() override;
-        void update() override;
+        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        void close();
+        void update();
 };
 
 #endif

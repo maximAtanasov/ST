@@ -3,11 +3,11 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
-#include <manager.hpp>
 #include <assets_manager/assets.hpp>
-#include <task_manager/task.hpp>
+#include <message_bus/message_bus.hpp>
+#include <task_manager/task_manager.hpp>
 
-class audio_manager : public virtual manager{
+class audio_manager{
     private:
 
         int volume = MIX_MAX_VOLUME;
@@ -21,7 +21,7 @@ class audio_manager : public virtual manager{
         task_manager* gTask_manager{}; //-Delivered in constructor
 
         //internal update functions
-        void handle_messages() override;
+        void handle_messages();
 
 
         //Audio control functions
@@ -36,9 +36,9 @@ class audio_manager : public virtual manager{
 
     public:
         audio_manager() = default;
-        void update() override;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr) override;
-        void close() override;
+        void update();
+        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        void close();
 
 };
 
