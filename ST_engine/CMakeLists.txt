@@ -104,7 +104,6 @@ add_executable(ST_engine
         src/main/game_manager/level/text.cpp
         src/main/message_bus/subscriber.cpp
         src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.cpp
         src/main/message_bus/message.hpp
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp
@@ -146,7 +145,6 @@ add_executable(asset_manager_test
         src/test/test_util.hpp
         src/main/message_bus/subscriber.cpp
         src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.cpp
         src/main/message_bus/message.hpp
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp

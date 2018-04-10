@@ -39,29 +39,12 @@ int game_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     return 0;
 }
 
-bool game_manager::key_pressed(size_t arg){
-    return keys_pressed_data[(Uint8)(get_level_data()->actions_Buttons[arg])];
-}
-
-bool game_manager::key_held(size_t arg){
-    return keys_held_data[(Uint8)get_level_data()->actions_Buttons[arg]];
-}
-
-bool game_manager::key_released(size_t arg){
-    return keys_released_data[(Uint8)get_level_data()->actions_Buttons[arg]];
-}
-
 void game_manager::reset_keys(){
     for(int i = 0; i < 64; i++){
         keys_pressed_data[i] = false;
         keys_held_data[i] = false;
         keys_released_data[i] = false;
     }
-}
-
-void game_manager::update(){
-    handle_messages();
-    run_level_loop();
 }
 
 void game_manager::handle_messages(){
@@ -139,20 +122,6 @@ void game_manager::handle_messages(){
     }
 }
 
-bool game_manager::game_is_running(){
-    return (bool)SDL_AtomicGet(&end_game);
-}
-
-//methods related to input
-
-int game_manager::get_mouse_x(){
-    return mouse_x;
-}
-
-int game_manager::get_mouse_y(){
-    return mouse_y;
-}
-
 //methods related to loading levels
 void game_manager::load_level(const std::string& level_name){
     for(auto& i: levels) {
@@ -217,27 +186,5 @@ void game_manager::start_level(const std::string& level_name){
     for(auto i : get_level_data()->actions_Buttons) {
         gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<key>(i.second)));
     }
-}
-
-std::string game_manager::get_active_level(){
-    return active_level;
-}
-
-void game_manager::close(){
-    handle_messages();
-    delete msg_sub;
-    gScript_backend->close();
-}
-
-void game_manager::run_level_loop() {
-    gScript_backend->run_global("loop");
-}
-
-level_data* game_manager::get_level_data() {
-    return current_level_pointer->get_data();
-}
-
-level game_manager::get_level(){
-	return *current_level_pointer;
 }
 

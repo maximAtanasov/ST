@@ -6,6 +6,7 @@
 #include <assets_manager/assets.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
+#include <console/log.hpp>
 
 class audio_manager{
     private:
@@ -41,5 +42,65 @@ class audio_manager{
         void close();
 
 };
+
+//INLINED METHODS
+
+inline void audio_manager::update(){
+        //start a task that will handle messages (play audio and such)
+        gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
+}
+
+inline void audio_manager::set_volume(Uint8 arg) {
+        volume = arg;
+}
+
+inline void audio_manager::mute(){
+        Mix_Volume(-1, 0);
+        Mix_VolumeMusic(0);
+        volume = 0;
+}
+
+inline void audio_manager::unmute(){
+        Mix_Volume(-1, MIX_MAX_VOLUME);
+        Mix_VolumeMusic(MIX_MAX_VOLUME);
+        volume = MIX_MAX_VOLUME;
+}
+
+inline void audio_manager::close(){
+        handle_messages();
+        delete msg_sub;
+        Mix_CloseAudio();
+        SDL_QuitSubSystem(SDL_INIT_AUDIO);
+        Mix_Quit();
+}
+
+inline void audio_manager::play_sound(size_t arg, int volume, int loops){
+        Mix_Chunk* data = assets_ptr->chunks[arg];
+        if(data != nullptr){
+                Mix_VolumeChunk(data, volume);
+                if(Mix_PlayChannel( -1, data, loops ) == -1){
+                        log(ERROR, "Mix_PlayChannel Error " + std::string(Mix_GetError()));
+                }
+        }
+}
+
+inline void audio_manager::play_music(size_t arg, int volume, int loops){
+        Mix_Music* data = assets_ptr->music[arg];
+        if(data != nullptr){
+                Mix_VolumeMusic(volume);
+                if(Mix_PlayMusic(data, loops) == -1){
+                        log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
+                }
+                Mix_VolumeMusic(this->volume);
+        }
+}
+
+inline void audio_manager::stop_music(){
+        Mix_PauseMusic();
+}
+
+inline void audio_manager::stop_channels(){
+        Mix_HaltChannel(-1);
+}
 
 #endif

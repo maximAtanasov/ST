@@ -48,4 +48,10 @@ class input_manager{
 
 };
 
+//INLINED METHODS
+
+inline void input_manager::update(){
+	gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
+}
+
 #endif

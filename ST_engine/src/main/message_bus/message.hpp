@@ -22,5 +22,24 @@ public:
     message* make_copy();
 };
 
+//INLINED METHODS
+
+//message implementation=========================================================
+
+
+//constructor - only ever used by the message_allocator class
+inline message::message(msg_type name, const std::shared_ptr<void>& data, int id){
+    msg_name = name;
+    this->data = data;
+    this->id = id;
+}
+
+inline void* message::get_data(){
+    return this->data.get();
+}
+
+inline int message::get_id(){
+    return id;
+}
 
 #endif //SLAVICTALES_MASTER_MESSAGE_HPP

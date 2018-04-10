@@ -17,7 +17,7 @@ private:
 public:
     message_allocator();
     message* allocate_message(msg_type name, std::shared_ptr<void> data);
-    void deallocate(int id, message* temp);
+    void deallocate(int id);
     ~message_allocator();
 };
 

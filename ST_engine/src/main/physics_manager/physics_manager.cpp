@@ -71,16 +71,6 @@ void physics_manager::process_vertical() {
     }
 }
 
-void physics_manager::update(level_data* data){
-    handle_messages();
-	if(physics_paused){
-		return;
-	}
-    entities = &data->entities;
-    process_horizontal();
-    process_vertical();
-}
-
 void physics_manager::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){

@@ -49,10 +49,6 @@ void display_manager::update_task(void* mngr){
     self->handle_messages();
 }
 
-void display_manager::update(){
-    gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
-}
-
 void display_manager::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){

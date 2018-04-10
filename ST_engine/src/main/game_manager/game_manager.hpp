@@ -8,8 +8,8 @@
 
 class game_manager{
     private:
-        std::vector<level*> levels;
-        std::string active_level;
+        std::vector<level*> levels{};
+        std::string active_level{};
         level* current_level_pointer{};
         subscriber* msg_sub{};
         SDL_atomic_t end_game{};
@@ -52,5 +52,60 @@ class game_manager{
         bool game_is_running();
 		level get_level();
 };
+
+//INLINED METHODS
+
+inline void game_manager::update(){
+    handle_messages();
+    run_level_loop();
+}
+
+inline std::string game_manager::get_active_level(){
+    return active_level;
+}
+
+inline void game_manager::close(){
+    handle_messages();
+    delete msg_sub;
+    gScript_backend->close();
+}
+
+inline void game_manager::run_level_loop() {
+    gScript_backend->run_global("loop");
+}
+
+inline level_data* game_manager::get_level_data() {
+    return current_level_pointer->get_data();
+}
+
+inline level game_manager::get_level(){
+    return *current_level_pointer;
+}
+
+inline bool game_manager::game_is_running(){
+    return (bool)SDL_AtomicGet(&end_game);
+}
+
+inline int game_manager::get_mouse_x(){
+    return mouse_x;
+}
+
+inline int game_manager::get_mouse_y(){
+    return mouse_y;
+}
+
+
+inline bool game_manager::key_pressed(size_t arg){
+    return keys_pressed_data[(Uint8)(get_level_data()->actions_Buttons[arg])];
+}
+
+inline bool game_manager::key_held(size_t arg){
+    return keys_held_data[(Uint8)get_level_data()->actions_Buttons[arg]];
+}
+
+inline bool game_manager::key_released(size_t arg){
+    return keys_released_data[(Uint8)get_level_data()->actions_Buttons[arg]];
+}
+
 
 #endif

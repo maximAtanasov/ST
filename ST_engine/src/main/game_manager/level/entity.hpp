@@ -3,12 +3,12 @@
 
 #include <defs.hpp>
 
-typedef struct collision_data{
+struct collision_data{
     int left;
     int right;
     int top;
     int bottom;
-} collision_data;
+};
 
 class entity{
     private:
@@ -97,6 +97,8 @@ class entity{
 
 
 };
+
+//INLINED METHODS
 
 //GENERAL FUNCTIONS//
 inline Uint64 entity::get_ID(){

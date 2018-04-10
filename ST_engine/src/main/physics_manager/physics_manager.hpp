@@ -33,4 +33,16 @@ class physics_manager{
         void close();
 };
 
+//INLINED METHODS
+
+inline void physics_manager::update(level_data* data){
+	handle_messages();
+	if(physics_paused){
+		return;
+	}
+	entities = &data->entities;
+	process_horizontal();
+	process_vertical();
+}
+
 #endif

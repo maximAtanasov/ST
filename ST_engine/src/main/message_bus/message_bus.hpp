@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <cstring>
+#include <message_bus/message_allocator.hpp>
 
 class message_bus{
     private:
@@ -30,6 +31,19 @@ class message_bus{
 //shared pointer are used internally to manage memory
 message* make_msg(msg_type name, const std::shared_ptr<void>& data);
 void destroy_msg(message* msg);
+
+//allocator and constructor for messages
+inline message* make_msg(msg_type name, const std::shared_ptr<void>& data){
+    return msg_memory->allocate_message(name, data);
+}
+
+inline void destroy_msg(message* msg){
+    msg_memory->deallocate(msg->get_id());
+}
+
+inline message* message::make_copy(){
+    return msg_memory->allocate_message(this->msg_name, this->data);
+}
 
 template <class T> std::shared_ptr<void> make_data(T data){
     return std::make_shared<T>(data);

@@ -38,10 +38,6 @@ void input_manager::update_task(void* mngr){
     self->take_input();
 }
 
-void input_manager::update(){
-    gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
-}
-
 void input_manager::take_input(){
     int length = 0;
     SDL_GetKeyboardState(&length);

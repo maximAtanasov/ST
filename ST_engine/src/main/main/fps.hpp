@@ -18,5 +18,10 @@ public:
     double get_value();
 };
 
+//INLINED METHODS
+
+inline double fps::get_value() {
+    return value;
+}
 
 #endif

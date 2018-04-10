@@ -26,10 +26,6 @@ void console::scroll(int scroll_y){
     scroll_offset = scroll_y*20;
 }
 
-void console::update(){
-    handle_messages();
-}
-
 void console::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){

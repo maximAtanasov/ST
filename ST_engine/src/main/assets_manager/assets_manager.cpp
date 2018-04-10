@@ -21,11 +21,6 @@ int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     return 0;
 }
 
-//will start the update task
-void assets_manager::update(){
-    gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
-}
-
 //performs the update for the asset_manager on a task thread
 void assets_manager::update_task(void* arg){
     auto self = (assets_manager*)arg;

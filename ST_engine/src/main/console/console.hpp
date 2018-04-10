@@ -43,4 +43,10 @@ class console{
         void close();
 };
 
+//INLINED METHODS
+
+inline void console::update(){
+    handle_messages();
+}
+
 #endif

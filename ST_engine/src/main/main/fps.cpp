@@ -19,10 +19,6 @@ void fps::update(double time, double frame_time) {
     }
 }
 
-double fps::get_value() {
-    return value;
-}
-
 double fps::get_average() {
     double sum = 0;
     for(double i : average){
