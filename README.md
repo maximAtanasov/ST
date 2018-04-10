@@ -1,6 +1,16 @@
+
+Instructions for building the project:
+
+If you are on linux you can use your favorite IDE and open the folder as a CMake project (CLion, QtCreator, KDevelop, NetBeans, Eclipse with extensions, etc.) and run the ST_engine target (note that the working directory of the ST_engine executable must be the gamedata folder) or you can run the following commands in your terminal while in the root directory of the project:
+
+./cmakew.sh
+make ST_engine
+cd ST_engine/gamedata && ../ST_engine
+
+This will automatically download all needed dependencies (a cmake binary is also included).
+
 New changes:
 
-A CMake project is now available.
 The developer console has been upgraded and you can now type in any lua code (has to be in one line) and have it be
 executed immediately.
 

@@ -42,7 +42,6 @@ class drawing_manager{
 
         //variables for drawing light
         Uint8 lightmap[1920][1080];
-        Uint8 lightmap_rotated[1080][1920];
         Uint8 darkness_level = 0;
         int lights_quality = 0;
 		
@@ -61,7 +60,6 @@ class drawing_manager{
         void draw_text_objects(std::vector<text>*);
 
         //Pre-processing
-        void rotate_lightmap();
         void process_lights(std::vector<light>* arg);
         bool is_onscreen(entity* i);
 

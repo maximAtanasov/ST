@@ -41,19 +41,8 @@ int renderer_sdl::initialize_with_vsync(SDL_Window* window, int width, int heigh
     }else{
         SDL_SetTextureBlendMode(lights_texture, SDL_BLENDMODE_BLEND);
     }
+    pixels = (Uint32*)malloc(width*height*sizeof(Uint32));
     return 0;
-}
-
-void renderer_sdl::draw_lights(Uint8 arg[1080][1920], const int w, const int h){
-    int k = 0;
-    for(Uint16 i = 0; i < w; i++){
-        for(Uint16 j = 0; j < h; j++){
-            pixels[k] = arg[i][j] << (Uint8)24;
-            k++;
-        };
-    }
-    SDL_UpdateTexture(lights_texture, nullptr, pixels, h*sizeof(Uint32));
-    SDL_RenderCopy(sdl_renderer, lights_texture, nullptr, nullptr);
 }
 
 void renderer_sdl::close(){
@@ -80,6 +69,8 @@ void renderer_sdl::close(){
 	gFont_cache = nullptr;
     SDL_DestroyRenderer(sdl_renderer);
     sdl_renderer = nullptr;
+    free(pixels);
+    pixels = nullptr;
 }
 
 //Text fallback for non-english text -- works with cyrillic, expanded Latin (Spanish, German, etc..) and I guess all of UTF8

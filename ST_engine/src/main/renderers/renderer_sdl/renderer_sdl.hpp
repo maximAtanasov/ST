@@ -42,7 +42,7 @@ private:
 	int initialize_with_vsync(SDL_Window* win, int width, int height, bool vsync);
 
 public:
-	void draw_lights(Uint8 arg[1080][1920], int w, int h);
+	void draw_lights(Uint8 arg[1920][1080]);
     void set_draw_color(Uint8,Uint8,Uint8,Uint8) ;
     void clear_screen() ;
     void present() ;
@@ -63,6 +63,18 @@ public:
 };
 
 //INLINED METHODS
+
+inline void renderer_sdl::draw_lights(Uint8 arg[1920][1080]){
+	int k = 0;
+	for(Uint16 i = 0; i < height; i++){
+		for(Uint16 j = 0; j < width; j++){
+			pixels[k] = arg[j][i] << (Uint8)24;
+			k++;
+		};
+	}
+	SDL_UpdateTexture(lights_texture, nullptr, pixels, width*sizeof(Uint32));
+	SDL_RenderCopy(sdl_renderer, lights_texture, nullptr, nullptr);
+}
 
 inline void renderer_sdl::draw_texture(size_t arg, int x, int y) {
 	SDL_Texture *temp = textures[arg];

@@ -9,7 +9,7 @@ set(LIBS_DIR ${PROJECT_SOURCE_DIR}/libs)
 
 include(ExternalProject)
 externalproject_add(SDL2
-        URL https://hg.libsdl.org/SDL/archive/tip.zip
+        URL https://www.libsdl.org/release/SDL2-2.0.8.zip
         DOWNLOAD_NAME SDL2.zip
         PREFIX ${LIBS_DIR}
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${LIBS_DIR}

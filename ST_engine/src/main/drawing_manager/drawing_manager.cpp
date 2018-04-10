@@ -40,15 +40,6 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
 void drawing_manager::process_lights_task(void *arg){
     auto self = static_cast<drawing_manager*>(arg);
     self->process_lights(self->lights_arg);
-    self->rotate_lightmap();
-}
-
-void drawing_manager::rotate_lightmap(){
-    for(int i = 0; i < 1080; i++){
-        for(int j = 0; j < 1920; j++){
-            lightmap_rotated[i][j] = lightmap[j][i];
-        }
-    }
 }
 
 void drawing_manager::update(level data, double fps, console* cnsl){
@@ -71,7 +62,7 @@ void drawing_manager::update(level data, double fps, console* cnsl){
 
     //draw the lights when we are sure they are processed
     gTask_manager->wait_for_task(id);
-    gRenderer->draw_lights(lightmap_rotated, 1080, 1920);
+    gRenderer->draw_lights(lightmap);
 
 
     #ifdef __DEBUG
