@@ -1,4 +1,4 @@
-#include "renderer_sdl.hpp"
+#include <renderers/renderer_sdl/renderer_sdl.hpp>
 
 int renderer_sdl::initialize(SDL_Window* window, int width, int height){
     gFont_cache = new font_cache(100);

@@ -1,5 +1,5 @@
 #include <cmath>
-#include "renderer_opengl_immediate.hpp"
+#include <renderers/renderer_opengl_immediate/renderer_opengl_immediate.hpp>
 
 int renderer_opengl_immediate::initialize(SDL_Window* window, int v_width, int v_height){
     gFont_cache = new font_cache_opengl(100);

@@ -1,7 +1,5 @@
-#include "drawing_manager.hpp"
-#include "../console/log.hpp"
-
-
+#include <drawing_manager/drawing_manager.hpp>
+#include <console/log.hpp>
 
 int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_manager* tsk_mngr){
 	if(TTF_Init() < 0){

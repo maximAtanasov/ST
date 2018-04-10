@@ -1,8 +1,8 @@
 #ifndef VERTEX_GL
 #define VERTEX_GL
 
-#include "GL/glew.h"
-#include "SDL2/SDL_opengl.h"
+#include <GL/glew.h>
+#include <SDL2/SDL_opengl.h>
 
 class vertex_2D{
 	GLfloat x = 0;

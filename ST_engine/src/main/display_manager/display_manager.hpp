@@ -2,10 +2,10 @@
 #define DM_DEF
 
 #include <string>
-#include "../defs.hpp"
-#include "../message_bus/message_bus.hpp"
-#include "../task_manager/task_manager.hpp"
-#include "../manager.hpp"
+#include <defs.hpp>
+#include <message_bus/message_bus.hpp>
+#include <task_manager/task_manager.hpp>
+#include <manager.hpp>
 
 class display_manager : public virtual manager{
     private:

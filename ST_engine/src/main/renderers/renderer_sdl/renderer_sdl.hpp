@@ -2,9 +2,9 @@
 #define RENDER_SDL_DEF
 
 #include <unordered_map>
-#include "../../defs.hpp"
-#include "font_cache.hpp"
-#include "../renderer.hpp"
+#include <defs.hpp>
+#include <renderers/renderer_sdl/font_cache.hpp>
+#include <renderers/renderer.hpp>
 
 class renderer_sdl{
 private:

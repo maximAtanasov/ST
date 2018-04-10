@@ -12,9 +12,9 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include "util/math.hpp"
-#include "util/atomic_queue/concurrentqueue.h"
-#include "util/atomic_queue/atomicops.h"
+#include <util/math.hpp>
+#include <util/atomic_queue/concurrentqueue.h>
+#include <util/atomic_queue/atomicops.h>
 
 //define __DEBUG or __RELEASE to enable or disable certain features
 #define __DEBUG

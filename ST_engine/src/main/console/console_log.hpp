@@ -1,9 +1,7 @@
-
 #ifndef CONSOLE_LOG_HPP
 #define CONSOLE_LOG_HPP
 
-
-#include "../defs.hpp"
+#include <defs.hpp>
 
 enum class log_type : Uint8 {ERROR = 0x01, SUCCESS = 0x02, INFO = 0x04};
 

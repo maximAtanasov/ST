@@ -1,8 +1,8 @@
 #ifndef TEXTURE_GL_LEGACY
 #define TEXTURE_GL_LEGACY
 
-#include "GL/glew.h"
-#include "SDL2/SDL_opengl.h"
+#include <GL/glew.h>
+#include <SDL2/SDL_opengl.h>
 
 typedef struct texture_gl_legacy{
     GLuint TextureID;

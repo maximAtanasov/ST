@@ -1,9 +1,9 @@
 #ifndef INPUT_DEF
 #define INPUT_DEF
 
-#include "../defs.hpp"
-#include "../manager.hpp"
-#include "key_definitions.hpp"
+#include <defs.hpp>
+#include <manager.hpp>
+#include <input_manager/key_definitions.hpp>
 
 typedef struct game_controls{
     Uint8* keyboardFramePrev;

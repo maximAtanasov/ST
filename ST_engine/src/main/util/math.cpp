@@ -1,4 +1,4 @@
-#include "math.hpp"
+#include <util/math.hpp>
 
 double m_abs(double arg){
     if(arg >= 0)

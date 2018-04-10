@@ -1,4 +1,4 @@
-#include "renderer_opengl_retained.hpp"
+#include <renderers/renderer_opengl_retained/renderer_opengl_retained.hpp>
 
 GLfloat g_vertex_buffer_data[] = {
 	-1.0f, -1.0f,

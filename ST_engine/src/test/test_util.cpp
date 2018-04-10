@@ -1,6 +1,6 @@
 #include <cstdio>
 
-#include "test_util.hpp"
+#include <test_util.hpp>
 
 void initialize_SDL(){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {

@@ -1,6 +1,7 @@
 #include <ST_loaders/loaders.hpp>
-#include "assets_manager.hpp"
-#include "../console/log.hpp"
+#include <console/log.hpp>
+#include <assets_manager/assets_manager.hpp>
+
 
 int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 

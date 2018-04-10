@@ -1,4 +1,4 @@
-#include "font_cache_opengl.hpp"
+#include <renderers/renderer_opengl_immediate/font_cache_opengl.hpp>
 
 //A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer class
 

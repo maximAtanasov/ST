@@ -1,8 +1,8 @@
 #ifndef TEXTURE_GL
 #define TEXTURE_GL
 
-#include "GL/glew.h"
-#include "SDL2/SDL_opengl.h"
+#include <GL/glew.h>
+#include <SDL2/SDL_opengl.h>
 
 class texture{
 

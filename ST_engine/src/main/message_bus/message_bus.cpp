@@ -1,5 +1,5 @@
-#include "message_bus.hpp"
-#include "message_allocator.hpp"
+#include <message_bus/message_bus.hpp>
+#include <message_bus/message_allocator.hpp>
 
 message_allocator* msg_memory;
 

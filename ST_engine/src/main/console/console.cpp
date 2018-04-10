@@ -1,5 +1,5 @@
-#include "console.hpp"
-#include "../input_manager/key_definitions.hpp"
+#include <console/console.hpp>
+#include <input_manager/key_definitions.hpp>
 
 int console::initialize(message_bus* msg_bus){
     gMessage_bus = msg_bus;

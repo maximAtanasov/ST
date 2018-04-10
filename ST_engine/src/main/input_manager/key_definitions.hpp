@@ -1,7 +1,7 @@
 #ifndef KEY_DEFINITIONS_HPP
 #define KEY_DEFINITIONS_HPP
 
-#include "SDL2/SDL_types.h"
+#include <SDL2/SDL_types.h>
 
 enum class key : Uint8 {LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4, A = 5, B = 6, C = 7, D = 8, E = 9, F = 10,
         G = 11, H = 12, I = 13, J = 14, K = 15 , L = 16, M = 17, N = 18, O = 19, P = 20, Q = 21, R = 22, S = 23,

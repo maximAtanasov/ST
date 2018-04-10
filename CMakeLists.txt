@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(slavicTales-master)
 
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/lib)
 set(FREETYPE_VER "2.4.8")
 
 message(${CMAKE_INSTALL_PREFIX})
@@ -16,12 +15,12 @@ externalproject_add(SDL2
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${LIBS_DIR}
         )
 
-#ExternalProject_Add(glew
-##        GIT_REPOSITORY https://github.com/LuaDist/glew.git
- #       GIT_TAG master
- #       PREFIX ${LIBS_DIR}
- #       CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${LIBS_DIR}
-#)
+ExternalProject_Add(glew
+        GIT_REPOSITORY https://github.com/Perlmint/glew-cmake.git
+       GIT_TAG master
+       PREFIX ${LIBS_DIR}
+       CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${LIBS_DIR}
+)
 
 ExternalProject_Add(gtest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -100,6 +99,7 @@ externalproject_add(freetype
         CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=${LIBS_DIR} --enable-shared=yes
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${LIBS_DIR}
         )
+
 
 externalproject_add(SDL2_ttf
         URL https://hg.libsdl.org/SDL_ttf/archive/tip.zip

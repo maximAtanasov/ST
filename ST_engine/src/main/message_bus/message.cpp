@@ -1,5 +1,5 @@
-#include "message.hpp"
-#include "message_allocator.hpp"
+#include <message_bus/message.hpp>
+#include <message_bus/message_allocator.hpp>
 
 //message implementation=========================================================
 

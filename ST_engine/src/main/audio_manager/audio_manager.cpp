@@ -1,5 +1,5 @@
-#include "audio_manager.hpp"
-#include "../console/log.hpp"
+#include <audio_manager/audio_manager.hpp>
+#include <console/log.hpp>
 
 void audio_manager::update_task(void* arg){
     auto mngr = (audio_manager*)arg;

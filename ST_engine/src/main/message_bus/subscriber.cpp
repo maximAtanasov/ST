@@ -1,4 +1,4 @@
-#include "subscriber.hpp"
+#include <message_bus/subscriber.hpp>
 
 message* subscriber::get_next_message(){
     message* new_message;

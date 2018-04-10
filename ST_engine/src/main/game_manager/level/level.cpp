@@ -1,5 +1,5 @@
 #include "level.hpp"
-#include "../../console/log.hpp"
+#include <console/log.hpp>
 
 level::level(const std::string& lvl_name, message_bus* msg_bus){
     name = lvl_name;

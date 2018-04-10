@@ -1,4 +1,4 @@
-#include "game_manager.hpp"
+#include <game_manager/game_manager.hpp>
 
 //initializes the game_manager and loads "main"
 int game_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){

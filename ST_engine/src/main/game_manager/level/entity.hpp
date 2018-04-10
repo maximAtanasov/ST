@@ -1,7 +1,7 @@
 #ifndef ENTITY_DEF
 #define ENTITY_DEF
 
-#include "../../defs.hpp"
+#include <defs.hpp>
 
 typedef struct collision_data{
     int left;

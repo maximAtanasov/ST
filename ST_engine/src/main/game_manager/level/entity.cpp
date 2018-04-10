@@ -1,4 +1,4 @@
-#include "entity.hpp"
+#include <game_manager/level/entity.hpp>
 
 //default constructor
 entity::entity(unsigned int id){

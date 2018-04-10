@@ -1,4 +1,4 @@
-#include "fps.hpp"
+#include <main/fps.hpp>
 
 int fps::initialize() {
     for(double& i : average) {

@@ -1,11 +1,11 @@
 #ifndef LVL_MNG_DEF
 #define LVL_MNG_DEF
 
-#include "../defs.hpp"
-#include "level/level.hpp"
-#include "../manager.hpp"
-#include "../message_bus/message_bus.hpp"
-#include "lua_backend/lua_backend.hpp"
+#include <defs.hpp>
+#include <game_manager/level/level.hpp>
+#include <manager.hpp>
+#include <message_bus/message_bus.hpp>
+#include <game_manager/lua_backend/lua_backend.hpp>
 
 class game_manager : public virtual manager{
     private:

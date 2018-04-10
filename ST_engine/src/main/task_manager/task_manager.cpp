@@ -1,8 +1,5 @@
-#include "task_manager.hpp"
-#include "../console/log.hpp"
-
-
-
+#include <task_manager/task_manager.hpp>
+#include <console/log.hpp>
 
 int task_manager::task_thread(void* arg){
 	auto self = static_cast<task_manager*>(arg);

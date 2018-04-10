@@ -1,14 +1,14 @@
 #ifndef RENDER_GL_LEGACY_DEF
 #define RENDER_GL_LEGACY_DEF
 
-#include "../renderer.hpp"
+#include <renderers/renderer.hpp>
 #include <unordered_map>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
-#include "font_cache_opengl.hpp"
-#include "GL/glew.h"
-#include "SDL2/SDL_opengl.h"
-#include "texture_opengl_immediate.hpp"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <renderers/renderer_opengl_immediate/font_cache_opengl.hpp>
+#include <GL/glew.h>
+#include <SDL2/SDL_opengl.h>
+#include <renderers/renderer_opengl_immediate/texture_opengl_immediate.hpp>
 
 
 class renderer_opengl_immediate : public virtual renderer{

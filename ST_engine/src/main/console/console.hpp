@@ -1,11 +1,9 @@
 #ifndef DEVCONSOLE_DEF
 #define DEVCONSOLE_DEF
 
-//SINGLETON CLASS
-
-#include "../defs.hpp"
-#include "console_log.hpp"
-#include "../message_bus/message_bus.hpp"
+#include <defs.hpp>
+#include <console/console_log.hpp>
+#include <message_bus/message_bus.hpp>
 
 
 class console{

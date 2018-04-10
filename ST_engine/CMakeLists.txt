@@ -9,6 +9,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 include_directories(../ST_loaders/include)
+include_directories(../ST_engine/src/main)
 include_directories(${PROJECT_SOURCE_DIR}/../libs/include)
 link_directories(${PROJECT_SOURCE_DIR}/../libs/lib)
 
@@ -152,6 +153,8 @@ add_executable(asset_manager_test
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp
         src/main/message_bus/message_types.hpp)
+
+include_directories(asset_manager_test ../ST_engine/src/test)
 
 target_link_libraries(asset_manager_test
         ST_loaders

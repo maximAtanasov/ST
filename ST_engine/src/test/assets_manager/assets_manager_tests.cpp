@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../../main/assets_manager/assets_manager.hpp"
-#include "../test_util.hpp"
+#include <assets_manager/assets_manager.hpp>
+#include <test_util.hpp>
 
 /// Tests fixture for the assets_manager
 class asset_manager_test : public ::testing::Test {

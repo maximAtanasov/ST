@@ -1,4 +1,4 @@
-#include "console_log.hpp"
+#include <console/console_log.hpp>
 
 
 console_log::console_log(log_type type, const std::string& text) {

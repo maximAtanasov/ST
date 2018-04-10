@@ -1,7 +1,7 @@
 #ifndef LIGHT_DEF
 #define LIGHT_DEF
 
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 class light{
     public:

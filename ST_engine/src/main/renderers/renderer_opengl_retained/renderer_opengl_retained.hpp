@@ -1,17 +1,16 @@
 #ifndef RENDER_GL
 #define RENDER_GL
 
-#include "../../defs.hpp"
+#include <defs.hpp>
 #include <unordered_map>
 #include <SDL2/SDL.h>
-#include "SDL2/SDL_ttf.h"
+#include <SDL2/SDL_ttf.h>
 #include <GL/glew.h>
-#include "texture_opengl_retained.hpp"
-#include "vertex.hpp"
-#include "../renderer.hpp"
+#include <renderers/renderer_opengl_retained/texture_opengl_retained.hpp>
+#include <renderers/renderer_opengl_retained/vertex.hpp>
+#include <renderers/renderer.hpp>
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
 
 class renderer_opengl_retained : public renderer{
 

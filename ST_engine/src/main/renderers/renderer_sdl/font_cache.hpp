@@ -1,7 +1,7 @@
 #ifndef QFC_DEF
 #define QFC_DEF
 
-#include "../../defs.hpp"
+#include <defs.hpp>
 #include <list>
 #include <tuple>
 

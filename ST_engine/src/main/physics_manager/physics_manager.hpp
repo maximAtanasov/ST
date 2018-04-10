@@ -1,11 +1,11 @@
 #ifndef PHYSICS_DEF
 #define PHYSICS_DEF
 
-#include "../defs.hpp"
-#include "../game_manager/level/level.hpp"
-#include "../game_manager/level/entity.hpp"
-#include "../manager.hpp"
-#include "../task_manager/task_manager.hpp"
+#include <defs.hpp>
+#include <game_manager/level/level.hpp>
+#include <game_manager/level/entity.hpp>
+#include <manager.hpp>
+#include <task_manager/task_manager.hpp>
 
 class physics_manager : public virtual manager{
     private:

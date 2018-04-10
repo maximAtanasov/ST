@@ -1,5 +1,5 @@
-#include "display_manager.hpp"
-#include "../console/log.hpp"
+#include <display_manager/display_manager.hpp>
+#include <console/log.hpp>
 
 void display_manager::close(){
     delete msg_sub;

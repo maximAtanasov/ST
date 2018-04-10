@@ -2,9 +2,9 @@
 #define SLAVICTALES_MASTER_MESSAGE_ALLOCATOR_HPP
 
 
-#include "message.hpp"
-#include "message_types.hpp"
-#include "../defs.hpp"
+#include <message_bus/message.hpp>
+#include <message_bus/message_types.hpp>
+#include <defs.hpp>
 
 class message_allocator{
 private:

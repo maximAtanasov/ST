@@ -1,8 +1,8 @@
 #include <SDL2/SDL_mutex.h>
 #include <memory>
-#include "message_allocator.hpp"
-#include "message.hpp"
-#include "message_types.hpp"
+#include <message_bus/message_allocator.hpp>
+#include <message_bus/message.hpp>
+#include <message_bus/message_types.hpp>
 
 //message_allocator implementation===============================================
 

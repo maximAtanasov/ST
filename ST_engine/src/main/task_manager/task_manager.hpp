@@ -1,9 +1,9 @@
 #ifndef TASK_MNGR_DEF
 #define TASK_MNGR_DEF
 
-#include "../defs.hpp"
-#include "../message_bus/message_bus.hpp"
-#include "task.hpp"
+#include <defs.hpp>
+#include <message_bus/message_bus.hpp>
+#include <task_manager/task.hpp>
 
 //The task manager only needs to be initialized, it will start at least one worker thread
 //and an update thread that will distribute incoming tasks

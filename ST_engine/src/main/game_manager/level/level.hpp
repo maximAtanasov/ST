@@ -1,14 +1,13 @@
 #ifndef LVL_DEF
 #define LVL_DEF
 
-#include "../../input_manager/key_definitions.hpp"
-
-#include "../../defs.hpp"
-#include "entity.hpp"
-#include "text.hpp"
-#include "light.hpp"
-#include "../../message_bus/message_bus.hpp"
-#include "camera.hpp"
+#include <input_manager/key_definitions.hpp>
+#include <defs.hpp>
+#include <game_manager/level/entity.hpp>
+#include <game_manager/level/text.hpp>
+#include <game_manager/level/light.hpp>
+#include <message_bus/message_bus.hpp>
+#include <game_manager/level/camera.hpp>
 
 typedef struct level_data{
     std::unordered_map<size_t, key> actions_Buttons;

@@ -3,9 +3,9 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "../util/atomic_queue/concurrentqueue.h"
-#include "subscriber.hpp"
-#include "message.hpp"
+#include <util/atomic_queue/concurrentqueue.h>
+#include <message_bus/subscriber.hpp>
+#include <message_bus/message.hpp>
 #include <unordered_map>
 #include <SDL2/SDL.h>
 #include <memory>

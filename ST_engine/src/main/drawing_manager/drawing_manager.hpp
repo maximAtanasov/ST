@@ -1,16 +1,16 @@
 #ifndef DRAWING_DEF
 #define DRAWING_DEF
 
-#include "../defs.hpp"
-#include "../renderers/renderer_sdl/font_cache.hpp"
-#include "../assets_manager/assets.hpp"
-#include "../game_manager/level/level.hpp"
-#include "../game_manager/level/light.hpp"
-#include "../console/console.hpp"
-#include "../message_bus/message_bus.hpp"
-#include "../task_manager/task_manager.hpp"
-#include "../game_manager/level/camera.hpp"
-#include "../renderers/renderer_sdl/renderer_sdl.hpp"
+#include <defs.hpp>
+#include <renderers/renderer_sdl/font_cache.hpp>
+#include <assets_manager/assets.hpp>
+#include <game_manager/level/level.hpp>
+#include <game_manager/level/light.hpp>
+#include <console/console.hpp>
+#include <message_bus/message_bus.hpp>
+#include <task_manager/task_manager.hpp>
+#include <game_manager/level/camera.hpp>
+#include <renderers/renderer_sdl/renderer_sdl.hpp>
 
 class drawing_manager : public virtual manager{
     private:

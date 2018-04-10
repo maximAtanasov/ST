@@ -3,10 +3,9 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
-#include "../message_bus/message_bus.hpp"
-#include "../manager.hpp"
-#include "../assets_manager/assets.hpp"
-#include "../task_manager/task.hpp"
+#include <manager.hpp>
+#include <assets_manager/assets.hpp>
+#include <task_manager/task.hpp>
 
 class audio_manager : public virtual manager{
     private:

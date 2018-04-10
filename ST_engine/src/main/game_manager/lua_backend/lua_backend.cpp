@@ -1,6 +1,6 @@
-#include "lua_backend.hpp"
-#include "../game_manager.hpp"
-#include "../../console/log.hpp"
+#include <game_manager/lua_backend/lua_backend.hpp>
+#include <game_manager/game_manager.hpp>
+#include <console/log.hpp>
 
 //local to the file, as lua bindings cannot be in a class
 static message_bus*  gMessage_busLua;

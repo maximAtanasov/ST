@@ -1,14 +1,14 @@
 #ifndef ASST_DEF
 #define ASST_DEF
 
-#include "assets.hpp"
+#include <assets_manager/assets.hpp>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
-#include "../defs.hpp"
-#include "../manager.hpp"
-#include "../message_bus/message_bus.hpp"
+#include <defs.hpp>
+#include <manager.hpp>
+#include <message_bus/message_bus.hpp>
 
 
 class assets_manager : public virtual manager{

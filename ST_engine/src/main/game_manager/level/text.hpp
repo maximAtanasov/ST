@@ -1,9 +1,9 @@
-#include "../../defs.hpp"
+#include <defs.hpp>
 
 #ifndef TEXT_OBJECT_DEF
 #define TEXT_OBJECT_DEF
 
-                                                    class text{
+class text{
 
 private:
     Uint64 ID;

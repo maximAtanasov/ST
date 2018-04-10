@@ -1,9 +1,9 @@
 #ifndef QFCGL_DEF
 #define QFCGL_DEF
 
-#include "../../defs.hpp"
-#include "GL/glew.h"
-#include "texture_opengl_immediate.hpp"
+#include <defs.hpp>
+#include <GL/glew.h>
+#include <renderers/renderer_opengl_immediate/texture_opengl_immediate.hpp>
 #include <list>
 #include <tuple>
 
