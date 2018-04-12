@@ -17,7 +17,7 @@
 #include <util/atomic_queue/atomicops.h>
 
 //define __DEBUG or __RELEASE to enable or disable certain features
-#define __DEBUG
+#define __RELEASE
 
 #define CONSOLE_TOGGLE_KEY '`'
 
