@@ -6,22 +6,16 @@ set(CMAKE_CXX_STANDARD 11)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 include_directories(../ST_loaders/include)
-include_directories(${PROJECT_SOURCE_DIR}/../libs/include)
-link_directories(${PROJECT_SOURCE_DIR}/../libs/lib)
 
-set(CMAKE_MODULE_PATH ../cmake)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
-if(UNIX AND NOT APPLE)
-    set(SDL2_LIBRARY -lSDL2 -lpthread)
-    set(SDL2_IMAGE_LIBRARY -lSDL2_image)
-    set(SDL2_MIXER_LIBRARY -lSDL2_mixer)
-endif()
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
 add_executable(ST_asset_pack src/main.cpp)
 
-target_link_libraries(ST_asset_pack ST_loaders dl ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_MIXER_LIBRARY})
-
-add_dependencies(ST_asset_pack
-        SDL2
-        SDL2_image
-        SDL2_mixer)
+include_directories(${SDL2_INCLUDE_DIR})
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
+target_link_libraries(ST_asset_pack ST_loaders ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_MIXER_LIBRARY})

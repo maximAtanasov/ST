@@ -75,7 +75,7 @@ inline void audio_manager::close(){
 }
 
 inline void audio_manager::play_sound(size_t arg, int volume, int loops){
-        Mix_Chunk* data = assets_ptr->chunks[arg];
+        Mix_Chunk* data = assets_ptr->chunks.get(arg);
         if(data != nullptr){
                 Mix_VolumeChunk(data, volume);
                 if(Mix_PlayChannel( -1, data, loops ) == -1){

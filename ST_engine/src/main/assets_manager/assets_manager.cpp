@@ -79,7 +79,7 @@ int assets_manager::load_assets_from_binary(const std::string& path) {
                 count[chunk.first]++;
                 std::hash<std::string> hash_f;
                 size_t hashed = hash_f(chunk.first);
-                all_assets.chunks[hashed] = chunk.second;
+                all_assets.chunks.add(hashed, chunk.second);
             }
         }
         for(auto music : assets1->music){
@@ -147,7 +147,7 @@ int assets_manager::load_asset(std::string path){
                 }
             }
             size_t string_hash = hash_f(path);
-            all_assets.chunks[string_hash] = temp1;
+            all_assets.chunks.add(string_hash, temp1);
             count[path]++;
         }
         else{
@@ -271,7 +271,7 @@ int assets_manager::unload_asset(std::string path){
     }else if(strcmp(extention, "wav") == 0){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
-        Mix_FreeChunk(all_assets.chunks[string_hash]);
+        Mix_FreeChunk(all_assets.chunks.get(string_hash));
         count[path]--;
     }else if(strcmp(extention, "ogg") == 0){
         std::hash<std::string> hash_f;

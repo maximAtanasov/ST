@@ -1,5 +1,6 @@
 #include <drawing_manager/drawing_manager.hpp>
 #include <console/log.hpp>
+#include <defs.hpp>
 
 int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_manager* tsk_mngr){
 	if(TTF_Init() < 0){
@@ -57,7 +58,7 @@ void drawing_manager::update(level data, double fps, console* cnsl){
 	gRenderer->draw_background(temp->background);
 	draw_entities(&temp->entities);
 
-	gRenderer->draw_overlay(temp->overlay, m_mod(ticks, temp->overlay_spriteNum), temp->overlay_spriteNum);
+	gRenderer->draw_overlay(temp->overlay, ST::pos_mod(ticks, temp->overlay_spriteNum), temp->overlay_spriteNum);
     draw_text_objects(&temp->text_objects);
 
     //draw the lights when we are sure they are processed
@@ -327,9 +328,9 @@ void drawing_manager::draw_entities(std::vector<entity>* entities){
             else{
                 int time = ticks >> 7; //ticks/128
                 if(i.is_static()){
-                    gRenderer->draw_sprite(i.get_texture(), i.get_x() , i.get_y(), m_mod(time, i.get_sprite_num()), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
+                    gRenderer->draw_sprite(i.get_texture(), i.get_x() , i.get_y(), ST::pos_mod(time, i.get_sprite_num()), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
                 }else{
-					gRenderer->draw_sprite(i.get_texture(), i.get_x() - Camera.x, i.get_y() - Camera.y , m_mod(time, i.get_sprite_num()), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
+					gRenderer->draw_sprite(i.get_texture(), i.get_x() - Camera.x, i.get_y() - Camera.y , ST::pos_mod(time, i.get_sprite_num()), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
 				}
             }
         }

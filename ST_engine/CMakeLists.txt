@@ -1,43 +1,29 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(ST_engine)
 
 set(CMAKE_CXX_STANDARD 11)
 
-if(UNIX AND NOT APPLE)
-    set(CMAKE_CXX_FLAGS_DEBUG  "${CMAKE_CXX_FLAGS} -Wall -Wextra -g")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra -flto")
-endif()
-
-include_directories(../ST_loaders/include)
-include_directories(../ST_engine/src/main)
-include_directories(${PROJECT_SOURCE_DIR}/../libs/include)
-link_directories(${PROJECT_SOURCE_DIR}/../libs/lib)
-
 enable_testing()
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
-#set(CMAKE_MODULE_PATH ../cmake)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
-
-set(GTEST_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/../libs/include)
 find_package(GTest REQUIRED)
-if(UNIX AND NOT APPLE)
-    set(SDL2_LIBRARY -lSDL2 -lpthread)
-    set(SDL2_IMAGE_LIBRARY -lSDL2_image)
-    set(SDL2_MIXER_LIBRARY -lSDL2_mixer)
-    set(SDL2_TTF_LIBRARY -lSDL2_ttf)
-    set(GTEST_LIBRARIES -lgtest -lgtest_main -lgmock -lgmock_main)
-    set(LUA_LIBRARY -llua)
-endif()
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+find_package(Lua REQUIRED)
 
-##Yes, we use find_package so that cmake defines some GTest specific commands
-##But now we have to tell cmake what to really link against
-
-
-set(INCLUDE_DIRS ${LUA_INCLUDE_DIR})
-
-add_definitions(-DLUA)
+include_directories(../ST_loaders/include)
+include_directories(../ST_util/include)
+include_directories(../ST_engine/src/main)
+include_directories(${LUA_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIR})
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
+include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 add_executable(ST_engine
         src/main/assets_manager/assets.hpp
@@ -71,8 +57,6 @@ add_executable(ST_engine
         src/main/game_manager/level/light.hpp
         src/main/main/main.cpp
         src/main/main/main.hpp
-        src/main/util/math.cpp
-        src/main/util/math.hpp
         src/main/message_bus/message_bus.cpp
         src/main/message_bus/message_bus.hpp
         src/main/physics_manager/physics_manager.cpp
@@ -110,16 +94,10 @@ add_executable(ST_engine
         src/main/message_bus/message_allocator.hpp
         src/main/message_bus/message_types.hpp)
 
-add_dependencies(ST_engine
-        SDL2
-        SDL2_ttf
-        SDL2_image
-        SDL2_mixer
-        lua5.3)
-
 target_link_libraries(ST_engine
         ${LUA_LIBRARY}
         ST_loaders
+        ST_util
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -163,14 +141,6 @@ target_link_libraries(asset_manager_test
         ${GLEW_LIBRARIES}
         ${OPENGL_LIBRARIES}
         ${LUA_LIBRARY})
-
-add_dependencies(asset_manager_test
-        gtest
-        SDL2
-        SDL2_ttf
-        SDL2_image
-        SDL2_mixer
-        lua5.3)
 
 gtest_add_tests(TARGET asset_manager_test)
 

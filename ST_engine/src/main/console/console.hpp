@@ -17,7 +17,6 @@ class console{
 
         Uint8 log_level = 0x00;
 
-
     public:
         SDL_Rect window{};
         SDL_Color color{};
@@ -31,7 +30,6 @@ class console{
 
         //things to do with inputting text commands
         std::string composition;
-        std::string* stream{};
 
         message_bus* gMessage_bus{};
 

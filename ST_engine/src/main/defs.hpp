@@ -12,7 +12,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include <util/math.hpp>
+#include <ST_util/math.hpp>
 #include <util/atomic_queue/concurrentqueue.h>
 #include <util/atomic_queue/atomicops.h>
 

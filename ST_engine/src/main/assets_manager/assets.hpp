@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <ST_util/map.hpp>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_mixer.h"
@@ -14,7 +15,7 @@ namespace ST {
     struct assets {
         std::unordered_map<size_t, SDL_Surface *> surfaces;
         std::unordered_map<std::string, TTF_Font *> fonts;
-        std::unordered_map<size_t, Mix_Chunk *> chunks;
+        ST::map<Mix_Chunk*> chunks;
         std::unordered_map<size_t, Mix_Music *> music;
     };
 }

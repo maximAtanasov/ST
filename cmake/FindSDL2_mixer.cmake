@@ -1,141 +1,68 @@
-# Locate SDL2_MIXER library
+# Locate the SDL2_mixer library. This CMake module is a modified version
+# of the original FindSDL_mixer.cmake file
+# ###########################################################################
+# Locate SDL_mixer library
 # This module defines
-# SDL2_MIXER_LIBRARY, the name of the library to link against
-# SDL2_MIXER_FOUND, if false, do not try to link to SDL2_MIXER
-# SDL2_MIXER_INCLUDE_DIR, where to find SDL_MIXER.h
+# SDL2MIXER_LIBRARY, the name of the library to link against
+# SDLMIXER_FOUND, if false, do not try to link to SDL
+# SDL2MIXER_INCLUDE_DIR, where to find SDL/SDL.h
 #
-# Additional Note: If you see an empty SDL2_MIXER_LIBRARY_TEMP in your configuration
-# and no SDL2_MIXER_LIBRARY, it means CMake did not find your SDL2_MIXER library
-# (SDL2_MIXER.dll, libsdl2_MIXER.so, SDL2_MIXER.framework, etc).
-# Set SDL2_MIXER_LIBRARY_TEMP to point to your SDL2 library, and configure again.
-# Similarly, if you see an empty SDL2MAIN_LIBRARY, you should set this value
-# as appropriate. These values are used to generate the final SDL2_MIXER_LIBRARY
-# variable, but when these values are unset, SDL2_MIXER_LIBRARY does not get created.
+# $SDLDIR is an environment variable that would
+# correspond to the ./configure --prefix=$SDLDIR
+# used in building SDL.
 #
-# $SDL2 is an environment variable that would
-# correspond to the ./configure --prefix=$SDL2
-# used in building SDL2.
-# l.e.galup 9-20-02
-#
-# Modified by Eric Wing.
-# Added code to assist with automated building by using environmental variables
-# and providing a more controlled/consistent search behavior.
-# Added new modifications to recognize OS X frameworks and
+# Created by Eric Wing. This was influenced by the FindSDL.cmake
+# module, but with modifications to recognize OS X frameworks and
 # additional Unix paths (FreeBSD, etc).
-# Also corrected the header search path to follow "proper" SDL2 guidelines.
-# Added a search for SDL2main which is needed by some platforms.
-# Added a search for threads which is needed by some platforms.
-# Added needed compile switches for MinGW.
-#
-# On OSX, this will prefer the Framework version (if found) over others.
-# People will have to manually change the cache values of
-# SDL2_MIXER_LIBRARY to override this selection or set the CMake environment
-# CMAKE_INCLUDE_PATH to modify the search paths.
-#
-# Note that the header path has changed from SDL2/SDL.h to just SDL.h
-# This needed to change because "proper" SDL2 convention
-# is #include "SDL.h", not <SDL2/SDL.h>. This is done for portability
-# reasons because not all systems place things in SDL2/ (see FreeBSD).
-#
-# Ported by Johnny Patterson. This is a literal port for SDL2 of the FindSDL.cmake
-# module with the minor edit of changing "SDL" to "SDL2" where necessary. This
-# was not created for redistribution, and exists temporarily pending official
-# SDL2 CMake modules.
-#
-# Note that on windows this will only search for the 32bit libraries, to search
-# for 64bit change x86/i686-w64 to x64/x86_64-w64
 
 #=============================================================================
-# Copyright 2003-2009 Kitware, Inc.
+# Copyright 2005-2009 Kitware, Inc.
 #
-# CMake - Cross Platform Makefile Generator
-# Copyright 2000-2014 Kitware, Inc.
-# Copyright 2000-2011 Insight Software Consortium
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#
-# * Redistributions in binary form must reproduce the above copyright
-# notice, this list of conditions and the following disclaimer in the
-# documentation and/or other materials provided with the distribution.
-#
-# * Neither the names of Kitware, Inc., the Insight Software Consortium,
-# nor the names of their contributors may be used to endorse or promote
-# products derived from this software without specific prior written
-# permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Distributed under the OSI-approved BSD License (the "License");
+# see accompanying file Copyright.txt for details.
 #
 # This software is distributed WITHOUT ANY WARRANTY; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the License for more information.
 #=============================================================================
-# (To distribute this file outside of CMake, substitute the full
-# License text for the above reference.)
+# (To distributed this file outside of CMake, substitute the full
+#  License text for the above reference.)
 
-# Lookup the 64 bit libs on x64
-IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    FIND_LIBRARY(SDL2_MIXER_LIBRARY_TEMP
-            NAMES SDL2_mixer
-            HINTS
-            ${SDL2}
-            $ENV{SDL2}
-            $ENV{SDL2_MIXER}
-            PATH_SUFFIXES lib64 lib
-            lib/x64
-            x86_64-w64-mingw32/lib
-            PATHS
-            /sw
-            /opt/local
-            /opt/csw
-            /opt
-            ${PROJECT_SOURCE_DIR}/../libs
-            )
-    # On 32bit build find the 32bit libs
-ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    FIND_LIBRARY(SDL2_MIXER_LIBRARY_TEMP
-            NAMES SDL2_mixer
-            HINTS
-            ${SDL2}
-            $ENV{SDL2}
-            $ENV{SDL2_MIXER}
-            PATH_SUFFIXES lib
-            lib/x86
-            i686-w64-mingw32/lib
-            PATHS
-            /sw
-            /opt/local
-            /opt/csw
-            /opt
-            ${PROJECT_SOURCE_DIR}/../libs
-            )
-ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
+FIND_PATH(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
+        HINTS
+        $ENV{SDL2_MIXER_DIR}
+        $ENV{SDL2_DIR}
+        PATH_SUFFIXES include
+        PATHS
+        ~/Library/Frameworks
+        /Library/Frameworks
+        /usr/local/include/SDL2
+        /usr/include/SDL2
+        /sw/include/SDL2 # Fink
+        /opt/local/include/SDL2 # DarwinPorts
+        /opt/csw/include/SDL2 # Blastwave
+        /opt/include/SDL2
+        )
+
+FIND_LIBRARY(SDL2_MIXER_LIBRARY
+        NAMES SDL2_mixer
+        HINTS
+        $ENV{SDL2_MIXER_DIR}
+        $ENV{SDL2_DIR}
+        PATH_SUFFIXES lib64 lib
+        PATHS
+        ~/Library/Frameworks
+        /Library/Frameworks
+        /usr/local
+        /usr
+        /sw
+        /opt/local
+        /opt/csw
+        /opt
+        )
 
 SET(SDL2_MIXER_FOUND "NO")
-IF(SDL2_MIXER_LIBRARY_TEMP)
-    # Set the final string here so the GUI reflects the final state.
-    SET(SDL2_MIXER_LIBRARY ${SDL2_MIXER_LIBRARY_TEMP} CACHE STRING "Where the SDL2_MIXER Library can be found")
-    # Set the temp variable to INTERNAL so it is not seen in the CMake GUI
-    SET(SDL2_MIXER_LIBRARY_TEMP "${SDL2_MIXER_LIBRARY_TEMP}" CACHE INTERNAL "")
-    SET(SDL2_MIXER_FOUND "YES")
-ENDIF(SDL2_MIXER_LIBRARY_TEMP)
-
-INCLUDE(FindPackageHandleStandardArgs)
-
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2_MIXER REQUIRED_VARS SDL2_MIXER_LIBRARY)
+IF(SDL2_MIXER_LIBRARY AND SDL2_MIXER_INCLUDE_DIR)
+    SET(SDL2MIXER_FOUND "YES")
+ENDIF(SDL2_MIXER_LIBRARY AND SDL2_MIXER_INCLUDE_DIR)
 

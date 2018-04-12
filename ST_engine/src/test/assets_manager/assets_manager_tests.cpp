@@ -56,7 +56,7 @@ TEST_F(asset_manager_test, loadWAV_nonExistant) {
     test_mngr.initialize(&msg_bus, nullptr);
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("nothing.wav")));
     update_task(&test_mngr);
-    EXPECT_EQ(nullptr, get_assets().chunks[hash_f("nothing.png")]);
+    EXPECT_EQ(nullptr, get_assets().chunks.get(hash_f("nothing.wav")));
     test_mngr.close();
 }
 
@@ -65,7 +65,7 @@ TEST_F(asset_manager_test, loadWAV) {
     msg_bus.send_msg(make_msg(LOAD_ASSET, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_sound.wav")));
     update_task(&test_mngr);
     Mix_Chunk* expected_chunk = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound.wav");
-    Mix_Chunk* result_chunk = get_assets().chunks[hash_f("test_sound.wav")];
+    Mix_Chunk* result_chunk = get_assets().chunks.get(hash_f("test_sound.wav"));
     ASSERT_EQ(true, static_cast<bool>(expected_chunk));
     ASSERT_EQ(true, static_cast<bool>(result_chunk));
     ASSERT_EQ(expected_chunk->alen, result_chunk->alen);
@@ -142,7 +142,7 @@ TEST_F(asset_manager_test, loadBinary_WAV) {
     msg_bus.send_msg(make_msg(LOAD_BINARY, make_data<std::string>("../../ST_engine/src/test/assets_manager/test_binary_wav.bin")));
     update_task(&test_mngr);
     Mix_Chunk* expected_chunk = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound.wav");
-    Mix_Chunk* result_chunk = get_assets().chunks[hash_f("test_sound.wav")];
+    Mix_Chunk* result_chunk = get_assets().chunks.get(hash_f("test_sound.wav"));
     ASSERT_EQ(true, static_cast<bool>(expected_chunk));
     ASSERT_EQ(true, static_cast<bool>(result_chunk));
     ASSERT_EQ(expected_chunk->alen, result_chunk->alen);
@@ -179,7 +179,7 @@ TEST_F(asset_manager_test, loadBinary_complex) {
 
     //Test sound_1
     Mix_Chunk* expected_chunk_1 = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound_1.wav");
-    Mix_Chunk* result_chunk_1 = get_assets().chunks[hash_f("test_sound_1.wav")];
+    Mix_Chunk* result_chunk_1 = get_assets().chunks.get(hash_f("test_sound_1.wav"));
     ASSERT_EQ(true, static_cast<bool>(expected_chunk_1));
     ASSERT_EQ(true, static_cast<bool>(result_chunk_1));
     ASSERT_EQ(expected_chunk_1->alen, result_chunk_1->alen);
@@ -189,7 +189,7 @@ TEST_F(asset_manager_test, loadBinary_complex) {
 
     //Test sound_2
     Mix_Chunk* expected_chunk_2 = Mix_LoadWAV("../../ST_engine/src/test/assets_manager/test_sound_2.wav");
-    Mix_Chunk* result_chunk_2 = get_assets().chunks[hash_f("test_sound_2.wav")];
+    Mix_Chunk* result_chunk_2 = get_assets().chunks.get(hash_f("test_sound_2.wav"));
     ASSERT_EQ(true, static_cast<bool>(expected_chunk_2));
     ASSERT_EQ(true, static_cast<bool>(result_chunk_2));
     ASSERT_EQ(expected_chunk_2->alen, result_chunk_2->alen);
