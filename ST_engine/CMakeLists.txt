@@ -106,6 +106,8 @@ target_link_libraries(ST_engine
         ${OPENGL_LIBRARIES}
        )
 
+
+
 add_executable(asset_manager_test
         src/main/assets_manager/assets.hpp
         src/main/assets_manager/assets_manager.cpp
@@ -149,6 +151,5 @@ set(ALL_TESTS asset_manager_test)
 
 add_dependencies(ST_engine ${ALL_TESTS})
 
-add_custom_command(TARGET ST_engine
-        POST_BUILD
-        COMMAND ${ALL_TESTS})
+set_target_properties( ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
+set_target_properties( asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager)

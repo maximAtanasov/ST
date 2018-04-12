@@ -23,13 +23,13 @@ sudo cmake CMakeLists.txt
 sudo make
 sudo cp *.a /usr/lib
 
-If you are on linux you can use your favorite IDE and open the folder as a CMake project (CLion, QtCreator, KDevelop, NetBeans, Eclipse with extensions, etc.) and run the ST_engine target (note that the working directory of the ST_engine executable must be the gamedata folder) or you can run the following commands in your terminal while in the root directory of the project: 
+If you are on linux you can use your favorite IDE and open the folder as a CMake project
+(CLion, QtCreator, KDevelop, NetBeans, Eclipse with extensions, etc.) and run the ST_engine target or you can run the following commands in the root of the project:
 
-./cmakew.sh
+cmake CMakeLists.txt
 make ST_engine
-cd ST_engine/gamedata && ../ST_engine
-
-This will automatically download all needed dependencies (a cmake binary is also included).
+cd ST_engine/gamedata
+./ST_engine
 
 New changes:
 
