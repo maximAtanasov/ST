@@ -15,12 +15,12 @@ class physics_manager{
         int friction = 0;
         int level_floor = 0;
 		bool physics_paused = false;
-        std::vector<entity>* entities{};
+        std::vector<ST::entity>* entities{};
 
 
-        int check_collision(unsigned int id, std::vector<entity>* entities);
-        int entity_set_x(int x, unsigned int ID, std::vector<entity>* entities);
-        int entity_set_y(int y, unsigned int ID, std::vector<entity>* entities);
+        int check_collision(unsigned int id, std::vector<ST::entity>* entities);
+        int entity_set_x(int x, unsigned int ID, std::vector<ST::entity>* entities);
+        int entity_set_y(int y, unsigned int ID, std::vector<ST::entity>* entities);
 
 		void process_horizontal();
 		void process_vertical();
@@ -29,13 +29,13 @@ class physics_manager{
     public:
         physics_manager() = default;
         int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
-        void update(level_data* data);
+        void update(ST::level_data* data);
         void close();
 };
 
 //INLINED METHODS
 
-inline void physics_manager::update(level_data* data){
+inline void physics_manager::update(ST::level_data* data){
 	handle_messages();
 	if(physics_paused){
 		return;

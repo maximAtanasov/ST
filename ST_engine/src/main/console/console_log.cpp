@@ -1,7 +1,7 @@
 #include <console/console_log.hpp>
 
 
-console_log::console_log(log_type type, const std::string& text) {
+ST::console_log::console_log(log_type type, const std::string& text) {
     if(type == log_type ::ERROR){
         color = {255, 0 ,0 , 255};
     }else if(type == log_type::SUCCESS){

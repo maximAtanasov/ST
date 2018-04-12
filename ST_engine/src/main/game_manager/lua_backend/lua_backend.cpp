@@ -397,7 +397,7 @@ extern "C" int createLightLua(lua_State* L){
     auto radius = static_cast<Uint16>(lua_tointeger(L, 3));
     auto intensity = static_cast<Uint16>(lua_tointeger(L, 4));
     auto brightness = static_cast<Uint16>(lua_tointeger(L, 5));
-    light tempLight = light(origin_x, origin_y, radius, intensity, brightness);
+    ST::light tempLight = ST::light(origin_x, origin_y, radius, intensity, brightness);
     gGame_managerLua->get_level_data()->lights.push_back(tempLight);
     return 0;
 }
@@ -431,7 +431,7 @@ extern "C" int createTextObjectLua(lua_State* L){
     auto font = static_cast<std::string>(lua_tostring(L, 5));
     auto size = static_cast<int>(lua_tointeger(L, 6));
     SDL_Color temp_color = {255,255,255,255};
-    text temp = text(ID, x, y, temp_color, text_string, font, size);
+    ST::text temp = ST::text(ID, x, y, temp_color, text_string, font, size);
     gGame_managerLua->get_level_data()->text_objects.push_back(temp);
     return 0;
 }
@@ -496,7 +496,7 @@ extern "C" int setTextObjectVisibleLua(lua_State* L){
 
 extern "C" int createEntityLua(lua_State* L){
     auto ID = static_cast<unsigned int>(lua_tointeger(L, 1));
-    gGame_managerLua->get_level_data()->entities.emplace_back(entity(ID));
+    gGame_managerLua->get_level_data()->entities.emplace_back(ST::entity(ID));
     return 0;
 }
 
@@ -620,7 +620,7 @@ extern "C" int setAffectedByPhysicsLua(lua_State* L){
 extern "C" int entityCollidesLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto id2 = static_cast<unsigned long>(lua_tointeger(L, 2));
-    level_data* temp = gGame_managerLua->get_level_data();
+    ST::level_data* temp = gGame_managerLua->get_level_data();
     if(temp->entities.at(id).is_active()){
         lua_pushboolean(L,temp->entities.at(id).collides(temp->entities.at(id2)));
     }
@@ -921,7 +921,7 @@ extern "C" int showCollisionsLua(lua_State* L){
 extern "C" int logLua(lua_State* L){
     auto type = static_cast<Uint8>(lua_tointeger(L, 1));
     auto arg = static_cast<std::string>(lua_tostring(L, 2));
-    gMessage_busLua->send_msg(make_msg(CONSOLE_WRITE, make_data<console_log>(console_log((log_type)type, arg))));
+    gMessage_busLua->send_msg(make_msg(CONSOLE_WRITE, make_data<ST::console_log>(ST::console_log((log_type)type, arg))));
     return 0;
 }
 

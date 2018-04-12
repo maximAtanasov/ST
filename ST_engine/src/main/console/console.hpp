@@ -12,7 +12,7 @@ class console{
         void toggle();
         void show();
         void hide();
-        void write(console_log arg);
+        void write(ST::console_log arg);
         void handle_messages();
 
         Uint8 log_level = 0x00;
@@ -23,7 +23,7 @@ class console{
         SDL_Color color_text{};
         subscriber* msg_sub{};
         bool shown = false;
-        std::vector<console_log> entries;
+        std::vector<ST::console_log> entries;
         int pos = 0;
         int font_size = 0;
         int scroll_offset = 0;

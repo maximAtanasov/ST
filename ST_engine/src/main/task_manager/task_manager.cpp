@@ -3,7 +3,7 @@
 
 int task_manager::task_thread(void* arg){
 	auto self = static_cast<task_manager*>(arg);
-	task* work;
+	ST::task* work;
 	while(SDL_AtomicGet(&self->run_threads) == 1){
         SDL_SemWait(self->work_sem);
 		if(self->task_queue.try_dequeue(work)){ //get a function pointer and data
@@ -13,7 +13,7 @@ int task_manager::task_thread(void* arg){
     return 0;
 }
 
-void task_manager::do_work(task* work){
+void task_manager::do_work(ST::task* work){
     if(work->dependency != nullptr){ //wait for dependency to finish
         SDL_SemWait(work->dependency);
         SDL_DestroySemaphore(work->dependency);
@@ -65,7 +65,7 @@ void task_manager::close(){
     }
 
     //finish running any remaining tasks
-	task* new_task;
+	ST::task* new_task;
 	while(task_queue.try_dequeue(new_task)){ //get a function pointer and data
         SDL_DestroySemaphore(new_task->lock);
 		delete new_task;
@@ -75,7 +75,7 @@ void task_manager::close(){
 
 //TODO: Task allocator
 
-task_id task_manager::start_task(task* arg){
+task_id task_manager::start_task(ST::task* arg){
     //Aparrently a bit cheaper to create a new semaphore instead of reusing old ones
     //This may depend on the platform (OS implementation of Semaphores)
     SDL_semaphore *lock = SDL_CreateSemaphore(0);
@@ -85,7 +85,7 @@ task_id task_manager::start_task(task* arg){
     return lock;
 }
 
-void task_manager::start_task_lockfree(task* arg){
+void task_manager::start_task_lockfree(ST::task* arg){
     arg->set_lock(nullptr);
     task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
@@ -94,7 +94,7 @@ void task_manager::start_task_lockfree(task* arg){
 void task_manager::wait_for_task(task_id id){
     if(id != nullptr) {
         while(SDL_SemTryWait(id) != 0) {
-            task* work;
+            ST::task* work;
             if(SDL_AtomicGet(&run_threads) == 1){
                 if(task_queue.try_dequeue(work)){ //get a function pointer and data
                     do_work(work);

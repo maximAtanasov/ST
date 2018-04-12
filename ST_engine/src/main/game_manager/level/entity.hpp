@@ -3,14 +3,17 @@
 
 #include <defs.hpp>
 
-struct collision_data{
-    int left;
-    int right;
-    int top;
-    int bottom;
-};
+namespace ST {
 
-class entity{
+    class entity {
+
+        struct collision_data {
+            int left;
+            int right;
+            int top;
+            int bottom;
+        };
+
     private:
         //general
 
@@ -49,166 +52,201 @@ class entity{
     public:
         //general
         explicit entity(unsigned int);
-		void set_active(bool);
-		bool is_active();
+
+        void set_active(bool);
+
+        bool is_active();
+
         bool is_static();
+
         void set_x(int);
+
         void set_y(int);
+
         int get_x();
+
         int get_y();
 
         Uint64 get_ID();
+
         void set_static(bool);
+
         void set_velocity_x(int);
+
         void set_velocity_y(int);
+
         int get_velocity_x();
+
         int get_velocity_y();
 
         //texture
         int get_tex_w();
+
         int get_tex_h();
+
         void set_tex_w(int);
+
         void set_tex_h(int);
+
         void set_visible(bool);
+
         bool is_visible();
+
         size_t get_texture();
+
         void set_texture(std::string);
 
         //physics
         int get_col_x();
+
         int get_col_y();
+
         int get_col_y_offset();
+
         int get_col_x_offset();
+
         bool collides(entity);
+
         void set_collision_box(int, int, int, int);
+
         void update_collision_box(int, int);
+
         void set_affected_by_physics(bool);
+
         bool is_affected_by_physics();
+
         int get_mass();
+
         void set_mass(int);
 
         //animation
         void set_animation_num(int);
+
         void set_sprite_num(int);
+
         void set_animation(int);
+
         int get_sprite_num();
+
         int get_animation();
+
         int get_animation_num();
 
 
-};
+    };
+}
 
 //INLINED METHODS
 
 //GENERAL FUNCTIONS//
-inline Uint64 entity::get_ID(){
+inline Uint64 ST::entity::get_ID(){
     return ID;
 }
 
-inline void entity::set_active(bool arg){
+inline void ST::entity::set_active(bool arg){
     active = arg;
 }
 
-inline bool entity::is_active(){
+inline bool ST::entity::is_active(){
     return active;
 }
 
-inline int entity::get_x(){
+inline int ST::entity::get_x(){
     return x;
 }
 
-inline int entity::get_y(){
+inline int ST::entity::get_y(){
     return y;
 }
 
-inline void entity::set_x(int X){
+inline void ST::entity::set_x(int X){
     x = X;
     update_collision_box(x, y);
 }
 
-inline void entity::set_y(int Y){
+inline void ST::entity::set_y(int Y){
     y = Y;
     update_collision_box(x, y);
 }
 
-inline void entity::set_static(bool arg){
+inline void ST::entity::set_static(bool arg){
     static_ = arg;
 }
 
-inline bool entity::is_static(){
+inline bool ST::entity::is_static(){
     return static_;
 }
 
-inline void entity::set_velocity_x(int arg){
+inline void ST::entity::set_velocity_x(int arg){
     velocity_x = arg;
 }
 
-inline void entity::set_velocity_y(int arg){
+inline void ST::entity::set_velocity_y(int arg){
     velocity_y = arg;
 }
 
-inline int entity::get_velocity_x(){
+inline int ST::entity::get_velocity_x(){
     return velocity_x;
 }
 
-inline int entity::get_velocity_y(){
+inline int ST::entity::get_velocity_y(){
     return velocity_y;
 }
 
 //TEXTURE FUNCTIONS//
 
-inline int entity::get_tex_w(){
+inline int ST::entity::get_tex_w(){
     return tex_w;
 }
 
-inline int entity::get_tex_h(){
+inline int ST::entity::get_tex_h(){
     return tex_h;
 }
 
-inline void entity::set_tex_w(int width){
+inline void ST::entity::set_tex_w(int width){
     tex_w = width;
 }
 
-inline void entity::set_tex_h(int height){
+inline void ST::entity::set_tex_h(int height){
     tex_h = height;
 }
 
-inline size_t entity::get_texture(){
+inline size_t ST::entity::get_texture(){
     return texture;
 }
 
-inline void entity::set_visible(bool arg){
+inline void ST::entity::set_visible(bool arg){
     visibility = arg;
 }
 
-inline void entity::set_texture(std::string arg){
+inline void ST::entity::set_texture(std::string arg){
     std::hash<std::string> hash_f;
     texture = hash_f(arg);
 }
 
-inline bool entity::is_visible(){
+inline bool ST::entity::is_visible(){
     return visibility;
 }
 
 //PHYSICS FUNTIONS//
 
-inline int entity::get_col_x(){
+inline int ST::entity::get_col_x(){
     return col_x;
 }
 
-inline int entity::get_col_y(){
+inline int ST::entity::get_col_y(){
     return col_y;
 }
 
-inline int entity::get_col_x_offset(){
+inline int ST::entity::get_col_x_offset(){
     return offset_x;
 }
 
-inline int entity::get_col_y_offset(){
+inline int ST::entity::get_col_y_offset(){
     return offset_y;
 }
 
-inline void entity::set_collision_box(int offsetX, int offsetY, int X, int Y){
+inline void ST::entity::set_collision_box(int offsetX, int offsetY, int X, int Y){
     if(X != 0 && Y != 0){
         col_x = X - 1;
         col_y = -Y + 1;
@@ -222,57 +260,57 @@ inline void entity::set_collision_box(int offsetX, int offsetY, int X, int Y){
     update_collision_box(x, y);
 }
 
-inline void entity::update_collision_box(int x, int y){
+inline void ST::entity::update_collision_box(int x, int y){
     collision.left = x + offset_x;
     collision.right = x + col_x + offset_x;
     collision.top = y + col_y + offset_y;
     collision.bottom = y + offset_y;
 }
 
-inline void entity::set_affected_by_physics(bool arg){
+inline void ST::entity::set_affected_by_physics(bool arg){
     affected_by_physics = arg;
 }
 
-inline bool entity::is_affected_by_physics(){
+inline bool ST::entity::is_affected_by_physics(){
     return affected_by_physics;
 }
 
-inline bool entity::collides(entity other){
+inline bool ST::entity::collides(entity other){
     return !((collision.bottom < other.collision.top) || (collision.top > other.collision.bottom)
           || (collision.left > other.collision.right) || (collision.right < other.collision.left));
 }
 
-inline void entity::set_mass(int arg){
+inline void ST::entity::set_mass(int arg){
     mass = arg;
 }
 
-inline int entity::get_mass(){
+inline int ST::entity::get_mass(){
     return mass;
 }
 
 //ANIMATION FUNCTIONS//
 
-inline void entity::set_animation(int arg){
+inline void ST::entity::set_animation(int arg){
     animation = arg;
 }
 
-inline int entity::get_animation(){
+inline int ST::entity::get_animation(){
     return animation;
 }
 
-inline void entity::set_animation_num(int arg){
+inline void ST::entity::set_animation_num(int arg){
     animation_num = arg;
 }
 
-inline int entity::get_animation_num(){
+inline int ST::entity::get_animation_num(){
     return animation_num;
 }
 
-inline void entity::set_sprite_num(int arg){
+inline void ST::entity::set_sprite_num(int arg){
     sprite_num = arg;
 }
 
-inline int entity::get_sprite_num(){
+inline int ST::entity::get_sprite_num(){
     return sprite_num;
 }
 

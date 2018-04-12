@@ -43,15 +43,14 @@ void drawing_manager::process_lights_task(void *arg){
     self->process_lights(self->lights_arg);
 }
 
-void drawing_manager::update(level data, double fps, console* cnsl){
-	level_data* temp = data.get_data();
+void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
 
 	Camera = temp->Camera;
 	handle_messages();
     lights_arg = &temp->lights;
 
     //start a task to pre-process lighting on a separate thread
-    task_id id = gTask_manager->start_task(new task(process_lights_task, this, nullptr, -1));
+    task_id id = gTask_manager->start_task(new ST::task(process_lights_task, this, nullptr, -1));
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
 	gRenderer->clear_screen();
@@ -79,7 +78,7 @@ void drawing_manager::update(level data, double fps, console* cnsl){
 
 
 //TODO: Finish it lol
-void drawing_manager::draw_text_objects(std::vector<text>* objects) {
+void drawing_manager::draw_text_objects(std::vector<ST::text>* objects) {
     for(auto i : *objects) {
         if (i.is_visible()) {
             gRenderer->draw_text(i.get_font(), i.get_text_string(), i.get_x(), i.get_y() - i.get_font_size(), i.get_color(),
@@ -113,7 +112,7 @@ void drawing_manager::draw_console(console* cnsl){
     }
 }
 
-void drawing_manager::process_lights(std::vector<light>* lights){
+void drawing_manager::process_lights(std::vector<ST::light>* lights){
     #ifdef __DEBUG
     if(!lighting_enabled){
         return;
@@ -314,7 +313,7 @@ void drawing_manager::set_darkness(Uint8 arg){
     }
 }
 
-void drawing_manager::draw_entities(std::vector<entity>* entities){
+void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
     for(auto& i : *entities){
         if(is_onscreen(&i)){
             if(i.get_animation_num() == 0){
@@ -337,7 +336,7 @@ void drawing_manager::draw_entities(std::vector<entity>* entities){
     }
 }
 
-bool drawing_manager::is_onscreen(entity* i){
+bool drawing_manager::is_onscreen(ST::entity* i){
     if(!i->is_visible())
         return false;
     if(i->is_static())
@@ -346,7 +345,7 @@ bool drawing_manager::is_onscreen(entity* i){
            && (*i).get_y()-Camera.y  > 0 && (*i).get_y()-Camera.y - (*i).get_tex_h() <= w_height;
 }
 
-void drawing_manager::draw_collisions(std::vector<entity>* entities){
+void drawing_manager::draw_collisions(std::vector<ST::entity>* entities){
     for(auto& i : *entities)
         if(is_onscreen(&i)){
             int Xoffset, Yoffset;
@@ -368,7 +367,7 @@ void drawing_manager::draw_collisions(std::vector<entity>* entities){
         }
 }
 
-void drawing_manager::draw_coordinates(std::vector<entity>* entities){
+void drawing_manager::draw_coordinates(std::vector<ST::entity>* entities){
     for(auto& i : *entities) {
         if (is_onscreen(&i)) {
             if (i.is_affected_by_physics()) {

@@ -53,6 +53,7 @@ add_executable(ST_engine
         src/main/input_manager/input_manager.hpp
         src/main/game_manager/level/level.cpp
         src/main/game_manager/level/level.hpp
+        src/main/game_manager/level/level_data.hpp
         src/main/game_manager/level/light.cpp
         src/main/game_manager/level/light.hpp
         src/main/main/main.cpp

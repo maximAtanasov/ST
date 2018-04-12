@@ -90,7 +90,7 @@ void physics_manager::handle_messages(){
     }
 }
 
-int physics_manager::entity_set_x(int X, unsigned int ID, std::vector<entity>* entities){
+int physics_manager::entity_set_x(int X, unsigned int ID, std::vector<ST::entity>* entities){
     int currentX = entities->at(ID).get_x();
     entities->at(ID).set_x(X);
     if(entities->at(ID).is_affected_by_physics())
@@ -101,7 +101,7 @@ int physics_manager::entity_set_x(int X, unsigned int ID, std::vector<entity>* e
     return 1;
 }
 
-int physics_manager::entity_set_y(int Y, unsigned int ID, std::vector<entity>* entities){
+int physics_manager::entity_set_y(int Y, unsigned int ID, std::vector<ST::entity>* entities){
     int currentY = entities->at(ID).get_y();
     entities->at(ID).set_y(Y);
     if(entities->at(ID).is_affected_by_physics()){
@@ -114,9 +114,9 @@ int physics_manager::entity_set_y(int Y, unsigned int ID, std::vector<entity>* e
 }
 
 
-int physics_manager::check_collision(unsigned int ID, std::vector<entity>* entities){
+int physics_manager::check_collision(unsigned int ID, std::vector<ST::entity>* entities){
     for(unsigned int i = 0; i < entities->size(); i++){
-        entity* temp = &entities->at(i);
+        ST::entity* temp = &entities->at(i);
         if(temp->is_affected_by_physics()){
             if(ID == i){
                 continue;

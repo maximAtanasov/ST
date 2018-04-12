@@ -47,7 +47,7 @@ class audio_manager{
 
 inline void audio_manager::update(){
         //start a task that will handle messages (play audio and such)
-        gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
+        gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr, -1));
 }
 
 inline void audio_manager::set_volume(Uint8 arg) {

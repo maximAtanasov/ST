@@ -30,7 +30,7 @@ void console::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == CONSOLE_WRITE){
-            auto log = (console_log*)temp->get_data();
+            auto log = (ST::console_log*)temp->get_data();
             if(log_level == 0x01) {
                 if (log->type == log_type::ERROR) {
                     write(*log);
@@ -71,7 +71,7 @@ void console::handle_messages(){
         else if(temp->msg_name == KEY_PRESSED){
             auto key_val = (key*)temp->get_data();
             if(*key_val == key::ENTER){
-                write(console_log(log_type ::INFO, composition));
+                write(ST::console_log(log_type ::INFO, composition));
                 if(!composition.empty()){
                     gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data<std::string>(composition)));
                 }
@@ -101,7 +101,7 @@ void console::toggle() {
     }
 }
 
-void console::write(console_log arg){
+void console::write(ST::console_log arg){
     printf("%s\n", arg.text.c_str());
     entries.push_back(arg);
     //remove entries if there are too many

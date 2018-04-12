@@ -4,7 +4,7 @@
 #include <defs.hpp>
 #include <renderers/renderer_sdl/font_cache.hpp>
 #include <assets_manager/assets.hpp>
-#include <game_manager/level/level.hpp>
+#include <game_manager/level/level_data.hpp>
 #include <game_manager/level/light.hpp>
 #include <console/console.hpp>
 #include <message_bus/message_bus.hpp>
@@ -31,7 +31,7 @@ class drawing_manager{
 
 
         //basically the argument passed to process_lights
-        std::vector<light>* lights_arg{};
+        std::vector<ST::light>* lights_arg{};
 
         //Basically the viewport
         ST::camera Camera{};
@@ -41,7 +41,7 @@ class drawing_manager{
         const int w_height = 1080;
 
         //variables for drawing light
-        Uint8 lightmap[1920][1080];
+        Uint8 lightmap[1920][1080]{};
         Uint8 darkness_level = 0;
         int lights_quality = 0;
 		
@@ -51,17 +51,17 @@ class drawing_manager{
         bool lighting_enabled = true;
 
         //Drawing functions
-        void draw_entities(std::vector<entity>*);
-        void draw_collisions(std::vector<entity>*);
-        void draw_coordinates(std::vector<entity>*);
+        void draw_entities(std::vector<ST::entity>*);
+        void draw_collisions(std::vector<ST::entity>*);
+        void draw_coordinates(std::vector<ST::entity>*);
         void draw_lights();
         void draw_fps(double fps);
         void draw_console(console* cnsl);
-        void draw_text_objects(std::vector<text>*);
+        void draw_text_objects(std::vector<ST::text>*);
 
         //Pre-processing
-        void process_lights(std::vector<light>* arg);
-        bool is_onscreen(entity* i);
+        void process_lights(std::vector<ST::light>* arg);
+        bool is_onscreen(ST::entity* i);
 
         //Other functions
         void handle_messages();
@@ -73,7 +73,7 @@ class drawing_manager{
     public:
         drawing_manager() = default; //empty constructor
         int initialize(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
-        void update(level temp, double, console* gConsole);
+        void update(ST::level_data* temp, double, console* gConsole);
         void close();
 };
 

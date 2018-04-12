@@ -129,7 +129,7 @@ void game_manager::load_level(const std::string& level_name){
             return;
         }
     }
-    auto temp = new level(level_name, gMessage_bus);
+    auto temp = new ST::level(level_name, gMessage_bus);
     temp->load();
     levels.push_back(temp);
 

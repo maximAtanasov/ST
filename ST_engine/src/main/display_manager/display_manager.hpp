@@ -35,7 +35,7 @@ class display_manager{
 //INLINED METHODS
 
 inline void display_manager::update(){
-    gTask_manager->start_task_lockfree(new task(update_task, this, nullptr, -1));
+    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr, -1));
 }
 
 #endif

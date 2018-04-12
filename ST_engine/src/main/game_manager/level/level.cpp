@@ -1,22 +1,22 @@
 #include "level.hpp"
 #include <console/log.hpp>
 
-level::level(const std::string& lvl_name, message_bus* msg_bus){
+ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
     name = lvl_name;
     gMessage_bus = msg_bus;
 }
 
-void level::load(){
+void ST::level::load(){
     load_input_conf();
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data<std::string>(temp)));
 }
 
-std::string level::get_name(){
+std::string ST::level::get_name(){
     return name;
 }
 
-level::~level(){
+ST::level::~level(){
     //unload inputConf
     data.actions_Buttons.clear();
 
@@ -26,7 +26,7 @@ level::~level(){
     data.lights.clear();
 }
 
-void level::unload(){
+void ST::level::unload(){
     for(auto i : data.actions_Buttons) {
         gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data<key>(i.second)));
     }
@@ -42,7 +42,7 @@ void level::unload(){
     data.entities.clear();
 }
 
-int level::load_input_conf(){
+int ST::level::load_input_conf(){
     std::ifstream file;
     std::string temp = "levels/" + name;
     temp = temp + "/inputConf.cfg";
@@ -93,7 +93,7 @@ int level::load_input_conf(){
 }
 
 //indexes the keys (for when they are loaded by the level to avoid string comparisons later)
-key level::key_index(std::string arg){
+key ST::level::key_index(std::string arg){
     key index = key::UNKNOWN;
     if(arg == "left"){
         index = key::LEFT;

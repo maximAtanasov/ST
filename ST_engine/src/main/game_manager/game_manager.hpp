@@ -8,9 +8,9 @@
 
 class game_manager{
     private:
-        std::vector<level*> levels{};
+        std::vector<ST::level*> levels{};
         std::string active_level{};
-        level* current_level_pointer{};
+        ST::level* current_level_pointer{};
         subscriber* msg_sub{};
         SDL_atomic_t end_game{};
         lua_backend* gScript_backend{};
@@ -40,7 +40,7 @@ class game_manager{
 
         game_manager() = default;
         std::string get_active_level();
-        level_data* get_level_data();
+        ST::level_data* get_level_data();
         bool key_pressed(size_t arg);
         bool key_held(size_t arg);
         bool key_released(size_t arg);
@@ -50,7 +50,7 @@ class game_manager{
         void update();
         void close();
         bool game_is_running();
-		level get_level();
+        ST::level get_level();
 };
 
 //INLINED METHODS
@@ -74,11 +74,11 @@ inline void game_manager::run_level_loop() {
     gScript_backend->run_global("loop");
 }
 
-inline level_data* game_manager::get_level_data() {
+inline ST::level_data* game_manager::get_level_data() {
     return current_level_pointer->get_data();
 }
 
-inline level game_manager::get_level(){
+inline ST::level game_manager::get_level(){
     return *current_level_pointer;
 }
 
