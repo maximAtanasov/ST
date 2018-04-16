@@ -14,7 +14,6 @@
 class assets_manager{
     friend class asset_manager_test;
 private:
-
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
         subscriber* msg_sub{};
@@ -30,7 +29,7 @@ private:
         static void update_task(void* arg);
 
     public:
-        assets_manager() = default;
+        //assets_manager() = default;
         int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
         void close();
         void update();

@@ -7,23 +7,25 @@
 
 namespace ST {
 
-    template<class T> class map {
-    private:
-        T* values = nullptr;
+    template <class T>
+    class map {
 
-        size_t size = 64;
+        struct key_value{
+            T value;
+            size_t key = 0;
+        };
+
+    private:
+        key_value* values = nullptr;
+
+        size_t size = 0;
         size_t fill_amount = 0;
 
     public:
-        map(){
-            values = static_cast<T*>(malloc(size * sizeof(T)));
-            for(size_t i = 0; i < size; i++){
-                values[i] = nullptr;
-            }
-        }
 
         ~map(){
-            //free(values);
+            free(values);
+            values = nullptr;
         }
 
         size_t get_size() {
@@ -31,28 +33,107 @@ namespace ST {
         }
 
         void reset(){
-            //free(values);
-            size = 64;
+            free(values);
+            values = nullptr;
+            size = 0;
+            fill_amount = 0;
         }
 
-        void add(size_t key, T value){
-            values[ST::pos_mod(key, size)] = value;
-            fill_amount += 1;
-            if(fill_amount > size / 2){
-                values = (T*)realloc(values, (size + size/2)*(sizeof(T)));
-                for(size_t i = size; i < size + size/2; i++){
-                    values[i] = nullptr;
+        void reset(size_t size){
+            this->size = size;
+            free(values);
+            values = nullptr;
+            values = static_cast<key_value*>(malloc(size * sizeof(key_value)));
+        }
+
+        bool exists(size_t key){
+            if(size > 0){
+                size_t result = key % (size-1);
+                if(values[result].key == key){
+                    return true;
+                }else{
+                    size_t counter = 0;
+                    while(values[result].key != key){
+                        result += 1;
+                        if(result == size){
+                            result = 0;
+                        }
+                        ++counter;
+                        if(counter == size){
+                            return false;
+                        }
+                    }
+                    return true;
                 }
-                size += size/2;
+            }else{
+                return false;
             }
         }
 
-        T* get_values(){
-            return values;
+        bool is_empty(){
+            return fill_amount == 0;
+        }
+
+        void add(size_t key, T value){
+            if(size == 0){
+                size = 32;
+                values = static_cast<key_value*>(malloc(size * sizeof(key_value)));
+                for(size_t i = 0; i < size; i++){
+                    values[i] = key_value();
+                }
+            }
+            size_t result = key % (size-1);
+
+            if(values[result].key == 0){
+                values[result].key = key;
+                values[result].value = value;
+            }else{
+                result += 1;
+                while(values[result].key != 0){
+                    result += 1;
+                    if(result == size){
+                        result = 0;
+                    }
+                }
+                values[result].key = key;
+                values[result].value = value;
+            }
+
+            //adjust size if needed
+            ++fill_amount;
+            if(fill_amount > size / 2){
+                auto temp = static_cast<key_value*>(realloc(values, (size * 2)*(sizeof(key_value))));
+                values = temp;
+                for(size_t i = size; i < size*2; i++){
+                    values[i] = key_value();
+                }
+                size = size*2;
+            }
         }
 
         T get(size_t key){
-            return values[ST::pos_mod(key, size)];
+            if(size > 0){
+                size_t result = key % (size-1);
+                if(values[result].key == key){
+                    return values[result].value;
+                }else{
+                    size_t counter = 0;
+                    while(values[result].key != key){
+                        result += 1;
+                        if(result == size){
+                            result = 0;
+                        }
+                        ++counter;
+                        if(counter == size){
+                            return nullptr;
+                        }
+                    }
+                    return values[result].value;
+                }
+            }else{
+                return nullptr;
+            }
+
         }
     };
 

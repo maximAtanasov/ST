@@ -178,6 +178,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     if(temp_surface != nullptr) {
                         assets->surfaces[filename] = temp_surface;
                     }
+                    SDL_RWclose(output);
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == "wav"){
