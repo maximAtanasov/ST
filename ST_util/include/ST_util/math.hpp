@@ -29,7 +29,7 @@ namespace ST {
 
     inline int random_int(int max)
     {
-        static unsigned int seed(std::chrono::system_clock::now().time_since_epoch().count());
+        static long seed(std::chrono::system_clock::now().time_since_epoch().count());
         static std::mt19937 gen(seed);
         std::uniform_int_distribution<int> dis(0, max - 1);
         return dis(gen);

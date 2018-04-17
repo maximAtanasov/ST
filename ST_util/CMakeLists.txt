@@ -22,7 +22,7 @@ enable_testing()
 find_package(GTest REQUIRED)
 
 add_library(ST_util STATIC include/ST_util/map.hpp
-        src/main/math.cpp
+        src/main/util.cpp
         include/ST_util/math.hpp)
 
 add_executable(map_test
