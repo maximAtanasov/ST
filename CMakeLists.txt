@@ -6,7 +6,7 @@
 # E-mail: atanasovmaksim1@gmail.com
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
-project(slavicTales-master)
+project(slavicTales)
 
 add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)

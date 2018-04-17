@@ -7,7 +7,6 @@
  */
 
 #include <cstdio>
-
 #include <test_util.hpp>
 
 void initialize_SDL(){
@@ -15,7 +14,6 @@ void initialize_SDL(){
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
-
     if(IMG_Init(IMG_INIT_PNG) < 0){
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);

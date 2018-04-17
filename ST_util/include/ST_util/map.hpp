@@ -6,8 +6,8 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#ifndef SLAVICTALES_MASTER_MAP_HPP
-#define SLAVICTALES_MASTER_MAP_HPP
+#ifndef SLAVICTALES_MAP_HPP
+#define SLAVICTALES_MAP_HPP
 
 #include <cstdio>
 #include <cstdlib>
@@ -147,4 +147,4 @@ namespace ST {
 
 }
 
-#endif //SLAVICTALES_MASTER_MAP_HPP
+#endif //SLAVICTALES_MAP_HPP
