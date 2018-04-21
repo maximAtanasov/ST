@@ -5,7 +5,6 @@
 #
 # E-mail: atanasovmaksim1@gmail.com
 
-
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(ST_engine)
 
@@ -104,9 +103,9 @@ add_executable(ST_engine
         src/main/message_bus/message_types.hpp)
 
 target_link_libraries(ST_engine
-        ${LUA_LIBRARY}
-        ST_loaders
         ST_util
+        ST_loaders
+        ${LUA_LIBRARY}
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -114,8 +113,6 @@ target_link_libraries(ST_engine
         ${GLEW_LIBRARIES}
         ${OPENGL_LIBRARIES}
        )
-
-
 
 add_executable(asset_manager_test
         src/main/assets_manager/assets.hpp
@@ -131,8 +128,6 @@ add_executable(asset_manager_test
         src/main/console/console_log.hpp
         src/main/console/log.hpp
         src/test/assets_manager/assets_manager_tests.cpp
-        src/test/test_util.cpp
-        src/test/test_util.hpp
         src/main/message_bus/subscriber.cpp
         src/main/message_bus/subscriber.hpp
         src/main/message_bus/message.hpp
@@ -142,8 +137,10 @@ add_executable(asset_manager_test
 
 include_directories(asset_manager_test ../ST_engine/src/test)
 
+
 target_link_libraries(asset_manager_test
         ST_loaders
+        ST_util
         ${GTEST_LIBRARIES}
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -153,12 +150,48 @@ target_link_libraries(asset_manager_test
         ${OPENGL_LIBRARIES}
         ${LUA_LIBRARY})
 
-gtest_add_tests(TARGET asset_manager_test)
+
+add_executable(audio_manager_test
+        src/main/assets_manager/assets.hpp
+        src/main/audio_manager/audio_manager.cpp
+        src/main/audio_manager/audio_manager.hpp
+        src/main/defs.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/task_manager/task.hpp
+        src/main/task_manager/task_manager.cpp
+        src/main/task_manager/task_manager.hpp
+        src/main/console/console_log.cpp
+        src/main/console/console_log.hpp
+        src/main/console/log.hpp
+        src/test/audio_manager/audio_manager_tests.cpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_types.hpp)
+
+target_link_libraries(audio_manager_test
+        ST_loaders
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY}
+        ${GLEW_LIBRARIES}
+        ${OPENGL_LIBRARIES}
+        ${LUA_LIBRARY})
+
+include_directories(audio_manager_test ../ST_engine/src/test)
 
 #Run all our tests on every build
-set(ALL_TESTS asset_manager_test)
+set(ALL_TESTS asset_manager_test audio_manager_test)
+
+gtest_add_tests(TARGET ${ALL_TESTS})
 
 add_dependencies(ST_engine ${ALL_TESTS})
 
-set_target_properties( ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
-set_target_properties( asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager)
+set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
+set_target_properties(asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager)

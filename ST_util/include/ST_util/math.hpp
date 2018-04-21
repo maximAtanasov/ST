@@ -15,7 +15,7 @@
 namespace ST {
 
     //abs functions
-    inline int m_abs(int value) {
+    inline int abs(int value) {
         auto temp = static_cast<unsigned int>(value >> 31);
         value ^= temp;
         value += temp & 1;
@@ -27,14 +27,8 @@ namespace ST {
         return a >= b ? a % b : a;
     }
 
-    inline int random_int(int max)
-    {
-        static long seed(std::chrono::system_clock::now().time_since_epoch().count());
-        static std::mt19937 gen(seed);
-        std::uniform_int_distribution<int> dis(0, max - 1);
-        return dis(gen);
-    }
 
+    int random_int(int max);
 }
 
 #endif //SLAVICTALES_MASTER_MATH_HPP

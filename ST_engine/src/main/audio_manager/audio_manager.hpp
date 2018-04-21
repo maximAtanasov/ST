@@ -16,24 +16,26 @@
 #include <task_manager/task_manager.hpp>
 #include <console/log.hpp>
 
+///This object is responsible for playing sounds and music
 class audio_manager{
+    friend class audio_manager_test;
     private:
 
         int volume = MIX_MAX_VOLUME;
 
-        //subscriber object to receive messages
+        ///subscriber object to receive messages
         subscriber* msg_sub{};
 
-        //External dependencies
+        ///External dependencies
         ST::assets* assets_ptr{}; //-Delivered as a message
         message_bus* gMessage_bus{}; //-Delivered in constructor
         task_manager* gTask_manager{}; //-Delivered in constructor
 
-        //internal update functions
+        ///internal update functions
         void handle_messages();
 
 
-        //Audio control functions
+        ///Audio control functions
         void play_music(size_t arg, int volume, int loops);
         void play_sound(size_t arg, int volume, int loops);
         void mute();
@@ -54,7 +56,7 @@ class audio_manager{
 //INLINED METHODS
 
 inline void audio_manager::update(){
-        //start a task that will handle messages (play audio and such)
+        ///start a task that will handle messages (play audio and such)
         gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr, -1));
 }
 

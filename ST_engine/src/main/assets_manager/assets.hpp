@@ -19,7 +19,7 @@
 
 namespace ST {
 
-    //A container that holds all asset types used in the game
+    ///A container that holds all asset types used in the game
     struct assets {
         std::unordered_map<size_t, SDL_Surface *> surfaces;
         std::unordered_map<std::string, TTF_Font *> fonts;

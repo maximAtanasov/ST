@@ -24,8 +24,7 @@ class physics_manager{
         int level_floor = 0;
 		bool physics_paused = false;
         std::vector<ST::entity>* entities{};
-
-
+        
         int check_collision(unsigned int id, std::vector<ST::entity>* entities);
         int entity_set_x(int x, unsigned int ID, std::vector<ST::entity>* entities);
         int entity_set_y(int y, unsigned int ID, std::vector<ST::entity>* entities);

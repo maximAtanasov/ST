@@ -23,10 +23,6 @@
 #include <ST_util/math.hpp>
 #include <util/atomic_queue/concurrentqueue.h>
 #include <util/atomic_queue/atomicops.h>
-
-//define __DEBUG or __RELEASE to enable or disable certain features
-#define __DEBUG
-
-#define CONSOLE_TOGGLE_KEY '`'
+#include <ST_util/debug_switch.hpp>
 
 #endif

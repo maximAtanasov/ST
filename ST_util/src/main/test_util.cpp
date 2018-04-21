@@ -7,7 +7,10 @@
  */
 
 #include <cstdio>
-#include <test_util.hpp>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 void initialize_SDL(){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {

@@ -11,6 +11,7 @@
 #include <vector>
 #include <sstream>
 #include <ST_loaders/loaders.hpp>
+#include <ST_util/test_util.hpp>
 
 /*
  * A small program that will combine multiple png, wav and ogg files into a single file that can
@@ -18,9 +19,6 @@
  * File format version: v0.5
  * Maxim Atanasov
  */
-
-void initialize_SDL();
-void close_SDL();
 
 int main(int argc, char* argv[]) {
     initialize_SDL();
@@ -47,34 +45,4 @@ int main(int argc, char* argv[]) {
     }
     close_SDL();
     return 0;
-}
-
-void initialize_SDL(){
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-        fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
-        exit(1);
-    }
-
-    if(IMG_Init(IMG_INIT_PNG) < 0){
-        fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
-        exit(1);
-    }
-
-    if(SDL_Init(SDL_INIT_AUDIO) < 0) {
-        fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", SDL_GetError());
-        exit(1);
-    }
-    Mix_Init(MIX_INIT_OGG);
-    if(Mix_OpenAudio(22050,AUDIO_S16SYS,2,640) == -1){
-        fprintf(stderr, "Failiure to initialize audio\n");
-        exit(1);
-    }
-}
-
-void close_SDL(){
-    Mix_CloseAudio();
-    SDL_QuitSubSystem(SDL_INIT_AUDIO);
-    Mix_Quit();
-    IMG_Quit();
-    SDL_Quit();
 }

@@ -38,6 +38,7 @@ int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(TOGGLE_AUDIO, msg_sub);
     gMessage_bus->subscribe(ASSETS, msg_sub);
 	gMessage_bus->subscribe(STOP_ALL_SOUNDS, msg_sub);
+    gMessage_bus->subscribe(SET_VOLUME, msg_sub);
     volume = 100;
     return 0;
 }
@@ -84,6 +85,7 @@ void audio_manager::handle_messages(){
         }else if(temp->msg_name == SET_VOLUME){
             auto arg = (Uint8*)temp->get_data();
             set_volume(*arg);
+            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data<int>(volume)));
         }
         destroy_msg(temp);
         temp = msg_sub->get_next_message();

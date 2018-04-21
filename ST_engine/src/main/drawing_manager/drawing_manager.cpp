@@ -37,7 +37,7 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
 
 	//Variables for lights
 	darkness_level = 0;
-    lights_quality = 1;
+    lights_quality = 3;
 
 	//Create and initialize the rendering object
 	gRenderer = new renderer_sdl();
@@ -65,14 +65,19 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
 	gRenderer->draw_background(temp->background);
 	draw_entities(&temp->entities);
 
-	gRenderer->draw_overlay(temp->overlay, ST::pos_mod(ticks, temp->overlay_spriteNum), temp->overlay_spriteNum);
+	gRenderer->draw_overlay(temp->overlay, ticks % temp->overlay_spriteNum, temp->overlay_spriteNum);
     draw_text_objects(&temp->text_objects);
 
     //draw the lights when we are sure they are processed
     gTask_manager->wait_for_task(id);
-    gRenderer->draw_lights(lightmap);
+
+    //alternative method for drawing lights
+    //gRenderer->draw_lights(lightmap);
+
+    draw_lights();
 
 
+    //Draw debug info and the console in a debug build
     #ifdef __DEBUG
 	if (collisions_shown) {
 		draw_collisions(&temp->entities);
@@ -81,6 +86,7 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
 	draw_fps(fps);
 	draw_console(cnsl);
     #endif
+
 	gRenderer->present();
 }
 
@@ -281,33 +287,6 @@ void drawing_manager::handle_messages(){
             gRenderer->upload_surfaces(&asset_ptr->surfaces);
             gRenderer->upload_fonts(&asset_ptr->fonts);
         }
-        #ifdef __DEBUG
-        else if(temp->msg_name == RENDERER_SWITCH){
-            /*auto val = *(std::string*)temp->get_data();
-			if(val == "sdl"){
-				delete gRenderer;
-				gRenderer = nullptr;
-				gRenderer = new renderer_sdl();
-				gRenderer->initialize(window, w_width, w_height);
-                log(SUCCESS, "Renderer switched to SDL2");
-			}else if(val == "opengl_legacy"){
-				delete gRenderer;
-				gRenderer = nullptr;
-				gRenderer = new renderer_opengl_immediate();
-				gRenderer->initialize(window, w_width, w_height);
-                log(SUCCESS, "Renderer switched to OpenGL immediate mode");
-			}else if(val == "opengl"){
-				delete gRenderer;
-				gRenderer = new renderer_opengl_retained();
-				gRenderer->initialize(window, w_width, w_height);
-                log(SUCCESS, "Renderer switched to OpenGL 3.3");
-			}else{
-                log(ERROR, "Unknown renderer specified, cannot switch!")
-			}
-			gRenderer->upload_surfaces(&asset_ptr->surfaces);
-            gRenderer->upload_fonts(&asset_ptr->fonts);*/
-        }
-        #endif
         destroy_msg(temp);
         temp = msg_sub->get_next_message();
     }
@@ -335,9 +314,9 @@ void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
             else{
                 int time = ticks >> 7; //ticks/128
                 if(i.is_static()){
-                    gRenderer->draw_sprite(i.get_texture(), i.get_x() , i.get_y(), ST::pos_mod(time, i.get_sprite_num()), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
+                    gRenderer->draw_sprite(i.get_texture(), i.get_x() , i.get_y(), time % i.get_sprite_num(), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
                 }else{
-					gRenderer->draw_sprite(i.get_texture(), i.get_x() - Camera.x, i.get_y() - Camera.y , ST::pos_mod(time, i.get_sprite_num()), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
+					gRenderer->draw_sprite(i.get_texture(), i.get_x() - Camera.x, i.get_y() - Camera.y , time % i.get_sprite_num(), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
 				}
             }
         }

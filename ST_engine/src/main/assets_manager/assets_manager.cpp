@@ -10,7 +10,6 @@
 #include <console/log.hpp>
 #include <assets_manager/assets_manager.hpp>
 
-
 int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     //set external dependencies
     gMessage_bus = msg_bus;

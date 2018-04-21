@@ -18,7 +18,7 @@
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
 
-
+///This object is responsible for loading/unloading assets
 class assets_manager{
     friend class asset_manager_test;
 private:

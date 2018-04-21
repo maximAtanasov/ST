@@ -10,22 +10,21 @@ project(ST_util)
 
 set(CMAKE_CXX_STANDARD 11)
 
-if(UNIX AND NOT APPLE)
-    set(CMAKE_CXX_FLAGS_DEBUG  "${CMAKE_CXX_FLAGS} -Wall -Wextra -g")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra -flto")
-endif()
-
 include_directories(${PROJECT_SOURCE_DIR}/include)
-
 enable_testing()
-
 find_package(GTest REQUIRED)
 
-add_library(ST_util STATIC include/ST_util/map.hpp
+add_library(ST_util STATIC
+        include/ST_util/map.hpp
+        include/ST_util/debug_switch.hpp
+        include/ST_util/test_util.hpp
+        include/ST_util/math.hpp
         src/main/util.cpp
-        include/ST_util/math.hpp)
+        src/main/math.cpp
+        src/main/test_util.cpp)
 
 add_executable(map_test
+        src/main/math.cpp
         src/test/map_test.cpp)
 
 target_link_libraries(map_test

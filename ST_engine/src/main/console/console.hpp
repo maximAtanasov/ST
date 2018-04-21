@@ -15,6 +15,7 @@
 
 
 class console{
+    friend class drawing_manager;
     private:
         void scroll(int scroll_y);
         void toggle();
@@ -25,7 +26,6 @@ class console{
 
         Uint8 log_level = 0x00;
 
-    public:
         SDL_Rect window{};
         SDL_Color color{};
         SDL_Color color_text{};
@@ -40,7 +40,7 @@ class console{
         std::string composition;
 
         message_bus* gMessage_bus{};
-
+public:
         console() = default;
         int initialize(message_bus* msg_bus);
         void set_log_level(log_type arg);

@@ -52,7 +52,7 @@ class drawing_manager{
         Uint8 lightmap[1920][1080]{};
         Uint8 darkness_level = 0;
         int lights_quality = 0;
-		
+
         //debug
         bool collisions_shown = false;
         bool show_fps = true;
