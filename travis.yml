@@ -1,5 +1,7 @@
 language: cpp
 
+sudo: enabled
+
 # compilers to add to build matrix
 compiler:
   - gcc
