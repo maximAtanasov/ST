@@ -8,7 +8,15 @@
 
 #include <game_manager/level/light.hpp>
 
-ST::light::light(int origin_x, int origin_y, Uint16 radius, Uint16 intensity, Uint16 brightness){
+/**
+ * The constructor for a light object.
+ * @param origin_x The X position of the light.
+ * @param origin_y The Y position of the light.
+ * @param radius The radius of the light.
+ * @param intensity The intensity of the light.
+ * @param brightness The brightness of the light.
+ */
+ST::light::light(int origin_x, int origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness){
     this->origin_x = origin_x;
     this->origin_y = origin_y;
     this->radius = radius;

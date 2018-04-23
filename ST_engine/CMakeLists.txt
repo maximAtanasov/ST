@@ -50,10 +50,8 @@ add_executable(ST_engine
         src/main/drawing_manager/drawing_manager.hpp
         src/main/game_manager/level/entity.cpp
         src/main/game_manager/level/entity.hpp
-        src/main/renderers/renderer_sdl/font_cache.cpp
-        src/main/renderers/renderer_sdl/font_cache.hpp
-        src/main/renderers/renderer_opengl_immediate/font_cache_opengl.cpp
-        src/main/renderers/renderer_opengl_immediate/font_cache_opengl.hpp
+        src/main/renderer/renderer_sdl/font_cache.cpp
+        src/main/renderer/renderer_sdl/font_cache.hpp
         src/main/game_manager/game_manager.cpp
         src/main/game_manager/game_manager.hpp
         src/main/input_manager/input_manager.cpp
@@ -70,22 +68,14 @@ add_executable(ST_engine
         src/main/physics_manager/physics_manager.cpp
         src/main/physics_manager/physics_manager.hpp
         src/main/util/atomic_queue/readerwriterqueue.h
-        src/main/renderers/renderer.hpp
-        src/main/renderers/renderer_opengl_retained/renderer_opengl_retained.cpp
-        src/main/renderers/renderer_opengl_retained/renderer_opengl_retained.hpp
-        src/main/renderers/renderer_opengl_immediate/renderer_opengl_immediate.cpp
-        src/main/renderers/renderer_opengl_immediate/renderer_opengl_immediate.hpp
-        src/main/renderers/renderer_sdl/renderer_sdl.cpp
-        src/main/renderers/renderer_sdl/renderer_sdl.hpp
+        src/main/renderer/renderer_sdl/renderer_sdl.cpp
+        src/main/renderer/renderer_sdl/renderer_sdl.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
         src/main/game_manager/level/text.hpp
-        src/main/renderers/renderer_opengl_retained/texture_opengl_retained.hpp
-        src/main/renderers/renderer_opengl_immediate/texture_opengl_immediate.hpp
         src/main/main/timer.cpp
         src/main/main/timer.hpp
-        src/main/renderers/renderer_opengl_retained/vertex.hpp
         src/main/main/fps.cpp
         src/main/main/fps.hpp
         src/main/game_manager/lua_backend/lua_backend.cpp
@@ -186,12 +176,84 @@ target_link_libraries(audio_manager_test
 
 include_directories(audio_manager_test ../ST_engine/src/test)
 
+add_executable(console_test
+        src/main/defs.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/console/console_log.cpp
+        src/main/console/console_log.hpp
+        src/main/console/log.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_types.hpp
+        src/main/console/console.cpp
+        src/main/console/console.hpp
+        src/test/console/console_tests.cpp)
+
+include_directories(console_test ../ST_engine/src/test)
+
+target_link_libraries(console_test
+        ST_loaders
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
+
+add_executable(display_manager_test
+        src/main/defs.hpp
+        src/main/display_manager/display_manager.cpp
+        src/main/display_manager/display_manager.hpp
+        src/test/display_manager/display_manager_tests.cpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/console/console_log.cpp
+        src/main/console/console_log.hpp
+        src/main/console/log.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_types.hpp)
+
+include_directories(display_manager_test ../ST_engine/src/test)
+
+target_link_libraries(display_manager_test
+        ST_loaders
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
+
 #Run all our tests on every build
-set(ALL_TESTS asset_manager_test audio_manager_test)
-
+set(ALL_TESTS asset_manager_test audio_manager_test console_test display_manager_test)
 gtest_add_tests(TARGET ${ALL_TESTS})
-
 add_dependencies(ST_engine ${ALL_TESTS})
-
-set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
 set_target_properties(asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager)
+set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
+
+#This loop will run all of our tests
+foreach(loop_var ${ALL_TESTS} total)
+    #The test for the asset_manager needs to be run in a specific directory
+    if(${loop_var} STREQUAL "asset_manager_test")
+    add_custom_command(
+            TARGET ST_engine
+            POST_BUILD
+            COMMAND ${loop_var}
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager
+    )
+    elseif(NOT ${loop_var} STREQUAL "total")
+    add_custom_command(
+            TARGET ST_engine
+            POST_BUILD
+            COMMAND ${loop_var}
+    )
+    endif()
+endforeach()

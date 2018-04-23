@@ -14,7 +14,23 @@
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
 
+///This object is responsible for managing the window.
+/**
+ * Creates and manages an SDL_Window.
+ *
+ * Messages this subsystem listens to: <br>
+ *
+ * <b>SET_FULLSCREEN</b> - Sets the window to fullscreen or windowed mode.
+ *
+ * Message must contain: a pointer to a <b>bool</b>. <br>
+ *
+ * <b>SET_WINDOW_BRIGHTNESS</b> - Sets the window brightness. Does not currently work.
+ *
+ * Message must contain: a pointer to a <b>float</b>. <br>
+ *
+ */
 class display_manager{
+    friend class display_manager_tests;
     private:
         SDL_Surface* icon{};
         SDL_Window* window{};
@@ -42,6 +58,9 @@ class display_manager{
 
 //INLINED METHODS
 
+/**
+ * Starts an the update_task() method using the task manager.
+ */
 inline void display_manager::update(){
     gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr, -1));
 }

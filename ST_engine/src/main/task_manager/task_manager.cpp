@@ -53,7 +53,7 @@ int task_manager::initialize(message_bus* msg_bus){
         thread_num = 2;
     }
 
-	for (Uint16 i = 0; i < thread_num - 1; i++) {
+	for (uint16_t i = 0; i < thread_num - 1; i++) {
 		task_threads.emplace_back(SDL_CreateThread(this->task_thread, "tskThr", this));
 	}
     return 0;

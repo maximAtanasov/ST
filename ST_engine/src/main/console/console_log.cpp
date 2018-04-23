@@ -8,7 +8,11 @@
 
 #include <console/console_log.hpp>
 
-
+/**
+ * Constructor for the <b>ST::console_log</b> object.
+ * @param type The log type - this can be log_type ::ERROR, log_type::SUCCESS or log_type::INFO.
+ * @param text The text the log should contain.
+ */
 ST::console_log::console_log(log_type type, const std::string& text) {
     if(type == log_type ::ERROR){
         color = {255, 0 ,0 , 255};

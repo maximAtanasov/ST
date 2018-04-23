@@ -11,8 +11,11 @@
 
 #include <console/console_log.hpp>
 
+//A macro that will a send a log message to the console window.
+//Requires the gMessage_bus object to be defined and pointing to the global message bus.
+
 #ifdef __DEBUG
-    #define log(TYPE, MSG) gMessage_bus->send_msg(make_msg(CONSOLE_WRITE, make_data<ST::console_log>(ST::console_log(log_type ::TYPE, MSG))));
+    #define log(TYPE, MSG) gMessage_bus->send_msg(make_msg(CONSOLE_WRITE, make_data<ST::console_log>(ST::console_log(ST::log_type ::TYPE, MSG))));
 #elif defined(__RELEASE)
     #define log(TYPE, MSG)
 #endif

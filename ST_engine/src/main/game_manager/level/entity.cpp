@@ -8,6 +8,10 @@
 
 #include <game_manager/level/entity.hpp>
 
+/**
+ * A very basic constructor for an entity.
+ * @param id A unique ID for the entity.
+ */
 ST::entity::entity(unsigned int id){
     ID = id;
 }

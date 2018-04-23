@@ -31,8 +31,6 @@ class game_manager{
         int mouse_x = 0;
         int mouse_y = 0;
 
-        task_id update_id{};
-
         //methods
         void handle_messages();
         void load_level(const std::string&);
@@ -104,15 +102,15 @@ inline int game_manager::get_mouse_y(){
 
 
 inline bool game_manager::key_pressed(size_t arg){
-    return keys_pressed_data[(Uint8)(get_level_data()->actions_Buttons[arg])];
+    return keys_pressed_data[(uint8_t)(get_level_data()->actions_Buttons[arg])];
 }
 
 inline bool game_manager::key_held(size_t arg){
-    return keys_held_data[(Uint8)get_level_data()->actions_Buttons[arg]];
+    return keys_held_data[(uint8_t)get_level_data()->actions_Buttons[arg]];
 }
 
 inline bool game_manager::key_released(size_t arg){
-    return keys_released_data[(Uint8)get_level_data()->actions_Buttons[arg]];
+    return keys_released_data[(uint8_t)get_level_data()->actions_Buttons[arg]];
 }
 
 

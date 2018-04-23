@@ -12,16 +12,16 @@
 #include <SDL2/SDL.h>
 
 namespace ST {
+    ///Contains the data needed to represent a light source.
     class light {
     public:
         int origin_x;
         int origin_y;
-        Uint16 radius;
-        Uint16 intensity;
-        Uint16 brightness;
-        SDL_Color color{};
+        uint16_t radius;
+        uint16_t intensity;
+        uint16_t brightness;
 
-        light(int origin_x, int origin_y, Uint16 radius, Uint16 intensity, Uint16 brightness);
+        light(int origin_x, int origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
     };
 }
 

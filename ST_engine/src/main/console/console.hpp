@@ -13,9 +13,36 @@
 #include <console/console_log.hpp>
 #include <message_bus/message_bus.hpp>
 
-
+///This object represents the console window.
+/**
+ * Displays all in-game logs and provides an interface to the lua scripting engine. <br>
+ *
+ * Messages this object listens to: <br>
+ *
+ * <b>CONSOLE_WRITE</b> - Writes a log to the console window. <br>
+ *
+ *  Message must contain: a pointer to a <b>ST::console_log</b> object.
+ *
+ * <b>CONSOLE_TOGGLE</b> - Toggles the console window. <br>
+ *
+ * Message must contain: a <b>nullptr</b>
+ *
+ * <b>MOUSE_SCROLL</b> - Scrolls the console window the given amount. <br>
+ *
+ * Message must contain: a pointer to an <b>int</b>.
+ *
+ * <b>KEY_PRESSED</b> - Checks if a key is pressed - only cares about the ENTER key. <br>
+ *
+ * Message must contain: a pointer to an <b>ST::key</b> object.
+ *
+ * <b>TEXT_STREAM</b> - Updates the internal composition given a pointer to a std::string. <br>
+ *
+ * Message must contain: a pointer to a <b>std::string</b>.
+ *
+ */
 class console{
     friend class drawing_manager;
+    friend class console_test;
     private:
         void scroll(int scroll_y);
         void toggle();
@@ -24,9 +51,8 @@ class console{
         void write(ST::console_log arg);
         void handle_messages();
 
-        Uint8 log_level = 0x00;
+        uint8_t log_level = 0x00;
 
-        SDL_Rect window{};
         SDL_Color color{};
         SDL_Color color_text{};
         subscriber* msg_sub{};
@@ -43,7 +69,7 @@ class console{
 public:
         console() = default;
         int initialize(message_bus* msg_bus);
-        void set_log_level(log_type arg);
+        void set_log_level(ST::log_type arg);
         bool is_open();
         void update();
         void close();
@@ -51,6 +77,9 @@ public:
 
 //INLINED METHODS
 
+/**
+ * Consumes messages from the subscriber object.
+ */
 inline void console::update(){
     handle_messages();
 }

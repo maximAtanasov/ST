@@ -15,10 +15,10 @@
 #include <task_manager/task_manager.hpp>
 
 typedef struct game_controls{
-    Uint8* keyboardFramePrev;
+    uint8_t* keyboardFramePrev;
     int mouseClicks[3];
     int mouseClicksFramePrev[3];
-    const Uint8* keyboard;
+    const uint8_t* keyboard;
     int mouseX_prev, mouseY_prev;
     int mouseX, mouseY;
     int mouse_scroll;
@@ -34,16 +34,15 @@ class input_manager{
 		message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
 		subscriber* msg_sub{};
-		std::vector<key> registered_keys;
-        task_id  update_lock{};
+		std::vector<ST::key> registered_keys;
 
         //this is where we save the text stream from our input manager
         std::string composition;
         bool text_input = false;
 
-		bool keypress(key);
-		bool keyheld(key);
-		bool keyrelease(key);
+		bool keypress(ST::key);
+		bool keyheld(ST::key);
+		bool keyrelease(ST::key);
 		void handle_messages();
         void take_input();
         static void update_task(void* mngr);

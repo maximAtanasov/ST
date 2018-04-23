@@ -9,6 +9,10 @@
 #include <display_manager/display_manager.hpp>
 #include <console/log.hpp>
 
+/**
+ * Closes the Display Manager.
+ * Destroys the window and quits SDL.
+ */
 void display_manager::close(){
     delete msg_sub;
     SDL_FreeSurface(icon);
@@ -17,6 +21,12 @@ void display_manager::close(){
     SDL_Quit();
 }
 
+/**
+ * Initializes the window and SDL.
+ * @param msg_bus a pointer to the global message bus
+ * @param tsk_mngr a pointer to the global task manager
+ * @return This function either returns 0 or exits the program with exit code 1.
+ */
 int display_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
@@ -52,11 +62,20 @@ int display_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     return 0;
 }
 
+/**
+ * Performs the update for the display_manager on a task thread.
+ * @param arg pointer to an display_manager (a <b>this</b> pointer basically) as the
+ * function must be static.
+ */
 void display_manager::update_task(void* mngr){
     auto self = (display_manager*)mngr;
     self->handle_messages();
 }
 
+/**
+ * Retrieves messages from the subscriber object and
+ * performs the appropriate actions.
+ */
 void display_manager::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){
@@ -75,11 +94,18 @@ void display_manager::handle_messages(){
     }
 }
 
-//returns a handle to the SDL_Window* (can be used for window management if this is ever to be used with pure OpenGL or Vulkan)
+/**
+ *
+ * @return Returns a handle to the SDL_Window*
+ */
 SDL_Window* display_manager::get_window(){
     return window;
 }
 
+/**
+ * Sets the window to fullscreen or windowed mode
+ * @param arg True for fullscreen or false for windowed.
+ */
 void display_manager::set_fullscreen(bool arg){
     if(arg) {
         SDL_SetWindowFullscreen(window, 1);
@@ -88,6 +114,11 @@ void display_manager::set_fullscreen(bool arg){
     }
 }
 
+/**
+ * This function should set the brightness.
+ * However, it does not function.
+ * @param arg a float indicating the value.
+ */
 void display_manager::set_brightness(float arg) {
     SDL_SetWindowBrightness(this->window, arg);
 }

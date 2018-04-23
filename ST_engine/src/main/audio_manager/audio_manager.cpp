@@ -9,11 +9,23 @@
 #include <audio_manager/audio_manager.hpp>
 #include <console/log.hpp>
 
+/**
+ * Performs the update for the asset_manager on a task thread.
+ * @param arg pointer to an audio_manager (a <b>this</b> pointer basically) as the
+ * function must be static.
+ */
 void audio_manager::update_task(void* arg){
     auto mngr = (audio_manager*)arg;
     mngr->handle_messages();
 }
 
+/**
+ * Initializes the audio subsystem.
+ * Allocates audio channels.
+ * @param msg_bus A pointer to the global message bus.
+ * @param tsk_mngr A pointer to the global task manager.
+ * @return -1 on failure or 0 on success.
+ */
 int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     if(SDL_Init(SDL_INIT_AUDIO) < 0) {
         fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", SDL_GetError());
@@ -39,10 +51,14 @@ int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(ASSETS, msg_sub);
 	gMessage_bus->subscribe(STOP_ALL_SOUNDS, msg_sub);
     gMessage_bus->subscribe(SET_VOLUME, msg_sub);
-    volume = 100;
+    volume = MIX_MAX_VOLUME;
     return 0;
 }
 
+/**
+ * Retrieves messages from the subscriber object and
+ * performs the appropriate actions.
+ */
 void audio_manager::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){
@@ -72,8 +88,10 @@ void audio_manager::handle_messages(){
             if(volume > 0){
                 log(SUCCESS, "Audio OFF");
                 mute();
+                set_volume(0);
             }
             else{
+                set_volume(MIX_MAX_VOLUME);
                 unmute();
                 log(SUCCESS, "Audio ON");
             }
@@ -83,7 +101,7 @@ void audio_manager::handle_messages(){
             auto temp_ptr = (ST::assets**)temp->get_data();
             assets_ptr = *temp_ptr;
         }else if(temp->msg_name == SET_VOLUME){
-            auto arg = (Uint8*)temp->get_data();
+            auto arg = static_cast<uint8_t*>(temp->get_data());
             set_volume(*arg);
             gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data<int>(volume)));
         }

@@ -9,31 +9,53 @@
 #include "level.hpp"
 #include <console/log.hpp>
 
+/**
+ * Constructor for the level.
+ * @param lvl_name The name of the level;
+ * @param msg_bus A pointer to the global message bus.
+ */
 ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
     name = lvl_name;
     gMessage_bus = msg_bus;
 }
 
+/**
+ * Loads the level.
+ * Sends a LOAD_LIST message to load the assets.list in the directory of the level.
+ */
 void ST::level::load(){
     load_input_conf();
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data<std::string>(temp)));
 }
 
+/**
+ * Get the name of the level.
+ * @return The name of the level.
+ */
 std::string ST::level::get_name(){
     return name;
 }
 
+/**
+ * Destroys the level.
+ * Frees all data.
+ */
 ST::level::~level(){
     //unload inputConf
     data.actions_Buttons.clear();
 
+    //unload entities.
     data.entities.clear();
 
     //unload lights
     data.lights.clear();
 }
 
+/**
+ * Unloads a level.
+ * Sends a UNLOAD_LIST message to unload all assets and unregisters all keys.
+ */
 void ST::level::unload(){
     for(auto i : data.actions_Buttons) {
         gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data<key>(i.second)));
@@ -50,6 +72,11 @@ void ST::level::unload(){
     data.entities.clear();
 }
 
+/**
+ * Loads the input configuration of the level.
+ * File inputConf.cfg must exist.
+ * @return -1 on error or 0 on success.
+ */
 int ST::level::load_input_conf(){
     std::ifstream file;
     std::string temp = "levels/" + name;
@@ -100,8 +127,12 @@ int ST::level::load_input_conf(){
     return 0;
 }
 
-//indexes the keys (for when they are loaded by the level to avoid string comparisons later)
-key ST::level::key_index(std::string arg){
+/**
+ * Indexes the keys (for when they are loaded by the level to avoid string comparisons later).
+ * @param arg the key string as read from inputConf.cfg.
+ * @return a <b>ST::key</b> enum (an uint8_t).
+ */
+ST::key ST::level::key_index(std::string arg){
     key index = key::UNKNOWN;
     if(arg == "left"){
         index = key::LEFT;

@@ -10,6 +10,13 @@
 #include <console/log.hpp>
 #include <assets_manager/assets_manager.hpp>
 
+/**
+ * Initializes the asset_manager.
+ * Loads all assets declared in the file <b>levels/assets_global.list</b>.
+ * @param msg_bus - A pointer to the global message bus.
+ * @param tsk_mngr - A pointer to the global task manager.
+ * @return Always returns 0.
+ */
 int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     //set external dependencies
     gMessage_bus = msg_bus;
@@ -27,12 +34,21 @@ int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     return 0;
 }
 
-//performs the update for the asset_manager on a task thread
+
+/**
+ * Performs the update for the asset_manager on a task thread.
+ * @param arg pointer to an assets_manager (a <b>this</b> pointer basically) as the
+ * function must be static.
+ */
 void assets_manager::update_task(void* arg){
     auto self = (assets_manager*)arg;
     self->handle_messages();
 }
 
+/**
+ * Retrieves messages from the subscriber object and
+ * performs the appropriate actions.
+ */
 void assets_manager::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){
@@ -60,7 +76,12 @@ void assets_manager::handle_messages(){
     }
 }
 
-//Loads assets contained within a binary
+
+/**
+ * Loads assets contained within a binary.
+ * @param path The path to the .bin (binary) file.
+ * @return -1 on failure or 0 on success.
+ */
 int assets_manager::load_assets_from_binary(const std::string& path) {
     ST::assets_named* assets1 = ST::unpack_binary(path);
     if(assets1 != nullptr){
@@ -107,8 +128,13 @@ int assets_manager::load_assets_from_binary(const std::string& path) {
     return 0;
 }
 
-//loads an asset given a path to it
-//handles .png, .wav, .mp3, .ttf
+
+/**
+ * Loads an asset given a path.
+ * handles .png, .wav, .ogg, .ttf.
+ * @param path the path to the file to load.
+ * @return -1 on failure or 0 on success.
+ */
 int assets_manager::load_asset(std::string path){
     //ignore a comment
     if(path.at(0) == '#'){
@@ -209,6 +235,11 @@ int assets_manager::load_asset(std::string path){
     return 0;
 }
 
+/**
+ * Loads assets from a .list file.
+ * @param path The path to the .list file.
+ * @return -1 on failure or 0 on success.
+ */
 int assets_manager::load_assets_from_list(std::string path){
     std::ifstream file;
     file.open(path.c_str());
@@ -230,6 +261,11 @@ int assets_manager::load_assets_from_list(std::string path){
     return 0;
 }
 
+/**
+ * Unloads assets from a .list file.
+ * @param path The path to the .list file.
+ * @return -1 on failure or 0 on success.
+ */
 int assets_manager::unload_assets_from_list(std::string path){
     std::ifstream file;
     file.open(path.c_str());
@@ -251,8 +287,11 @@ int assets_manager::unload_assets_from_list(std::string path){
     return 0;
 }
 
-
-//same as load_asset - except we unload it
+/**
+ * Unload an asset given a path to it.
+ * @param path The path to the asset.
+ * @return Always returns 0.
+ */
 int assets_manager::unload_asset(std::string path){
     //Ignore comments
     if(path.at(0) == '#'){
@@ -294,7 +333,10 @@ int assets_manager::unload_asset(std::string path){
     return 0;
 }
 
-//unload all assets
+/**
+ * Closes the asset_manager.
+ * Consumes any leftover messages and unloads all assets.
+ */
 void assets_manager::close(){
     handle_messages();
     delete msg_sub;

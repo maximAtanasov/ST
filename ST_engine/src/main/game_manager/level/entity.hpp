@@ -13,248 +13,328 @@
 
 namespace ST {
 
+    ///This class represents all static or dynamic objects in the game (excluding text, see ST::text)
+    /**
+     * Contains all the data for an entity.
+     * Texture and animation information, collisions box and position as well as various other options.
+     */
     class entity {
 
-        struct collision_data {
-            int left;
-            int right;
-            int top;
-            int bottom;
+        ///a simple struct defining the collision box for an entity.
+        struct collision_box {
+            int32_t left;
+            int32_t right;
+            int32_t top;
+            int32_t bottom;
         };
 
     private:
         //general
 
-        //64 bits
-        int x = 0;
-        int y = 0;
+        int32_t x = 0;
+        int32_t y = 0;
 
-        //64 bits
-        Uint64 ID;
+        uint64_t ID;
         bool visibility = true;
         bool static_ = false; //does not move with Camera
-        int velocity_x = 0;
-        int velocity_y = 0;
+        int16_t velocity_x = 0;
+        int16_t velocity_y = 0;
 
-        //animation - 32 bits
-        int sprite_num = 0;
-        int animation = 0;
-        int animation_num = 0;
+        //animation
+        uint16_t sprite_num = 0;
+        uint16_t animation = 0;
+        uint16_t animation_num = 0;
 
         //texture
         size_t texture = 0;
-        int tex_w = 0;
-        int tex_h = 0;
-
+        uint16_t tex_w = 0;
+        uint16_t tex_h = 0;
 
         //physics
-        int col_x = 0;
-        int col_y = 0;
-        int mass = 0;
-        int offset_x = 0;
-        int offset_y = 0;
-        collision_data collision;
+        int32_t col_x = 0;
+        int32_t col_y = 0;
+        uint16_t mass = 0;
+        int16_t offset_x = 0;
+        int16_t offset_y = 0;
+        collision_box collision;
         bool affected_by_physics = false;
         bool active = true;
+
+        void update_collision_box();
 
     public:
         //general
         explicit entity(unsigned int);
-
         void set_active(bool);
-
         bool is_active();
-
         bool is_static();
-
-        void set_x(int);
-
-        void set_y(int);
-
-        int get_x();
-
-        int get_y();
-
-        Uint64 get_ID();
-
+        void set_x(int32_t);
+        void set_y(int32_t);
+        int32_t get_x();
+        int32_t get_y();
+        uint64_t get_ID();
         void set_static(bool);
-
-        void set_velocity_x(int);
-
-        void set_velocity_y(int);
-
-        int get_velocity_x();
-
-        int get_velocity_y();
+        void set_velocity_x(int16_t);
+        void set_velocity_y(int16_t);
+        int16_t get_velocity_x();
+        int16_t get_velocity_y();
 
         //texture
-        int get_tex_w();
-
-        int get_tex_h();
-
-        void set_tex_w(int);
-
-        void set_tex_h(int);
-
+        uint16_t get_tex_w();
+        uint16_t get_tex_h();
+        void set_tex_w(uint16_t);
+        void set_tex_h(uint16_t);
         void set_visible(bool);
-
         bool is_visible();
-
         size_t get_texture();
-
-        void set_texture(std::string);
+        void set_texture(const std::string&);
 
         //physics
-        int get_col_x();
-
-        int get_col_y();
-
-        int get_col_y_offset();
-
-        int get_col_x_offset();
-
+        int32_t get_col_x();
+        int32_t get_col_y();
+        int16_t get_col_y_offset();
+        int16_t get_col_x_offset();
         bool collides(entity);
-
-        void set_collision_box(int, int, int, int);
-
-        void update_collision_box(int, int);
+        void set_collision_box(int16_t, int16_t, int16_t, int16_t);
 
         void set_affected_by_physics(bool);
-
         bool is_affected_by_physics();
-
         int get_mass();
 
-        void set_mass(int);
-
+        void set_mass(uint16_t);
         //animation
-        void set_animation_num(int);
-
-        void set_sprite_num(int);
-
-        void set_animation(int);
-
-        int get_sprite_num();
-
-        int get_animation();
-
-        int get_animation_num();
-
-
+        void set_animation_num(uint16_t);
+        void set_sprite_num(uint16_t);
+        void set_animation(uint16_t);
+        uint16_t get_sprite_num();
+        uint16_t get_animation();
+        uint16_t get_animation_num();
     };
 }
+
+
+
+
 
 //INLINED METHODS
 
 //GENERAL FUNCTIONS//
-inline Uint64 ST::entity::get_ID(){
+
+/**
+ *
+ * @return The ID of the entity.
+ */
+inline uint64_t ST::entity::get_ID(){
     return ID;
 }
 
+/**
+ * Sets the entity to active state or not.
+ * @param arg True or false.
+ */
 inline void ST::entity::set_active(bool arg){
     active = arg;
 }
 
+/**
+ * Returns the status of the entity.
+ * @return Boolean indicating if the entity is active or not.
+ */
 inline bool ST::entity::is_active(){
     return active;
 }
 
-inline int ST::entity::get_x(){
+/**
+ * Returns the x coordinate of the entity.
+ * @return A signed 32-bit integer representing the current X coordinate position of the entity.
+ */
+inline int32_t ST::entity::get_x(){
     return x;
 }
 
-inline int ST::entity::get_y(){
+/**
+ * Returns the y coordinate of the entity. (y = 0 is the top of the screen)
+ * @return A signed 32-bit integer representing the current Y coordinate position of the entity.
+ */
+inline int32_t ST::entity::get_y(){
     return y;
 }
 
-inline void ST::entity::set_x(int X){
+/**
+ *
+ * @param X Set the x coordinate of the entity.
+ */
+inline void ST::entity::set_x(int32_t X){
     x = X;
-    update_collision_box(x, y);
+    update_collision_box();
 }
 
-inline void ST::entity::set_y(int Y){
+/**
+ *
+ * @param X Set the y coordinate of the entity.
+ */
+inline void ST::entity::set_y(int32_t Y){
     y = Y;
-    update_collision_box(x, y);
+    update_collision_box();
 }
 
+/**
+ * Sets the entity to static (not moving with the camera) or not static (following the camera).
+ * @param arg True or False.
+ */
 inline void ST::entity::set_static(bool arg){
     static_ = arg;
 }
 
+/**
+ *
+ * @return A boolean indicating if the entity is static or not.
+ */
 inline bool ST::entity::is_static(){
     return static_;
 }
 
-inline void ST::entity::set_velocity_x(int arg){
+/**
+ * Sets the current x velocity of the entity.
+ * @param arg A signed 16-bit integer representing the velocity (positive or negative)
+ */
+inline void ST::entity::set_velocity_x(int16_t arg){
     velocity_x = arg;
 }
 
-inline void ST::entity::set_velocity_y(int arg){
+/**
+ * Sets the current y velocity of the entity.
+ * @param arg A signed 16-bit integer representing the velocity (positive or negative)
+ */
+inline void ST::entity::set_velocity_y(int16_t arg){
     velocity_y = arg;
 }
 
-inline int ST::entity::get_velocity_x(){
+/**
+ * Get the current x velocity of the entity.
+ * @return A signed 16-bit integer representing the velocity (positive or negative)
+ */
+inline int16_t ST::entity::get_velocity_x(){
     return velocity_x;
 }
 
-inline int ST::entity::get_velocity_y(){
+/**
+ * Get the current y velocity of the entity.
+ * @return A signed 16-bit integer representing the velocity (positive or negative)
+ */
+inline int16_t ST::entity::get_velocity_y(){
     return velocity_y;
 }
 
 //TEXTURE FUNCTIONS//
 
-inline int ST::entity::get_tex_w(){
+/**
+ * Get the width of the texture of the entity.
+ * @return An unsigned 16-bit integer representing the texture width.
+ */
+inline uint16_t ST::entity::get_tex_w(){
     return tex_w;
 }
 
-inline int ST::entity::get_tex_h(){
+/**
+ * Get the height of the texture of the entity.
+ * @return An unsigned 16-bit integer representing the texture height.
+ */
+inline uint16_t ST::entity::get_tex_h(){
     return tex_h;
 }
 
-inline void ST::entity::set_tex_w(int width){
+/**
+ * Sets the width of the texture of the entity.
+ * @param width An unsigned 16-bit integer representing the texture width.
+ */
+inline void ST::entity::set_tex_w(uint16_t width){
     tex_w = width;
 }
 
-inline void ST::entity::set_tex_h(int height){
+/**
+ * Sets the height of the texture of the entity.
+ * @param height An unsigned 16-bit integer representing the texture height.
+ */
+inline void ST::entity::set_tex_h(uint16_t height){
     tex_h = height;
 }
 
+/**
+ * Get the texture of the entity.
+ * @return An unsigned integer representing the hash of the texture name.
+ */
 inline size_t ST::entity::get_texture(){
     return texture;
 }
 
+/**
+ * Sets the entity to visible or not visible.
+ * @param arg True = visible, false = not visible.
+ */
 inline void ST::entity::set_visible(bool arg){
     visibility = arg;
 }
 
-inline void ST::entity::set_texture(std::string arg){
+/**
+ * Sets the texture of the current entity, takes a hash of the std::string and does not keep a copy.
+ * @param arg A <b>std::string</b> containing the name of the texture.
+ */
+inline void ST::entity::set_texture(const std::string& arg){
     std::hash<std::string> hash_f;
     texture = hash_f(arg);
 }
 
+/**
+ * Tells if the entity is visble or not.
+ * @return True if visible, false otherwise.
+ */
 inline bool ST::entity::is_visible(){
     return visibility;
 }
 
 //PHYSICS FUNTIONS//
 
-inline int ST::entity::get_col_x(){
+/**
+ * Get the horizontal length of the collision box.
+ * @return A int32_t representing the length.
+ */
+inline int32_t ST::entity::get_col_x(){
     return col_x;
 }
 
-inline int ST::entity::get_col_y(){
+/**
+ * Get the vertical length of the collision box.
+ * @return A int32_t representing the length.
+ */
+inline int32_t ST::entity::get_col_y(){
     return col_y;
 }
 
-inline int ST::entity::get_col_x_offset(){
+/**
+ * Get the horizontal offset for the collision box.
+ * @return The offset relative to the current position.
+ */
+inline int16_t ST::entity::get_col_x_offset(){
     return offset_x;
 }
 
-inline int ST::entity::get_col_y_offset(){
+/**
+ * Get the vertical offset for the collision box.
+ * @return The offset relative to the current position.
+ */
+inline int16_t ST::entity::get_col_y_offset(){
     return offset_y;
 }
 
-inline void ST::entity::set_collision_box(int offsetX, int offsetY, int X, int Y){
+/**
+ * Set the collision box for the entity, relative to the current position.
+ * @param offsetX The horizontal offset for the colllision box.
+ * @param offsetY The vertical offset for the colllision box.
+ * @param X The horizontal length of the collision box.
+ * @param Y The vertical length of the collision box.
+ */
+inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t X, int16_t Y){
     if(X != 0 && Y != 0){
         col_x = X - 1;
         col_y = -Y + 1;
@@ -265,60 +345,110 @@ inline void ST::entity::set_collision_box(int offsetX, int offsetY, int X, int Y
         col_y = 0;
         set_affected_by_physics(false);
     }
-    update_collision_box(x, y);
+    update_collision_box();
 }
 
-inline void ST::entity::update_collision_box(int x, int y){
+/**
+ * Updates the collision_box struct of the entity relative to it's current position.
+ */
+inline void ST::entity::update_collision_box(){
     collision.left = x + offset_x;
     collision.right = x + col_x + offset_x;
     collision.top = y + col_y + offset_y;
     collision.bottom = y + offset_y;
 }
 
+/**
+ * Set whether or not the entity is affected by physics.
+ * @param arg True = affected, false = not affected (skipped by the physics manager)
+ */
 inline void ST::entity::set_affected_by_physics(bool arg){
     affected_by_physics = arg;
 }
 
+/**
+ * Tells if the entity is affected by physics or not.
+ * @return True = affected, false = not affected (skipped by the physics manager)
+ */
 inline bool ST::entity::is_affected_by_physics(){
     return affected_by_physics;
 }
 
+/**
+ * Tells if two entities are colliding or not.
+ * @param other Entity to test collision against.
+ * @return True if colliding, false otherwise.
+ */
 inline bool ST::entity::collides(entity other){
     return !((collision.bottom < other.collision.top) || (collision.top > other.collision.bottom)
           || (collision.left > other.collision.right) || (collision.right < other.collision.left));
 }
 
-inline void ST::entity::set_mass(int arg){
+/**
+ * Sets the mass of the entity.
+ * @param arg The value of the mass.
+ */
+inline void ST::entity::set_mass(uint16_t arg){
     mass = arg;
 }
 
+/**
+ * Get the mass of the entity.
+ * @return The value of the mass.
+ */
 inline int ST::entity::get_mass(){
     return mass;
 }
 
 //ANIMATION FUNCTIONS//
 
-inline void ST::entity::set_animation(int arg){
+/**
+ * Set the animation to play.
+ * @param arg The number of the animation. (from 1 to n, where n is the rows of your
+ * sprite sheet and each row contains one animation).
+ */
+inline void ST::entity::set_animation(uint16_t arg){
     animation = arg;
 }
 
-inline int ST::entity::get_animation(){
+/**
+ * Get the currently playing animation.
+ * @return The number of the animation. (from 1 to n, where n is the rows of your
+ * sprite sheet and each row contains one animation).
+ */
+inline uint16_t ST::entity::get_animation(){
     return animation;
 }
 
-inline void ST::entity::set_animation_num(int arg){
+/**
+ * Set the number of animations the entity has.
+ * @param arg Equal to the number of rows of your spritesheet.
+ */
+inline void ST::entity::set_animation_num(uint16_t arg){
     animation_num = arg;
 }
 
-inline int ST::entity::get_animation_num(){
+/**
+ * Get the number of animations the entity has.
+ * @return Equal to the number of rows of your spritesheet.
+ */
+inline uint16_t ST::entity::get_animation_num(){
     return animation_num;
 }
 
-inline void ST::entity::set_sprite_num(int arg){
+/**
+ * Set the number of sprites the entity has. This is equal to the amount of colums your spritesheet has.
+ * @param arg An integer from 1 to n, where n should be the amount of columns in your spritesheet.
+ */
+inline void ST::entity::set_sprite_num(uint16_t arg){
     sprite_num = arg;
 }
 
-inline int ST::entity::get_sprite_num(){
+/**
+ * Get the number of sprites the entity has. This is equal to the amount of colums your spritesheet has.
+ * @return An integer from 1 to n, where n should be the amount of columns in your spritesheet.
+ */
+inline uint16_t ST::entity::get_sprite_num(){
     return sprite_num;
 }
 

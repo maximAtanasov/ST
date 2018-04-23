@@ -20,6 +20,10 @@
 #include <game_manager/level/level_data.hpp>
 
 namespace ST {
+    ///This object contains all the data for a level and provides functions for loading and unloading a level.
+    /**
+     * Sends messages to load assets and loads the input configuration from disk.
+     */
     class level {
     private:
         std::string name;
@@ -27,24 +31,26 @@ namespace ST {
         message_bus *gMessage_bus;
 
         int load_input_conf();
-
         key key_index(std::string arg);
 
     public:
         level(const std::string &, message_bus *);
-
         void load();
-
         void unload();
-
-        inline level_data *get_data() {
-            return &data;
-        }
-
+        level_data *get_data();
         std::string get_name();
-
         ~level();
     };
+}
+
+//INLINED METHODS
+
+/**
+ * Returns the data of the level (entities, lights, background, text objects).
+ * @return a <b>ST::level_data</b> struct.
+ */
+inline ST::level_data *ST::level::get_data() {
+    return &data;
 }
 
 #endif

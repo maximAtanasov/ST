@@ -10,6 +10,13 @@
 #include <console/log.hpp>
 #include <defs.hpp>
 
+/**
+ *
+ * @param window A pointer to an SDL_Window to bind the renderer to.
+ * @param msg_bus A pointer to the global message bus.
+ * @param tsk_mngr A pointer to the global task_manager.
+ * @return Returns either 0 on success or exits the program with exit code 1.
+ */
 int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_manager* tsk_mngr){
 	if(TTF_Init() < 0){
 		fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
@@ -19,7 +26,6 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
     //set our external dependencies
     this->gMessage_bus = msg_bus;
     this->gTask_manager = tsk_mngr;
-	this->window = window;
 
 	//Create a new subscriber object and subscribe to certain messages
 	msg_sub = new subscriber();
@@ -29,7 +35,6 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
     gMessage_bus->subscribe(SHOW_FPS, msg_sub);
 	gMessage_bus->subscribe(SET_DARKNESS, msg_sub);
 	gMessage_bus->subscribe(ASSETS, msg_sub);
-	gMessage_bus->subscribe(RENDERER_SWITCH, msg_sub);
     gMessage_bus->subscribe(ENABLE_LIGHTING, msg_sub);
 
 	//debug collisions aren't shown by default
@@ -37,7 +42,7 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
 
 	//Variables for lights
 	darkness_level = 0;
-    lights_quality = 3;
+    lights_quality = 4;
 
 	//Create and initialize the rendering object
 	gRenderer = new renderer_sdl();
@@ -46,11 +51,22 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
     return 0;
 }
 
+/**
+ * Start a task to process the lightmap
+ * @param arg a pointer to the drawing manager (a <b>this</b> pointer basically)
+ */
 void drawing_manager::process_lights_task(void *arg){
     auto self = static_cast<drawing_manager*>(arg);
     self->process_lights(self->lights_arg);
 }
 
+/**
+ * Consumes messages from the subscriber object.
+ * Performs all drawing operations.
+ * @param temp a pointer to the data of the current level.
+ * @param fps the current frames per second.
+ * @param cnsl a pointer to the console object.
+ */
 void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
 
 	Camera = temp->Camera;
@@ -70,12 +86,10 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
 
     //draw the lights when we are sure they are processed
     gTask_manager->wait_for_task(id);
+    draw_lights();
 
     //alternative method for drawing lights
     //gRenderer->draw_lights(lightmap);
-
-    draw_lights();
-
 
     //Draw debug info and the console in a debug build
     #ifdef __DEBUG
@@ -91,7 +105,11 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
 }
 
 
-//TODO: Finish it lol
+//TODO: Finish it
+/**
+ * Draws all visible text objects in the current level
+ * @param objects a pointer to a vector of text_objects
+ */
 void drawing_manager::draw_text_objects(std::vector<ST::text>* objects) {
     for(auto i : *objects) {
         if (i.is_visible()) {
@@ -101,6 +119,10 @@ void drawing_manager::draw_text_objects(std::vector<ST::text>* objects) {
     }
 }
 
+/**
+ * Draws the fps counter on the screen.
+ * @param fps The current fps.
+ */
 void drawing_manager::draw_fps(double fps){
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
@@ -108,6 +130,10 @@ void drawing_manager::draw_fps(double fps){
     }
 }
 
+/**
+ * Draws the console window on the screen.
+ * @param cnsl A pointer to the console object.
+ */
 void drawing_manager::draw_console(console* cnsl){
     if(cnsl->is_open()){
         gRenderer->draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl->color);
@@ -126,6 +152,11 @@ void drawing_manager::draw_console(console* cnsl){
     }
 }
 
+/**
+ * Processes the lightmap given a vector of light objects.
+ * TODO: tests must be written for this method, but the algorithm calculating  the lighting is not yet finished.
+ * @param lights A vector of <b>ST::light</b> objects.
+ */
 void drawing_manager::process_lights(std::vector<ST::light>* lights){
     #ifdef __DEBUG
     if(!lighting_enabled){
@@ -151,7 +182,7 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j < x + radius + intensity; j++){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = (Uint8)lights->at(q).brightness + (Uint8)count;
+                    lightmap[j][i] = (uint8_t)lights->at(q).brightness + (uint8_t)count;
                 if(count + lights->at(q).brightness < darkness_level && j > x + intensity)
                     count += step;
             }
@@ -165,7 +196,7 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j > x - radius - intensity; j--){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights->at(q).brightness + (Uint8)count;
+                    lightmap[j][i] = lights->at(q).brightness + (uint8_t)count;
                 if(count + lights->at(q).brightness < darkness_level && j < x - intensity)
                     count += step;
             }
@@ -179,7 +210,7 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j < x + radius + intensity; j++){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights->at(q).brightness + (Uint8)count;
+                    lightmap[j][i] = lights->at(q).brightness + (uint8_t)count;
                 if(count + lights->at(q).brightness < darkness_level && j > x + intensity)
                     count += step;
             }
@@ -193,7 +224,7 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j > x - radius - intensity; j--){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights->at(q).brightness + (Uint8)count;
+                    lightmap[j][i] = lights->at(q).brightness + (uint8_t)count;
                 if(count + lights->at(q).brightness< darkness_level && j < x - intensity)
                     count += step;
             }
@@ -206,6 +237,9 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
     }
 }
 
+/**
+ * Draws the lightmap on the screen.
+ */
 void drawing_manager::draw_lights(){
     #ifdef __DEBUG
     if(!lighting_enabled){
@@ -238,7 +272,10 @@ void drawing_manager::draw_lights(){
 }
 
 
-
+/**
+ * Consume messages from the message bus and perform
+ * the appropriate actions.
+ */
 void drawing_manager::handle_messages(){
     message* temp = msg_sub->get_next_message();
     while(temp != nullptr){
@@ -251,7 +288,7 @@ void drawing_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(VSYNC_IS_OFF, nullptr));
         }
         else if(temp->msg_name == SET_DARKNESS){
-            set_darkness(*(Uint8*)temp->get_data());
+            set_darkness(*(uint8_t*)temp->get_data());
         }
         else if(temp->msg_name == SHOW_COLLISIONS){
             auto arg = (bool*)temp->get_data();
@@ -292,7 +329,11 @@ void drawing_manager::handle_messages(){
     }
 }
 
-void drawing_manager::set_darkness(Uint8 arg){
+/**
+ * Set the level of darkness in the level.
+ * @param arg The level of darkness where 255 is full black and 0 is fully lit.
+ */
+void drawing_manager::set_darkness(uint8_t arg){
     darkness_level = arg;
     for(int i = 0; i < w_width; i++){
         for(int j = 0; j < w_height; j++)
@@ -300,6 +341,10 @@ void drawing_manager::set_darkness(Uint8 arg){
     }
 }
 
+/**
+ * Draws all visible entities on the screen.
+ * @param entities A vector of entities in the current level.
+ */
 void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
     for(auto& i : *entities){
         if(is_onscreen(&i)){
@@ -312,7 +357,7 @@ void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
 				}
             }
             else{
-                int time = ticks >> 7; //ticks/128
+                uint32_t time = ticks >> 7; //ticks/128
                 if(i.is_static()){
                     gRenderer->draw_sprite(i.get_texture(), i.get_x() , i.get_y(), time % i.get_sprite_num(), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
                 }else{
@@ -323,6 +368,11 @@ void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
     }
 }
 
+/**
+ * Tells if an entity is visible on the screen.
+ * @param i The entity to check.
+ * @return True if it is on screen and false otherwise.
+ */
 bool drawing_manager::is_onscreen(ST::entity* i){
     if(!i->is_visible())
         return false;
@@ -332,6 +382,10 @@ bool drawing_manager::is_onscreen(ST::entity* i){
            && (*i).get_y()-Camera.y  > 0 && (*i).get_y()-Camera.y - (*i).get_tex_h() <= w_height;
 }
 
+/**
+ * Draws the collision boxes for entities that are affected by physics.
+ * @param entities A vector of entities in the current level.
+ */
 void drawing_manager::draw_collisions(std::vector<ST::entity>* entities){
     for(auto& i : *entities)
         if(is_onscreen(&i)){
@@ -354,6 +408,10 @@ void drawing_manager::draw_collisions(std::vector<ST::entity>* entities){
         }
 }
 
+/**
+ * Draws the coordinates for entities that are affected by physics.
+ * @param entities A vector of entities in the current level.
+ */
 void drawing_manager::draw_coordinates(std::vector<ST::entity>* entities){
     for(auto& i : *entities) {
         if (is_onscreen(&i)) {
@@ -378,14 +436,24 @@ void drawing_manager::draw_coordinates(std::vector<ST::entity>* entities){
     }
 }
 
+/**
+ * Enables the drawing of collision boxes.
+ */
 void drawing_manager::show_collisions(){
     collisions_shown = true;
 }
 
+/**
+ * Disables the drawing of collision boxes.
+ */
 void drawing_manager::hide_collisions(){
     collisions_shown = false;
 }
 
+/**
+ * Closes the drawing manager.
+ * Quits the Font subsystem and destroys the renderer object.
+ */
 void drawing_manager::close(){
     delete msg_sub;
 	TTF_Quit();

@@ -11,6 +11,7 @@
 
 namespace ST {
 
+    ///The camera object - represents the viewport for the game.
     struct camera {
         int x;
         int y;

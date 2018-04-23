@@ -11,7 +11,7 @@ currentVolume = 100;
 math.randomseed( os.time() )
 
 function newID()
-    temp = currentID
+    local temp = currentID
     currentID = currentID + 1;
     return temp
 end
@@ -222,7 +222,7 @@ end
 currentTextID = 0 --MUST start at 0
 
 function newTextID()
-    temp = currentTextID
+    local temp = currentTextID
     currentTextID = currentTextID + 1;
     return temp
 end
@@ -241,7 +241,7 @@ textObject = {
 }
 
 function newTextObject(self, x, y, fontSize, font)
-    o = {}
+    local o = {}
     setmetatable(o, self)
     self.__index = self
     if(x ~= nil and y ~= nil) then

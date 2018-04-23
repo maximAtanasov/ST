@@ -16,6 +16,12 @@
 #include <game_manager/level/camera.hpp>
 
 namespace ST {
+    ///Holds all the data for a level.
+    /**
+     * Contains the mappings from keys to actions.
+     * Contains all entities, lights and text objects.
+     * Contains the background overlay and the camera.
+     */
     struct level_data {
         std::unordered_map<size_t, key> actions_Buttons{};
         std::vector<entity> entities{};
@@ -24,7 +30,7 @@ namespace ST {
         ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
         size_t background{};
         size_t overlay = 0;
-        int overlay_spriteNum = 1;
+        int16_t overlay_spriteNum = 1;
     };
 }
 

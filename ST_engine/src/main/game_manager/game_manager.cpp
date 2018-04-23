@@ -71,19 +71,19 @@ void game_manager::handle_messages(){
             unload_level(*name);
         }
         else if(temp->msg_name == KEY_PRESSED){
-            Uint8 key_index = *(Uint8*)temp->get_data();
+            uint8_t key_index = *(uint8_t*)temp->get_data();
             keys_pressed_data[key_index] = true;
             keys_held_data[key_index] = false;
             keys_released_data[key_index] = false;
         }
         else if(temp->msg_name == KEY_HELD){
-            Uint8 key_index = *(Uint8*)temp->get_data();
+            uint8_t key_index = *(uint8_t*)temp->get_data();
             keys_pressed_data[key_index] = false;
             keys_held_data[key_index] = true;
             keys_released_data[key_index] = false;
         }
         else if(temp->msg_name == KEY_RELEASED){
-            Uint8 key_index = *(Uint8*)temp->get_data();
+            uint8_t key_index = *(uint8_t*)temp->get_data();
             keys_pressed_data[key_index] = false;
             keys_held_data[key_index] = false;
             keys_released_data[key_index] = true;
@@ -192,7 +192,7 @@ void game_manager::start_level(const std::string& level_name){
     gScript_backend->set_global("loop");
 
     for(auto i : get_level_data()->actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<key>(i.second)));
+        gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(i.second)));
     }
 }
 

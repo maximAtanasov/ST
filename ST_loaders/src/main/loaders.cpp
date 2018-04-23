@@ -20,7 +20,7 @@ bool ST::replace_string(std::string& str, const std::string& from, const std::st
 
 std::string ST::get_file_extension(const std::string& filename){
     if(filename.size() > 4){
-        Uint64 size = filename.size() - 1;
+        uint64_t size = filename.size() - 1;
         if(filename.at(size - 2) == 'p' && filename.at(size - 1) == 'n' && filename.at(size) == 'g'){
             return "png";
         }else if(filename.at(size - 2) == 'w' && filename.at(size - 1) == 'a' && filename.at(size) == 'v'){
@@ -83,43 +83,43 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     //write our header===
 
     //total number of assets
-    Uint64 total_size = surfaces_names.size() + music_names.size() + chunks_names.size();
+    uint64_t total_size = surfaces_names.size() + music_names.size() + chunks_names.size();
     std::string total_num = "total:" + std::to_string(total_size) + "\n";
     output->write(output, total_num.c_str(), 1, total_num.size());
 
 
 
     //Names and sizes for surfaces, chunks and music
-    for(Uint64 i = 0; i < surfaces_sizes.size(); i++) {
+    for(uint64_t i = 0; i < surfaces_sizes.size(); i++) {
         output->write(output, surfaces_names[i].c_str(), 1, surfaces_names[i].size());
         std::string size = "size:" + std::to_string(surfaces_sizes[i]) + "\n";
         output->write(output, size.c_str(), 1, size.size());
     }
 
-    for(Uint64 i = 0; i < chunk_sizes.size(); i++) {
+    for(uint64_t i = 0; i < chunk_sizes.size(); i++) {
         output->write(output, chunks_names[i].c_str(), 1, chunks_names[i].size());
         std::string size = "size:" + std::to_string(chunk_sizes[i]) + "\n";
         output->write(output, size.c_str(), 1, size.size());
     }
 
-    for(Uint64 i = 0; i < music_sizes.size(); i++) {
+    for(uint64_t i = 0; i < music_sizes.size(); i++) {
         output->write(output, music_names[i].c_str(), 1, music_names[i].size());
         std::string size = "size:" + std::to_string(music_sizes[i]) + "\n";
         output->write(output, size.c_str(), 1, size.size());
     }
 
     //Write image data
-    for(Uint64 i = 0; i < surfaces.size(); i++) {
+    for(uint64_t i = 0; i < surfaces.size(); i++) {
         output->write(output, surfaces[i], 1, surfaces_sizes[i]);
     }
 
     //Write chunks data
-    for(Uint64 i = 0; i < chunks.size(); i++) {
+    for(uint64_t i = 0; i < chunks.size(); i++) {
         output->write(output, chunks[i], 1, chunk_sizes[i]);
     }
 
     //Write music data
-    for(Uint64 i = 0; i < music.size(); i++) {
+    for(uint64_t i = 0; i < music.size(); i++) {
         output->write(output, music[i], 1, music_sizes[i]);
     }
     output->close(output);
@@ -138,9 +138,9 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
 
             //read filename
             std::string temp;
-            Uint64 total_num = 0;
-            Uint64 counter = 0;
-            Uint64 pointer = 0;
+            uint64_t total_num = 0;
+            uint64_t counter = 0;
+            uint64_t pointer = 0;
             for(char i : *file){
                 pointer++;
                 temp += i;
@@ -173,8 +173,8 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
             }
             free(buffer);
             input->seek(input, pointer, RW_SEEK_SET);
-            Uint64 seek = pointer;
-            Uint64 i = 0;
+            uint64_t seek = pointer;
+            uint64_t i = 0;
             for (const std::string &filename : file_names) {
                 std::string ext = get_file_extension(filename);
                 if(ext == "png") {
@@ -234,9 +234,9 @@ int ST::unpack_binary_to_disk(const std::string& path){
             std::vector<size_t> sizes;
             //read filename
             std::string temp;
-            Uint64 total_num = 0;
-            Uint64 counter = 0;
-            Uint64 pointer = 0;
+            uint64_t total_num = 0;
+            uint64_t counter = 0;
+            uint64_t pointer = 0;
             for(char i : *file) {
                 pointer++;
                 temp += i;
@@ -270,8 +270,8 @@ int ST::unpack_binary_to_disk(const std::string& path){
             free(buffer);
 
             input->seek(input, pointer, RW_SEEK_SET);
-            Uint64 seek = pointer;
-            Uint64 i = 0;
+            uint64_t seek = pointer;
+            uint64_t i = 0;
             for (const std::string &filename : file_names) {
                 std::string ext = get_file_extension(filename);
                 if(ext == "png") {

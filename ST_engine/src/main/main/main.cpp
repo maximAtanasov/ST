@@ -8,6 +8,11 @@
 
 #include <main/main.hpp>
 
+/**
+ * Execution starting point.
+ * Initializes all subsystems and start the main loop.
+ * Takes care of subsystem shutdowns.
+ */
 int main(int argc, char** argv){
 
     //we get rid of the two warnings for unused parameters.
@@ -51,7 +56,7 @@ int main(int argc, char** argv){
     gTimer.initialize();
 
     #ifdef __DEBUG
-    gConsole.set_log_level(log_type::INFO | log_type::SUCCESS | log_type::ERROR);
+    gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
     gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(false)));
     #elif defined(__RELEASE)
     gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(true)));
