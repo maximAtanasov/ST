@@ -10,6 +10,8 @@ A 2D Platformer project built with C++, SDL2 and Lua.
 
 ![](https://raw.githubusercontent.com/maximAtanasov/slavicTales/master/ST_engine/docs/screenshots/screenshot3.png)
 
+
+
 <b>Instructions for building the project:</b>
 
 Dependcies needed on Linux:
