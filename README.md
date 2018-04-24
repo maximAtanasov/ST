@@ -15,6 +15,8 @@ A 2D Platformer project built with C++, SDL2 and Lua.
 Instructions for building the project:
 ==============================================
 
+<b><big>Linux:</big></b>
+
 Dependcies needed on Linux:
 
 cmake - you need version 3.9 or higher (or your IDE comes bundled with CMake)

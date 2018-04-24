@@ -21,7 +21,9 @@ add_library(ST_util STATIC
         include/ST_util/math.hpp
         src/main/util.cpp
         src/main/math.cpp
-        src/main/test_util.cpp)
+        src/main/test_util.cpp
+        src/main/string_util.cpp
+        include/ST_util/string_util.hpp)
 
 add_executable(map_test
         src/main/math.cpp

@@ -18,15 +18,21 @@ extern "C" {
     #include <lua5.3/lauxlib.h>
 }
 
+//Forward declare the game_manager to avoid a circular dependency.
 class game_manager;
 
+///This class handles all interaction with lua.
+/**
+ * It loads lua scripts and runs them.
+ * Also provides Lua with the API to the internal engine code.
+ * This is the bridge between gameplay and engine code.
+ */
 class lua_backend {
 private:
     lua_State* L;
     message_bus* gMessage_bus;
-    std::string hash_strings(std::string path);
+    std::string hash_strings(std::string& path);
     std::string hash_string(std::string& path);
-    bool replace_string(std::string& str, const std::string& from, const std::string& to);
 
 public:
     int initialize(message_bus* msg_bus, game_manager* game_mngr);
@@ -74,7 +80,6 @@ extern "C" int keyHeldLua(lua_State* L);
 extern "C" int keyReleasedLua(lua_State* L);
 extern "C" int getMouseXLua(lua_State* L);
 extern "C" int getMouseYLua(lua_State* L);
-extern "C" int switchRendererLua(lua_State* L);
 extern "C" int setVolumeLua(lua_State* L);
 
 //Text Object lua bindings definitions

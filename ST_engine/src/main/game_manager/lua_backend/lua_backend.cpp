@@ -9,17 +9,28 @@
 #include <game_manager/lua_backend/lua_backend.hpp>
 #include <game_manager/game_manager.hpp>
 #include <console/log.hpp>
+#include <ST_util/string_util.hpp>
 
 //local to the file, as lua bindings cannot be in a class
 static message_bus*  gMessage_busLua;
 static game_manager* gGame_managerLua;
 static lua_backend* gLua_backendLua;
 
+/**
+ * Initializes the Lua susytem.
+ * @param msg_bus A pointer to the global msg_bus.
+ * @param game_mngr A pointer to the game_manager object.
+ * @return Returns 0 on success or exits with exit code 1 on failure.
+ */
 int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
+
+    //Set the external dependencies.
     gLua_backendLua = this;
     gGame_managerLua = game_mngr;
     gMessage_busLua = msg_bus;
     gMessage_bus = msg_bus;
+
+    //Initialize LUa
     L = luaL_newstate();
     if(L == nullptr){
         exit(1);
@@ -40,7 +51,6 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     #endif
 
     //General Functions
-    lua_register(L, "switchRenderer", switchRendererLua);
     lua_register(L, "setFullscreen", setFullscreenLua);
     lua_register(L, "getFullscreenStatus", getFullscreenStatusLua);
     lua_register(L, "hashString", hashStringLua);
@@ -60,7 +70,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
 
-    //PHYSICS
+    //Physics functions.
     lua_register(L, "setGravity", setGravityLua);
     lua_register(L, "pausePhysics", pausePhysicsLua);
     lua_register(L, "unpausePhysics", unpausePhysicsLua);
@@ -141,6 +151,10 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     return 0;
 }
 
+/**
+ * Run a lua script inside the global Lua state.
+ * @param file The path to the file.
+ */
 void lua_backend::run_file(std::string file){
     std::string temp = hash_strings(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
@@ -150,7 +164,11 @@ void lua_backend::run_file(std::string file){
     }
 }
 
-
+/**
+ * Loads a file into the global Lua State, but does not run it.
+ * @param file The path to the file.
+ * @return -1 on failure or 0 on success.
+ */
 int lua_backend::load_file(std::string file){
     std::string temp = hash_strings(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
@@ -163,6 +181,10 @@ int lua_backend::load_file(std::string file){
     }
 }
 
+/**
+ * Run a lua script contained in a script.
+ * @param script The Lua Script to run.
+ */
 void lua_backend::run_script(std::string script) {
     std::string temp = hash_string(script);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
@@ -171,30 +193,37 @@ void lua_backend::run_script(std::string script) {
     }
 }
 
+/**
+ * Set a loaded script as a global.
+ * @param arg The name of the script to set as global.
+ */
 void lua_backend::set_global(std::string arg){
     lua_setglobal(L, arg.c_str());
 }
 
+/**
+ * Run a already set global.
+ * @param arg The name of the global.
+ */
 void lua_backend::run_global(std::string arg) {
     lua_getglobal(L, arg.c_str());
     lua_pcall(L, 0, 0, 0);
 }
 
+/**
+ * Close the Lua State.
+ */
 void lua_backend::close() {
     lua_close(L);
 }
 
-bool lua_backend::replace_string(std::string& str, const std::string& from, const std::string& to) {
-    size_t start_pos = str.find(from);
-    if(start_pos == std::string::npos)
-        return false;
-    str.replace(start_pos, from.length(), to);
-    return true;
-}
-
-//hash plaintext filenames in scripts in the functions 'playSound','playMusic','keyHeld', 'keyReleased' and 'keyPressed'
-//this way, we have no hashing/comparing/copying strings in our main loop
-std::string lua_backend::hash_strings(std::string path){
+/**
+ * Hashes plaintext filenames in scripts in the functions 'playSound','playMusic','keyHeld', 'keyReleased' and 'keyPressed'
+ * and also the annotations --@Audio and --@Key.This way, we have no hashing/comparing/copying strings in our main loop
+ * @param path The path to the file.
+ * @return The script with the values hashed.
+ */
+std::string lua_backend::hash_strings(std::string& path){
     std::ifstream file;
     file.open(path.c_str());
     std::string result;
@@ -317,8 +346,12 @@ std::string lua_backend::hash_strings(std::string path){
     }
 }
 
-//hash plaintext filenames in scripts in the functions 'playSound','playMusic','keyHeld', 'keyReleased' and 'keyPressed'
-//this way, we have no hashing/comparing/copying strings in our main loop
+/**
+ * Hashes plaintext filenames in scripts in the functions 'playSound','playMusic','keyHeld', 'keyReleased' and 'keyPressed'
+ * and also the annotations --@Audio and --@Key.This way, we have no hashing/comparing/copying strings in our main loop
+ * @param path The script.
+ * @return The script with the values hashed.
+ */
 std::string lua_backend::hash_string(std::string& temp){
     std::string result;
     if(!temp.empty()){
@@ -394,17 +427,30 @@ std::string lua_backend::hash_string(std::string& temp){
     return "Error\n";
 }
 
+
 //External lua API
 
+/**
+ * Sends a SET_DARKNESS message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setDarknessLua(lua_State* L){
-    auto arg = static_cast<char>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_DARKNESS, make_data<char>(arg)));
+    auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
+    gMessage_busLua->send_msg(make_msg(SET_DARKNESS, make_data<uint8_t>(arg)));
     return 0;
 }
 
+/**
+ * Creates a new Light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int createLightLua(lua_State* L){
-    auto origin_x = static_cast<int>(lua_tointeger(L, 1));
-    auto origin_y = static_cast<int>(lua_tointeger(L, 2));
+    auto origin_x = static_cast<int32_t>(lua_tointeger(L, 1));
+    auto origin_y = static_cast<int32_t>(lua_tointeger(L, 2));
     auto radius = static_cast<uint16_t>(lua_tointeger(L, 3));
     auto intensity = static_cast<uint16_t>(lua_tointeger(L, 4));
     auto brightness = static_cast<uint16_t>(lua_tointeger(L, 5));
@@ -413,6 +459,12 @@ extern "C" int createLightLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Provides Lua with std::hash<std::string>().
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int hashStringLua(lua_State* L){
     auto str = static_cast<std::string>(lua_tostring(L, 1));
     std::hash<std::string> hash_f;
@@ -420,12 +472,24 @@ extern "C" int hashStringLua(lua_State* L){
     return 1;
 }
 
+/**
+ * Sends a SET_FULLSCREEN message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setFullscreenLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
     gMessage_busLua->send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(arg)));
     return 0;
 }
 
+/**
+ * Asks the game_manager if we are running in fullscreen or not.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getFullscreenStatusLua(lua_State* L){
     lua_pushboolean(L, gGame_managerLua->fullscreen_status);
     return 1;
@@ -434,6 +498,12 @@ extern "C" int getFullscreenStatusLua(lua_State* L){
 
 //Text Object Lua bindings
 
+/**
+ * Creates a new text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int createTextObjectLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto x = static_cast<int>(lua_tointeger(L, 2));
@@ -447,6 +517,12 @@ extern "C" int createTextObjectLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the color of the text in a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectColorLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto r = static_cast<uint8_t>(lua_tointeger(L, 2));
@@ -458,6 +534,12 @@ extern "C" int setTextObjectColorLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the text a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectTextLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto text = static_cast<std::string>(lua_tostring(L, 2));
@@ -465,6 +547,12 @@ extern "C" int setTextObjectTextLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the font of a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectFontLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto font = static_cast<std::string>(lua_tostring(L, 2));
@@ -472,6 +560,12 @@ extern "C" int setTextObjectFontLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the font size of a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectFontSizeLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto size = static_cast<uint8_t>(lua_tointeger(L, 2));
@@ -479,6 +573,12 @@ extern "C" int setTextObjectFontSizeLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the x position of a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectXLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto x = static_cast<int>(lua_tointeger(L, 2));
@@ -486,6 +586,12 @@ extern "C" int setTextObjectXLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the y position of a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectYLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto y = static_cast<int>(lua_tointeger(L, 2));
@@ -493,6 +599,12 @@ extern "C" int setTextObjectYLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the visibility of a text object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextObjectVisibleLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
@@ -503,14 +615,24 @@ extern "C" int setTextObjectVisibleLua(lua_State* L){
 
 //Entity Lua bindings
 
-//GENERAL//
-
+/**
+ * Creates a new entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int createEntityLua(lua_State* L){
     auto ID = static_cast<unsigned int>(lua_tointeger(L, 1));
     gGame_managerLua->get_level_data()->entities.emplace_back(ST::entity(ID));
     return 0;
 }
 
+/**
+ * Sets the x position of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setXLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto x = static_cast<int>(lua_tointeger(L, 2));
@@ -518,6 +640,12 @@ extern "C" int setXLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets if entity an entity is active or not.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setActiveLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
@@ -525,6 +653,12 @@ extern "C" int setActiveLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the y position of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setYLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto y = static_cast<int>(lua_tointeger(L, 2));
@@ -532,6 +666,12 @@ extern "C" int setYLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the x velocity of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setVelocityXLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<int16_t>(lua_tointeger(L, 2));
@@ -539,6 +679,12 @@ extern "C" int setVelocityXLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the y velocity of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setVelocityYLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<int16_t>(lua_tointeger(L, 2));
@@ -546,18 +692,36 @@ extern "C" int setVelocityYLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Gets the x velocity of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getVelocityXLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L , gGame_managerLua->get_level_data()->entities.at(id).get_velocity_x());
     return 1;
 }
 
+/**
+ * Gets the y velocity of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getVelocityYLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L , gGame_managerLua->get_level_data()->entities.at(id).get_velocity_y());
     return 1;
 }
 
+/**
+ * Sets the entity to static/non-static.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setStaticLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
@@ -565,12 +729,24 @@ extern "C" int setStaticLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Gets the x position of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getXLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L , gGame_managerLua->get_level_data()->entities.at(id).get_x());
     return 1;
 }
 
+/**
+ * Gets the y position of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getYLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L , gGame_managerLua->get_level_data()->entities.at(id).get_y());
@@ -579,18 +755,36 @@ extern "C" int getYLua(lua_State* L){
 
 //TEXTURE//
 
+/**
+ * Gets the texture width of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getTexWLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level_data()->entities.at(id).get_tex_w());
     return 1;
 }
 
+/**
+ * Gets the texture height of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getTexHLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level_data()->entities.at(id).get_tex_h());
     return 1;
 }
 
+/**
+ * Sets the texture width of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTexWLua(lua_State* L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto texW = static_cast<uint16_t>(lua_tointeger(L, 2));
@@ -598,6 +792,12 @@ extern "C" int setTexWLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the texture height of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTexHLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto texH = static_cast<uint16_t>(lua_tointeger(L, 2));
@@ -605,6 +805,12 @@ extern "C" int setTexHLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the the entity to visible/non-visible.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setVisibleLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
@@ -612,15 +818,27 @@ extern "C" int setVisibleLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the texture of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setTextureLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    std::string arg = (std::string)lua_tostring(L, 2);
+    std::string arg = static_cast<std::string>(lua_tostring(L, 2));
     gGame_managerLua->get_level_data()->entities.at(id).set_texture(arg);
     return 0;
 }
 
 //PHYSICS//
 
+/**
+ * Sets the physcis status of an entity (affected/not affected).
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setAffectedByPhysicsLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
@@ -628,6 +846,12 @@ extern "C" int setAffectedByPhysicsLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Tells if two entities are colliding.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int entityCollidesLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto id2 = static_cast<uint64_t>(lua_tointeger(L, 2));
@@ -641,6 +865,12 @@ extern "C" int entityCollidesLua(lua_State* L){
     return 1;
 }
 
+/**
+ * Sets the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setCollisionBoxLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto offset_x = static_cast<int16_t>(lua_tointeger(L, 2));
@@ -651,24 +881,48 @@ extern "C" int setCollisionBoxLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Gets the width of the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getColXLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level_data()->entities.at(id).get_col_x());
     return 1;
 }
 
+/**
+ * Gets the height of the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getColYLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level_data()->entities.at(id).get_col_y());
     return 1;
 }
 
+/**
+ * Gets the mass of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getMassLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level_data()->entities.at(id).get_mass());
     return 1;
 }
 
+/**
+ * Sets the mass of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setMassLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
@@ -676,11 +930,21 @@ extern "C" int setMassLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Pauses physics.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int pausePhysicsLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(PAUSE_PHYSICS, nullptr));
     return 0;
 }
 
+/**
+ * Unpauses physics.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int unpausePhysicsLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(UNPAUSE_PHYSICS, nullptr));
     return 0;
@@ -688,6 +952,12 @@ extern "C" int unpausePhysicsLua(lua_State*){
 
 //ANIMATION//
 
+/**
+ * Sets the current animation of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setAnimationLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
@@ -695,6 +965,12 @@ extern "C" int setAnimationLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the number of animations of an entity. (colums in the spritesheet)
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setAnimationNumLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
@@ -702,6 +978,12 @@ extern "C" int setAnimationNumLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Sets the number of sprites of an entity. (rows in the spritesheet)
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setSpriteNumLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
@@ -712,48 +994,79 @@ extern "C" int setSpriteNumLua(lua_State* L){
 
 //OTHER
 
-extern "C" int switchRendererLua(lua_State* L){
-    #ifdef __DEBUG
-    std::string arg = lua_tostring(L, 1);
-    gMessage_busLua->send_msg(make_msg(RENDERER_SWITCH, make_data<std::string>(arg)));
-    #endif
-    return 0;
-}
-
+/**
+ * Sets the gravity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setGravityLua(lua_State* L){
     auto arg = static_cast<int>(lua_tointeger(L, 1));
     gMessage_busLua->send_msg(make_msg(SET_GRAVITY, make_data<int>(arg)));
     return 0;
 }
 
+/**
+ * Sets the level floor.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setLevelFloorLua(lua_State* L){
     auto arg = static_cast<int>(lua_tointeger(L, 1));
     gMessage_busLua->send_msg(make_msg(SET_FLOOR, make_data<int>(arg)));
     return 0;
 }
 
+/**
+ * Sets VSYNC to on.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int vsyncOnLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(VSYNC_ON, nullptr));
     return 0;
 }
 
+/**
+ * Sets VSYNC to off.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int vsyncOffLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(VSYNC_OFF, nullptr));
     return 0;
 }
 
+/**
+ * Get the state of vsync.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int getVsyncStateLua(lua_State* L){
     lua_pushboolean(L, gGame_managerLua->vsync_flag);
     return 1;
 }
 
-
+/**
+ * Set the brightness of the screen.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setBrightnessLua(lua_State* L){
     auto arg = static_cast<float>(lua_tonumber(L, 1));
     gMessage_busLua->send_msg(make_msg(SET_WINDOW_BRIGHTNESS, make_data<float>(arg)));
     return 0;
 }
 
+/**
+ * Center the camera on an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int centreCameraLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     gGame_managerLua->get_level_data()->Camera.x = gGame_managerLua->get_level_data()->entities.at(id).get_x() - 1920/4;
@@ -769,6 +1082,12 @@ extern "C" int centreCameraLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Set the size of the level.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
 extern "C" int setLevelsizeLua(lua_State* L){
     auto x = static_cast<int>(lua_tointeger(L, 1));
     auto y = static_cast<int>(lua_tointeger(L, 2));
@@ -777,35 +1096,70 @@ extern "C" int setLevelsizeLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Ends the application.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int endGameLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(END_GAME, nullptr));
     return 0;
 }
 
+/**
+ * Start a level given it's name. Sends a <b>START_LEVEL</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int startLevelLua(lua_State* L){
     std::string level = (std::string)lua_tostring(L, 1);
     gMessage_busLua->send_msg(make_msg(START_LEVEL, make_data<std::string>(level)));
     return 0;
 }
 
+/**
+ * Load a level given it's name. Sends a <b>LOAD_LEVEL</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int load_levelLua(lua_State* L){
     std::string arg = (std::string)lua_tostring(L, 1);
     gMessage_busLua->send_msg(make_msg(LOAD_LEVEL, make_data<std::string>(arg)));
     return 0;
 }
 
+/**
+ * Unload a level given it's name. Sends a <b>UNLOAD_LEVEL</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int unload_levelLua(lua_State* L){
     std::string level = (std::string)lua_tostring(L, 1);
     gMessage_busLua->send_msg(make_msg(UNLOAD_LEVEL, make_data<std::string>(level)));
     return 0;
 }
 
+/**
+ * Pause the execution of the game simulation thread by a given amount.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int delayLua(lua_State* L){
     auto ms = static_cast<unsigned int>(lua_tointeger(L, 1));
     SDL_Delay(ms);
     return 0;
 }
 
+/**
+ * Run a lua script given it's name. The script must be in the same directory as the current level.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int useLua(lua_State* L){
     std::string arg = (std::string)lua_tostring(L, 1);
     std::string temp = "levels/";
@@ -815,16 +1169,32 @@ extern "C" int useLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Show the mouse cursor.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int showMouseCursorLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(SHOW_MOUSE, make_data<bool>(true)));
     return 0;
 }
 
+/**
+ * Hide the mouse cursor.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int hideMouseCursorLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(SHOW_MOUSE, make_data<bool>(false)));
     return 0;
 }
 
+/**
+ * Set the background of a level.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setBackgroundLua(lua_State* L){
     std::string arg = (std::string)lua_tostring(L, 1);
     std::hash<std::string> hash_f;
@@ -832,6 +1202,12 @@ extern "C" int setBackgroundLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Set the overlay of a level.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
 extern "C" int setOverlayLua(lua_State* L){
     std::string arg = (std::string)lua_tostring(L, 1);
     auto spriteNum = static_cast<int16_t>(lua_tointeger(L, 2));
@@ -843,28 +1219,58 @@ extern "C" int setOverlayLua(lua_State* L){
 
 //INPUT
 
+/**
+ * Get the X position of the mouse cursor.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
 extern "C" int getMouseXLua(lua_State* L){
     lua_pushnumber(L, gGame_managerLua->get_mouse_x());
     return 1;
 }
 
+/**
+ * Get the Y position of the mouse cursor.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
 extern "C" int getMouseYLua(lua_State* L){
     lua_pushnumber(L, gGame_managerLua->get_mouse_y());
     return 1;
 }
 
+/**
+ * Tells if a key is held or not.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
 extern "C" int keyHeldLua(lua_State* L){
     auto arg = static_cast<size_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_held(arg));
     return 1;
 }
 
+/**
+ * Tells if a key is pressed or not.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
 extern "C" int keyPressedLua(lua_State* L){
     auto arg = static_cast<size_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_pressed(arg));
     return 1;
 }
 
+/**
+ * Tells if a key is released or not.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
 extern "C" int keyReleasedLua(lua_State* L){
     auto arg = static_cast<size_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_released(arg));
@@ -874,12 +1280,24 @@ extern "C" int keyReleasedLua(lua_State* L){
 
 //AUDIO
 
+/**
+ * Toggles the audio. Sends a <b>TOGGLE_AUDIO</b> message.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int toggleAudioLua(lua_State*){
     message* msg_temp = make_msg(TOGGLE_AUDIO, nullptr);
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
 
+
+/**
+ * Plays music given it's name. Sends a <b>PLAY_MUSIC</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
 extern "C" int playMusicLua(lua_State* L){
     auto arg = (size_t)lua_tointeger(L, 1);
     auto volume = (int)lua_tointeger(L, 2);
@@ -890,6 +1308,12 @@ extern "C" int playMusicLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Plays a sound given it's name. Sends a <b>PLAY_SOUND</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
 extern "C" int playSoundLua(lua_State* L){
     auto arg = (size_t)lua_tointeger(L, 1);
     auto volume = (int)lua_tointeger(L, 2);
@@ -900,35 +1324,70 @@ extern "C" int playSoundLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Stops the music. Sends a <b>STOP_MUSIC</b> message.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int stopMusicLua(lua_State*){
     message* msg_temp = make_msg(STOP_MUSIC, nullptr);
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
 
+/**
+ * Stops all currently playing sounds. Sends a <b>STOP_ALL_SOUNDS</b> message.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
 extern "C" int stopAllSoundsLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(STOP_ALL_SOUNDS, nullptr));
     return 0;
 }
 
+/**
+ * Gets the current audio volume.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
 extern "C" int getVolumeLua(lua_State* L){
     lua_pushnumber(L, gGame_managerLua->volume_level);
     return 1;
 }
 
+/**
+ * Sets the current audio volume.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
 extern "C" int setVolumeLua(lua_State* L){
-    auto arg = (uint8_t)lua_tointeger(L, 1);
+    auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
     gMessage_busLua->send_msg(make_msg(SET_VOLUME, make_data<uint8_t>(arg)));
     return 0;
 }
 
 #ifdef __DEBUG
+/**
+ * Show or hide the collisions and coordinates from rendering.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
 extern "C" int showCollisionsLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
     gMessage_busLua->send_msg(make_msg(SHOW_COLLISIONS, make_data<bool>(arg)));
     return 0;
 }
 
+/**
+ * Logging function for lua - works the same as the log() macro in the engine code.
+ * Allows logging to the console from gameplay code.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
 extern "C" int logLua(lua_State* L){
     auto type = static_cast<uint8_t>(lua_tointeger(L, 1));
     auto arg = static_cast<std::string>(lua_tostring(L, 2));
@@ -936,6 +1395,12 @@ extern "C" int logLua(lua_State* L){
     return 0;
 }
 
+/**
+ * Show or hide the fps counter from rendering.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
 extern "C" int showFpsLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
     gMessage_busLua->send_msg(make_msg(SHOW_FPS, make_data<bool>(arg)));
