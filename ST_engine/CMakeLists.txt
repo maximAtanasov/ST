@@ -14,8 +14,6 @@ enable_testing()
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
 find_package(GTest REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
@@ -100,8 +98,6 @@ target_link_libraries(ST_engine
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
-        ${GLEW_LIBRARIES}
-        ${OPENGL_LIBRARIES}
        )
 
 add_executable(asset_manager_test
@@ -170,8 +166,6 @@ target_link_libraries(audio_manager_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
-        ${GLEW_LIBRARIES}
-        ${OPENGL_LIBRARIES}
         ${LUA_LIBRARY})
 
 include_directories(audio_manager_test ../ST_engine/src/test)

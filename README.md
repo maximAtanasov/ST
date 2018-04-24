@@ -12,12 +12,12 @@ A 2D Platformer project built with C++, SDL2 and Lua.
 
 
 
-<b>Instructions for building the project:</b>
+Instructions for building the project:
 ==============================================
 
 Dependcies needed on Linux:
 
-cmake - you need version 3.9 or higher (or your IDE coms beundled with CMake)
+cmake - you need version 3.9 or higher (or your IDE comes bundled with CMake)
 
 liblua5.3
 libSDL2
@@ -29,7 +29,7 @@ libglew
 
 if you are on Ubuntu (or another Debian-based distro) you can install all dependencies like this:
 ```
-sudo apt-get install cmake liblua5.3-dev libSDL2-dev libSDL2_image-dev libSDL2_mixer-dev libSDL2_ttf-dev libglew-dev
+sudo apt-get install cmake liblua5.3-dev libSDL2-dev libSDL2_image-dev libSDL2_mixer-dev libSDL2_ttf-dev
 
 sudo apt-get install libgtest-dev
 
@@ -44,7 +44,7 @@ sudo cp *.a /usr/lib
 
 Or if you are on Fedora:
 ```
-sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua-devel glew-devel gtest-devel
+sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua-devel gtest-devel
 
 cd /usr/src/gtest
 
@@ -65,4 +65,4 @@ cd ST_engine/gamedata
 ```
 
 
-Also, have a look at the [Documentation](http://maximatanasov.github.io/slavicTales/index.html)
+Also, have a look at the [Documentation](http://maximatanasov.github.io/slavicTales/index.html).
