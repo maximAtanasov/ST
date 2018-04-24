@@ -63,3 +63,6 @@ make ST_engine
 cd ST_engine/gamedata
 ./ST_engine
 ```
+
+
+Also, have a look at the [Documentation](http://maximatanasov.github.io/slavicTales/index.html)
