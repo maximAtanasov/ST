@@ -15,7 +15,7 @@ CTestTestfile.cmake
 
 /.idea/
 
-html/*
+html/
 
 # User-specific stuff
 .idea/**/workspace.xml
