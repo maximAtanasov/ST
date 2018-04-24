@@ -88,9 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a77a63aa2b4dce616d974c6526ba28c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14b6bc02511e9a9568bd580e36b73c22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a14b6bc02511e9a9568bd580e36b73c22">key_released</a> (size_t arg)</td></tr>
 <tr class="separator:a14b6bc02511e9a9568bd580e36b73c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4123499a4eea7fbcc7b882903ba0f4e3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a4123499a4eea7fbcc7b882903ba0f4e3">get_mouse_x</a> ()</td></tr>
+<tr class="memitem:a4123499a4eea7fbcc7b882903ba0f4e3"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a4123499a4eea7fbcc7b882903ba0f4e3">get_mouse_x</a> ()</td></tr>
 <tr class="separator:a4123499a4eea7fbcc7b882903ba0f4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59e9c05efecfb7740361670abbca86c5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a59e9c05efecfb7740361670abbca86c5">get_mouse_y</a> ()</td></tr>
+<tr class="memitem:a59e9c05efecfb7740361670abbca86c5"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a59e9c05efecfb7740361670abbca86c5">get_mouse_y</a> ()</td></tr>
 <tr class="separator:a59e9c05efecfb7740361670abbca86c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf8a7859cc26d730ec46321074663fca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#aaf8a7859cc26d730ec46321074663fca">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
 <tr class="separator:aaf8a7859cc26d730ec46321074663fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,9 +111,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>vsync_flag</b> = true
 <tr class="memitem:af124d77cd2b52bb7a4f5d214ec818352"><td class="memItemLeft" align="right" valign="top"><a id="af124d77cd2b52bb7a4f5d214ec818352"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>fullscreen_status</b> = false</td></tr>
 <tr class="separator:af124d77cd2b52bb7a4f5d214ec818352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6709e64f096823435bc0f7950a2c70ff"><td class="memItemLeft" align="right" valign="top"><a id="a6709e64f096823435bc0f7950a2c70ff"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> = 0</td></tr>
-<tr class="separator:a6709e64f096823435bc0f7950a2c70ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf821380bf8ad1b89edfb2f6482bb0f5"><td class="memItemLeft" align="right" valign="top"><a id="aaf821380bf8ad1b89edfb2f6482bb0f5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> = 0</td></tr>
+<tr class="separator:aaf821380bf8ad1b89edfb2f6482bb0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p class="">This class is responsible for managing all levels and the lua backend, it is the heart of the engine. </p>
@@ -426,7 +426,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> = 0</
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True of held, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if held, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -459,7 +459,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> = 0</
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True of pressed, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if pressed, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -492,7 +492,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> = 0</
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True of released, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if released, false otherwise. </dd></dl>
 
 </div>
 </div>
