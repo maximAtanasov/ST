@@ -14,7 +14,7 @@
 #include <message_bus/message_types.hpp>
 
 class message_allocator;
-extern message_allocator* msg_memory;
+extern message_allocator msg_memory;
 
 //Never use new() or delete() or the constructor  (it will just break) with this class - only make_msg() and destroy_msg()
 class message{

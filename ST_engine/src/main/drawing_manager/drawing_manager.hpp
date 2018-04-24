@@ -63,10 +63,10 @@ class drawing_manager{
 		ST::assets* asset_ptr{};
 
         //a subscriber object - so we can subscribe to and recieve messages
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
 
         //rendering object - the interface
-        renderer_sdl* gRenderer{};
+        renderer_sdl gRenderer{};
 
         //CPU ticks since start - used for animating sprites
         Uint32 ticks = 0;

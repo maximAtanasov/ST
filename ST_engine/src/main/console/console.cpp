@@ -22,12 +22,11 @@ int console::initialize(message_bus* msg_bus){
     pos = 1080/2;
     font_size = 40;
     scroll_offset = 0;
-    msg_sub = new subscriber();
-    gMessage_bus->subscribe(CONSOLE_WRITE, msg_sub);
-    gMessage_bus->subscribe(CONSOLE_TOGGLE, msg_sub);
-    gMessage_bus->subscribe(MOUSE_SCROLL, msg_sub);
-    gMessage_bus->subscribe(KEY_PRESSED, msg_sub);
-    gMessage_bus->subscribe(TEXT_STREAM, msg_sub);
+    gMessage_bus->subscribe(CONSOLE_WRITE, &msg_sub);
+    gMessage_bus->subscribe(CONSOLE_TOGGLE, &msg_sub);
+    gMessage_bus->subscribe(MOUSE_SCROLL, &msg_sub);
+    gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
+    gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
     gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(ST::key::ENTER)));
     return 0;
 }
@@ -44,7 +43,7 @@ void console::scroll(int scroll_y){
  * performs the appropriate actions.
  */
 void console::handle_messages(){
-    message* temp = msg_sub->get_next_message();
+    message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == CONSOLE_WRITE){
             auto log = (ST::console_log*)temp->get_data();
@@ -97,7 +96,7 @@ void console::handle_messages(){
             composition = *(std::string*)temp->get_data();
         }
         destroy_msg(temp);
-        temp = msg_sub->get_next_message();
+        temp = msg_sub.get_next_message();
     }
 }
 
@@ -168,7 +167,6 @@ void console::show(){
  */
 void console::close(){
     handle_messages();
-    delete msg_sub;
 }
 
 

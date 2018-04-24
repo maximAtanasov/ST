@@ -39,7 +39,7 @@ class display_manager{
         message_bus* gMessage_bus{};
         int height = 0;
         int width = 0;
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
 
         void set_fullscreen(bool arg);
         void handle_messages();

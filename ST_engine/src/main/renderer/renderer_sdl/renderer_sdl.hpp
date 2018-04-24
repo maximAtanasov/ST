@@ -16,7 +16,7 @@
 class renderer_sdl{
 private:
     SDL_Renderer* sdl_renderer;
-    font_cache* gFont_cache;
+    font_cache gFont_cache;
 
 	//reference to a window
 	SDL_Window* window;

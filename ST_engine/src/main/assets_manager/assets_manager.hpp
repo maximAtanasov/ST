@@ -49,7 +49,7 @@ class assets_manager{
 private:
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
         ST::assets all_assets;
         std::unordered_map<std::string, int> count;
         int load_asset(std::string path);

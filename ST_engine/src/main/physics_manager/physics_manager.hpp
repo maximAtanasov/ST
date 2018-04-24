@@ -18,16 +18,16 @@ class physics_manager{
     private:
         message_bus* gMessage_bus{};
 		task_manager* gTask_manager{};
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
         int gravity = 0;
         int friction = 0;
         int level_floor = 0;
 		bool physics_paused = false;
         std::vector<ST::entity>* entities{};
         
-        int check_collision(unsigned int id, std::vector<ST::entity>* entities);
-        int entity_set_x(int x, unsigned int ID, std::vector<ST::entity>* entities);
-        int entity_set_y(int y, unsigned int ID, std::vector<ST::entity>* entities);
+        int check_collision(uint64_t, std::vector<ST::entity>* entities);
+        int entity_set_x(int x, uint64_t, std::vector<ST::entity>* entities);
+        int entity_set_y(int y, uint64_t, std::vector<ST::entity>* entities);
 
 		void process_horizontal();
 		void process_vertical();

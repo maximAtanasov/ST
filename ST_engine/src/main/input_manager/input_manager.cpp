@@ -17,7 +17,6 @@ int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     //Initialize controls
     int length = 0;
     controls.keyboard = SDL_GetKeyboardState(&length);
-    controls.keyboardFramePrev = (uint8_t*)malloc(sizeof(uint8_t)*length);
     SDL_PollEvent(&event);
     controls.mouseX = 0;
     controls.mouseY = 0;
@@ -25,17 +24,14 @@ int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     controls.mouseY_prev = controls.mouseY;
     controls.mouse_scroll = 0;
 
-    //Create a subscriber object
-	msg_sub = new subscriber();
-
     //Subscribe to the messages we need
-	gMessage_bus->subscribe(VIRTUAL_SCREEN_COORDINATES, msg_sub);
-	gMessage_bus->subscribe(REAL_SCREEN_COORDINATES, msg_sub);
-    gMessage_bus->subscribe(START_TEXT_INPUT, msg_sub);
-    gMessage_bus->subscribe(STOP_TEXT_INPUT, msg_sub);
-    gMessage_bus->subscribe(CLEAR_TEXT_STREAM, msg_sub);
-    gMessage_bus->subscribe(REGISTER_KEY, msg_sub);
-    //gMessage_bus->subscribe(UNREGISTER_KEY, msg_sub);
+	gMessage_bus->subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
+	gMessage_bus->subscribe(REAL_SCREEN_COORDINATES, &msg_sub);
+    gMessage_bus->subscribe(START_TEXT_INPUT, &msg_sub);
+    gMessage_bus->subscribe(STOP_TEXT_INPUT, &msg_sub);
+    gMessage_bus->subscribe(CLEAR_TEXT_STREAM, &msg_sub);
+    gMessage_bus->subscribe(REGISTER_KEY, &msg_sub);
+    gMessage_bus->subscribe(UNREGISTER_KEY, &msg_sub);
 
     return 0;
 }
@@ -49,7 +45,7 @@ void input_manager::update_task(void* mngr){
 void input_manager::take_input(){
     int length = 0;
     SDL_GetKeyboardState(&length);
-    for(int i = 0; i < length; i++){
+    for(int i = 0; i < controls.keys; i++){
         controls.keyboardFramePrev[i] = controls.keyboard[i];
     }
 
@@ -139,16 +135,16 @@ void input_manager::take_input(){
 }
 
 void input_manager::handle_messages(){
-	message* temp = msg_sub->get_next_message();
+	message* temp = msg_sub.get_next_message();
 	while(temp != nullptr){
 		if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
-			auto data = (std::tuple<int, int>*)temp->get_data();
+            auto data = static_cast<std::tuple<int, int>*>(temp->get_data());
             v_width = std::get<0> (*data);
             v_height = std::get<1> (*data);
 			ratio_w = (float)v_width/(float)r_width;
 			ratio_h = (float)v_height/(float)r_height;
 		}else if(temp->msg_name == REAL_SCREEN_COORDINATES) {
-            auto data = (std::tuple<int, int> *) temp->get_data();
+            auto data = static_cast<std::tuple<int, int>*>(temp->get_data());
             r_width = std::get<0>(*data);
             r_height = std::get<1>(*data);
             ratio_w = (float) v_width / (float) r_width;
@@ -161,14 +157,14 @@ void input_manager::handle_messages(){
             composition.clear();
             gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data<std::string>(composition)));
         }else if(temp->msg_name == REGISTER_KEY){
-            auto key_val = (ST::key*)temp->get_data();
+            auto key_val = static_cast<ST::key*>(temp->get_data());
             registered_keys.push_back(*key_val);
         }else if(temp->msg_name == UNREGISTER_KEY){
-            auto key_val = (ST::key*)temp->get_data();
+            auto key_val = static_cast<ST::key*>(temp->get_data());
             registered_keys.erase(std::remove(registered_keys.begin(), registered_keys.end(), *key_val), registered_keys.end());
         }
 		destroy_msg(temp);
-		temp = msg_sub->get_next_message();
+		temp = msg_sub.get_next_message();
 	}
 }
 
@@ -943,7 +939,4 @@ bool input_manager::keyrelease(ST::key arg){
     return released;
 }
 
-void input_manager::close(){
-    free(controls.keyboardFramePrev);
-    delete msg_sub;
-}
+void input_manager::close(){}

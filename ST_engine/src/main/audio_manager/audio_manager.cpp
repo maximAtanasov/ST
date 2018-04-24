@@ -42,15 +42,14 @@ int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     Mix_VolumeMusic(MIX_MAX_VOLUME);
     Mix_AllocateChannels(16);
 
-    //create a subscriber and subscribe to messages
-    msg_sub = new subscriber();
-    gMessage_bus->subscribe(PLAY_SOUND, msg_sub);
-    gMessage_bus->subscribe(PLAY_MUSIC, msg_sub);
-    gMessage_bus->subscribe(STOP_MUSIC, msg_sub);
-    gMessage_bus->subscribe(TOGGLE_AUDIO, msg_sub);
-    gMessage_bus->subscribe(ASSETS, msg_sub);
-	gMessage_bus->subscribe(STOP_ALL_SOUNDS, msg_sub);
-    gMessage_bus->subscribe(SET_VOLUME, msg_sub);
+    //subscribe to messages
+    gMessage_bus->subscribe(PLAY_SOUND, &msg_sub);
+    gMessage_bus->subscribe(PLAY_MUSIC, &msg_sub);
+    gMessage_bus->subscribe(STOP_MUSIC, &msg_sub);
+    gMessage_bus->subscribe(TOGGLE_AUDIO, &msg_sub);
+    gMessage_bus->subscribe(ASSETS, &msg_sub);
+	gMessage_bus->subscribe(STOP_ALL_SOUNDS, &msg_sub);
+    gMessage_bus->subscribe(SET_VOLUME, &msg_sub);
     volume = MIX_MAX_VOLUME;
     return 0;
 }
@@ -60,7 +59,7 @@ int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
  * performs the appropriate actions.
  */
 void audio_manager::handle_messages(){
-    message* temp = msg_sub->get_next_message();
+    message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == PLAY_SOUND){
             auto data = static_cast<std::tuple<size_t, int, int>*>(temp->get_data());
@@ -106,6 +105,6 @@ void audio_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data<int>(volume)));
         }
         destroy_msg(temp);
-        temp = msg_sub->get_next_message();
+        temp = msg_sub.get_next_message();
     }
 }

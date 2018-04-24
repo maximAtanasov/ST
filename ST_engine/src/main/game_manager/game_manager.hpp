@@ -81,12 +81,12 @@
  */
 class game_manager{
     private:
-        std::vector<ST::level*> levels{};
+        std::vector<ST::level> levels{};
         std::string active_level{};
         ST::level* current_level_pointer{};
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
         SDL_atomic_t end_game{};
-        lua_backend* gScript_backend{};
+        lua_backend gScript_backend{};
 
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
@@ -148,15 +148,14 @@ inline std::string game_manager::get_active_level(){
  */
 inline void game_manager::close(){
     handle_messages();
-    delete msg_sub;
-    gScript_backend->close();
+    gScript_backend.close();
 }
 
 /**
  * Runs one iteration of the global loop script.
  */
 inline void game_manager::run_level_loop() {
-    gScript_backend->run_global("loop");
+    gScript_backend.run_global("loop");
 }
 
 /**
@@ -202,28 +201,28 @@ inline int game_manager::get_mouse_y(){
 /**
  * Tells if a key corresponding to a certain action has been pressed.
  * @param arg A hash of the name of the action.
- * @return True of pressed, false otherwise.
+ * @return True if pressed, false otherwise.
  */
 inline bool game_manager::key_pressed(size_t arg){
-    return keys_pressed_data[(uint8_t)(get_level_data()->actions_Buttons[arg])];
+    return keys_pressed_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
 }
 
 /**
  * Tells if a key corresponding to a certain action has been held.
  * @param arg A hash of the name of the action.
- * @return True of held, false otherwise.
+ * @return True if held, false otherwise.
  */
 inline bool game_manager::key_held(size_t arg){
-    return keys_held_data[(uint8_t)get_level_data()->actions_Buttons[arg]];
+    return keys_held_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
 }
 
 /**
  * Tells if a key corresponding to a certain action has been released.
  * @param arg A hash of the name of the action.
- * @return True of released, false otherwise.
+ * @return True if released, false otherwise.
  */
 inline bool game_manager::key_released(size_t arg){
-    return keys_released_data[(uint8_t)get_level_data()->actions_Buttons[arg]];
+    return keys_released_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
 }
 
 #endif

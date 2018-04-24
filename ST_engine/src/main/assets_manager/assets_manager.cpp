@@ -22,12 +22,11 @@ int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
-    msg_sub = new subscriber();
-    gMessage_bus->subscribe(LOAD_LIST, msg_sub);
-    gMessage_bus->subscribe(UNLOAD_LIST, msg_sub);
-    gMessage_bus->subscribe(LOAD_ASSET, msg_sub);
-    gMessage_bus->subscribe(UNLOAD_ASSET, msg_sub);
-    gMessage_bus->subscribe(LOAD_BINARY, msg_sub);
+    gMessage_bus->subscribe(LOAD_LIST, &msg_sub);
+    gMessage_bus->subscribe(UNLOAD_LIST, &msg_sub);
+    gMessage_bus->subscribe(LOAD_ASSET, &msg_sub);
+    gMessage_bus->subscribe(UNLOAD_ASSET, &msg_sub);
+    gMessage_bus->subscribe(LOAD_BINARY, &msg_sub);
 
     //load the global assets
     load_assets_from_list("levels/assets_global.list");
@@ -50,29 +49,29 @@ void assets_manager::update_task(void* arg){
  * performs the appropriate actions.
  */
 void assets_manager::handle_messages(){
-    message* temp = msg_sub->get_next_message();
+    message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == LOAD_LIST){
-            auto path = *(std::string*)temp->get_data();
+            auto path = *static_cast<std::string*>(temp->get_data());
             load_assets_from_list(path);
         }
         else if(temp->msg_name == UNLOAD_LIST){
-            auto path = *(std::string*)temp->get_data();
+            auto path = *static_cast<std::string*>(temp->get_data());
             unload_assets_from_list(path);
         }else if(temp->msg_name == LOAD_ASSET){
-            auto path = *(std::string*)temp->get_data();
+            auto path = *static_cast<std::string*>(temp->get_data());
             load_asset(path);
         }
         else if(temp->msg_name == UNLOAD_ASSET){
-            auto path = *(std::string*)temp->get_data();
+            auto path = *static_cast<std::string*>(temp->get_data());
             unload_asset(path);
         }
         else if(temp->msg_name == LOAD_BINARY){
-            auto path = *(std::string*)temp->get_data();
+            auto path = *static_cast<std::string*>(temp->get_data());
             load_assets_from_binary(path);
         }
         destroy_msg(temp);
-        temp = msg_sub->get_next_message();
+        temp = msg_sub.get_next_message();
     }
 }
 
@@ -339,7 +338,6 @@ int assets_manager::unload_asset(std::string path){
  */
 void assets_manager::close(){
     handle_messages();
-    delete msg_sub;
     for(auto& i : count){
         if(i.second > 0){
             i.second = 1;

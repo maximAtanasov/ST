@@ -9,13 +9,11 @@
 #include <message_bus/message_bus.hpp>
 #include <message_bus/message_allocator.hpp>
 
-message_allocator* msg_memory;
+message_allocator msg_memory{};
 
 //message_bus implementation=====================================================
 
 int message_bus::initialize(){
-    //initialize the message allocator
-    msg_memory = new message_allocator();
     return 0;
 }
 
@@ -42,6 +40,4 @@ void message_bus::subscribe(msg_type msg, subscriber* sub){
     subscribers[temp].push_back(sub);
 }
 
-void message_bus::close(){
-    delete msg_memory;
-}
+void message_bus::close(){}

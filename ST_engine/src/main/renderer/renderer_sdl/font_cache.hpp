@@ -45,7 +45,9 @@ class font_cache{
         int cache_size;
         void move_to_front(std::list<key_pair>& list,std::list<key_pair>::iterator element);
     public:
-        explicit font_cache(int);
+        font_cache() = default;
+        font_cache(int);
+        void set_max(int max);
         ~font_cache();
         void cache_string(std::string, SDL_Texture*, std::string, int);
         bool str_is_cached(std::string, std::string, int);

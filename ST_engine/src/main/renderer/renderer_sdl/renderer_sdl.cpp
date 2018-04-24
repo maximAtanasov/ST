@@ -9,7 +9,7 @@
 #include <renderer/renderer_sdl/renderer_sdl.hpp>
 
 int renderer_sdl::initialize(SDL_Window* window, int width, int height){
-    gFont_cache = new font_cache(100);
+    gFont_cache.set_max(100);
     //initialize renderer
 	this->window = window;
 	this->width = width;
@@ -32,7 +32,7 @@ int renderer_sdl::initialize(SDL_Window* window, int width, int height){
 }
 
 int renderer_sdl::initialize_with_vsync(SDL_Window* window, int width, int height, bool vsync){
-    gFont_cache = new font_cache(100);
+    gFont_cache.set_max(100);
     //initialize renderer
 	if(vsync){
     	sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -72,9 +72,7 @@ void renderer_sdl::close(){
         }
     }
 
-    delete gFont_cache;
     SDL_DestroyTexture(lights_texture);
-	gFont_cache = nullptr;
     SDL_DestroyRenderer(sdl_renderer);
     sdl_renderer = nullptr;
     free(pixels);
@@ -87,8 +85,8 @@ void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, in
     TTF_Font* font = fonts[font_and_size];
     if(font != nullptr){
         int texW, texH;
-        if(gFont_cache->str_is_cached(arg2, arg, size)){ //if the given string (with same size and font) is already cached, get it from cache
-            SDL_Texture* texture = gFont_cache->return_cache();
+        if(gFont_cache.str_is_cached(arg2, arg, size)){ //if the given string (with same size and font) is already cached, get it from cache
+            SDL_Texture* texture = gFont_cache.return_cache();
             SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
             SDL_Rect Rect = {x, y, texW, texH};
             SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
@@ -101,7 +99,7 @@ void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, in
             SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
             SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
             SDL_FreeSurface(text);
-            gFont_cache->cache_string(arg2, texture, arg, size);
+            gFont_cache.cache_string(arg2, texture, arg, size);
         }
     }
 }

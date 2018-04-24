@@ -22,6 +22,10 @@ void font_cache::move_to_front(std::list<key_pair>& list,std::list<key_pair>::it
     }
 }
 
+void font_cache::set_max(int max) {
+    cache_size = max;
+}
+
 SDL_Texture* font_cache::return_cache() {
     return last_check;
 }

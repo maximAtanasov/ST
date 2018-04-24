@@ -14,7 +14,6 @@
  * Destroys the window and quits SDL.
  */
 void display_manager::close(){
-    delete msg_sub;
     SDL_FreeSurface(icon);
     SDL_DestroyWindow(window);
     window = nullptr;
@@ -56,9 +55,8 @@ int display_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     icon = IMG_Load("levels/icon.png");
     SDL_SetWindowIcon(window, icon);
 
-    msg_sub = new subscriber();
-    gMessage_bus->subscribe(SET_FULLSCREEN, msg_sub);
-    gMessage_bus->subscribe(SET_WINDOW_BRIGHTNESS, msg_sub);
+    gMessage_bus->subscribe(SET_FULLSCREEN, &msg_sub);
+    gMessage_bus->subscribe(SET_WINDOW_BRIGHTNESS, &msg_sub);
     return 0;
 }
 
@@ -77,7 +75,7 @@ void display_manager::update_task(void* mngr){
  * performs the appropriate actions.
  */
 void display_manager::handle_messages(){
-    message* temp = msg_sub->get_next_message();
+    message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_FULLSCREEN){
             auto arg = static_cast<bool*>(temp->get_data());
@@ -90,7 +88,7 @@ void display_manager::handle_messages(){
             log(SUCCESS, "Brightness set to: " + std::to_string(*arg));
         }
         destroy_msg(temp);
-        temp = msg_sub->get_next_message();
+        temp = msg_sub.get_next_message();
     }
 }
 

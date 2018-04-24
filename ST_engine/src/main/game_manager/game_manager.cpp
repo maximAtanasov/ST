@@ -17,28 +17,26 @@
  */
 int game_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 
-    gScript_backend = new lua_backend();
-    gScript_backend->initialize(gMessage_bus, this);
+    gScript_backend.initialize(gMessage_bus, this);
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
-    //create a subscriber and subscribe to messages
-    msg_sub = new subscriber();
-    gMessage_bus->subscribe(LOAD_LEVEL, msg_sub);
-    gMessage_bus->subscribe(START_LEVEL, msg_sub);
-    gMessage_bus->subscribe(UNLOAD_LEVEL, msg_sub);
-    gMessage_bus->subscribe(KEY_PRESSED, msg_sub);
-    gMessage_bus->subscribe(KEY_HELD, msg_sub);
-    gMessage_bus->subscribe(KEY_RELEASED, msg_sub);
-    gMessage_bus->subscribe(MOUSE_X, msg_sub);
-    gMessage_bus->subscribe(MOUSE_Y, msg_sub);
-    gMessage_bus->subscribe(VSYNC_IS_ON, msg_sub);
-    gMessage_bus->subscribe(VSYNC_IS_OFF, msg_sub);
-    gMessage_bus->subscribe(END_GAME, msg_sub);
-    gMessage_bus->subscribe(VOLUME_LEVEL, msg_sub);
-    gMessage_bus->subscribe(SHOW_MOUSE, msg_sub);
-    gMessage_bus->subscribe(EXECUTE_SCRIPT, msg_sub);
-    gMessage_bus->subscribe(FULLSCREEN_STATUS, msg_sub);
+    //subscribe to messages
+    gMessage_bus->subscribe(LOAD_LEVEL, &msg_sub);
+    gMessage_bus->subscribe(START_LEVEL, &msg_sub);
+    gMessage_bus->subscribe(UNLOAD_LEVEL, &msg_sub);
+    gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
+    gMessage_bus->subscribe(KEY_HELD, &msg_sub);
+    gMessage_bus->subscribe(KEY_RELEASED, &msg_sub);
+    gMessage_bus->subscribe(MOUSE_X, &msg_sub);
+    gMessage_bus->subscribe(MOUSE_Y, &msg_sub);
+    gMessage_bus->subscribe(VSYNC_IS_ON, &msg_sub);
+    gMessage_bus->subscribe(VSYNC_IS_OFF, &msg_sub);
+    gMessage_bus->subscribe(END_GAME, &msg_sub);
+    gMessage_bus->subscribe(VOLUME_LEVEL, &msg_sub);
+    gMessage_bus->subscribe(SHOW_MOUSE, &msg_sub);
+    gMessage_bus->subscribe(EXECUTE_SCRIPT, &msg_sub);
+    gMessage_bus->subscribe(FULLSCREEN_STATUS, &msg_sub);
     //initialize initial states of keys
     reset_keys();
 
@@ -68,7 +66,7 @@ void game_manager::reset_keys(){
  * Consumes message from the subscriber obeject and performs the appropriate actions.
  */
 void game_manager::handle_messages(){
-    message* temp = msg_sub->get_next_message();
+    message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == LOAD_LEVEL){
             auto name = static_cast<std::string*>(temp->get_data());
@@ -131,14 +129,14 @@ void game_manager::handle_messages(){
         }
         else if(temp->msg_name == EXECUTE_SCRIPT){
             auto scipt = static_cast<std::string*>(temp->get_data());
-            gScript_backend->run_script(*scipt);
+            gScript_backend.run_script(*scipt);
         }
         else if(temp->msg_name == FULLSCREEN_STATUS){
             bool arg = *static_cast<bool*>(temp->get_data());
             fullscreen_status = arg;
         }
         destroy_msg(temp);
-        temp = msg_sub->get_next_message();
+        temp = msg_sub.get_next_message();
     }
 }
 
@@ -150,21 +148,21 @@ void game_manager::load_level(const std::string& level_name){
 
     //check if it is already loaded.
     for(auto& i: levels) {
-        if (i->get_name() == level_name) {
+        if (i.get_name() == level_name) {
             return;
         }
     }
 
     //otherwise - create it
-    auto temp = new ST::level(level_name, gMessage_bus);
-    temp->load();
+    auto temp = ST::level(level_name, gMessage_bus);
+    temp.load();
     levels.push_back(temp);
 
     //current level pointer must be reset, because apparently adding to the vector changes the pointer address
     //(makes sense as it has to reallocate the whole thing)
-    for(auto& i: levels) {
-        if (i->get_name() == active_level) {
-            current_level_pointer = i;
+    for(int i = 0; i < levels.size(); i++) {
+        if(levels[i].get_name() == active_level){
+            current_level_pointer = &levels[i];
             break;
         }
     }
@@ -176,8 +174,8 @@ void game_manager::load_level(const std::string& level_name){
  */
 void game_manager::unload_level(const std::string& level_name){
     for(Uint32 i = 0; i < levels.size(); i++)
-        if(levels[i]->get_name() == level_name){
-            levels[i]->unload();
+        if(levels[i].get_name() == level_name){
+            levels[i].unload();
             levels.erase(levels.begin()+i);
             break;
         }
@@ -188,14 +186,14 @@ void game_manager::unload_level(const std::string& level_name){
  * @param level_name The name of the level to start (this must the name of the folder).
  */
 void game_manager::start_level(const std::string& level_name){
-    gScript_backend->close();
-    gScript_backend->initialize(gMessage_bus, this);
+    gScript_backend.close();
+    gScript_backend.initialize(gMessage_bus, this);
     active_level = level_name;
 
     //set current level pointer
-    for(auto& i: levels) {
-        if(i->get_name() == active_level){
-            current_level_pointer = i;
+    for(int i = 0; i < levels.size(); i++) {
+        if(levels[i].get_name() == active_level){
+            current_level_pointer = &levels[i];
             break;
         }
     }
@@ -210,14 +208,14 @@ void game_manager::start_level(const std::string& level_name){
     std::string temp = "levels/";
     temp = temp + active_level;
     temp = temp + "/level.lua";
-    gScript_backend->run_file(temp);
+    gScript_backend.run_file(temp);
 
     //load level loop
     temp = "levels/";
     temp = temp + active_level;
     temp = temp + "/loop.lua";
-    gScript_backend->load_file(temp);
-    gScript_backend->set_global("loop");
+    gScript_backend.load_file(temp);
+    gScript_backend.set_global("loop");
 
     //Register all the keys this level uses with the input manager.
     for(auto i : get_level_data()->actions_Buttons) {

@@ -60,7 +60,7 @@ class audio_manager{
         int volume = MIX_MAX_VOLUME;
 
         ///subscriber object to receive messages
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
 
         ///External dependencies
         ST::assets* assets_ptr{}; //-Delivered as a message
@@ -128,7 +128,6 @@ inline void audio_manager::unmute(){
  */
 inline void audio_manager::close(){
     handle_messages();
-    delete msg_sub;
     Mix_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
     Mix_Quit();

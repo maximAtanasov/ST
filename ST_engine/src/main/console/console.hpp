@@ -55,7 +55,7 @@ class console{
 
         SDL_Color color{};
         SDL_Color color_text{};
-        subscriber* msg_sub{};
+        subscriber msg_sub{};
         bool shown = false;
         std::vector<ST::console_log> entries;
         int pos = 0;

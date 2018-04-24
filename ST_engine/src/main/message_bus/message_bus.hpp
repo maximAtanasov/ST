@@ -42,15 +42,15 @@ void destroy_msg(message* msg);
 
 //allocator and constructor for messages
 inline message* make_msg(msg_type name, const std::shared_ptr<void>& data){
-    return msg_memory->allocate_message(name, data);
+    return msg_memory.allocate_message(name, data);
 }
 
 inline void destroy_msg(message* msg){
-    msg_memory->deallocate(msg->get_id());
+    msg_memory.deallocate(msg->get_id());
 }
 
 inline message* message::make_copy(){
-    return msg_memory->allocate_message(this->msg_name, this->data);
+    return msg_memory.allocate_message(this->msg_name, this->data);
 }
 
 template <class T> std::shared_ptr<void> make_data(T data){
