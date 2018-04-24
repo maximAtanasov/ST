@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['game_5fis_5frunning',['game_is_running',['../classgame__manager.html#a453aaeba2c2b6d52884f339f2aba3bbc',1,'game_manager']]],
+  ['get_5factive_5flevel',['get_active_level',['../classgame__manager.html#a133b2d1898d88c3fb3b82f7c214eed2a',1,'game_manager']]],
   ['get_5fanimation',['get_animation',['../classST_1_1entity.html#a500bcfe9c9b905b5cff8ed4a4ed88658',1,'ST::entity']]],
   ['get_5fanimation_5fnum',['get_animation_num',['../classST_1_1entity.html#a19107133ccd2142995d8adc6eeff049a',1,'ST::entity']]],
   ['get_5fcol_5fx',['get_col_x',['../classST_1_1entity.html#a62628f395bd543a24dd17db7130a7eb4',1,'ST::entity']]],
@@ -11,7 +13,11 @@ var searchData=
   ['get_5ffont',['get_font',['../classST_1_1text.html#af276459fd6e519d6e197ba41d55d8606',1,'ST::text']]],
   ['get_5ffont_5fsize',['get_font_size',['../classST_1_1text.html#a6e18fedd8ea5d85aecac70328e92c4e4',1,'ST::text']]],
   ['get_5fid',['get_ID',['../classST_1_1entity.html#a747a592ff61a53facf96a7e994183f38',1,'ST::entity']]],
+  ['get_5flevel',['get_level',['../classgame__manager.html#ac3c5bd9d597e6ed31acfe037d2b9eb91',1,'game_manager']]],
+  ['get_5flevel_5fdata',['get_level_data',['../classgame__manager.html#a77946b08bb92265b7dfcccb1fc468c38',1,'game_manager']]],
   ['get_5fmass',['get_mass',['../classST_1_1entity.html#a02e8abbe69a0f142c7ee2a41c5a810ed',1,'ST::entity']]],
+  ['get_5fmouse_5fx',['get_mouse_x',['../classgame__manager.html#a4123499a4eea7fbcc7b882903ba0f4e3',1,'game_manager']]],
+  ['get_5fmouse_5fy',['get_mouse_y',['../classgame__manager.html#a59e9c05efecfb7740361670abbca86c5',1,'game_manager']]],
   ['get_5fname',['get_name',['../classST_1_1level.html#aaedf629adc6b5dc02c06e8a3ded17ee4',1,'ST::level']]],
   ['get_5fsprite_5fnum',['get_sprite_num',['../classST_1_1entity.html#a07fbd0d3b6b4bb28ced1e27968183c0f',1,'ST::entity']]],
   ['get_5ftex_5fh',['get_tex_h',['../classST_1_1entity.html#a88ecb4c27b067efe6ae1ac040ef52f5e',1,'ST::entity']]],

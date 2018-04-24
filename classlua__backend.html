@@ -69,31 +69,208 @@ $(function() {
 <div class="title">lua_backend Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class handles all interaction with lua.  
+ <a href="classlua__backend.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="lua__backend_8hpp_source.html">lua_backend.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a86454d954a94b7e46c53636ca3ef8557"><td class="memItemLeft" align="right" valign="top"><a id="a86454d954a94b7e46c53636ca3ef8557"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classgame__manager.html">game_manager</a> *game_mngr)</td></tr>
+<tr class="memitem:a86454d954a94b7e46c53636ca3ef8557"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#a86454d954a94b7e46c53636ca3ef8557">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classgame__manager.html">game_manager</a> *game_mngr)</td></tr>
 <tr class="separator:a86454d954a94b7e46c53636ca3ef8557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc0c162fc24742bfa9579414ff4d8ca3"><td class="memItemLeft" align="right" valign="top"><a id="adc0c162fc24742bfa9579414ff4d8ca3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_global</b> (std::string arg)</td></tr>
+<tr class="memitem:adc0c162fc24742bfa9579414ff4d8ca3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#adc0c162fc24742bfa9579414ff4d8ca3">set_global</a> (std::string arg)</td></tr>
 <tr class="separator:adc0c162fc24742bfa9579414ff4d8ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a146ec0ddb7ec23ae9adcb24a6780b56b"><td class="memItemLeft" align="right" valign="top"><a id="a146ec0ddb7ec23ae9adcb24a6780b56b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>run_global</b> (std::string arg)</td></tr>
+<tr class="memitem:a146ec0ddb7ec23ae9adcb24a6780b56b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#a146ec0ddb7ec23ae9adcb24a6780b56b">run_global</a> (std::string arg)</td></tr>
 <tr class="separator:a146ec0ddb7ec23ae9adcb24a6780b56b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784bc80abb2efb1531f263938ebeccd8"><td class="memItemLeft" align="right" valign="top"><a id="a784bc80abb2efb1531f263938ebeccd8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>run_file</b> (std::string arg)</td></tr>
+<tr class="memitem:a784bc80abb2efb1531f263938ebeccd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#a784bc80abb2efb1531f263938ebeccd8">run_file</a> (std::string arg)</td></tr>
 <tr class="separator:a784bc80abb2efb1531f263938ebeccd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a9c90d86b894fc04dc8672617c6562e"><td class="memItemLeft" align="right" valign="top"><a id="a1a9c90d86b894fc04dc8672617c6562e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>load_file</b> (std::string)</td></tr>
+<tr class="memitem:a1a9c90d86b894fc04dc8672617c6562e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#a1a9c90d86b894fc04dc8672617c6562e">load_file</a> (std::string)</td></tr>
 <tr class="separator:a1a9c90d86b894fc04dc8672617c6562e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7df393f5455b75a60dd425e013d19275"><td class="memItemLeft" align="right" valign="top"><a id="a7df393f5455b75a60dd425e013d19275"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>run_script</b> (std::string script)</td></tr>
+<tr class="memitem:a7df393f5455b75a60dd425e013d19275"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#a7df393f5455b75a60dd425e013d19275">run_script</a> (std::string script)</td></tr>
 <tr class="separator:a7df393f5455b75a60dd425e013d19275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a533a373f8b78e2738d699db2d6666932"><td class="memItemLeft" align="right" valign="top"><a id="a533a373f8b78e2738d699db2d6666932"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> ()</td></tr>
+<tr class="memitem:a533a373f8b78e2738d699db2d6666932"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlua__backend.html#a533a373f8b78e2738d699db2d6666932">close</a> ()</td></tr>
 <tr class="separator:a533a373f8b78e2738d699db2d6666932"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p class="">This class handles all interaction with lua. </p>
+<p class="">It loads lua scripts and runs them. Also provides Lua with the API to the internal engine code. This is the bridge between gameplay and engine code. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a533a373f8b78e2738d699db2d6666932"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a533a373f8b78e2738d699db2d6666932">&#9670;&nbsp;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lua_backend::close </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Close the Lua State. </p>
+
+</div>
+</div>
+<a id="a86454d954a94b7e46c53636ca3ef8557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86454d954a94b7e46c53636ca3ef8557">&#9670;&nbsp;</a></span>initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lua_backend::initialize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
+          <td class="paramname"><em>msg_bus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgame__manager.html">game_manager</a> *&#160;</td>
+          <td class="paramname"><em>game_mngr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Initializes the Lua susytem. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_bus</td><td>A pointer to the global msg_bus. </td></tr>
+    <tr><td class="paramname">game_mngr</td><td>A pointer to the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a> object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 0 on success or exits with exit code 1 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="a1a9c90d86b894fc04dc8672617c6562e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a9c90d86b894fc04dc8672617c6562e">&#9670;&nbsp;</a></span>load_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lua_backend::load_file </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Loads a file into the global Lua State, but does not run it. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The path to the file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>-1 on failure or 0 on success. </dd></dl>
+
+</div>
+</div>
+<a id="a784bc80abb2efb1531f263938ebeccd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a784bc80abb2efb1531f263938ebeccd8">&#9670;&nbsp;</a></span>run_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lua_backend::run_file </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Run a lua script inside the global Lua state. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The path to the file. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a146ec0ddb7ec23ae9adcb24a6780b56b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a146ec0ddb7ec23ae9adcb24a6780b56b">&#9670;&nbsp;</a></span>run_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lua_backend::run_global </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>arg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Run a already set global. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arg</td><td>The name of the global. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7df393f5455b75a60dd425e013d19275"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7df393f5455b75a60dd425e013d19275">&#9670;&nbsp;</a></span>run_script()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lua_backend::run_script </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>script</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Run a lua script contained in a script. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">script</td><td>The Lua Script to run. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adc0c162fc24742bfa9579414ff4d8ca3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc0c162fc24742bfa9579414ff4d8ca3">&#9670;&nbsp;</a></span>set_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lua_backend::set_global </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>arg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Set a loaded script as a global. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">arg</td><td>The name of the script to set as global. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/main/game_manager/lua_backend/<a class="el" href="lua__backend_8hpp_source.html">lua_backend.hpp</a></li>
 <li>src/main/game_manager/lua_backend/lua_backend.cpp</li>
