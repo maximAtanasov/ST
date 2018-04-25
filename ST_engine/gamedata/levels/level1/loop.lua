@@ -32,8 +32,9 @@ if(pause == 0) then
 
     centreCamera(player1.ID)
     --thunderclap
-    if math.random(1, 800) == 50 then
-        if math.random(1, 4) ~= 3 then
+    local random = math.random
+    if random(1, 800) == 50 then
+        if random(1, 4) ~= 3 then
             playSound("thunderclap.wav", 100, 0)
         else
             playSound("thunderclap2.wav", 75, 0)

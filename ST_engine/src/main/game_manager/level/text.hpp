@@ -15,7 +15,7 @@ namespace ST {
 
     ///This class represents text objects in the game
     /**
-     * It is used for any user-defined or game-specific text. (So no the fps counter, console text, etc.).
+     * It is used for any user-defined or game-specific text. (So not the fps counter, console text, etc.).
      */
     class text {
 
