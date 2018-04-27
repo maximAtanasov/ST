@@ -22,7 +22,7 @@ Dependcies needed on Linux:
 cmake - you need version 3.9 or higher (or your IDE comes bundled with CMake)
 
 liblua5.3
-libSDL2
+libsd
 libSDL2_image
 libSDL2_mixer
 libSDL2_ttf
@@ -31,7 +31,7 @@ libglew
 
 if you are on Ubuntu (or another Debian-based distro) you can install all dependencies like this:
 ```
-sudo apt-get install cmake liblua5.3-dev libSDL2-dev libSDL2_image-dev libSDL2_mixer-dev libSDL2_ttf-dev
+sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev llibsdl2-mixer-dev libsdl2-ttf-dev
 
 sudo apt-get install libgtest-dev
 
