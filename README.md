@@ -31,7 +31,7 @@ libglew
 
 if you are on Ubuntu (or another Debian-based distro) you can install all dependencies like this:
 ```
-sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev llibsdl2-mixer-dev libsdl2-ttf-dev
+sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 
 sudo apt-get install libgtest-dev
 
@@ -48,13 +48,6 @@ Or if you are on Fedora:
 ```
 sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua-devel gtest-devel
 
-cd /usr/src/gtest
-
-sudo cmake CMakeLists.txt
-
-sudo make
-
-sudo cp *.a /usr/lib
 ```
 
 If you are on linux you can use your favorite IDE and open the folder as a CMake project
