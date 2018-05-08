@@ -13,6 +13,11 @@
 #include <defs.hpp>
 #include <renderer/renderer_sdl/font_cache.hpp>
 
+///The renderer for the engine.
+/**
+ * This renderer is based entirely on the SDL2 renderer and uses it, along with some helper methods and
+ * rendering techniques to draw textures, text, primitives to the screen.
+ */
 class renderer_sdl{
 private:
     SDL_Renderer* sdl_renderer;
@@ -71,6 +76,10 @@ public:
 
 //INLINED METHODS
 
+/**
+ * An alternative method to drawing lights - not used at the moment.
+ * @param arg - A lightmap.
+ */
 inline void renderer_sdl::draw_lights(uint8_t arg[1920][1080]){
 	int k = 0;
 	for(uint16_t i = 0; i < height; i++){
@@ -83,6 +92,12 @@ inline void renderer_sdl::draw_lights(uint8_t arg[1920][1080]){
 	SDL_RenderCopy(sdl_renderer, lights_texture, nullptr, nullptr);
 }
 
+/**
+ * Draw a texture at a given position.
+ * @param arg The hash of the texture name.
+ * @param x The X position to render at.
+ * @param y The Y position to render at.
+ */
 inline void renderer_sdl::draw_texture(size_t arg, int x, int y) {
 	SDL_Texture *temp = textures[arg];
 	if (temp != nullptr) {
@@ -93,6 +108,14 @@ inline void renderer_sdl::draw_texture(size_t arg, int x, int y) {
 	}
 }
 
+/**
+ * Draws a filled rectangle on the screen.
+ * @param x The X position to draw at.
+ * @param y The Y position to draw at.
+ * @param w The width of the rectangle.
+ * @param h The height of the rectangle.
+ * @param color The color of the rectangle.
+ */
 inline void renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color){
 	SDL_Rect Rect = {x, y, w, h};
 	SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
@@ -100,6 +123,14 @@ inline void renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_
 	SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
 }
 
+/**
+ * Draws a rectangle on the screen.
+ * @param x The X position to draw at.
+ * @param y The Y position to draw at.
+ * @param w The width of the rectangle.
+ * @param h The height of the rectangle.
+ * @param color The color of the rectangle.
+ */
 inline void renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color color){
 	SDL_Rect Rect = {x, y, w, h};
 	SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
@@ -107,6 +138,10 @@ inline void renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color c
 	SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
 }
 
+/**
+ * Draws a texture that fills the entire screen (Background).
+ * @param arg The hash of the texture name.
+ */
 inline void renderer_sdl::draw_background(size_t arg){
 	SDL_Texture* temp = textures[arg];
 	if(temp != nullptr){
@@ -114,6 +149,16 @@ inline void renderer_sdl::draw_background(size_t arg){
 	}
 }
 
+/**
+ * Draws a texture that is a spritesheet.
+ * @param arg The hash of the name of the spritesheet.
+ * @param x The X position to render at.
+ * @param y The Y position to render at.
+ * @param sprite The number of the sprite in the texture. (Column in the spritesheet).
+ * @param animation The number of the animation in the texture (Row in the spritesheet).
+ * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
+ * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
+ */
 inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num){
 	SDL_Texture* temp = textures[arg];
 	if(temp != nullptr){
@@ -127,6 +172,13 @@ inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int 
 	}
 }
 
+/**
+ * Draws an animated overlay.
+ * Works similary to draw_sprite, except only one animation is supported.
+ * @param arg The hash of the texture name.
+ * @param sprite The number of the sprite to use.
+ * @param sprite_num The total number of frames this spritesheet has.
+ */
 inline void renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num){
 	int animation_num = 1;
 	int animation = 1;
@@ -141,16 +193,29 @@ inline void renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num){
 	}
 }
 
+/**
+ * Clears the screen.
+ */
 inline void renderer_sdl::clear_screen(){
 	SDL_RenderClear(sdl_renderer);
 }
 
+/**
+ * Sets a draw color.
+ * @param r Red value.
+ * @param g Green value.
+ * @param b Blue value.
+ * @param a Alpha value.
+ */
 inline void renderer_sdl::set_draw_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a){
 	SDL_SetRenderDrawColor(sdl_renderer, r, g, b, a);
 }
 
+/**
+ * Presents the framebuffer to the window.
+ */
 inline void renderer_sdl::present(){
 	SDL_RenderPresent(sdl_renderer);
 }
 
-#endif
+#endif //RENDER_SDL_DEF

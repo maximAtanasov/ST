@@ -9,15 +9,11 @@
 #include <string>
 #include <ST_loaders/loaders.hpp>
 
-bool ST::replace_string(std::string& str, const std::string& from, const std::string& to){
-    size_t start_pos = str.find(from);
-    if(start_pos == std::string::npos){
-        return false;
-    }
-    str.replace(start_pos, from.length(), to);
-    return true;
-}
-
+/**
+ * Gets the file extension from the filename.
+ * @param filename The filename.
+ * @return The extension. - "png", "wav", "mp3", or "ogg". Unknown when it's well, unknown.
+ */
 std::string ST::get_file_extension(const std::string& filename){
     if(filename.size() > 4){
         uint64_t size = filename.size() - 1;
@@ -34,6 +30,12 @@ std::string ST::get_file_extension(const std::string& filename){
     return "unknown";
 }
 
+/**
+ * Packs assets to a binary.
+ * Assets must be present on disk.
+ * @param binary The name of the binary that is going to be created.
+ * @param args The filenames of the assets to read from.
+ */
 void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args){
     SDL_RWops *output = SDL_RWFromFile(binary.c_str(), "a+");
 
@@ -125,6 +127,11 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     output->close(output);
 }
 
+/**
+ * Unpacks all the assets a binary contains.
+ * @param path The path to the binary.
+ * @return An ST:assets_named struct containing all assets in native engine format and their names.
+ */
 ST::assets_named* ST::unpack_binary(const std::string& path){
     auto assets = new ST::assets_named();
     SDL_RWops *input = SDL_RWFromFile(path.c_str(), "r");
@@ -223,6 +230,11 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
     return assets;
 }
 
+/**
+ * Unpacks the contents of a binary to disk.
+ * @param path The path to the binary.
+ * @return 0 on Success, -1 on Failure.
+ */
 int ST::unpack_binary_to_disk(const std::string& path){
     SDL_RWops *input = SDL_RWFromFile(path.c_str(), "r");
     if (input != nullptr) {

@@ -14,14 +14,38 @@
 #include <game_manager/level/entity.hpp>
 #include <task_manager/task_manager.hpp>
 
+///This class handles all physics related actions in the engine.
+/**
+ * Messages this subsystem listens to: <br>
+ *
+ * <b>SET_GRAVITY</b> - Sets the current gravity.
+ *
+ * Message must contain: a pointer to a <b>int8_t</b>.
+ *
+ *  <b>SET_FRICTION</b> - Sets the current friction.
+ *
+ * Message must contain: a pointer to a <b>int8_t</b>.
+ *
+ *  <b>SET_FLOOR</b> - Sets the floor of the level.
+ *
+ * Message must contain: a pointer to a <b>int32_t</b>.
+ *
+ *  <b>PAUSE_PHYSICS</b> - Pauses all physics.
+ *
+ * Message must contain: a <b>nullptr</b>.
+ *
+ * <b>UNPAUSE_PHYSICS</b> - Resumes all physics.
+ *
+ * Message must contain: a <b>nullptr</b>.
+ */
 class physics_manager{
     private:
         message_bus* gMessage_bus{};
 		task_manager* gTask_manager{};
         subscriber msg_sub{};
-        int gravity = 0;
-        int friction = 0;
-        int level_floor = 0;
+        int8_t gravity = 0;
+        int8_t friction = 0;
+        int32_t level_floor = 0;
 		bool physics_paused = false;
         std::vector<ST::entity>* entities{};
         
@@ -42,6 +66,10 @@ class physics_manager{
 
 //INLINED METHODS
 
+/**
+ * Responds to messages from the subscriber object and updates the physics if they are not paused.
+ * @param data A pointer to the level data. (containing the entities that we need).
+ */
 inline void physics_manager::update(ST::level_data* data){
 	handle_messages();
 	if(physics_paused){
@@ -52,4 +80,4 @@ inline void physics_manager::update(ST::level_data* data){
 	process_vertical();
 }
 
-#endif
+#endif //PHYSICS_DEF

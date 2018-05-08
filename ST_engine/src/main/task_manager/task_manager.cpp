@@ -9,6 +9,11 @@
 #include <task_manager/task_manager.hpp>
 #include <console/log.hpp>
 
+/**
+ * The function each task thread runs.
+ * @param arg A pointer to the task_manager.
+ * @return Always 0. (This function only returns when at engine-shutdown).
+ */
 int task_manager::task_thread(void* arg){
 	auto self = static_cast<task_manager*>(arg);
 	ST::task* work;
@@ -21,6 +26,11 @@ int task_manager::task_thread(void* arg){
     return 0;
 }
 
+/**
+ * Runs a function pointer from a task with it's associated data.
+ * Waits for any other tasks that are dependencies to the current one and waits for them.
+ * @param work The ST::task object conatining job data.
+ */
 void task_manager::do_work(ST::task* work){
     if(work->dependency != nullptr){ //wait for dependency to finish
         SDL_SemWait(work->dependency);
@@ -33,6 +43,12 @@ void task_manager::do_work(ST::task* work){
     delete work;
 }
 
+/**
+ * Initializes the task manager.
+ * Starts as many worker threads as there are logical cores in the system - 1.
+ * @param msg_bus A pointer to the global message bus.
+ * @return Always 0.
+ */
 int task_manager::initialize(message_bus* msg_bus){
 
     //Set our external dependency
@@ -59,10 +75,19 @@ int task_manager::initialize(message_bus* msg_bus){
     return 0;
 }
 
+/**
+ * This method will start a completely new thread, separate from the worker threads.
+ * @param thread_func The function pointer.
+ * @param data The data to suppply to it.
+ */
 void task_manager::start_thread(int (*thread_func)(void*), void* data){
     SDL_CreateThread(thread_func, " ", data);
 }
 
+/**
+ * Closes the task manager.
+ * Waits for all threads to exit properly and finishes any unfinished tasks.
+ */
 void task_manager::close(){
     SDL_AtomicSet(&run_threads, 0);
     for(int i = 0; i < thread_num-1; i++){
@@ -83,6 +108,11 @@ void task_manager::close(){
 
 //TODO: Task allocator
 
+/**
+ * Start a new task on one of the task threads.
+ * @param arg The task object to use.
+ * @return A task_id that can be used to wait for this task.
+ */
 task_id task_manager::start_task(ST::task* arg){
     //Aparrently a bit cheaper to create a new semaphore instead of reusing old ones
     //This may depend on the platform (OS implementation of Semaphores)
@@ -93,12 +123,20 @@ task_id task_manager::start_task(ST::task* arg){
     return lock;
 }
 
+/**
+ * Same as start_task except no task_id (lock) is created and the task has no dependencies.
+ * @param arg The task object to use.
+ */
 void task_manager::start_task_lockfree(ST::task* arg){
     arg->set_lock(nullptr);
     task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
 }
 
+/**
+ * Wait for a task to finish and do work from the work queue while doing waiting.
+ * @param id The ID of the task.
+ */
 void task_manager::wait_for_task(task_id id){
     if(id != nullptr) {
         while(SDL_SemTryWait(id) != 0) {

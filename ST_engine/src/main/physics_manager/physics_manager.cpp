@@ -8,6 +8,12 @@
 
 #include <physics_manager/physics_manager.hpp>
 
+/**
+ * Initializes the physics manager.
+ * @param msg_bus A pointer to the global message bus.
+ * @param tsk_mngr A pointer to the global task_mngr.
+ * @return Always 0.
+ */
 int physics_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
@@ -22,6 +28,9 @@ int physics_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     return 0;
 }
 
+/**
+ * Process horizontal collisions for all entities.
+ */
 void physics_manager::process_horizontal() {
     for(auto& i : *entities) {
         //handle horizontal velocity
@@ -49,6 +58,9 @@ void physics_manager::process_horizontal() {
     }
 }
 
+/**
+ * Process vertical collisions for all entities.
+ */
 void physics_manager::process_vertical() {
     for(auto& i : *entities) {
         if (i.is_affected_by_physics()) {
@@ -78,15 +90,19 @@ void physics_manager::process_vertical() {
     }
 }
 
+/**
+ * Retrieves messages from the subscriber object and
+ * performs the appropriate actions.
+ */
 void physics_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_GRAVITY){
-            gravity = *(int*)temp->get_data();
+            gravity = *static_cast<int8_t*>(temp->get_data());
         }else if(temp->msg_name == SET_FLOOR){
-            level_floor = *(int*)temp->get_data();
+            level_floor = *static_cast<int32_t*>(temp->get_data());
         }else if(temp->msg_name == SET_FRICTION){
-            friction = *(int*)temp->get_data();
+            friction = *static_cast<int8_t*>(temp->get_data());
         }else if(temp->msg_name == PAUSE_PHYSICS){
             physics_paused = true;
         }else if(temp->msg_name == UNPAUSE_PHYSICS){
@@ -97,6 +113,13 @@ void physics_manager::handle_messages(){
     }
 }
 
+/**
+ * Sets the X position of an entity.
+ * @param X The X position to set.
+ * @param ID The ID of the entity.
+ * @param entities All entities in the level.
+ * @return 0 if there was no collision and X was set, 1 otherwise.
+ */
 int physics_manager::entity_set_x(int X, uint64_t ID, std::vector<ST::entity>* entities){
     int currentX = entities->at(ID).get_x();
     entities->at(ID).set_x(X);
@@ -108,6 +131,13 @@ int physics_manager::entity_set_x(int X, uint64_t ID, std::vector<ST::entity>* e
     return 1;
 }
 
+/**
+ * Sets the Y position of an entity.
+ * @param Y The Y position to set.
+ * @param ID The ID of the entity.
+ * @param entities All entities in the level.
+ * @return 0 if there was no collision and X was set, 1 otherwise.
+ */
 int physics_manager::entity_set_y(int Y, uint64_t ID, std::vector<ST::entity>* entities){
     int currentY = entities->at(ID).get_y();
     entities->at(ID).set_y(Y);
@@ -120,7 +150,12 @@ int physics_manager::entity_set_y(int Y, uint64_t ID, std::vector<ST::entity>* e
     return 1;
 }
 
-
+/**
+ * Checks if an entity collides with any other entities.
+ * @param ID The ID of the entity to check.
+ * @param entities All entities in the current level.
+ * @return 0 if there was a collision, -1 otherwise.
+ */
 int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entities){
     for(unsigned int i = 0; i < entities->size(); i++){
         ST::entity* temp = &entities->at(i);
@@ -136,5 +171,7 @@ int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entit
     return -1;
 }
 
-
+/**
+ * Closes the physics manager.
+ */
 void physics_manager::close(){}

@@ -12,6 +12,7 @@ project(ST_loaders)
 set(CMAKE_CXX_STANDARD 11)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(../ST_util/include)
 
 add_library(ST_loaders STATIC
         src/main/loaders.cpp

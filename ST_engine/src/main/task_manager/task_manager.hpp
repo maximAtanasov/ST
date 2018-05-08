@@ -13,11 +13,13 @@
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task.hpp>
 
-//The task manager only needs to be initialized, it will start at least one worker thread
-//and an update thread that will distribute incoming tasks
-
 typedef SDL_semaphore* task_id;
 
+///The Task Manager handles all things multi-threaded in the engine.
+/**
+ * The task manager only needs to be initialized, it will start at least one worker thread
+ *
+ */
 class task_manager{
 
     private:
@@ -41,4 +43,4 @@ class task_manager{
         void wait_for_task(task_id id);
 };
 
-#endif
+#endif //TASK_MNGR_DEF

@@ -6,8 +6,8 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#ifndef SLAVICTALES_MASTER_MATH_HPP
-#define SLAVICTALES_MASTER_MATH_HPP
+#ifndef SLAVIC_TALES_MATH_HPP
+#define SLAVIC_TALES_MATH_HPP
 
 #include <chrono>
 #include <random>
@@ -31,4 +31,4 @@ namespace ST {
     int random_int(int max);
 }
 
-#endif //SLAVICTALES_MASTER_MATH_HPP
+#endif //SLAVIC_TALES_MATH_HPP

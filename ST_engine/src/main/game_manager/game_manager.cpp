@@ -13,7 +13,7 @@
  * initializes the game_manager and loads the level "main"
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
- * @return Always 1.
+ * @return Always 0.
  */
 int game_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 

@@ -11,6 +11,10 @@
 
 #include <chrono>
 
+///A timer used for keeping track of time in the main loop.
+/**
+ * Uses a std::chrono::high_resolution_clock internally to provide quite accurate timekeeping.
+ */
 class timer{
     private:
         std::chrono::time_point<std::chrono::high_resolution_clock> start;
@@ -22,6 +26,10 @@ class timer{
 
 //INLINED METHODS
 
+/**
+ *
+ * @return The elapsed time since the initializes of the timer.
+ */
 inline double timer::time_since_start(){
     std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
     return elapsed_seconds.count() * 1000;

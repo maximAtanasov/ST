@@ -8,6 +8,13 @@
 
 #include <renderer/renderer_sdl/renderer_sdl.hpp>
 
+/**
+ * Initializes the renderer.
+ * @param window The window to bind this renderer to.
+ * @param width The virtual width of the window.
+ * @param height The virtual height of the window.
+ * @return Always 0.
+ */
 int renderer_sdl::initialize(SDL_Window* window, int width, int height){
     gFont_cache.set_max(100);
     //initialize renderer
@@ -21,16 +28,26 @@ int renderer_sdl::initialize(SDL_Window* window, int width, int height){
     set_draw_color(0, 0, 0, 255);
 
     //initialize lights surfaces and texture
-    lights_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 1920, 1080);
+    lights_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height);
     if(lights_texture == nullptr){
         printf("%s\n", SDL_GetError());
     }else{
         SDL_SetTextureBlendMode(lights_texture, SDL_BLENDMODE_BLEND);
     }
-    pixels = (Uint32*)malloc(width*height*sizeof(Uint32));
+    pixels = static_cast<uint32_t*>(malloc(width*height*sizeof(Uint32)));
     return 0;
 }
 
+
+/**
+ * Initializes the renderer.
+ * Same as the regular initialization method, except for an additional parameter that specify if VSYNC should be on or off.
+ * @param window The window to bind this renderer to.
+ * @param width The virtual width of the window.
+ * @param height The virtual height of the window.
+ * @param vsync True to enable VSYNC, false otherwise.
+ * @return Always 0.
+ */
 int renderer_sdl::initialize_with_vsync(SDL_Window* window, int width, int height, bool vsync){
     gFont_cache.set_max(100);
     //initialize renderer
@@ -49,10 +66,13 @@ int renderer_sdl::initialize_with_vsync(SDL_Window* window, int width, int heigh
     }else{
         SDL_SetTextureBlendMode(lights_texture, SDL_BLENDMODE_BLEND);
     }
-    pixels = (Uint32*)malloc(width*height*sizeof(Uint32));
+    pixels = static_cast<uint32_t*>(malloc(width*height*sizeof(Uint32)));
     return 0;
 }
 
+/**
+ * Closes the renderer. Deletes all textures and fonts.
+ */
 void renderer_sdl::close(){
     for (auto& it : fonts) {
         if (it.second != nullptr) {
@@ -79,7 +99,17 @@ void renderer_sdl::close(){
     pixels = nullptr;
 }
 
-//Text fallback for non-english text -- works with cyrillic, expanded Latin (Spanish, German, etc..) and I guess all of UTF8
+/**
+ * Text rendering method for non-ASCII text -- works with cyrillic, expanded Latin (Spanish, German, etc..) and I guess all of UTF8
+ * @param arg The font to render with.
+ * @param arg2 The text to render.
+ * @param x The x position to render at.
+ * @param y The y position to render at.
+ * @param color_font The color to render with.
+ * @param size The size of the font to render at.
+ *
+ * Note that the font must previously be loaded at the selected size.
+ */
 void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size){
     std::string font_and_size = arg+std::to_string(size);
     TTF_Font* font = fonts[font_and_size];
@@ -104,8 +134,18 @@ void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, in
     }
 }
 
-//This will draw text using cached glyphs - the fastest way possible, works only with english and relatively simple fonts
-//(any complex cursive fonts won't be rendered properly)
+/**
+ * This will draw text using cached glyphs - the fastest way possible, works only with ASCII and relatively simple fonts
+ * (any complex cursive fonts won't be rendered properly).
+ * @param arg The font to render with.
+ * @param arg2 The text to render.
+ * @param x The x position to render at.
+ * @param y The y position to render at.
+ * @param color_font The color to render with.
+ * @param size The size of the font to render at.
+ *
+ * Note that the font must previously be loaded at the selected size.
+ */
 void renderer_sdl::draw_text_cached(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size){
     std::string font_and_size = arg+std::to_string(size);
     std::vector<SDL_Texture*> tempVector = fonts_cache[font_and_size];
@@ -124,8 +164,20 @@ void renderer_sdl::draw_text_cached(std::string arg, std::string arg2, int x, in
     }
 }
 
-//This is will decide which of the above text rendering methods to use based on the flag that is passed, if you are unsure if your
-//font will render properly just pass in 0 (the default for all non-internal engine text)
+/**
+ * This method will decide which of the two text rendering methods to use based on the flag that is passed, if you are unsure if your
+ * font will render properly just pass in 0 (the default for all non-internal engine text).
+ * @param arg The font to render with.
+ * @param arg2 The text to render.
+ * @param x The x position to render at.
+ * @param y The y position to render at.
+ * @param color_font The color to render with.
+ * @param size The size of the font to render at.
+ * @param flag 1 to render with draw_text_cached, 0 to render with draw_text_normal
+ * and any other value will cause a method to be picked automatically.
+ *
+ * Note that the font must previously be loaded at the selected size.
+ */
 void renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag){
     if(flag == 1){
         draw_text_cached(arg, arg2, x, y, color_font, size);
@@ -142,6 +194,10 @@ void renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SD
     }
 }
 
+/**
+ * Upload all surface to the GPU. (Create textures from them).
+ * @param surfaces The surfaces to upload.
+ */
 void renderer_sdl::upload_surfaces(std::unordered_map<size_t, SDL_Surface*>* surfaces){
 	if(surfaces != nullptr){
 		this->surfaces_pointer = surfaces;
@@ -161,6 +217,9 @@ void renderer_sdl::upload_surfaces(std::unordered_map<size_t, SDL_Surface*>* sur
     }
 }
 
+/**
+ * Upload fonts to the GPU. (save and cache their glyphs).
+ */
 void renderer_sdl::upload_fonts(std::unordered_map<std::string, TTF_Font*>* fonts){
     if(fonts != nullptr){
 		this->fonts_pointer = fonts;
@@ -185,8 +244,14 @@ void renderer_sdl::upload_fonts(std::unordered_map<std::string, TTF_Font*>* font
     }
 }
 
-//do not confuse this method with the font_cache class, they have nothing in common, this caches fonts to be used
-//with ASCII strings, font_cache is a LRU cache that works with any string
+/**
+ * Caches all glyphs of a font at a given size.
+ * Works with the draw_text_cached method.
+ * Do not confuse this method with the font_cache class, they have nothing in common, this caches fonts to be used
+ * with ASCII strings, font_cache is a LRU cache that works with any string.
+ * @param Font The Font to render with.
+ * @param font_and_size The name+size of the font.
+ */
 void renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
@@ -202,7 +267,9 @@ void renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
     fonts_cache[font_and_size] = tempVector;
 }
 
-
+/**
+ * Turns on vsync.
+ */
 void renderer_sdl::vsync_on(){
 	close();
 	initialize_with_vsync(window, width, height, true);
@@ -210,6 +277,9 @@ void renderer_sdl::vsync_on(){
 	upload_fonts(fonts_pointer);
 }
 
+/**
+ * Turns off vsync.
+ */
 void renderer_sdl::vsync_off(){
 	close();
 	initialize_with_vsync(window, width, height, false);
@@ -217,6 +287,9 @@ void renderer_sdl::vsync_off(){
 	upload_fonts(fonts_pointer);
 }
 
+/**
+ * Destroys this renderer object.
+ */
 renderer_sdl::~renderer_sdl(){
     this->close();
 }

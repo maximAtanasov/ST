@@ -8,6 +8,10 @@
 
 #include <main/fps.hpp>
 
+/**
+ * Initializes the fps counter.
+ * @return Always 0.
+ */
 int fps::initialize() {
     for(double& i : average) {
         i = 0;
@@ -15,6 +19,11 @@ int fps::initialize() {
     return 0;
 }
 
+/**
+ * Updates the fps counter with the current time and current frame_time.
+ * @param time The current time.
+ * @param frame_time The current frame time.
+ */
 void fps::update(double time, double frame_time) {
     average[counter++] = frame_time;
     if(counter == 60){
@@ -27,6 +36,9 @@ void fps::update(double time, double frame_time) {
     }
 }
 
+/**
+ * @return The average framerate of the last second.
+ */
 double fps::get_average() {
     double sum = 0;
     for(double i : average){

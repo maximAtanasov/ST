@@ -18,9 +18,11 @@
 #include <unordered_map>
 #include <iostream>
 #include <sstream>
+#include <ST_util/string_util.hpp>
 
 namespace ST {
 
+    ///This struct contains assets just like the regular ST::assets, except it uses asset names as keys instead of hashes.
     struct assets_named{
         std::unordered_map<std::string, SDL_Surface *> surfaces;
         std::unordered_map<std::string, Mix_Chunk *> chunks;
@@ -31,6 +33,5 @@ namespace ST {
     void pack_to_binary(const std::string &path, std::vector<std::string> args);
     int unpack_binary_to_disk(const std::string &path);
     std::string get_file_extension(const std::string &filename);
-    bool replace_string(std::string &str, const std::string &from, const std::string &to);
 }
 #endif

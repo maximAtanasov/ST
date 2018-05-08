@@ -8,6 +8,12 @@
 
 #include <input_manager/input_manager.hpp>
 
+/**
+ * initializes the input manager
+ * @param msg_bus A pointer to the global message bus.
+ * @param tsk_mngr A pointer to the global task_mngr.
+ * @return Always 0.
+ */
 int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 
     //SET OUR EXTERNAL DEPENDENCIES
@@ -15,7 +21,7 @@ int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gTask_manager = tsk_mngr;
 
     //Initialize controls
-    int length = 0;
+    int32_t length = 0;
     controls.keyboard = SDL_GetKeyboardState(&length);
     SDL_PollEvent(&event);
     controls.mouseX = 0;
@@ -36,12 +42,20 @@ int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     return 0;
 }
 
+/**
+ * Performs the update for the input_manager on a task thread.
+ * @param arg pointer to an input_manager (a <b>this</b> pointer basically) as the
+ * function must be static.
+ */
 void input_manager::update_task(void* mngr){
     auto self = (input_manager*)mngr;
     self->handle_messages();
     self->take_input();
 }
 
+/**
+ * Checks the state of the keyboard/mouse and sends appropriate messages.
+ */
 void input_manager::take_input(){
     int length = 0;
     SDL_GetKeyboardState(&length);
@@ -102,8 +116,6 @@ void input_manager::take_input(){
 		}
     }
 
-
-
     //check if any of the registered keys is pressed and send a message if so
     for(auto i : registered_keys){
         if(keypress(i)){
@@ -134,6 +146,10 @@ void input_manager::take_input(){
     }
 }
 
+/**
+ * Retrieves messages from the subscriber object and
+ * performs the appropriate actions.
+ */
 void input_manager::handle_messages(){
 	message* temp = msg_sub.get_next_message();
 	while(temp != nullptr){
@@ -141,14 +157,14 @@ void input_manager::handle_messages(){
             auto data = static_cast<std::tuple<int, int>*>(temp->get_data());
             v_width = std::get<0> (*data);
             v_height = std::get<1> (*data);
-			ratio_w = (float)v_width/(float)r_width;
-			ratio_h = (float)v_height/(float)r_height;
+            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
+            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
 		}else if(temp->msg_name == REAL_SCREEN_COORDINATES) {
             auto data = static_cast<std::tuple<int, int>*>(temp->get_data());
             r_width = std::get<0>(*data);
             r_height = std::get<1>(*data);
-            ratio_w = (float) v_width / (float) r_width;
-            ratio_h = (float) v_height / (float) r_height;
+            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
+            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
         }else if(temp->msg_name == START_TEXT_INPUT){
             text_input = true;
         }else if(temp->msg_name == STOP_TEXT_INPUT){
@@ -168,6 +184,12 @@ void input_manager::handle_messages(){
 	}
 }
 
+/**
+ * Tells if a key is pressed or not. Works by comparing it's
+ * current state with the state from the previous frame.
+ * @param arg an <b>ST::key</b> to key for being pressed.
+ * @return True if pressed, false otherwise.
+ */
 bool input_manager::keypress(ST::key arg){
     bool pressed = false;
     if(arg == ST::key::LEFT){
@@ -425,6 +447,12 @@ bool input_manager::keypress(ST::key arg){
     return pressed;
 }
 
+/**
+ * Tells if a key is held or not. Works by comparing it's
+ * current state with the state from the previous frame.
+ * @param arg an <b>ST::key</b> to key for being held.
+ * @return True if held, false otherwise.
+ */
 bool input_manager::keyheld(ST::key arg){
     bool held = false;
     if(arg == ST::key::LEFT){
@@ -682,6 +710,12 @@ bool input_manager::keyheld(ST::key arg){
     return held;
 }
 
+/**
+ * Tells if a key is released or not. Works by comparing it's
+ * current state with the state from the previous frame.
+ * @param arg an <b>ST::key</b> to key for being released.
+ * @return True if released, false otherwise.
+ */
 bool input_manager::keyrelease(ST::key arg){
     bool released = false;
     if(arg == ST::key::LEFT){
@@ -939,4 +973,7 @@ bool input_manager::keyrelease(ST::key arg){
     return released;
 }
 
+/**
+ * Closes the input manager.
+ */
 void input_manager::close(){}

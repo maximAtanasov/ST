@@ -11,6 +11,12 @@
 
 namespace ST {
 
+    ///An object representing a task to be run by the task manager.
+    /**
+     * Contains a function pointer.
+     * Data to pass to that function pointer.
+     * And some locking mechanisms.
+     */
     class task {
     public:
         void (*task_func)(void *);

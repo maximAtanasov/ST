@@ -22,4 +22,4 @@
 #include <main/timer.hpp>
 #include <main/fps.hpp>
 
-#endif
+#endif //MAIN_DEF

@@ -8,6 +8,10 @@
 
 #include <main/timer.hpp>
 
+/**
+ * Initializes the timer with the current time.
+ * @return Always 0.
+ */
 int timer::initialize(){
     start = std::chrono::high_resolution_clock::now();
     return 0;

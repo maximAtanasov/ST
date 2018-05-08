@@ -9,12 +9,14 @@
 #ifndef KEY_DEFINITIONS_HPP
 #define KEY_DEFINITIONS_HPP
 
-#include <SDL2/SDL_types.h>
+#include <cstdint>
 
+//This is where the key to toggle the console is defined
 #define CONSOLE_TOGGLE_KEY '`'
 
 namespace ST {
 
+    ///An enum containing all mouse/keyboard keys supported by the engine.
     enum class key : uint8_t {
         LEFT = 1,
         RIGHT = 2,

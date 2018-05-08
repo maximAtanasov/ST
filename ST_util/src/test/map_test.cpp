@@ -10,7 +10,7 @@
 #include <ST_util/map.hpp>
 #include <algorithm>
 
-//fills a vector with unique random values of type size_t
+///fills a vector with unique random values of type size_t
 static std::vector<size_t> fill_vector(size_t amount){
     std::vector<size_t> result;
     for(size_t i = 0; i < amount; i++){

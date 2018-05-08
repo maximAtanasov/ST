@@ -6,12 +6,16 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#ifndef SLAVICTALES_MASTER_SUBSCRIBER_HPP
-#define SLAVICTALES_MASTER_SUBSCRIBER_HPP
+#ifndef SLAVIC_TALES_SUBSCRIBER_HPP
+#define SLAVIC_TALES_SUBSCRIBER_HPP
 
 #include <message_bus/message.hpp>
 #include <util/atomic_queue/concurrentqueue.h>
 
+///This class handles a small queue for messages.
+/**
+ * A simple wrapper around  moodycamel::ConcurrentQueue<message*>.
+ */
 class subscriber{
 private:
     moodycamel::ConcurrentQueue<message*> queue;
@@ -21,4 +25,4 @@ public:
     void push_message(message* arg);
 };
 
-#endif //SLAVICTALES_MASTER_SUBSCRIBER_HPP
+#endif //SLAVIC_TALES_SUBSCRIBER_HPP
