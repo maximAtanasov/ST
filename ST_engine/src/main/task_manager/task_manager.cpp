@@ -134,7 +134,7 @@ void task_manager::start_task_lockfree(ST::task* arg){
 }
 
 /**
- * Wait for a task to finish and do work from the work queue while doing waiting.
+ * Wait for a task to finish and do work from the work queue while waiting.
  * @param id The ID of the task.
  */
 void task_manager::wait_for_task(task_id id){

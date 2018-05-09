@@ -50,7 +50,7 @@ sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua
 
 ```
 
-If you are on linux you can use your favorite IDE and open the folder as a CMake project
+If you are on linux you can use your favourite IDE and open the folder as a CMake project
 (CLion, QtCreator, KDevelop, NetBeans, Eclipse with extensions, etc.) and run the ST_engine target or you can run the following commands in the root of the project:
 ```
 cmake CMakeLists.txt

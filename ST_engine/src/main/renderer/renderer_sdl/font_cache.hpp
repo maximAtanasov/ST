@@ -19,7 +19,7 @@
 typedef std::tuple<std::string, std::string, int> font_cache_tuple;
 namespace std{
 
-    ///defines a hash operator for the font_cache_tuple type - this is needef because we use it in a std::unordered_map
+    ///defines a hash operator for the font_cache_tuple type - this is needed because we use it in a std::unordered_map
     template <> struct hash<font_cache_tuple>{
           std::size_t operator()(const font_cache_tuple& k) const{
           using std::size_t;

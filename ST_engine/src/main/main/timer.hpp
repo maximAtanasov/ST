@@ -28,7 +28,7 @@ class timer{
 
 /**
  *
- * @return The elapsed time since the initializes of the timer.
+ * @return The elapsed time since the initialization of the timer.
  */
 inline double timer::time_since_start(){
     std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;

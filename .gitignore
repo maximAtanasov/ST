@@ -14,7 +14,6 @@ compile_commands.json
 CTestTestfile.cmake
 
 ST_engine/gamedata/ST_engine
-asset_manager_test
 
 /.idea/
 

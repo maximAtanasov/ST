@@ -16,7 +16,7 @@
 ///The renderer for the engine.
 /**
  * This renderer is based entirely on the SDL2 renderer and uses it, along with some helper methods and
- * rendering techniques to draw textures, text, primitives to the screen.
+ * rendering techniques to draw textures, text and primitives to the screen.
  */
 class renderer_sdl{
 private:
