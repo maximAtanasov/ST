@@ -5,10 +5,16 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
---Contains global variable definitions
+--LIGHTING
 
+light = {
+    origin_x;
+    origin_y;
+    radius;
+    intensity;
+    brightness;
+}
 
---SUPPORTED:
---English
---Russian
-language = "english"
+function newLight(origin_x, origin_y, radius, intensity, brightness)
+    createLight(origin_x, origin_y, radius, intensity, brightness)
+end

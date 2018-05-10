@@ -41,6 +41,7 @@ int main(int argc, char** argv){
 
     //Order of initialization however is crucial
     gMessage_bus.initialize();
+    gTask_manager.initialize(&gMessage_bus);
 	gInput_manager.initialize(&gMessage_bus, &gTask_manager);
 	gDisplay_manager.initialize(&gMessage_bus, &gTask_manager);
     gDrawing_manager.initialize(gDisplay_manager.get_window(), &gMessage_bus, &gTask_manager);
@@ -52,7 +53,6 @@ int main(int argc, char** argv){
     gConsole.initialize(&gMessage_bus);
     gFps.initialize();
     #endif
-    gTask_manager.initialize(&gMessage_bus);
     gTimer.initialize();
 
     #ifdef __DEBUG
@@ -106,16 +106,16 @@ int main(int argc, char** argv){
 
     //Clean up everything and quit subsystems
     //The order here is also important
-    gAssets_manager.close();
-    gGame_manager.close();
-    gPhysics_manager.close();
-    gInput_manager.close();
     gAudio_manager.close();
-    gDrawing_manager.close();
-    gDisplay_manager.close();
+    gGame_manager.close();
     #ifdef __DEBUG
     gConsole.close();
     #endif
+    gPhysics_manager.close();
+    gAssets_manager.close();
+    gDrawing_manager.close();
+    gDisplay_manager.close();
+    gInput_manager.close();
     gTask_manager.close();
     gMessage_bus.close();
     return 0;

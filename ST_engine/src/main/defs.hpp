@@ -25,4 +25,4 @@
 #include <util/atomic_queue/atomicops.h>
 #include <ST_util/debug_switch.hpp>
 
-#endif
+#endif //GLOBALDEFS_DEF

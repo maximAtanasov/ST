@@ -158,11 +158,11 @@ inline void audio_manager::play_sound(size_t arg, int volume, int loops){
 inline void audio_manager::play_music(size_t arg, int volume, int loops){
     Mix_Music* data = assets_ptr->music[arg];
     if(data != nullptr){
-            Mix_VolumeMusic(volume);
-            if(Mix_PlayMusic(data, loops) == -1){
-                    log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
-            }
-            Mix_VolumeMusic(this->volume);
+        Mix_VolumeMusic(volume);
+        if(Mix_PlayMusic(data, loops) == -1){
+            log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
+        }
+        Mix_VolumeMusic(this->volume);
     }
 }
 

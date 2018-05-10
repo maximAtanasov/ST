@@ -39,7 +39,11 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     luaL_dofile(L, "levels/general.lua");
     luaL_dofile(L, "levels/debug.lua");
-    luaL_dofile(L, "levels/ui.lua");
+    luaL_dofile(L, "levels/objects/entity.lua");
+    luaL_dofile(L, "levels/objects/text.lua");
+    luaL_dofile(L, "levels/objects/light.lua");
+    luaL_dofile(L, "levels/ui/button.lua");
+    luaL_dofile(L, "levels/ui/label.lua");
     luaL_dofile(L, "levels/global_properties.lua");
 
     //register lua binding functions
