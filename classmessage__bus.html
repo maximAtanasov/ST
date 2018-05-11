@@ -98,15 +98,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a626de93f6f1b20e3c7eeb6d7cda385ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a626de93f6f1b20e3c7eeb6d7cda385ab"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td></tr>
-<tr class="separator:a626de93f6f1b20e3c7eeb6d7cda385ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc8fa0d20d60c09faf5762be919ca04a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a> (<a class="el" href="classmessage.html">message</a> *msg)</td></tr>
 <tr class="separator:adc8fa0d20d60c09faf5762be919ca04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae236be78950124599758a79529879aa6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#ae236be78950124599758a79529879aa6">subscribe</a> (msg_type msg, <a class="el" href="classsubscriber.html">subscriber</a> *sub)</td></tr>
 <tr class="separator:ae236be78950124599758a79529879aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7610bd541b5e30ce850452af217c22d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#a7610bd541b5e30ce850452af217c22d9">close</a> ()</td></tr>
-<tr class="separator:a7610bd541b5e30ce850452af217c22d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The centeral messaging system of the engine. All subsystem make extensive use of it. </p>
@@ -114,24 +109,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td>
 
 <p>Definition at line <a class="el" href="message__bus_8hpp_source.html#l00029">29</a> of file <a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a7610bd541b5e30ce850452af217c22d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void message_bus::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Closes the message bus. </p>
-
-<p>Definition at line <a class="el" href="message__bus_8cpp_source.html#l00058">58</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="adc8fa0d20d60c09faf5762be919ca04a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +124,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td>
 </div><div class="memdoc">
 <p>Sends a message to all subscribers of that message type. Creates a copy of the message if it has more than one subscriber. </p>
 
-<p>Definition at line <a class="el" href="message__bus_8cpp_source.html#l00027">27</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__bus_8cpp_source.html#l00023">23</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
 
 </div>
 </div>
@@ -182,7 +159,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="message__bus_8cpp_source.html#l00050">50</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="message__bus_8cpp_source.html#l00046">46</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
 
 </div>
 </div>

@@ -98,10 +98,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3f1805cb9e590c3cabe07553433b8176"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#a3f1805cb9e590c3cabe07553433b8176">close</a> ()</td></tr>
-<tr class="separator:a3f1805cb9e590c3cabe07553433b8176"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8a65850ca5eaa6101b9e2a6dd6ac856"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#ad8a65850ca5eaa6101b9e2a6dd6ac856">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus)</td></tr>
-<tr class="separator:ad8a65850ca5eaa6101b9e2a6dd6ac856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd1739cfc8c58105d40a59b9b27068a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#acd1739cfc8c58105d40a59b9b27068a6">task_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus)</td></tr>
+<tr class="separator:acd1739cfc8c58105d40a59b9b27068a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f1eb4ceea5db9b096171115af6b7e14"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#a6f1eb4ceea5db9b096171115af6b7e14">~task_manager</a> ()</td></tr>
+<tr class="separator:a6f1eb4ceea5db9b096171115af6b7e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf1b0a1176405fb39bfedc0e4cc1cc3c"><td class="memItemLeft" align="right" valign="top">task_id&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#aaf1b0a1176405fb39bfedc0e4cc1cc3c">start_task</a> (<a class="el" href="classST_1_1task.html">ST::task</a> *arg)</td></tr>
 <tr class="separator:aaf1b0a1176405fb39bfedc0e4cc1cc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84f3600a490f4a93380d4f57524cb606"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#a84f3600a490f4a93380d4f57524cb606">start_task_lockfree</a> (<a class="el" href="classST_1_1task.html">ST::task</a> *arg)</td></tr>
@@ -114,13 +114,45 @@ Public Member Functions</h2></td></tr>
 <p>The task manager only needs to be initialized, it will start at least one worker thread </p>
 
 <p>Definition at line <a class="el" href="task__manager_8hpp_source.html#l00023">23</a> of file <a class="el" href="task__manager_8hpp_source.html">task_manager.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a3f1805cb9e590c3cabe07553433b8176"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="acd1739cfc8c58105d40a59b9b27068a6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">task_manager::task_manager </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
+          <td class="paramname"><em>msg_bus</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Initializes the task manager. Starts as many worker threads as there are logical cores in the system - 1. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00051">51</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6f1eb4ceea5db9b096171115af6b7e14"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void task_manager::close </td>
+          <td class="memname">task_manager::~task_manager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -129,35 +161,11 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Closes the task manager. Waits for all threads to exit properly and finishes any unfinished tasks. </p>
 
-<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00091">91</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00089">89</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad8a65850ca5eaa6101b9e2a6dd6ac856"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int task_manager::initialize </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initializes the task manager. Starts as many worker threads as there are logical cores in the system - 1. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Always 0. </dd></dl>
-
-<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00052">52</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
-
-</div>
-</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aaf1b0a1176405fb39bfedc0e4cc1cc3c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -179,7 +187,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A task_id that can be used to wait for this task. </dd></dl>
 
-<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00116">116</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00114">114</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -203,7 +211,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00130">130</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00128">128</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -227,7 +235,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00140">140</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="task__manager_8cpp_source.html#l00138">138</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
 
 </div>
 </div>

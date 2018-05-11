@@ -99,12 +99,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aceab77ded30a9bb6183474067ea24ac0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisplay__manager.html#aceab77ded30a9bb6183474067ea24ac0">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:aceab77ded30a9bb6183474067ea24ac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48582c5d390e2dafa1da5602451c70d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisplay__manager.html#a48582c5d390e2dafa1da5602451c70d8">display_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
+<tr class="separator:a48582c5d390e2dafa1da5602451c70d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80194429cb11eda72d8bd86deca55951"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisplay__manager.html#a80194429cb11eda72d8bd86deca55951">~display_manager</a> ()</td></tr>
+<tr class="separator:a80194429cb11eda72d8bd86deca55951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f3168f64300656afcccf3df72d85e26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisplay__manager.html#a7f3168f64300656afcccf3df72d85e26">update</a> ()</td></tr>
 <tr class="separator:a7f3168f64300656afcccf3df72d85e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6050e8d8030bdd5f226f929b2d2d9bd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisplay__manager.html#a6050e8d8030bdd5f226f929b2d2d9bd9">close</a> ()</td></tr>
-<tr class="separator:a6050e8d8030bdd5f226f929b2d2d9bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b437bc82fb4877b5f8fc59345eba707"><td class="memItemLeft" align="right" valign="top">SDL_Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdisplay__manager.html#a0b437bc82fb4877b5f8fc59345eba707">get_window</a> ()</td></tr>
 <tr class="separator:a0b437bc82fb4877b5f8fc59345eba707"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -127,49 +127,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>display_manager_test
  </p>
 
 <p>Definition at line <a class="el" href="display__manager_8hpp_source.html#l00032">32</a> of file <a class="el" href="display__manager_8hpp_source.html">display_manager.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a6050e8d8030bdd5f226f929b2d2d9bd9"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a48582c5d390e2dafa1da5602451c70d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void display_manager::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Closes the Display Manager. Destroys the window and quits SDL. </p>
-
-<p>Definition at line <a class="el" href="display__manager_8cpp_source.html#l00016">16</a> of file <a class="el" href="display__manager_8cpp_source.html">display_manager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0b437bc82fb4877b5f8fc59345eba707"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">SDL_Window * display_manager::get_window </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Returns a handle to the SDL_Window* </dd></dl>
-
-<p>Definition at line <a class="el" href="display__manager_8cpp_source.html#l00099">99</a> of file <a class="el" href="display__manager_8cpp_source.html">display_manager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aceab77ded30a9bb6183474067ea24ac0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int display_manager::initialize </td>
+          <td class="memname">display_manager::display_manager </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
           <td class="paramname"><em>msg_bus</em>, </td>
@@ -194,9 +158,45 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>display_manager_test
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>This function either returns 0 or exits the program with exit code 1. </dd></dl>
 
-<p>Definition at line <a class="el" href="display__manager_8cpp_source.html#l00029">29</a> of file <a class="el" href="display__manager_8cpp_source.html">display_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="display__manager_8cpp_source.html#l00028">28</a> of file <a class="el" href="display__manager_8cpp_source.html">display_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a80194429cb11eda72d8bd86deca55951"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">display_manager::~display_manager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the Display Manager. Destroys the window and quits SDL. </p>
+
+<p>Definition at line <a class="el" href="display__manager_8cpp_source.html#l00016">16</a> of file <a class="el" href="display__manager_8cpp_source.html">display_manager.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0b437bc82fb4877b5f8fc59345eba707"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_Window * display_manager::get_window </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Returns a handle to the SDL_Window* </dd></dl>
+
+<p>Definition at line <a class="el" href="display__manager_8cpp_source.html#l00097">97</a> of file <a class="el" href="display__manager_8cpp_source.html">display_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,7 +222,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>display_manager_test
 </div><div class="memdoc">
 <p>Starts an the update_task() method using the task manager. </p>
 
-<p>Definition at line <a class="el" href="display__manager_8hpp_source.html#l00064">64</a> of file <a class="el" href="display__manager_8hpp_source.html">display_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="display__manager_8hpp_source.html#l00062">62</a> of file <a class="el" href="display__manager_8hpp_source.html">display_manager.hpp</a>.</p>
 
 </div>
 </div>

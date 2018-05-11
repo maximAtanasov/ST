@@ -79,6 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
       <li><a href="#index_e"><span>e</span></a></li>
+      <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_k"><span>k</span></a></li>
@@ -116,6 +117,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>allocate_message()
 : <a class="el" href="classmessage__allocator.html#a2c8ca21e56080647db51962afb7edb3e">message_allocator</a>
 </li>
+<li>assets_manager()
+: <a class="el" href="classassets__manager.html#aee50f45589cd1445827eba5f2deb5644">assets_manager</a>
+</li>
+<li>audio_manager()
+: <a class="el" href="classaudio__manager.html#a9b11ab2ec53e8864b1b4c6d32f9b9b47">audio_manager</a>
+</li>
 </ul>
 
 
@@ -127,21 +134,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classrenderer__sdl.html#a6aba1e9c28647b179d274304fafd6aac">renderer_sdl</a>
 </li>
 <li>close()
-: <a class="el" href="classassets__manager.html#a48061b3576bfc2a5cc3a6cf5cc587af7">assets_manager</a>
-, <a class="el" href="classaudio__manager.html#a309992d4873ba2f09bc5b9855fb06083">audio_manager</a>
-, <a class="el" href="classconsole.html#a4f1aed7ba20d5006ed3219c4746c3592">console</a>
-, <a class="el" href="classdisplay__manager.html#a6050e8d8030bdd5f226f929b2d2d9bd9">display_manager</a>
-, <a class="el" href="classdrawing__manager.html#ada0d2696f5881cd7bebf36dba0a905ff">drawing_manager</a>
-, <a class="el" href="classgame__manager.html#ae76aaeaa3cb3f2f43e3e0f463f6e0357">game_manager</a>
-, <a class="el" href="classinput__manager.html#ad88569f8f0ab7146caaf164f92f7f18b">input_manager</a>
-, <a class="el" href="classlua__backend.html#a533a373f8b78e2738d699db2d6666932">lua_backend</a>
-, <a class="el" href="classmessage__bus.html#a7610bd541b5e30ce850452af217c22d9">message_bus</a>
-, <a class="el" href="classphysics__manager.html#acc872de8ab61594246abe13b3836eabb">physics_manager</a>
+: <a class="el" href="classlua__backend.html#a533a373f8b78e2738d699db2d6666932">lua_backend</a>
 , <a class="el" href="classrenderer__sdl.html#a025ba1eee8f1c59c8ca2a33040eba186">renderer_sdl</a>
-, <a class="el" href="classtask__manager.html#a3f1805cb9e590c3cabe07553433b8176">task_manager</a>
 </li>
 <li>collides()
 : <a class="el" href="classST_1_1entity.html#a7927ea9dc27f87ae448ad5ba1aef7e69">ST::entity</a>
+</li>
+<li>console()
+: <a class="el" href="classconsole.html#a9d015b3612f299fd6ad0fd1f7679bc46">console</a>
 </li>
 <li>console_log()
 : <a class="el" href="classST_1_1console__log.html#a4fd775330cd596599fb2c92d10256a4a">ST::console_log</a>
@@ -152,6 +152,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>deallocate()
 : <a class="el" href="classmessage__allocator.html#a4fec1c53cdc90c9428c460f0cc764453">message_allocator</a>
+</li>
+<li>display_manager()
+: <a class="el" href="classdisplay__manager.html#a48582c5d390e2dafa1da5602451c70d8">display_manager</a>
 </li>
 <li>draw_background()
 : <a class="el" href="classrenderer__sdl.html#ac6a6c79ddc95519918f8f22a385c4fa6">renderer_sdl</a>
@@ -177,6 +180,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>draw_texture()
 : <a class="el" href="classrenderer__sdl.html#a8523ab762be7c8c2c4aae9a70fcb0227">renderer_sdl</a>
 </li>
+<li>drawing_manager()
+: <a class="el" href="classdrawing__manager.html#ac53e9ff20092b2df4b90fe9e5908bcce">drawing_manager</a>
+</li>
 </ul>
 
 
@@ -187,9 +193,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 
 
+<h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>fps()
+: <a class="el" href="classfps.html#ad237835dfbc11eeb1b38cd37f71e6c10">fps</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>game_is_running()
 : <a class="el" href="classgame__manager.html#a453aaeba2c2b6d52884f339f2aba3bbc">game_manager</a>
+</li>
+<li>game_manager()
+: <a class="el" href="classgame__manager.html#a95a139ab6c186d1e877340db0c8df082">game_manager</a>
 </li>
 <li>get_active_level()
 : <a class="el" href="classgame__manager.html#a133b2d1898d88c3fb3b82f7c214eed2a">game_manager</a>
@@ -292,19 +308,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>initialize()
-: <a class="el" href="classassets__manager.html#a77676e5ab645d07327d1b0393b5e3a06">assets_manager</a>
-, <a class="el" href="classaudio__manager.html#aab38a944afb4762efb4b2d949cdc5c8c">audio_manager</a>
-, <a class="el" href="classconsole.html#a22a476aa3f94923f5846bd0611d9b31b">console</a>
-, <a class="el" href="classdisplay__manager.html#aceab77ded30a9bb6183474067ea24ac0">display_manager</a>
-, <a class="el" href="classdrawing__manager.html#a75183372b1f345846149bf41c6e927af">drawing_manager</a>
-, <a class="el" href="classfps.html#ab6aa475941b5b593afd179042f6434a2">fps</a>
-, <a class="el" href="classgame__manager.html#aaf8a7859cc26d730ec46321074663fca">game_manager</a>
-, <a class="el" href="classinput__manager.html#a886a4193972b3cc91164600398c2de59">input_manager</a>
-, <a class="el" href="classlua__backend.html#a86454d954a94b7e46c53636ca3ef8557">lua_backend</a>
-, <a class="el" href="classphysics__manager.html#a38647dcb7186726df71aed38fbf0ab7c">physics_manager</a>
+: <a class="el" href="classlua__backend.html#a86454d954a94b7e46c53636ca3ef8557">lua_backend</a>
 , <a class="el" href="classrenderer__sdl.html#a11204774747c349d03ed4da2d25e9292">renderer_sdl</a>
-, <a class="el" href="classtask__manager.html#ad8a65850ca5eaa6101b9e2a6dd6ac856">task_manager</a>
-, <a class="el" href="classtimer.html#aba27c55d11dcc04c1bb5130cfb1ccae2">timer</a>
+</li>
+<li>input_manager()
+: <a class="el" href="classinput__manager.html#aa3b39ea80ab4c61d8335bf4401182852">input_manager</a>
 </li>
 <li>is_active()
 : <a class="el" href="classST_1_1entity.html#a676e1bc328416f502918dbef57785a82">ST::entity</a>
@@ -365,6 +373,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>physics_manager()
+: <a class="el" href="classphysics__manager.html#a9f7760a373f4ed8d2b3d2254079d7cf7">physics_manager</a>
+</li>
 <li>present()
 : <a class="el" href="classrenderer__sdl.html#a653fec1bdea3060241085046a5c949de">renderer_sdl</a>
 </li>
@@ -485,11 +496,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>task_manager()
+: <a class="el" href="classtask__manager.html#acd1739cfc8c58105d40a59b9b27068a6">task_manager</a>
+</li>
 <li>text()
 : <a class="el" href="classST_1_1text.html#ab74b4ad760d597e0b524fa7345157e3f">ST::text</a>
 </li>
 <li>time_since_start()
 : <a class="el" href="classtimer.html#a107ef6c53e12845c339b3f1aa93cc5b8">timer</a>
+</li>
+<li>timer()
+: <a class="el" href="classtimer.html#ae536faf93e02933cd025a6fbcbb48d0a">timer</a>
 </li>
 </ul>
 
@@ -536,8 +553,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_0x7e"></a>- ~ -</h3><ul>
+<li>~assets_manager()
+: <a class="el" href="classassets__manager.html#a5e3d043c52eea4c50b788d15b6457466">assets_manager</a>
+</li>
+<li>~audio_manager()
+: <a class="el" href="classaudio__manager.html#a2d6157fbfb6372bbeca21aba8136e3e9">audio_manager</a>
+</li>
+<li>~console()
+: <a class="el" href="classconsole.html#a64e288005da1008a195331b2ff74b287">console</a>
+</li>
+<li>~display_manager()
+: <a class="el" href="classdisplay__manager.html#a80194429cb11eda72d8bd86deca55951">display_manager</a>
+</li>
+<li>~drawing_manager()
+: <a class="el" href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">drawing_manager</a>
+</li>
 <li>~font_cache()
 : <a class="el" href="classfont__cache.html#a22128e8a4385b2b081d77da438fd3a82">font_cache</a>
+</li>
+<li>~game_manager()
+: <a class="el" href="classgame__manager.html#a04a0adf5908a3d9c12db5df615a49df5">game_manager</a>
 </li>
 <li>~level()
 : <a class="el" href="classST_1_1level.html#aa157d5ff0d48e9ac2e973869bae411d8">ST::level</a>
@@ -547,6 +582,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>~renderer_sdl()
 : <a class="el" href="classrenderer__sdl.html#a7d0c985446e92d2ffa2b94e7222576c8">renderer_sdl</a>
+</li>
+<li>~task_manager()
+: <a class="el" href="classtask__manager.html#a6f1eb4ceea5db9b096171115af6b7e14">task_manager</a>
 </li>
 </ul>
 </div><!-- contents -->

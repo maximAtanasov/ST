@@ -99,12 +99,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a9b11ab2ec53e8864b1b4c6d32f9b9b47"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaudio__manager.html#a9b11ab2ec53e8864b1b4c6d32f9b9b47">audio_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
+<tr class="separator:a9b11ab2ec53e8864b1b4c6d32f9b9b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d6157fbfb6372bbeca21aba8136e3e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaudio__manager.html#a2d6157fbfb6372bbeca21aba8136e3e9">~audio_manager</a> ()</td></tr>
+<tr class="separator:a2d6157fbfb6372bbeca21aba8136e3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ddeddf517a79cbcc4be751bb73972b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaudio__manager.html#a9ddeddf517a79cbcc4be751bb73972b4">update</a> ()</td></tr>
 <tr class="separator:a9ddeddf517a79cbcc4be751bb73972b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab38a944afb4762efb4b2d949cdc5c8c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaudio__manager.html#aab38a944afb4762efb4b2d949cdc5c8c">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:aab38a944afb4762efb4b2d949cdc5c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a309992d4873ba2f09bc5b9855fb06083"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classaudio__manager.html#a309992d4873ba2f09bc5b9855fb06083">close</a> ()</td></tr>
-<tr class="separator:a309992d4873ba2f09bc5b9855fb06083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -141,39 +141,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>audio_manager_test</
  </p>
 
 <p>Definition at line <a class="el" href="audio__manager_8hpp_source.html#l00056">56</a> of file <a class="el" href="audio__manager_8hpp_source.html">audio_manager.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a309992d4873ba2f09bc5b9855fb06083"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void audio_manager::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Consumes any leftover messages and closes the audio subsystem. </p>
-
-<p>Definition at line <a class="el" href="audio__manager_8hpp_source.html#l00129">129</a> of file <a class="el" href="audio__manager_8hpp_source.html">audio_manager.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aab38a944afb4762efb4b2d949cdc5c8c"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a9b11ab2ec53e8864b1b4c6d32f9b9b47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int audio_manager::initialize </td>
+          <td class="memname">audio_manager::audio_manager </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
           <td class="paramname"><em>msg_bus</em>, </td>
@@ -198,12 +172,30 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>audio_manager_test</
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>-1 on failure or 0 on success. </dd></dl>
 
-<p>Definition at line <a class="el" href="audio__manager_8cpp_source.html#l00029">29</a> of file <a class="el" href="audio__manager_8cpp_source.html">audio_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="audio__manager_8cpp_source.html#l00028">28</a> of file <a class="el" href="audio__manager_8cpp_source.html">audio_manager.cpp</a>.</p>
 
 </div>
 </div>
+<a class="anchor" id="a2d6157fbfb6372bbeca21aba8136e3e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">audio_manager::~audio_manager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Consumes any leftover messages and closes the audio subsystem. </p>
+
+<p>Definition at line <a class="el" href="audio__manager_8cpp_source.html#l00113">113</a> of file <a class="el" href="audio__manager_8cpp_source.html">audio_manager.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a9ddeddf517a79cbcc4be751bb73972b4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +218,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>audio_manager_test</
 </div><div class="memdoc">
 <p>Starts the update_task() method using the task manager. </p>
 
-<p>Definition at line <a class="el" href="audio__manager_8hpp_source.html#l00097">97</a> of file <a class="el" href="audio__manager_8hpp_source.html">audio_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="audio__manager_8hpp_source.html#l00095">95</a> of file <a class="el" href="audio__manager_8hpp_source.html">audio_manager.hpp</a>.</p>
 
 </div>
 </div>

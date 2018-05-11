@@ -99,6 +99,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a95a139ab6c186d1e877340db0c8df082"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a95a139ab6c186d1e877340db0c8df082">game_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
+<tr class="separator:a95a139ab6c186d1e877340db0c8df082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a0adf5908a3d9c12db5df615a49df5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a04a0adf5908a3d9c12db5df615a49df5">~game_manager</a> ()</td></tr>
+<tr class="separator:a04a0adf5908a3d9c12db5df615a49df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a133b2d1898d88c3fb3b82f7c214eed2a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a133b2d1898d88c3fb3b82f7c214eed2a">get_active_level</a> ()</td></tr>
 <tr class="separator:a133b2d1898d88c3fb3b82f7c214eed2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77946b08bb92265b7dfcccb1fc468c38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structST_1_1level__data.html">ST::level_data</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a77946b08bb92265b7dfcccb1fc468c38">get_level_data</a> ()</td></tr>
@@ -113,12 +117,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4123499a4eea7fbcc7b882903ba0f4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59e9c05efecfb7740361670abbca86c5"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a59e9c05efecfb7740361670abbca86c5">get_mouse_y</a> ()</td></tr>
 <tr class="separator:a59e9c05efecfb7740361670abbca86c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf8a7859cc26d730ec46321074663fca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#aaf8a7859cc26d730ec46321074663fca">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:aaf8a7859cc26d730ec46321074663fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfe4a62964b10fe72a499575b573055d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#acfe4a62964b10fe72a499575b573055d">update</a> ()</td></tr>
 <tr class="separator:acfe4a62964b10fe72a499575b573055d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae76aaeaa3cb3f2f43e3e0f463f6e0357"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#ae76aaeaa3cb3f2f43e3e0f463f6e0357">close</a> ()</td></tr>
-<tr class="separator:ae76aaeaa3cb3f2f43e3e0f463f6e0357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a453aaeba2c2b6d52884f339f2aba3bbc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a453aaeba2c2b6d52884f339f2aba3bbc">game_is_running</a> ()</td></tr>
 <tr class="separator:a453aaeba2c2b6d52884f339f2aba3bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3c5bd9d597e6ed31acfe037d2b9eb91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classST_1_1level.html">ST::level</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#ac3c5bd9d597e6ed31acfe037d2b9eb91">get_level</a> ()</td></tr>
@@ -201,33 +201,61 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
  </p>
 
 <p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00082">82</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ae76aaeaa3cb3f2f43e3e0f463f6e0357"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a95a139ab6c186d1e877340db0c8df082"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void game_manager::close </td>
+          <td class="memname">game_manager::game_manager </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
+          <td class="paramname"><em>msg_bus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
+          <td class="paramname"><em>tsk_mngr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>initializes the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a> and loads the level "main" </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
+    <tr><td class="paramname">tsk_mngr</td><td>A pointer to the global task_mngr. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="game__manager_8cpp_source.html#l00017">17</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a04a0adf5908a3d9c12db5df615a49df5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">game_manager::~game_manager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Closes the game manager and the lua backend. Consumes any leftover messages. </p>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00149">149</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8cpp_source.html#l00228">228</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a453aaeba2c2b6d52884f339f2aba3bbc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -250,7 +278,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Tells is if the game is still running or not. This is the main condition for running the main loop (the entire engine). </p><dl class="section return"><dt>Returns</dt><dd>True if running, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00181">181</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00171">171</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -276,7 +304,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Get the name of the active level. </p><dl class="section return"><dt>Returns</dt><dd>The name of the current level. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00141">141</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00140">140</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -302,7 +330,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A poitner to the current level. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00172">172</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00162">162</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -328,7 +356,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Returns the data of the current level. </p><dl class="section return"><dt>Returns</dt><dd>A pointer to the data of the current level. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00165">165</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00155">155</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -354,7 +382,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Get the current mouse X position. </p><dl class="section return"><dt>Returns</dt><dd>The X position of the mouse cursor. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00189">189</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00179">179</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -380,43 +408,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Get the current mouse Y position. </p><dl class="section return"><dt>Returns</dt><dd>The Y position of the mouse cursor. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00197">197</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aaf8a7859cc26d730ec46321074663fca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int game_manager::initialize </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
-          <td class="paramname"><em>tsk_mngr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>initializes the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a> and loads the level "main" </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
-    <tr><td class="paramname">tsk_mngr</td><td>A pointer to the global task_mngr. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Always 0. </dd></dl>
-
-<p>Definition at line <a class="el" href="game__manager_8cpp_source.html#l00018">18</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00187">187</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -449,7 +441,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if held, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00215">215</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00205">205</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -482,7 +474,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if pressed, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00206">206</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00196">196</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -515,7 +507,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if released, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00224">224</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00214">214</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -541,7 +533,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Listens to messages and runs one iteration of loop.lua for the specific level. </p>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00132">132</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00131">131</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>

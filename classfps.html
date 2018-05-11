@@ -98,8 +98,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab6aa475941b5b593afd179042f6434a2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfps.html#ab6aa475941b5b593afd179042f6434a2">initialize</a> ()</td></tr>
-<tr class="separator:ab6aa475941b5b593afd179042f6434a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad237835dfbc11eeb1b38cd37f71e6c10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfps.html#ad237835dfbc11eeb1b38cd37f71e6c10">fps</a> ()</td></tr>
+<tr class="separator:ad237835dfbc11eeb1b38cd37f71e6c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c8c59b44f0ce9cde8b0a6265fcf0ca6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">update</a> (double time, double frame_time)</td></tr>
 <tr class="separator:a2c8c59b44f0ce9cde8b0a6265fcf0ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad32cd3b3610e8ceea6a0aabe8b9ae31a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfps.html#ad32cd3b3610e8ceea6a0aabe8b9ae31a">get_value</a> ()</td></tr>
@@ -110,7 +110,26 @@ Public Member Functions</h2></td></tr>
 <p>Provides average framerates over 1 second. We need this class, because the framerate is otherwise constantly fluctuating. </p>
 
 <p>Definition at line <a class="el" href="fps_8hpp_source.html#l00017">17</a> of file <a class="el" href="fps_8hpp_source.html">fps.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ad237835dfbc11eeb1b38cd37f71e6c10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">fps::fps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the fps counter. </p><dl class="section return"><dt>Returns</dt><dd>Always 0. </dd></dl>
+
+<p>Definition at line <a class="el" href="fps_8cpp_source.html#l00015">15</a> of file <a class="el" href="fps_8cpp_source.html">fps.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad32cd3b3610e8ceea6a0aabe8b9ae31a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -133,25 +152,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The current average framerate value. </dd></dl>
 
-<p>Definition at line <a class="el" href="fps_8hpp_source.html#l00038">38</a> of file <a class="el" href="fps_8hpp_source.html">fps.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab6aa475941b5b593afd179042f6434a2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int fps::initialize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initializes the fps counter. </p><dl class="section return"><dt>Returns</dt><dd>Always 0. </dd></dl>
-
-<p>Definition at line <a class="el" href="fps_8cpp_source.html#l00015">15</a> of file <a class="el" href="fps_8cpp_source.html">fps.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fps_8hpp_source.html#l00037">37</a> of file <a class="el" href="fps_8hpp_source.html">fps.hpp</a>.</p>
 
 </div>
 </div>
@@ -186,7 +187,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="fps_8cpp_source.html#l00027">27</a> of file <a class="el" href="fps_8cpp_source.html">fps.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fps_8cpp_source.html#l00026">26</a> of file <a class="el" href="fps_8cpp_source.html">fps.cpp</a>.</p>
 
 </div>
 </div>

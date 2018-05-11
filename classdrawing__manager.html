@@ -98,12 +98,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a75183372b1f345846149bf41c6e927af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a75183372b1f345846149bf41c6e927af">initialize</a> (SDL_Window *win, <a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:a75183372b1f345846149bf41c6e927af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac53e9ff20092b2df4b90fe9e5908bcce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#ac53e9ff20092b2df4b90fe9e5908bcce">drawing_manager</a> (SDL_Window *win, <a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
+<tr class="separator:ac53e9ff20092b2df4b90fe9e5908bcce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a607e5ea758beeabcd5b6824ab8fcfb3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">~drawing_manager</a> ()</td></tr>
+<tr class="separator:a607e5ea758beeabcd5b6824ab8fcfb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ba73273e7d846c34ba9952022bac41a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a2ba73273e7d846c34ba9952022bac41a">update</a> (<a class="el" href="structST_1_1level__data.html">ST::level_data</a> *temp, double, <a class="el" href="classconsole.html">console</a> *gConsole)</td></tr>
 <tr class="separator:a2ba73273e7d846c34ba9952022bac41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada0d2696f5881cd7bebf36dba0a905ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#ada0d2696f5881cd7bebf36dba0a905ff">close</a> ()</td></tr>
-<tr class="separator:ada0d2696f5881cd7bebf36dba0a905ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This object is responsible for issuing drawing commands and drawing the current level. </p>
@@ -134,31 +134,13 @@ Public Member Functions</h2></td></tr>
  </p>
 
 <p>Definition at line <a class="el" href="drawing__manager_8hpp_source.html#l00058">58</a> of file <a class="el" href="drawing__manager_8hpp_source.html">drawing_manager.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ada0d2696f5881cd7bebf36dba0a905ff"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ac53e9ff20092b2df4b90fe9e5908bcce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void drawing_manager::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Closes the drawing manager. Quits the Font subsystem and destroys the renderer object. </p>
-
-<p>Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00455">455</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a75183372b1f345846149bf41c6e927af"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int drawing_manager::initialize </td>
+          <td class="memname">drawing_manager::drawing_manager </td>
           <td>(</td>
           <td class="paramtype">SDL_Window *&#160;</td>
           <td class="paramname"><em>window</em>, </td>
@@ -190,12 +172,30 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns either 0 on success or exits the program with exit code 1. </dd></dl>
 
-<p>Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00020">20</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00019">19</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
 
 </div>
 </div>
+<a class="anchor" id="a607e5ea758beeabcd5b6824ab8fcfb3c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">drawing_manager::~drawing_manager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the drawing manager. Quits the Font subsystem and destroys the renderer object. </p>
+
+<p>Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00453">453</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a2ba73273e7d846c34ba9952022bac41a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +234,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00068">68</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00066">66</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
 
 </div>
 </div>

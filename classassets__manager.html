@@ -99,10 +99,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a77676e5ab645d07327d1b0393b5e3a06"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#a77676e5ab645d07327d1b0393b5e3a06">initialize</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:a77676e5ab645d07327d1b0393b5e3a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48061b3576bfc2a5cc3a6cf5cc587af7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#a48061b3576bfc2a5cc3a6cf5cc587af7">close</a> ()</td></tr>
-<tr class="separator:a48061b3576bfc2a5cc3a6cf5cc587af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee50f45589cd1445827eba5f2deb5644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#aee50f45589cd1445827eba5f2deb5644">assets_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
+<tr class="separator:aee50f45589cd1445827eba5f2deb5644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3d043c52eea4c50b788d15b6457466"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#a5e3d043c52eea4c50b788d15b6457466">~assets_manager</a> ()</td></tr>
+<tr class="separator:a5e3d043c52eea4c50b788d15b6457466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eee870009e6ac35daad4be4c311e6e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#a4eee870009e6ac35daad4be4c311e6e8">update</a> ()</td></tr>
 <tr class="separator:a4eee870009e6ac35daad4be4c311e6e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -138,31 +138,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
  </p>
 
 <p>Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00047">47</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a48061b3576bfc2a5cc3a6cf5cc587af7"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aee50f45589cd1445827eba5f2deb5644"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void assets_manager::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Closes the asset_manager. Consumes any leftover messages and unloads all assets. </p>
-
-<p>Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00339">339</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a77676e5ab645d07327d1b0393b5e3a06"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int assets_manager::initialize </td>
+          <td class="memname">assets_manager::assets_manager </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
           <td class="paramname"><em>msg_bus</em>, </td>
@@ -187,12 +169,30 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Always returns 0. </dd></dl>
 
-<p>Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00020">20</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00019">19</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
 
 </div>
 </div>
+<a class="anchor" id="a5e3d043c52eea4c50b788d15b6457466"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">assets_manager::~assets_manager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the asset_manager. Consumes any leftover messages and unloads all assets. </p>
+
+<p>Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00337">337</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a4eee870009e6ac35daad4be4c311e6e8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +215,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
 </div><div class="memdoc">
 <p>will start the update task using the task manager. </p>
 
-<p>Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00075">75</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00074">74</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
 
 </div>
 </div>
