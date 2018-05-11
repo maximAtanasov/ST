@@ -83,9 +83,7 @@ class input_manager{
         static void update_task(void* mngr);
 
     public:
-        input_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
-        void close();
+        input_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         void update();
 
 };

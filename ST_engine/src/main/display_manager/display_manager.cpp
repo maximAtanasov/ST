@@ -13,7 +13,7 @@
  * Closes the Display Manager.
  * Destroys the window and quits SDL.
  */
-void display_manager::close(){
+display_manager::~display_manager(){
     SDL_FreeSurface(icon);
     SDL_DestroyWindow(window);
     window = nullptr;
@@ -24,9 +24,8 @@ void display_manager::close(){
  * Initializes the window and SDL.
  * @param msg_bus a pointer to the global message bus
  * @param tsk_mngr a pointer to the global task manager
- * @return This function either returns 0 or exits the program with exit code 1.
  */
-int display_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
+display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
@@ -57,7 +56,6 @@ int display_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 
     gMessage_bus->subscribe(SET_FULLSCREEN, &msg_sub);
     gMessage_bus->subscribe(SET_WINDOW_BRIGHTNESS, &msg_sub);
-    return 0;
 }
 
 /**

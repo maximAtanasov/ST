@@ -24,17 +24,16 @@ void audio_manager::update_task(void* arg){
  * Allocates audio channels.
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task manager.
- * @return -1 on failure or 0 on success.
  */
-int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
+audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     if(SDL_Init(SDL_INIT_AUDIO) < 0) {
         fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", SDL_GetError());
-        return -1;
+        exit(1);
     }
     Mix_Init(MIX_INIT_OGG);
     if(Mix_OpenAudio(22050,AUDIO_S16SYS,2,640) == -1){
         fprintf(stderr, "Failiure to initialize audio\n");
-		return -1;
+        exit(1);
     }
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
@@ -51,7 +50,6 @@ int audio_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 	gMessage_bus->subscribe(STOP_ALL_SOUNDS, &msg_sub);
     gMessage_bus->subscribe(SET_VOLUME, &msg_sub);
     volume = MIX_MAX_VOLUME;
-    return 0;
 }
 
 /**
@@ -107,4 +105,14 @@ void audio_manager::handle_messages(){
         destroy_msg(temp);
         temp = msg_sub.get_next_message();
     }
+}
+
+/**
+ * Consumes any leftover messages and closes the audio subsystem.
+ */
+audio_manager::~audio_manager(){
+    handle_messages();
+    Mix_CloseAudio();
+    SDL_QuitSubSystem(SDL_INIT_AUDIO);
+    Mix_Quit();
 }

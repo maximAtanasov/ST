@@ -16,10 +16,6 @@ message_allocator msg_memory{};
 
 //message_bus implementation=====================================================
 
-int message_bus::initialize(){
-    return 0;
-}
-
 /**
  * Sends a message to all subscribers of that message type.
  * Creates a copy of the message if it has more than one subscriber.
@@ -51,8 +47,3 @@ void message_bus::subscribe(msg_type msg, subscriber* sub){
     int temp = msg;
     subscribers[temp].push_back(sub);
 }
-
-/**
- * Closes the message bus.
- */
-void message_bus::close(){}

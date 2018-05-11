@@ -12,9 +12,8 @@
  * initializes the input manager
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
- * @return Always 0.
  */
-int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
+input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 
     //SET OUR EXTERNAL DEPENDENCIES
     gMessage_bus = msg_bus;
@@ -38,8 +37,6 @@ int input_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(CLEAR_TEXT_STREAM, &msg_sub);
     gMessage_bus->subscribe(REGISTER_KEY, &msg_sub);
     gMessage_bus->subscribe(UNREGISTER_KEY, &msg_sub);
-
-    return 0;
 }
 
 /**
@@ -972,8 +969,3 @@ bool input_manager::keyrelease(ST::key arg){
     }
     return released;
 }
-
-/**
- * Closes the input manager.
- */
-void input_manager::close(){}

@@ -15,9 +15,8 @@
  * @param window A pointer to an SDL_Window to bind the renderer to.
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
- * @return Returns either 0 on success or exits the program with exit code 1.
  */
-int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_manager* tsk_mngr){
+drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_manager* tsk_mngr){
 	if(TTF_Init() < 0){
 		fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
 		exit(1);
@@ -46,7 +45,6 @@ int drawing_manager::initialize(SDL_Window* window, message_bus* msg_bus, task_m
 	//Initialize the rendering object
 	gRenderer.initialize(window, w_width, w_height);
 	gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data<std::tuple<int, int>>(std::make_tuple(w_width, w_height))));
-    return 0;
 }
 
 /**
@@ -452,6 +450,6 @@ void drawing_manager::hide_collisions(){
  * Closes the drawing manager.
  * Quits the Font subsystem and destroys the renderer object.
  */
-void drawing_manager::close(){
+drawing_manager::~drawing_manager(){
 	TTF_Quit();
 }

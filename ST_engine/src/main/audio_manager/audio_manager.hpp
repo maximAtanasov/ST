@@ -82,11 +82,9 @@ class audio_manager{
         static void update_task(void* arg);
 
     public:
-        audio_manager() = default;
+        audio_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        ~audio_manager();
         void update();
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
-        void close();
-
 };
 
 //INLINED METHODS
@@ -121,16 +119,6 @@ inline void audio_manager::mute(){
 inline void audio_manager::unmute(){
     Mix_Volume(-1, volume);
     Mix_VolumeMusic(volume);
-}
-
-/**
- * Consumes any leftover messages and closes the audio subsystem.
- */
-inline void audio_manager::close(){
-    handle_messages();
-    Mix_CloseAudio();
-    SDL_QuitSubSystem(SDL_INIT_AUDIO);
-    Mix_Quit();
 }
 
 /**

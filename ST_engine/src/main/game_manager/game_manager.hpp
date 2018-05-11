@@ -109,7 +109,8 @@ class game_manager{
         bool fullscreen_status = false;
         uint8_t volume_level = 0;
 
-        game_manager() = default;
+        game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        ~game_manager();
         std::string get_active_level();
         ST::level_data* get_level_data();
         bool key_pressed(size_t arg);
@@ -117,9 +118,7 @@ class game_manager{
         bool key_released(size_t arg);
         int32_t get_mouse_x();
         int32_t get_mouse_y();
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
         void update();
-        void close();
         bool game_is_running();
         ST::level get_level();
 };
@@ -140,15 +139,6 @@ inline void game_manager::update(){
  */
 inline std::string game_manager::get_active_level(){
     return active_level;
-}
-
-/**
- * Closes the game manager and the lua backend.
- * Consumes any leftover messages.
- */
-inline void game_manager::close(){
-    handle_messages();
-    gScript_backend.close();
 }
 
 /**

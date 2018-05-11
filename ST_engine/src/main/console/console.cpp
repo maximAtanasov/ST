@@ -12,9 +12,8 @@
 /**
  *
  * @param msg_bus A pointer to the global message bus.
- * @return Always returns 0.
  */
-int console::initialize(message_bus* msg_bus){
+console::console(message_bus* msg_bus){
     gMessage_bus = msg_bus;
     color = {50, 50, 50, 100};
     color_text = {255, 255, 255, 255};
@@ -28,7 +27,6 @@ int console::initialize(message_bus* msg_bus){
     gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
     gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
     gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(ST::key::ENTER)));
-    return 0;
 }
 
 /**
@@ -165,7 +163,7 @@ void console::show(){
  * Close the console.
  * Consume any leftover messages.
  */
-void console::close(){
+console::~console(){
     handle_messages();
 }
 

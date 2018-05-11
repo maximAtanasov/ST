@@ -13,9 +13,8 @@
  * initializes the game_manager and loads the level "main"
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
- * @return Always 0.
  */
-int game_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
+game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
 
     gScript_backend.initialize(gMessage_bus, this);
     gMessage_bus = msg_bus;
@@ -48,7 +47,6 @@ int game_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     load_level("main");
     start_level("main");
     SDL_AtomicSet(&end_game, 1);
-    return 0;
 }
 
 /**
@@ -223,3 +221,11 @@ void game_manager::start_level(const std::string& level_name){
     }
 }
 
+/**
+ * Closes the game manager and the lua backend.
+ * Consumes any leftover messages.
+ */
+game_manager::~game_manager(){
+    handle_messages();
+    gScript_backend.close();
+}

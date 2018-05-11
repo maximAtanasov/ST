@@ -16,7 +16,7 @@ class audio_manager_test : public ::testing::Test {
 protected:
 
     int get_volume(){
-        return test_mngr.volume;
+        return test_mngr->volume;
     }
 
     void update_task(void* arg){
@@ -24,17 +24,15 @@ protected:
     }
 
     message_bus msg_bus{};
-    audio_manager test_mngr;
+    audio_manager* test_mngr{};
 
     void SetUp() override{
         initialize_SDL();
-        msg_bus.initialize();
-        test_mngr.initialize(&msg_bus, nullptr);
+        test_mngr = new audio_manager(&msg_bus, nullptr);
     }
 
     void TearDown() override{
-        test_mngr.close();
-        msg_bus.close();
+        delete test_mngr;
         close_SDL();
     }
 };
@@ -43,7 +41,7 @@ TEST_F(audio_manager_test, set_volume) {
     auto temp_sub = new subscriber();
     msg_bus.subscribe(VOLUME_LEVEL, temp_sub);
     msg_bus.send_msg(make_msg(SET_VOLUME, make_data<int>(50)));
-    update_task(&test_mngr);
+    update_task(test_mngr);
     EXPECT_EQ(50, get_volume());
 
     message* temp = temp_sub->get_next_message();
@@ -56,7 +54,7 @@ TEST_F(audio_manager_test, toggle_audio) {
     msg_bus.subscribe(VOLUME_LEVEL, temp_sub);
 
     msg_bus.send_msg(make_msg(TOGGLE_AUDIO, nullptr));
-    update_task(&test_mngr);
+    update_task(test_mngr);
     ASSERT_EQ(0, get_volume());
 
     message* temp = temp_sub->get_next_message();
@@ -64,7 +62,7 @@ TEST_F(audio_manager_test, toggle_audio) {
     ASSERT_EQ(0, *static_cast<int*>(temp->get_data()));
 
     msg_bus.send_msg(make_msg(TOGGLE_AUDIO, nullptr));
-    update_task(&test_mngr);
+    update_task(test_mngr);
     ASSERT_EQ(MIX_MAX_VOLUME, get_volume());
 
     temp = temp_sub->get_next_message();

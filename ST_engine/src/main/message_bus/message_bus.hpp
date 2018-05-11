@@ -30,11 +30,8 @@ class message_bus{
     private:
         std::unordered_map<int, std::vector<subscriber*>> subscribers; //each message enum maps to a list of subscribers for that message
     public:
-        message_bus() = default;
-        int initialize();
         void send_msg(message* msg);
         void subscribe(msg_type msg, subscriber* sub);
-        void close();
 };
 
 /**

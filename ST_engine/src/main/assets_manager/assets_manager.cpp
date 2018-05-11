@@ -15,9 +15,8 @@
  * Loads all assets declared in the file <b>levels/assets_global.list</b>.
  * @param msg_bus - A pointer to the global message bus.
  * @param tsk_mngr - A pointer to the global task manager.
- * @return Always returns 0.
  */
-int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
+assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     //set external dependencies
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
@@ -30,7 +29,6 @@ int assets_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
 
     //load the global assets
     load_assets_from_list("levels/assets_global.list");
-    return 0;
 }
 
 
@@ -336,7 +334,7 @@ int assets_manager::unload_asset(std::string path){
  * Closes the asset_manager.
  * Consumes any leftover messages and unloads all assets.
  */
-void assets_manager::close(){
+assets_manager::~assets_manager(){
     handle_messages();
     for(auto& i : count){
         if(i.second > 0){

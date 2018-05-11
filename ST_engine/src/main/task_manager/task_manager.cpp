@@ -47,9 +47,8 @@ void task_manager::do_work(ST::task* work){
  * Initializes the task manager.
  * Starts as many worker threads as there are logical cores in the system - 1.
  * @param msg_bus A pointer to the global message bus.
- * @return Always 0.
  */
-int task_manager::initialize(message_bus* msg_bus){
+task_manager::task_manager(message_bus *msg_bus){
 
     //Set our external dependency
     gMessage_bus = msg_bus;
@@ -72,7 +71,6 @@ int task_manager::initialize(message_bus* msg_bus){
 	for (uint16_t i = 0; i < thread_num - 1; i++) {
 		task_threads.emplace_back(SDL_CreateThread(this->task_thread, "tskThr", this));
 	}
-    return 0;
 }
 
 /**
@@ -88,7 +86,7 @@ void task_manager::start_thread(int (*thread_func)(void*), void* data){
  * Closes the task manager.
  * Waits for all threads to exit properly and finishes any unfinished tasks.
  */
-void task_manager::close(){
+task_manager::~task_manager(){
     SDL_AtomicSet(&run_threads, 0);
     for(int i = 0; i < thread_num-1; i++){
         SDL_SemPost(work_sem);

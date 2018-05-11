@@ -47,11 +47,9 @@ class display_manager{
         static void update_task(void* mngr);
 
     public:
-        display_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        display_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        ~display_manager();
         void update();
-        void close();
-
         SDL_Window* get_window();
 };
 

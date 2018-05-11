@@ -61,9 +61,8 @@ private:
         static void update_task(void* arg);
 
     public:
-        assets_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
-        void close();
+        assets_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        ~assets_manager();
         void update();
 };
 

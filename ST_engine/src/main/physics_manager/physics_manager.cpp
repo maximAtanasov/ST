@@ -12,9 +12,8 @@
  * Initializes the physics manager.
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
- * @return Always 0.
  */
-int physics_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
+physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
     gMessage_bus->subscribe(SET_GRAVITY, &msg_sub);
@@ -25,7 +24,6 @@ int physics_manager::initialize(message_bus* msg_bus, task_manager* tsk_mngr){
     gravity = 0;
     friction = 3;
     level_floor = 0;
-    return 0;
 }
 
 /**
@@ -170,8 +168,3 @@ int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entit
     }
     return -1;
 }
-
-/**
- * Closes the physics manager.
- */
-void physics_manager::close(){}

@@ -58,10 +58,8 @@ class physics_manager{
         void handle_messages();
 
     public:
-        physics_manager() = default;
-        int initialize(message_bus* msg_bus, task_manager* tsk_mngr);
+        physics_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         void update(ST::level_data* data);
-        void close();
 };
 
 //INLINED METHODS

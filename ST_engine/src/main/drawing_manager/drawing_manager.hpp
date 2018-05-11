@@ -113,10 +113,9 @@ class drawing_manager{
         static void process_lights_task(void* arg);
 
     public:
-        drawing_manager() = default;
-        int initialize(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
+        drawing_manager(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
+        ~drawing_manager();
         void update(ST::level_data* temp, double, console* gConsole);
-        void close();
 };
 
 #endif

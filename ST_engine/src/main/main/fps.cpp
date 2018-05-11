@@ -12,11 +12,10 @@
  * Initializes the fps counter.
  * @return Always 0.
  */
-int fps::initialize() {
+fps::fps() {
     for(double& i : average) {
         i = 0;
     }
-    return 0;
 }
 
 /**

@@ -22,17 +22,15 @@ protected:
     }
 
     message_bus msg_bus{};
-    display_manager test_mngr;
+    display_manager* test_mngr{};
 
     void SetUp() override{
         initialize_SDL();
-        msg_bus.initialize();
-        test_mngr.initialize(&msg_bus, nullptr);
+        test_mngr = new display_manager(&msg_bus, nullptr);
     }
 
     void TearDown() override{
-        test_mngr.close();
-        msg_bus.close();
+        delete test_mngr;
         close_SDL();
     }
 };
@@ -41,7 +39,7 @@ TEST_F(display_manager_tests, set_fullscreen){
     auto temp_sub = new subscriber();
     msg_bus.subscribe(FULLSCREEN_STATUS, temp_sub);
     msg_bus.send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(true)));
-    update_task(&test_mngr);
+    update_task(test_mngr);
     message* temp = temp_sub->get_next_message();
     ASSERT_EQ(true, static_cast<bool>(temp));
     ASSERT_EQ(true, *static_cast<bool*>(temp->get_data()));

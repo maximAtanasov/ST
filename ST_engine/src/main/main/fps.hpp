@@ -24,8 +24,7 @@ class fps {
         double average[60]{};
         double get_average();
     public:
-        fps() = default;
-        int initialize();
+        fps();
         void update(double time, double frame_time);
         double get_value();
 };

@@ -67,12 +67,11 @@ class console{
 
         message_bus* gMessage_bus{};
 public:
-        console() = default;
-        int initialize(message_bus* msg_bus);
+        explicit console(message_bus* msg_bus);
+        ~console();
         void set_log_level(ST::log_type arg);
         bool is_open();
         void update();
-        void close();
 };
 
 //INLINED METHODS

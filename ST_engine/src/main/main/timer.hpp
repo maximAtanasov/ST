@@ -19,8 +19,7 @@ class timer{
     private:
         std::chrono::time_point<std::chrono::high_resolution_clock> start;
     public:
-        timer() = default;
-        int initialize();
+        timer();
         double time_since_start();
 };
 

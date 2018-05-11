@@ -10,9 +10,7 @@
 
 /**
  * Initializes the timer with the current time.
- * @return Always 0.
  */
-int timer::initialize(){
+timer::timer(){
     start = std::chrono::high_resolution_clock::now();
-    return 0;
 }

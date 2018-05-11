@@ -35,9 +35,8 @@ class task_manager{
         void start_thread(int (*thread_func)(void*), void* data);
 
     public:
-        task_manager() = default;
-        void close();
-        int initialize(message_bus* msg_bus);
+        explicit task_manager(message_bus* msg_bus);
+        ~task_manager();
 		task_id start_task(ST::task* arg);
         void start_task_lockfree(ST::task* arg);
         void wait_for_task(task_id id);
