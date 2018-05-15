@@ -202,7 +202,6 @@ void game_manager::start_level(const std::string& level_name){
     get_level_data()->Camera.x = 0;
     get_level_data()->Camera.y = 0;
 
-
     std::string temp = "levels/";
     temp = temp + active_level;
     temp = temp + "/level.lua";

@@ -54,7 +54,6 @@ int main(int argc, char** argv){
 
     //main loop
     while(gGame_manager.game_is_running()){
-
         new_time = gTimer.time_since_start();
         frame_time = new_time - current_time;
         current_time = new_time;
