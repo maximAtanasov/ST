@@ -24,7 +24,7 @@ Dependcies needed on Linux:
 cmake - you need version 3.9 or higher (or your IDE comes bundled with CMake)
 
 liblua5.3
-libsd
+libSDL2
 libSDL2_image
 libSDL2_mixer
 libSDL2_ttf
