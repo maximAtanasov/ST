@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-grass = object:new()
+grass = entity:new()
 grass.texture = "grass.png";
 grass.texWidth = 400;
 grass.texHeight = 100;

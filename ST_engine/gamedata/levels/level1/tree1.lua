@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-tree1 = object:new()
+tree1 = entity:new()
 tree1.texture = "tree1oil.png"
 tree1.texWidth = 490
 tree1.texHeight = 685

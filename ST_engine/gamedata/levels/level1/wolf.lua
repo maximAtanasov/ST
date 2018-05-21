@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-wolf = object:new()
+wolf = entity:new()
 wolf.texture = "wolf.png"
 wolf.texWidth = 300
 wolf.texHeight = 150
@@ -24,7 +24,7 @@ wolf.mass = 0
 wolf.idleCounter = 0;
 wolf.prevX = 0;
 
-wolfTrigger = object:new()
+wolfTrigger = entity:new()
 wolfTrigger.affectedByPhysics = false;
 wolfTrigger.colX = 252;
 wolfTrigger.colY = 122;

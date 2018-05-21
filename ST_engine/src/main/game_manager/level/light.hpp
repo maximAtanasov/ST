@@ -15,13 +15,14 @@ namespace ST {
     ///Contains the data needed to represent a light source.
     class light {
     public:
-        int origin_x;
-        int origin_y;
+        uint64_t ID;
+        int32_t origin_x;
+        int32_t origin_y;
         uint16_t radius;
         uint16_t intensity;
         uint16_t brightness;
 
-        light(int origin_x, int origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
+        light(uint64_t ID, int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
     };
 }
 

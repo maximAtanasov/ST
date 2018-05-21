@@ -16,7 +16,8 @@
  * @param intensity The intensity of the light.
  * @param brightness The brightness of the light.
  */
-ST::light::light(int origin_x, int origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness){
+ST::light::light(uint64_t ID, int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness){
+    this->ID = ID;
     this->origin_x = origin_x;
     this->origin_y = origin_y;
     this->radius = radius;

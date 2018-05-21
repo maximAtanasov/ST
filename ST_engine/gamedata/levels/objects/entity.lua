@@ -45,8 +45,8 @@ function new(self, x, y)
     return o
 end
 
---genieric game object, from which all objects inherit
-object = {
+--genieric game entity, from which all other entities inherit
+entity = {
 	texture = "";
     offsetColX = 0;
     offsetColY = 0;
@@ -63,136 +63,136 @@ object = {
     animationNum = 0;
 }
 
---create a new instance of an object (calls the constructor above)
-function object:new(x, y)
+--create a new instance of an entity (calls the constructor above)
+function entity:new(x, y)
     return new(self, x, y)
 end
 
---set the x position of an object
-function object:setX(x)
+--set the x position of an entity
+function entity:setX(x)
     setX(self.ID, x)
 end
 
---set the y position of an object
-function object:setY(y)
+--set the y position of an entity
+function entity:setY(y)
     setY(self.ID, y)
 end
 
---set the x and y position of an object
-function object:setXY(x, y)
+--set the x and y position of an entity
+function entity:setXY(x, y)
 	setX(self.ID, x)
 	setY(self.ID, y)
 end
 
---get the x corrdinate of an object
-function object:getX()
+--get the x corrdinate of an entity
+function entity:getX()
     return getX(self.ID)
 end
 
---get the y corrdinate of an object
-function object:getY()
+--get the y corrdinate of an entity
+function entity:getY()
     return getY(self.ID)
 end
 
---tells if an object (without hard collision) is over another object
-function object:overObject(other)
+--tells if an entity (without hard collision) is over another entity
+function entity:overObject(other)
     return entityCollides(self.ID, other.ID)
 end
 
---set the Texture width of an object
-function object:setTexW(arg)
+--set the Texture width of an entity
+function entity:setTexW(arg)
     self.texWidth = arg;
     setTexW(self.ID, arg)
 end
 
---set the Texture height of an object
-function object:setTexH(arg)
+--set the Texture height of an entity
+function entity:setTexH(arg)
     self.texHeight = arg;
     setTexH(self.ID, arg)
 end
 
---get the Texture width of an object
-function object:getTexW()
+--get the Texture width of an entity
+function entity:getTexW()
     return self.texWidth
 end
 
---get the Texture height of an object
-function object:getTexH()
+--get the Texture height of an entity
+function entity:getTexH()
     return self.texHeight
 end
 
---set the horizontal velocity of an object
-function object:setVelocityX(arg)
+--set the horizontal velocity of an entity
+function entity:setVelocityX(arg)
     setVelocityX(self.ID, arg)
 end
 
---set the vertical velocity of an object
-function object:setVelocityY(arg)
+--set the vertical velocity of an entity
+function entity:setVelocityY(arg)
     setVelocityY(self.ID, arg)
 end
 
---get the horizontal velocity of an object
-function object:getVelocityX()
+--get the horizontal velocity of an entity
+function entity:getVelocityX()
     return getVelocityX(self.ID)
 end
 
---get the vertical velocity of an object
-function object:getVelocityY()
+--get the vertical velocity of an entity
+function entity:getVelocityY()
     return getVelocityY(self.ID)
 end
 
---set the mass of an object
-function object:setMass(arg)
+--set the mass of an entity
+function entity:setMass(arg)
     self.mass = arg;
     setMass(self.ID, arg)
 end
 
---get the mass of an object
-function object:getMass()
+--get the mass of an entity
+function entity:getMass()
     return getMass(self.ID)
 end
 
---set the collision box of an object
-function object:setCollision(offsetX, offsetY, width, height)
+--set the collision box of an entity
+function entity:setCollision(offsetX, offsetY, width, height)
     self.colX = width
     self.colY = height
     setCollisionBox(self.ID, offsetX, offsetY, self.colX, self.colY)
 end
 
---get the Width of the collision box of an object
-function object:getColX()
+--get the Width of the collision box of an entity
+function entity:getColX()
     return getColX(self.ID)
 end
 
---get the Height of the collision box of an object
-function object:getColY()
+--get the Height of the collision box of an entity
+function entity:getColY()
     return getColY(self.ID)
 end
 
---set the Visibility of an object
-function object:setVisible(arg)
+--set the Visibility of an entity
+function entity:setVisible(arg)
     self.isVisible = arg;
     setVisible(self.ID, arg)
 end
 
---set weather an object is static (always drawn at the same corrdinates, regardless of camera position)
-function object:setStatic(arg)
+--set weather an entity is static (always drawn at the same corrdinates, regardless of camera position)
+function entity:setStatic(arg)
     setStatic(self.ID, arg)
 end
 
---set the Texture of an object (filepath)
-function object:setTexture(arg)
+--set the Texture of an entity (filepath)
+function entity:setTexture(arg)
     self.texture = arg
     setTexture(self.ID, arg)
 end
 
---play the corresponding animation of an object (the corresponding index in the spritesheet)
-function object:playAnimation(arg)
+--play the corresponding animation of an entity (the corresponding index in the spritesheet)
+function entity:playAnimation(arg)
     setAnimation(self.ID, arg)
 end
 
---delete object
-function object:delete()
+--delete entity
+function entity:delete()
     setVisible(self.ID, false)
     self:setCollision(0, 0, 0, 0)
     setActive(self.ID, false)

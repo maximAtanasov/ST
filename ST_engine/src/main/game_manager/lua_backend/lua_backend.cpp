@@ -453,13 +453,14 @@ extern "C" int setDarknessLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int createLightLua(lua_State* L){
-    auto origin_x = static_cast<int32_t>(lua_tointeger(L, 1));
-    auto origin_y = static_cast<int32_t>(lua_tointeger(L, 2));
-    auto radius = static_cast<uint16_t>(lua_tointeger(L, 3));
-    auto intensity = static_cast<uint16_t>(lua_tointeger(L, 4));
-    auto brightness = static_cast<uint16_t>(lua_tointeger(L, 5));
-    ST::light tempLight = ST::light(origin_x, origin_y, radius, intensity, brightness);
-    gGame_managerLua->get_level_data()->lights.push_back(tempLight);
+    auto ID = static_cast<uint64_t >(lua_tointeger(L, 1));
+    auto origin_x = static_cast<int32_t>(lua_tointeger(L, 2));
+    auto origin_y = static_cast<int32_t>(lua_tointeger(L, 3));
+    auto radius = static_cast<uint16_t>(lua_tointeger(L, 4));
+    auto intensity = static_cast<uint16_t>(lua_tointeger(L, 5));
+    auto brightness = static_cast<uint16_t>(lua_tointeger(L, 6));
+    ST::light tempLight = ST::light(ID, origin_x, origin_y, radius, intensity, brightness);
+    gGame_managerLua->get_level_data()->lights.emplace_back(tempLight);
     return 0;
 }
 
@@ -517,7 +518,7 @@ extern "C" int createTextObjectLua(lua_State* L){
     auto size = static_cast<int>(lua_tointeger(L, 6));
     SDL_Color temp_color = {255,255,255,255};
     ST::text temp = ST::text(ID, x, y, temp_color, text_string, font, size);
-    gGame_managerLua->get_level_data()->text_objects.push_back(temp);
+    gGame_managerLua->get_level_data()->text_objects.emplace_back(temp);
     return 0;
 }
 

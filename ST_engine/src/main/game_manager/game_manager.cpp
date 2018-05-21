@@ -61,7 +61,7 @@ void game_manager::reset_keys(){
 }
 
 /**
- * Consumes message from the subscriber obeject and performs the appropriate actions.
+ * Consumes message from the subscriber object and performs the appropriate actions.
  */
 void game_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();

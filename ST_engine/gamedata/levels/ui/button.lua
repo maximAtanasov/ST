@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-button = object:new()
+button = entity:new()
 button.soundPlayed = 0
 button.isVisible = true;
 button.text = textObject:new()

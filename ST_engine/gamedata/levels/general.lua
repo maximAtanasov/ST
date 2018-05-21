@@ -7,6 +7,9 @@
 
 
 currentID = 0 --MUST start at 0
+currentTextID = 0 --MUST start at 0
+currentLightID = 0 --MUST start at 0
+
 currentVolume = 100;
 math.randomseed( os.time() )
 
@@ -20,5 +23,7 @@ end
 function startLevel(arg)
     startLevelLua(arg)
     currentID = 0
+    currentLightID = 0;
+    currentTextID = 0;
     error() --a dirty trick, but works
 end

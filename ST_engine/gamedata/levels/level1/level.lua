@@ -159,12 +159,12 @@ coin11:spin();
 coin12 = coin:new(3950, 1000)
 coin12:spin();
 
-newLight(1935, 850, 100, 85, 0)
-newLight(2815, 850, 100, 85, 0)
-newLight(5315, 850, 100, 85, 0)
+light1 = light:new(1935, 850, 100, 85, 0)
+light2 = light:new(2815, 850, 100, 85, 0)
+light3 = light:new(5315, 850, 100, 85, 0)
 
 --PAUSE MENU=========================================================================
-pauseBG = object:new(0, floor)
+pauseBG = entity:new(0, floor)
 pauseBG:setTexture("fortress.png")
 pauseBG:setVisible(false)
 pauseBG:setStatic(true)

@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-crystal_green = object:new()
+crystal_green = entity:new()
 
 crystal_green.texture = "crystal_green.png"
 crystal_green.texWidth = 64

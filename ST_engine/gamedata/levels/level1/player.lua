@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-player = object:new()
+player = entity:new()
 player.texture = "player2.png"
 player.texWidth = 300
 player.texHeight = 305

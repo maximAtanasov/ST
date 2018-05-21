@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-coin = object:new()
+coin = entity:new()
 coin.texture = "coin.png"
 coin.texWidth = 63
 coin.texHeight = 63

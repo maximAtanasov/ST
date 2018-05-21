@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-label = object:new()
+label = entity:new()
 label.isVisible = true;
 label.text = textObject:new()
 
@@ -14,6 +14,10 @@ function createLabel(x, y, text, font, fontSize)
     newLabel.text = textObject:new(x,y, fontSize, font)
     newLabel.text:setText(text)
     return newLabel
+end
+
+function label:new(x, y)
+    return new(self, x, y);
 end
 
 function label:hide()

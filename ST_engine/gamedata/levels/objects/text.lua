@@ -7,8 +7,6 @@
 
 --TEXT
 
-currentTextID = 0 --MUST start at 0
-
 function newTextID()
     local temp = currentTextID
     currentTextID = currentTextID + 1;

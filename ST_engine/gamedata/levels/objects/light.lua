@@ -7,14 +7,34 @@
 
 --LIGHTING
 
+function newLightID()
+    local temp = currentLightID
+    currentLightID = currentLightID + 1;
+    return temp
+end
+
 light = {
+    ID;
     origin_x;
     origin_y;
-    radius;
-    intensity;
-    brightness;
+    radius = 0;
+    intensity = 0;
+    brightness = 0;
 }
 
-function newLight(origin_x, origin_y, radius, intensity, brightness)
-    createLight(origin_x, origin_y, radius, intensity, brightness)
+function newLight(self, origin_x, origin_y, radius, intensity, brightness)
+    local o = {}
+    setmetatable(o, self)
+    self.__index = self
+    if(origin_x ~= nil and origin_y ~= nil) then
+        o.ID = newLightID()
+        createLight(o.ID, origin_x, origin_y, radius, intensity, brightness)
+    end
+    return o
 end
+
+function light:new(origin_x, origin_y, radius, intensity, brightness)
+    return newLight(self, origin_x, origin_y, radius, intensity, brightness)
+end
+
+

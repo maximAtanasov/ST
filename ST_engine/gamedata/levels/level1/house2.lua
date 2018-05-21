@@ -5,7 +5,7 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-house2 = object:new()
+house2 = entity:new()
 house2.texture = "house2.png"
 house2.texWidth = 615
 house2.texHeight = 730
