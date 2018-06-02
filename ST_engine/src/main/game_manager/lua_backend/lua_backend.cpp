@@ -103,6 +103,16 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     //lights
     lua_register(L, "setDarkness", setDarknessLua);
     lua_register(L, "createLight", createLightLua);
+    lua_register(L, "setLightOriginX", setLightOriginXLua);
+    lua_register(L, "getLightOriginX", getLightOriginXLua);
+    lua_register(L, "setLightOriginY", setLightOriginYLua);
+    lua_register(L, "getLightOriginY", getLightOriginYLua);
+    lua_register(L, "setLightIntensity", setLightIntensityLua);
+    lua_register(L, "getLightIntensity", getLightIntensityLua);
+    lua_register(L, "setLightBrightness", setLightBrightnessLua);
+    lua_register(L, "getLightBrightness", getLightBrightnessLua);
+    lua_register(L, "setLightRadius", setLightRadiusLua);
+    lua_register(L, "getLightRadius", getLightRadiusLua);
 
     //Text funtions
 
@@ -304,7 +314,7 @@ std::string lua_backend::hash_strings(std::string& path){
                     replace_string(temp, temp_buf_2, string_hash);
                 }
                 //A way for creating annotations in lua
-                while(temp.find("@Key") != std::string::npos) {
+                while(temp.find("----@Key") != std::string::npos) {
                     std::string to_find = "\"";
                     std::string temp_buf;
                     std::string next_line;
@@ -318,7 +328,7 @@ std::string lua_backend::hash_strings(std::string& path){
                     replace_string(next_line, temp_buf_2, string_hash);
                     temp = next_line;
                 }
-                while(temp.find("@Audio") != std::string::npos) {
+                while(temp.find("----@Audio") != std::string::npos) {
                     std::string to_find = "\"";
                     std::string temp_buf;
                     std::string next_line;
@@ -461,6 +471,131 @@ extern "C" int createLightLua(lua_State* L){
     auto brightness = static_cast<uint16_t>(lua_tointeger(L, 6));
     ST::light tempLight = ST::light(ID, origin_x, origin_y, radius, intensity, brightness);
     gGame_managerLua->get_level_data()->lights.emplace_back(tempLight);
+    return 0;
+}
+
+/**
+ * Sets the x origin of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setLightOriginXLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto origin_x = static_cast<int32_t>(lua_tointeger(L, 2));
+    gGame_managerLua->get_level_data()->lights.at(ID).set_origin_x(origin_x);
+    return 0;
+}
+
+/**
+ * Gets the x origin of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getLightOriginXLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level_data()->lights.at(ID).get_origin_x());
+    return 1;
+}
+
+/**
+ * Sets the y origin of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setLightOriginYLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto origin_y = static_cast<int32_t>(lua_tointeger(L, 2));
+    gGame_managerLua->get_level_data()->lights.at(ID).set_origin_y(origin_y);
+    return 0;
+}
+
+/**
+ * Gets the y origin of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getLightOriginYLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level_data()->lights.at(ID).get_origin_y());
+    return 1;
+}
+
+/**
+ * Gets the radius of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getLightRadiusLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level_data()->lights.at(ID).get_radius());
+    return 1;
+}
+
+/**
+ * Sets the radius of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setLightRadiusLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto radius = static_cast<uint16_t>(lua_tointeger(L, 2));
+    gGame_managerLua->get_level_data()->lights.at(ID).set_radius(radius);
+    return 0;
+}
+
+/**
+ * Gets the intensity of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getLightIntensityLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level_data()->lights.at(ID).get_intensity());
+    return 1;
+}
+
+/**
+ * Sets the intensity of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setLightIntensityLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto intensity = static_cast<uint16_t>(lua_tointeger(L, 2));
+    gGame_managerLua->get_level_data()->lights.at(ID).set_intensity(intensity);
+    return 0;
+}
+
+/**
+ * Gets the brightness of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getLightBrightnessLua(lua_State* L) {
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level_data()->lights.at(ID).get_brightness());
+    return 1;
+}
+
+/**
+ * Sets the brightness of a light object.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setLightBrightnessLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto brightness = static_cast<uint16_t>(lua_tointeger(L, 2));
+    gGame_managerLua->get_level_data()->lights.at(ID).set_brightness(brightness);
     return 0;
 }
 

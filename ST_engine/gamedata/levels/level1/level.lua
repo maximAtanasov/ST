@@ -51,8 +51,6 @@ plant1_3 = plant1:new(200, floor)
 
 tree1_1 = tree1:new(725, floor)
 
-
-
 house1_1 = house1:new(1700, floor)
 house2_1 = house2:new(2500, floor)
 house2_2 = house2:new(5000, floor)
@@ -170,13 +168,11 @@ pauseBG:setVisible(false)
 pauseBG:setStatic(true)
 pauseBG:setY(1080)
 
-
-
 --Buttons and their update functions
---@Key
+----@Key
 all_buttons_key = "MOUSE1"
 
---@Audio
+----@Audio
 all_buttons_sound = "buttonSelected.wav"
 
 --CONTINUE BUTTON

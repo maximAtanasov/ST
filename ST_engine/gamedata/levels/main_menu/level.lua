@@ -31,10 +31,10 @@ room = "main"
 --The click key used for all buttons - the following annotion tells our interpreter that
 --the string we declare is going to be used as a key
 
---@Key
+----@Key
 all_buttons_key = "MOUSE1"
 
---@Audio
+----@Audio
 all_buttons_sound = "buttonSelected.wav"
 
 --New Game button

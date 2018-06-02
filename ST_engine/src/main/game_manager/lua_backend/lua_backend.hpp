@@ -49,7 +49,6 @@ public:
 extern "C" int setFullscreenLua(lua_State* L);
 extern "C" int getFullscreenStatusLua(lua_State* L);
 extern "C" int setDarknessLua(lua_State* L);
-extern "C" int createLightLua(lua_State* L);
 extern "C" int hashStringLua(lua_State* L);
 extern "C" int setGravityLua(lua_State* L);
 extern "C" int setLevelFloorLua(lua_State* L);
@@ -92,6 +91,19 @@ extern "C" int setTextObjectFontSizeLua(lua_State* L);
 extern "C" int setTextObjectXLua(lua_State* L);
 extern "C" int setTextObjectYLua(lua_State* L);
 extern "C" int setTextObjectVisibleLua(lua_State* L);
+
+//Light bindings definitions
+extern "C" int createLightLua(lua_State* L);
+extern "C" int setLightOriginXLua(lua_State* L);
+extern "C" int getLightOriginXLua(lua_State* L);
+extern "C" int setLightOriginYLua(lua_State* L);
+extern "C" int getLightOriginYLua(lua_State* L);
+extern "C" int getLightRadiusLua(lua_State* L);
+extern "C" int setLightRadiusLua(lua_State* L);
+extern "C" int getLightIntensityLua(lua_State* L);
+extern "C" int setLightIntensityLua(lua_State* L);
+extern "C" int getLightBrightnessLua(lua_State* L);
+extern "C" int setLightBrightnessLua(lua_State* L);
 
 //Enitity lua bindigs definitions
 

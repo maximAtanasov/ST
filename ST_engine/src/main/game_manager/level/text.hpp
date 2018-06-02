@@ -30,7 +30,7 @@ namespace ST {
 
     public:
         text(uint64_t id, int32_t x, int32_t y, SDL_Color color, const std::string &text_string, const std::string &font,
-             int font_size);
+             uint8_t font_size);
 
         //setters
         void set_x(int32_t arg);

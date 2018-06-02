@@ -58,7 +58,7 @@ class input_manager{
             const uint8_t* keyboard{};
 			int mouseX_prev = 0, mouseY_prev = 0;
 			int mouseX = 0, mouseY = 0;
-			uint32_t mouse_scroll = 0;
+			int32_t mouse_scroll = 0;
         };
 
 		int v_width = 1, v_height = 1;

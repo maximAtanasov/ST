@@ -31,7 +31,6 @@ function newTextObject(self, x, y, fontSize, font)
     setmetatable(o, self)
     self.__index = self
     if(x ~= nil and y ~= nil) then
-        --general
         o.ID = newTextID()
 		createTextObject(o.ID, x, y, o.text, font, fontSize);
     end

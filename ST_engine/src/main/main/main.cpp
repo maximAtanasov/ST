@@ -10,7 +10,7 @@
 
 /**
  * Execution starting point.
- * Initializes all subsystems and start the main loop.
+ * Initializes all subsystems and starts the main loop.
  */
 int main(int argc, char** argv){
 

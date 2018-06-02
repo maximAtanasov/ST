@@ -13,12 +13,6 @@ currentLightID = 0 --MUST start at 0
 currentVolume = 100;
 math.randomseed( os.time() )
 
-function newID()
-    local temp = currentID
-    currentID = currentID + 1;
-    return temp
-end
-
 --cleans up current level and start the specifed one
 function startLevel(arg)
     startLevelLua(arg)

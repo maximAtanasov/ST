@@ -15,14 +15,20 @@ function mouseOver(object)
     return false
 end
 
+function newEntityID()
+    local temp = currentID
+    currentID = currentID + 1;
+    return temp
+end
+
 --default constructor for all entities
-function new(self, x, y)
+function newEntity(self, x, y)
     local o = {}
     setmetatable(o, self)
     self.__index = self
     if(x ~= nil and y ~= nil) then
         --general
-        o.ID = newID()
+        o.ID = newEntityID()
 	    createEntity(o.ID)
         setX(o.ID, x)
         setY(o.ID, y)
@@ -65,7 +71,7 @@ entity = {
 
 --create a new instance of an entity (calls the constructor above)
 function entity:new(x, y)
-    return new(self, x, y)
+    return newEntity(self, x, y)
 end
 
 --set the x position of an entity
