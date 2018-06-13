@@ -26,15 +26,6 @@ int renderer_sdl::initialize(SDL_Window* window, int width, int height){
     SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
     set_draw_color(0, 0, 0, 255);
-
-    //initialize lights surfaces and texture
-    lights_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, width, height);
-    if(lights_texture == nullptr){
-        printf("%s\n", SDL_GetError());
-    }else{
-        SDL_SetTextureBlendMode(lights_texture, SDL_BLENDMODE_BLEND);
-    }
-    pixels = static_cast<uint32_t*>(malloc(width*height*sizeof(Uint32)));
     return 0;
 }
 
@@ -60,13 +51,6 @@ int renderer_sdl::initialize_with_vsync(SDL_Window* window, int width, int heigh
  	SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
     set_draw_color(0, 0, 0, 255);
-    lights_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 1920, 1080);
-    if(lights_texture == nullptr) {
-        printf("%s\n", SDL_GetError());
-    }else{
-        SDL_SetTextureBlendMode(lights_texture, SDL_BLENDMODE_BLEND);
-    }
-    pixels = static_cast<uint32_t*>(malloc(width*height*sizeof(Uint32)));
     return 0;
 }
 
@@ -91,12 +75,9 @@ void renderer_sdl::close(){
             it.second = nullptr;
         }
     }
-
-    SDL_DestroyTexture(lights_texture);
+    gFont_cache.clear();
     SDL_DestroyRenderer(sdl_renderer);
     sdl_renderer = nullptr;
-    free(pixels);
-    pixels = nullptr;
 }
 
 /**
@@ -276,6 +257,8 @@ void renderer_sdl::vsync_on(){
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
 }
+
+
 
 /**
  * Turns off vsync.

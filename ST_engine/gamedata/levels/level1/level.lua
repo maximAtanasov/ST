@@ -19,9 +19,9 @@ use("coin.lua")
 use("wolf.lua")
 use("torch.lua")
 
-pause = 0;
+pause = 0
 
-stopAllSounds();
+stopAllSounds()
 setLevelSize(7000, 3000)
 floor = 1050
 gravity = 18
@@ -56,13 +56,13 @@ house2_1 = house2:new(2500, floor)
 house2_2 = house2:new(5000, floor)
 
 torch1 = torch:new(1900, 950)
-torch1:play_animation();
+torch1:play_animation()
 
 torch2 = torch:new(2780, 950)
-torch2:play_animation();
+torch2:play_animation()
 
 torch2 = torch:new(5280, 950)
-torch2:play_animation();
+torch2:play_animation()
 
 tree1_2 = tree1:new(1040, floor)
 tree1_3 = tree1:new(2250, floor)
@@ -87,9 +87,9 @@ crate5 = crate:new(900, floor-150)
 crate6 = crate:new(1000, floor)
 crate7 = crate:new(2000, floor)
 
-wolf1 = wolf:new(2500, 1000);
-wolfTrigger1 = wolfTrigger:new(2500, 1000);
-wolf1:idle();
+wolf1 = wolf:new(2500, 1000)
+wolfTrigger1 = wolfTrigger:new(2500, 1000)
+wolf1:idle()
 
 grass1 = grass:new(0, 1081)
 grass2 = grass:new(400, 1081)
@@ -119,43 +119,43 @@ grass25 = grass:new(9600, 1081)
 grass26 = grass:new(10000, 1081)
 
 coin1 = coin:new(1400, 1000)
-coin1:spin();
+coin1:spin()
 
 coin2 = coin:new(1470, 1000)
-coin2:spin();
+coin2:spin()
 
 coin3 = coin:new(1540, 1000)
-coin3:spin();
+coin3:spin()
 
 coin4 = coin:new(1610, 1000)
-coin4:spin();
+coin4:spin()
 
 coin5 = coin:new(1680, 1000)
-coin5:spin();
+coin5:spin()
 
 coin6 = coin:new(1750, 1000)
-coin6:spin();
+coin6:spin()
 
 crystal_green1 = crystal_green:new(1850, 1000)
-crystal_green1:spin();
+crystal_green1:spin()
 
 coin7 = coin:new(3600, 1000)
-coin7:spin();
+coin7:spin()
 
 coin8 = coin:new(3670, 1000)
-coin8:spin();
+coin8:spin()
 
 coin9 = coin:new(3740, 1000)
-coin9:spin();
+coin9:spin()
 
 coin10 = coin:new(3810, 1000)
-coin10:spin();
+coin10:spin()
 
 coin11 = coin:new(3880, 1000)
-coin11:spin();
+coin11:spin()
 
 coin12 = coin:new(3950, 1000)
-coin12:spin();
+coin12:spin()
 
 light1 = light:new(1935, 850, 100, 85, 0)
 light2 = light:new(2815, 850, 100, 85, 0)
@@ -176,7 +176,7 @@ all_buttons_key = "MOUSE1"
 all_buttons_sound = "buttonSelected.wav"
 
 --CONTINUE BUTTON
-button_continue = createButton(50, 500, CONTINUE_TEXT, FONT, 80)
+button_continue = button:new(50, 500, CONTINUE_TEXT, FONT, 80)
 button_continue:setClickKey(all_buttons_key)
 button_continue:setMarginX(474)
 button_continue:setMarginY(92)
@@ -198,7 +198,7 @@ function button_continue:onNothing()
 end
 
 --EXIT BUTTON
-button_exit = createButton(50, 600, EXIT_TEXT, FONT, 80)
+button_exit = button:new(50, 600, EXIT_TEXT, FONT, 80)
 button_exit:setClickKey(all_buttons_key)
 button_exit:setMarginX(224)
 button_exit:setMarginY(85)

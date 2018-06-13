@@ -7,15 +7,15 @@
 
 button = entity:new()
 button.soundPlayed = 0
-button.isVisible = true;
+button.isVisible = true
 button.text = textObject:new()
 button.colX = 0
 button.colY = 0
 button.clickKey = ""
 
-function createButton(x, y, text, font, fontSize)
-    local newButton = button:new(x, y)
-    newButton.text = textObject:new(x,y, fontSize, font)
+function button:new(x, y, text, font, fontSize)
+    local newButton = newEntity(self, x, y)
+    newButton.text = textObject:new(x, y, fontSize, font)
     newButton.text:setText(text)
     return newButton
 end

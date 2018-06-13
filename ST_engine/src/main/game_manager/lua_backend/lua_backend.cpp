@@ -17,7 +17,7 @@ static game_manager* gGame_managerLua;
 static lua_backend* gLua_backendLua;
 
 /**
- * Initializes the Lua susytem.
+ * Initializes the Lua subsytem.
  * @param msg_bus A pointer to the global msg_bus.
  * @param game_mngr A pointer to the game_manager object.
  * @return Returns 0 on success or exits with exit code 1 on failure.
@@ -30,21 +30,23 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     gMessage_busLua = msg_bus;
     gMessage_bus = msg_bus;
 
-    //Initialize LUa
+    //Initialize Lua
     L = luaL_newstate();
     if(L == nullptr){
+        fprintf(stderr, "ERROR: Could not initialize a Lua context");
         exit(1);
     }
     luaL_openlibs(L);
 
-    luaL_dofile(L, "levels/general.lua");
-    luaL_dofile(L, "levels/debug.lua");
-    luaL_dofile(L, "levels/objects/entity.lua");
-    luaL_dofile(L, "levels/objects/text.lua");
-    luaL_dofile(L, "levels/objects/light.lua");
-    luaL_dofile(L, "levels/ui/button.lua");
-    luaL_dofile(L, "levels/ui/label.lua");
-    luaL_dofile(L, "levels/global_properties.lua");
+    luaL_dofile(L, "lua/general.lua");
+    luaL_dofile(L, "lua/debug.lua");
+    luaL_dofile(L, "lua/objects/entity.lua");
+    luaL_dofile(L, "lua/objects/text.lua");
+    luaL_dofile(L, "lua/objects/light.lua");
+    luaL_dofile(L, "lua/ui/button.lua");
+    luaL_dofile(L, "lua/ui/label.lua");
+    luaL_dofile(L, "lua/ui/checkbox.lua");
+    luaL_dofile(L, "lua/global_properties.lua");
 
     //register lua binding functions
 

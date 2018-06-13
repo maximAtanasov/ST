@@ -59,6 +59,7 @@ class font_cache{
         void cache_string(std::string, SDL_Texture*, std::string, int);
         bool str_is_cached(std::string, std::string, int);
         SDL_Texture* return_cache();
+        void clear();
 };
 
 #endif

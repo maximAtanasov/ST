@@ -44,17 +44,12 @@ private:
     //we do however need to cleanup the cache as that lives on the GPU
     std::unordered_map<std::string, std::vector<SDL_Texture*>> fonts_cache;
 
-	//texture and surface to render lights to
-	Uint32* pixels;
-	SDL_Texture* lights_texture{};
-
     void cache_font(TTF_Font* Font, std::string font_and_size);
     void draw_text_normal(std::string, std::string, int, int, SDL_Color, int);
     void draw_text_cached(std::string, std::string, int, int, SDL_Color, int);
 	int initialize_with_vsync(SDL_Window* win, int width, int height, bool vsync);
 
 public:
-	void draw_lights(uint8_t arg[1920][1080]);
     void set_draw_color(uint8_t,uint8_t,uint8_t,uint8_t) ;
     void clear_screen() ;
     void present() ;
@@ -75,22 +70,6 @@ public:
 };
 
 //INLINED METHODS
-
-/**
- * An alternative method to drawing lights - not used at the moment.
- * @param arg - A lightmap.
- */
-inline void renderer_sdl::draw_lights(uint8_t arg[1920][1080]){
-	int k = 0;
-	for(uint16_t i = 0; i < height; i++){
-		for(uint16_t j = 0; j < width; j++){
-			pixels[k] = arg[j][i] << (uint8_t)24;
-			k++;
-		};
-	}
-	SDL_UpdateTexture(lights_texture, nullptr, pixels, width*sizeof(Uint32));
-	SDL_RenderCopy(sdl_renderer, lights_texture, nullptr, nullptr);
-}
 
 /**
  * Draw a texture at a given position.

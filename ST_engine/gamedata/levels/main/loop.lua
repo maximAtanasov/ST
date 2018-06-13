@@ -14,3 +14,7 @@ elseif splashUp < 255 then
 else
     startLevel("main_menu")
 end
+
+if keyPressed("START") then
+    startLevel("main_menu")
+end

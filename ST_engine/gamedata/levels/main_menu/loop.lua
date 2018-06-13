@@ -11,10 +11,16 @@ if darkness > 0 then
 end
 
 if(room == "main") then
+    if keyPressed("START") and darkness == 0 then
+        button_newGame:onClick()
+    end
     button_settings:update()
     button_exit:update()
     button_newGame:update()
 elseif(room == "settings") then
+    if keyPressed("BACK") then
+        button_back:onClick()
+    end 
     button_back:update()
     button_fullscreen:update()
     button_soundSwitch:update()

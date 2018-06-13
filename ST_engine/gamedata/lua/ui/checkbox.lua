@@ -1,0 +1,91 @@
+--Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
+--You may not use, distribute or modify this code.
+--This code is proprietary and belongs to the "slavicTales"
+--project. See LICENCE.txt in the root directory of the project.
+--
+-- E-mail: atanasovmaksim1@gmail.com
+
+checkbox = entity:new()
+checkbox.isVisible = true
+checkbox.checked = false
+checkbox.soundPlayed = 0
+checkbox.clickKey = ""
+checkbox.colX = 0
+checkbox.colY = 0
+
+function checkbox:new(x, y)
+    local newCheckbox = newEntity(self, x, y) 
+    newCheckbox:setTexture("ui/checkbox-unchecked.png")
+    newCheckbox:setTexW(50)
+    newCheckbox:setTexH(50)
+    newCheckbox.colX = 50
+    newCheckbox.colY = 50
+    newCheckbox:setCollision(0, 0, 50 ,50)
+    return newCheckbox
+end
+
+function checkbox:hide()
+    self:setVisible(false)
+end
+
+function checkbox:show()
+    self:setVisible(true)
+end
+
+function checkbox:check()
+    self.checked = true
+    self:setTexture("ui/checkbox-checked.png")
+end
+
+function checkbox:uncheck()
+    self.checked = false
+    self:setTexture("ui/checkbox-unchecked.png")
+end
+
+function checkbox:toggle()
+    if self.checked then
+        self:uncheck()
+    else
+        self:check()
+    end
+end
+
+function checkbox:update()
+    if mouseOver(self) then
+        self:onHover()
+        if keyPressed(self.clickKey) then
+            self:toggle()
+            self:onClick()
+        end
+    else
+        self:onNothing()
+    end
+end
+
+function checkbox:setClickKey(x)
+    self.clickKey = x
+end
+
+function checkbox:onClick()
+
+end
+
+function checkbox:onHover()
+
+end
+
+function checkbox:onNothing()
+
+end
+
+function checkbox:setMarginX(x)
+    self:setTexW(x)
+    self.colX = x
+    self:setCollision(0,0,x,self.colY)
+end
+
+function checkbox:setMarginY(y)
+    self:setTexH(y)
+    self.colY = y
+    self:setCollision(0,0, self.colX, y)
+end

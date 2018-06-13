@@ -21,3 +21,7 @@ function startLevel(arg)
     currentTextID = 0;
     error() --a dirty trick, but works
 end
+
+function exit()
+    endGame()
+end

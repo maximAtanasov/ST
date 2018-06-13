@@ -13,7 +13,7 @@ elseif language == "english" then
     use("language_english.lua")
 end
 
-label = createButton(960-LABEL_OFFSET, 870, LABEL_TEXT, FONT, FONT_SIZE)
+label = label:new(960-LABEL_OFFSET, 870, LABEL_TEXT, FONT, FONT_SIZE)
 
 setGravity(0)
 setBackground("splash.png")

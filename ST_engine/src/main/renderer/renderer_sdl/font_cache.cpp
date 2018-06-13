@@ -80,3 +80,8 @@ font_cache::~font_cache(){
         SDL_DestroyTexture(i.second);
     }
 }
+
+void font_cache::clear() {
+    cache.clear();
+    hash.clear();
+}

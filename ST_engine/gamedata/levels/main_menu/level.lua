@@ -14,9 +14,6 @@ loadLevel("level1") --preload level1
 
 playMusic("AlaFlair.ogg", 100, -1)
 
-
-log(ERROR, "Level main created succesfully")
-
 --Load the appropriate language configuration
 if language == "russian" then
     use("language_russian.lua")
@@ -38,7 +35,7 @@ all_buttons_key = "MOUSE1"
 all_buttons_sound = "buttonSelected.wav"
 
 --New Game button
-button_newGame = createButton(50, 500, NEW_GAME_TEXT, FONT, 80)
+button_newGame = button:new(50, 500, NEW_GAME_TEXT, FONT, 80)
 button_newGame:setMarginX(474)
 button_newGame:setMarginY(92)
 button_newGame:setClickKey(all_buttons_key)
@@ -61,7 +58,7 @@ end
 
 
 --Settings button
-button_settings = createButton(50, 600, SETTINGS_TEXT, FONT, 80)
+button_settings = button:new(50, 600, SETTINGS_TEXT, FONT, 80)
 button_settings:setMarginX(479)
 button_settings:setMarginY(98)
 button_settings:setClickKey("MOUSE1")
@@ -93,7 +90,7 @@ end
 
 
 --Exit button
-button_exit = createButton(50, 700, EXIT_TEXT, FONT, 80)
+button_exit = button:new(50, 700, EXIT_TEXT, FONT, 80)
 button_exit:setMarginX(224)
 button_exit:setMarginY(85)
 button_exit:setClickKey(all_buttons_key)
@@ -118,7 +115,7 @@ end
 --SETTINGS
 
 --Buttons and their update functions
-button_back = createButton(50, 800, BACK_TEXT, FONT, 70)
+button_back = button:new(50, 800, BACK_TEXT, FONT, 70)
 button_back:setMarginX(200)
 button_back:setMarginY(65)
 button_back:hide()
@@ -150,7 +147,7 @@ function button_back:onNothing()
 end
 
 --SOUND BUTTON
-button_soundSwitch = createButton(50, 500, SOUND_TEXT, FONT, 70)
+button_soundSwitch = button:new(50, 500, SOUND_TEXT, FONT, 70)
 button_soundSwitch:setMarginX(240)
 button_soundSwitch:setMarginY(65)
 button_soundSwitch:hide()
@@ -173,7 +170,7 @@ function button_soundSwitch:onNothing()
 end
 
 --ON LABEL FOR SOUND
-button_switch1 = createButton(ON1_OFFSET, 500, ON_TEXT, FONT, 50)
+button_switch1 = button:new(ON1_OFFSET, 500, ON_TEXT, FONT, 50)
 button_switch1:hide()
 
 function button_switch1:update()
@@ -185,19 +182,11 @@ function button_switch1:update()
 end
 
 --VSYNC button
-button_vsync = createButton(50, 600, VSYNC_TEXT, FONT, 70)
+button_vsync = button:new(50, 600, VSYNC_TEXT, FONT, 70)
 button_vsync:setMarginX(VSYNC_MARGINS)
 button_vsync:setMarginY(60)
 button_vsync:hide()
 button_vsync:setClickKey(all_buttons_key)
-
-function button_vsync:onClick()
-    if getVsyncState() then
-        vsyncOff()
-    else
-        vsyncOn()
-    end
-end
 
 function button_vsync:onHover()
     if(self.soundPlayed == 1) then
@@ -211,20 +200,27 @@ function button_vsync:onNothing()
 end
 
 --ON SWITCH FOR VSYNC
-button_switch2 = createButton(ON2_OFFSET, 600, ON_TEXT, FONT, 50)
+ 
+button_switch2 = checkbox:new(450, 620)
 button_switch2:hide()
+button_switch2:setClickKey(all_buttons_key)
+if getVsyncState() then
+    button_switch2:check()
+else
+    button_switch2:uncheck()    
+end
 
-function button_switch2:update()
+function button_switch2:onClick()
     if getVsyncState() then
-        button_switch2:setText(ON_TEXT)
+        vsyncOff()
     else
-        button_switch2:setText(OFF_TEXT)
+        vsyncOn()
     end
 end
 
 --Fullscreen button
 
-button_fullscreen = createButton(50, 700, FULLSCREEN_TEXT, FONT, 70)
+button_fullscreen = button:new(50, 700, FULLSCREEN_TEXT, FONT, 70)
 button_fullscreen:setMarginX(FULLSCREEN_MARGINS)
 button_fullscreen:setMarginY(60)
 button_fullscreen:hide()
@@ -252,7 +248,7 @@ end
 
 
 --ON SWITCH FOR FULLSCREEN
-button_switch3 = createButton(ON3_OFFSET, 700, ON_TEXT, FONT, 50)
+button_switch3 = button:new(ON3_OFFSET, 700, ON_TEXT, FONT, 50)
 button_switch3:hide()
 
 function button_switch3:update()

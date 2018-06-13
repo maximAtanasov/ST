@@ -305,7 +305,7 @@ void drawing_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == ENABLE_LIGHTING){
-            auto arg = (bool*)temp->get_data();
+            auto arg = static_cast<bool*>(temp->get_data());
             if(*arg) {
                 lighting_enabled = true;
             }
@@ -314,7 +314,7 @@ void drawing_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == ASSETS) {
-            auto gAssets = (ST::assets **) temp->get_data();
+            auto gAssets = static_cast<ST::assets**>(temp->get_data());
             ST::assets *temp_ast = *gAssets;
             asset_ptr = temp_ast;
             gRenderer.upload_surfaces(&asset_ptr->surfaces);

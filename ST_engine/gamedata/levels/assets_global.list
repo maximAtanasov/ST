@@ -13,3 +13,6 @@
 fonts/OpenSans-Regular.ttf 100
 fonts/OpenSans-Regular.ttf 40
 fonts/OpenSans-Regular.ttf 25
+
+assets/ui/checkbox-checked.png
+assets/ui/checkbox-unchecked.png

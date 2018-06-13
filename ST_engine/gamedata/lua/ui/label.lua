@@ -9,15 +9,11 @@ label = entity:new()
 label.isVisible = true;
 label.text = textObject:new()
 
-function createLabel(x, y, text, font, fontSize)
-    local newLabel = label:new(x, y)
+function label:new(x, y, text, font, fontSize)
+    local newLabel = newEntity(self, x, y)
     newLabel.text = textObject:new(x,y, fontSize, font)
     newLabel.text:setText(text)
     return newLabel
-end
-
-function label:new(x, y)
-    return new(self, x, y);
 end
 
 function label:hide()
