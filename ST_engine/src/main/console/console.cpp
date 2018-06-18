@@ -83,7 +83,7 @@ void console::handle_messages(){
         else if(temp->msg_name == KEY_PRESSED){
             auto key_val = (ST::key*)temp->get_data();
             if(*key_val == ST::key::ENTER){
-                write(ST::console_log(ST::log_type ::INFO, composition));
+                write(ST::console_log(ST::log_type::INFO, composition));
                 if(!composition.empty()){
                     gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data<std::string>(composition)));
                 }

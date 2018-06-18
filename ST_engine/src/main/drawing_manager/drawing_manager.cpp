@@ -84,9 +84,6 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
     gTask_manager->wait_for_task(id);
     draw_lights();
 
-    //alternative method for drawing lights
-    //gRenderer.draw_lights(lightmap);
-
     //Draw debug info and the console in a debug build
     #ifdef __DEBUG
 	if (collisions_shown) {

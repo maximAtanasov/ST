@@ -29,7 +29,6 @@ int renderer_sdl::initialize(SDL_Window* window, int width, int height){
     return 0;
 }
 
-
 /**
  * Initializes the renderer.
  * Same as the regular initialization method, except for an additional parameter that specify if VSYNC should be on or off.
@@ -257,8 +256,6 @@ void renderer_sdl::vsync_on(){
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
 }
-
-
 
 /**
  * Turns off vsync.

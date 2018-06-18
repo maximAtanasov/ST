@@ -10,18 +10,19 @@ currentID = 0 --MUST start at 0
 currentTextID = 0 --MUST start at 0
 currentLightID = 0 --MUST start at 0
 
-currentVolume = 100;
-math.randomseed( os.time() )
+currentVolume = 100
+math.randomseed(os.time())
 
 --cleans up current level and start the specifed one
 function startLevel(arg)
     startLevelLua(arg)
     currentID = 0
-    currentLightID = 0;
-    currentTextID = 0;
-    error() --a dirty trick, but works
+    currentLightID = 0
+    currentTextID = 0
+    error() --a dirty trick, but it works
 end
 
 function exit()
     endGame()
 end
+

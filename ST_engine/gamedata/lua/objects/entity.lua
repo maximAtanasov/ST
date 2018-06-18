@@ -7,8 +7,12 @@
 
 --tells if the mouse is over an object
 function mouseOver(object)
-    if getMouseX() < object:getTexW() + object:getX() and getMouseX() > object:getX() then
-        if getMouseY() > object:getY() - object:getTexH() and getMouseY() < object:getY() then
+    local mouseX = getMouseX()
+    local mouseY = getMouseY()
+    local objectX = getX(object.ID)
+    local objectY = getY(object.ID)
+    if mouseX < getTexW(object.ID) + objectX and mouseX > objectX then
+        if mouseY > objectY - getTexH(object.ID) and mouseY < objectY then
             return true
         end
     end
