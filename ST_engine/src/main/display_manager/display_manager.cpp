@@ -64,7 +64,7 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
  * function must be static.
  */
 void display_manager::update_task(void* mngr){
-    auto self = (display_manager*)mngr;
+    auto self = static_cast<display_manager*>(mngr);
     self->handle_messages();
 }
 

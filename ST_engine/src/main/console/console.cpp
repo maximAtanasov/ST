@@ -44,7 +44,7 @@ void console::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == CONSOLE_WRITE){
-            auto log = (ST::console_log*)temp->get_data();
+            auto log = static_cast<ST::console_log*>(temp->get_data());
             if(log_level == 0x01) {
                 if (log->type == ST::log_type::ERROR) {
                     write(*log);
@@ -69,29 +69,29 @@ void console::handle_messages(){
                 if(log->type == ST::log_type::SUCCESS || log->type == ST::log_type::INFO){
                     write(*log);
                 }
-            }else if(log_level == 0x07){
-                write(*log);
+            }else if(log_level == 0x07){ write(*log);
             }
         }
         else if(temp->msg_name == CONSOLE_TOGGLE){
             toggle();
         }
         else if(temp->msg_name == MOUSE_SCROLL){
-            int value = *(int*)temp->get_data();
+            int value = *static_cast<int*>(temp->get_data());
             scroll(value);
         }
         else if(temp->msg_name == KEY_PRESSED){
-            auto key_val = (ST::key*)temp->get_data();
+            auto key_val = static_cast<ST::key*>(temp->get_data());
             if(*key_val == ST::key::ENTER){
                 write(ST::console_log(ST::log_type::INFO, composition));
                 if(!composition.empty()){
                     gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data<std::string>(composition)));
                 }
+                composition.clear();
                 gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
             }
         }
         else if(temp->msg_name == TEXT_STREAM){
-            composition = *(std::string*)temp->get_data();
+            composition = *static_cast<std::string*>(temp->get_data());
         }
         destroy_msg(temp);
         temp = msg_sub.get_next_message();

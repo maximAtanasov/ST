@@ -32,6 +32,7 @@
 class display_manager{
     friend class display_manager_tests;
     private:
+        SDL_Event window_events;
         SDL_Surface* icon{};
         SDL_Window* window{};
         SDL_DisplayMode DM{};

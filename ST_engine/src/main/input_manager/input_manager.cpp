@@ -45,7 +45,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
  * function must be static.
  */
 void input_manager::update_task(void* mngr){
-    auto self = (input_manager*)mngr;
+    auto self = static_cast<input_manager*>(mngr);
     self->handle_messages();
     self->take_input();
 }
@@ -111,6 +111,12 @@ void input_manager::take_input(){
 			controls.mouseX = static_cast<int>(static_cast<float>(controls.mouseX)*ratio_w);
 			controls.mouseY = static_cast<int>(static_cast<float>(controls.mouseY)*ratio_h);
 		}
+        if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+            r_width = event.window.data1;
+            r_height = event.window.data2;
+            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
+            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
+        }
     }
 
     //check if any of the registered keys is pressed and send a message if so
