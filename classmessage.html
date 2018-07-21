@@ -100,12 +100,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2030e715b53be4dd6193984f1f28d93c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a2030e715b53be4dd6193984f1f28d93c">get_id</a> ()</td></tr>
-<tr class="separator:a2030e715b53be4dd6193984f1f28d93c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22f20cc07976ae6f8e147ec11b9640a9"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a22f20cc07976ae6f8e147ec11b9640a9">get_data</a> ()</td></tr>
-<tr class="separator:a22f20cc07976ae6f8e147ec11b9640a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26418d1aec70f3f917e5d86e7841d15e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmessage.html">message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a26418d1aec70f3f917e5d86e7841d15e">make_copy</a> ()</td></tr>
-<tr class="separator:a26418d1aec70f3f917e5d86e7841d15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40b10ca954f75da24222a0e47adf01c7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a40b10ca954f75da24222a0e47adf01c7">get_id</a> () const </td></tr>
+<tr class="separator:a40b10ca954f75da24222a0e47adf01c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c4ca23a03f86a8dce1efd01f3d556fb"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a5c4ca23a03f86a8dce1efd01f3d556fb">get_data</a> () const </td></tr>
+<tr class="separator:a5c4ca23a03f86a8dce1efd01f3d556fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48d36596a09949e5b4f0f48e107d8563"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmessage.html">message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a48d36596a09949e5b4f0f48e107d8563">make_copy</a> () const </td></tr>
+<tr class="separator:a48d36596a09949e5b4f0f48e107d8563"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -123,9 +123,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
 <div class="textblock"><p>A message object passed around in the message bus. Holds anything created with make_data&lt;&gt;(). </p>
 <p>Only use make_msg() and destroy_msg() for the creation of a message. </p>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00023">23</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00024">24</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a22f20cc07976ae6f8e147ec11b9640a9"></a>
+<a class="anchor" id="a5c4ca23a03f86a8dce1efd01f3d556fb"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -136,7 +136,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
           <td class="memname">void * message::get_data </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -147,11 +147,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The data contained within a message. Always a void* that MUST be properly casted to an actual type on the other end </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00054">54</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00055">55</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2030e715b53be4dd6193984f1f28d93c"></a>
+<a class="anchor" id="a40b10ca954f75da24222a0e47adf01c7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -162,7 +162,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
           <td class="memname">uint16_t message::get_id </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -173,11 +173,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The id of the mesage. </dd></dl>
 
-<p>Definition at line <a class="el" href="message_8hpp_source.html#l00061">61</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message_8hpp_source.html#l00062">62</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a26418d1aec70f3f917e5d86e7841d15e"></a>
+<a class="anchor" id="a48d36596a09949e5b4f0f48e107d8563"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -188,7 +188,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
           <td class="memname"><a class="el" href="classmessage.html">message</a> * message::make_copy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -199,7 +199,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
 </div><div class="memdoc">
 <p>Makes a copy of itself. </p><dl class="section return"><dt>Returns</dt><dd>A new message that is an exact copy of the original. </dd></dl>
 
-<p>Definition at line <a class="el" href="message__bus_8hpp_source.html#l00063">63</a> of file <a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a>.</p>
+<p>Definition at line <a class="el" href="message__bus_8hpp_source.html#l00064">64</a> of file <a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a>.</p>
 
 </div>
 </div>

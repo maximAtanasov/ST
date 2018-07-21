@@ -104,16 +104,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a22128e8a4385b2b081d77da438fd3a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedf17180fd9df0cfe88ef2e287a5469c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#aedf17180fd9df0cfe88ef2e287a5469c">cache_string</a> (std::string, SDL_Texture *, std::string, int)</td></tr>
 <tr class="separator:aedf17180fd9df0cfe88ef2e287a5469c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0745dcfdd1b8dc7644ed376e07802f57"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a0745dcfdd1b8dc7644ed376e07802f57">str_is_cached</a> (std::string, std::string, int)</td></tr>
-<tr class="separator:a0745dcfdd1b8dc7644ed376e07802f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5135564d042dca4182e1ac249534ee48"><td class="memItemLeft" align="right" valign="top">SDL_Texture *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a5135564d042dca4182e1ac249534ee48">return_cache</a> ()</td></tr>
-<tr class="separator:a5135564d042dca4182e1ac249534ee48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a380fe3735d706ed0381ab2f372cb694a"><td class="memItemLeft" align="right" valign="top">SDL_Texture *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a380fe3735d706ed0381ab2f372cb694a">get_cached_string</a> (std::string, std::string, int)</td></tr>
+<tr class="separator:a380fe3735d706ed0381ab2f372cb694a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a770a89bf190cb98865c5ab91cf85a2d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a770a89bf190cb98865c5ab91cf85a2d8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
+<tr class="separator:a770a89bf190cb98865c5ab91cf85a2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer class. </p>
 <p>Caches textures and the string, font+size used to render them. </p>
 
-<p>Definition at line <a class="el" href="font__cache_8hpp_source.html#l00047">47</a> of file <a class="el" href="font__cache_8hpp_source.html">font_cache.hpp</a>.</p>
+<p>Definition at line <a class="el" href="font__cache_8hpp_source.html#l00048">48</a> of file <a class="el" href="font__cache_8hpp_source.html">font_cache.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a22128e8a4385b2b081d77da438fd3a82"></a>
 <div class="memitem">
@@ -129,7 +130,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Destroys the <a class="el" href="classfont__cache.html" title="A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer c...">font_cache</a> object and frees all cached textures. </p>
 
-<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00078">78</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00069">69</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
 
 </div>
 </div>
@@ -179,58 +180,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00062">62</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00053">53</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5135564d042dca4182e1ac249534ee48"></a>
+<a class="anchor" id="a380fe3735d706ed0381ab2f372cb694a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">SDL_Texture * font_cache::return_cache </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The last searched for texture. </dd></dl>
-
-<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00033">33</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4016efc59bee296dbe1df0d3cff0d38a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void font_cache::set_max </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets the maximum cache size. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">max</td><td>The maximum number of Cached rendered textures that can be stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00026">26</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0745dcfdd1b8dc7644ed376e07802f57"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool font_cache::str_is_cached </td>
+          <td class="memname">SDL_Texture * font_cache::get_cached_string </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>STR</em>, </td>
@@ -254,7 +213,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Tells if a string with the given font and at the given size is in the cache.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">STR</td><td>The string to search for. </td></tr>
@@ -263,9 +221,33 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if in cache, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The cached string corresponding to the give parameters or nullptr if it was not found </dd></dl>
 
-<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00045">45</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
+<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00037">37</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4016efc59bee296dbe1df0d3cff0d38a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void font_cache::set_max </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the maximum cache size. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">max</td><td>The maximum number of Cached rendered textures that can be stored. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="font__cache_8cpp_source.html#l00027">27</a> of file <a class="el" href="font__cache_8cpp_source.html">font_cache.cpp</a>.</p>
 
 </div>
 </div>

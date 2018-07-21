@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['copyright_20_28c_29_202018_20maxim_20atanasov_20_2d_20all_20rights_20reserved',['Copyright (C) 2018 Maxim Atanasov - All Rights Reserved',['../index.html',1,'']]]
+  ['this_20file_20is_20part_20of_20the_20_22slavictales_22_20project_2e',['This file is part of the &quot;slavicTales&quot; project.',['../index.html',1,'']]]
 ];
