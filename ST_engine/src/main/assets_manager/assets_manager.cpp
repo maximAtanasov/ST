@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -38,7 +39,7 @@ assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
  * function must be static.
  */
 void assets_manager::update_task(void* arg){
-    auto self = (assets_manager*)arg;
+    auto self = static_cast<assets_manager*>(arg);
     self->handle_messages();
 }
 
@@ -254,7 +255,7 @@ int assets_manager::load_assets_from_list(std::string path){
         log(ERROR, "File " + path + " not found");
         return -1;
     }
-    gMessage_bus->send_msg(make_msg(ASSETS, make_data<ST::assets*>(&all_assets)));
+    gMessage_bus->send_msg(make_msg(ASSETS, make_data(&all_assets)));
     return 0;
 }
 
@@ -280,7 +281,7 @@ int assets_manager::unload_assets_from_list(std::string path){
         log(ERROR, "File " + path + " not found");
         return -1;
     }
-    gMessage_bus->send_msg(make_msg(ASSETS, make_data<ST::assets*>(&all_assets)));
+    gMessage_bus->send_msg(make_msg(ASSETS, make_data(&all_assets)));
     return 0;
 }
 

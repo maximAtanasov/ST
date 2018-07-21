@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -44,7 +45,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_
 
 	//Initialize the rendering object
 	gRenderer.initialize(window, w_width, w_height);
-	gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data<std::tuple<int, int>>(std::make_tuple(w_width, w_height))));
+	gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data(std::make_tuple(w_width, w_height))));
 }
 
 /**
@@ -63,22 +64,22 @@ void drawing_manager::process_lights_task(void *arg){
  * @param fps the current frames per second.
  * @param cnsl a pointer to the console object.
  */
-void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
+void drawing_manager::update(const ST::level_data& temp, double fps, const console& cnsl){
 
-	Camera = temp->Camera;
+	Camera = temp.Camera;
 	handle_messages();
-    lights_arg = &temp->lights;
+    lights_arg = temp.lights;
 
     //start a task to pre-process lighting on a separate thread
     task_id id = gTask_manager->start_task(new ST::task(process_lights_task, this, nullptr, -1));
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
 	gRenderer.clear_screen();
-	gRenderer.draw_background(temp->background);
-	draw_entities(&temp->entities);
+	gRenderer.draw_background(temp.background);
+	draw_entities(temp.entities);
 
-	gRenderer.draw_overlay(temp->overlay, ticks % temp->overlay_spriteNum, temp->overlay_spriteNum);
-    draw_text_objects(&temp->text_objects);
+	gRenderer.draw_overlay(temp.overlay, ticks % temp.overlay_spriteNum, temp.overlay_spriteNum);
+    draw_text_objects(temp.text_objects);
 
     //draw the lights when we are sure they are processed
     gTask_manager->wait_for_task(id);
@@ -87,8 +88,8 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
     //Draw debug info and the console in a debug build
     #ifdef __DEBUG
 	if (collisions_shown) {
-		draw_collisions(&temp->entities);
-		draw_coordinates(&temp->entities);
+		draw_collisions(temp.entities);
+		draw_coordinates(temp.entities);
 	}
 	draw_fps(fps);
 	draw_console(cnsl);
@@ -103,8 +104,8 @@ void drawing_manager::update(ST::level_data* temp, double fps, console* cnsl){
  * Draws all visible text objects in the current level
  * @param objects a pointer to a vector of text_objects
  */
-void drawing_manager::draw_text_objects(std::vector<ST::text>* objects) {
-    for(auto i : *objects) {
+void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
+    for(auto i : objects) {
         if (i.is_visible()) {
             gRenderer.draw_text(i.get_font(), i.get_text_string(), i.get_x(), i.get_y() - i.get_font_size(), i.get_color(),
                                  i.get_font_size(), 2);
@@ -127,21 +128,21 @@ void drawing_manager::draw_fps(double fps){
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
  */
-void drawing_manager::draw_console(console* cnsl){
-    if(cnsl->is_open()){
-        gRenderer.draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl->color);
-        for(auto i = cnsl->entries.rbegin(); i != cnsl->entries.rend(); ++i) {
-            if (cnsl->pos - cnsl->font_size - 50 + cnsl->scroll_offset <= w_height / 2 - cnsl->font_size * 2) {
+void drawing_manager::draw_console(const console& cnsl){
+    if(cnsl.is_open()){
+        gRenderer.draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
+        int pos = w_height/2;
+        for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
+            if (pos - cnsl.font_size - 50 + cnsl.scroll_offset <= w_height / 2 - cnsl.font_size * 2) {
                 gRenderer.draw_text("OpenSans-Regular.ttf", i->text, 0,
-                                     cnsl->pos - cnsl->font_size - 20 + cnsl->scroll_offset - 50, i->color,
-                                     cnsl->font_size, -1);
+                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset - 50, i->color,
+                                     cnsl.font_size, -1);
             }
-            cnsl->pos -= cnsl->font_size + 5;
+            pos -= cnsl.font_size + 5;
         }
-        gRenderer.draw_rectangle_filled(0, w_height/2 - cnsl->font_size - 12, w_width, 3, cnsl->color_text);
-        gRenderer.draw_text("OpenSans-Regular.ttf", "Command: " + cnsl->composition, 0, w_height/2-50, cnsl->color_text,
-                             cnsl->font_size, -1);
-        cnsl->pos = w_height/2;
+        gRenderer.draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
+        gRenderer.draw_text("OpenSans-Regular.ttf", "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
+                             cnsl.font_size, -1);
     }
 }
 
@@ -150,7 +151,7 @@ void drawing_manager::draw_console(console* cnsl){
  * TODO: tests must be written for this method, but the algorithm calculating  the lighting is not yet finished.
  * @param lights A vector of <b>ST::light</b> objects.
  */
-void drawing_manager::process_lights(std::vector<ST::light>* lights){
+void drawing_manager::process_lights(const std::vector<ST::light>& lights){
     #ifdef __DEBUG
     if(!lighting_enabled){
         return;
@@ -161,27 +162,27 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
             lightmap[i][j] = darkness_level;
         }
     }
-    for(unsigned int q = 0; q < lights->size(); q++){
-        int x = lights->at(q).origin_x - Camera.x;
-        int y = lights->at(q).origin_y - Camera.y;
+    for(unsigned int q = 0; q < lights.size(); q++){
+        int x = lights.at(q).origin_x - Camera.x;
+        int y = lights.at(q).origin_y - Camera.y;
         double count = 0;
-        double step = darkness_level/(double)lights->at(q).radius;
+        double step = darkness_level/ static_cast<double>(lights.at(q).radius);
         count = 0;
-        int radius = lights->at(q).radius;
-        int intensity = lights->at(q).intensity;
+        int radius = lights.at(q).radius;
+        int intensity = lights.at(q).intensity;
         if(x - radius - intensity > w_width || y - radius - intensity > w_height)
             continue;
         double step2 = 0;
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j < x + radius + intensity; j++){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = (uint8_t)lights->at(q).brightness + (uint8_t)count;
-                if(count + lights->at(q).brightness < darkness_level && j > x + intensity)
+                    lightmap[j][i] = (uint8_t)lights.at(q).brightness + (uint8_t)count;
+                if(count + lights.at(q).brightness < darkness_level && j > x + intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights->at(q).brightness < darkness_level && i > y + intensity)
+            if(step2 + lights.at(q).brightness < darkness_level && i > y + intensity)
                 step2 += step;
         }
         count = 0;
@@ -189,13 +190,13 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j > x - radius - intensity; j--){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights->at(q).brightness + (uint8_t)count;
-                if(count + lights->at(q).brightness < darkness_level && j < x - intensity)
+                    lightmap[j][i] = lights.at(q).brightness + (uint8_t)count;
+                if(count + lights.at(q).brightness < darkness_level && j < x - intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights->at(q).brightness < darkness_level && i < y - intensity)
+            if(step2 + lights.at(q).brightness < darkness_level && i < y - intensity)
                 step2 += step;
         }
         count = 0;
@@ -203,13 +204,13 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j < x + radius + intensity; j++){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights->at(q).brightness + (uint8_t)count;
-                if(count + lights->at(q).brightness < darkness_level && j > x + intensity)
+                    lightmap[j][i] = lights.at(q).brightness + (uint8_t)count;
+                if(count + lights.at(q).brightness < darkness_level && j > x + intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights->at(q).brightness < darkness_level && i < y - intensity)
+            if(step2 + lights.at(q).brightness < darkness_level && i < y - intensity)
                 step2 += step;
         }
         count = 0;
@@ -217,13 +218,13 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j > x - radius - intensity; j--){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights->at(q).brightness + (uint8_t)count;
-                if(count + lights->at(q).brightness< darkness_level && j < x - intensity)
+                    lightmap[j][i] = lights.at(q).brightness + (uint8_t)count;
+                if(count + lights.at(q).brightness< darkness_level && j < x - intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights->at(q).brightness < darkness_level && i > y + intensity) {
+            if(step2 + lights.at(q).brightness < darkness_level && i > y + intensity) {
                 step2 += step;
             }
         }
@@ -233,7 +234,7 @@ void drawing_manager::process_lights(std::vector<ST::light>* lights){
 /**
  * Draws the lightmap on the screen.
  */
-void drawing_manager::draw_lights(){
+void drawing_manager::draw_lights() const{
     #ifdef __DEBUG
     if(!lighting_enabled){
         return;
@@ -284,7 +285,7 @@ void drawing_manager::handle_messages(){
             set_darkness(*(uint8_t*)temp->get_data());
         }
         else if(temp->msg_name == SHOW_COLLISIONS){
-            auto arg = (bool*)temp->get_data();
+            auto arg = static_cast<bool*>(temp->get_data());
             if(*arg) {
                 show_collisions();
             }
@@ -293,7 +294,7 @@ void drawing_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == SHOW_FPS){
-            auto arg = (bool*)temp->get_data();
+            auto arg = static_cast<bool*>(temp->get_data());
             if(*arg) {
                 show_fps = true;
             }
@@ -338,9 +339,9 @@ void drawing_manager::set_darkness(uint8_t arg){
  * Draws all visible entities on the screen.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
-    for(auto& i : *entities){
-        if(is_onscreen(&i)){
+void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) const{
+    for(auto& i : entities){
+        if(is_onscreen(i)){
             if(i.get_animation_num() == 0){
                 if(i.is_static()){
                     gRenderer.draw_texture(i.get_texture(), i.get_x(), i.get_y());
@@ -350,7 +351,7 @@ void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
 				}
             }
             else{
-                uint32_t time = ticks >> 7; //ticks/128
+                uint32_t time = ticks >> 7U; //ticks/128
                 if(i.is_static()){
                     gRenderer.draw_sprite(i.get_texture(), i.get_x() , i.get_y(), time % i.get_sprite_num(), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
                 }else{
@@ -366,22 +367,22 @@ void drawing_manager::draw_entities(std::vector<ST::entity>* entities){
  * @param i The entity to check.
  * @return True if it is on screen and false otherwise.
  */
-bool drawing_manager::is_onscreen(ST::entity* i){
-    if(!i->is_visible())
+bool drawing_manager::is_onscreen(const ST::entity& i) const{
+    if(!i.is_visible())
         return false;
-    if(i->is_static())
+    if(i.is_static())
         return true;
-    return (*i).get_x() - Camera.x + (*i).get_tex_w() >= 0 && (*i).get_x() - Camera.x <= w_width
-           && (*i).get_y()-Camera.y  > 0 && (*i).get_y()-Camera.y - (*i).get_tex_h() <= w_height;
+    return i.get_x() - Camera.x + i.get_tex_w() >= 0 && i.get_x() - Camera.x <= w_width
+           && i.get_y()-Camera.y  > 0 && i.get_y()-Camera.y - i.get_tex_h() <= w_height;
 }
 
 /**
  * Draws the collision boxes for entities that are affected by physics.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_collisions(std::vector<ST::entity>* entities){
-    for(auto& i : *entities)
-        if(is_onscreen(&i)){
+void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) const{
+    for(auto& i : entities)
+        if(is_onscreen(i)){
             int Xoffset, Yoffset;
             if(i.is_static()){
                 Xoffset = 0;
@@ -405,9 +406,9 @@ void drawing_manager::draw_collisions(std::vector<ST::entity>* entities){
  * Draws the coordinates for entities that are affected by physics.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_coordinates(std::vector<ST::entity>* entities){
-    for(auto& i : *entities) {
-        if (is_onscreen(&i)) {
+void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities){
+    for(auto& i : entities) {
+        if (is_onscreen(i)) {
             if (i.is_affected_by_physics()) {
                 int Xoffset, Yoffset;
                 if (i.is_static()) {

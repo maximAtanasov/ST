@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -111,16 +112,16 @@ class game_manager{
 
         game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         ~game_manager();
-        std::string get_active_level();
-        ST::level_data* get_level_data();
-        bool key_pressed(size_t arg);
-        bool key_held(size_t arg);
-        bool key_released(size_t arg);
-        int32_t get_mouse_x();
-        int32_t get_mouse_y();
+        std::string get_active_level() const;
+        ST::level_data* get_level_data() const;
+        bool key_pressed(size_t arg) const;
+        bool key_held(size_t arg) const;
+        bool key_released(size_t arg) const;
+        int32_t get_mouse_x() const;
+        int32_t get_mouse_y() const;
         void update();
-        bool game_is_running();
-        ST::level get_level();
+        bool game_is_running() const;
+        ST::level get_level() const;
 };
 
 //INLINED METHODS
@@ -137,7 +138,7 @@ inline void game_manager::update(){
  * Get the name of the active level.
  * @return The name of the current level.
  */
-inline std::string game_manager::get_active_level(){
+inline std::string game_manager::get_active_level() const{
     return active_level;
 }
 
@@ -152,14 +153,14 @@ inline void game_manager::run_level_loop() {
  * Returns the data of the current level.
  * @return A pointer to the data of the current level.
  */
-inline ST::level_data* game_manager::get_level_data() {
+inline ST::level_data* game_manager::get_level_data() const{
     return current_level_pointer->get_data();
 }
 
 /**
  * @return A poitner to the current level.
  */
-inline ST::level game_manager::get_level(){
+inline ST::level game_manager::get_level() const{
     return *current_level_pointer;
 }
 
@@ -168,15 +169,15 @@ inline ST::level game_manager::get_level(){
  * This is the main condition for running the main loop (the entire engine).
  * @return True if running, false otherwise.
  */
-inline bool game_manager::game_is_running(){
-    return static_cast<bool>(SDL_AtomicGet(&end_game));
+inline bool game_manager::game_is_running() const{
+    return static_cast<bool>(SDL_AtomicGet(const_cast<SDL_atomic_t*>(&end_game)));
 }
 
 /**
  * Get the current mouse X position.
  * @return The X position of the mouse cursor.
  */
-inline int game_manager::get_mouse_x(){
+inline int game_manager::get_mouse_x() const{
     return mouse_x;
 }
 
@@ -184,7 +185,7 @@ inline int game_manager::get_mouse_x(){
  * Get the current mouse Y position.
  * @return The Y position of the mouse cursor.
  */
-inline int game_manager::get_mouse_y(){
+inline int game_manager::get_mouse_y() const{
     return mouse_y;
 }
 
@@ -193,7 +194,7 @@ inline int game_manager::get_mouse_y(){
  * @param arg A hash of the name of the action.
  * @return True if pressed, false otherwise.
  */
-inline bool game_manager::key_pressed(size_t arg){
+inline bool game_manager::key_pressed(size_t arg) const{
     return keys_pressed_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
 }
 
@@ -202,7 +203,7 @@ inline bool game_manager::key_pressed(size_t arg){
  * @param arg A hash of the name of the action.
  * @return True if held, false otherwise.
  */
-inline bool game_manager::key_held(size_t arg){
+inline bool game_manager::key_held(size_t arg) const{
     return keys_held_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
 }
 
@@ -211,7 +212,7 @@ inline bool game_manager::key_held(size_t arg){
  * @param arg A hash of the name of the action.
  * @return True if released, false otherwise.
  */
-inline bool game_manager::key_released(size_t arg){
+inline bool game_manager::key_released(size_t arg) const{
     return keys_released_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
 }
 

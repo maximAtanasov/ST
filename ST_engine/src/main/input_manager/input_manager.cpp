@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -83,7 +84,7 @@ void input_manager::take_input(){
             if(controls.mouse_scroll < 0){
                 controls.mouse_scroll = 0;
             }
-            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data<int>(controls.mouse_scroll)));
+            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
         }
         if(event.type == SDL_TEXTINPUT){
             if(text_input) {
@@ -95,14 +96,14 @@ void input_manager::take_input(){
                     composition.pop_back();
                 }
                 #endif
-                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data<std::string>(composition)));
+                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
             }
         }
         if(event.type == SDL_KEYDOWN){
             if(event.key.keysym.sym == SDLK_BACKSPACE) {
                 if (composition.length() > 0) {
                     composition.pop_back();
-                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data<std::string>(composition)));
+                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
                 }
             }
         }
@@ -122,13 +123,13 @@ void input_manager::take_input(){
     //check if any of the registered keys is pressed and send a message if so
     for(auto i : registered_keys){
         if(keypress(i)){
-            gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data<uint8_t>((uint8_t)i)));
+            gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i))));
         }
         else if(keyheld(i)){
-            gMessage_bus->send_msg(make_msg(KEY_HELD, make_data<uint8_t>((uint8_t)i)));
+            gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i))));
         }
         else if(keyrelease(i)){
-            gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data<uint8_t>((uint8_t)i)));
+            gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i))));
         }
     }
 
@@ -140,11 +141,11 @@ void input_manager::take_input(){
 
     //only send mouse coordinates if they change
     if(controls.mouseX != controls.mouseX_prev){
-        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data<int>(controls.mouseX)));
+        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouseX)));
         controls.mouseX_prev = controls.mouseX;
     }
     if(controls.mouseY != controls.mouseY_prev){
-        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data<int>(controls.mouseY)));
+        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouseY)));
         controls.mouseY_prev = controls.mouseY;
     }
 }
@@ -174,7 +175,7 @@ void input_manager::handle_messages(){
             text_input = false;
         }else if(temp->msg_name == CLEAR_TEXT_STREAM){
             composition.clear();
-            gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data<std::string>(composition)));
+            gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
         }else if(temp->msg_name == REGISTER_KEY){
             auto key_val = static_cast<ST::key*>(temp->get_data());
             registered_keys.push_back(*key_val);
@@ -193,7 +194,7 @@ void input_manager::handle_messages(){
  * @param arg an <b>ST::key</b> to key for being pressed.
  * @return True if pressed, false otherwise.
  */
-bool input_manager::keypress(ST::key arg){
+bool input_manager::keypress(ST::key arg) const{
     bool pressed = false;
     if(arg == ST::key::LEFT){
         if(controls.keyboard[SDL_SCANCODE_LEFT] && !controls.keyboardFramePrev[SDL_SCANCODE_LEFT])
@@ -456,7 +457,7 @@ bool input_manager::keypress(ST::key arg){
  * @param arg an <b>ST::key</b> to key for being held.
  * @return True if held, false otherwise.
  */
-bool input_manager::keyheld(ST::key arg){
+bool input_manager::keyheld(ST::key arg) const{
     bool held = false;
     if(arg == ST::key::LEFT){
         if(controls.keyboard[SDL_SCANCODE_LEFT] && controls.keyboardFramePrev[SDL_SCANCODE_LEFT])
@@ -719,7 +720,7 @@ bool input_manager::keyheld(ST::key arg){
  * @param arg an <b>ST::key</b> to key for being released.
  * @return True if released, false otherwise.
  */
-bool input_manager::keyrelease(ST::key arg){
+bool input_manager::keyrelease(ST::key arg) const{
     bool released = false;
     if(arg == ST::key::LEFT){
         if(!controls.keyboard[SDL_SCANCODE_LEFT] && controls.keyboardFramePrev[SDL_SCANCODE_LEFT])

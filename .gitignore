@@ -3,6 +3,11 @@
 
 assets_manager_test
 audio_manager_test
+display_manager_test
+console_test
+renderer_sdl_test
+message_test
+message_allocator_test
 CMakeCache.txt
 CMakeFiles
 CMakeScripts

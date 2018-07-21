@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -30,9 +31,9 @@ private:
     message(msg_type name, const std::shared_ptr<void>& data, uint16_t id);
 public:
     msg_type msg_name;
-    uint16_t get_id();
-    void* get_data();
-    message* make_copy();
+    uint16_t get_id() const;
+    void* get_data() const;
+    message* make_copy() const;
 };
 
 //INLINED METHODS
@@ -51,14 +52,14 @@ inline message::message(msg_type name, const std::shared_ptr<void>& data, uint16
 /**
  * @return The data contained within a message. Always a void* that MUST be properly casted to an actual type on the other end
  */
-inline void* message::get_data(){
+inline void* message::get_data() const{
     return this->data.get();
 }
 
 /**
  * @return The id of the mesage.
  */
-inline uint16_t message::get_id(){
+inline uint16_t message::get_id() const{
     return id;
 }
 

@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -26,14 +27,14 @@ ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
 void ST::level::load(){
     load_input_conf();
     std::string temp = "levels/" + name + "/assets.list";
-    gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data<std::string>(temp)));
+    gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
 }
 
 /**
  * Get the name of the level.
  * @return The name of the level.
  */
-std::string ST::level::get_name(){
+std::string ST::level::get_name() const{
     return name;
 }
 
@@ -58,12 +59,12 @@ ST::level::~level(){
  */
 void ST::level::unload(){
     for(auto i : data.actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data<key>(i.second)));
+        gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
     }
     //unload fonts
     std::string temp = "levels/" + name;
     temp = temp + "/assets.list";
-    gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data<std::string>(temp)));
+    gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data(temp)));
 
     //unload inputConf
     data.actions_Buttons.clear();

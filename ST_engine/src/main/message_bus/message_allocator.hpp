@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -13,6 +14,8 @@
 #include <message_bus/message.hpp>
 #include <message_bus/message_types.hpp>
 #include <defs.hpp>
+
+#define MESSAGE_ALLOCATOR_CAPACITY 300
 
 ///An allocator class that pre-allocates memory for messages
 /**
@@ -26,8 +29,8 @@ private:
     SDL_mutex* access_mutex{};
     uint16_t pointer = 0;
     message* memory{};
-    int memory_size = 300;
-    bool allocated[300]{};
+    int memory_size = MESSAGE_ALLOCATOR_CAPACITY;
+    bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
     message_allocator();

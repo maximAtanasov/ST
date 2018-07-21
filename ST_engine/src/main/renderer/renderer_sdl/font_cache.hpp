@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -46,9 +47,7 @@ typedef std::unordered_map<font_cache_tuple, cache_list::iterator> cache_hash;
  */
 class font_cache{
     private:
-        int entries = 0;
-        SDL_Texture* last_check{};
-        cache_list cache;
+        int entries = 0;cache_list cache;
         cache_hash hash;
         int cache_size = 0;
         void move_to_front(std::list<key_pair>& list,std::list<key_pair>::iterator element);
@@ -57,8 +56,7 @@ class font_cache{
         void set_max(int max);
         ~font_cache();
         void cache_string(std::string, SDL_Texture*, std::string, int);
-        bool str_is_cached(std::string, std::string, int);
-        SDL_Texture* return_cache();
+        SDL_Texture* get_cached_string(std::string, std::string, int);
         void clear();
 };
 

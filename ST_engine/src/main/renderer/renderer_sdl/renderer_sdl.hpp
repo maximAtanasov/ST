@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -20,6 +21,8 @@
  */
 class renderer_sdl{
 private:
+	friend class renderer_sdl_tests;
+
     SDL_Renderer* sdl_renderer;
     font_cache gFont_cache;
 
@@ -46,20 +49,20 @@ private:
 
     void cache_font(TTF_Font* Font, std::string font_and_size);
     void draw_text_normal(std::string, std::string, int, int, SDL_Color, int);
-    void draw_text_cached(std::string, std::string, int, int, SDL_Color, int);
+    void draw_text_cached(std::string, std::string, int, int, SDL_Color, int) const;
 	int initialize_with_vsync(SDL_Window* win, int width, int height, bool vsync);
 
 public:
     void set_draw_color(uint8_t,uint8_t,uint8_t,uint8_t) ;
-    void clear_screen() ;
-    void present() ;
-    void draw_background(size_t);
-    void draw_overlay(size_t arg, int sprite, int sprite_num);
-    void draw_texture(size_t, int, int);
-    void draw_rectangle(int, int, int, int, SDL_Color);
-    void draw_rectangle_filled(int, int, int, int, SDL_Color);
-    void draw_sprite(size_t, int, int, int, int, int, int);
-    void draw_text(std::string, std::string, int, int, SDL_Color, int, int);
+    void clear_screen() const;
+    void present() const;
+    void draw_background(size_t arg) const;
+    void draw_overlay(size_t arg, int sprite, int sprite_num) const;
+    void draw_texture(const size_t arg, int x, int y) const;
+    void draw_rectangle(int x, int y, int w, int h, SDL_Color color) const;
+    void draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color) const;
+    void draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num) const;
+    void draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag);
     void upload_surfaces(std::unordered_map<size_t, SDL_Surface*>* surfaces);
     void upload_fonts(std::unordered_map<std::string, TTF_Font*>* fonts);
     void vsync_on();
@@ -77,13 +80,13 @@ public:
  * @param x The X position to render at.
  * @param y The Y position to render at.
  */
-inline void renderer_sdl::draw_texture(size_t arg, int x, int y) {
-	SDL_Texture *temp = textures[arg];
-	if (temp != nullptr) {
+inline void renderer_sdl::draw_texture(const size_t arg, int x, int y)  const{
+    auto texture = textures.find(arg);
+	if (texture != textures.end()) {
 		int tex_w, tex_h;
-		SDL_QueryTexture(temp, nullptr, nullptr, &tex_w, &tex_h);
+		SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
 		SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
-		SDL_RenderCopy(sdl_renderer, temp, nullptr, &src_rect);
+		SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &src_rect);
 	}
 }
 
@@ -95,7 +98,7 @@ inline void renderer_sdl::draw_texture(size_t arg, int x, int y) {
  * @param h The height of the rectangle.
  * @param color The color of the rectangle.
  */
-inline void renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color){
+inline void renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color) const{
 	SDL_Rect Rect = {x, y, w, h};
 	SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(sdl_renderer, &Rect);
@@ -110,7 +113,7 @@ inline void renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_
  * @param h The height of the rectangle.
  * @param color The color of the rectangle.
  */
-inline void renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color color){
+inline void renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color color) const{
 	SDL_Rect Rect = {x, y, w, h};
 	SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawRect(sdl_renderer, &Rect);
@@ -121,10 +124,10 @@ inline void renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color c
  * Draws a texture that fills the entire screen (Background).
  * @param arg The hash of the texture name.
  */
-inline void renderer_sdl::draw_background(size_t arg){
-	SDL_Texture* temp = textures[arg];
-	if(temp != nullptr){
-		SDL_RenderCopy(sdl_renderer, temp, nullptr, nullptr);
+inline void renderer_sdl::draw_background(const size_t arg) const{
+	auto texture = textures.find(arg);
+	if(texture != textures.end()){
+		SDL_RenderCopy(sdl_renderer, texture->second, nullptr, nullptr);
 	}
 }
 
@@ -138,16 +141,16 @@ inline void renderer_sdl::draw_background(size_t arg){
  * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
-inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num){
-	SDL_Texture* temp = textures[arg];
-	if(temp != nullptr){
+inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num) const{
+	auto texture = textures.find(arg);
+	if(texture != textures.end()){
 		int tex_w, tex_h;
-		SDL_QueryTexture(temp, nullptr, nullptr, &tex_w, &tex_h);
+		SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
 		int temp1 = tex_h/animation_num;
 		int temp2 = tex_w/sprite_num;
 		SDL_Rect src_rect = {x, y - temp1, temp2, temp1};
 		SDL_Rect dst_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
-		SDL_RenderCopy(sdl_renderer, temp, &dst_rect, &src_rect);
+		SDL_RenderCopy(sdl_renderer, texture->second, &dst_rect, &src_rect);
 	}
 }
 
@@ -158,24 +161,24 @@ inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int 
  * @param sprite The number of the sprite to use.
  * @param sprite_num The total number of frames this spritesheet has.
  */
-inline void renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num){
+inline void renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num) const{
 	int animation_num = 1;
 	int animation = 1;
-	SDL_Texture* temp = textures[arg];
-	if(temp != nullptr){
+	auto texture = textures.find(arg);
+	if(texture != textures.end()){
 		int tex_w, tex_h;
-		SDL_QueryTexture(temp, nullptr, nullptr, &tex_w, &tex_h);
+		SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
 		int temp1 = tex_h/animation_num;
 		int temp2 = tex_w/sprite_num;
 		SDL_Rect dst_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
-		SDL_RenderCopy(sdl_renderer, temp, &dst_rect, nullptr);
+		SDL_RenderCopy(sdl_renderer, texture->second, &dst_rect, nullptr);
 	}
 }
 
 /**
  * Clears the screen.
  */
-inline void renderer_sdl::clear_screen(){
+inline void renderer_sdl::clear_screen() const{
 	SDL_RenderClear(sdl_renderer);
 }
 
@@ -193,7 +196,7 @@ inline void renderer_sdl::set_draw_color(uint8_t r, uint8_t g, uint8_t b, uint8_
 /**
  * Presents the framebuffer to the window.
  */
-inline void renderer_sdl::present(){
+inline void renderer_sdl::present() const{
 	SDL_RenderPresent(sdl_renderer);
 }
 

@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -58,7 +59,6 @@ class console{
         subscriber msg_sub{};
         bool shown = false;
         std::vector<ST::console_log> entries;
-        int pos = 0;
         int font_size = 0;
         int scroll_offset = 0;
 
@@ -70,7 +70,7 @@ public:
         explicit console(message_bus* msg_bus);
         ~console();
         void set_log_level(ST::log_type arg);
-        bool is_open();
+        bool is_open() const;
         void update();
 };
 

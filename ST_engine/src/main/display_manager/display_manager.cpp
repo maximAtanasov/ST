@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -48,7 +49,7 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL
     );
     log(INFO, "Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height));
-	gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data<std::tuple<int,int>>(std::make_tuple(width, height))));
+	gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
 
     //Load and set icon
     icon = IMG_Load("levels/icon.png");

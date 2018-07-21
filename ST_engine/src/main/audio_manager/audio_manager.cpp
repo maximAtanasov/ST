@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -92,7 +93,7 @@ void audio_manager::handle_messages(){
                 unmute();
                 log(SUCCESS, "Audio ON");
             }
-            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data<int>(volume)));
+            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data(volume)));
         }
         else if(temp->msg_name == ASSETS){
             auto temp_ptr = (ST::assets**)temp->get_data();
@@ -100,7 +101,7 @@ void audio_manager::handle_messages(){
         }else if(temp->msg_name == SET_VOLUME){
             auto arg = static_cast<uint8_t*>(temp->get_data());
             set_volume(*arg);
-            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data<int>(volume)));
+            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data(volume)));
         }
         destroy_msg(temp);
         temp = msg_sub.get_next_message();

@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -72,8 +73,8 @@ class audio_manager{
 
 
         ///Audio control functions
-        void play_music(size_t arg, int volume, int loops);
-        void play_sound(size_t arg, int volume, int loops);
+        void play_music(size_t arg, int volume, int loops) const;
+        void play_sound(size_t arg, int volume, int loops) const;
         void mute();
         void unmute();
         void stop_music();
@@ -127,7 +128,7 @@ inline void audio_manager::unmute(){
  * @param volume The volume to play the chunk at.
  * @param loops How many times to play it.
  */
-inline void audio_manager::play_sound(size_t arg, int volume, int loops){
+inline void audio_manager::play_sound(size_t arg, int volume, int loops) const{
     auto data = static_cast<Mix_Chunk*>(assets_ptr->chunks[arg]);
     if(data != nullptr){
         Mix_VolumeChunk(data, volume);
@@ -143,7 +144,7 @@ inline void audio_manager::play_sound(size_t arg, int volume, int loops){
  * @param volume The volume to play the music at.
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
-inline void audio_manager::play_music(size_t arg, int volume, int loops){
+inline void audio_manager::play_music(size_t arg, int volume, int loops) const{
     Mix_Music* data = assets_ptr->music[arg];
     if(data != nullptr){
         Mix_VolumeMusic(volume);

@@ -1,8 +1,9 @@
-/** \mainpage Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/** \mainpage This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -39,9 +40,9 @@ int main(int argc, char** argv){
 
     #ifdef __DEBUG
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
-    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(false)));
+    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(false)));
     #elif defined(__RELEASE)
-    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(true)));
+    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
     #endif
     gMessage_bus.send_msg(make_msg(VSYNC_ON, nullptr));
 
@@ -78,7 +79,7 @@ int main(int argc, char** argv){
         #ifdef __DEBUG
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
-        gDrawing_manager.update(gGame_manager.get_level_data(), gFps.get_value(), &gConsole);
+        gDrawing_manager.update(*gGame_manager.get_level_data(), gFps.get_value(), gConsole);
 
         #elif defined(__RELEASE)
         gDrawing_manager.update(gGame_manager.get_level_data(), 0, nullptr);

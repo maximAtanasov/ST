@@ -1,8 +1,9 @@
---Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
---You may not use, distribute or modify this code.
---This code is proprietary and belongs to the "slavicTales"
---project. See LICENCE.txt in the root directory of the project.
+-- This file is part of the "slavicTales" project.
+-- You may use, distribute or modify this code under the terms
+-- of the GNU General Public License version 2.
+-- See LICENCE.txt in the root directory of the project.
 --
+-- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
 label = entity:new()
@@ -10,7 +11,7 @@ label.isVisible = true;
 label.text = textObject:new()
 
 function label:new(x, y, text, font, fontSize)
-    local newLabel = newEntity(self, x, y)
+    local newLabel = entity:new(self, x, y)
     newLabel.text = textObject:new(x,y, fontSize, font)
     newLabel.text:setText(text)
     return newLabel

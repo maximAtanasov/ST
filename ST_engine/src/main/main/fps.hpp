@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -26,7 +27,7 @@ class fps {
     public:
         fps();
         void update(double time, double frame_time);
-        double get_value();
+        double get_value() const;
 };
 
 //INLINED METHODS
@@ -34,7 +35,7 @@ class fps {
 /**
  * @return The current average framerate value.
  */
-inline double fps::get_value() {
+inline double fps::get_value() const{
     return value;
 }
 

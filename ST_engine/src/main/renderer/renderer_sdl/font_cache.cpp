@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -28,28 +29,18 @@ void font_cache::set_max(int max) {
 }
 
 /**
- * @return The last searched for texture.
- */
-SDL_Texture* font_cache::return_cache() {
-    return last_check;
-}
-
-/**
- * Tells if a string with the given font and at the given size is in the cache.
- *
  * @param STR The string to search for.
  * @param FONT The font of the text.
  * @param SIZE The size of the font that the text was rendered at.
- * @return True if in cache, false otherwise.
+ * @return The cached string corresponding to the give parameters or nullptr if it was not found
  */
-bool font_cache::str_is_cached(std::string STR, std::string FONT, int SIZE){
+SDL_Texture* font_cache::get_cached_string(std::string STR, std::string FONT, int SIZE){
     font_cache_tuple temp = std::make_tuple(STR, FONT, SIZE);
     if(hash.find(temp) != hash.end()){
-        last_check = hash[temp]->second;
         move_to_front(cache, hash[temp]);
-        return true;
+        return hash[temp]->second;;
     }
-    return false;
+    return nullptr;
 }
 
 /**

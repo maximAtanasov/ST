@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -66,14 +67,13 @@ class drawing_manager{
         subscriber msg_sub{};
 
         //rendering object - the interface
-        renderer_sdl gRenderer{};
+        renderer_sdl gRenderer;
 
         //CPU ticks since start - used for animating sprites
         Uint32 ticks = 0;
 
-
         //basically the argument passed to process_lights
-        std::vector<ST::light>* lights_arg{};
+        std::vector<ST::light> lights_arg{};
 
         //Basically the viewport
         ST::camera Camera{};
@@ -93,17 +93,17 @@ class drawing_manager{
         bool lighting_enabled = true;
 
         //Drawing functions
-        void draw_entities(std::vector<ST::entity>*);
-        void draw_collisions(std::vector<ST::entity>*);
-        void draw_coordinates(std::vector<ST::entity>*);
-        void draw_lights();
+        void draw_entities(const std::vector<ST::entity>&) const;
+        void draw_collisions(const std::vector<ST::entity>&) const;
+        void draw_coordinates(const std::vector<ST::entity>&);
+        void draw_lights() const;
         void draw_fps(double fps);
-        void draw_console(console* cnsl);
-        void draw_text_objects(std::vector<ST::text>*);
+        void draw_console(const console& cnsl);
+        void draw_text_objects(const std::vector<ST::text>&);
 
         //Pre-processing
-        void process_lights(std::vector<ST::light>* arg);
-        bool is_onscreen(ST::entity* i);
+        void process_lights(const std::vector<ST::light>& arg);
+        bool is_onscreen(const ST::entity& i) const;
 
         //Other functions
         void handle_messages();
@@ -115,7 +115,7 @@ class drawing_manager{
     public:
         drawing_manager(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
         ~drawing_manager();
-        void update(ST::level_data* temp, double, console* gConsole);
+        void update(const ST::level_data& temp, double, const console& gConsole);
 };
 
 #endif

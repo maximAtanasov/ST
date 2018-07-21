@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -95,12 +96,12 @@ void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, in
     TTF_Font* font = fonts[font_and_size];
     if(font != nullptr){
         int texW, texH;
-        if(gFont_cache.str_is_cached(arg2, arg, size)){ //if the given string (with same size and font) is already cached, get it from cache
-            SDL_Texture* texture = gFont_cache.return_cache();
-            SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
+        SDL_Texture* cached_texture = gFont_cache.get_cached_string(arg2, arg, size);
+        if(cached_texture != nullptr){ //if the given string (with same size and font) is already cached, get it from cache
+            SDL_QueryTexture(cached_texture, nullptr, nullptr, &texW, &texH);
             SDL_Rect Rect = {x, y, texW, texH};
-            SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
-            SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
+            SDL_SetTextureColorMod(cached_texture, color_font.r, color_font.g, color_font.b);
+            SDL_RenderCopy(sdl_renderer, cached_texture, nullptr, &Rect);
         }else{ //else create a texture, render it, and then cache it - this is costly, so pick a good cache size
             SDL_Surface* text = TTF_RenderUTF8_Blended(font, arg2.c_str(), color_font);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(sdl_renderer, text);
@@ -126,20 +127,23 @@ void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, in
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void renderer_sdl::draw_text_cached(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size){
+void renderer_sdl::draw_text_cached(const std::string arg, const std::string arg2, const int x, const int y, const SDL_Color color_font ,const int size) const{
     std::string font_and_size = arg+std::to_string(size);
-    std::vector<SDL_Texture*> tempVector = fonts_cache[font_and_size];
-    if(!tempVector.empty()){
-        int texW, texH;
-        int tempX = x;
-        const char* arg3 = arg2.c_str();
-        for(int j = 0; arg3[j] != 0; j++){
-            SDL_Texture* texture = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
-            SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
-            SDL_Rect Rect = {tempX, y, texW, texH};
-            SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
-            SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
-            tempX += texW;
+    auto cached_vector = fonts_cache.find(font_and_size);
+    if(cached_vector != fonts_cache.end()){
+        std::vector<SDL_Texture*> tempVector = cached_vector->second;
+        if(!tempVector.empty()){
+            int texW, texH;
+            int tempX = x;
+            const char* arg3 = arg2.c_str();
+            for(int j = 0; arg3[j] != 0; j++){
+                SDL_Texture* texture = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
+                SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
+                SDL_Rect Rect = {tempX, y, texW, texH};
+                SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
+                SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
+                tempX += texW;
+            }
         }
     }
 }

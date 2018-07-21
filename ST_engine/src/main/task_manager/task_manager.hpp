@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -31,7 +32,7 @@ class task_manager{
         moodycamel::ConcurrentQueue<ST::task*> task_queue;
 
         static int task_thread(void* arg);
-        void do_work(ST::task* work);
+        void do_work(ST::task* work) const;
         void start_thread(int (*thread_func)(void*), void* data);
 
     public:

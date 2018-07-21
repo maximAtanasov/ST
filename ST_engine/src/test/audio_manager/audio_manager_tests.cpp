@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -15,20 +16,23 @@ class audio_manager_test : public ::testing::Test {
 
 protected:
 
-    int get_volume(){
-        return test_mngr->volume;
+    void set_assets(ST::assets* assets){
+        test_mngr->assets_ptr = assets;
     }
 
-    void update_task(void* arg){
-        audio_manager::update_task(arg);
+    void play_sound(size_t arg, int volume, int loops){
+        test_mngr->play_sound(arg, volume, loops);
     }
 
-    message_bus msg_bus{};
+    void play_music(size_t arg, int volume, int loops){
+        test_mngr->play_music(arg, volume, loops);
+    }
+
     audio_manager* test_mngr{};
 
     void SetUp() override{
         initialize_SDL();
-        test_mngr = new audio_manager(&msg_bus, nullptr);
+        test_mngr = new audio_manager(new message_bus(), nullptr);
     }
 
     void TearDown() override{
@@ -37,37 +41,54 @@ protected:
     }
 };
 
-TEST_F(audio_manager_test, set_volume) {
-    auto temp_sub = new subscriber();
-    msg_bus.subscribe(VOLUME_LEVEL, temp_sub);
-    msg_bus.send_msg(make_msg(SET_VOLUME, make_data<int>(50)));
-    update_task(test_mngr);
-    EXPECT_EQ(50, get_volume());
-
-    message* temp = temp_sub->get_next_message();
-    ASSERT_EQ(true, static_cast<bool>(temp));
-    ASSERT_EQ(50, *static_cast<int*>(temp->get_data()));
+TEST_F(audio_manager_test, test_play_wav_full_volume) {
+    auto test_wav = Mix_LoadWAV("test_sound.wav");
+    ASSERT_TRUE(test_wav);
+    ST::assets assets;
+    assets.chunks[1] = test_wav;
+    set_assets(&assets);
+    play_sound(1, MIX_MAX_VOLUME, 0);
+    SDL_Delay(1000);
 }
 
-TEST_F(audio_manager_test, toggle_audio) {
-    auto temp_sub = new subscriber();
-    msg_bus.subscribe(VOLUME_LEVEL, temp_sub);
+TEST_F(audio_manager_test, test_play_wav_half_volume) {
+    auto test_wav = Mix_LoadWAV("test_sound.wav");
+    ASSERT_TRUE(test_wav);
+    ST::assets assets;
+    assets.chunks[1] = test_wav;
+    set_assets(&assets);
+    play_sound(1, MIX_MAX_VOLUME/2, 0);
+    SDL_Delay(1000);
+}
 
-    msg_bus.send_msg(make_msg(TOGGLE_AUDIO, nullptr));
-    update_task(test_mngr);
-    ASSERT_EQ(0, get_volume());
+TEST_F(audio_manager_test, test_play_wav_looping) {
+    auto test_wav = Mix_LoadWAV("test_sound.wav");
+    ASSERT_TRUE(test_wav);
+    ST::assets assets;
+    assets.chunks[1] = test_wav;
+    set_assets(&assets);
+    play_sound(1, MIX_MAX_VOLUME, 3);
+    SDL_Delay(2000);
+}
 
-    message* temp = temp_sub->get_next_message();
-    ASSERT_EQ(true, static_cast<bool>(temp));
-    ASSERT_EQ(0, *static_cast<int*>(temp->get_data()));
+TEST_F(audio_manager_test, test_play_ogg_full_volume) {
+    auto test_ogg = Mix_LoadMUS("test_music.ogg");
+    ASSERT_TRUE(test_ogg);
+    ST::assets assets;
+    assets.music[1] = test_ogg;
+    set_assets(&assets);
+    play_music(1, MIX_MAX_VOLUME, 3);
+    SDL_Delay(10000);
+}
 
-    msg_bus.send_msg(make_msg(TOGGLE_AUDIO, nullptr));
-    update_task(test_mngr);
-    ASSERT_EQ(MIX_MAX_VOLUME, get_volume());
-
-    temp = temp_sub->get_next_message();
-    ASSERT_EQ(true, static_cast<bool>(temp));
-    ASSERT_EQ(MIX_MAX_VOLUME, *static_cast<int*>(temp->get_data()));
+TEST_F(audio_manager_test, test_play_ogg_half_volume) {
+    auto test_ogg = Mix_LoadMUS("test_music.ogg");
+    ASSERT_TRUE(test_ogg);
+    ST::assets assets;
+    assets.music[1] = test_ogg;
+    set_assets(&assets);
+    play_music(1, MIX_MAX_VOLUME/2, 3);
+    SDL_Delay(10000);
 }
 
 int main(int argc, char **argv) {

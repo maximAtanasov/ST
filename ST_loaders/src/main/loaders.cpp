@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -109,6 +110,8 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
         std::string size = "size:" + std::to_string(music_sizes[i]) + "\n";
         output->write(output, size.c_str(), 1, size.size());
     }
+
+    //Write the data===
 
     //Write image data
     for(uint64_t i = 0; i < surfaces.size(); i++) {
@@ -238,7 +241,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
 int ST::unpack_binary_to_disk(const std::string& path){
     SDL_RWops *input = SDL_RWFromFile(path.c_str(), "r");
     if (input != nullptr) {
-        auto buffer = (char*)malloc((size_t) input->size(input));
+        auto buffer = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
         size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
         if (read > 0) {
             std::string* file = new std::string(buffer);

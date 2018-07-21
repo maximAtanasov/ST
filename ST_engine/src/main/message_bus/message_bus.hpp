@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -60,7 +61,7 @@ inline void destroy_msg(message* msg){
  * Makes a copy of itself.
  * @return A new message that is an exact copy of the original.
  */
-inline message* message::make_copy(){
+inline message* message::make_copy() const{
     return msg_memory.allocate_message(this->msg_name, this->data);
 }
 

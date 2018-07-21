@@ -1,8 +1,9 @@
-# Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
-# You may not use, distribute or modify this code.
-# This code is proprietary and belongs to the "slavicTales"
-# project. See LICENCE.txt in the root directory of the project.
+# This file is part of the "slavicTales" project.
+# You may use, distribute or modify this code under the terms
+# of the GNU General Public License version 2.
+# See LICENCE.txt in the root directory of the project.
 #
+# Author: Maxim Atanasov
 # E-mail: atanasovmaksim1@gmail.com
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
@@ -131,10 +132,7 @@ target_link_libraries(asset_manager_test
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY}
-        ${GLEW_LIBRARIES}
-        ${OPENGL_LIBRARIES}
-        ${LUA_LIBRARY})
+        ${SDL2_MIXER_LIBRARY})
 
 
 add_executable(audio_manager_test
@@ -165,8 +163,7 @@ target_link_libraries(audio_manager_test
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY}
-        ${LUA_LIBRARY})
+        ${SDL2_MIXER_LIBRARY})
 
 include_directories(audio_manager_test ../ST_engine/src/test)
 
@@ -226,28 +223,97 @@ target_link_libraries(display_manager_test
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
+add_executable(renderer_sdl_test
+        src/main/defs.hpp
+        src/main/renderer/renderer_sdl/renderer_sdl.cpp
+        src/main/renderer/renderer_sdl/renderer_sdl.hpp
+        src/test/renderer/renderer_sdl/renderer_sdl_tests.cpp
+        src/main/renderer/renderer_sdl/font_cache.cpp
+        src/main/renderer/renderer_sdl/font_cache.hpp)
+
+include_directories(renderer_sdl_test ../ST_engine/src/test ../ST_loaders/include)
+
+target_link_libraries(renderer_sdl_test
+        ST_loaders
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
+
+add_executable(message_test
+        src/main/message_bus/message_types.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/test/message_bus/message_tests.cpp
+        src/main/message_bus/message.hpp)
+
+target_link_libraries(message_test
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY})
+
+add_executable(message_allocator_test
+        src/main/message_bus/message_types.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/test/message_bus/message_allocator_tests.cpp
+        src/main/message_bus/message.hpp)
+
+target_link_libraries(message_allocator_test
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY})
+
+add_executable(subscriber_test
+        src/main/message_bus/message_types.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/test/message_bus/subscriber_tests.cpp
+        src/main/message_bus/message.hpp)
+
+target_link_libraries(subscriber_test
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY})
+
 #Run all our tests on every build
-set(ALL_TESTS asset_manager_test audio_manager_test console_test display_manager_test)
+set(ALL_TESTS
+        message_allocator_test
+        message_test
+        subscriber_test
+        console_test
+        audio_manager_test
+        display_manager_test
+        asset_manager_test
+        renderer_sdl_test)
+
 gtest_add_tests(TARGET ${ALL_TESTS})
 add_dependencies(ST_engine ${ALL_TESTS})
-set_target_properties(asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager)
+set_target_properties(asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
+set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
+set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
 
 #This loop will run all of our tests
-foreach(loop_var ${ALL_TESTS} total)
-    #The test for the asset_manager needs to be run in a specific directory
-    if(${loop_var} STREQUAL "asset_manager_test")
+foreach(loop_var ${ALL_TESTS})
     add_custom_command(
             TARGET ST_engine
             POST_BUILD
             COMMAND ${loop_var}
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/assets_manager
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
-    elseif(NOT ${loop_var} STREQUAL "total")
-    add_custom_command(
-            TARGET ST_engine
-            POST_BUILD
-            COMMAND ${loop_var}
-    )
-    endif()
 endforeach()

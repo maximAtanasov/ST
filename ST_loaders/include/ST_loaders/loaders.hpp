@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -29,7 +30,7 @@ namespace ST {
         std::unordered_map<std::string, Mix_Music *> music;
     };
 
-    ST::assets_named *unpack_binary(const std::string &path);
+    ST::assets_named* unpack_binary(const std::string &path);
     void pack_to_binary(const std::string &path, std::vector<std::string> args);
     int unpack_binary_to_disk(const std::string &path);
     std::string get_file_extension(const std::string &filename);

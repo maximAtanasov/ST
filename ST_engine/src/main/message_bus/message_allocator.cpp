@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -41,6 +42,9 @@ message* message_allocator::allocate_message(msg_type name, std::shared_ptr<void
         if(pointer > memory_size-1){
             pointer = 0;
         }
+    }
+    if(i == memory_size){
+        return nullptr;
     }
     allocated[pointer] = true;
     auto temp = new (memory+pointer) message(name, data, pointer);

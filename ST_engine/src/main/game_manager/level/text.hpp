@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -48,19 +49,19 @@ namespace ST {
         void set_visible(bool arg);
 
         //getters
-        int32_t get_x();
+        int32_t get_x() const;
 
-        int32_t get_y();
+        int32_t get_y() const;
 
-        SDL_Color get_color();
+        SDL_Color get_color() const;
 
-        std::string get_text_string();
+        std::string get_text_string() const;
 
-        std::string get_font();
+        std::string get_font() const;
 
-        uint8_t get_font_size();
+        uint8_t get_font_size() const;
 
-        bool is_visible();
+        bool is_visible() const;
 
     };
 
@@ -80,7 +81,7 @@ inline void ST::text::set_visible(bool arg) {
  * Tells if the text object is visible.
  * @return True - visible, false - not visible.
  */
-inline bool ST::text::is_visible() {
+inline bool ST::text::is_visible() const{
     return this->visible;
 }
 
@@ -136,7 +137,7 @@ inline void ST::text::set_font_size(uint8_t size) {
  * Get the X position of the text object.
  * @return the X coordinate.
  */
-inline int32_t ST::text::get_x(){
+inline int32_t ST::text::get_x() const{
     return x;
 }
 
@@ -144,7 +145,7 @@ inline int32_t ST::text::get_x(){
  * Get the Y position of the text object.
  * @return the Y coordinate.
  */
-inline int32_t ST::text::get_y(){
+inline int32_t ST::text::get_y() const{
     return y;
 }
 
@@ -152,7 +153,7 @@ inline int32_t ST::text::get_y(){
  * Get the color of the font.
  * @return SDL_Color struct (RGBA).
  */
-inline SDL_Color ST::text::get_color(){
+inline SDL_Color ST::text::get_color() const{
     return color;
 }
 
@@ -160,7 +161,7 @@ inline SDL_Color ST::text::get_color(){
  * Return the text itself.
  * @return a std::string containing the text.
  */
-inline std::string ST::text::get_text_string(){
+inline std::string ST::text::get_text_string() const{
     return text_string;
 }
 
@@ -168,7 +169,7 @@ inline std::string ST::text::get_text_string(){
  * Get the name of the font.
  * @return The name of fthe font.
  */
-inline std::string ST::text::get_font (){
+inline std::string ST::text::get_font () const{
     return font;
 }
 
@@ -176,7 +177,7 @@ inline std::string ST::text::get_font (){
  * Get the size of the font.
  * @return Font size.
  */
-inline uint8_t ST::text::get_font_size (){
+inline uint8_t ST::text::get_font_size () const{
     return font_size;
 }
 

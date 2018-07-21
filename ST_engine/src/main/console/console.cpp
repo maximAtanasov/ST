@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -18,7 +19,6 @@ console::console(message_bus* msg_bus){
     color = {50, 50, 50, 100};
     color_text = {255, 255, 255, 255};
     shown = false;
-    pos = 1080/2;
     font_size = 40;
     scroll_offset = 0;
     gMessage_bus->subscribe(CONSOLE_WRITE, &msg_sub);
@@ -26,7 +26,7 @@ console::console(message_bus* msg_bus){
     gMessage_bus->subscribe(MOUSE_SCROLL, &msg_sub);
     gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
     gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
-    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(ST::key::ENTER)));
+    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::ENTER)));
 }
 
 /**
@@ -69,7 +69,8 @@ void console::handle_messages(){
                 if(log->type == ST::log_type::SUCCESS || log->type == ST::log_type::INFO){
                     write(*log);
                 }
-            }else if(log_level == 0x07){ write(*log);
+            }else if(log_level == 0x07){
+                write(*log);
             }
         }
         else if(temp->msg_name == CONSOLE_TOGGLE){
@@ -84,7 +85,7 @@ void console::handle_messages(){
             if(*key_val == ST::key::ENTER){
                 write(ST::console_log(ST::log_type::INFO, composition));
                 if(!composition.empty()){
-                    gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data<std::string>(composition)));
+                    gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data(composition)));
                 }
                 composition.clear();
                 gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
@@ -141,7 +142,7 @@ void console::write(ST::console_log arg){
  *
  * @return bool indicating if the console window is open.
  */
-bool console::is_open(){
+bool console::is_open() const{
     return shown;
 }
 

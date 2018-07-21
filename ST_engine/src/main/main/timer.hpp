@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -20,7 +21,7 @@ class timer{
         std::chrono::time_point<std::chrono::high_resolution_clock> start;
     public:
         timer();
-        double time_since_start();
+        double time_since_start() const;
 };
 
 //INLINED METHODS
@@ -29,7 +30,7 @@ class timer{
  *
  * @return The elapsed time since the initialization of the timer.
  */
-inline double timer::time_since_start(){
+inline double timer::time_since_start() const{
     std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
     return elapsed_seconds.count() * 1000;
 }

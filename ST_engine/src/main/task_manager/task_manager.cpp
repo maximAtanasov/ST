@@ -1,8 +1,9 @@
-/* Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
- * You may not use, distribute or modify this code.
- * This code is proprietary and belongs to the "slavicTales"
- * project. See LICENCE.txt in the root directory of the project.
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
  *
+ * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
 
@@ -31,7 +32,7 @@ int task_manager::task_thread(void* arg){
  * Waits for any other tasks that are dependencies to the current one and waits for them.
  * @param work The ST::task object conatining job data.
  */
-void task_manager::do_work(ST::task* work){
+void task_manager::do_work(ST::task* work) const{
     if(work->dependency != nullptr){ //wait for dependency to finish
         SDL_SemWait(work->dependency);
         SDL_DestroySemaphore(work->dependency);
