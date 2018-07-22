@@ -13,7 +13,7 @@
 /**
  * Gets the file extension from the filename.
  * @param filename The filename.
- * @return The extension. - "png", "wav", "mp3", or "ogg". Unknown when it's well, unknown.
+ * @return The extension. - "png", "webp", "wav", "mp3", or "ogg". Unknown when it's well, unknown.
  */
 std::string ST::get_file_extension(const std::string& filename){
     if(filename.size() > 4){
@@ -26,6 +26,13 @@ std::string ST::get_file_extension(const std::string& filename){
             return "mp3";
         }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'o' && filename.at(size - 1) == 'g' && filename.at(size) == 'g'){
             return "ogg";
+        }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'b' && filename.at(size - 1) == 'i' && filename.at(size) == 'n'){
+            return "bin";
+        }else if(filename.size() > 5){
+            if(filename.at(size - 4) == '.' && filename.at(size - 3) == 'w'
+               && filename.at(size - 2) == 'e' && filename.at(size - 1) == 'b' && filename.at(size) == 'p'){
+                return "webp";
+            }
         }
     }
     return "unknown";
@@ -58,24 +65,24 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
         if (input != nullptr) {
             std::string h_filename = "filename:" + filename + "\n";
             std::string ext = get_file_extension(filename);
-            if(ext == "png") {
+            if(ext == "png" || "webp") {
                 surfaces_names.emplace_back(h_filename);
-                auto temp = (char*)malloc((size_t)input->size(input));
-                input->read(input, temp, 1, (size_t)input->size(input));
+                auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
+                input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 surfaces.emplace_back(temp);
-                surfaces_sizes.emplace_back((size_t)input->size(input));
+                surfaces_sizes.emplace_back(static_cast<size_t>(input->size(input)));
             }else if(ext == "wav") {
                 chunks_names.emplace_back(h_filename);
-                auto temp = (char*)malloc((size_t)input->size(input));
-                input->read(input, temp, 1, (size_t)input->size(input));
+                auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
+                input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 chunks.emplace_back(temp);
-                chunk_sizes.emplace_back((size_t)input->size(input));
+                chunk_sizes.emplace_back(static_cast<size_t>(input->size(input)));
             }else if(ext == "ogg") {
                 music_names.emplace_back(h_filename);
-                auto temp = (char*)malloc((size_t)input->size(input));
-                input->read(input, temp, 1, (size_t)input->size(input));
+                auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
+                input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 music.emplace_back(temp);
-                music_sizes.emplace_back((size_t)input->size(input));
+                music_sizes.emplace_back(static_cast<size_t>(input->size(input)));
             }
             input->close(input);
         }
@@ -189,10 +196,22 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                 std::string ext = get_file_extension(filename);
                 if(ext == "png") {
                     seek += sizes.at(i);
-                    auto to_write = (char*)malloc(sizes.at(i));
+                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
                     SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
                     SDL_Surface* temp_surface = IMG_LoadPNG_RW(output);
+                    if(temp_surface != nullptr) {
+                        assets->surfaces[filename] = temp_surface;
+                    }
+                    SDL_RWclose(output);
+                    free(to_write);
+                    input->seek(input, seek, RW_SEEK_SET);
+                }else if(ext == "webp") {
+                    seek += sizes.at(i);
+                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
+                    input->read(input, to_write, 1, sizes.at(i));
+                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
+                    SDL_Surface* temp_surface = IMG_LoadWEBP_RW(output);
                     if(temp_surface != nullptr) {
                         assets->surfaces[filename] = temp_surface;
                     }
@@ -290,7 +309,7 @@ int ST::unpack_binary_to_disk(const std::string& path){
             uint64_t i = 0;
             for (const std::string &filename : file_names) {
                 std::string ext = get_file_extension(filename);
-                if(ext == "png" || ext == "wav" || ext == "ogg") {
+                if(ext == "png" || ext == "webp" || ext == "wav" || ext == "ogg") {
                     SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
                     seek += sizes.at(i);
                     auto to_write = static_cast<char*>(malloc(sizes.at(i)));

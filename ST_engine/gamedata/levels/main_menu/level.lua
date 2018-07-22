@@ -9,7 +9,7 @@
 setLevelSize(3000, 3000)
 setGravity(0)
 showMouseCursor()
-setBackground("menu.png")
+setBackground("menu.webp")
 setDarkness(255)
 loadLevel("level1") --preload level1
 

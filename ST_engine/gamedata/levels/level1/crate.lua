@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 crate = entity:new()
-crate.texture = "crate.png"
+crate.texture = "crate.webp"
 crate.texWidth = 150
 crate.texHeight = 150
 crate.colX = 150

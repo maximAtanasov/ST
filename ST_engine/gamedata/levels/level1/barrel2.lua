@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 barrel2 = entity:new()
-barrel2.texture = "barrel2.png"
+barrel2.texture = "barrel2.webp"
 barrel2.texWidth = 133;
 barrel2.texHeight = 200;
 barrel2.isVisible = true

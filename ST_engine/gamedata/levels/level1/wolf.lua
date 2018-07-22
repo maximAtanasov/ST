@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 wolf = entity:new()
-wolf.texture = "wolf.png"
+wolf.texture = "wolf.webp"
 wolf.texWidth = 300
 wolf.texHeight = 150
 wolf.colX = 250

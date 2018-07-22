@@ -19,7 +19,7 @@ void initialize_SDL(){
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
-    if(IMG_Init(IMG_INIT_PNG) < 0){
+    if(IMG_Init(IMG_INIT_PNG | IMG_INIT_WEBP) < 0){
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);
     }

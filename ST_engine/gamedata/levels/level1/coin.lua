@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 coin = entity:new()
-coin.texture = "coin.png"
+coin.texture = "coin.webp"
 coin.texWidth = 63
 coin.texHeight = 63
 coin.colX = 63;

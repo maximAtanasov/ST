@@ -40,8 +40,8 @@ elseif language == "english" then
     use("language_english.lua")
 end
 
-setBackground("fortress.png")
-setOverlay("rain.png", 17);
+setBackground("fortress.webp")
+setOverlay("rain.webp", 17);
 playMusic("Shades.ogg", 100, -1)
 playSound("rain.wav", 50, -1)
 --Create and initialize entities
@@ -164,7 +164,7 @@ light3 = light:new(5315, 850, 100, 85, 0)
 
 --PAUSE MENU=========================================================================
 pauseBG = entity:new(0, floor)
-pauseBG:setTexture("fortress.png")
+pauseBG:setTexture("fortress.webp")
 pauseBG:setVisible(false)
 pauseBG:setStatic(true)
 pauseBG:setY(1080)
@@ -235,14 +235,14 @@ end
 
 function unpauseGame()
     setDarkness(darkness)
-    setOverlay("rain.png", 17)
+    setOverlay("rain.webp", 17)
     unpausePhysics()
     setGravity(gravity)
     pauseBG:setVisible(false)
     button_continue:hide()
     button_exit:hide()
     hideMouseCursor()
-    setBackground("fortress.png")
+    setBackground("fortress.webp")
     pause = 0
 end
 

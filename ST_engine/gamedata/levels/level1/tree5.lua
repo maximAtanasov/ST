@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 tree5 = entity:new()
-tree5.texture = "tree5.png"
+tree5.texture = "tree5.webp"
 tree5.texWidth = 517
 tree5.texHeight = 1100
 tree5.isVisible = true

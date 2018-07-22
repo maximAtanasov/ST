@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 plant1 = entity:new()
-plant1.texture = "plant1.png"
+plant1.texture = "plant1.webp"
 plant1.texWidth = 88
 plant1.texHeight = 150
 plant1.isVisible = true

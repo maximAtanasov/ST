@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 player = entity:new()
-player.texture = "player2.png"
+player.texture = "player2.webp"
 player.texWidth = 300
 player.texHeight = 305
 player.offsetColX = 50

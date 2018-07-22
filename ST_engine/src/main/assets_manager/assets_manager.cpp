@@ -145,17 +145,13 @@ int8_t assets_manager::load_asset(std::string path){
         return 0;
     }
 
-    char extention[4];
-    size_t length = path.length();
-    extention[0] = path.c_str()[length - 3];
-    extention[1] = path.c_str()[length - 2];
-    extention[2] = path.c_str()[length - 1];
-    extention[3] = 0;
+    std::string extention;
+    extention = ST::get_file_extension(path);
     log(INFO, "Loading " + path);
     std::hash<std::string> hash_f;
 
     //Handle the different extentions - currently png, wav, mp3, ttf
-    if(strcmp(extention, "png") == 0){
+    if(extention == "png" || extention == "webp"){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
             for(Uint32 i = 0; i < path.size(); i++) {
@@ -170,7 +166,7 @@ int8_t assets_manager::load_asset(std::string path){
             log(ERROR, "File " + path + " not found");
             return -1;
         }
-    }else if(strcmp(extention, "wav") == 0){
+    }else if(extention == "wav"){
         Mix_Chunk* temp1 = Mix_LoadWAV(path.c_str());
         if (temp1 != nullptr){
             for(Uint32 i = 0; i < path.size(); i++) {
@@ -186,7 +182,7 @@ int8_t assets_manager::load_asset(std::string path){
             log(ERROR, "File " + path + " not found");
             return -1;
         }
-    }else if(strcmp(extention, "ogg") == 0){
+    }else if(extention == "ogg"){
         Mix_Music* temp1 = Mix_LoadMUS(path.c_str());
         if (temp1 != nullptr) {
             for(Uint32 i = 0; i < path.size(); i++) {
@@ -202,7 +198,7 @@ int8_t assets_manager::load_asset(std::string path){
             log(ERROR, "File " + path + " not found");
             return -1;
         }
-    }else if(strcmp(extention, "bin") == 0){
+    }else if(extention == "bin"){
         load_assets_from_binary(path);
     }else{ //if file is a font
         std::vector<std::string> result;
@@ -303,30 +299,26 @@ int8_t assets_manager::unload_asset(std::string path){
         count[path]--;
         return 0;
     }
-    char extention[4];
-    size_t length = path.length();
-    extention[0] = path.c_str()[length - 3];
-    extention[1] = path.c_str()[length - 2];
-    extention[2] = path.c_str()[length - 1];
-    extention[3] = 0;
+    std::string extention;
+    extention = ST::get_file_extension(path);
     log(INFO, "Unloading " + path);
-    if(strcmp(extention, "png") == 0){
+    if(extention == "png"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
         count[path]--;
-    }else if(strcmp(extention, "wav") == 0){
+    }else if(extention == "wav"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
         count[path]--;
-    }else if(strcmp(extention, "ogg") == 0){
+    }else if(extention == "ogg"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
         count[path]--;
-    }else if(strcmp(extention, "bin") == 0){
+    }else if(extention == "bin"){
         return 0;
     }else{ //if file is a font
         TTF_CloseFont(all_assets.fonts[path]);

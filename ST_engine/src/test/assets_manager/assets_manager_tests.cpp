@@ -71,6 +71,19 @@ TEST_F(asset_manager_test, loadPNG) {
     SDL_FreeSurface(test_surface);
 }
 
+TEST_F(asset_manager_test, loadWEBP_nonExistant) {
+    load_asset("nothing.webp");
+    ASSERT_FALSE(get_assets().surfaces[hash_f("nothing.webp")]);
+}
+
+TEST_F(asset_manager_test, loadWEBP) {
+    load_asset("test_image_3.webp");
+    SDL_Surface* test_surface = IMG_Load("test_image_3.webp");
+    ASSERT_TRUE(static_cast<bool>(test_surface));
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    SDL_FreeSurface(test_surface);
+}
+
 TEST_F(asset_manager_test, loadWAV_nonExistant) {
     load_asset("nothing.wav");
     ASSERT_FALSE(get_assets().chunks[(hash_f("nothing.wav"))]);
@@ -134,6 +147,14 @@ TEST_F(asset_manager_test, loadBinary_PNG) {
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
     ASSERT_TRUE(test_surface);
     ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")]));
+    SDL_FreeSurface(test_surface);
+}
+
+TEST_F(asset_manager_test, loadBinary_WEBP) {
+    ASSERT_EQ(0, load_assets_from_binary("test_binary_webp.bin"));
+    SDL_Surface* test_surface = IMG_Load("test_image_3.webp");
+    ASSERT_TRUE(test_surface);
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_3.webp")]));
     SDL_FreeSurface(test_surface);
 }
 
@@ -203,6 +224,12 @@ TEST_F(asset_manager_test, loadBinary_complex) {
     ASSERT_TRUE(test_surface_2);
     ASSERT_TRUE(compare_surfaces(test_surface_2, get_assets().surfaces[hash_f("test_image_2.png")]));
     SDL_FreeSurface(test_surface_2);
+
+    //Test image_3
+    SDL_Surface* test_surface_3 = IMG_Load("test_image_3.webp");
+    ASSERT_TRUE(test_surface_3);
+    ASSERT_TRUE(compare_surfaces(test_surface_3, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    SDL_FreeSurface(test_surface_3);
 }
 
 TEST_F(asset_manager_test, test_load_assets_from_list){
@@ -220,6 +247,12 @@ TEST_F(asset_manager_test, test_load_assets_from_list){
     ASSERT_TRUE(test_surface_2);
     ASSERT_TRUE(compare_surfaces(test_surface_2, get_assets().surfaces[hash_f("test_sprite.png")]));
     SDL_FreeSurface(test_surface_2);
+
+    //Test image_3
+    SDL_Surface* test_surface_3 = IMG_Load("test_image_3.webp");
+    ASSERT_TRUE(test_surface_3);
+    ASSERT_TRUE(compare_surfaces(test_surface_3, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    SDL_FreeSurface(test_surface_3);
 
     //Test sound_1
     Mix_Chunk* expected_chunk_1 = Mix_LoadWAV("test_sound.wav");

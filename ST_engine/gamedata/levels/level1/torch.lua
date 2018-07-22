@@ -7,7 +7,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 torch = entity:new()
-torch.texture = "torch.png"
+torch.texture = "torch.webp"
 torch.texWidth = 630
 torch.texHeight = 140
 torch.colX = 0;
