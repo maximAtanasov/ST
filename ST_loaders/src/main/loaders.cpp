@@ -18,13 +18,13 @@
 std::string ST::get_file_extension(const std::string& filename){
     if(filename.size() > 4){
         uint64_t size = filename.size() - 1;
-        if(filename.at(size - 2) == 'p' && filename.at(size - 1) == 'n' && filename.at(size) == 'g'){
+        if(filename.at(size-3) == '.' && filename.at(size - 2) == 'p' && filename.at(size - 1) == 'n' && filename.at(size) == 'g'){
             return "png";
-        }else if(filename.at(size - 2) == 'w' && filename.at(size - 1) == 'a' && filename.at(size) == 'v'){
+        }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'w' && filename.at(size - 1) == 'a' && filename.at(size) == 'v'){
             return "wav";
-        }else if(filename.at(size - 2) == 'm' && filename.at(size - 1) == 'p' && filename.at(size) == '3'){
+        }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'm' && filename.at(size - 1) == 'p' && filename.at(size) == '3'){
             return "mp3";
-        }else if(filename.at(size - 2) == 'o' && filename.at(size - 1) == 'g' && filename.at(size) == 'g'){
+        }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'o' && filename.at(size - 1) == 'g' && filename.at(size) == 'g'){
             return "ogg";
         }
     }
@@ -133,7 +133,7 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
 /**
  * Unpacks all the assets a binary contains.
  * @param path The path to the binary.
- * @return An ST:assets_named struct containing all assets in native engine format and their names.
+ * @return An ST:assets_named struct containing all assets in native engine format and their names, <b>nullptr</b> on error.
  */
 ST::assets_named* ST::unpack_binary(const std::string& path){
     auto assets = new ST::assets_named();
@@ -289,36 +289,7 @@ int ST::unpack_binary_to_disk(const std::string& path){
             uint64_t i = 0;
             for (const std::string &filename : file_names) {
                 std::string ext = get_file_extension(filename);
-                if(ext == "png") {
-                    SDL_Surface *temp_surface = IMG_Load_RW(input, 0);
-                    if (temp_surface != nullptr) {
-                        SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
-                        IMG_SavePNG_RW(temp_surface, output, 0);
-                        seek += output->size(output);
-                        input->seek(input, seek, RW_SEEK_SET);
-                        output->close(output);
-                        SDL_FreeSurface(temp_surface);
-                    }else{
-                        return -1;
-                    }
-                }else if(ext == "wav"){
-                    auto current_seek = static_cast<size_t>(SDL_RWtell(input));
-                    Mix_Chunk* temp_chunk = Mix_LoadWAV_RW(input, 0);
-                    auto after_seek = static_cast<size_t>(SDL_RWtell(input));
-                    if (temp_chunk != nullptr) {
-                        SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
-                        seek += after_seek-current_seek;
-                        auto to_write = (char*)malloc(after_seek-current_seek);
-                        input->seek(input, current_seek, RW_SEEK_SET);
-                        input->read(input, to_write, 1, after_seek-current_seek);
-                        output->write(output, to_write, 1, after_seek- current_seek);
-                        output->close(output);
-                        free(to_write);
-                        Mix_FreeChunk(temp_chunk);
-                    }else{
-                        return -1;
-                    }
-                }else if(ext == "ogg"){
+                if(ext == "png" || ext == "wav" || ext == "ogg") {
                     SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
                     seek += sizes.at(i);
                     auto to_write = (char*)malloc(sizes.at(i));

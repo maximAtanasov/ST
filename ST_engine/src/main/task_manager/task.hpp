@@ -27,8 +27,17 @@ namespace ST {
         SDL_semaphore *dependency{};
         bool has_lock = false;
         int affinity = -1;
+        const uint16_t id{};
 
-        task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity) {
+        /**
+         *
+         * @param id An id given to each task by the task allocator
+         * @param function A function representing a work task
+         * @param arg The arguments to above function
+         * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
+         * @param affinity Thread affinity for the task
+         */
+        task(uint16_t id, void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity) : id(id){
             task_func = function;
             data = arg;
             this->dependency = dependency;
@@ -39,6 +48,7 @@ namespace ST {
             has_lock = static_cast<bool>(lock);
             this->lock = lock;
         }
+
 
     };
 }

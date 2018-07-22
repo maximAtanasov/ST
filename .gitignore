@@ -1,6 +1,9 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+ST_asset_pack
+ST_asset_pack_tests
+loaders_test
 assets_manager_test
 audio_manager_test
 display_manager_test
@@ -8,6 +11,12 @@ console_test
 renderer_sdl_test
 message_test
 message_allocator_test
+subscriber_test
+message_bus_test
+ST_util
+map_test
+
+
 CMakeCache.txt
 CMakeFiles
 CMakeScripts

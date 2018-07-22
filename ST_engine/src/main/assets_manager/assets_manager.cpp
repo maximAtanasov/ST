@@ -80,7 +80,7 @@ void assets_manager::handle_messages(){
  * @param path The path to the .bin (binary) file.
  * @return -1 on failure or 0 on success.
  */
-int assets_manager::load_assets_from_binary(const std::string& path) {
+int8_t assets_manager::load_assets_from_binary(const std::string& path) {
     ST::assets_named* assets1 = ST::unpack_binary(path);
     if(assets1 != nullptr){
         for(auto surface : assets1->surfaces){
@@ -133,7 +133,7 @@ int assets_manager::load_assets_from_binary(const std::string& path) {
  * @param path the path to the file to load.
  * @return -1 on failure or 0 on success.
  */
-int assets_manager::load_asset(std::string path){
+int8_t assets_manager::load_asset(std::string path){
     //ignore a comment
     if(path.at(0) == '#'){
         return 0;
@@ -168,6 +168,7 @@ int assets_manager::load_asset(std::string path){
             count[path]++;
         }else{
             log(ERROR, "File " + path + " not found");
+            return -1;
         }
     }else if(strcmp(extention, "wav") == 0){
         Mix_Chunk* temp1 = Mix_LoadWAV(path.c_str());
@@ -183,6 +184,7 @@ int assets_manager::load_asset(std::string path){
         }
         else{
             log(ERROR, "File " + path + " not found");
+            return -1;
         }
     }else if(strcmp(extention, "ogg") == 0){
         Mix_Music* temp1 = Mix_LoadMUS(path.c_str());
@@ -198,6 +200,7 @@ int assets_manager::load_asset(std::string path){
         }
         else {
             log(ERROR, "File " + path + " not found");
+            return -1;
         }
     }else if(strcmp(extention, "bin") == 0){
         load_assets_from_binary(path);
@@ -228,6 +231,7 @@ int assets_manager::load_asset(std::string path){
             count[font_and_size]++;
         }else{
             log(ERROR, "File " + font + " not found!");
+            return -1;
         }
     }
     return 0;
@@ -238,7 +242,7 @@ int assets_manager::load_asset(std::string path){
  * @param path The path to the .list file.
  * @return -1 on failure or 0 on success.
  */
-int assets_manager::load_assets_from_list(std::string path){
+int8_t assets_manager::load_assets_from_list(std::string path){
     std::ifstream file;
     file.open(path.c_str());
     if(file.is_open()){
@@ -264,7 +268,7 @@ int assets_manager::load_assets_from_list(std::string path){
  * @param path The path to the .list file.
  * @return -1 on failure or 0 on success.
  */
-int assets_manager::unload_assets_from_list(std::string path){
+int8_t assets_manager::unload_assets_from_list(std::string path){
     std::ifstream file;
     file.open(path.c_str());
     if(file.is_open()){
@@ -290,7 +294,7 @@ int assets_manager::unload_assets_from_list(std::string path){
  * @param path The path to the asset.
  * @return Always returns 0.
  */
-int assets_manager::unload_asset(std::string path){
+int8_t assets_manager::unload_asset(std::string path){
     //Ignore comments
     if(path.at(0) == '#'){
         return 0;

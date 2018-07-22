@@ -89,7 +89,9 @@ add_executable(ST_engine
         src/main/message_bus/message.hpp
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp)
+        src/main/message_bus/message_types.hpp
+        src/main/task_manager/task_allocator.cpp
+        src/main/task_manager/task_allocator.hpp)
 
 target_link_libraries(ST_engine
         ST_util
@@ -120,7 +122,9 @@ add_executable(asset_manager_test
         src/main/message_bus/message.hpp
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp)
+        src/main/message_bus/message_types.hpp
+        src/main/task_manager/task_allocator.cpp
+        src/main/task_manager/task_allocator.hpp)
 
 include_directories(asset_manager_test ../ST_engine/src/test)
 
@@ -154,7 +158,9 @@ add_executable(audio_manager_test
         src/main/message_bus/message.hpp
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp)
+        src/main/message_bus/message_types.hpp
+        src/main/task_manager/task_allocator.cpp
+        src/main/task_manager/task_allocator.hpp)
 
 target_link_libraries(audio_manager_test
         ST_loaders
@@ -210,7 +216,9 @@ add_executable(display_manager_test
         src/main/message_bus/message.hpp
         src/main/message_bus/message_allocator.cpp
         src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp)
+        src/main/message_bus/message_types.hpp
+        src/main/task_manager/task_allocator.cpp
+        src/main/task_manager/task_allocator.hpp)
 
 include_directories(display_manager_test ../ST_engine/src/test)
 
@@ -272,7 +280,10 @@ add_executable(message_allocator_test
 target_link_libraries(message_allocator_test
         ST_util
         ${GTEST_LIBRARIES}
-        ${SDL2_LIBRARY})
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
 
 add_executable(subscriber_test
         src/main/message_bus/message_types.hpp
@@ -290,11 +301,31 @@ target_link_libraries(subscriber_test
         ${GTEST_LIBRARIES}
         ${SDL2_LIBRARY})
 
+add_executable(message_bus_test
+        src/main/message_bus/message_types.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.hpp
+        src/test/message_bus/message_bus_tests.cpp)
+
+target_link_libraries(message_bus_test
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
+
 #Run all our tests on every build
 set(ALL_TESTS
         message_allocator_test
         message_test
         subscriber_test
+        message_bus_test
         console_test
         audio_manager_test
         display_manager_test
@@ -308,12 +339,12 @@ set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PR
 set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
 
-#This loop will run all of our tests
-foreach(loop_var ${ALL_TESTS})
-    add_custom_command(
-            TARGET ST_engine
-            POST_BUILD
-            COMMAND ${loop_var}
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
-    )
-endforeach()
+#This loop will run all of our tests - Commented out because running all tests after a single change is tedious
+#foreach(loop_var ${ALL_TESTS})
+#    add_custom_command(
+#            TARGET ST_engine
+#            POST_BUILD
+#            COMMAND ${loop_var}
+#            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
+#    )
+#endforeach()

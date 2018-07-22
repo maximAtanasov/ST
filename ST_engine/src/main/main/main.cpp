@@ -40,10 +40,10 @@ int main(int argc, char** argv){
 
     #ifdef __DEBUG
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
-    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(false)));
     #elif defined(__RELEASE)
     gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
     #endif
+    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
     gMessage_bus.send_msg(make_msg(VSYNC_ON, nullptr));
 
     //time keeping variables

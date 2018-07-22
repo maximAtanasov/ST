@@ -31,8 +31,8 @@ void message_bus::send_msg(message* arg){
     if(temp->size() == 1){
         temp->at(0)->push_message(arg);
     }
-    else{
-        for(auto i : *temp){
+    else
+        for(auto i : *temp){{
             i->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
         }
         destroy_msg(arg);

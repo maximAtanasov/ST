@@ -10,6 +10,7 @@
 #include <drawing_manager/drawing_manager.hpp>
 #include <console/log.hpp>
 #include <defs.hpp>
+#include <task_manager/task_allocator.hpp>
 
 /**
  *
@@ -71,7 +72,7 @@ void drawing_manager::update(const ST::level_data& temp, double fps, const conso
     lights_arg = temp.lights;
 
     //start a task to pre-process lighting on a separate thread
-    task_id id = gTask_manager->start_task(new ST::task(process_lights_task, this, nullptr, -1));
+    task_id id = gTask_manager->start_task(make_task(process_lights_task, this, nullptr, -1));
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
 	gRenderer.clear_screen();

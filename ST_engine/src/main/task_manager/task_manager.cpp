@@ -9,6 +9,7 @@
 
 #include <task_manager/task_manager.hpp>
 #include <console/log.hpp>
+#include "task_allocator.hpp"
 
 /**
  * The function each task thread runs.
@@ -41,7 +42,7 @@ void task_manager::do_work(ST::task* work) const{
     if(work->has_lock) {
         SDL_SemPost(work->lock); //increment the semaphore
     }
-    delete work;
+    destroy_task(work);
 }
 
 /**

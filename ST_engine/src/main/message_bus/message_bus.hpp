@@ -29,6 +29,7 @@
  */
 class message_bus{
     private:
+        friend class message_bus_tests;
         std::unordered_map<int, std::vector<subscriber*>> subscribers; //each message enum maps to a list of subscribers for that message
     public:
         void send_msg(message* msg);

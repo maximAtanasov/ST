@@ -18,6 +18,7 @@
 #include <defs.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
+#include <task_manager/task_allocator.hpp>
 
 ///This object is responsible for loading/unloading assets.
 /**
@@ -52,12 +53,12 @@ private:
         task_manager* gTask_manager{};
         subscriber msg_sub{};
         ST::assets all_assets;
-        std::unordered_map<std::string, int> count;
-        int load_asset(std::string path);
-        int unload_asset(std::string path);
-        int unload_assets_from_list(std::string path);
-        int load_assets_from_list(std::string path);
-        int load_assets_from_binary(const std::string& path);
+        std::unordered_map<std::string, uint16_t > count;
+        int8_t load_asset(std::string path);
+        int8_t unload_asset(std::string path);
+        int8_t unload_assets_from_list(std::string path);
+        int8_t load_assets_from_list(std::string path);
+        int8_t load_assets_from_binary(const std::string& path);
         void handle_messages();
         static void update_task(void* arg);
 
@@ -73,7 +74,7 @@ private:
  * will start the update task using the task manager.
  */
 inline void assets_manager::update(){
-    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr, -1));
+    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr, -1));
 }
 
 #endif

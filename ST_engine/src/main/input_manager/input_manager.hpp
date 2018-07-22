@@ -14,6 +14,7 @@
 #include <input_manager/key_definitions.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
+#include <task_manager/task_allocator.hpp>
 
 ///This object is responsible for taking input
 /**
@@ -94,7 +95,7 @@ class input_manager{
  * Starts the update_task() method using the task manager.
  */
 inline void input_manager::update(){
-	gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr, -1));
+	gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr, -1));
 }
 
 #endif

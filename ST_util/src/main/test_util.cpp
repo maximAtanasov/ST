@@ -7,6 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
+#include <fstream>
 #include <cstdio>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -60,12 +61,21 @@ bool compare_surfaces(SDL_Surface* expected, SDL_Surface* result) {
     if(expected->pitch != result->pitch){
         return false;
     }
-    auto temp1 = (char*)expected->pixels;
-    auto temp2 = (char*)result->pixels;
+    auto temp1 = static_cast<char*>(expected->pixels);
+    auto temp2 = static_cast<char*>(result->pixels);
     for(int i = 0; i < expected->h*expected->w; i++){
         if(temp1[i] != temp2[i]){
             return false;
         }
     }
     return true;
+}
+
+long get_file_size(const std::string& path){
+    FILE *pFile = nullptr;
+    pFile = fopen(path.c_str(), "rb" );
+    fseek( pFile, 0, SEEK_END );
+    long size = ftell( pFile );
+    fclose( pFile );
+    return size;
 }

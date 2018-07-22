@@ -29,7 +29,7 @@ private:
     SDL_mutex* access_mutex{};
     uint16_t pointer = 0;
     message* memory{};
-    int memory_size = MESSAGE_ALLOCATOR_CAPACITY;
+    uint32_t memory_size = MESSAGE_ALLOCATOR_CAPACITY;
     bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
