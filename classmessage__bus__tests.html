@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>ST_engine: Member List</title>
+<title>ST_engine: message_bus_tests Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,29 +81,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><b>ST</b></li><li class="navelem"><a class="el" href="classST_1_1task.html">task</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classmessage__bus__tests-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ST::task Member List</div>  </div>
+<div class="title">message_bus_tests Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="classST_1_1task.html">ST::task</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>affinity</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>data</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>dependency</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>has_lock</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>id</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>lock</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>set_lock</b>(SDL_semaphore *lock) (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classST_1_1task.html#a5fda3e9f68c613bdc9a9c167e897ccf0">task</a>(uint16_t id, void(*function)(void *), void *arg, SDL_semaphore *dependency, int affinity)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>task_func</b> (defined in <a class="el" href="classST_1_1task.html">ST::task</a>)</td><td class="entry"><a class="el" href="classST_1_1task.html">ST::task</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<div class="dynheader">
+Inheritance diagram for message_bus_tests:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classmessage__bus__tests.png" usemap="#message_5Fbus_5Ftests_map" alt=""/>
+  <map id="message_5Fbus_5Ftests_map" name="message_bus_tests_map">
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aeb62e5d5fa351b4fcd68cb231ef8f21e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb62e5d5fa351b4fcd68cb231ef8f21e"></a>
+std::vector&lt; <a class="el" href="classsubscriber.html">subscriber</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_subscribers</b> (<a class="el" href="classmessage__bus.html">message_bus</a> *test_subject, msg_type msg)</td></tr>
+<tr class="separator:aeb62e5d5fa351b4fcd68cb231ef8f21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a133859cb9e8e2f8898c3adfad45aafc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a133859cb9e8e2f8898c3adfad45aafc4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetUp</b> () override</td></tr>
+<tr class="separator:a133859cb9e8e2f8898c3adfad45aafc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a986d4d34a9531c2e8765279dc3e1a190"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a986d4d34a9531c2e8765279dc3e1a190"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TearDown</b> () override</td></tr>
+<tr class="separator:a986d4d34a9531c2e8765279dc3e1a190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="message__bus__tests_8cpp_source.html#l00015">15</a> of file <a class="el" href="message__bus__tests_8cpp_source.html">message_bus_tests.cpp</a>.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>src/test/message_bus/<a class="el" href="message__bus__tests_8cpp_source.html">message_bus_tests.cpp</a></li>
+</ul>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

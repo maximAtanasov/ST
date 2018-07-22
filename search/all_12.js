@@ -10,5 +10,6 @@ var searchData=
   ['_7elevel',['~level',['../classST_1_1level.html#aa157d5ff0d48e9ac2e973869bae411d8',1,'ST::level']]],
   ['_7emessage_5fallocator',['~message_allocator',['../classmessage__allocator.html#a861b2584901c24e3b634b454708e340b',1,'message_allocator']]],
   ['_7erenderer_5fsdl',['~renderer_sdl',['../classrenderer__sdl.html#a7d0c985446e92d2ffa2b94e7222576c8',1,'renderer_sdl']]],
+  ['_7etask_5fallocator',['~task_allocator',['../classtask__allocator.html#a05b1c1f73e255cbec9868fba56be65f4',1,'task_allocator']]],
   ['_7etask_5fmanager',['~task_manager',['../classtask__manager.html#a6f1eb4ceea5db9b096171115af6b7e14',1,'task_manager']]]
 ];

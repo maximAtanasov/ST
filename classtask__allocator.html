@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>ST_engine: input_manager Class Reference</title>
+<title>ST_engine: task_allocator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,91 +84,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classinput__manager-members.html">List of all members</a>  </div>
+<a href="classtask__allocator-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">input_manager Class Reference</div>  </div>
+<div class="title">task_allocator Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This object is responsible for taking input.  
- <a href="classinput__manager.html#details">More...</a></p>
+<p>An allocator for task objects.  
+ <a href="classtask__allocator.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="task__allocator_8hpp_source.html">task_allocator.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa3b39ea80ab4c61d8335bf4401182852"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinput__manager.html#aa3b39ea80ab4c61d8335bf4401182852">input_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:aa3b39ea80ab4c61d8335bf4401182852"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ea71ec270312897110d94a68df59479"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinput__manager.html#a9ea71ec270312897110d94a68df59479">update</a> ()</td></tr>
-<tr class="separator:a9ea71ec270312897110d94a68df59479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32ad9cc8138b614171963e8f5eff7b74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32ad9cc8138b614171963e8f5eff7b74"></a>
+<a class="el" href="classST_1_1task.html">ST::task</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>allocate_task</b> (void(*function)(void *), void *arg, SDL_semaphore *dependency, int affinity)</td></tr>
+<tr class="separator:a32ad9cc8138b614171963e8f5eff7b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a680fb303a722ddd20dbc7fcb45d4c737"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__allocator.html#a680fb303a722ddd20dbc7fcb45d4c737">deallocate</a> (uint16_t id)</td></tr>
+<tr class="separator:a680fb303a722ddd20dbc7fcb45d4c737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58ae311c5c1be940bc6e378d49e24d74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__allocator.html#a58ae311c5c1be940bc6e378d49e24d74">task_allocator</a> ()</td></tr>
+<tr class="separator:a58ae311c5c1be940bc6e378d49e24d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05b1c1f73e255cbec9868fba56be65f4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__allocator.html#a05b1c1f73e255cbec9868fba56be65f4">~task_allocator</a> ()</td></tr>
+<tr class="separator:a05b1c1f73e255cbec9868fba56be65f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This object is responsible for taking input. </p>
-<p>Messages this subsystem listens to: <br />
-</p>
-<p><b>VIRTUAL_SCREEN_COORDINATES</b> - Tell the input manager what the virtual screen resolution is.</p>
-<p>Message must contain: a pointer to a <b>std::tuple&lt;int, int&gt;</b> containing the width and the height of the viewport. <br />
-</p>
-<p><b>REAL_SCREEN_COORDINATES</b> - Tell the input manager what the actual screen resolution is.</p>
-<p>Message must contain: a pointer to a <b>std::tuple&lt;int, int&gt;</b> containing the width and the height of the screen. <br />
-</p>
-<p><b>START_TEXT_INPUT</b> - Starts taking all keyboard input and sends <b>TEXT_STREAM</b> messages.</p>
-<p>Message must contain: a <b>nullptr</b>.<br />
-</p>
-<p><b>STOP_TEXT_INPUT</b> - Stops taking all keyboard input.</p>
-<p>Message must contain: a <b>nullptr</b>.<br />
-</p>
-<p><b>CLEAR_TEXT_STREAM</b> - Clears the text buffer if text_input is true.</p>
-<p>Message must contain: a <b>nullptr</b>.<br />
-</p>
-<p><b>REGISTER_KEY</b> - Registers the given key and sends input events (pressed, held, released) for it.</p>
-<p>Message must contain: a pointer to a <b>ST::key</b>. <br />
-</p>
-<p><b>UNREGISTER_KEY</b> - Unregisters a previously registered key and stops sending input events for it.</p>
-<p>Message must contain: a pointer to a <b>ST::key</b>. <br />
- </p>
+<div class="textblock"><p>An allocator for task objects. </p>
 
-<p>Definition at line <a class="el" href="input__manager_8hpp_source.html#l00052">52</a> of file <a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="task__allocator_8hpp_source.html#l00019">19</a> of file <a class="el" href="task__allocator_8hpp_source.html">task_allocator.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa3b39ea80ab4c61d8335bf4401182852"></a>
+<a class="anchor" id="a58ae311c5c1be940bc6e378d49e24d74"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">input_manager::input_manager </td>
+          <td class="memname">task_allocator::task_allocator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
-          <td class="paramname"><em>tsk_mngr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>initializes the input manager </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
-    <tr><td class="paramname">tsk_mngr</td><td>A pointer to the global task_mngr. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Constructor for the task allocator. Allocates memory for tasks. </p>
 
-<p>Definition at line <a class="el" href="input__manager_8cpp_source.html#l00017">17</a> of file <a class="el" href="input__manager_8cpp_source.html">input_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="task__allocator_8cpp_source.html#l00017">17</a> of file <a class="el" href="task__allocator_8cpp_source.html">task_allocator.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a05b1c1f73e255cbec9868fba56be65f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">task_allocator::~task_allocator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Destructor for the allocator - frees all allocated memory. </p>
+
+<p>Definition at line <a class="el" href="task__allocator_8cpp_source.html#l00029">29</a> of file <a class="el" href="task__allocator_8cpp_source.html">task_allocator.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a9ea71ec270312897110d94a68df59479"></a>
+<a class="anchor" id="a680fb303a722ddd20dbc7fcb45d4c737"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -176,9 +158,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void input_manager::update </td>
+          <td class="memname">void task_allocator::deallocate </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -188,15 +171,20 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Starts the update_task() method using the task manager. </p>
+<p>Deallocate a task obbject. Internally marks the previously used memory as free. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the task. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="input__manager_8hpp_source.html#l00097">97</a> of file <a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="task__allocator_8cpp_source.html#l00083">83</a> of file <a class="el" href="task__allocator_8cpp_source.html">task_allocator.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/main/input_manager/<a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a></li>
-<li>src/main/input_manager/<a class="el" href="input__manager_8cpp_source.html">input_manager.cpp</a></li>
+<li>src/main/task_manager/<a class="el" href="task__allocator_8hpp_source.html">task_allocator.hpp</a></li>
+<li>src/main/task_manager/<a class="el" href="task__allocator_8cpp_source.html">task_allocator.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

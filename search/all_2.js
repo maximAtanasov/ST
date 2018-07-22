@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['deallocate',['deallocate',['../classmessage__allocator.html#a4fec1c53cdc90c9428c460f0cc764453',1,'message_allocator']]],
+  ['deallocate',['deallocate',['../classmessage__allocator.html#a4fec1c53cdc90c9428c460f0cc764453',1,'message_allocator::deallocate()'],['../classtask__allocator.html#a680fb303a722ddd20dbc7fcb45d4c737',1,'task_allocator::deallocate()']]],
   ['display_5fmanager',['display_manager',['../classdisplay__manager.html',1,'display_manager'],['../classdisplay__manager.html#a48582c5d390e2dafa1da5602451c70d8',1,'display_manager::display_manager()']]],
   ['display_5fmanager_5ftests',['display_manager_tests',['../classdisplay__manager__tests.html',1,'']]],
   ['draw_5fbackground',['draw_background',['../classrenderer__sdl.html#a01a115ecf01ea8787dc01860a2fc10b2',1,'renderer_sdl']]],

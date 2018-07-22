@@ -105,12 +105,27 @@ Inheritance diagram for asset_manager_test:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a88ac43c5608b35c794dd457634e10b09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88ac43c5608b35c794dd457634e10b09"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>update_task</b> (void *arg)</td></tr>
-<tr class="separator:a88ac43c5608b35c794dd457634e10b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae43d726f466d0e421d0c65899f612073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae43d726f466d0e421d0c65899f612073"></a>
 <a class="el" href="structST_1_1assets.html">ST::assets</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_assets</b> ()</td></tr>
 <tr class="separator:ae43d726f466d0e421d0c65899f612073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49c518fbd8c21aa468d8a916c56a5061"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49c518fbd8c21aa468d8a916c56a5061"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>load_asset</b> (const std::string &amp;path)</td></tr>
+<tr class="separator:a49c518fbd8c21aa468d8a916c56a5061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a265d8bce6aef50eb78d04249f0cd3a40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a265d8bce6aef50eb78d04249f0cd3a40"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>unload_asset</b> (const std::string &amp;path)</td></tr>
+<tr class="separator:a265d8bce6aef50eb78d04249f0cd3a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8707934c97cc8d5583d7a005e3309a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8707934c97cc8d5583d7a005e3309a0"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>load_assets_from_binary</b> (const std::string &amp;path)</td></tr>
+<tr class="separator:ad8707934c97cc8d5583d7a005e3309a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae312928eb533c5ea674ba8e05650259d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae312928eb533c5ea674ba8e05650259d"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>load_assets_from_list</b> (const std::string &amp;path)</td></tr>
+<tr class="separator:ae312928eb533c5ea674ba8e05650259d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40feff8834c91179d6d028c5b99f9621"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40feff8834c91179d6d028c5b99f9621"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>unload_assets_from_list</b> (const std::string &amp;path)</td></tr>
+<tr class="separator:a40feff8834c91179d6d028c5b99f9621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a758b074967fd0b86dafe2a6cd0331fca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a758b074967fd0b86dafe2a6cd0331fca"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_count</b> (const std::string &amp;asset_name)</td></tr>
+<tr class="separator:a758b074967fd0b86dafe2a6cd0331fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afedfcca8052dcbccb4a3093d0e1a076e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afedfcca8052dcbccb4a3093d0e1a076e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetUp</b> () override</td></tr>
 <tr class="separator:afedfcca8052dcbccb4a3093d0e1a076e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,9 +138,6 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a9460de36ec9c5d8ede7a4f1f37094dd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9460de36ec9c5d8ede7a4f1f37094dd3"></a>
 std::hash&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hash_f</b></td></tr>
 <tr class="separator:a9460de36ec9c5d8ede7a4f1f37094dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ba34ae8ee8e287573ff3a240e68a59b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ba34ae8ee8e287573ff3a240e68a59b"></a>
-<a class="el" href="classmessage__bus.html">message_bus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>msg_bus</b> {}</td></tr>
-<tr class="separator:a3ba34ae8ee8e287573ff3a240e68a59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab75a72455b69c857e9222ab48b97a813"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab75a72455b69c857e9222ab48b97a813"></a>
 <a class="el" href="classassets__manager.html">assets_manager</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>test_mngr</b> {}</td></tr>
 <tr class="separator:ab75a72455b69c857e9222ab48b97a813"><td class="memSeparator" colspan="2">&#160;</td></tr>
