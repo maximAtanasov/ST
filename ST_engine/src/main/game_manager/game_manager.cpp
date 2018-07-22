@@ -159,9 +159,9 @@ void game_manager::load_level(const std::string& level_name){
 
     //current level pointer must be reset, because apparently adding to the vector changes the pointer address
     //(makes sense as it has to reallocate the whole thing)
-    for(int i = 0; i < levels.size(); i++) {
-        if(levels[i].get_name() == active_level){
-            current_level_pointer = &levels[i];
+    for (auto &level : levels) {
+        if(level.get_name() == active_level){
+            current_level_pointer = &level;
             break;
         }
     }

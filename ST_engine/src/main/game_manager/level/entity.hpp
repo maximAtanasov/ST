@@ -10,7 +10,10 @@
 #ifndef ENTITY_DEF
 #define ENTITY_DEF
 
-#include <defs.hpp>
+
+#include <cstdint>
+#include <cstddef>
+#include <string>
 
 namespace ST {
 

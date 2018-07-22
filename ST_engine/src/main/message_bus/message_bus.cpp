@@ -11,7 +11,7 @@
 #include <message_bus/message_allocator.hpp>
 
 /**
- * The allocator is declared globaly.
+ * The allocator is declared globally.
  */
 message_allocator msg_memory{};
 

@@ -20,22 +20,26 @@
 #include <input_manager/input_manager.hpp>
 #include <game_manager/level/level_data.hpp>
 
+class level_tests;
+
 namespace ST {
     ///This object contains all the data for a level and provides functions for loading and unloading a level.
     /**
      * Sends messages to load assets and loads the input configuration from disk.
      */
     class level {
+        friend class ::level_tests;
     private:
+
         std::string name;
         ST::level_data data;
         message_bus *gMessage_bus;
 
-        int load_input_conf();
+        int8_t load_input_conf();
         key key_index(std::string arg);
 
     public:
-        level(const std::string &, message_bus *);
+        level(const std::string&, message_bus*);
         void load();
         void unload();
         level_data *get_data();

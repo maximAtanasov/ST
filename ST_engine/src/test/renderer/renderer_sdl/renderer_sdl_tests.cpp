@@ -23,8 +23,8 @@ class renderer_sdl_tests : public ::testing::Test {
 protected:
 
     //Adjust testing conditions here
-    Uint32 wait_duration = 1500;
-    int fullscreen = 1;
+    uint32_t wait_duration = 1500;
+    uint32_t fullscreen = 1;
 
 
     renderer_sdl* test_subject{};

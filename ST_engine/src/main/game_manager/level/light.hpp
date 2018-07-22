@@ -26,14 +26,19 @@ namespace ST {
 
         light(uint64_t ID, int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
         uint64_t get_ID();
+
         int32_t get_origin_x() const;
         void set_origin_x(int32_t origin_x);
+
         int32_t get_origin_y() const;
         void set_origin_y(int32_t origin_y);
+
         uint16_t get_radius() const;
         void set_radius(uint16_t radius);
+
         uint16_t get_intensity() const;
         void set_intensity(uint16_t intensity);
+
         uint16_t get_brightness() const;
         void set_brightness(uint16_t brightness);
 

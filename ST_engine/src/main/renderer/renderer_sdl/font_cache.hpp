@@ -7,8 +7,8 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#ifndef QFC_DEF
-#define QFC_DEF
+#ifndef FONT_CACHE_DEF
+#define FONT_CACHE_DEF
 
 #include <defs.hpp>
 #include <list>
@@ -60,4 +60,4 @@ class font_cache{
         void clear();
 };
 
-#endif
+#endif // FONT_CACHE_DEF

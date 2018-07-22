@@ -78,7 +78,7 @@ void ST::level::unload(){
  * File inputConf.cfg must exist.
  * @return -1 on error or 0 on success.
  */
-int ST::level::load_input_conf(){
+int8_t ST::level::load_input_conf(){
     std::ifstream file;
     std::string temp = "levels/" + name;
     temp = temp + "/inputConf.cfg";

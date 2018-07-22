@@ -106,7 +106,7 @@ void drawing_manager::update(const ST::level_data& temp, double fps, const conso
  * @param objects a pointer to a vector of text_objects
  */
 void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
-    for(auto i : objects) {
+    for(auto& i : objects) {
         if (i.is_visible()) {
             gRenderer.draw_text(i.get_font(), i.get_text_string(), i.get_x(), i.get_y() - i.get_font_size(), i.get_color(),
                                  i.get_font_size(), 2);
@@ -163,27 +163,27 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
             lightmap[i][j] = darkness_level;
         }
     }
-    for(unsigned int q = 0; q < lights.size(); q++){
-        int x = lights.at(q).origin_x - Camera.x;
-        int y = lights.at(q).origin_y - Camera.y;
+    for (const auto &light : lights) {
+        int x = light.origin_x - Camera.x;
+        int y = light.origin_y - Camera.y;
         double count = 0;
-        double step = darkness_level/ static_cast<double>(lights.at(q).radius);
+        double step = darkness_level/ static_cast<double>(light.radius);
         count = 0;
-        int radius = lights.at(q).radius;
-        int intensity = lights.at(q).intensity;
+        int radius = light.radius;
+        int intensity = light.intensity;
         if(x - radius - intensity > w_width || y - radius - intensity > w_height)
             continue;
         double step2 = 0;
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j < x + radius + intensity; j++){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = (uint8_t)lights.at(q).brightness + (uint8_t)count;
-                if(count + lights.at(q).brightness < darkness_level && j > x + intensity)
+                    lightmap[j][i] = (uint8_t) light.brightness + (uint8_t)count;
+                if(count + light.brightness < darkness_level && j > x + intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights.at(q).brightness < darkness_level && i > y + intensity)
+            if(step2 + light.brightness < darkness_level && i > y + intensity)
                 step2 += step;
         }
         count = 0;
@@ -191,13 +191,13 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j > x - radius - intensity; j--){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights.at(q).brightness + (uint8_t)count;
-                if(count + lights.at(q).brightness < darkness_level && j < x - intensity)
+                    lightmap[j][i] = light.brightness + (uint8_t)count;
+                if(count + light.brightness < darkness_level && j < x - intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights.at(q).brightness < darkness_level && i < y - intensity)
+            if(step2 + light.brightness < darkness_level && i < y - intensity)
                 step2 += step;
         }
         count = 0;
@@ -205,13 +205,13 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j < x + radius + intensity; j++){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights.at(q).brightness + (uint8_t)count;
-                if(count + lights.at(q).brightness < darkness_level && j > x + intensity)
+                    lightmap[j][i] = light.brightness + (uint8_t)count;
+                if(count + light.brightness < darkness_level && j > x + intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights.at(q).brightness < darkness_level && i < y - intensity)
+            if(step2 + light.brightness < darkness_level && i < y - intensity)
                 step2 += step;
         }
         count = 0;
@@ -219,13 +219,13 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j > x - radius - intensity; j--){
                 if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = lights.at(q).brightness + (uint8_t)count;
-                if(count + lights.at(q).brightness< darkness_level && j < x - intensity)
+                    lightmap[j][i] = light.brightness + (uint8_t)count;
+                if(count + light.brightness< darkness_level && j < x - intensity)
                     count += step;
             }
             count = 0;
             count += step2;
-            if(step2 + lights.at(q).brightness < darkness_level && i > y + intensity) {
+            if(step2 + light.brightness < darkness_level && i > y + intensity) {
                 step2 += step;
             }
         }

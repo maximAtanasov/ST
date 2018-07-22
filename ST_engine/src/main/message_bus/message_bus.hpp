@@ -22,6 +22,7 @@
 #include <cstring>
 #include <message_bus/message_allocator.hpp>
 
+
 ///The centeral messaging system of the engine. All subsystem make extensive use of it.
 /**
  *

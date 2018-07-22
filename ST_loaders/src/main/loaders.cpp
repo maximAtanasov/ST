@@ -201,7 +201,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == "wav"){
                     seek += sizes.at(i);
-                    auto to_write = (char*)malloc(sizes.at(i));
+                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
                     SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
                     Mix_Chunk* temp_chunk = Mix_LoadWAV_RW(output, 1);
@@ -212,14 +212,15 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == "ogg"){
                     seek += sizes.at(i);
-                    auto to_write = (char*)malloc(sizes.at(i));
+                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
                     SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
-                    Mix_Music* temp_music = Mix_LoadMUS_RW(output, 1);
+                    Mix_Music* temp_music = Mix_LoadMUSType_RW(output, MUS_OGG, 1);
                     if(temp_music != nullptr) {
                         assets->music[filename] = temp_music;
+                    }else{
+                        free(to_write);
                     }
-                    free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
                 }
                 i++;
@@ -292,7 +293,7 @@ int ST::unpack_binary_to_disk(const std::string& path){
                 if(ext == "png" || ext == "wav" || ext == "ogg") {
                     SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
                     seek += sizes.at(i);
-                    auto to_write = (char*)malloc(sizes.at(i));
+                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
                     output->write(output, to_write, 1, sizes.at(i));
                     output->close(output);

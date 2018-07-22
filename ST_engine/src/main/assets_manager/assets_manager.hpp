@@ -19,6 +19,7 @@
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
 #include <task_manager/task_allocator.hpp>
+#include <cstdint>
 
 ///This object is responsible for loading/unloading assets.
 /**
@@ -53,7 +54,7 @@ private:
         task_manager* gTask_manager{};
         subscriber msg_sub{};
         ST::assets all_assets;
-        std::unordered_map<std::string, uint16_t > count;
+        std::unordered_map<std::string, uint16_t> count;
         int8_t load_asset(std::string path);
         int8_t unload_asset(std::string path);
         int8_t unload_assets_from_list(std::string path);
