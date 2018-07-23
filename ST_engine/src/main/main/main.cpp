@@ -82,7 +82,7 @@ int main(int argc, char** argv){
         gDrawing_manager.update(*gGame_manager.get_level_data(), gFps.get_value(), gConsole);
 
         #elif defined(__RELEASE)
-        gDrawing_manager.update(gGame_manager.get_level_data(), 0, nullptr);
+        gDrawing_manager.update(*gGame_manager.get_level_data());
         #endif
     }
     return 0;

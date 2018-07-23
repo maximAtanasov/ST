@@ -373,6 +373,16 @@ set(ALL_TESTS
         entity_test
         level_test)
 
+set(RUN_ON_BUILD_TESTS
+        message_allocator_test
+        message_test
+        subscriber_test
+        message_bus_test
+        console_test
+        asset_manager_test
+        entity_test
+        level_test)
+
 gtest_add_tests(TARGET ${ALL_TESTS})
 add_dependencies(ST_engine ${ALL_TESTS})
 set_target_properties(asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
@@ -381,12 +391,11 @@ set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${P
 set_target_properties(level_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
 
-#This loop will run all of our tests - Commented out because running all tests after a single change is tedious
-#foreach(loop_var ${ALL_TESTS})
-#    add_custom_command(
-#            TARGET ST_engine
-#            POST_BUILD
-#            COMMAND ${loop_var}
-#            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
-#    )
-#endforeach()
+foreach(loop_var ${RUN_ON_BUILD_TESTS})
+    add_custom_command(
+            TARGET ST_engine
+            POST_BUILD
+            COMMAND ${loop_var}
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
+    )
+endforeach()

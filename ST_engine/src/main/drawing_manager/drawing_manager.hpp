@@ -115,7 +115,12 @@ class drawing_manager{
     public:
         drawing_manager(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
         ~drawing_manager();
+
+        #ifdef __DEBUG
         void update(const ST::level_data& temp, double, const console& gConsole);
+        #elif defined(__RELEASE)
+        void update(const ST::level_data& temp);
+        #endif
 };
 
 #endif

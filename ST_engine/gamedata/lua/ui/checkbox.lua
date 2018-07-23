@@ -16,7 +16,7 @@ checkbox.colY = 0
 
 function checkbox:new(x, y)
     local newCheckbox = newEntity(self, x, y) 
-    newCheckbox:setTexture("ui/checkbox-unchecked.webp")
+    newCheckbox:setTexture("checkbox-unchecked.webp")
     newCheckbox:setTexW(50)
     newCheckbox:setTexH(50)
     newCheckbox.colX = 50
@@ -35,12 +35,12 @@ end
 
 function checkbox:check()
     self.checked = true
-    self:setTexture("ui/checkbox-checked.webp")
+    self:setTexture("checkbox-checked.webp")
 end
 
 function checkbox:uncheck()
     self.checked = false
-    self:setTexture("ui/checkbox-unchecked.webp")
+    self:setTexture("checkbox-unchecked.webp")
 end
 
 function checkbox:toggle()

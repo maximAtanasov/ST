@@ -35,32 +35,20 @@ namespace ST {
 
         //setters
         void set_x(int32_t arg);
-
         void set_y(int32_t arg);
-
         void set_color(SDL_Color arg);
-
         void set_text_string(const std::string &text);
-
         void set_font(const std::string &font);
-
         void set_font_size(uint8_t size);
-
         void set_visible(bool arg);
 
         //getters
         int32_t get_x() const;
-
         int32_t get_y() const;
-
         SDL_Color get_color() const;
-
         std::string get_text_string() const;
-
         std::string get_font() const;
-
         uint8_t get_font_size() const;
-
         bool is_visible() const;
 
     };

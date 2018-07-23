@@ -21,12 +21,6 @@ protected:
         return test_cnsl->log_level;
     }
 
-    std::string pop_string(){
-        std::string str = test_cnsl->entries.at(0).text;
-        test_cnsl->entries.erase(test_cnsl->entries.begin());
-        return str;
-    }
-
     void write(const ST::console_log& log){
         test_cnsl->write(log);
     }
@@ -64,28 +58,29 @@ TEST_F(console_test, set_log_level) {
 }
 
 TEST_F(console_test, console_write_error) {
+    ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::ERROR);
     write(ST::console_log(ST::log_type::ERROR, "TEST_STRING"));
-    EXPECT_EQ("TEST_STRING", pop_string());
+    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
 }
 
 TEST_F(console_test, console_write_info) {
+    ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::INFO);
     write(ST::console_log(ST::console_log(ST::log_type::INFO, "TEST_STRING")));
-    EXPECT_EQ("TEST_STRING", pop_string());
+    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
 }
 
 
 TEST_F(console_test, console_write_all) {
+    ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::SUCCESS | ST::log_type::INFO | ST::log_type::ERROR);
 
     write(ST::console_log(ST::console_log(ST::log_type::INFO, "TEST_STRING")));
     write(ST::console_log(ST::console_log(ST::log_type::ERROR, "TEST_STRING2")));
     write(ST::console_log(ST::console_log(ST::log_type::INFO, "TEST_STRING3")));
 
-    EXPECT_EQ("TEST_STRING", pop_string());
-    EXPECT_EQ("TEST_STRING2", pop_string());
-    EXPECT_EQ("TEST_STRING3", pop_string());
+    ASSERT_EQ("TEST_STRING\nTEST_STRING2\nTEST_STRING3\n", testing::internal::GetCapturedStdout());
 }
 
 int main(int argc, char **argv) {

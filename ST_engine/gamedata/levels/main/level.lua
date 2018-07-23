@@ -7,6 +7,8 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 
+enableLighting(true)
+
 --Load the appropriate language configuration
 if language == "russian" then
     use("language_russian.lua")

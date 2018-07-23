@@ -105,6 +105,7 @@ extern "C" int getLightIntensityLua(lua_State* L);
 extern "C" int setLightIntensityLua(lua_State* L);
 extern "C" int getLightBrightnessLua(lua_State* L);
 extern "C" int setLightBrightnessLua(lua_State* L);
+extern "C" int enableLightingLua(lua_State* L);
 
 //Enitity lua bindigs definitions
 

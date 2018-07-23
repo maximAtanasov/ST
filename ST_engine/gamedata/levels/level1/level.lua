@@ -20,6 +20,7 @@ use("coin.lua")
 use("wolf.lua")
 use("torch.lua")
 
+enableLighting(true)
 pause = 0
 
 stopAllSounds()

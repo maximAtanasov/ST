@@ -9,6 +9,9 @@
 if darkness > 0 then
     darkness = darkness - 1
     setDarkness(darkness)
+elseif darkness == 0 then
+    enableLighting(false)
+    darkness = darkness -1
 end
 
 if(room == "main") then

@@ -63,16 +63,23 @@ void drawing_manager::process_lights_task(void *arg){
  * Performs all drawing operations.
  * @param temp a pointer to the data of the current level.
  * @param fps the current frames per second.
- * @param cnsl a pointer to the console object.
+ * @param cnsl a console object.
  */
+#ifdef __DEBUG
 void drawing_manager::update(const ST::level_data& temp, double fps, const console& cnsl){
-
+#elif defined(__RELEASE)
+void drawing_manager::update(const ST::level_data& temp){
+#endif
 	Camera = temp.Camera;
 	handle_messages();
     lights_arg = temp.lights;
+    const bool lights_on = lighting_enabled;
 
-    //start a task to pre-process lighting on a separate thread
-    task_id id = gTask_manager->start_task(make_task(process_lights_task, this, nullptr, -1));
+    task_id id = nullptr;
+    if(lights_on) {
+        //start a task to pre-process lighting on a separate thread
+        id = gTask_manager->start_task(make_task(process_lights_task, this, nullptr, -1));
+    }
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
 	gRenderer.clear_screen();
@@ -83,8 +90,10 @@ void drawing_manager::update(const ST::level_data& temp, double fps, const conso
     draw_text_objects(temp.text_objects);
 
     //draw the lights when we are sure they are processed
-    gTask_manager->wait_for_task(id);
-    draw_lights();
+    if(lights_on) {
+        gTask_manager->wait_for_task(id);
+        draw_lights();
+    }
 
     //Draw debug info and the console in a debug build
     #ifdef __DEBUG
@@ -236,11 +245,6 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
  * Draws the lightmap on the screen.
  */
 void drawing_manager::draw_lights() const{
-    #ifdef __DEBUG
-    if(!lighting_enabled){
-        return;
-    }
-    #endif
     //Losing a lot of fps here :)
     SDL_Rect tempRect = {0, 0, lights_quality, lights_quality};
     for(int i = 0; i <= w_width-lights_quality; i += lights_quality){

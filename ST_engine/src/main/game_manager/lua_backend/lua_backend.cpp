@@ -105,6 +105,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //lights
     lua_register(L, "setDarkness", setDarknessLua);
+    lua_register(L, "enableLighting", enableLightingLua);
     lua_register(L, "createLight", createLightLua);
     lua_register(L, "setLightOriginX", setLightOriginXLua);
     lua_register(L, "getLightOriginX", getLightOriginXLua);
@@ -457,6 +458,11 @@ extern "C" int setDarknessLua(lua_State* L){
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
     gMessage_busLua->send_msg(make_msg(SET_DARKNESS, make_data<uint8_t>(arg)));
     return 0;
+}
+
+extern "C" int enableLightingLua(lua_State* L){
+    auto arg = static_cast<bool>(lua_toboolean(L, 1));
+    gMessage_busLua->send_msg(make_msg(ENABLE_LIGHTING, make_data(arg)));
 }
 
 /**

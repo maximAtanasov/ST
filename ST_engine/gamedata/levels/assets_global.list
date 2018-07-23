@@ -8,12 +8,13 @@
 
 
 
-#These fonts are used by the engine
-#and must be loaded at all times
+# These fonts are used by the engine
+# and must be loaded at all times
 
 fonts/OpenSans-Regular.ttf 100
 fonts/OpenSans-Regular.ttf 40
 fonts/OpenSans-Regular.ttf 25
 
-assets/ui/checkbox-checked.webp
-assets/ui/checkbox-unchecked.webp
+# UI assets
+
+assets/ui/ui_assets.bin
