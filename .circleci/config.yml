@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: sudo_install
+          command: apt-get install -y sudo
+      - run:
           name: cmake_install
           command: sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 
