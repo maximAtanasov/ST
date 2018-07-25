@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: dummy-sound-card
-          command: echo locate snd-dummy && modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy
+          command: locate snd-dummy && modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy
 
       - run:
           name: build
