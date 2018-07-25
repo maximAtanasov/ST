@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: dummy-sound-card
-          command: locate snd-dummy && modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy
+          command: apt-get install -y mlocate && updatedb && locate snd-dummy && modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy
 
       - run:
           name: build
