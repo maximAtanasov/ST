@@ -1,21 +1,38 @@
 version: 2
 jobs:
   build:
+    
     docker:
-      - image: ubuntu:16.04
+      - image: ubuntu:bionic
     steps:
       - checkout
       - run:
-          name: sudo_install
-          command: apt-get install -y sudo
+          name: dependencies_install
+          command:  apt-get update && apt-get install -y software-properties-common wget && add-apt-repository -y ppa:ubuntu-toolchain-r/test && apt-get update &&  apt-get install -y build-essential
+
       - run:
           name: cmake_install
-          command: sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+          command: apt-get install -y cmake
+    
+      - run:
+          name: sdl_install
+          command: apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev module-init-tools pulseaudio alsa-utils dbus-x11 && DEBIAN_FRONTEND=noninteractive apt-get install -y jackd2
+
+      - run:
+          name: lua_install
+          command: apt-get install -y liblua5.3-dev 
 
       - run:
           name: gtest_install
-          command: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib
+          command: apt-get install -y libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
+    
+      - run:
+          name: xvfb_install
+          command: apt-get install -y xvfb
 
       - run:
-          name: buikd
-          command: cmake CMakeLists.txt && make all
+          name: build
+          environment:
+            DISPLAY: :99
+          command: modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy & Xvfb -ac :99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
+      
