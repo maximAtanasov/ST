@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: dummy-sound-card
-          command: apt-get -y install linux-headers-`uname -r` libncursesw5-dev && apt-get update && depmod && modprobe snd-dummy
+          command: apt-get upgrade -y && apt-get dist-upgrade && apt-get -y install linux-headers-`uname -r` libncursesw5-dev && apt-get update && depmod && modprobe snd-dummy
 
       - run:
           name: build
