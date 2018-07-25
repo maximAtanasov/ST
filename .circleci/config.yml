@@ -31,8 +31,12 @@ jobs:
           command: apt-get install -y xvfb
 
       - run:
+          name: dummy-sound-card
+          command: echo locate snd-dummy && modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy
+
+      - run:
           name: build
           environment:
             DISPLAY: :99
-          command: modprobe /lib/modules/$(uname -r)/kernel/sound/drivers/snd-dummy & Xvfb -ac :99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
+          command: Xvfb -ac :99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
       
