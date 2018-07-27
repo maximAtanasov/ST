@@ -31,10 +31,6 @@ jobs:
           command: apt-get install -y xvfb
 
       - run:
-          name: dummy-sound-card
-          command: apt-get upgrade -y && apt-get dist-upgrade && apt-get update && apt-get -y install libasound2-dev libasound2 libasound2-data module-init-tools libsndfile1-dev && modprobe snd-dummy
-
-      - run:
           name: build
           environment:
             DISPLAY: :99
