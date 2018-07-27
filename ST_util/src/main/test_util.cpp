@@ -24,19 +24,16 @@ void initialize_SDL(){
         exit(1);
     }
 
-    if(SDL_Init(SDL_INIT_AUDIO) < 0) {
-        fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", SDL_GetError());
-        exit(1);
-    }
+    SDL_Init(SDL_INIT_AUDIO);
     if(TTF_Init() < 0){
         fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
         exit(1);
     }
     Mix_Init(MIX_INIT_OGG);
-    if(Mix_OpenAudio(22050,AUDIO_S16SYS,2,640) == -1){
-        fprintf(stderr, "Failiure to initialize audio\n");
+    Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
+/*        fprintf(stderr, "Failiure to initialize audio\n");
         exit(1);
-    }
+    }*/
 }
 
 void close_SDL(){
