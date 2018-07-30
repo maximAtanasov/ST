@@ -28,7 +28,7 @@ namespace ST {
      * @return The result of binary OR performed on <b>a</b> and <b>b</b>
      */
     inline log_type operator | (log_type a, log_type b){
-        return (log_type)(static_cast<uint8_t>(a) | static_cast<uint8_t>(b));
+        return static_cast<log_type>(static_cast<uint8_t>(a) | static_cast<uint8_t>(b));
     }
 
     ///Represents a log message to be displayed in the console.

@@ -31,11 +31,11 @@ void message_bus::send_msg(message* arg){
     if(temp->size() == 1){
         temp->at(0)->push_message(arg);
     }
-    else
-        for(auto i : *temp){{
-            i->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
+    else if(!temp->empty()){
+        temp->at(0)->push_message(arg);
+        for(uint32_t i = 1; i < temp->size(); i++){
+            temp->at(i)->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
         }
-        destroy_msg(arg);
     }
 }
 
