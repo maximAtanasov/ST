@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: dummy audio
-          command: aptitude --purge reinstall -y linux-sound-base alsa-base alsa-utils linux-image-`uname -r` linux-ubuntu-modules-`uname -r` libasound2 && modprobe snd-dummy
+          command: apt-get --purge reinstall -y linux-sound-base alsa-base alsa-utils linux-image-`uname -r` linux-ubuntu-modules-`uname -r` libasound2 && modprobe snd-dummy
 
       - run:
           name: build
