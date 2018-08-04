@@ -3,7 +3,7 @@ jobs:
   build:
     
     docker:
-      - image: eoshep:xenial
+      - image: eoshep/build-essentials:bionic
     steps:
       - checkout
       - run:
