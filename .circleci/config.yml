@@ -3,7 +3,7 @@ jobs:
   build:
     
     docker:
-      - image: ubuntu:bionic
+      - image: ubuntu:cosmic
     steps:
       - checkout
       - run:
@@ -29,6 +29,10 @@ jobs:
       - run:
           name: xvfb_install
           command: apt-get install -y xvfb
+
+      - run:
+          name: dummy audio
+          command: modprobe snd-dummy
 
       - run:
           name: build

@@ -92,7 +92,7 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     remove("test_sound_1.wav");
     remove("test_sound_2.wav");
     close_SDL();
-    chdir("../");
+    ASSERT_EQ(0, chdir("../"));
 }
 
 
@@ -127,7 +127,7 @@ TEST(loaders_tests, test_unpack_binary){
     SDL_FreeSurface(result->surfaces.at("test_image_2.png"));
     SDL_FreeSurface(result->surfaces.at("test_image_3.webp"));
     close_SDL();
-    chdir("../");
+    ASSERT_EQ(0, chdir("../"));
 }
 
 int main(int argc, char **argv) {
