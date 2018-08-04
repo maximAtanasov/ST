@@ -34,4 +34,4 @@ jobs:
           name: build
           environment:
             DISPLAY: :99
-          command: Xvfb -ac :99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
+          command: pwd && Xvfb -ac :99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
