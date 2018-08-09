@@ -126,6 +126,33 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
     return 0;
 }
 
+/**
+ * Unloads assets contained within a binary.
+ * @param path The path to the .bin (binary) file.
+ * @return -1 on failure or 0 on success.
+ */
+int8_t assets_manager::unload_assets_from_binary(const std::string& path) {
+    ST::assets_named* assets1 = ST::unpack_binary(path);
+    if(assets1 != nullptr){
+        for(auto surface : assets1->surfaces){
+            unload_asset(surface.first);
+            SDL_FreeSurface(surface.second);
+        }
+        for(auto chunk : assets1->chunks){
+            unload_asset(chunk.first);
+            Mix_FreeChunk(chunk.second);
+        }
+        for(auto music : assets1->music){
+            unload_asset(music.first);
+            Mix_FreeMusic(music.second);
+        }
+        delete assets1;
+    }else{
+        return -1;
+    }
+    return 0;
+}
+
 
 /**
  * Loads an asset given a path.
@@ -319,7 +346,7 @@ int8_t assets_manager::unload_asset(std::string path){
         Mix_FreeMusic(all_assets.music[string_hash]);
         count[path]--;
     }else if(extention == "bin"){
-        return 0;
+        return unload_assets_from_binary(path);
     }else{ //if file is a font
         TTF_CloseFont(all_assets.fonts[path]);
         count[path]--;

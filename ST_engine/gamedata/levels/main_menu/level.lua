@@ -11,7 +11,7 @@ setGravity(0)
 showMouseCursor()
 setBackground("menu.webp")
 setDarkness(255)
-loadLevel("level1") --preload level1
+
 
 playMusic("AlaFlair.ogg", 100, -1)
 

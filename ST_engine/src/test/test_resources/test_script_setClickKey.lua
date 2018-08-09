@@ -1,0 +1,1 @@
+setClickKey("MOUSE1");

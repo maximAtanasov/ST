@@ -174,7 +174,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
  * @param file The path to the file.
  */
 void lua_backend::run_file(std::string file){
-    std::string temp = hash_strings(file);
+    std::string temp = hash_file(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE || lua_pcall(L, 0, 0, 0)){
         fprintf(stderr, "cannot compile script\n");
@@ -188,7 +188,7 @@ void lua_backend::run_file(std::string file){
  * @return -1 on failure or 0 on success.
  */
 int lua_backend::load_file(std::string file){
-    std::string temp = hash_strings(file);
+    std::string temp = hash_file(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE){
         fprintf(stderr, "cannot compile script\n");
@@ -200,7 +200,7 @@ int lua_backend::load_file(std::string file){
 }
 
 /**
- * Run a lua script contained in a script.
+ * Run a lua script contained in a string.
  * @param script The Lua Script to run.
  */
 void lua_backend::run_script(std::string script) {
@@ -241,7 +241,7 @@ void lua_backend::close() {
  * @param path The path to the file.
  * @return The script with the values hashed.
  */
-std::string lua_backend::hash_strings(std::string& path){
+std::string lua_backend::hash_file(std::string& path){
     std::ifstream file;
     file.open(path.c_str());
     std::string result;
@@ -659,7 +659,7 @@ extern "C" int createTextObjectLua(lua_State* L){
     auto y = static_cast<int>(lua_tointeger(L, 3));
     auto text_string = static_cast<std::string>(lua_tostring(L, 4));
     auto font = static_cast<std::string>(lua_tostring(L, 5));
-    auto size = static_cast<int>(lua_tointeger(L, 6));
+    auto size = static_cast<uint8_t>(lua_tointeger(L, 6));
     SDL_Color temp_color = {255,255,255,255};
     ST::text temp = ST::text(ID, x, y, temp_color, text_string, font, size);
     gGame_managerLua->get_level_data()->text_objects.emplace_back(temp);
@@ -678,8 +678,7 @@ extern "C" int setTextObjectColorLua(lua_State* L){
     auto g = static_cast<uint8_t>(lua_tointeger(L, 3));
     auto b = static_cast<uint8_t>(lua_tointeger(L, 4));
     auto a = static_cast<uint8_t>(lua_tointeger(L, 5));
-    SDL_Color temp = {r, g, b, a};
-    gGame_managerLua->get_level_data()->text_objects.at(ID).set_color(temp);
+    gGame_managerLua->get_level_data()->text_objects.at(ID).set_color({r,g,b,a});
     return 0;
 }
 

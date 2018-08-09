@@ -29,11 +29,12 @@ class game_manager;
  * This is the bridge between gameplay and engine code.
  */
 class lua_backend {
+    friend class lua_backend_test;
 private:
     lua_State* L;
     message_bus* gMessage_bus;
-    std::string hash_strings(std::string& path);
-    std::string hash_string(std::string& path);
+    std::string hash_file(std::string& path);
+    std::string hash_string(std::string& string);
 
 public:
     int initialize(message_bus* msg_bus, game_manager* game_mngr);

@@ -359,6 +359,41 @@ target_link_libraries(level_test
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
+
+add_executable(lua_backend_test
+        src/main/game_manager/level/entity.cpp
+        src/main/game_manager/level/entity.hpp
+        src/main/game_manager/level/light.cpp
+        src/main/game_manager/level/light.hpp
+        src/main/message_bus/message_types.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/message_bus/message.hpp
+        src/main/game_manager/level/level.cpp
+        src/main/game_manager/level/level.hpp
+        src/main/console/console.cpp
+        src/main/console/console.hpp
+        src/main/console/console_log.cpp
+        src/main/console/console_log.hpp
+        src/main/game_manager/level/text.cpp
+        src/main/game_manager/level/text.hpp
+        src/main/game_manager/lua_backend/lua_backend.hpp
+        src/main/game_manager/lua_backend/lua_backend.cpp
+        src/test/game_manager/lua_backend/lua_backend_tests.cpp)
+
+target_link_libraries(lua_backend_test
+        ST_util
+        ${GTEST_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY}
+        ${LUA_LIBRARY})
+
 #Run all our tests on every build
 set(ALL_TESTS
         message_allocator_test
@@ -371,7 +406,8 @@ set(ALL_TESTS
         asset_manager_test
         renderer_sdl_test
         entity_test
-        level_test)
+        level_test
+        lua_backend_test)
 
 set(RUN_ON_BUILD_TESTS
         message_allocator_test
@@ -381,12 +417,14 @@ set(RUN_ON_BUILD_TESTS
         console_test
         asset_manager_test
         entity_test
-        level_test)
+        level_test
+        lua_backend_test)
 
 gtest_add_tests(TARGET ${ALL_TESTS})
 add_dependencies(ST_engine ${ALL_TESTS})
 set_target_properties(asset_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
+set_target_properties(lua_backend_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(level_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)

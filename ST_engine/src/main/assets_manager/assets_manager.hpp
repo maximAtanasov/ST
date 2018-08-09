@@ -60,6 +60,7 @@ private:
         int8_t unload_assets_from_list(std::string path);
         int8_t load_assets_from_list(std::string path);
         int8_t load_assets_from_binary(const std::string& path);
+        int8_t unload_assets_from_binary(const std::string& path);
         void handle_messages();
         static void update_task(void* arg);
 

@@ -11,7 +11,6 @@
 #define DRAWING_DEF
 
 #include <defs.hpp>
-#include <renderer/renderer_sdl/font_cache.hpp>
 #include <assets_manager/assets.hpp>
 #include <game_manager/level/level_data.hpp>
 #include <game_manager/level/light.hpp>
