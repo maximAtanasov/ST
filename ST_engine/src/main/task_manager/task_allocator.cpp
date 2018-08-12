@@ -31,7 +31,7 @@ task_allocator::~task_allocator(){
     free(memory);
 }
 
-static task_allocator gTask_pool{};
+static task_allocator gTask_allocator{};
 
 /**
  * //only use these functions to create/destroy tasks
@@ -42,7 +42,7 @@ static task_allocator gTask_pool{};
  * @return A new task object
  */
 ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity){
-    return gTask_pool.allocate_task(function, arg, dependency, affinity);
+    return gTask_allocator.allocate_task(function, arg, dependency, affinity);
 }
 
 /**
@@ -50,39 +50,5 @@ ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependen
  * @param task The task to destroy
  */
 void destroy_task(ST::task* task){
-    gTask_pool.deallocate(task->id);
-}
-
-//INLINED METHODS
-
-inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity){
-    uint16_t i = 0;
-    SDL_LockMutex(access_mutex);
-    //find the next free spot in memory
-    while(allocated[pointer] && i < memory_size){
-        pointer++;
-        i++;
-        if(pointer > memory_size-1){
-            pointer = 0;
-        }
-    }
-    if(i == memory_size){
-        return nullptr;
-    }
-    allocated[pointer] = true;
-    auto temp = new (memory+pointer) ST::task(pointer, function, arg, dependency, affinity);
-    SDL_UnlockMutex(access_mutex);
-    return temp;
-}
-
-/**
- * Deallocate a task obbject.
- * Internally marks the previously used memory as free.
- * @param id The id of the task.
- */
-inline void task_allocator::deallocate(uint16_t id){
-    //with the help of the id we can mark the unused memory as free in our array
-    SDL_LockMutex(access_mutex);
-    allocated[id] = false;
-    SDL_UnlockMutex(access_mutex);
+    gTask_allocator.deallocate(task->id);
 }

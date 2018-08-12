@@ -48,8 +48,8 @@ private:
     std::unordered_map<std::string, std::vector<SDL_Texture*>> fonts_cache;
 
     void cache_font(TTF_Font* Font, std::string font_and_size);
-    void draw_text_normal(std::string, std::string, int, int, SDL_Color, int);
-    void draw_text_cached(std::string, std::string, int, int, SDL_Color, int) const;
+    void draw_text_lru_cached(std::string, std::string, int, int, SDL_Color, int);
+    void draw_text_cached_glyphs(const std::string, const std::string, const int, const int, const SDL_Color, const int) const;
 	int initialize_with_vsync(SDL_Window* win, int width, int height, bool vsync);
 
 public:

@@ -12,4 +12,4 @@
 --SUPPORTED:
 --English
 --Russian
-language = "russian"
+language = "english"

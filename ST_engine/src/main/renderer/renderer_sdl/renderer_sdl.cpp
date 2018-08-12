@@ -91,7 +91,7 @@ void renderer_sdl::close(){
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size){
+void renderer_sdl::draw_text_lru_cached(std::string arg, std::string arg2, int x, int y, SDL_Color color_font, int size){
     std::string font_and_size = arg+std::to_string(size);
     TTF_Font* font = fonts[font_and_size];
     if(font != nullptr){
@@ -127,7 +127,8 @@ void renderer_sdl::draw_text_normal(std::string arg, std::string arg2, int x, in
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void renderer_sdl::draw_text_cached(const std::string arg, const std::string arg2, const int x, const int y, const SDL_Color color_font ,const int size) const{
+void renderer_sdl::draw_text_cached_glyphs(const std::string arg, const std::string arg2, const int x, const int y,
+                                           const SDL_Color color_font, const int size) const{
     std::string font_and_size = arg+std::to_string(size);
     auto cached_vector = fonts_cache.find(font_and_size);
     if(cached_vector != fonts_cache.end()){
@@ -164,17 +165,17 @@ void renderer_sdl::draw_text_cached(const std::string arg, const std::string arg
  */
 void renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag){
     if(flag == 1){
-        draw_text_cached(arg, arg2, x, y, color_font, size);
+        draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }else if(flag == 0){
-        draw_text_normal(arg, arg2, x, y, color_font, size);
+        draw_text_lru_cached(arg, arg2, x, y, color_font, size);
     }else{
         for(unsigned int i = 0; i < arg2.size(); i++) {
             if (arg2.at(i) > 126 || (arg2.at(i) < 32)) {
-                draw_text_normal(arg, arg2, x, y, color_font, size);
+                draw_text_lru_cached(arg, arg2, x, y, color_font, size);
                 return;
             }
         }
-        draw_text_cached(arg, arg2, x, y, color_font, size);
+        draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }
 }
 

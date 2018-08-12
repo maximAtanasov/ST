@@ -167,6 +167,8 @@ end
 function entity:setCollision(offsetX, offsetY, width, height)
     self.colX = width
     self.colY = height
+    self.offsetColX = offsetX;
+    self.offsetColY = offsetY;
     setCollisionBox(self.ID, offsetX, offsetY, self.colX, self.colY)
 end
 

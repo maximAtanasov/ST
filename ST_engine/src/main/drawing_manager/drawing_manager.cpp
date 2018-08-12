@@ -42,7 +42,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_
 
 	//Variables for lights
 	darkness_level = 0;
-    lights_quality = 4;
+    lights_quality = 3;
 
 	//Initialize the rendering object
 	gRenderer.initialize(window, w_width, w_height);
@@ -173,8 +173,11 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         }
     }
     for (const auto &light : lights) {
-        int x = light.origin_x - Camera.x;
-        int y = light.origin_y - Camera.y;
+        int x = light.origin_x, y = light.origin_y;
+        if(!light.is_static()){
+            x -= Camera.x;
+            y -= Camera.y;
+        }
         double count = 0;
         double step = darkness_level/ static_cast<double>(light.radius);
         count = 0;

@@ -10,7 +10,6 @@
 #define TESTING
 
 #include <gtest/gtest.h>
-#include <main.hpp>
 #include <main.cpp>
 
 TEST(ST_asset_pack_tests, test_wrong_argument_count){

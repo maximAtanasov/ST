@@ -202,7 +202,7 @@ end
 
 --ON SWITCH FOR VSYNC
  
-button_switch2 = checkbox:new(450, 620)
+button_switch2 = checkbox:new(VSYNC_CHECKBOX, 620 - VSYNC_CHECKBOX_Y_OFFSET)
 button_switch2:hide()
 button_switch2:setClickKey(all_buttons_key)
 if getVsyncState() then

@@ -9,6 +9,7 @@
 
 #include <string>
 #include <ST_loaders/loaders.hpp>
+#include <algorithm>
 
 /**
  * Gets the file extension from the filename.
@@ -44,8 +45,18 @@ std::string ST::get_file_extension(const std::string& filename){
  * @param binary The name of the binary that is going to be created.
  * @param args The filenames of the assets to read from.
  */
-void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args){
+void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args_){
     SDL_RWops *output = SDL_RWFromFile(binary.c_str(), "a+");
+
+    std::vector<std::string> args;
+
+    //ignore duplicate file names
+    for (uint32_t i = 0; i < args_.size(); i++) {
+        std::string arg = args_.at(i);
+        if(std::find(args.begin(), args.end(), arg) == args.end()){
+            args.emplace_back(arg);
+        }
+    }
 
     std::vector<std::string> surfaces_names;
     std::vector<char*> surfaces;

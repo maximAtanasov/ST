@@ -394,7 +394,6 @@ target_link_libraries(lua_backend_test
         ${SDL2_MIXER_LIBRARY}
         ${LUA_LIBRARY})
 
-#Run all our tests on every build
 set(ALL_TESTS
         message_allocator_test
         message_test
@@ -429,6 +428,7 @@ set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${P
 set_target_properties(level_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
 
+#Run the tests on each build
 foreach(loop_var ${RUN_ON_BUILD_TESTS})
     add_custom_command(
             TARGET ST_engine

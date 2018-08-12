@@ -40,9 +40,9 @@ public:
     int initialize(message_bus* msg_bus, game_manager* game_mngr);
     void set_global(std::string arg);
     void run_global(std::string arg);
-    void run_file(std::string arg);
-    int load_file(std::string);
-    void run_script(std::string script);
+    int8_t run_file(std::string arg);
+    int8_t load_file(std::string);
+    int8_t run_script(std::string script);
     void close();
 };
 
@@ -107,6 +107,8 @@ extern "C" int setLightIntensityLua(lua_State* L);
 extern "C" int getLightBrightnessLua(lua_State* L);
 extern "C" int setLightBrightnessLua(lua_State* L);
 extern "C" int enableLightingLua(lua_State* L);
+extern "C" int setLightStaticLua(lua_State* L);
+extern "C" int isLightStaticLua(lua_State* L);
 
 //Enitity lua bindigs definitions
 

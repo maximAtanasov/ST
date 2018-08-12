@@ -8,7 +8,10 @@
 
 use("grass.lua")
 use("tree1.lua")
+use("tree2.lua")
 use("plant1.lua")
+use("plant2.lua")
+use("plant3.lua")
 use("player.lua")
 use("house1.lua")
 use("house2.lua")
@@ -47,11 +50,19 @@ playMusic("Shades.ogg", 100, -1)
 playSound("rain.wav", 50, -1)
 --Create and initialize entities
 
-plant1_2 = plant1:new(100, floor)
-plant1_1 = plant1:new(150, floor)
-plant1_3 = plant1:new(200, floor)
-
 tree1_1 = tree1:new(725, floor)
+
+plant1_1 = plant1:new(100, floor)
+plant1_2 = plant1:new(1400, floor)
+plant1_3 = plant1:new(6200, floor)
+
+plant2_1 = plant2:new(640, floor)
+plant2_2 = plant2:new(3550, floor)
+plant2_3 = plant2:new(1500, floor)
+
+plant3_1 = plant3:new(4000, floor)
+plant3_2 = plant3:new(750, floor)
+plant3_3 = plant3:new(6500, floor)
 
 house1_1 = house1:new(1700, floor)
 house2_1 = house2:new(2500, floor)

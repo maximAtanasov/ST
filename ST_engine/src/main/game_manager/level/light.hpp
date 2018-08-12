@@ -23,6 +23,7 @@ namespace ST {
         uint16_t radius;
         uint16_t intensity;
         uint16_t brightness;
+        bool static_ = false;
 
         light(uint64_t ID, int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
         uint64_t get_ID();
@@ -41,6 +42,9 @@ namespace ST {
 
         uint16_t get_brightness() const;
         void set_brightness(uint16_t brightness);
+
+        bool is_static() const;
+        void set_static(bool arg);
 
     };
 }
@@ -135,5 +139,21 @@ inline void ST::light::set_brightness(uint16_t brightness) {
     light::brightness = brightness;
 }
 
+/**
+ * Tells if the light is static (not moving with the camera)
+ * or not static (moving along with the camera)
+ * @return The static mode of the light.
+ */
+inline bool ST::light::is_static() const{
+    return static_;
+}
+
+/**
+ * Sets the light as static (not moving with the camera)
+ * or not static (moving along with the camera)
+ */
+inline void ST::light::set_static(bool arg){
+    static_ = arg;
+}
 
 #endif //LIGHT_DEF

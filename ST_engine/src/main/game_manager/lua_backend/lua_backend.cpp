@@ -117,6 +117,8 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "getLightBrightness", getLightBrightnessLua);
     lua_register(L, "setLightRadius", setLightRadiusLua);
     lua_register(L, "getLightRadius", getLightRadiusLua);
+    lua_register(L, "setLightStatic", setLightStaticLua);
+    lua_register(L, "isLightStatic", isLightStaticLua);
 
     //Text funtions
 
@@ -172,22 +174,26 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 /**
  * Run a lua script inside the global Lua state.
  * @param file The path to the file.
+ * @return -1 on failiure or 0 on success.
  */
-void lua_backend::run_file(std::string file){
+int8_t lua_backend::run_file(std::string file){
     std::string temp = hash_file(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE || lua_pcall(L, 0, 0, 0)){
         fprintf(stderr, "cannot compile script\n");
         lua_error(L);
+        return -1;
+    }else{
+        return 0;
     }
 }
 
 /**
  * Loads a file into the global Lua State, but does not run it.
  * @param file The path to the file.
- * @return -1 on failure or 0 on success.
+ * @return ABORTS THE APP on failure or returns 0 on success.
  */
-int lua_backend::load_file(std::string file){
+int8_t lua_backend::load_file(std::string file){
     std::string temp = hash_file(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE){
@@ -202,12 +208,16 @@ int lua_backend::load_file(std::string file){
 /**
  * Run a lua script contained in a string.
  * @param script The Lua Script to run.
+ * @return -1 on failure and 0 on success.
  */
-void lua_backend::run_script(std::string script) {
+int8_t lua_backend::run_script(std::string script) {
     std::string temp = hash_string(script);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE || lua_pcall(L, 0, 0, 0)){
         log(ERROR, "Cannot run Script");
+        return -1;
+    }else{
+        return 0;
     }
 }
 
@@ -254,7 +264,7 @@ std::string lua_backend::hash_file(std::string& path){
                 while(temp.find("playSound(\"") != std::string::npos) {
                     std::string to_find = "playSound(\"";
                     std::string temp_buf;
-                    for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+                    for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -265,7 +275,7 @@ std::string lua_backend::hash_file(std::string& path){
                 while(temp.find("playMusic(\"") != std::string::npos) {
                     std::string to_find = "playMusic(\"";
                     std::string temp_buf;
-                    for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+                    for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -276,7 +286,7 @@ std::string lua_backend::hash_file(std::string& path){
                 while(temp.find("keyHeld(\"") != std::string::npos) {
                     std::string to_find = "keyHeld(\"";
                     std::string temp_buf;
-                    for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+                    for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -287,7 +297,7 @@ std::string lua_backend::hash_file(std::string& path){
                 while(temp.find("keyPressed(\"") != std::string::npos) {
                     std::string to_find = "keyPressed(\"";
                     std::string temp_buf;
-                    for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+                    for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -298,7 +308,7 @@ std::string lua_backend::hash_file(std::string& path){
                 while(temp.find("keyReleased(\"") != std::string::npos) {
                     std::string to_find = "keyReleased(\"";
                     std::string temp_buf;
-                    for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+                    for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -309,7 +319,7 @@ std::string lua_backend::hash_file(std::string& path){
                 while(temp.find("setClickKey(\"") != std::string::npos) {
                     std::string to_find = "setClickKey(\"";
                     std::string temp_buf;
-                    for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+                    for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -323,7 +333,7 @@ std::string lua_backend::hash_file(std::string& path){
                     std::string temp_buf;
                     std::string next_line;
                     getline(file, next_line);
-                    for(unsigned long i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
+                    for(uint64_t i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
                         temp_buf.push_back((next_line.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -337,7 +347,7 @@ std::string lua_backend::hash_file(std::string& path){
                     std::string temp_buf;
                     std::string next_line;
                     getline(file, next_line);
-                    for(unsigned long i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
+                    for(uint64_t i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
                         temp_buf.push_back((next_line.at(i)));
                     }
                     std::hash<std::string> hash_f;
@@ -463,6 +473,7 @@ extern "C" int setDarknessLua(lua_State* L){
 extern "C" int enableLightingLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
     gMessage_busLua->send_msg(make_msg(ENABLE_LIGHTING, make_data(arg)));
+    return 0;
 }
 
 /**
@@ -606,6 +617,31 @@ extern "C" int setLightBrightnessLua(lua_State* L){
     auto brightness = static_cast<uint16_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->lights.at(ID).set_brightness(brightness);
     return 0;
+}
+
+/**
+ * Sets if the light is static or not(moves with camera).
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setLightStaticLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto static_ = static_cast<bool>(lua_toboolean(L, 2));
+    gGame_managerLua->get_level_data()->lights.at(ID).set_static(static_);
+    return 0;
+}
+
+/**
+ * Tells if the light is static or not(moves with camera).
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int isLightStaticLua(lua_State* L){
+    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushboolean(L, gGame_managerLua->get_level_data()->lights.at(ID).is_static());
+    return 1;
 }
 
 /**

@@ -69,7 +69,6 @@ TEST(loaders_tests, test_pack_to_binary){
 TEST(loaders_tests, test_unpack_binary_to_disk){
     //Set up
     initialize_SDL();
-    printf("%s\n", get_current_dir_name());
     ASSERT_EQ(0, chdir("unpack_test/"));
     std::string binary_name = "test_binary_complex.bin";
 
@@ -99,7 +98,6 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
 TEST(loaders_tests, test_unpack_binary){
     //Set up
     initialize_SDL();
-    printf("%s\n", get_current_dir_name());
     ASSERT_EQ(0, chdir("unpack_test/"));
     std::string binary_name = "test_binary_complex.bin";
 

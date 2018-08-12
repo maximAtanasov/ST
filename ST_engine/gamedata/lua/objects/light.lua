@@ -81,3 +81,10 @@ function light:getIntensity()
     return getLightIntensity(self.ID);
 end
 
+function light:setStatic(arg)
+    setLightStatic(self.ID, arg)
+end
+
+function light:isStatic()
+    return isLightStatic(self.ID)
+end
