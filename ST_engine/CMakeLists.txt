@@ -9,7 +9,7 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(ST_engine)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 enable_testing()
 
@@ -35,11 +35,11 @@ add_executable(ST_engine
         src/main/assets_manager/assets.hpp
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
-        src/main/util/atomic_queue/atomicops.h
+        ../ST_util/include/ST_util/atomic_queue/atomicops.h
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
-        src/main/util/atomic_queue/concurrentqueue.h
+        ../ST_util/include/ST_util/atomic_queue/concurrentqueue.h
         src/main/console/console.cpp
         src/main/console/console.hpp
         src/main/defs.hpp
@@ -66,7 +66,7 @@ add_executable(ST_engine
         src/main/message_bus/message_bus.hpp
         src/main/physics_manager/physics_manager.cpp
         src/main/physics_manager/physics_manager.hpp
-        src/main/util/atomic_queue/readerwriterqueue.h
+        ../ST_util/include/ST_util/atomic_queue/readerwriterqueue.h
         src/main/renderer/renderer_sdl/renderer_sdl.cpp
         src/main/renderer/renderer_sdl/renderer_sdl.hpp
         src/main/task_manager/task.hpp

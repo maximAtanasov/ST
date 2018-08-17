@@ -8,7 +8,6 @@
  */
 
 #include <message_bus/message_bus.hpp>
-#include <message_bus/message_allocator.hpp>
 
 /**
  * The allocator is declared globally.

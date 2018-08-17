@@ -9,8 +9,8 @@
 
 #define TESTING
 
-#include <gtest/gtest.h>
 #include <main.cpp>
+#include <gtest/gtest.h>
 
 TEST(ST_asset_pack_tests, test_wrong_argument_count){
 

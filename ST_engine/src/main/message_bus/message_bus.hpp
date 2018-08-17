@@ -12,10 +12,10 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <util/atomic_queue/concurrentqueue.h>
+#include <ST_util/atomic_queue/concurrentqueue.h>
 #include <message_bus/subscriber.hpp>
 #include <message_bus/message.hpp>
-#include <unordered_map>
+#include <ST_util/bytell_hash_map.hpp>
 #include <SDL2/SDL.h>
 #include <memory>
 #include <vector>
@@ -31,7 +31,7 @@
 class message_bus{
     private:
         friend class message_bus_tests;
-        std::unordered_map<int, std::vector<subscriber*>> subscribers; //each message enum maps to a list of subscribers for that message
+        ska::bytell_hash_map<int, std::vector<subscriber*>> subscribers; //each message enum maps to a list of subscribers for that message
     public:
         void send_msg(message* msg);
         void subscribe(msg_type msg, subscriber* sub);

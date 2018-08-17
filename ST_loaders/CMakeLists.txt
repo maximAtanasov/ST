@@ -9,7 +9,7 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(ST_loaders)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 enable_testing()
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 

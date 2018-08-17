@@ -9,7 +9,6 @@
 
 #include <gtest/gtest.h>
 #include <message_bus/message_bus.hpp>
-#include <console/console.hpp>
 
 TEST(message_test, test_message_creation) {
     auto test_subject = make_msg(SET_FULLSCREEN, make_data<bool>(true));

@@ -10,8 +10,6 @@
 #include <SDL2/SDL_mutex.h>
 #include <memory>
 #include <message_bus/message_allocator.hpp>
-#include <message_bus/message.hpp>
-#include <message_bus/message_types.hpp>
 
 /**
  * Constructor for the message allocator.

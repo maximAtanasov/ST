@@ -13,7 +13,6 @@
 #include <sstream>
 #include <ST_loaders/loaders.hpp>
 #include <ST_util/test_util.hpp>
-#include <main.hpp>
 
 /**
  * \mainpage A small program that will combine multiple png, wav and ogg files into a single file that can

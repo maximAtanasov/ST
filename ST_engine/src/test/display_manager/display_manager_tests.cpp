@@ -9,8 +9,8 @@
 
 #include <gtest/gtest.h>
 
-#include <ST_util/test_util.hpp>
 #include <display_manager/display_manager.hpp>
+#include <ST_util/test_util.hpp>
 
 /// Tests fixture for the display_manager
 class display_manager_tests : public ::testing::Test {

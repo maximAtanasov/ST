@@ -8,7 +8,6 @@
  */
 
 #include <audio_manager/audio_manager.hpp>
-#include <console/log.hpp>
 
 /**
  * Performs the update for the asset_manager on a task thread.

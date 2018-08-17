@@ -14,7 +14,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <unordered_map>
+
 #include <defs.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>
@@ -54,7 +54,7 @@ private:
         task_manager* gTask_manager{};
         subscriber msg_sub{};
         ST::assets all_assets;
-        std::unordered_map<std::string, uint16_t> count;
+        ska::bytell_hash_map<std::string, uint16_t> count;
         int8_t load_asset(std::string path);
         int8_t unload_asset(std::string path);
         int8_t unload_assets_from_list(std::string path);

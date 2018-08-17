@@ -9,7 +9,6 @@
 
 #include <string>
 #include <ST_loaders/loaders.hpp>
-#include <algorithm>
 
 /**
  * Gets the file extension from the filename.

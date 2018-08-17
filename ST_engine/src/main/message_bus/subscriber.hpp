@@ -11,7 +11,7 @@
 #define SLAVIC_TALES_SUBSCRIBER_HPP
 
 #include <message_bus/message.hpp>
-#include <util/atomic_queue/concurrentqueue.h>
+#include <ST_util/atomic_queue/concurrentqueue.h>
 
 ///This class handles a small queue for messages.
 /**

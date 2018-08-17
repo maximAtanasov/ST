@@ -8,8 +8,6 @@
  */
 
 #include <drawing_manager/drawing_manager.hpp>
-#include <console/log.hpp>
-#include <defs.hpp>
 #include <task_manager/task_allocator.hpp>
 
 /**

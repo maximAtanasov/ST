@@ -24,7 +24,7 @@ namespace ST {
      * Contains the background overlay and the camera.
      */
     struct level_data {
-        std::unordered_map<size_t, key> actions_Buttons{};
+        ska::bytell_hash_map<size_t, key> actions_Buttons{};
         std::vector<entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};

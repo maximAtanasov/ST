@@ -8,9 +8,6 @@
  */
 
 #include <cstdlib>
-#include <cstddef>
-#include <ST_util/debug_switch.hpp>
-#include <cstdio>
 
 #ifdef __DEBUG
 

@@ -20,7 +20,7 @@
 typedef std::tuple<std::string, std::string, int> font_cache_tuple;
 namespace std{
 
-    ///defines a hash operator for the font_cache_tuple type - this is needed because we use it in a std::unordered_map
+    ///defines a hash operator for the font_cache_tuple type - this is needed because we use it in a ska::bytell_hash_map
     template <> struct hash<font_cache_tuple>{
           std::size_t operator()(const font_cache_tuple& k) const{
           using std::size_t;
@@ -37,7 +37,7 @@ bool operator==(const std::tuple<std::string, std::string, int>& tpl1, const std
 //A few typedefs to make working with these types easier.
 typedef std::pair<font_cache_tuple, SDL_Texture*> key_pair;
 typedef std::list<key_pair> cache_list;
-typedef std::unordered_map<font_cache_tuple, cache_list::iterator> cache_hash;
+typedef ska::bytell_hash_map<font_cache_tuple, cache_list::iterator> cache_hash;
 
 #endif
 

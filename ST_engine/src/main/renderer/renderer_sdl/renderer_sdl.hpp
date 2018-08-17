@@ -10,9 +10,10 @@
 #ifndef RENDER_SDL_DEF
 #define RENDER_SDL_DEF
 
-#include <unordered_map>
+
 #include <defs.hpp>
 #include <renderer/renderer_sdl/font_cache.hpp>
+#include <ST_util/bytell_hash_map.hpp>
 
 ///The renderer for the engine.
 /**
@@ -34,22 +35,22 @@ private:
 	int height;
 
     //Textures with no corresponding surface in our assets need to be freed
-    std::unordered_map<size_t, SDL_Texture*> textures;
+    ska::bytell_hash_map<size_t, SDL_Texture*> textures;
 
-	std::unordered_map<size_t, SDL_Surface*>* surfaces_pointer;
-	std::unordered_map<std::string, TTF_Font*>* fonts_pointer;
+	ska::bytell_hash_map<size_t, SDL_Surface*>* surfaces_pointer;
+	ska::bytell_hash_map<std::string, TTF_Font*>* fonts_pointer;
 
 
     //the fonts in this table do not need to be cleaned - these are just pointer to Fonts stored in the asset_manager and
     //that will handle the cleanup
-    std::unordered_map<std::string, TTF_Font*> fonts;
+    ska::bytell_hash_map<std::string, TTF_Font*> fonts;
 
     //we do however need to cleanup the cache as that lives on the GPU
-    std::unordered_map<std::string, std::vector<SDL_Texture*>> fonts_cache;
+    ska::bytell_hash_map<std::string, std::vector<SDL_Texture*>> fonts_cache;
 
     void cache_font(TTF_Font* Font, std::string font_and_size);
     void draw_text_lru_cached(std::string, std::string, int, int, SDL_Color, int);
-    void draw_text_cached_glyphs(const std::string, const std::string, const int, const int, const SDL_Color, const int) const;
+    void draw_text_cached_glyphs(std::string, std::string, int, int, SDL_Color, int) const;
 	int initialize_with_vsync(SDL_Window* win, int width, int height, bool vsync);
 
 public:
@@ -58,13 +59,13 @@ public:
     void present() const;
     void draw_background(size_t arg) const;
     void draw_overlay(size_t arg, int sprite, int sprite_num) const;
-    void draw_texture(const size_t arg, int x, int y) const;
+    void draw_texture(size_t arg, int x, int y) const;
     void draw_rectangle(int x, int y, int w, int h, SDL_Color color) const;
     void draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color) const;
     void draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num) const;
     void draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag);
-    void upload_surfaces(std::unordered_map<size_t, SDL_Surface*>* surfaces);
-    void upload_fonts(std::unordered_map<std::string, TTF_Font*>* fonts);
+    void upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*>* surfaces);
+    void upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fonts);
     void vsync_on();
     void vsync_off();
     int initialize(SDL_Window* win, int width, int height);

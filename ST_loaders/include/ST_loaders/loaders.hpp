@@ -16,7 +16,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_image.h>
-#include <unordered_map>
+#include <ST_util/bytell_hash_map.hpp>
 #include <iostream>
 #include <sstream>
 #include <ST_util/string_util.hpp>
@@ -25,9 +25,9 @@ namespace ST {
 
     ///This struct contains assets just like the regular ST::assets, except it uses asset names as keys instead of hashes.
     struct assets_named{
-        std::unordered_map<std::string, SDL_Surface *> surfaces;
-        std::unordered_map<std::string, Mix_Chunk *> chunks;
-        std::unordered_map<std::string, Mix_Music *> music;
+        ska::bytell_hash_map<std::string, SDL_Surface *> surfaces;
+        ska::bytell_hash_map<std::string, Mix_Chunk *> chunks;
+        ska::bytell_hash_map<std::string, Mix_Music *> music;
     };
 
     ST::assets_named* unpack_binary(const std::string &path);

@@ -183,7 +183,7 @@ void renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SD
  * Upload all surface to the GPU. (Create textures from them).
  * @param surfaces The surfaces to upload.
  */
-void renderer_sdl::upload_surfaces(std::unordered_map<size_t, SDL_Surface*>* surfaces){
+void renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*>* surfaces){
 	if(surfaces != nullptr){
 		this->surfaces_pointer = surfaces;
         for ( auto& it : *surfaces){
@@ -205,7 +205,7 @@ void renderer_sdl::upload_surfaces(std::unordered_map<size_t, SDL_Surface*>* sur
 /**
  * Upload fonts to the GPU. (save and cache their glyphs).
  */
-void renderer_sdl::upload_fonts(std::unordered_map<std::string, TTF_Font*>* fonts){
+void renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fonts){
     if(fonts != nullptr){
 		this->fonts_pointer = fonts;
         for ( auto& it : *fonts){
