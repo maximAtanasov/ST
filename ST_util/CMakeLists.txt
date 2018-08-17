@@ -16,7 +16,6 @@ enable_testing()
 find_package(GTest REQUIRED)
 
 add_library(ST_util STATIC
-        include/ST_util/map.hpp
         include/ST_util/debug_switch.hpp
         include/ST_util/test_util.hpp
         include/ST_util/math.hpp
@@ -25,22 +24,3 @@ add_library(ST_util STATIC
         src/main/test_util.cpp
         src/main/string_util.cpp
         include/ST_util/string_util.hpp include/ST_util/bytell_hash_map.hpp include/ST_util/flat_hash_map.hpp include/ST_util/flat_hash_map.hpp)
-
-add_executable(map_test
-        src/main/math.cpp
-        src/test/map_test.cpp)
-
-target_link_libraries(map_test
-        -pthread
-        ${GTEST_LIBRARIES})
-
-gtest_add_tests(TARGET map_test)
-
-#Run all our tests on every build
-set(ALL_TESTS map_test)
-
-add_dependencies(ST_util ${ALL_TESTS})
-
-add_custom_command(TARGET ST_util
-        POST_BUILD
-        COMMAND ${ALL_TESTS})

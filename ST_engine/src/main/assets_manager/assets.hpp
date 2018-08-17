@@ -12,7 +12,6 @@
 
 #include <string>
 
-#include <ST_util/map.hpp>
 #include <ST_util/bytell_hash_map.hpp>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
