@@ -51,8 +51,8 @@ class physics_manager{
         std::vector<ST::entity>* entities{};
         
         int check_collision(uint64_t, std::vector<ST::entity>* entities);
-        int entity_set_x(int x, uint64_t, std::vector<ST::entity>* entities);
-        int entity_set_y(int y, uint64_t, std::vector<ST::entity>* entities);
+        int entity_set_x(int32_t x, uint64_t, std::vector<ST::entity>* entities);
+        int entity_set_y(int32_t y, uint64_t, std::vector<ST::entity>* entities);
 
 		void process_horizontal();
 		void process_vertical();

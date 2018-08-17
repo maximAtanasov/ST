@@ -28,10 +28,10 @@ namespace ST {
         std::vector<entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};
-        ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
-        size_t background{};
+        size_t background = 0;
         size_t overlay = 0;
         int16_t overlay_spriteNum = 1;
+        ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
     };
 }
 

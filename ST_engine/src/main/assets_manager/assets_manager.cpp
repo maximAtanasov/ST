@@ -57,7 +57,8 @@ void assets_manager::handle_messages(){
         else if(temp->msg_name == UNLOAD_LIST){
             auto path = *static_cast<std::string*>(temp->get_data());
             unload_assets_from_list(path);
-        }else if(temp->msg_name == LOAD_ASSET){
+        }
+        else if(temp->msg_name == LOAD_ASSET){
             auto path = *static_cast<std::string*>(temp->get_data());
             load_asset(path);
         }

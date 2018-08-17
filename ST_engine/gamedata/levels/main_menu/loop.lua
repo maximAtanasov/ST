@@ -6,13 +6,9 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
-if darkness > 0 then
-    darkness = darkness - 1
-    setDarkness(darkness)
-elseif darkness == 0 then
-    enableLighting(false)
-    darkness = darkness -1
-end
+introFading()
+
+
 
 if(room == "main") then
     if keyPressed("START") and darkness == 0 then

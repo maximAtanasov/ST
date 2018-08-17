@@ -23,17 +23,21 @@ use("coin.lua")
 use("wolf.lua")
 use("torch.lua")
 
-enableLighting(true)
 pause = 0
 
 stopAllSounds()
+unpausePhysics()
+enableLighting(true)
+
 setLevelSize(7000, 3000)
 floor = 1050
 gravity = 18
 initialFade = 255
 darkness = 195
+
 setGravity(gravity)
-setLevelFloor(1050)
+
+setLevelFloor(floor)
 setDarkness(darkness)
 hideMouseCursor()
 

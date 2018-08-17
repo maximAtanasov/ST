@@ -14,7 +14,6 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-
 #include <defs.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>

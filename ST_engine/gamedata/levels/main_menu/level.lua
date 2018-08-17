@@ -6,11 +6,29 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
+enableLighting(true)
 setLevelSize(3000, 3000)
 setGravity(0)
+pausePhysics()
 showMouseCursor()
 setBackground("menu.webp")
 setDarkness(255)
+
+function empty()
+end
+
+darkness = 255
+
+function introFading()
+    if darkness > 0 then
+        darkness = darkness - 1
+        setDarkness(darkness)
+    elseif darkness == 0 then
+        enableLighting(false)
+        introFading = empty
+    end
+end
+
 
 
 playMusic("AlaFlair.ogg", 100, -1)
@@ -22,7 +40,7 @@ elseif language == "english" then
     use("language_english.lua")
 end
 
-darkness = 255
+
 room = "main"
 --Buttons and their update functions
 

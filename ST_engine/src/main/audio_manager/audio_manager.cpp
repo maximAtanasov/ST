@@ -15,7 +15,7 @@
  * function must be static.
  */
 void audio_manager::update_task(void* arg){
-    auto mngr = (audio_manager*)arg;
+    auto mngr = static_cast<audio_manager*>(arg);
     mngr->handle_messages();
 }
 

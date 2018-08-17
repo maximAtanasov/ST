@@ -24,10 +24,10 @@ namespace ST {
         uint64_t ID;
         int32_t x, y;
         SDL_Color color;
-        std::string text_string;
-        std::string font;
         uint8_t font_size;
         bool visible = true;
+        std::string text_string;
+        std::string font;
 
     public:
         text(uint64_t id, int32_t x, int32_t y, SDL_Color color, const std::string &text_string, const std::string &font,

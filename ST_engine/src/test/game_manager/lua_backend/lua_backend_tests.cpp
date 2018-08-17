@@ -1,3 +1,11 @@
+/* This file is part of the "slavicTales" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
+ *
+ * Author: Maxim Atanasov
+ * E-mail: atanasovmaksim1@gmail.com
+ */
 
 #include <gtest/gtest.h>
 #include <game_manager/lua_backend/lua_backend.hpp>
@@ -215,8 +223,6 @@ TEST_F(lua_backend_test, test_fail_on_broken_script){
     ::testing::FLAGS_gtest_death_test_style = "threadsafe";
     ASSERT_EXIT(test_subject.run_file("lua_scripts/test_script_broken.lua"), ::testing::KilledBySignal(SIGABRT), ".*");
 }
-
-
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
