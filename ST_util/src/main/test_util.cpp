@@ -78,3 +78,20 @@ long get_file_size(const std::string& path){
     fclose( pFile );
     return size;
 }
+
+int8_t copy_file(const std::string& src, const std::string& dest){
+    FILE* src_file = fopen(src.c_str(), "rb");
+    FILE* dest_file = fopen(dest.c_str(), "wb");
+
+    uint32_t size = 16384;
+    char buffer[size];
+
+    while(!feof(src_file)){
+        size_t n = fread(buffer, 1, size, src_file);
+        fwrite(buffer, 1, n, dest_file);
+    }
+
+    fflush(dest_file);
+    fclose(src_file);
+    fclose(dest_file);
+}

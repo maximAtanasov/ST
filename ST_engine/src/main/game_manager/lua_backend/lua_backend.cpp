@@ -55,6 +55,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "logLua", logLua);
     lua_register(L, "showCollisions", showCollisionsLua);
     lua_register(L, "showFps", showFpsLua);
+    lua_register(L, "consoleClear", consoleClearLua);
     #endif
 
     //General Functions
@@ -1590,4 +1591,14 @@ extern "C" int showFpsLua(lua_State* L){
     gMessage_busLua->send_msg(make_msg(SHOW_FPS, make_data<bool>(arg)));
     return 0;
 }
+
+/**
+ * Clears the dev console.
+ * @return awlays 0.
+ */
+extern "C" int consoleClearLua(lua_State*){
+    gMessage_busLua->send_msg(make_msg(CONSOLE_CLEAR, nullptr));
+    return 0;
+}
+
 #endif

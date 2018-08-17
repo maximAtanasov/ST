@@ -46,13 +46,15 @@ std::string ST::get_file_extension(const std::string& filename){
  * @param args The filenames of the assets to read from.
  */
 void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args_){
+    if(fopen(binary.c_str(), "r+") != nullptr){
+        ST::add_to_binary(binary, args_);
+    }
     SDL_RWops *output = SDL_RWFromFile(binary.c_str(), "a+");
 
     std::vector<std::string> args;
 
     //ignore duplicate file names
-    for (uint32_t i = 0; i < args_.size(); i++) {
-        std::string arg = args_.at(i);
+    for (auto arg : args_) {
         if(std::find(args.begin(), args.end(), arg) == args.end()){
             args.emplace_back(arg);
         }
@@ -108,8 +110,6 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     std::string total_num = "total:" + std::to_string(total_size) + "\n";
     output->write(output, total_num.c_str(), 1, total_num.size());
 
-
-
     //Names and sizes for surfaces, chunks and music
     for(uint64_t i = 0; i < surfaces_sizes.size(); i++) {
         output->write(output, surfaces_names[i].c_str(), 1, surfaces_names[i].size());
@@ -157,7 +157,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
     auto assets = new ST::assets_named();
     SDL_RWops *input = SDL_RWFromFile(path.c_str(), "r");
     if (input != nullptr) {
-        auto buffer = (char*)malloc((size_t) input->size(input));
+        auto buffer = static_cast<char*>(malloc((size_t) input->size(input)));
         size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
         if (read > 0) {
             std::string* file = new std::string(buffer);
@@ -269,7 +269,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
  * @param path The path to the binary.
  * @return 0 on Success, -1 on Failure.
  */
-int ST::unpack_binary_to_disk(const std::string& path){
+int8_t ST::unpack_binary_to_disk(const std::string& path){
     SDL_RWops *input = SDL_RWFromFile(path.c_str(), "r");
     if (input != nullptr) {
         auto buffer = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
@@ -341,4 +341,60 @@ int ST::unpack_binary_to_disk(const std::string& path){
         return -1;
     }
     return 0;
+}
+
+int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string> args_){
+    SDL_RWops *input = SDL_RWFromFile(binary_name.c_str(), "r+");
+    std::string new_header;
+    if (input != nullptr) {
+        auto buffer = static_cast<char*>(malloc((size_t) input->size(input)));
+        size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
+        if (read > 0) {
+            std::string *file = new std::string(buffer);
+            std::string header;
+
+            //read filename
+            std::string temp;
+            uint64_t total_num = 0;
+            uint64_t counter = 0;
+            uint64_t pointer = 0;
+            for (char i : *file) {
+                pointer++;
+                temp += i;
+                if (i == '\n') {
+                    if(temp.find("filename:") != std::string::npos) {
+                        counter++;
+                    }else if (temp.find("total:") != std::string::npos) {
+                        temp.pop_back();
+                        replace_string(temp, "total:", "");
+                        std::stringstream s_stream(temp);
+                        s_stream >> total_num;
+                        temp.clear();
+                    }
+                    if (counter == total_num) {
+                        header.append(1, i);
+                        break;
+                    }
+                }
+                header.append(1, i);
+            }
+            free(buffer);
+            input->seek(input, pointer, RW_SEEK_SET);
+            uint64_t seek = pointer;
+            uint64_t i = 0;
+
+            std::string header_no_total;
+            bool write = false;
+            for(char k : header){
+                if(k == '\n'){
+                    write = true;
+                }
+                if(write){
+                    header_no_total += k;
+                }
+            }
+            new_header = "total:" + std::to_string((total_num + args_.size())) + header_no_total;
+            printf("%s\n", new_header.c_str());
+        }
+    }
 }

@@ -24,12 +24,12 @@ int main(int argc, char** argv){
 
     //Order of subsystem initialization is crucial
     message_bus gMessage_bus;
-    task_manager gTask_manager(&gMessage_bus);
-    input_manager gInput_manager(&gMessage_bus, &gTask_manager);
     #ifdef __DEBUG
     fps gFps;
     console gConsole(&gMessage_bus);
     #endif
+    task_manager gTask_manager(&gMessage_bus);
+    input_manager gInput_manager(&gMessage_bus, &gTask_manager);
     display_manager gDisplay_manager(&gMessage_bus, &gTask_manager);
     drawing_manager gDrawing_manager(gDisplay_manager.get_window(), &gMessage_bus, &gTask_manager);
     assets_manager gAssets_manager(&gMessage_bus, &gTask_manager);

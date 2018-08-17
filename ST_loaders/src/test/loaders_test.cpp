@@ -11,7 +11,6 @@
 #include <ST_loaders/loaders.hpp>
 #include <ST_util/test_util.hpp>
 
-
 TEST(loaders_tests, test_get_file_extension){
     std::string test_wav = "sound.wav";
     std::string test_mp3 = "music.mp3";
@@ -126,6 +125,72 @@ TEST(loaders_tests, test_unpack_binary){
     SDL_FreeSurface(result->surfaces.at("test_image_3.webp"));
     close_SDL();
     ASSERT_EQ(0, chdir("../"));
+}
+
+TEST(loaders_tests, test_ignore_identical_file_when_packing_to_binary){
+
+    //Set up
+    initialize_SDL();
+    std::vector<std::string> filenames = {"test_image_1.png", "test_image_1.png", "test_sound_1.wav", "test_music_1.ogg"};
+    std::string binary_name = "result_binary";
+    ST::pack_to_binary(binary_name, filenames);
+
+    long expected_size = get_file_size(filenames.at(0)) + get_file_size(filenames.at(2)) + get_file_size(filenames.at(3));
+    long binary_size = get_file_size(binary_name);
+
+    //Tear Down
+    remove(binary_name.c_str());
+    close_SDL();
+
+    ASSERT_NEAR(expected_size, binary_size, 200);
+}
+
+TEST(loaders_tests, test_can_add_to_existing_binary){
+
+/*    //Set up
+    initialize_SDL();
+    ASSERT_EQ(0, chdir("add_to_binary_test/"));
+    std::string binary_name = "test_binary.bin";
+    std::string binary_copy_name = "test_binary_copy.bin";
+    copy_file(binary_name, binary_copy_name);
+
+    std::vector<std::string> filenames = {"test_image_4.png"};
+    ST::pack_to_binary(binary_copy_name, filenames);
+
+    long expected_size = get_file_size(filenames.at(0)) + get_file_size(binary_name);
+    long binary_size = get_file_size(binary_copy_name);
+
+    //Make sure everything is there
+    ST::assets_named* result = ST::unpack_binary(binary_name);
+    ASSERT_TRUE(result);
+    ASSERT_EQ(2, result->music.size());
+    ASSERT_EQ(2, result->chunks.size());
+    ASSERT_EQ(3, result->surfaces.size());
+
+    ASSERT_TRUE(result->music.at("test_music_1.ogg"));
+    ASSERT_TRUE(result->music.at("test_music_2.ogg"));
+    ASSERT_TRUE(result->chunks.at("test_sound_1.wav"));
+    ASSERT_TRUE(result->chunks.at("test_sound_2.wav"));
+    ASSERT_TRUE(result->surfaces.at("test_image_1.png"));
+    ASSERT_TRUE(result->surfaces.at("test_image_2.png"));
+    ASSERT_TRUE(result->surfaces.at("test_image_3.webp"));
+    ASSERT_TRUE(result->surfaces.at("test_image_4.png"));
+
+    //Tear down
+    Mix_FreeMusic(result->music.at("test_music_1.ogg"));
+    Mix_FreeMusic(result->music.at("test_music_2.ogg"));
+    Mix_FreeChunk(result->chunks.at("test_sound_1.wav"));
+    Mix_FreeChunk(result->chunks.at("test_sound_2.wav"));
+    SDL_FreeSurface(result->surfaces.at("test_image_1.png"));
+    SDL_FreeSurface(result->surfaces.at("test_image_2.png"));
+    SDL_FreeSurface(result->surfaces.at("test_image_3.webp"));
+    SDL_FreeSurface(result->surfaces.at("test_image_4.png"));
+
+    //Tear Down
+    close_SDL();
+    remove(binary_copy_name.c_str());
+    ASSERT_NEAR(expected_size, binary_size, 200);
+    ASSERT_EQ(0, chdir("../"));*/
 }
 
 int main(int argc, char **argv) {

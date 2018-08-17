@@ -14,3 +14,7 @@ INFO = 0x04
 function log(type, string)
     logLua(type, tostring(string))
 end
+
+function clear()
+    consoleClear()
+end

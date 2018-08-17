@@ -174,7 +174,11 @@ int8_t assets_manager::load_asset(std::string path){
 
     std::string extention;
     extention = ST::get_file_extension(path);
-    log(INFO, "Loading " + path);
+    if(extention == "bin"){
+        log(INFO, "Loading from binary " + path);
+    }else {
+        log(INFO, "Loading " + path);
+    }
     std::hash<std::string> hash_f;
 
     //Handle the different extentions - currently png, wav, mp3, ttf

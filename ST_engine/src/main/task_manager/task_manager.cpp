@@ -33,7 +33,7 @@ int task_manager::task_thread(void* arg){
  * Waits for any other tasks that are dependencies to the current one and waits for them.
  * @param work The ST::task object conatining job data.
  */
-void task_manager::do_work(ST::task* work) const{
+void task_manager::do_work(ST::task* work) {
     if(work->dependency != nullptr){ //wait for dependency to finish
         SDL_SemWait(work->dependency);
         SDL_DestroySemaphore(work->dependency);
@@ -71,8 +71,9 @@ task_manager::task_manager(message_bus *msg_bus){
     }
 
 	for (uint16_t i = 0; i < thread_num - 1; i++) {
-		task_threads.emplace_back(SDL_CreateThread(this->task_thread, "tskThr", this));
+		task_threads.emplace_back(SDL_CreateThread(task_thread, "tsk_thr", this));
 	}
+	log(INFO, std::to_string(thread_num-1) + " task threads started.");
 }
 
 /**

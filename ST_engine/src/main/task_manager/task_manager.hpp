@@ -32,7 +32,7 @@ class task_manager{
         moodycamel::ConcurrentQueue<ST::task*> task_queue;
 
         static int task_thread(void* arg);
-        void do_work(ST::task* work) const;
+        void do_work(ST::task* work);
         void start_thread(int (*thread_func)(void*), void* data);
 
     public:

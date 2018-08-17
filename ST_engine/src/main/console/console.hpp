@@ -28,6 +28,10 @@
  *
  * Message must contain: a <b>nullptr</b>
  *
+ * <b>CONSOLE_CLEAR</b> - Clears the console window. <br>
+ *
+ * Message must contain: a <b>nullptr</b>
+ *
  * <b>MOUSE_SCROLL</b> - Scrolls the console window the given amount. <br>
  *
  * Message must contain: a pointer to an <b>int</b>.

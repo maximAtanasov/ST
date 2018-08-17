@@ -20,5 +20,6 @@ void close_SDL();
 void initialize_SDL();
 bool compare_surfaces(SDL_Surface* expected, SDL_Surface* result);
 long get_file_size(const std::string& path);
+int8_t copy_file(const std::string& src, const std::string& dest);
 
 #endif //SLAVICTALES_TEST_UTIL_HPP

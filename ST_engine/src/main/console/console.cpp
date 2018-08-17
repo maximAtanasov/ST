@@ -26,6 +26,7 @@ console::console(message_bus* msg_bus){
     gMessage_bus->subscribe(MOUSE_SCROLL, &msg_sub);
     gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
     gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
+    gMessage_bus->subscribe(CONSOLE_CLEAR, &msg_sub);
     gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::ENTER)));
 }
 
@@ -75,6 +76,9 @@ void console::handle_messages(){
         }
         else if(temp->msg_name == CONSOLE_TOGGLE){
             toggle();
+        }
+        else if(temp->msg_name == CONSOLE_CLEAR){
+            this->entries.clear();
         }
         else if(temp->msg_name == MOUSE_SCROLL){
             int value = *static_cast<int*>(temp->get_data());
