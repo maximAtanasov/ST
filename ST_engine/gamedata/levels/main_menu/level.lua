@@ -14,9 +14,6 @@ showMouseCursor()
 setBackground("menu.webp")
 setDarkness(255)
 
-function empty()
-end
-
 darkness = 255
 
 function introFading()
@@ -25,10 +22,9 @@ function introFading()
         setDarkness(darkness)
     elseif darkness == 0 then
         enableLighting(false)
-        introFading = empty
+        introFading = function () end
     end
 end
-
 
 
 playMusic("AlaFlair.ogg", 100, -1)
@@ -80,7 +76,7 @@ end
 button_settings = button:new(50, 600, SETTINGS_TEXT, FONT, 80)
 button_settings:setMarginX(479)
 button_settings:setMarginY(98)
-button_settings:setClickKey("MOUSE1")
+button_settings:setClickKey(all_buttons_key)
 
 function button_settings:onClick()
     room = "settings"
