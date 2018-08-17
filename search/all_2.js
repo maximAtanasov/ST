@@ -9,6 +9,6 @@ var searchData=
   ['draw_5frectangle_5ffilled',['draw_rectangle_filled',['../classrenderer__sdl.html#aea74bb64ab766ba4a9021b82cb991197',1,'renderer_sdl']]],
   ['draw_5fsprite',['draw_sprite',['../classrenderer__sdl.html#ac6a6f08eabb0a732a4be237350ba168f',1,'renderer_sdl']]],
   ['draw_5ftext',['draw_text',['../classrenderer__sdl.html#ae4a815c139e6197f042569664df32a75',1,'renderer_sdl']]],
-  ['draw_5ftexture',['draw_texture',['../classrenderer__sdl.html#ab13cab0d20a1096a5047a00e451c51d3',1,'renderer_sdl']]],
+  ['draw_5ftexture',['draw_texture',['../classrenderer__sdl.html#a38dd7a9827cd90cb71b87c4c1550d27a',1,'renderer_sdl']]],
   ['drawing_5fmanager',['drawing_manager',['../classdrawing__manager.html',1,'drawing_manager'],['../classdrawing__manager.html#ac53e9ff20092b2df4b90fe9e5908bcce',1,'drawing_manager::drawing_manager()']]]
 ];

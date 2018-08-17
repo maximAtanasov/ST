@@ -20,7 +20,7 @@ var searchData=
   ['set_5forigin_5fy',['set_origin_y',['../classST_1_1light.html#a3e5a6079ac0ac7fba2a4fe647fcb4652',1,'ST::light']]],
   ['set_5fradius',['set_radius',['../classST_1_1light.html#a7b72b2b63b10f5e99e72a187c9e26801',1,'ST::light']]],
   ['set_5fsprite_5fnum',['set_sprite_num',['../classST_1_1entity.html#a4dec3339757ca4d801f8dac2952fed72',1,'ST::entity']]],
-  ['set_5fstatic',['set_static',['../classST_1_1entity.html#a713c225b90dea90a9f2bbccff487031c',1,'ST::entity']]],
+  ['set_5fstatic',['set_static',['../classST_1_1entity.html#a713c225b90dea90a9f2bbccff487031c',1,'ST::entity::set_static()'],['../classST_1_1light.html#afa79d9bf0cf60316e690a7fbc84e5bbc',1,'ST::light::set_static()']]],
   ['set_5ftex_5fh',['set_tex_h',['../classST_1_1entity.html#aa8b572ca39e0645375e379be0c29a29f',1,'ST::entity']]],
   ['set_5ftex_5fw',['set_tex_w',['../classST_1_1entity.html#a1fa5a45a5a739e8c3be977912cb924fa',1,'ST::entity']]],
   ['set_5ftext_5fstring',['set_text_string',['../classST_1_1text.html#a780dce8bd8845b8e667c77995b289369',1,'ST::text']]],
