@@ -54,17 +54,17 @@ class input_manager{
 
         struct game_controls{
             const uint16_t keys = 512;
-            uint8_t keyboardFramePrev[512]{};
-            int mouseClicks[3]{};
-            int mouseClicksFramePrev[3]{};
-            const uint8_t* keyboard{};
-			int mouseX_prev = 0, mouseY_prev = 0;
-			int mouseX = 0, mouseY = 0;
+            int8_t mouseClicks[3]{};
+			int8_t mouseClicksFramePrev[3]{};
+			int32_t mouseX_prev = 0, mouseY_prev = 0;
+			int32_t mouseX = 0, mouseY = 0;
 			int32_t mouse_scroll = 0;
+			uint8_t keyboardFramePrev[512]{};
+			const uint8_t* keyboard{};
         };
 
-		int v_width = 1, v_height = 1;
-		int r_width = 1, r_height = 1;
+		int32_t v_width = 1, v_height = 1;
+		int32_t r_width = 1, r_height = 1;
 		float ratio_w = 1, ratio_h = 1;
 		SDL_Event event{};
 		game_controls controls{};

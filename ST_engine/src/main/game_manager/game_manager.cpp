@@ -190,9 +190,9 @@ void game_manager::start_level(const std::string& level_name){
     active_level = level_name;
 
     //set current level pointer
-    for(int i = 0; i < levels.size(); i++) {
-        if(levels[i].get_name() == active_level){
-            current_level_pointer = &levels[i];
+    for (auto &level : levels) {
+        if(level.get_name() == active_level){
+            current_level_pointer = &level;
             break;
         }
     }

@@ -85,7 +85,7 @@ void audio_manager::handle_messages(){
             if(volume > 0){
                 log(SUCCESS, "Audio OFF");
                 mute();
-                set_volume(0);
+                 set_volume(0);
             }
             else{
                 set_volume(MIX_MAX_VOLUME);
@@ -97,7 +97,8 @@ void audio_manager::handle_messages(){
         else if(temp->msg_name == ASSETS){
             auto temp_ptr = (ST::assets**)temp->get_data();
             assets_ptr = *temp_ptr;
-        }else if(temp->msg_name == SET_VOLUME){
+        }
+        else if(temp->msg_name == SET_VOLUME){
             auto arg = static_cast<uint8_t*>(temp->get_data());
             set_volume(*arg);
             gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data(volume)));

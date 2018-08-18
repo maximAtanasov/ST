@@ -57,7 +57,7 @@ void input_manager::update_task(void* mngr){
 void input_manager::take_input(){
     int length = 0;
     SDL_GetKeyboardState(&length);
-    for(int i = 0; i < controls.keys; i++){
+    for(uint16_t i = 0; i < controls.keys; i++){
         controls.keyboardFramePrev[i] = controls.keyboard[i];
     }
 
@@ -65,7 +65,7 @@ void input_manager::take_input(){
 	controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
 	controls.mouseClicksFramePrev[1] = controls.mouseClicks[1];
 	controls.mouseClicksFramePrev[2] = controls.mouseClicks[2];
-    for(int& i : controls.mouseClicks){
+    for(int8_t& i : controls.mouseClicks){
         i = 0;
     }
     if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT))

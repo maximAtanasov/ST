@@ -19,7 +19,7 @@
  * @param font The font to use (Must be already loaded).
  * @param font_size The size of the font.
  */
-ST::text::text(uint64_t id, int x, int y, SDL_Color color, const std::string& text_string, const std::string& font, uint8_t font_size) {
+ST::text::text(uint64_t id, int32_t x, int32_t y, SDL_Color color, const std::string& text_string, const std::string& font, uint8_t font_size) {
     this->ID = id;
     this->x = x;
     this->y = y;

@@ -106,8 +106,9 @@ int8_t ST::level::load_input_conf(){
             else if(actionRead ==  0 && a ==  '\n'){ //ignore empty lines
                 continue;
             }
-            else if(actionRead ==  0)
+            else if(actionRead ==  0) {
                 action += a;
+            }
             else if(a ==  '\n' || file.eof()){
                 std::hash<std::string> hash_f;
                 data.actions_Buttons[hash_f(action)] = key_index(button);

@@ -261,7 +261,7 @@ std::string lua_backend::hash_file(std::string& path){
         while(!file.eof()){
             getline(file, temp);
             if(!temp.empty()){
-                temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
+                temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<>(), ' ')));
                 while(temp.find("playSound(\"") != std::string::npos) {
                     std::string to_find = "playSound(\"";
                     std::string temp_buf;
@@ -384,7 +384,7 @@ std::string lua_backend::hash_file(std::string& path){
 std::string lua_backend::hash_string(std::string& temp){
     std::string result;
     if(!temp.empty()){
-        temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
+        temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<>(), ' ')));
         while(temp.find("playSound(\"") != std::string::npos) {
             std::string to_find = "playSound(\"";
             std::string temp_buf;

@@ -47,16 +47,17 @@ typedef ska::bytell_hash_map<font_cache_tuple, cache_list::iterator> cache_hash;
  */
 class font_cache{
     private:
-        int entries = 0;cache_list cache;
+        int entries = 0;
+        cache_list cache;
         cache_hash hash;
-        int cache_size = 0;
+        uint32_t cache_size = 0;
         void move_to_front(std::list<key_pair>& list,std::list<key_pair>::iterator element);
     public:
         font_cache() = default;
-        void set_max(int max);
+        void set_max(uint32_t max);
         ~font_cache();
-        void cache_string(std::string, SDL_Texture*, std::string, int);
-        SDL_Texture* get_cached_string(std::string, std::string, int);
+        void cache_string(std::string str, SDL_Texture* texture, std::string font, uint8_t size);
+        SDL_Texture* get_cached_string(std::string str, std::string font, uint8_t size);
         void clear();
 };
 
