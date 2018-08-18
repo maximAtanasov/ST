@@ -206,12 +206,14 @@ end
 function button_continue:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_continue:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 --EXIT BUTTON
@@ -229,11 +231,13 @@ function button_exit:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0;
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_exit:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 --FUNCTIONS FOR PAUSING THE GAME

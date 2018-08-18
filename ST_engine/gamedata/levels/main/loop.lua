@@ -16,6 +16,6 @@ else
     startLevel("main_menu")
 end
 
-if keyPressed("START") then
+if keyPressed("START") or keyPressed("ESCAPE") then
     startLevel("main_menu")
 end

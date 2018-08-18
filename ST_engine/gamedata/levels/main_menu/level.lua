@@ -63,12 +63,14 @@ end
 function button_newGame:onHover()
     if(self.soundPlayed == 1) then
         playSound("buttonSelected.wav", 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_newGame:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 
@@ -95,12 +97,14 @@ end
 function button_settings:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_settings:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 
@@ -117,12 +121,14 @@ end
 function button_exit:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_exit:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 
@@ -153,12 +159,14 @@ end
 function button_back:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_back:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 --SOUND BUTTON
@@ -176,12 +184,14 @@ end
 function button_soundSwitch:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_soundSwitch:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 --ON LABEL FOR SOUND
@@ -206,12 +216,24 @@ button_vsync:setClickKey(all_buttons_key)
 function button_vsync:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_vsync:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
+end
+
+function button_vsync:onClick()
+    if getVsyncState() then
+        vsyncOff()
+        button_switch2:uncheck()
+    else
+        vsyncOn()
+        button_switch2:check()
+    end
 end
 
 --ON SWITCH FOR VSYNC
@@ -228,8 +250,10 @@ end
 function button_switch2:onClick()
     if getVsyncState() then
         vsyncOff()
+        self:uncheck()
     else
         vsyncOn()
+        self:check()
     end
 end
 
@@ -240,7 +264,7 @@ button_fullscreen:setMarginX(FULLSCREEN_MARGINS)
 button_fullscreen:setMarginY(60)
 button_fullscreen:hide()
 button_fullscreen:setText(FULLSCREEN_TEXT)
-button_fullscreen:setClickKey(all_buttons_key);
+button_fullscreen:setClickKey(all_buttons_key)
 
 function button_fullscreen:onClick()
     if getFullscreenStatus() == true then
@@ -253,12 +277,14 @@ end
 function button_fullscreen:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 100, 100, 255)
     end
 end
 
 function button_fullscreen:onNothing()
     self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end
 
 
