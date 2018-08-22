@@ -348,20 +348,20 @@ void drawing_manager::set_darkness(uint8_t arg){
 void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities){
         if(is_onscreen(i)){
-            if(i.get_animation_num() == 0){
-                if(i.is_static()){
-                    gRenderer.draw_texture(i.get_texture(), i.get_x(), i.get_y());
+            if(i.animation_num == 0){
+                if(i.is_static){
+                    gRenderer.draw_texture(i.texture, i.x, i.y);
 				}
                 else{
-                    gRenderer.draw_texture(i.get_texture(), i.get_x() - Camera.x, i.get_y() - Camera.y);
+                    gRenderer.draw_texture(i.texture, i.x - Camera.x, i.y - Camera.y);
 				}
             }
             else{
                 uint32_t time = ticks >> 7U; //ticks/128
-                if(i.is_static()){
-                    gRenderer.draw_sprite(i.get_texture(), i.get_x() , i.get_y(), time % i.get_sprite_num(), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
+                if(i.is_static){
+                    gRenderer.draw_sprite(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
                 }else{
-					gRenderer.draw_sprite(i.get_texture(), i.get_x() - Camera.x, i.get_y() - Camera.y , time % i.get_sprite_num(), i.get_animation(), i.get_animation_num(), i.get_sprite_num());
+					gRenderer.draw_sprite(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
 				}
             }
         }
@@ -374,12 +374,12 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
  * @return True if it is on screen and false otherwise.
  */
 bool drawing_manager::is_onscreen(const ST::entity& i) const{
-    if(!i.is_visible())
+    if(!i.is_visible)
         return false;
-    if(i.is_static())
+    if(i.is_static)
         return true;
-    return i.get_x() - Camera.x + i.get_tex_w() >= 0 && i.get_x() - Camera.x <= w_width
-           && i.get_y()-Camera.y  > 0 && i.get_y()-Camera.y - i.get_tex_h() <= w_height;
+    return i.x - Camera.x + i.tex_w >= 0 && i.x - Camera.x <= w_width
+           && i.y - Camera.y  > 0 && i.y - Camera.y - i.tex_h <= w_height;
 }
 
 /**
@@ -390,20 +390,20 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
     for(auto& i : entities)
         if(is_onscreen(i)){
             int Xoffset, Yoffset;
-            if(i.is_static()){
+            if(i.is_static){
                 Xoffset = 0;
                 Yoffset = 0;
             }else{
                 Xoffset = Camera.x;
                 Yoffset = Camera.y;
             }
-            if(i.is_affected_by_physics()){
+            if(i.is_affected_by_physics){
                 SDL_Colour colour = {240, 0, 0, 100};
-                gRenderer.draw_rectangle_filled(i.get_x() - Xoffset + i.get_col_x_offset(), i.get_y() - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(), colour);
+                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(), i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(), colour);
             }
             else{
                 SDL_Colour colour2 = {0, 0, 220, 100};
-                gRenderer.draw_rectangle_filled(i.get_x() - Xoffset + i.get_col_x_offset(), i.get_y() - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(), colour2);
+                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(), i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(), colour2);
             }
         }
 }
@@ -415,22 +415,22 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
 void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities){
     for(auto& i : entities) {
         if (is_onscreen(i)) {
-            if (i.is_affected_by_physics()) {
+            if (i.is_affected_by_physics) {
                 int Xoffset, Yoffset;
-                if (i.is_static()) {
+                if (i.is_static) {
                     Xoffset = 0;
                     Yoffset = 0;
                 } else {
                     Yoffset = Camera.y;
                     Xoffset = Camera.x;
                 }
-                std::string tempX = "x: " + std::to_string(i.get_x());
-                std::string tempY = "y: " + std::to_string(i.get_y());
+                std::string tempX = "x: " + std::to_string(i.x);
+                std::string tempY = "y: " + std::to_string(i.y);
                 SDL_Colour colour_text = {255, 255, 0, 255};
-                gRenderer.draw_text("OpenSans-Regular.ttf", tempX, i.get_x() - Xoffset,
-                                     i.get_y() - Yoffset - i.get_tex_h(), colour_text, 25, 1);
-                gRenderer.draw_text("OpenSans-Regular.ttf", tempY, i.get_x() - Xoffset,
-                                     i.get_y() - Yoffset - i.get_tex_h() + 30, colour_text, 25, 1);
+                gRenderer.draw_text("OpenSans-Regular.ttf", tempX, i.x - Xoffset,
+                                     i.y - Yoffset - i.tex_h, colour_text, 25, 1);
+                gRenderer.draw_text("OpenSans-Regular.ttf", tempY, i.x - Xoffset,
+                                     i.y - Yoffset - i.tex_h + 30, colour_text, 25, 1);
             }
         }
     }

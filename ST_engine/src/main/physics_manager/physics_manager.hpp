@@ -71,12 +71,11 @@ class physics_manager{
  */
 inline void physics_manager::update(ST::level_data* data){
 	handle_messages();
-	if(physics_paused){
-		return;
+	if(!physics_paused){
+		entities = &data->entities;
+		process_horizontal();
+		process_vertical();
 	}
-	entities = &data->entities;
-	process_horizontal();
-	process_vertical();
 }
 
 #endif //PHYSICS_DEF
