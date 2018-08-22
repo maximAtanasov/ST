@@ -114,9 +114,8 @@ void drawing_manager::update(const ST::level_data& temp){
  */
 void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
     for(auto& i : objects) {
-        if (i.is_visible()) {
-            gRenderer.draw_text(i.get_font(), i.get_text_string(), i.get_x(), i.get_y() - i.get_font_size(), i.get_color(),
-                                 i.get_font_size(), 2);
+        if (i.is_visible) {
+            gRenderer.draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
         }
     }
 }
@@ -172,7 +171,7 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
     }
     for (const auto &light : lights) {
         int x = light.origin_x, y = light.origin_y;
-        if(!light.is_static()){
+        if(!light.is_static){
             x -= Camera.x;
             y -= Camera.y;
         }
