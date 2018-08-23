@@ -8,10 +8,12 @@
  */
 
 #include <game_manager/game_manager.hpp>
+#include <algorithm>
 
+#define FIRST_LEVEL_NAME "main"
 
 /**
- * initializes the game_manager and loads the level "main"
+ * initializes the game_manager and loads the level specified as first ("main" is default)
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
@@ -45,8 +47,8 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     volume_level = 100;
 
     //Load the first level
-    load_level("main");
-    start_level("main");
+    load_level(FIRST_LEVEL_NAME);
+    start_level(FIRST_LEVEL_NAME);
     SDL_AtomicSet(&end_game, 1);
 }
 
@@ -54,11 +56,9 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
  * Reset all information about input.
  */
 void game_manager::reset_keys(){
-    for(int i = 0; i < 64; i++){
-        keys_pressed_data[i] = false;
-        keys_held_data[i] = false;
-        keys_released_data[i] = false;
-    }
+    memset(keys_pressed_data, false, sizeof(bool) * 64);
+    memset(keys_held_data, false, sizeof(bool) * 64);
+    memset(keys_released_data, false, sizeof(bool) * 64);
 }
 
 /**

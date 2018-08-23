@@ -74,8 +74,8 @@ class audio_manager{
 
 
         ///Audio control functions
-        void play_music(size_t arg, int volume, int loops) const;
-        void play_sound(size_t arg, int volume, int loops) const;
+        void play_music(size_t arg, uint8_t volume, int8_t loops) const;
+        void play_sound(size_t arg, uint8_t volume, int8_t loops) const;
         void mute();
         void unmute();
         void stop_music();
@@ -129,7 +129,7 @@ inline void audio_manager::unmute(){
  * @param volume The volume to play the chunk at.
  * @param loops How many times to play it.
  */
-inline void audio_manager::play_sound(size_t arg, int volume, int loops) const{
+inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
     auto data = static_cast<Mix_Chunk*>(assets_ptr->chunks[arg]);
     if(data != nullptr){
         Mix_VolumeChunk(data, volume);
@@ -145,7 +145,7 @@ inline void audio_manager::play_sound(size_t arg, int volume, int loops) const{
  * @param volume The volume to play the music at.
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
-inline void audio_manager::play_music(size_t arg, int volume, int loops) const{
+inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
     Mix_Music* data = assets_ptr->music[arg];
     if(data != nullptr){
         Mix_VolumeMusic(volume);

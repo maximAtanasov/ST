@@ -60,17 +60,17 @@ void audio_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == PLAY_SOUND){
-            auto data = static_cast<std::tuple<size_t, int, int>*>(temp->get_data());
+            auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(temp->get_data());
             size_t name = std::get<0> (*data);
-            int volume = std::get<1> (*data);
-            int loops = std::get<2> (*data);
+            uint8_t volume = std::get<1> (*data);
+            int8_t loops = std::get<2> (*data);
             play_sound(name, volume, loops);
         }
         else if(temp->msg_name == PLAY_MUSIC){
-            auto data = (std::tuple<size_t, int, int>*)temp->get_data();
+            auto data = (std::tuple<size_t, uint8_t, int8_t>*)temp->get_data();
             size_t name = std::get<0> (*data);
-            int volume = std::get<1> (*data);
-            int loops = std::get<2> (*data);
+            uint8_t volume = std::get<1> (*data);
+            int8_t loops = std::get<2> (*data);
             play_music(name, volume, loops);
         }
         else if(temp->msg_name == STOP_MUSIC){

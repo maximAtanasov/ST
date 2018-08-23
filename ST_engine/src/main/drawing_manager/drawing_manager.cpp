@@ -10,6 +10,8 @@
 #include <drawing_manager/drawing_manager.hpp>
 #include <task_manager/task_allocator.hpp>
 
+#define DEFAULT_FONT "OpenSans-Regular.ttf"
+
 /**
  *
  * @param window A pointer to an SDL_Window to bind the renderer to.
@@ -23,8 +25,8 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_
 	}
 
     //set our external dependencies
-    this->gMessage_bus = msg_bus;
-    this->gTask_manager = tsk_mngr;
+    gMessage_bus = msg_bus;
+    gTask_manager = tsk_mngr;
 
 	//Subscribe to certain messages
 	gMessage_bus->subscribe(VSYNC_ON, &msg_sub);
@@ -106,15 +108,13 @@ void drawing_manager::update(const ST::level_data& temp){
 	gRenderer.present();
 }
 
-
-//TODO: Finish it
 /**
  * Draws all visible text objects in the current level
  * @param objects a pointer to a vector of text_objects
  */
 void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
     for(auto& i : objects) {
-        if (i.is_visible) {
+        if (is_onscreen(i)) {
             gRenderer.draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
         }
     }
@@ -127,7 +127,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
 void drawing_manager::draw_fps(double fps){
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
-        gRenderer.draw_text("OpenSans-Regular.ttf", "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);
+        gRenderer.draw_text(DEFAULT_FONT, "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);
     }
 }
 
@@ -141,14 +141,14 @@ void drawing_manager::draw_console(const console& cnsl){
         int pos = w_height/2;
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
             if (pos - cnsl.font_size - 50 + cnsl.scroll_offset <= w_height / 2 - cnsl.font_size * 2) {
-                gRenderer.draw_text("OpenSans-Regular.ttf", i->text, 0,
+                gRenderer.draw_text(DEFAULT_FONT, i->text, 0,
                                      pos - cnsl.font_size - 20 + cnsl.scroll_offset - 50, i->color,
                                      cnsl.font_size, -1);
             }
             pos -= cnsl.font_size + 5;
         }
         gRenderer.draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-        gRenderer.draw_text("OpenSans-Regular.ttf", "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
+        gRenderer.draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
                              cnsl.font_size, -1);
     }
 }
@@ -373,12 +373,25 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
  * @return True if it is on screen and false otherwise.
  */
 bool drawing_manager::is_onscreen(const ST::entity& i) const{
-    if(!i.is_visible)
+    if(!i.is_visible) {
         return false;
-    if(i.is_static)
+    }
+    else if(i.is_static) {
         return true;
-    return i.x - Camera.x + i.tex_w >= 0 && i.x - Camera.x <= w_width
-           && i.y - Camera.y  > 0 && i.y - Camera.y - i.tex_h <= w_height;
+    }
+    else {
+        return i.x - Camera.x + i.tex_w >= 0 && i.x - Camera.x <= w_width
+                && i.y - Camera.y > 0 && i.y - Camera.y - i.tex_h <= w_height;
+    }
+}
+
+/**
+ * Tells if a text object is visible on the screen.
+ * @param i The text object to check.
+ * @return True if it is on screen and false otherwise.
+ */
+bool drawing_manager::is_onscreen(const ST::text& i) const{
+    return i.is_visible;//TODO: finish
 }
 
 /**
@@ -386,25 +399,29 @@ bool drawing_manager::is_onscreen(const ST::entity& i) const{
  * @param entities A vector of entities in the current level.
  */
 void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) const{
-    for(auto& i : entities)
-        if(is_onscreen(i)){
+    for(auto& i : entities) {
+        if (is_onscreen(i)) {
             int Xoffset, Yoffset;
-            if(i.is_static){
+            if (i.is_static) {
                 Xoffset = 0;
                 Yoffset = 0;
-            }else{
+            } else {
                 Xoffset = Camera.x;
                 Yoffset = Camera.y;
             }
-            if(i.is_affected_by_physics){
+            if (i.is_affected_by_physics) {
                 SDL_Colour colour = {240, 0, 0, 100};
-                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(), i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(), colour);
-            }
-            else{
+                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
+                                                i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
+                                                colour);
+            } else {
                 SDL_Colour colour2 = {0, 0, 220, 100};
-                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(), i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(), colour2);
+                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
+                                                i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
+                                                colour2);
             }
         }
+    }
 }
 
 /**
@@ -426,9 +443,9 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities){
                 std::string tempX = "x: " + std::to_string(i.x);
                 std::string tempY = "y: " + std::to_string(i.y);
                 SDL_Colour colour_text = {255, 255, 0, 255};
-                gRenderer.draw_text("OpenSans-Regular.ttf", tempX, i.x - Xoffset,
+                gRenderer.draw_text(DEFAULT_FONT, tempX, i.x - Xoffset,
                                      i.y - Yoffset - i.tex_h, colour_text, 25, 1);
-                gRenderer.draw_text("OpenSans-Regular.ttf", tempY, i.x - Xoffset,
+                gRenderer.draw_text(DEFAULT_FONT, tempY, i.x - Xoffset,
                                      i.y - Yoffset - i.tex_h + 30, colour_text, 25, 1);
             }
         }

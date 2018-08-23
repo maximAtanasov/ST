@@ -9,6 +9,8 @@
 
 #include <gtest/gtest.h>
 #include <game_manager/lua_backend/lua_backend.hpp>
+#include <game_manager/game_manager.hpp>
+#include <main/timer.hpp>
 
 /// Tests fixture for the lua_backend
 class lua_backend_test : public ::testing::Test {
@@ -24,12 +26,23 @@ protected:
         return test_subject.hash_string(string);
     }
 
+    lua_State* get_lua_state(){
+        return test_subject.L;
+    }
+
+    message_bus* msg_bus{};
+    game_manager* game_mngr{};
+
     void SetUp() override{
-        test_subject.initialize(new message_bus, nullptr);
+        msg_bus = new message_bus();
+        //game_mngr = new game_manager(msg_bus, nullptr);
+        test_subject.initialize(msg_bus, nullptr);
     }
 
     void TearDown() override{
         test_subject.close();
+        //delete game_mngr;
+        delete msg_bus;
     }
 };
 
@@ -222,6 +235,390 @@ TEST_F(lua_backend_test, test_run_simple_script){
 TEST_F(lua_backend_test, test_fail_on_broken_script){
     ::testing::FLAGS_gtest_death_test_style = "threadsafe";
     ASSERT_EXIT(test_subject.run_file("lua_scripts/test_script_broken.lua"), ::testing::KilledBySignal(SIGABRT), ".*");
+}
+
+TEST_F(lua_backend_test, test_call_function_setFullscreen){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_FULLSCREEN, &subscriber1);
+
+    //Test
+    test_subject.run_script("setFullscreen(true)");
+
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_FULLSCREEN, result->msg_name);
+    ASSERT_TRUE(*static_cast<bool*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_hashString){
+    //Set up
+    std::string test_string = "TEST_STRING";
+    std::hash<std::string> hash_f;
+    size_t expected = hash_f(test_string);
+
+    //Test
+    test_subject.run_script("return hashString(\"" + test_string +"\")");
+    ASSERT_EQ(expected, lua_tointeger(get_lua_state(), -1));
+}
+
+TEST_F(lua_backend_test, test_call_function_delay){
+    //Set up
+    timer test_timer;
+    uint64_t runtime = 500;
+
+    //Test
+    double start_time = test_timer.time_since_start();
+    test_subject.run_script("delay(" + std::to_string(runtime) + ")");
+    double end_time = test_timer.time_since_start();
+
+    ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time-start_time), 20);
+}
+
+TEST_F(lua_backend_test, test_call_function_vsyncOn){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(VSYNC_ON, &subscriber1);
+
+    //Test
+    test_subject.run_script("vsyncOn()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(VSYNC_ON, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_vsyncOff){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(VSYNC_OFF, &subscriber1);
+
+    //Test
+    test_subject.run_script("vsyncOff()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(VSYNC_OFF, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_startLevelLua){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(START_LEVEL, &subscriber1);
+    std::string level_name = "some_level";
+
+    //Test
+    test_subject.run_script("startLevelLua(\"" + level_name + "\")");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(START_LEVEL, result->msg_name);
+    ASSERT_EQ(level_name, *static_cast<std::string*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_loadLevel){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(LOAD_LEVEL, &subscriber1);
+    std::string level_name = "some_level";
+
+    //Test
+    test_subject.run_script("loadLevel(\"" + level_name + "\")");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(LOAD_LEVEL, result->msg_name);
+    ASSERT_EQ(level_name, *static_cast<std::string*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_showMouseCursor){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SHOW_MOUSE, &subscriber1);
+
+    //Test
+    test_subject.run_script("showMouseCursor()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SHOW_MOUSE, result->msg_name);
+    ASSERT_TRUE(*static_cast<bool*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SHOW_MOUSE, &subscriber1);
+
+    //Test
+    test_subject.run_script("hideMouseCursor()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SHOW_MOUSE, result->msg_name);
+    ASSERT_FALSE(*static_cast<bool*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_endGame){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(END_GAME, &subscriber1);
+
+    //Test
+    test_subject.run_script("endGame()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(END_GAME, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_setLevelFloor){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_FLOOR, &subscriber1);
+
+    //Test
+    test_subject.run_script("setLevelFloor(500)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_FLOOR, result->msg_name);
+    ASSERT_EQ(500, *static_cast<int32_t*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_unloadLevel){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(UNLOAD_LEVEL, &subscriber1);
+    std::string level_name = "some_level";
+
+    //Test
+    test_subject.run_script("unloadLevel(\"" + level_name + "\")");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(UNLOAD_LEVEL, result->msg_name);
+    ASSERT_EQ(level_name, *static_cast<std::string*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_setGravity){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_GRAVITY, &subscriber1);
+
+    //Test
+    test_subject.run_script("setGravity(12)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_GRAVITY, result->msg_name);
+    ASSERT_EQ(12, *static_cast<uint8_t*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_pausePhysics){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(PAUSE_PHYSICS, &subscriber1);
+
+    //Test
+    test_subject.run_script("pausePhysics()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(PAUSE_PHYSICS, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_unpausePhysics){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(UNPAUSE_PHYSICS, &subscriber1);
+
+    //Test
+    test_subject.run_script("unpausePhysics()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(UNPAUSE_PHYSICS, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_playSound){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(PLAY_SOUND, &subscriber1);
+    std::string test_string = "some_sound.wav";
+    std::hash<std::string> hash_f;
+    size_t expected = hash_f(test_string);
+
+    //Test
+    test_subject.run_script("playSound(\"" + test_string + "\", 100, 3)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+    ASSERT_TRUE(result);
+    ASSERT_EQ(PLAY_SOUND, result->msg_name);
+
+    auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(result->get_data());
+    size_t name = std::get<0> (*data);
+    uint8_t volume = std::get<1> (*data);
+    int8_t loops = std::get<2> (*data);
+
+    ASSERT_EQ(expected, name);
+    ASSERT_EQ(100, volume);
+    ASSERT_EQ(3, loops);
+}
+
+TEST_F(lua_backend_test, test_call_function_playMusic){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(PLAY_MUSIC, &subscriber1);
+    std::string test_string = "some_music.mp3";
+    std::hash<std::string> hash_f;
+    size_t expected = hash_f(test_string);
+
+    //Test
+    test_subject.run_script("playMusic(\"" + test_string + "\", 128, 2)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+    ASSERT_TRUE(result);
+    ASSERT_EQ(PLAY_MUSIC, result->msg_name);
+
+    auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(result->get_data());
+    size_t name = std::get<0> (*data);
+    uint8_t volume = std::get<1> (*data);
+    int8_t loops = std::get<2> (*data);
+
+    ASSERT_EQ(expected, name);
+    ASSERT_EQ(128, volume);
+    ASSERT_EQ(2, loops);
+}
+
+TEST_F(lua_backend_test, test_call_function_stopMusic){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(STOP_MUSIC, &subscriber1);
+
+    //Test
+    test_subject.run_script("stopMusic()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(STOP_MUSIC, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_toggleAudio){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(TOGGLE_AUDIO, &subscriber1);
+
+    //Test
+    test_subject.run_script("toggleAudio()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(TOGGLE_AUDIO, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_stopAllSounds){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(STOP_ALL_SOUNDS, &subscriber1);
+
+    //Test
+    test_subject.run_script("stopAllSounds()");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(STOP_ALL_SOUNDS, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+}
+
+TEST_F(lua_backend_test, test_call_function_setVolume){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_VOLUME, &subscriber1);
+
+    //Test
+    test_subject.run_script("setVolume(50)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_VOLUME, result->msg_name);
+    ASSERT_EQ(50, *static_cast<uint8_t*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_setDarkness){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_DARKNESS, &subscriber1);
+
+    //Test
+    test_subject.run_script("setDarkness(250)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_DARKNESS, result->msg_name);
+    ASSERT_EQ(250, *static_cast<uint8_t*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_enableLighting){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(ENABLE_LIGHTING, &subscriber1);
+
+    //Test
+    test_subject.run_script("enableLighting(false)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(ENABLE_LIGHTING, result->msg_name);
+    ASSERT_FALSE(*static_cast<bool*>(result->get_data()));
 }
 
 int main(int argc, char **argv) {

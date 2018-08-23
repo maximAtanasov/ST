@@ -381,6 +381,10 @@ add_executable(lua_backend_test
         src/main/console/console_log.hpp
         src/main/game_manager/level/text.cpp
         src/main/game_manager/level/text.hpp
+        src/main/game_manager/game_manager.cpp
+        src/main/game_manager/game_manager.hpp
+        src/main/main/timer.cpp
+        src/main/main/timer.hpp
         src/main/game_manager/lua_backend/lua_backend.hpp
         src/main/game_manager/lua_backend/lua_backend.cpp
         src/test/game_manager/lua_backend/lua_backend_tests.cpp)

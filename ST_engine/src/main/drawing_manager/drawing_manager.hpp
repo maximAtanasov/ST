@@ -103,6 +103,7 @@ class drawing_manager{
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
         bool is_onscreen(const ST::entity& i) const;
+        bool is_onscreen(const ST::text& i) const;
 
         //Other functions
         void handle_messages();

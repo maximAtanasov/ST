@@ -60,20 +60,20 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //General Functions
     lua_register(L, "setFullscreen", setFullscreenLua);
-    lua_register(L, "getFullscreenStatus", getFullscreenStatusLua);
+    lua_register(L, "getFullscreenStatus", getFullscreenStatusLua); //TODO: NOT TESTED
     lua_register(L, "hashString", hashStringLua);
     lua_register(L, "delay", delayLua);
-    lua_register(L, "use", useLua);
+    lua_register(L, "use", useLua);  //TODO: NOT TESTED
     lua_register(L, "vsyncOn", vsyncOnLua);
     lua_register(L, "vsyncOff", vsyncOffLua);
-    lua_register(L, "getVsyncState", getVsyncStateLua);
-    lua_register(L, "setBrightness", setBrightnessLua);
+    lua_register(L, "getVsyncState", getVsyncStateLua); //TODO: NOT TESTED
+    lua_register(L, "setBrightness", setBrightnessLua); //TODO: NOT TESTED
     lua_register(L, "startLevelLua", startLevelLua);
     lua_register(L, "showMouseCursor", showMouseCursorLua);
     lua_register(L, "hideMouseCursor", hideMouseCursorLua);
     lua_register(L, "endGame", endGameLua);
-    lua_register(L, "centreCamera", centreCameraLua);
-    lua_register(L, "setLevelSize", setLevelsizeLua);
+    lua_register(L, "centreCamera", centreCameraLua); //TODO: NOT TESTED
+    lua_register(L, "setLevelSize", setLevelsizeLua); //TODO: NOT TESTED
     lua_register(L, "setLevelFloor", setLevelFloorLua);
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
@@ -84,90 +84,89 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "unpausePhysics", unpausePhysicsLua);
 
     //Drawing functions
-    lua_register(L, "setBackground", setBackgroundLua);
-    lua_register(L, "setOverlay", setOverlayLua);
-    lua_register(L, "centreCamera", centreCameraLua);
+    lua_register(L, "setBackground", setBackgroundLua); //TODO: NOT TESTED
+    lua_register(L, "setOverlay", setOverlayLua); //TODO: NOT TESTED
 
     //Input functions
-    lua_register(L, "getMouseX", getMouseXLua);
-    lua_register(L, "getMouseY", getMouseYLua);
-    lua_register(L, "keyHeld", keyHeldLua);
-    lua_register(L, "keyPressed", keyPressedLua);
-    lua_register(L, "keyReleased", keyReleasedLua);
+    lua_register(L, "getMouseX", getMouseXLua); //TODO: NOT TESTED
+    lua_register(L, "getMouseY", getMouseYLua); //TODO: NOT TESTED
+    lua_register(L, "keyHeld", keyHeldLua); //TODO: NOT TESTED
+    lua_register(L, "keyPressed", keyPressedLua); //TODO: NOT TESTED
+    lua_register(L, "keyReleased", keyReleasedLua); //TODO: NOT TESTED
 
     //Audio functions
     lua_register(L, "playSound", playSoundLua);
     lua_register(L, "playMusic", playMusicLua);
     lua_register(L, "stopMusic", stopMusicLua);
     lua_register(L, "toggleAudio", toggleAudioLua);
-    lua_register(L, "getVolume", getVolumeLua);
+    lua_register(L, "getVolume", getVolumeLua); //TODO: NOT TESTED
     lua_register(L, "setVolume", setVolumeLua);
     lua_register(L, "stopAllSounds", stopAllSoundsLua);
 
     //lights
     lua_register(L, "setDarkness", setDarknessLua);
     lua_register(L, "enableLighting", enableLightingLua);
-    lua_register(L, "createLight", createLightLua);
-    lua_register(L, "setLightOriginX", setLightOriginXLua);
-    lua_register(L, "getLightOriginX", getLightOriginXLua);
-    lua_register(L, "setLightOriginY", setLightOriginYLua);
-    lua_register(L, "getLightOriginY", getLightOriginYLua);
-    lua_register(L, "setLightIntensity", setLightIntensityLua);
-    lua_register(L, "getLightIntensity", getLightIntensityLua);
-    lua_register(L, "setLightBrightness", setLightBrightnessLua);
-    lua_register(L, "getLightBrightness", getLightBrightnessLua);
-    lua_register(L, "setLightRadius", setLightRadiusLua);
-    lua_register(L, "getLightRadius", getLightRadiusLua);
-    lua_register(L, "setLightStatic", setLightStaticLua);
-    lua_register(L, "isLightStatic", isLightStaticLua);
+    lua_register(L, "createLight", createLightLua); //TODO: NOT TESTED
+    lua_register(L, "setLightOriginX", setLightOriginXLua); //TODO: NOT TESTED
+    lua_register(L, "getLightOriginX", getLightOriginXLua); //TODO: NOT TESTED
+    lua_register(L, "setLightOriginY", setLightOriginYLua); //TODO: NOT TESTED
+    lua_register(L, "getLightOriginY", getLightOriginYLua); //TODO: NOT TESTED
+    lua_register(L, "setLightIntensity", setLightIntensityLua); //TODO: NOT TESTED
+    lua_register(L, "getLightIntensity", getLightIntensityLua); //TODO: NOT TESTED
+    lua_register(L, "setLightBrightness", setLightBrightnessLua); //TODO: NOT TESTED
+    lua_register(L, "getLightBrightness", getLightBrightnessLua); //TODO: NOT TESTED
+    lua_register(L, "setLightRadius", setLightRadiusLua); //TODO: NOT TESTED
+    lua_register(L, "getLightRadius", getLightRadiusLua); //TODO: NOT TESTED
+    lua_register(L, "setLightStatic", setLightStaticLua); //TODO: NOT TESTED
+    lua_register(L, "isLightStatic", isLightStaticLua); //TODO: NOT TESTED
 
     //Text funtions
 
-    lua_register(L, "createTextObject", createTextObjectLua);
-    lua_register(L, "setTextObjectColor", setTextObjectColorLua);
-    lua_register(L, "setTextObjectText", setTextObjectTextLua);
-    lua_register(L, "setTextObjectFont", setTextObjectFontLua);
-    lua_register(L, "setTextObjectFontSize", setTextObjectFontSizeLua);
-    lua_register(L, "setTextObjectX", setTextObjectXLua);
-    lua_register(L, "setTextObjectY", setTextObjectYLua);
-    lua_register(L, "setTextObjectVisible", setTextObjectVisibleLua);
+    lua_register(L, "createTextObject", createTextObjectLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectColor", setTextObjectColorLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectText", setTextObjectTextLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectFont", setTextObjectFontLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectFontSize", setTextObjectFontSizeLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectX", setTextObjectXLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectY", setTextObjectYLua); //TODO: NOT TESTED
+    lua_register(L, "setTextObjectVisible", setTextObjectVisibleLua); //TODO: NOT TESTED
 
     //Entity functions
 
     //general
-    lua_register(L, "createEntity", createEntityLua);
-    lua_register(L, "setActive", setActiveLua);
-    lua_register(L, "setX", setXLua);
-    lua_register(L, "setY", setYLua);
-    lua_register(L, "getX", getXLua);
-    lua_register(L, "getY", getYLua);
-    lua_register(L, "setStatic", setStaticLua);
-    lua_register(L, "setVelocityX", setVelocityXLua);
-    lua_register(L, "setVelocityY", setVelocityYLua);
-    lua_register(L, "getVelocityX", getVelocityXLua);
-    lua_register(L, "getVelocityY", getVelocityYLua);
+    lua_register(L, "createEntity", createEntityLua); //TODO: NOT TESTED
+    lua_register(L, "setActive", setActiveLua); //TODO: NOT TESTED
+    lua_register(L, "setX", setXLua); //TODO: NOT TESTED
+    lua_register(L, "setY", setYLua); //TODO: NOT TESTED
+    lua_register(L, "getX", getXLua); //TODO: NOT TESTED
+    lua_register(L, "getY", getYLua); //TODO: NOT TESTED
+    lua_register(L, "setStatic", setStaticLua); //TODO: NOT TESTED
+    lua_register(L, "setVelocityX", setVelocityXLua); //TODO: NOT TESTED
+    lua_register(L, "setVelocityY", setVelocityYLua); //TODO: NOT TESTED
+    lua_register(L, "getVelocityX", getVelocityXLua); //TODO: NOT TESTED
+    lua_register(L, "getVelocityY", getVelocityYLua); //TODO: NOT TESTED
 
     //texture
-    lua_register(L, "setTexture", setTextureLua);
-    lua_register(L, "getTexW", getTexWLua);
-    lua_register(L, "getTexH", getTexHLua);
-    lua_register(L, "setTexW", setTexWLua);
-    lua_register(L, "setTexH", setTexHLua);
-    lua_register(L, "setVisible", setVisibleLua);
+    lua_register(L, "setTexture", setTextureLua); //TODO: NOT TESTED
+    lua_register(L, "getTexW", getTexWLua); //TODO: NOT TESTED
+    lua_register(L, "getTexH", getTexHLua); //TODO: NOT TESTED
+    lua_register(L, "setTexW", setTexWLua); //TODO: NOT TESTED
+    lua_register(L, "setTexH", setTexHLua); //TODO: NOT TESTED
+    lua_register(L, "setVisible", setVisibleLua); //TODO: NOT TESTED
 
     //physics
-    lua_register(L, "setCollisionBox", setCollisionBoxLua);
-    lua_register(L, "entityCollides", entityCollidesLua);
-    lua_register(L, "setAffectedByPhysics", setAffectedByPhysicsLua);
-    lua_register(L, "getColX", getColXLua);
-    lua_register(L, "getColY", getColYLua);
-    lua_register(L, "getMass", getMassLua);
-    lua_register(L, "setMass", setMassLua);
+    lua_register(L, "setCollisionBox", setCollisionBoxLua); //TODO: NOT TESTED
+    lua_register(L, "entityCollides", entityCollidesLua); //TODO: NOT TESTED
+    lua_register(L, "setAffectedByPhysics", setAffectedByPhysicsLua); //TODO: NOT TESTED
+    lua_register(L, "getColX", getColXLua); //TODO: NOT TESTED
+    lua_register(L, "getColY", getColYLua); //TODO: NOT TESTED
+    lua_register(L, "getMass", getMassLua); //TODO: NOT TESTED
+    lua_register(L, "setMass", setMassLua); //TODO: NOT TESTED
 
     //animation
-    lua_register(L, "setAnimation", setAnimationLua);
-    lua_register(L, "setAnimationNum", setAnimationNumLua);
-    lua_register(L, "setSpriteNum", setSpriteNumLua);
+    lua_register(L, "setAnimation", setAnimationLua); //TODO: NOT TESTED
+    lua_register(L, "setAnimationNum", setAnimationNumLua); //TODO: NOT TESTED
+    lua_register(L, "setSpriteNum", setSpriteNumLua); //TODO: NOT TESTED
 
     return 0;
 }
@@ -213,8 +212,8 @@ int8_t lua_backend::load_file(std::string file){
  */
 int8_t lua_backend::run_script(std::string script) {
     std::string temp = hash_string(script);
-    int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
-    if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE || lua_pcall(L, 0, 0, 0)){
+   // int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
+    if (luaL_dostring(L, temp.c_str())){
         log(ERROR, "Cannot run Script");
         return -1;
     }else{
@@ -1187,8 +1186,8 @@ extern "C" int setSpriteNumLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setGravityLua(lua_State* L){
-    auto arg = static_cast<int>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_GRAVITY, make_data<int>(arg)));
+    auto arg = static_cast<int8_t>(lua_tointeger(L, 1));
+    gMessage_busLua->send_msg(make_msg(SET_GRAVITY, make_data<>(arg)));
     return 0;
 }
 
@@ -1199,8 +1198,8 @@ extern "C" int setGravityLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setLevelFloorLua(lua_State* L){
-    auto arg = static_cast<int>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_FLOOR, make_data<int>(arg)));
+    auto arg = static_cast<int32_t>(lua_tointeger(L, 1));
+    gMessage_busLua->send_msg(make_msg(SET_FLOOR, make_data<>(arg)));
     return 0;
 }
 
@@ -1243,7 +1242,7 @@ extern "C" int getVsyncStateLua(lua_State* L){
  */
 extern "C" int setBrightnessLua(lua_State* L){
     auto arg = static_cast<float>(lua_tonumber(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_WINDOW_BRIGHTNESS, make_data<float>(arg)));
+    gMessage_busLua->send_msg(make_msg(SET_WINDOW_BRIGHTNESS, make_data<>(arg)));
     return 0;
 }
 
@@ -1299,7 +1298,7 @@ extern "C" int endGameLua(lua_State*){
  * @return Always 0.
  */
 extern "C" int startLevelLua(lua_State* L){
-    std::string level = (std::string)lua_tostring(L, 1);
+    std::string level = static_cast<std::string>(lua_tostring(L, 1));
     gMessage_busLua->send_msg(make_msg(START_LEVEL, make_data<std::string>(level)));
     return 0;
 }
@@ -1311,7 +1310,7 @@ extern "C" int startLevelLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int load_levelLua(lua_State* L){
-    std::string arg = (std::string)lua_tostring(L, 1);
+    std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     gMessage_busLua->send_msg(make_msg(LOAD_LEVEL, make_data<std::string>(arg)));
     return 0;
 }
@@ -1323,7 +1322,7 @@ extern "C" int load_levelLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int unload_levelLua(lua_State* L){
-    std::string level = (std::string)lua_tostring(L, 1);
+    std::string level = static_cast<std::string>(lua_tostring(L, 1));
     gMessage_busLua->send_msg(make_msg(UNLOAD_LEVEL, make_data<std::string>(level)));
     return 0;
 }
@@ -1347,7 +1346,7 @@ extern "C" int delayLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int useLua(lua_State* L){
-    std::string arg = (std::string)lua_tostring(L, 1);
+    std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     std::string temp = "levels/";
     temp = temp + gGame_managerLua->get_active_level();
     temp = temp + "/" + arg;
@@ -1485,11 +1484,11 @@ extern "C" int toggleAudioLua(lua_State*){
  * @return Always 0.
  */
 extern "C" int playMusicLua(lua_State* L){
-    auto arg = (size_t)lua_tointeger(L, 1);
-    auto volume = (int)lua_tointeger(L, 2);
-    auto loops = (int)lua_tointeger(L, 3);
-    std::tuple<size_t, int, int> data = std::make_tuple(arg, volume, loops);
-    message* msg_temp = make_msg(PLAY_MUSIC, make_data<std::tuple<size_t, int, int>>(data));
+    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto volume = static_cast<uint8_t>(lua_tointeger(L, 2));
+    auto loops = static_cast<int8_t>(lua_tointeger(L, 3));
+    std::tuple<size_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
+    message* msg_temp = make_msg(PLAY_MUSIC, make_data<std::tuple<size_t, uint8_t, int8_t>>(data));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1501,11 +1500,11 @@ extern "C" int playMusicLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int playSoundLua(lua_State* L){
-    auto arg = (size_t)lua_tointeger(L, 1);
-    auto volume = (int)lua_tointeger(L, 2);
-    auto loops = (int)lua_tointeger(L, 3);
-    std::tuple<size_t, int, int> data = std::make_tuple(arg, volume, loops);
-    message* msg_temp = make_msg(PLAY_SOUND, make_data<std::tuple<size_t, int, int>>(data));
+    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto volume = static_cast<uint8_t>(lua_tointeger(L, 2));
+    auto loops = static_cast<int8_t>(lua_tointeger(L, 3));
+    std::tuple<size_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
+    message* msg_temp = make_msg(PLAY_SOUND, make_data<std::tuple<size_t, uint8_t, int8_t>>(data));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }

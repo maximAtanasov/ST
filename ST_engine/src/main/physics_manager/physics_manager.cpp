@@ -24,7 +24,7 @@ physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
 	gMessage_bus->subscribe(PAUSE_PHYSICS, &msg_sub);
 	gMessage_bus->subscribe(UNPAUSE_PHYSICS, &msg_sub);
     gravity = 0;
-    friction = 3;
+    friction = 4;
     level_floor = 0;
 }
 
