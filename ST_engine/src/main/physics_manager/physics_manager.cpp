@@ -31,7 +31,7 @@ physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
 /**
  * Process horizontal collisions for all entities.
  */
-void physics_manager::process_horizontal() {
+void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
     for(auto& i : *entities) {
         //handle horizontal velocity
         if (i.is_affected_by_physics) {
@@ -61,7 +61,7 @@ void physics_manager::process_horizontal() {
 /**
  * Process vertical collisions for all entities.
  */
-void physics_manager::process_vertical() {
+void physics_manager::process_vertical(std::vector<ST::entity>* entities) {
     for(auto& i : *entities) {
         if (i.is_affected_by_physics) {
             //handle vertical velocity

@@ -64,7 +64,7 @@ int main(int argc, char** argv){
             //will start an update task
             gInput_manager.update();
             do{
-                gPhysics_manager.update(gGame_manager.get_level_data());
+                gPhysics_manager.update(&gGame_manager.get_level_data()->entities);
                 gGame_manager.update();
                 total_time -= UPDATE_RATE;
             }

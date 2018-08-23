@@ -8,9 +8,17 @@
  */
 
 #include <game_manager/lua_backend/lua_backend.hpp>
+
+//The following trick is used to replace the game_manager with a mock definition when testing.
+#ifndef TESTING_LUA_BACKEND
 #include <game_manager/game_manager.hpp>
+#elif defined(TESTING_LUA_BACKEND)
+#include "../../../test/game_manager/lua_backend/game_manager_mock.hpp"
+#endif
+
 #include <console/log.hpp>
 #include <ST_util/string_util.hpp>
+#include <game_manager/level/light.hpp>
 
 //local to the file, as lua bindings cannot be in a class
 static message_bus*  gMessage_busLua;
@@ -60,14 +68,14 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //General Functions
     lua_register(L, "setFullscreen", setFullscreenLua);
-    lua_register(L, "getFullscreenStatus", getFullscreenStatusLua); //TODO: NOT TESTED
+    lua_register(L, "getFullscreenStatus", getFullscreenStatusLua);
     lua_register(L, "hashString", hashStringLua);
     lua_register(L, "delay", delayLua);
-    lua_register(L, "use", useLua);  //TODO: NOT TESTED
+    lua_register(L, "use", useLua);
     lua_register(L, "vsyncOn", vsyncOnLua);
     lua_register(L, "vsyncOff", vsyncOffLua);
-    lua_register(L, "getVsyncState", getVsyncStateLua); //TODO: NOT TESTED
-    lua_register(L, "setBrightness", setBrightnessLua); //TODO: NOT TESTED
+    lua_register(L, "getVsyncState", getVsyncStateLua);
+    lua_register(L, "setBrightness", setBrightnessLua);
     lua_register(L, "startLevelLua", startLevelLua);
     lua_register(L, "showMouseCursor", showMouseCursorLua);
     lua_register(L, "hideMouseCursor", hideMouseCursorLua);
@@ -84,8 +92,8 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "unpausePhysics", unpausePhysicsLua);
 
     //Drawing functions
-    lua_register(L, "setBackground", setBackgroundLua); //TODO: NOT TESTED
-    lua_register(L, "setOverlay", setOverlayLua); //TODO: NOT TESTED
+    lua_register(L, "setBackground", setBackgroundLua);
+    lua_register(L, "setOverlay", setOverlayLua);
 
     //Input functions
     lua_register(L, "getMouseX", getMouseXLua); //TODO: NOT TESTED
@@ -99,7 +107,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "playMusic", playMusicLua);
     lua_register(L, "stopMusic", stopMusicLua);
     lua_register(L, "toggleAudio", toggleAudioLua);
-    lua_register(L, "getVolume", getVolumeLua); //TODO: NOT TESTED
+    lua_register(L, "getVolume", getVolumeLua);
     lua_register(L, "setVolume", setVolumeLua);
     lua_register(L, "stopAllSounds", stopAllSoundsLua);
 
@@ -121,7 +129,6 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "isLightStatic", isLightStaticLua); //TODO: NOT TESTED
 
     //Text funtions
-
     lua_register(L, "createTextObject", createTextObjectLua); //TODO: NOT TESTED
     lua_register(L, "setTextObjectColor", setTextObjectColorLua); //TODO: NOT TESTED
     lua_register(L, "setTextObjectText", setTextObjectTextLua); //TODO: NOT TESTED
@@ -1381,7 +1388,7 @@ extern "C" int hideMouseCursorLua(lua_State*){
  * @return Always 0.
  */
 extern "C" int setBackgroundLua(lua_State* L){
-    std::string arg = (std::string)lua_tostring(L, 1);
+    std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     std::hash<std::string> hash_f;
     gGame_managerLua->get_level_data()->background = hash_f(arg);
     return 0;
@@ -1394,7 +1401,7 @@ extern "C" int setBackgroundLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setOverlayLua(lua_State* L){
-    std::string arg = (std::string)lua_tostring(L, 1);
+    std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     auto spriteNum = static_cast<int16_t>(lua_tointeger(L, 2));
     std::hash<std::string> hash_f;
     gGame_managerLua->get_level_data()->overlay = hash_f(arg);

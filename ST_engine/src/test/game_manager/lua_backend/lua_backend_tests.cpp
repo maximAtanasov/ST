@@ -7,9 +7,10 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
+#define TESTING_LUA_BACKEND
+
 #include <gtest/gtest.h>
-#include <game_manager/lua_backend/lua_backend.hpp>
-#include <game_manager/game_manager.hpp>
+#include <game_manager/lua_backend/lua_backend.cpp>
 #include <main/timer.hpp>
 
 /// Tests fixture for the lua_backend
@@ -35,13 +36,13 @@ protected:
 
     void SetUp() override{
         msg_bus = new message_bus();
-        //game_mngr = new game_manager(msg_bus, nullptr);
-        test_subject.initialize(msg_bus, nullptr);
+        game_mngr = new game_manager(msg_bus, nullptr);
+        test_subject.initialize(msg_bus, game_mngr);
     }
 
     void TearDown() override{
         test_subject.close();
-        //delete game_mngr;
+        delete game_mngr;
         delete msg_bus;
     }
 };
@@ -619,6 +620,66 @@ TEST_F(lua_backend_test, test_call_function_enableLighting){
     ASSERT_TRUE(result);
     ASSERT_EQ(ENABLE_LIGHTING, result->msg_name);
     ASSERT_FALSE(*static_cast<bool*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_getFullscreenStatus){
+    game_mngr->fullscreen_status = false;
+    test_subject.run_script("return getFullscreenStatus()");
+
+    //Check result
+    ASSERT_FALSE(lua_toboolean(get_lua_state(), -1));
+}
+
+TEST_F(lua_backend_test, test_call_function_use){
+    //Set up
+    ::testing::internal::CaptureStdout();
+
+    //Test
+    test_subject.run_script("use(\"test_script_simple.lua\")");
+    ASSERT_EQ("4\n", testing::internal::GetCapturedStdout());
+}
+
+TEST_F(lua_backend_test, test_call_function_setBackground){
+    test_subject.run_script("setBackground(\"some_bg.webp\")");
+    ASSERT_EQ(1, game_mngr->get_level_data_calls);
+}
+
+TEST_F(lua_backend_test, test_call_function_getVsyncState){
+    game_mngr->vsync_flag = true;
+    test_subject.run_script("return getVsyncState()");
+
+    //Check result
+    ASSERT_TRUE(lua_toboolean(get_lua_state(), -1));
+}
+
+
+TEST_F(lua_backend_test, test_call_function_setBrightness){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_WINDOW_BRIGHTNESS, &subscriber1);
+
+    //Test
+    test_subject.run_script("setBrightness(250)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_WINDOW_BRIGHTNESS, result->msg_name);
+    ASSERT_EQ(250, *static_cast<float*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_setOverlay){
+    test_subject.run_script("setOverlay(\"some_bg.webp\", 3)");
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+}
+
+TEST_F(lua_backend_test, test_call_function_getVolume){
+    game_mngr->volume_level = 123;
+    test_subject.run_script("return getVolume()");
+
+    //Check result
+    ASSERT_EQ(123, lua_tointeger(get_lua_state(), -1));
 }
 
 int main(int argc, char **argv) {

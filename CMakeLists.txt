@@ -14,4 +14,5 @@ add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)
 add_subdirectory(ST_asset_pack)
 add_subdirectory(ST_util)
+add_subdirectory(external/googletest)
 

@@ -9,7 +9,6 @@
 
 #include <task_manager/task_allocator.hpp>
 
-
 /**
  * Constructor for the task allocator.
  * Allocates memory for tasks.

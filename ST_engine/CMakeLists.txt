@@ -11,11 +11,11 @@ project(ST_engine)
 
 set(CMAKE_CXX_STANDARD 14)
 
+include(GoogleTest)
 enable_testing()
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
-find_package(GTest REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
@@ -25,6 +25,8 @@ find_package(Lua REQUIRED)
 include_directories(../ST_loaders/include)
 include_directories(../ST_util/include)
 include_directories(../ST_engine/src/main)
+include_directories(../external/googletest/googletest/include)
+include_directories(../external/googletest/googlemock/include)
 include_directories(${LUA_INCLUDE_DIR})
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
@@ -132,7 +134,7 @@ include_directories(asset_manager_test ../ST_engine/src/test)
 target_link_libraries(asset_manager_test
         ST_loaders
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -165,7 +167,7 @@ add_executable(audio_manager_test
 target_link_libraries(audio_manager_test
         ST_loaders
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -195,7 +197,7 @@ include_directories(console_test ../ST_engine/src/test)
 target_link_libraries(console_test
         ST_loaders
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -225,7 +227,7 @@ include_directories(display_manager_test ../ST_engine/src/test)
 target_link_libraries(display_manager_test
         ST_loaders
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -244,7 +246,7 @@ include_directories(renderer_sdl_test ../ST_engine/src/test ../ST_loaders/includ
 target_link_libraries(renderer_sdl_test
         ST_loaders
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -263,7 +265,7 @@ add_executable(message_test
 
 target_link_libraries(message_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY})
 
 add_executable(message_allocator_test
@@ -279,7 +281,7 @@ add_executable(message_allocator_test
 
 target_link_libraries(message_allocator_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -298,7 +300,7 @@ add_executable(subscriber_test
 
 target_link_libraries(subscriber_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY})
 
 add_executable(message_bus_test
@@ -314,7 +316,7 @@ add_executable(message_bus_test
 
 target_link_libraries(message_bus_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -328,7 +330,7 @@ add_executable(entity_test
 target_link_libraries(entity_test
         ST_util
         -pthread
-        ${GTEST_LIBRARIES})
+        gtest)
 
 add_executable(level_test
         src/main/game_manager/level/entity.cpp
@@ -353,12 +355,11 @@ add_executable(level_test
 
 target_link_libraries(level_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
-
 
 add_executable(lua_backend_test
         src/main/game_manager/level/entity.cpp
@@ -381,22 +382,23 @@ add_executable(lua_backend_test
         src/main/console/console_log.hpp
         src/main/game_manager/level/text.cpp
         src/main/game_manager/level/text.hpp
-        src/main/game_manager/game_manager.cpp
-        src/main/game_manager/game_manager.hpp
         src/main/main/timer.cpp
         src/main/main/timer.hpp
-        src/main/game_manager/lua_backend/lua_backend.hpp
-        src/main/game_manager/lua_backend/lua_backend.cpp
-        src/test/game_manager/lua_backend/lua_backend_tests.cpp)
+        src/test/game_manager/lua_backend/lua_backend_tests.cpp
+        src/test/game_manager/lua_backend/game_manager_mock.hpp)
 
 target_link_libraries(lua_backend_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
         ${LUA_LIBRARY})
+
+include_directories(lua_backend_test ../ST_engine/src
+        ../ST_engine/src/test ../ST_loaders/include)
+
 
 set(ALL_TESTS
         message_allocator_test
