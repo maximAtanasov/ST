@@ -26,10 +26,10 @@ namespace ST {
 
         ///a simple struct defining the collision box for an entity.
         struct collision_box {
-            int32_t left;
-            int32_t right;
-            int32_t top;
-            int32_t bottom;
+            int32_t left{0};
+            int32_t right{0};
+            int32_t top{0};
+            int32_t bottom{0};
         };
 
     private:
@@ -75,6 +75,7 @@ namespace ST {
         int16_t get_col_x_offset() const;
         bool collides(entity) const;
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
+        collision_box get_collision_box();
         void update_collision_box();
     };
 }
@@ -145,6 +146,14 @@ inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int1
         is_affected_by_physics = false;
     }
     update_collision_box();
+}
+
+/**
+ *
+ * @return A copy of this entity's collision box.
+ */
+inline ST::entity::collision_box ST::entity::get_collision_box(){
+    return this->collision;
 }
 
 /**
