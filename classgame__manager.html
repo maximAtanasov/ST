@@ -123,6 +123,44 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abe11ed5e089f136d461083ebfd27da24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a810f0c30c079f72a4cddbaa62d0b684f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classST_1_1level.html">ST::level</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a810f0c30c079f72a4cddbaa62d0b684f">get_level</a> () const </td></tr>
 <tr class="separator:a810f0c30c079f72a4cddbaa62d0b684f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25c4c5c82a51b0820131ecd85e7f1da1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a25c4c5c82a51b0820131ecd85e7f1da1">center_camera_on_entity</a> (uint64_t id)</td></tr>
+<tr class="separator:a25c4c5c82a51b0820131ecd85e7f1da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95a139ab6c186d1e877340db0c8df082"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95a139ab6c186d1e877340db0c8df082"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>game_manager</b> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
+<tr class="separator:a95a139ab6c186d1e877340db0c8df082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd54b3d8a6ad7de441cea6ce54799cea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd54b3d8a6ad7de441cea6ce54799cea"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>get_active_level</b> () const </td></tr>
+<tr class="separator:abd54b3d8a6ad7de441cea6ce54799cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2cb3aef2c5574b866c5465926bf2914"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2cb3aef2c5574b866c5465926bf2914"></a>
+<a class="el" href="structST_1_1level__data.html">ST::level_data</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_level_data</b> ()</td></tr>
+<tr class="separator:ab2cb3aef2c5574b866c5465926bf2914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc05ca139f550f48741f4d4f394316d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc05ca139f550f48741f4d4f394316d4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>key_pressed</b> (size_t arg) const </td></tr>
+<tr class="separator:adc05ca139f550f48741f4d4f394316d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16763d26bc1e3a2082e2ef9579004435"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16763d26bc1e3a2082e2ef9579004435"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>key_held</b> (size_t arg) const </td></tr>
+<tr class="separator:a16763d26bc1e3a2082e2ef9579004435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106b80260c1e5922ac5e135bc33eef36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a106b80260c1e5922ac5e135bc33eef36"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>key_released</b> (size_t arg) const </td></tr>
+<tr class="separator:a106b80260c1e5922ac5e135bc33eef36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0083b3b06152e4d0e8d8ee7f7d4115d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0083b3b06152e4d0e8d8ee7f7d4115d7"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_mouse_x</b> () const </td></tr>
+<tr class="separator:a0083b3b06152e4d0e8d8ee7f7d4115d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d70091586eb450092f37763b26cc41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0d70091586eb450092f37763b26cc41"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_mouse_y</b> () const </td></tr>
+<tr class="separator:af0d70091586eb450092f37763b26cc41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe4a62964b10fe72a499575b573055d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe4a62964b10fe72a499575b573055d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
+<tr class="separator:acfe4a62964b10fe72a499575b573055d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe11ed5e089f136d461083ebfd27da24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe11ed5e089f136d461083ebfd27da24"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>game_is_running</b> () const </td></tr>
+<tr class="separator:abe11ed5e089f136d461083ebfd27da24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a810f0c30c079f72a4cddbaa62d0b684f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a810f0c30c079f72a4cddbaa62d0b684f"></a>
+<a class="el" href="classST_1_1level.html">ST::level</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_level</b> () const </td></tr>
+<tr class="separator:a810f0c30c079f72a4cddbaa62d0b684f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25c4c5c82a51b0820131ecd85e7f1da1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25c4c5c82a51b0820131ecd85e7f1da1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_entity</b> (uint64_t id)</td></tr>
+<tr class="separator:a25c4c5c82a51b0820131ecd85e7f1da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -135,9 +173,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>fullscreen_status</b>
 <tr class="memitem:aaf821380bf8ad1b89edfb2f6482bb0f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf821380bf8ad1b89edfb2f6482bb0f5"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> = 0</td></tr>
 <tr class="separator:aaf821380bf8ad1b89edfb2f6482bb0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af84bf972a9aaa8f49dfc7e94a2458434"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af84bf972a9aaa8f49dfc7e94a2458434"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_level_data_calls</b> = 0</td></tr>
+<tr class="separator:af84bf972a9aaa8f49dfc7e94a2458434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62aa91537f83495dce1aff4973bcde87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62aa91537f83495dce1aff4973bcde87"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_entity_calls</b> = 0</td></tr>
+<tr class="separator:a62aa91537f83495dce1aff4973bcde87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is responsible for managing all levels and the lua backend, it is the heart of the engine. </p>
+<p>This is a mock class of the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a>.</p>
 <p>Messages this subsystem listens to: <br />
 </p>
 <p><b>LOAD_LEVEL</b> - Loads a level given it's name.</p>
@@ -198,7 +243,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 <p><b>FULLSCREEN_STATUS</b> - A message containing the current fullscreen status. <br />
 </p>
 <p>Message must contain: a pointer to a <b>bool</b>. <br />
- </p>
+</p>
+<p>It contains the exact same function definitions as the real <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a>, but not the implementations. This is need to properly test the <a class="el" href="classlua__backend.html" title="This class handles all interaction with lua. ">lua_backend</a>. GMock is not used as it requires to use virtual methods (interfaces) to create mocks. We assume that this mock contains the same definitions as the real thing, but this is not checked anywhere and is done per hand. (A compile time error will occur if a method/attribute is not found, but things like wrong data types in the method arguments may not be noticed easily). </p>
 
 <p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00083">83</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -225,7 +271,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
         </tr>
       </table>
 </div><div class="memdoc">
-<p>initializes the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a> and loads the level "main" </p><dl class="params"><dt>Parameters</dt><dd>
+<p>initializes the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a> and loads the level specified as first ("main" is default) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
     <tr><td class="paramname">tsk_mngr</td><td>A pointer to the global task_mngr. </td></tr>
@@ -233,7 +279,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="game__manager_8cpp_source.html#l00018">18</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8cpp_source.html#l00020">20</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -256,6 +302,38 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a25c4c5c82a51b0820131ecd85e7f1da1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void game_manager::center_camera_on_entity </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Center the camera on an entity. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The ID of the entity to center on. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00224">224</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="abe11ed5e089f136d461083ebfd27da24"></a>
 <div class="memitem">
 <div class="memproto">
@@ -278,7 +356,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Tells is if the game is still running or not. This is the main condition for running the main loop (the entire engine). </p><dl class="section return"><dt>Returns</dt><dd>True if running, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00172">172</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00173">173</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -304,7 +382,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Get the name of the active level. </p><dl class="section return"><dt>Returns</dt><dd>The name of the current level. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00141">141</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00142">142</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -330,7 +408,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A poitner to the current level. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00163">163</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00164">164</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -356,7 +434,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Returns the data of the current level. </p><dl class="section return"><dt>Returns</dt><dd>A pointer to the data of the current level. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00156">156</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00157">157</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -382,7 +460,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Get the current mouse X position. </p><dl class="section return"><dt>Returns</dt><dd>The X position of the mouse cursor. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00180">180</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00181">181</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -408,7 +486,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Get the current mouse Y position. </p><dl class="section return"><dt>Returns</dt><dd>The Y position of the mouse cursor. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00188">188</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00189">189</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -441,7 +519,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if held, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00206">206</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00207">207</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -474,7 +552,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if pressed, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00197">197</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00198">198</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -507,7 +585,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if released, false otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00215">215</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00216">216</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -533,12 +611,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>volume_level</b> =
 </div><div class="memdoc">
 <p>Listens to messages and runs one iteration of loop.lua for the specific level. </p>
 
-<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00132">132</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
+<p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00133">133</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/main/game_manager/<a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a></li>
+<li>src/test/game_manager/lua_backend/<a class="el" href="game__manager__mock_8hpp_source.html">game_manager_mock.hpp</a></li>
 <li>src/main/game_manager/<a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a></li>
 </ul>
 </div><!-- contents -->

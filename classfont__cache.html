@@ -98,14 +98,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4016efc59bee296dbe1df0d3cff0d38a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a4016efc59bee296dbe1df0d3cff0d38a">set_max</a> (int max)</td></tr>
-<tr class="separator:a4016efc59bee296dbe1df0d3cff0d38a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62d68ad8d35ed596e202ca20f9fc3515"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a62d68ad8d35ed596e202ca20f9fc3515">set_max</a> (uint32_t max)</td></tr>
+<tr class="separator:a62d68ad8d35ed596e202ca20f9fc3515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22128e8a4385b2b081d77da438fd3a82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a22128e8a4385b2b081d77da438fd3a82">~font_cache</a> ()</td></tr>
 <tr class="separator:a22128e8a4385b2b081d77da438fd3a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedf17180fd9df0cfe88ef2e287a5469c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#aedf17180fd9df0cfe88ef2e287a5469c">cache_string</a> (std::string, SDL_Texture *, std::string, int)</td></tr>
-<tr class="separator:aedf17180fd9df0cfe88ef2e287a5469c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a380fe3735d706ed0381ab2f372cb694a"><td class="memItemLeft" align="right" valign="top">SDL_Texture *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a380fe3735d706ed0381ab2f372cb694a">get_cached_string</a> (std::string, std::string, int)</td></tr>
-<tr class="separator:a380fe3735d706ed0381ab2f372cb694a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a590428205f3055f2bd94a77e7ef3abe7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#a590428205f3055f2bd94a77e7ef3abe7">cache_string</a> (std::string str, SDL_Texture *texture, std::string font, uint8_t size)</td></tr>
+<tr class="separator:a590428205f3055f2bd94a77e7ef3abe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af258b4c92b446a32657ceb26f1fe02fd"><td class="memItemLeft" align="right" valign="top">SDL_Texture *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfont__cache.html#af258b4c92b446a32657ceb26f1fe02fd">get_cached_string</a> (std::string str, std::string font, uint8_t size)</td></tr>
+<tr class="separator:af258b4c92b446a32657ceb26f1fe02fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a770a89bf190cb98865c5ab91cf85a2d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a770a89bf190cb98865c5ab91cf85a2d8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
 <tr class="separator:a770a89bf190cb98865c5ab91cf85a2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,7 +135,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aedf17180fd9df0cfe88ef2e287a5469c"></a>
+<a class="anchor" id="a590428205f3055f2bd94a77e7ef3abe7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -143,25 +143,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
           <td class="memname">void font_cache::cache_string </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>STR</em>, </td>
+          <td class="paramname"><em>str</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">SDL_Texture *&#160;</td>
-          <td class="paramname"><em>TEXTURE</em>, </td>
+          <td class="paramname"><em>texture</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>FONT</em>, </td>
+          <td class="paramname"><em>font</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>SIZE</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -184,7 +184,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 
 </div>
 </div>
-<a class="anchor" id="a380fe3735d706ed0381ab2f372cb694a"></a>
+<a class="anchor" id="af258b4c92b446a32657ceb26f1fe02fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -192,19 +192,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
           <td class="memname">SDL_Texture * font_cache::get_cached_string </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>STR</em>, </td>
+          <td class="paramname"><em>str</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>FONT</em>, </td>
+          <td class="paramname"><em>font</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>SIZE</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -227,14 +227,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 
 </div>
 </div>
-<a class="anchor" id="a4016efc59bee296dbe1df0d3cff0d38a"></a>
+<a class="anchor" id="a62d68ad8d35ed596e202ca20f9fc3515"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void font_cache::set_max </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>max</em></td><td>)</td>
           <td></td>
         </tr>
