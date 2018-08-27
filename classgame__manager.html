@@ -182,7 +182,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is responsible for managing all levels and the lua backend, it is the heart of the engine. </p>
-<p>This is a mock class of the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a>.</p>
 <p>Messages this subsystem listens to: <br />
 </p>
 <p><b>LOAD_LEVEL</b> - Loads a level given it's name.</p>
@@ -244,7 +243,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </p>
 <p>Message must contain: a pointer to a <b>bool</b>. <br />
 </p>
-<p>It contains the exact same function definitions as the real <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a>, but not the implementations. This is need to properly test the <a class="el" href="classlua__backend.html" title="This class handles all interaction with lua. ">lua_backend</a>. GMock is not used as it requires to use virtual methods (interfaces) to create mocks. We assume that this mock contains the same definitions as the real thing, but this is not checked anywhere and is done per hand. (A compile time error will occur if a method/attribute is not found, but things like wrong data types in the method arguments may not be noticed easily). </p>
+<p>MOCK: contained in <a class="el" href="game__manager__mock_8hpp_source.html">game_manager_mock.hpp</a> This is a mock class of the <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a>. It contains the exact same function definitions as the real <a class="el" href="classgame__manager.html" title="This class is responsible for managing all levels and the lua backend, it is the heart of the engine...">game_manager</a>, but not the implementations. This is need to properly test the <a class="el" href="classlua__backend.html" title="This class handles all interaction with lua. ">lua_backend</a>. GMock is not used as it requires to use virtual methods (interfaces) to create mocks. We assume that this mock contains the same definitions as the real thing, but this is not checked anywhere and is done per hand. (A compile time error will occur if a method/attribute is not found, but things like wrong data types in the method arguments may not be noticed easily). </p>
 
 <p>Definition at line <a class="el" href="game__manager_8hpp_source.html#l00083">83</a> of file <a class="el" href="game__manager_8hpp_source.html">game_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
