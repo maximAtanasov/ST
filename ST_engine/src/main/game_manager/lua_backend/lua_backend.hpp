@@ -53,6 +53,8 @@ extern "C" int getFullscreenStatusLua(lua_State* L);
 extern "C" int setDarknessLua(lua_State* L);
 extern "C" int hashStringLua(lua_State* L);
 extern "C" int setGravityLua(lua_State* L);
+extern "C" int pausePhysicsLua(lua_State* L);
+extern "C" int unpausePhysicsLua(lua_State* L);
 extern "C" int setLevelFloorLua(lua_State* L);
 extern "C" int setBackgroundLua(lua_State* L);
 extern "C" int setOverlayLua(lua_State* L);
@@ -63,7 +65,7 @@ extern "C" int load_levelLua(lua_State* L);
 extern "C" int unload_levelLua(lua_State* L);
 extern "C" int endGameLua(lua_State* L);
 extern "C" int setLevelsizeLua(lua_State* L);
-extern "C" int centreCameraLua(lua_State* L);
+extern "C" int centerCameraLua(lua_State* L);
 extern "C" int showMouseCursorLua(lua_State* L);
 extern "C" int hideMouseCursorLua(lua_State* L);
 extern "C" int setBrightnessLua(lua_State* L);
@@ -82,6 +84,7 @@ extern "C" int keyReleasedLua(lua_State* L);
 extern "C" int getMouseXLua(lua_State* L);
 extern "C" int getMouseYLua(lua_State* L);
 extern "C" int setVolumeLua(lua_State* L);
+
 
 //Text Object lua bindings definitions
 
@@ -114,41 +117,38 @@ extern "C" int isLightStaticLua(lua_State* L);
 
 //general
 extern "C" int createEntityLua(lua_State* L);
-extern "C" int setActiveLua(lua_State* L);
-extern "C" int setXLua(lua_State* L);
-extern "C" int setYLua(lua_State* L);
-extern "C" int getXLua(lua_State* L);
-extern "C" int getYLua(lua_State* L);
-extern "C" int setStaticLua(lua_State* L);
-extern "C" int setVelocityXLua(lua_State* L);
-extern "C" int setVelocityYLua(lua_State* L);
-extern "C" int getVelocityXLua(lua_State* L);
-extern "C" int getVelocityYLua(lua_State* L);
+extern "C" int setEntityActiveLua(lua_State *L);
+extern "C" int setEntityXLua(lua_State *L);
+extern "C" int setEntityYLua(lua_State *L);
+extern "C" int getEntityXLua(lua_State *L);
+extern "C" int getEntityYLua(lua_State *L);
+extern "C" int setEntityStaticLua(lua_State *L);
+extern "C" int setEntityVelocityXLua(lua_State *L);
+extern "C" int setEntityVelocityYLua(lua_State *L);
+extern "C" int getEntityVelocityXLua(lua_State *L);
+extern "C" int getEntityVelocityYLua(lua_State *L);
 
 //texture
-extern "C" int setTextureLua(lua_State* L);
-extern "C" int setVisibleLua(lua_State* L);
-extern "C" int getTexWLua(lua_State* L);
-extern "C" int getTexHLua(lua_State* L);
-extern "C" int setTexWLua(lua_State* L);
-extern "C" int setTexHLua(lua_State* L);
+extern "C" int setEntityTextureLua(lua_State *L);
+extern "C" int setEntityVisibleLua(lua_State *L);
+extern "C" int getEntityTexWLua(lua_State *L);
+extern "C" int getEntityTexHLua(lua_State *L);
+extern "C" int setEntityTexWLua(lua_State *L);
+extern "C" int setEntityTexHLua(lua_State *L);
 
 //physics
-extern "C" int setCollisionBoxLua(lua_State* L);
+extern "C" int setEntityCollisionBoxLua(lua_State *L);
 extern "C" int entityCollidesLua(lua_State* L);
-extern "C" int setAffectedByPhysicsLua(lua_State* L);
-extern "C" int getColXLua(lua_State* L);
-extern "C" int getColYLua(lua_State* L);
-extern "C" int getMassLua(lua_State* L);
-extern "C" int setMassLua(lua_State* L);
-
-extern "C" int pausePhysicsLua(lua_State* L);
-extern "C" int unpausePhysicsLua(lua_State* L);
+extern "C" int setEntityAffectedByPhysicsLua(lua_State *L);
+extern "C" int getEntityColXLua(lua_State *L);
+extern "C" int getEntityColYLua(lua_State *L);
+extern "C" int getEntityMassLua(lua_State *L);
+extern "C" int setEntityMassLua(lua_State *L);
 
 //animation
-extern "C" int setAnimationLua(lua_State* L);
-extern "C" int setSpriteNumLua(lua_State* L);
-extern "C" int setAnimationNumLua(lua_State* L);
+extern "C" int setEntityAnimationLua(lua_State *L);
+extern "C" int setEntitySpriteNumLua(lua_State *L);
+extern "C" int setEntityAnimationNumLua(lua_State *L);
 
 #ifdef __DEBUG
 extern "C" int showCollisionsLua(lua_State* L);
@@ -156,5 +156,7 @@ extern "C" int logLua(lua_State* L);
 extern "C" int showFpsLua(lua_State* L);
 extern "C" int consoleClearLua(lua_State*);
 #endif
+
+
 
 #endif

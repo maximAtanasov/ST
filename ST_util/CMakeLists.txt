@@ -12,8 +12,8 @@ project(ST_util)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include(GoogleTest)
 enable_testing()
-find_package(GTest REQUIRED)
 
 add_library(ST_util STATIC
         include/ST_util/debug_switch.hpp

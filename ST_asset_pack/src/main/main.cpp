@@ -56,7 +56,7 @@ int asset_pack_main(int argc, char *argv[]) {
             if(ST::unpack_binary_to_disk(path) == 0){
                 fprintf(stdout, "Binary unpacked!\n");
             } else{
-                fprintf(stderr, "Error unpacking!");
+                fprintf(stderr, "Error unpacking!\n");
             }
             #elif defined(TESTING)
             fprintf(stdout, "Binary unpacked!\n");

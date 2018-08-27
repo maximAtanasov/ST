@@ -6,8 +6,9 @@
  * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
-
+#include <console/log.hpp>
 #include <physics_manager/physics_manager.hpp>
+
 
 /**
  * Initializes the physics manager.
@@ -23,34 +24,34 @@ physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
 	gMessage_bus->subscribe(PAUSE_PHYSICS, &msg_sub);
 	gMessage_bus->subscribe(UNPAUSE_PHYSICS, &msg_sub);
     gravity = 0;
-    friction = 3;
+    friction = 4;
     level_floor = 0;
 }
 
 /**
  * Process horizontal collisions for all entities.
  */
-void physics_manager::process_horizontal() {
+void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
     for(auto& i : *entities) {
         //handle horizontal velocity
-        if (i.is_affected_by_physics()) {
-            if (i.get_velocity_x() > 0) {
-                for (int j = 0; j < i.get_velocity_x(); j++) {
-                    if (entity_set_x(i.get_x() + 1, i.get_ID(), entities) == 0) {
+        if (i.is_affected_by_physics) {
+            if (i.velocity_x > 0) {
+                for (int j = 0; j < i.velocity_x; j++) {
+                    if (entity_set_x(i.x + 1, i.get_ID(), entities) == 0) {
                         break;
                     }
                 }
-                for (int j = 0; j < friction && i.get_velocity_x() > 0; j++) {
-                    (i.set_velocity_x(static_cast<int16_t>(i.get_velocity_x() - 1)));
+                for (int j = 0; j < friction && i.velocity_x > 0; j++) {
+                    (i.velocity_x = (static_cast<int16_t>(i.velocity_x - 1)));
                 }
-            } else if (i.get_velocity_x() < 0) {
-                for (int j = 0; j > i.get_velocity_x(); j--) {
-                    if (entity_set_x(i.get_x() - 1, i.get_ID(), entities) == 0) {
+            } else if (i.velocity_x < 0) {
+                for (int j = 0; j > i.velocity_x; j--) {
+                    if (entity_set_x(i.x - 1, i.get_ID(), entities) == 0) {
                         break;
                     }
                 }
-                for (int j = 0; j < friction && i.get_velocity_x() < 0; j++) {
-                    (i.set_velocity_x(static_cast<int16_t>(i.get_velocity_x() + 1)));
+                for (int j = 0; j < friction && i.velocity_x < 0; j++) {
+                    (i.velocity_x = (static_cast<int16_t>(i.velocity_x + 1)));
                 }
             }
         }
@@ -60,21 +61,21 @@ void physics_manager::process_horizontal() {
 /**
  * Process vertical collisions for all entities.
  */
-void physics_manager::process_vertical() {
+void physics_manager::process_vertical(std::vector<ST::entity>* entities) {
     for(auto& i : *entities) {
-        if (i.is_affected_by_physics()) {
+        if (i.is_affected_by_physics) {
             //handle vertical velocity
-            const int16_t objectVelocity = i.get_velocity_y() + gravity;
+            const int16_t objectVelocity = i.velocity_y + gravity;
             if (objectVelocity < 0) {
                 for (int j = 0; j > objectVelocity; j--) {
-                    if (entity_set_y(i.get_y() - 1, i.get_ID(), entities) == 0) {
+                    if (entity_set_y(i.y - 1, i.get_ID(), entities) == 0) {
                         break;
                     }
                 }
             } else if (objectVelocity > 0) {
                 for (int j = 0; j < objectVelocity; j++) {
-                    if (i.get_y() + i.get_col_y_offset() < level_floor) {
-                        if (entity_set_y(i.get_y() + 1, i.get_ID(), entities) == 0) {
+                    if (i.y + i.get_col_y_offset() < level_floor) {
+                        if (entity_set_y(i.y + 1, i.get_ID(), entities) == 0) {
                             break;
                         }
                     }
@@ -83,7 +84,7 @@ void physics_manager::process_vertical() {
             //decrease velocity of objects (apply gravity really)
             int16_t realVelocity = objectVelocity - gravity;
             if (realVelocity < 0) {
-                i.set_velocity_y(static_cast<int16_t>(realVelocity + 2));
+                i.velocity_y = (static_cast<int16_t>(realVelocity + 2));
             }
         }
     }
@@ -120,11 +121,11 @@ void physics_manager::handle_messages(){
  * @return 0 if there was no collision and X was set, 1 otherwise.
  */
 int physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity>* entities){
-    int currentX = entities->at(ID).get_x();
-    entities->at(ID).set_x(X);
-    if(entities->at(ID).is_affected_by_physics())
+    int32_t currentX = entities->at(ID).x;
+    entities->at(ID).x = (X);
+    if(entities->at(ID).is_affected_by_physics)
         if(check_collision(ID, entities) == 0){//if there is a collision, don't modify x
-            entities->at(ID).set_x(currentX);
+            entities->at(ID).x = (currentX);
             return 0;
         }
     return 1;
@@ -138,11 +139,11 @@ int physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity
  * @return 0 if there was no collision and X was set, 1 otherwise.
  */
 int physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity>* entities){
-    int currentY = entities->at(ID).get_y();
-    entities->at(ID).set_y(Y);
-    if(entities->at(ID).is_affected_by_physics()){
+    int32_t currentY = entities->at(ID).y;
+    entities->at(ID).y = (Y);
+    if(entities->at(ID).is_affected_by_physics){
         if(check_collision(ID, entities) == 0){//if there is a collision, don't modify y
-            entities->at(ID).set_y(currentY);
+            entities->at(ID).y = (currentY);
             return 0;
         }
 	}
@@ -156,9 +157,11 @@ int physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity
  * @return 0 if there was a collision, -1 otherwise.
  */
 int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entities){
+    entities->at(ID).update_collision_box();
     for(unsigned int i = 0; i < entities->size(); i++){
         ST::entity* temp = &entities->at(i);
-        if(temp->is_affected_by_physics()){
+        temp->update_collision_box();
+        if(temp->is_affected_by_physics){
             if(ID == i){
                 continue;
             }

@@ -15,10 +15,9 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(../ST_loaders/include)
 include_directories(../ST_util/include)
+include(GoogleTest)
 enable_testing()
 
-
-find_package(GTest REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
@@ -35,6 +34,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/main)
 target_link_libraries(ST_asset_pack
         ST_loaders
         ST_util
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
@@ -47,12 +47,11 @@ add_executable(ST_asset_pack_tests
 target_link_libraries(ST_asset_pack_tests
         ST_loaders
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
         ${SDL2_TTF_LIBRARY})
-
 
 gtest_add_tests(TARGET ST_asset_pack_tests)
 

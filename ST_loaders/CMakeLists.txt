@@ -10,13 +10,13 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(ST_loaders)
 set(CMAKE_CXX_STANDARD 14)
+include(GoogleTest)
 enable_testing()
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(../ST_util/include)
 
-find_package(GTest REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
@@ -33,13 +33,15 @@ add_executable(loaders_test
 
 target_link_libraries(loaders_test
         ST_util
-        ${GTEST_LIBRARIES}
+        gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
 set_target_properties(loaders_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
+
+gtest_add_tests(TARGET loaders_test)
 
 add_dependencies(ST_loaders loaders_test)
 

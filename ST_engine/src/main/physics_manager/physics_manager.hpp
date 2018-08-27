@@ -11,7 +11,6 @@
 #define PHYSICS_DEF
 
 #include <defs.hpp>
-#include <game_manager/level/level.hpp>
 #include <game_manager/level/entity.hpp>
 #include <task_manager/task_manager.hpp>
 
@@ -48,19 +47,18 @@ class physics_manager{
         int8_t friction = 0;
         int32_t level_floor = 0;
 		bool physics_paused = false;
-        std::vector<ST::entity>* entities{};
-        
+
         int check_collision(uint64_t, std::vector<ST::entity>* entities);
         int entity_set_x(int32_t x, uint64_t, std::vector<ST::entity>* entities);
         int entity_set_y(int32_t y, uint64_t, std::vector<ST::entity>* entities);
 
-		void process_horizontal();
-		void process_vertical();
+		void process_horizontal(std::vector<ST::entity>* entities);
+		void process_vertical(std::vector<ST::entity>* entities);
         void handle_messages();
 
     public:
         physics_manager(message_bus* msg_bus, task_manager* tsk_mngr);
-        void update(ST::level_data* data);
+        void update(std::vector<ST::entity>* data);
 };
 
 //INLINED METHODS
@@ -69,14 +67,12 @@ class physics_manager{
  * Responds to messages from the subscriber object and updates the physics if they are not paused.
  * @param data A pointer to the level data. (containing the entities that we need).
  */
-inline void physics_manager::update(ST::level_data* data){
+inline void physics_manager::update(std::vector<ST::entity>* data){
 	handle_messages();
-	if(physics_paused){
-		return;
+	if(!physics_paused){
+		process_horizontal(data);
+		process_vertical(data);
 	}
-	entities = &data->entities;
-	process_horizontal();
-	process_vertical();
 }
 
 #endif //PHYSICS_DEF
