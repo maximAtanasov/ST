@@ -17,8 +17,11 @@
 #include <game_manager/level/level.hpp>
 #include <game_manager/level/level_data.hpp>
 
-///This is a mock class of the game_manager
 /**
+ *
+ * MOCK:
+ * contained in game_manager_mock.hpp
+ * This is a mock class of the game_manager.
  * It contains the exact same function definitions as the real game_manager, but not the implementations.
  * This is need to properly test the lua_backend.
  * GMock is not used as it requires to use virtual methods (interfaces) to create mocks.
