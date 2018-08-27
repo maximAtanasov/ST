@@ -80,8 +80,9 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "showMouseCursor", showMouseCursorLua);
     lua_register(L, "hideMouseCursor", hideMouseCursorLua);
     lua_register(L, "endGame", endGameLua);
-    lua_register(L, "centreCamera", centreCameraLua); //TODO: NOT TESTED
-    lua_register(L, "setLevelSize", setLevelsizeLua); //TODO: NOT TESTED
+    lua_register(L, "centerCamera", centerCameraLua);
+    lua_register(L, "centreCamera", centerCameraLua);
+    lua_register(L, "setLevelSize", setLevelsizeLua);
     lua_register(L, "setLevelFloor", setLevelFloorLua);
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
@@ -96,11 +97,11 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setOverlay", setOverlayLua);
 
     //Input functions
-    lua_register(L, "getMouseX", getMouseXLua); //TODO: NOT TESTED
-    lua_register(L, "getMouseY", getMouseYLua); //TODO: NOT TESTED
-    lua_register(L, "keyHeld", keyHeldLua); //TODO: NOT TESTED
-    lua_register(L, "keyPressed", keyPressedLua); //TODO: NOT TESTED
-    lua_register(L, "keyReleased", keyReleasedLua); //TODO: NOT TESTED
+    lua_register(L, "getMouseX", getMouseXLua);
+    lua_register(L, "getMouseY", getMouseYLua);
+    lua_register(L, "keyHeld", keyHeldLua);
+    lua_register(L, "keyPressed", keyPressedLua);
+    lua_register(L, "keyReleased", keyReleasedLua);
 
     //Audio functions
     lua_register(L, "playSound", playSoundLua);
@@ -114,29 +115,29 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     //lights
     lua_register(L, "setDarkness", setDarknessLua);
     lua_register(L, "enableLighting", enableLightingLua);
-    lua_register(L, "createLight", createLightLua); //TODO: NOT TESTED
-    lua_register(L, "setLightOriginX", setLightOriginXLua); //TODO: NOT TESTED
-    lua_register(L, "getLightOriginX", getLightOriginXLua); //TODO: NOT TESTED
-    lua_register(L, "setLightOriginY", setLightOriginYLua); //TODO: NOT TESTED
-    lua_register(L, "getLightOriginY", getLightOriginYLua); //TODO: NOT TESTED
-    lua_register(L, "setLightIntensity", setLightIntensityLua); //TODO: NOT TESTED
-    lua_register(L, "getLightIntensity", getLightIntensityLua); //TODO: NOT TESTED
-    lua_register(L, "setLightBrightness", setLightBrightnessLua); //TODO: NOT TESTED
-    lua_register(L, "getLightBrightness", getLightBrightnessLua); //TODO: NOT TESTED
-    lua_register(L, "setLightRadius", setLightRadiusLua); //TODO: NOT TESTED
-    lua_register(L, "getLightRadius", getLightRadiusLua); //TODO: NOT TESTED
-    lua_register(L, "setLightStatic", setLightStaticLua); //TODO: NOT TESTED
-    lua_register(L, "isLightStatic", isLightStaticLua); //TODO: NOT TESTED
+    lua_register(L, "createLight", createLightLua);
+    lua_register(L, "setLightOriginX", setLightOriginXLua);
+    lua_register(L, "getLightOriginX", getLightOriginXLua);
+    lua_register(L, "setLightOriginY", setLightOriginYLua);
+    lua_register(L, "getLightOriginY", getLightOriginYLua);
+    lua_register(L, "setLightIntensity", setLightIntensityLua);
+    lua_register(L, "getLightIntensity", getLightIntensityLua);
+    lua_register(L, "setLightBrightness", setLightBrightnessLua);
+    lua_register(L, "getLightBrightness", getLightBrightnessLua);
+    lua_register(L, "setLightRadius", setLightRadiusLua);
+    lua_register(L, "getLightRadius", getLightRadiusLua);
+    lua_register(L, "setLightStatic", setLightStaticLua);
+    lua_register(L, "isLightStatic", isLightStaticLua);
 
     //Text funtions
-    lua_register(L, "createTextObject", createTextObjectLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectColor", setTextObjectColorLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectText", setTextObjectTextLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectFont", setTextObjectFontLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectFontSize", setTextObjectFontSizeLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectX", setTextObjectXLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectY", setTextObjectYLua); //TODO: NOT TESTED
-    lua_register(L, "setTextObjectVisible", setTextObjectVisibleLua); //TODO: NOT TESTED
+    lua_register(L, "createTextObject", createTextObjectLua);
+    lua_register(L, "setTextObjectColor", setTextObjectColorLua);
+    lua_register(L, "setTextObjectText", setTextObjectTextLua);
+    lua_register(L, "setTextObjectFont", setTextObjectFontLua);
+    lua_register(L, "setTextObjectFontSize", setTextObjectFontSizeLua);
+    lua_register(L, "setTextObjectX", setTextObjectXLua);
+    lua_register(L, "setTextObjectY", setTextObjectYLua);
+    lua_register(L, "setTextObjectVisible", setTextObjectVisibleLua);
 
     //Entity functions
 
@@ -1259,18 +1260,9 @@ extern "C" int setBrightnessLua(lua_State* L){
  * @param L The global Lua State.
  * @return Always 0.
  */
-extern "C" int centreCameraLua(lua_State* L){
+extern "C" int centerCameraLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    gGame_managerLua->get_level_data()->Camera.x = gGame_managerLua->get_level_data()->entities.at(id).x - 1920/4;
-    while(gGame_managerLua->get_level_data()->Camera.x < gGame_managerLua->get_level_data()->Camera.limitX1 + 1)
-        gGame_managerLua->get_level_data()->Camera.x++;
-    while(gGame_managerLua->get_level_data()->Camera.x > gGame_managerLua->get_level_data()->Camera.limitX2 - 1)
-        gGame_managerLua->get_level_data()->Camera.x--;
-    gGame_managerLua->get_level_data()->Camera.y = gGame_managerLua->get_level_data()->entities.at(id).y - 1080;
-    while(gGame_managerLua->get_level_data()->Camera.y < gGame_managerLua->get_level_data()->Camera.limitY1 + 1)
-        gGame_managerLua->get_level_data()->Camera.y++;
-    while(gGame_managerLua->get_level_data()->Camera.y > gGame_managerLua->get_level_data()->Camera.limitY2 - 1)
-        gGame_managerLua->get_level_data()->Camera.y--;
+    gGame_managerLua->center_camera_on_entity(id);
     return 0;
 }
 
@@ -1281,8 +1273,8 @@ extern "C" int centreCameraLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int setLevelsizeLua(lua_State* L){
-    auto x = static_cast<int>(lua_tointeger(L, 1));
-    auto y = static_cast<int>(lua_tointeger(L, 2));
+    auto x = static_cast<int32_t>(lua_tointeger(L, 1));
+    auto y = static_cast<int32_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->Camera.limitX2 = x;
     gGame_managerLua->get_level_data()->Camera.limitY2 = y;
     return 0;

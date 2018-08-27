@@ -670,8 +670,11 @@ TEST_F(lua_backend_test, test_call_function_setBrightness){
 }
 
 TEST_F(lua_backend_test, test_call_function_setOverlay){
+    std::hash<std::string> hash_f;
     test_subject.run_script("setOverlay(\"some_bg.webp\", 3)");
     ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(3, game_mngr->get_level_data()->overlay_spriteNum);
+    ASSERT_EQ(hash_f("some_bg.webp"), game_mngr->get_level_data()->overlay);
 }
 
 TEST_F(lua_backend_test, test_call_function_getVolume){
@@ -681,6 +684,480 @@ TEST_F(lua_backend_test, test_call_function_getVolume){
     //Check result
     ASSERT_EQ(123, lua_tointeger(get_lua_state(), -1));
 }
+
+TEST_F(lua_backend_test, test_call_function_centerCamera){
+    test_subject.run_script("centerCamera(5)");  //Test US spelling
+    test_subject.run_script("centreCamera(2)");  //Test UK spelling
+
+    //Check result
+    ASSERT_EQ(2, game_mngr->center_camera_on_entity_calls);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLevelSize){
+    test_subject.run_script("setLevelSize(5000, 5000)");
+
+    //Check result
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(5000, game_mngr->get_level_data()->Camera.limitX2);
+    ASSERT_EQ(5000, game_mngr->get_level_data()->Camera.limitY2);
+}
+
+TEST_F(lua_backend_test, test_call_function_getMouseX){
+    test_subject.run_script("return getMouseX()");
+
+    //Check result
+    ASSERT_EQ(100, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+
+TEST_F(lua_backend_test, test_call_function_getMouseY){
+    test_subject.run_script("return getMouseY()");
+
+    //Check result
+    ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_keyHeld){
+    test_subject.run_script("return keyHeld(\"SOME_KEY\")");
+
+    //Check result
+    ASSERT_TRUE(lua_toboolean(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_keyPressed){
+    test_subject.run_script("return keyPressed(\"SOME_KEY\")");
+
+    //Check result
+    ASSERT_TRUE(lua_toboolean(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_keyReleased){
+    test_subject.run_script("return keyReleased(\"SOME_KEY\")");
+
+    //Check result
+    ASSERT_TRUE(lua_toboolean(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+
+TEST_F(lua_backend_test, test_call_function_createLight){
+    test_subject.run_script("createLight(0, 500, 600, 100, 50, 400)");
+
+    //Check results
+    ASSERT_EQ(1, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLightOriginX){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("setLightOriginX(0, 1000)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(1000, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLightOriginY){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("setLightOriginY(0, 1000)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(1000, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_getLightOriginX){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return getLightOriginX(0)");
+
+    //Check results
+    ASSERT_EQ(500, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Make sure nothing has changed in the light object
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_getLightOriginY){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return getLightOriginY(0)");
+
+    //Check results
+    ASSERT_EQ(600, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Make sure nothing has changed in the light object
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLightIntensity){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("setLightIntensity(0, 1000)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(1000, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_getLightIntensity){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return getLightIntensity(0)");
+
+    //Check results
+    ASSERT_EQ(50, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Make sure nothing has changed in the light object
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_getLightRadius){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return getLightRadius(0)");
+
+    //Check results
+    ASSERT_EQ(100, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Make sure nothing has changed in the light object
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLightRadius){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return setLightRadius(0, 300)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(300, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_getLightBrightness){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return getLightBrightness(0)");
+
+    //Check results
+    ASSERT_EQ(400, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Make sure nothing has changed in the light object
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLightBrightness){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return setLightBrightness(0, 300)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(300, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_isLightStatic){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return isLightStatic(0)");
+
+    //Check results
+    ASSERT_FALSE(lua_toboolean(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Make sure nothing has changed in the light object
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLightStatic){
+    //Set up
+    game_mngr->get_level_data()->lights.emplace_back(ST::light(0, 500, 600, 100, 50, 400));
+
+    //Test
+    test_subject.run_script("return setLightStatic(0, true)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->lights.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->lights.at(0).origin_x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->lights.at(0).origin_y);
+    ASSERT_EQ(100, game_mngr->get_level_data()->lights.at(0).radius);
+    ASSERT_EQ(50, game_mngr->get_level_data()->lights.at(0).intensity);
+    ASSERT_EQ(400, game_mngr->get_level_data()->lights.at(0).brightness);
+    ASSERT_TRUE(game_mngr->get_level_data()->lights.at(0).is_static);
+}
+
+TEST_F(lua_backend_test, test_call_function_createTextObject){
+    test_subject.run_script("createTextObject(0, 500, 600, \"SOME_TEXT\", \"SOME_FONT.ttf\", 40)");
+
+    //Check results
+    ASSERT_EQ(1, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+            "SOME_TEXT", "SOME_FONT.ttf", 40));
+
+    //Test
+    test_subject.run_script("setTextObjectColor(0, 100, 110, 120, 130)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(100, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(110, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(120, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(130, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectText){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+    //Test
+    test_subject.run_script("setTextObjectText(0, \"NEW_TEXT\")");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("NEW_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+    //Test
+    test_subject.run_script("setTextObjectFont(0, \"NEW_FONT.ttf\")");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("NEW_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectFontSize){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+    //Test
+    test_subject.run_script("setTextObjectFontSize(0, 30)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(30, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectX){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+    //Test
+    test_subject.run_script("setTextObjectX(0, 123)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(123, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectY){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+    //Test
+    test_subject.run_script("setTextObjectY(0, 123)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(123, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_TRUE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
+TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
+    //Set up
+    game_mngr->get_level_data()->text_objects.emplace_back(ST::text(0, 500, 600, {255,255,255,255},
+                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+    //Test
+    test_subject.run_script("setTextObjectVisible(0, false)");
+
+    //Check results
+    ASSERT_EQ(2, game_mngr->get_level_data_calls);
+    ASSERT_EQ(1, game_mngr->get_level_data()->text_objects.size());
+    ASSERT_EQ(500, game_mngr->get_level_data()->text_objects.at(0).x);
+    ASSERT_EQ(600, game_mngr->get_level_data()->text_objects.at(0).y);
+    ASSERT_EQ("SOME_TEXT", game_mngr->get_level_data()->text_objects.at(0).text_string);
+    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level_data()->text_objects.at(0).font);
+    ASSERT_EQ(40, game_mngr->get_level_data()->text_objects.at(0).font_size);
+    ASSERT_FALSE(game_mngr->get_level_data()->text_objects.at(0).is_visible);
+
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.r);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.g);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.b);
+    ASSERT_EQ(255, game_mngr->get_level_data()->text_objects.at(0).color.a);
+}
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

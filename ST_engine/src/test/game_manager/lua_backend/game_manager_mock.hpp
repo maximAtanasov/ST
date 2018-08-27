@@ -19,6 +19,8 @@ private:
     void reset_keys(){}
     void run_level_loop(){}
 
+    ST::level_data* data = new ST::level_data();
+
 public:
 
     bool fullscreen_status = false;
@@ -31,20 +33,22 @@ public:
 
     ST::level_data* get_level_data() {
         get_level_data_calls++;
-        return new ST::level_data();
+        return data;
     }
 
-    bool key_pressed(size_t arg) const {};
-    bool key_held(size_t arg) const {};
-    bool key_released(size_t arg) const {};
-    int32_t get_mouse_x() const {};
-    int32_t get_mouse_y() const {};
+    bool key_pressed(size_t arg) const { return true;};
+    bool key_held(size_t arg) const {return true;};
+    bool key_released(size_t arg) const {return true;};
+    int32_t get_mouse_x() const {return 100;};
+    int32_t get_mouse_y() const {return 200;};
     void update() {};
     bool game_is_running() const {};
     ST::level get_level() const {};
+    void center_camera_on_entity(uint64_t id){center_camera_on_entity_calls++;}
 
     //Variables to keep track of method calls
     uint8_t get_level_data_calls = 0;
+    uint8_t center_camera_on_entity_calls = 0;
  };
 
 

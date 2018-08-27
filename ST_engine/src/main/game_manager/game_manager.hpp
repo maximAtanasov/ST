@@ -122,6 +122,7 @@ class game_manager{
         void update();
         bool game_is_running() const;
         ST::level get_level() const;
+        void center_camera_on_entity(uint64_t id);
 };
 
 //INLINED METHODS
@@ -214,6 +215,23 @@ inline bool game_manager::key_held(size_t arg) const{
  */
 inline bool game_manager::key_released(size_t arg) const{
     return keys_released_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
+}
+
+/**
+ * Center the camera on an entity.
+ * @param id The ID of the entity to center on.
+ */
+inline void game_manager::center_camera_on_entity(uint64_t id) {
+    this->get_level_data()->Camera.x = this->get_level_data()->entities.at(id).x - 1920/4;
+    while(this->get_level_data()->Camera.x < this->get_level_data()->Camera.limitX1 + 1)
+        this->get_level_data()->Camera.x++;
+    while(this->get_level_data()->Camera.x > this->get_level_data()->Camera.limitX2 - 1)
+        this->get_level_data()->Camera.x--;
+    this->get_level_data()->Camera.y = this->get_level_data()->entities.at(id).y - 1080;
+    while(this->get_level_data()->Camera.y < this->get_level_data()->Camera.limitY1 + 1)
+        this->get_level_data()->Camera.y++;
+    while(this->get_level_data()->Camera.y > this->get_level_data()->Camera.limitY2 - 1)
+        this->get_level_data()->Camera.y--;
 }
 
 #endif

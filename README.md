@@ -28,27 +28,16 @@ libSDL2
 libSDL2_image
 libSDL2_mixer
 libSDL2_ttf
-libgtest
 libglew
 
 if you are on Ubuntu (or another Debian-based distro) you can install all dependencies like this:
 ```
 sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
-
-sudo apt-get install libgtest-dev
-
-cd /usr/src/gtest
-
-sudo cmake CMakeLists.txt
-
-sudo make
-
-sudo cp *.a /usr/lib
 ```
 
 Or if you are on Fedora:
 ```
-sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua-devel gtest-devel
+sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua-devel
 
 ```
 
@@ -60,6 +49,5 @@ make ST_engine
 cd ST_engine/gamedata
 ./ST_engine
 ```
-
 
 Also, have a look at the [Documentation](http://maximatanasov.github.io/slavicTales/index.html).
