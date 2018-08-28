@@ -21,18 +21,14 @@ Instructions for building the project:
 
 Dependcies needed on Linux:
 
-cmake - you need version 3.9 or higher (or your IDE comes bundled with CMake)
-
-liblua5.3
 libSDL2
 libSDL2_image
 libSDL2_mixer
 libSDL2_ttf
-libglew
 
 if you are on Ubuntu (or another Debian-based distro) you can install all dependencies like this:
 ```
-sudo apt-get install cmake liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+sudo apt-get install liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 ```
 
 Or if you are on Fedora:
@@ -41,11 +37,14 @@ sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua
 
 ```
 
+If you do not have a recent version of cmake installed, you can point your IDE to the included version inside the `cmake` folder. 
+
 If you are on linux you can use your favourite IDE and open the folder as a CMake project
 (CLion, QtCreator, KDevelop, NetBeans, Eclipse with extensions, etc.) and run the ST_engine target or you can run the following commands in the root of the project:
+
 ```
-cmake CMakeLists.txt
-make ST_engine
+./cmakew CMakeLists.txt
+make all
 cd ST_engine/gamedata
 ./ST_engine
 ```
