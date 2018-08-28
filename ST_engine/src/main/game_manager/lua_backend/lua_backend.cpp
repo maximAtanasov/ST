@@ -9,11 +9,11 @@
 
 #include <game_manager/lua_backend/lua_backend.hpp>
 
-//The following trick is used to replace the game_manager with a mock definition when testing.
+//The following trick is used to replace the game_manager with a mock implementation when testing.
 #ifndef TESTING_LUA_BACKEND
 #include <game_manager/game_manager.hpp>
 #elif defined(TESTING_LUA_BACKEND)
-#include "../../../test/game_manager/lua_backend/game_manager_mock.hpp"
+#include <test/game_manager/lua_backend/game_manager_mock.hpp>
 #endif
 
 #include <console/log.hpp>
