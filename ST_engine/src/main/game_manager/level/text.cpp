@@ -11,7 +11,6 @@
 
 /**
  * Constructor for the text objects.
- * @param id The id for the object.
  * @param x The X position.
  * @param y The Y position.
  * @param color The color of the text (RGBA).
@@ -19,8 +18,7 @@
  * @param font The font to use (Must be already loaded).
  * @param font_size The size of the font.
  */
-ST::text::text(uint64_t id, int32_t x, int32_t y, SDL_Color color, const std::string& text_string, const std::string& font, uint8_t font_size) {
-    this->ID = id;
+ST::text::text(int32_t x, int32_t y, SDL_Color color, const std::string& text_string, const std::string& font, uint8_t font_size) {
     this->x = x;
     this->y = y;
     this->color = color;

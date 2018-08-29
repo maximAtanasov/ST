@@ -34,7 +34,7 @@ function newEntity(self, x, y)
     if(x ~= nil and y ~= nil) then
         --general
         o.ID = newEntityID()
-	    createEntity(o.ID)
+	    createEntity()
         setEntityX(o.ID, x)
         setEntityY(o.ID, y)
 

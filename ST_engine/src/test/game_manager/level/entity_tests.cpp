@@ -13,7 +13,7 @@
 
 TEST(entity_tests, test_set_collisions_box){
     //Set up
-    ST::entity test_subject(0);
+    ST::entity test_subject;
 
     //Test
     test_subject.set_collision_box(0,0,0,0);
@@ -25,8 +25,8 @@ TEST(entity_tests, test_set_collisions_box){
 
 TEST(entity_tests, test_entities_collision){
     //Set up
-    ST::entity test_subject1(0);
-    ST::entity test_subject2(1);
+    ST::entity test_subject1;
+    ST::entity test_subject2;
 
     test_subject1.x = 0;
     test_subject1.y = 0;
@@ -42,8 +42,8 @@ TEST(entity_tests, test_entities_collision){
 
 TEST(entity_tests, test_entities_colliding_on_edge){
     //Set up
-    ST::entity test_subject1(0);
-    ST::entity test_subject2(1);
+    ST::entity test_subject1;
+    ST::entity test_subject2;
 
     test_subject1.x = 0;
     test_subject1.y = 0;
@@ -59,8 +59,8 @@ TEST(entity_tests, test_entities_colliding_on_edge){
 
 TEST(entity_tests, test_entities_colliding_one_pixel_from_edge){
     //Set up
-    ST::entity test_subject1(0);
-    ST::entity test_subject2(1);
+    ST::entity test_subject1;
+    ST::entity test_subject2;
 
     test_subject1.x = 0;
     test_subject1.y = 0;

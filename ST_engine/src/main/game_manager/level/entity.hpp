@@ -23,26 +23,15 @@ namespace ST {
      */
     class entity {
 
-        ///a simple struct defining the collision box for an entity.
-        struct collision_box { //16 bytes
-            int32_t left{0};
-            int32_t right{0};
-            int32_t top{0};
-            int32_t bottom{0};
-        };
-
     private:
 
         // 4 bytes
         int16_t col_x = 0;
         int16_t col_y = 0;
 
-        //4 bytes+
+        //4 bytes
         int16_t offset_x = 0;
         int16_t offset_y = 0;
-
-        //16 bytes
-        collision_box collision;
 
     public:
 
@@ -66,13 +55,11 @@ namespace ST {
         int8_t velocity_y = 0;
 
         //2 bytes
-        uint16_t mass = 0;
-
-        //1 byte
+        uint8_t mass = 0;
         uint8_t animation_num = 0;
 
-        //1 byte padding
-        uint8_t padding_byte = 0;
+        //2 byte padding
+        uint16_t padding_bytes = 0;
 
         //4 bytes
         bool is_active = true;
@@ -80,34 +67,19 @@ namespace ST {
         bool is_visible = true;
         bool is_affected_by_physics = false;
 
-        explicit entity(unsigned int);
-        //uint64_t get_ID() const;
+        entity() = default;
 
         int32_t get_col_x() const;
         int32_t get_col_y() const;
         int16_t get_col_y_offset() const;
         int16_t get_col_x_offset() const;
-        bool collides(entity) const;
+        bool collides(const entity&) const;
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
-        collision_box get_collision_box();
-        void update_collision_box();
     };
 }
-
+static_assert(sizeof(ST::entity) == 40, "class 'entity' is not sized properly, maybe you have misaligned the fields");
 
 //INLINED METHODS
-
-/**
- *
- * @return The ID of the entity.
- */
-/*inline uint64_t ST::entity::get_ID() const{
-    return ID;
-}*/
-
-
-
-//PHYSICS METHODS//
 
 /**
  * Get the horizontal length of the collision box.
@@ -149,35 +121,10 @@ inline int16_t ST::entity::get_col_y_offset() const{
  * @param Y The vertical length of the collision box.
  */
 inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t col_x, int16_t col_y){
-    if(col_x != 0 && col_y != 0){
-        this->col_x = col_x;
-        this->col_y = -col_y;
-        offset_x = offsetX;
-        offset_y = offsetY;
-    }else{
-        this->col_x = 0;
-        this->col_y = 0;
-        is_affected_by_physics = false;
-    }
-    update_collision_box();
-}
-
-/**
- *
- * @return A copy of this entity's collision box.
- */
-inline ST::entity::collision_box ST::entity::get_collision_box(){
-    return this->collision;
-}
-
-/**
- * Updates the collision_box struct of the entity relative to it's current position.
- */
-inline void ST::entity::update_collision_box(){
-    collision.left = x + offset_x;
-    collision.right = x + col_x + offset_x;
-    collision.top = y + col_y + offset_y;
-    collision.bottom = y + offset_y;
+    this->col_x = col_x;
+    this->col_y = -col_y;
+    offset_x = offsetX;
+    offset_y = offsetY;
 }
 
 /**
@@ -185,9 +132,9 @@ inline void ST::entity::update_collision_box(){
  * @param other Entity to test collision against.
  * @return True if colliding, false otherwise.
  */
-inline bool ST::entity::collides(entity other) const{
-    return !((collision.bottom < other.collision.top) || (collision.top > other.collision.bottom)
-          || (collision.left > other.collision.right) || (collision.right < other.collision.left));
+inline bool ST::entity::collides(const entity& other) const{
+    return !((y + offset_y < other.y + other.col_y + other.offset_y) || (y + col_y + offset_y > other.y + other.offset_y)
+          || (x + offset_x > other.x + other.col_x + other.offset_x) || (x + col_x + offset_x < other.x + other.offset_x));
 }
 
 #endif

@@ -15,7 +15,6 @@
 #include <task_manager/task_manager.hpp>
 #include <message_bus/message_bus.hpp>
 #include <game_manager/level/level.hpp>
-#include <game_manager/level/level_data.hpp>
 
 /**
  *
@@ -40,7 +39,7 @@ private:
     void reset_keys(){}
     void run_level_loop(){}
 
-    ST::level_data* data = new ST::level_data();
+    ST::level* level = new ST::level("test_level", nullptr);
 
 public:
 
@@ -52,9 +51,9 @@ public:
     ~game_manager() = default;
     std::string get_active_level() const {return "test_level";}
 
-    ST::level_data* get_level_data() {
-        get_level_data_calls++;
-        return data;
+    ST::level* get_level() {
+        get_level_calls++;
+        return level;
     }
 
     bool key_pressed(size_t arg) const { return true;};
@@ -64,11 +63,10 @@ public:
     int32_t get_mouse_y() const {return 200;};
     void update() {};
     bool game_is_running() const { return true; };
-    ST::level get_level() const {return ST::level("test_level", nullptr); };
     void center_camera_on_entity(uint64_t id){center_camera_on_entity_calls++;}
 
     //Variables to keep track of method calls
-    uint8_t get_level_data_calls = 0;
+    uint8_t get_level_calls = 0;
     uint8_t center_camera_on_entity_calls = 0;
  };
 

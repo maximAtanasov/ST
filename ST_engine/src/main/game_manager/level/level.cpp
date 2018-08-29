@@ -44,13 +44,13 @@ std::string ST::level::get_name() const{
  */
 ST::level::~level(){
     //unload inputConf
-    data.actions_Buttons.clear();
+    actions_Buttons.clear();
 
     //unload entities.
-    data.entities.clear();
+    entities.clear();
 
     //unload lights
-    data.lights.clear();
+    lights.clear();
 }
 
 /**
@@ -58,7 +58,7 @@ ST::level::~level(){
  * Sends a UNLOAD_LIST message to unload all assets and unregisters all keys.
  */
 void ST::level::unload(){
-    for(auto i : data.actions_Buttons) {
+    for(auto i : actions_Buttons) {
         gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
     }
     //unload fonts
@@ -67,10 +67,10 @@ void ST::level::unload(){
     gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data(temp)));
 
     //unload inputConf
-    data.actions_Buttons.clear();
+    actions_Buttons.clear();
 
     //unload entities
-    data.entities.clear();
+    entities.clear();
 }
 
 /**
@@ -111,7 +111,7 @@ int8_t ST::level::load_input_conf(){
             }
             else if(a ==  '\n' || file.eof()){
                 std::hash<std::string> hash_f;
-                data.actions_Buttons[hash_f(action)] = key_index(button);
+                actions_Buttons[hash_f(action)] = key_index(button);
                 actionRead = 0;
                 action.clear();
                 button.clear();

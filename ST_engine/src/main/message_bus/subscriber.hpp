@@ -18,12 +18,12 @@
  * A simple wrapper around  moodycamel::ConcurrentQueue<message*>.
  */
 class subscriber{
-private:
-    moodycamel::ConcurrentQueue<message*> queue;
 public:
     subscriber() = default;
     message* get_next_message();
     void push_message(message* arg);
+private:
+    moodycamel::ConcurrentQueue<message*> queue;
 };
 
 #endif //SLAVIC_TALES_SUBSCRIBER_HPP

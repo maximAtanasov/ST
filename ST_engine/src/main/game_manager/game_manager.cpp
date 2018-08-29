@@ -196,12 +196,12 @@ void game_manager::start_level(const std::string& level_name){
             break;
         }
     }
-    get_level_data()->lights.clear();
-    get_level_data()->entities.clear();
+    get_level()->lights.clear();
+    get_level()->entities.clear();
 
     //construct level
-    get_level_data()->Camera.x = 0;
-    get_level_data()->Camera.y = 0;
+    get_level()->Camera.x = 0;
+    get_level()->Camera.y = 0;
 
     std::string temp = "levels/";
     temp = temp + active_level;
@@ -216,7 +216,7 @@ void game_manager::start_level(const std::string& level_name){
     gScript_backend.set_global("loop");
 
     //Register all the keys this level uses with the input manager.
-    for(auto i : get_level_data()->actions_Buttons) {
+    for(auto i : get_level()->actions_Buttons) {
         gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(i.second)));
     }
 }

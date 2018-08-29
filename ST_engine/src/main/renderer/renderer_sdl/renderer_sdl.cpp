@@ -16,7 +16,7 @@
  * @param height The virtual height of the window.
  * @return Always 0.
  */
-int renderer_sdl::initialize(SDL_Window* window, int width, int height){
+int renderer_sdl::initialize(SDL_Window* window, int16_t width, int16_t height){
     gFont_cache.set_max(100);
     //initialize renderer
 	this->window = window;

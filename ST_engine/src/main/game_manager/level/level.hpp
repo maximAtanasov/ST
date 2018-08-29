@@ -18,7 +18,6 @@
 #include <message_bus/message_bus.hpp>
 #include <game_manager/level/camera.hpp>
 #include <input_manager/input_manager.hpp>
-#include <game_manager/level/level_data.hpp>
 
 class level_tests;
 
@@ -32,30 +31,34 @@ namespace ST {
     private:
 
         std::string name;
-        ST::level_data data;
         message_bus *gMessage_bus;
 
         int8_t load_input_conf();
         key key_index(std::string arg);
 
     public:
+
+        //public data
+        /*
+         * Contains the mappings from keys to actions.
+         * Contains all entities, lights and text objects.
+         * Contains the background overlay and the camera.
+         */
+        ska::bytell_hash_map<size_t, key> actions_Buttons{};
+        std::vector<entity> entities{};
+        std::vector<ST::light> lights{};
+        std::vector<ST::text> text_objects{};
+        size_t background = 0;
+        size_t overlay = 0;
+        int16_t overlay_spriteNum = 1;
+        ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
+
         level(const std::string&, message_bus*);
         void load();
         void unload();
-        level_data *get_data();
         std::string get_name() const;
         ~level();
     };
-}
-
-//INLINED METHODS
-
-/**
- * Returns the data of the level (entities, lights, background, text objects).
- * @return a <b>ST::level_data</b> struct.
- */
-inline ST::level_data *ST::level::get_data() {
-    return &data;
 }
 
 #endif

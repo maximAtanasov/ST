@@ -31,7 +31,7 @@ int main(int argc, char** argv){
     task_manager gTask_manager(&gMessage_bus);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);
     display_manager gDisplay_manager(&gMessage_bus, &gTask_manager);
-    drawing_manager gDrawing_manager(gDisplay_manager.get_window(), &gMessage_bus, &gTask_manager);
+    drawing_manager gDrawing_manager(gDisplay_manager.get_window(), &gMessage_bus);
     assets_manager gAssets_manager(&gMessage_bus, &gTask_manager);
     physics_manager gPhysics_manager(&gMessage_bus, &gTask_manager);
     game_manager gGame_manager(&gMessage_bus, &gTask_manager);// will load "levels/main"
@@ -64,7 +64,7 @@ int main(int argc, char** argv){
             //will start an update task
             gInput_manager.update();
             do{
-                gPhysics_manager.update(&gGame_manager.get_level_data()->entities);
+                gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 gGame_manager.update();
                 total_time -= UPDATE_RATE;
             }
@@ -79,10 +79,10 @@ int main(int argc, char** argv){
         #ifdef __DEBUG
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
-        gDrawing_manager.update(*gGame_manager.get_level_data(), gFps.get_value(), gConsole);
+        gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);
 
         #elif defined(__RELEASE)
-        gDrawing_manager.update(*gGame_manager.get_level_data());
+        gDrawing_manager.update(*gGame_manager.get_level());
         #endif
     }
     return 0;

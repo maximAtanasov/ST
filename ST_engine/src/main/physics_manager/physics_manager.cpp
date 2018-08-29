@@ -159,15 +159,10 @@ int physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity
  * @return 0 if there was a collision, -1 otherwise.
  */
 int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entities){
-    entities->at(ID).update_collision_box();
     for(unsigned int i = 0; i < entities->size(); i++){
         ST::entity* temp = &entities->at(i);
-        temp->update_collision_box();
         if(temp->is_affected_by_physics){
-            if(ID == i){
-                continue;
-            }
-            if(temp->collides(entities->at(ID))){
+            if(i != ID && temp->collides(entities->at(ID))){
                 return 0;
             }
         }

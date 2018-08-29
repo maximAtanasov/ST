@@ -20,17 +20,17 @@ namespace ST {
      */
     struct text {
 
-        text(uint64_t id, int32_t x, int32_t y, SDL_Color color, const std::string &text_string, const std::string &font,
+        text(int32_t x, int32_t y, SDL_Color color, const std::string &text_string, const std::string &font,
              uint8_t font_size);
 
-        uint64_t ID;
-        int32_t x, y;
-        SDL_Color color;
-        uint8_t font_size;
-        bool is_visible = true;
         std::string text_string;
         std::string font;
+        int32_t x, y;
+        SDL_Color color;
+        bool is_visible = true;
+        uint8_t font_size;
     };
+    static_assert(sizeof(ST::text) == 80, "class 'text' is not sized properly, maybe you have misaligned the fields");
 }
 
 #endif

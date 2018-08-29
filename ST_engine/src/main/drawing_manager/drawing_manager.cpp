@@ -8,7 +8,6 @@
  */
 
 #include <drawing_manager/drawing_manager.hpp>
-#include <task_manager/task_allocator.hpp>
 
 #define DEFAULT_FONT "OpenSans-Regular.ttf"
 
@@ -18,7 +17,7 @@
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
  */
-drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_manager* tsk_mngr){
+drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 	if(TTF_Init() < 0){
 		fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
 		exit(1);
@@ -26,7 +25,6 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_
 
     //set our external dependencies
     gMessage_bus = msg_bus;
-    gTask_manager = tsk_mngr;
 
 	//Subscribe to certain messages
 	gMessage_bus->subscribe(VSYNC_ON, &msg_sub);
@@ -50,15 +48,6 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_
 }
 
 /**
- * Start a task to process the lightmap
- * @param arg a pointer to the drawing manager (a <b>this</b> pointer basically)
- */
-void drawing_manager::process_lights_task(void *arg){
-    auto self = static_cast<drawing_manager*>(arg);
-    self->process_lights(self->lights_arg);
-}
-
-/**
  * Consumes messages from the subscriber object.
  * Performs all drawing operations.
  * @param temp a pointer to the data of the current level.
@@ -66,20 +55,12 @@ void drawing_manager::process_lights_task(void *arg){
  * @param cnsl a console object.
  */
 #ifdef __DEBUG
-void drawing_manager::update(const ST::level_data& temp, double fps, const console& cnsl){
+void drawing_manager::update(const ST::level& temp, double fps, const console& cnsl){
 #elif defined(__RELEASE)
-void drawing_manager::update(const ST::level_data& temp){
+void drawing_manager::update(const ST::level& temp){
 #endif
 	Camera = temp.Camera;
 	handle_messages();
-    lights_arg = temp.lights;
-    const bool lights_on = lighting_enabled;
-
-    task_id id = nullptr;
-    if(lights_on) {
-        //start a task to pre-process lighting on a separate thread
-        id = gTask_manager->start_task(make_task(process_lights_task, this, nullptr, -1));
-    }
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
 	gRenderer.clear_screen();
@@ -90,8 +71,8 @@ void drawing_manager::update(const ST::level_data& temp){
     draw_text_objects(temp.text_objects);
 
     //draw the lights when we are sure they are processed
-    if(lights_on) {
-        gTask_manager->wait_for_task(id);
+    if(lighting_enabled) {
+        process_lights(temp.lights);
         draw_lights();
     }
 
@@ -318,10 +299,9 @@ void drawing_manager::handle_messages(){
         }
         else if(temp->msg_name == ASSETS) {
             auto gAssets = static_cast<ST::assets**>(temp->get_data());
-            ST::assets *temp_ast = *gAssets;
-            asset_ptr = temp_ast;
-            gRenderer.upload_surfaces(&asset_ptr->surfaces);
-            gRenderer.upload_fonts(&asset_ptr->fonts);
+            ST::assets* temp_ast = *gAssets;
+            gRenderer.upload_surfaces(&temp_ast->surfaces);
+            gRenderer.upload_fonts(&temp_ast->fonts);
         }
         destroy_msg(temp);
         temp = msg_sub.get_next_message();

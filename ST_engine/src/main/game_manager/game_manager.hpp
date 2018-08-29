@@ -113,7 +113,6 @@ class game_manager{
         game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         ~game_manager();
         std::string get_active_level() const;
-        ST::level_data* get_level_data() const;
         bool key_pressed(size_t arg) const;
         bool key_held(size_t arg) const;
         bool key_released(size_t arg) const;
@@ -121,7 +120,7 @@ class game_manager{
         int32_t get_mouse_y() const;
         void update();
         bool game_is_running() const;
-        ST::level get_level() const;
+        ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
 };
 
@@ -151,18 +150,10 @@ inline void game_manager::run_level_loop() {
 }
 
 /**
- * Returns the data of the current level.
- * @return A pointer to the data of the current level.
- */
-inline ST::level_data* game_manager::get_level_data() const{
-    return current_level_pointer->get_data();
-}
-
-/**
  * @return A poitner to the current level.
  */
-inline ST::level game_manager::get_level() const{
-    return *current_level_pointer;
+inline ST::level* game_manager::get_level() const{
+    return current_level_pointer;
 }
 
 /**
@@ -196,7 +187,7 @@ inline int game_manager::get_mouse_y() const{
  * @return True if pressed, false otherwise.
  */
 inline bool game_manager::key_pressed(size_t arg) const{
-    return keys_pressed_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
+    return keys_pressed_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
 }
 
 /**
@@ -205,7 +196,7 @@ inline bool game_manager::key_pressed(size_t arg) const{
  * @return True if held, false otherwise.
  */
 inline bool game_manager::key_held(size_t arg) const{
-    return keys_held_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
+    return keys_held_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
 }
 
 /**
@@ -214,7 +205,7 @@ inline bool game_manager::key_held(size_t arg) const{
  * @return True if released, false otherwise.
  */
 inline bool game_manager::key_released(size_t arg) const{
-    return keys_released_data[static_cast<uint8_t>(get_level_data()->actions_Buttons[arg])];
+    return keys_released_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
 }
 
 /**
@@ -222,16 +213,21 @@ inline bool game_manager::key_released(size_t arg) const{
  * @param id The ID of the entity to center on.
  */
 inline void game_manager::center_camera_on_entity(uint64_t id) {
-    this->get_level_data()->Camera.x = this->get_level_data()->entities.at(id).x - 1920/4;
-    while(this->get_level_data()->Camera.x < this->get_level_data()->Camera.limitX1 + 1)
-        this->get_level_data()->Camera.x++;
-    while(this->get_level_data()->Camera.x > this->get_level_data()->Camera.limitX2 - 1)
-        this->get_level_data()->Camera.x--;
-    this->get_level_data()->Camera.y = this->get_level_data()->entities.at(id).y - 1080;
-    while(this->get_level_data()->Camera.y < this->get_level_data()->Camera.limitY1 + 1)
-        this->get_level_data()->Camera.y++;
-    while(this->get_level_data()->Camera.y > this->get_level_data()->Camera.limitY2 - 1)
-        this->get_level_data()->Camera.y--;
+    current_level_pointer->Camera.x = current_level_pointer->entities.at(id).x - 1920/4;
+    while(current_level_pointer->Camera.x < current_level_pointer->Camera.limitX1 + 1) {
+        current_level_pointer->Camera.x++;
+    }
+    while(current_level_pointer->Camera.x > current_level_pointer->Camera.limitX2 - 1) {
+        current_level_pointer->Camera.x--;
+    }
+
+    current_level_pointer->Camera.y = current_level_pointer->entities.at(id).y - 1080;
+    while(current_level_pointer->Camera.y < current_level_pointer->Camera.limitY1 + 1) {
+        current_level_pointer->Camera.y++;
+    }
+    while(current_level_pointer->Camera.y > current_level_pointer->Camera.limitY2 - 1) {
+        current_level_pointer->Camera.y--;
+    }
 }
 
 #endif

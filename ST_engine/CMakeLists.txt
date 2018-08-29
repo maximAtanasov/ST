@@ -49,7 +49,6 @@ add_executable(ST_engine
         src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp
         src/main/drawing_manager/drawing_manager.hpp
-        src/main/game_manager/level/entity.cpp
         src/main/game_manager/level/entity.hpp
         src/main/renderer/renderer_sdl/font_cache.cpp
         src/main/renderer/renderer_sdl/font_cache.hpp
@@ -59,7 +58,6 @@ add_executable(ST_engine
         src/main/input_manager/input_manager.hpp
         src/main/game_manager/level/level.cpp
         src/main/game_manager/level/level.hpp
-        src/main/game_manager/level/level_data.hpp
         src/main/game_manager/level/light.cpp
         src/main/game_manager/level/light.hpp
         src/main/main/main.cpp
@@ -323,7 +321,6 @@ target_link_libraries(message_bus_test
         ${SDL2_MIXER_LIBRARY})
 
 add_executable(entity_test
-        src/main/game_manager/level/entity.cpp
         src/main/game_manager/level/entity.hpp
         src/test/game_manager/level/entity_tests.cpp)
 
@@ -333,7 +330,6 @@ target_link_libraries(entity_test
         gtest)
 
 add_executable(level_test
-        src/main/game_manager/level/entity.cpp
         src/main/game_manager/level/entity.hpp
         src/main/game_manager/level/light.cpp
         src/main/game_manager/level/light.hpp
@@ -362,7 +358,6 @@ target_link_libraries(level_test
         ${SDL2_MIXER_LIBRARY})
 
 add_executable(lua_backend_test
-        src/main/game_manager/level/entity.cpp
         src/main/game_manager/level/entity.hpp
         src/main/game_manager/level/light.cpp
         src/main/game_manager/level/light.hpp

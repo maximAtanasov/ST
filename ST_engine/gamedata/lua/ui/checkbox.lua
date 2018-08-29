@@ -82,11 +82,11 @@ end
 function checkbox:setMarginX(x)
     self:setTexW(x)
     self.colX = x
-    self:setCollision(0,0,x,self.colY)
+    self:setCollision(0, 0, x, self.colY)
 end
 
 function checkbox:setMarginY(y)
     self:setTexH(y)
     self.colY = y
-    self:setCollision(0,0, self.colX, y)
+    self:setCollision(0, 0, self.colX, y)
 end

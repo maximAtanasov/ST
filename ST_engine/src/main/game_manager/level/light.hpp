@@ -16,28 +16,25 @@ namespace ST {
     ///Contains the data needed to represent a light source.
     struct light {
 
-    private:
-        uint64_t ID;
     public:
+        //8 bytes
         int32_t origin_x;
         int32_t origin_y;
+
+        //4 bytes
         uint16_t radius;
         uint16_t intensity;
+
+        //2 bytes
         uint16_t brightness;
+
+        //2 bytes
         bool is_static = false;
+        uint8_t padding_byte;
 
-        light(uint64_t ID, int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
-        uint64_t get_ID();
+        light(int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
     };
+    static_assert(sizeof(ST::light) == 16, "class 'text' is not sized properly, maybe you have misaligned the fields");
 }
 
-//INLINE METHODS
-
-/**
- *
- * @return The ID of the light object
- */
-inline uint64_t ST::light::get_ID(){
-    return this->ID;
-}
 #endif //LIGHT_DEF

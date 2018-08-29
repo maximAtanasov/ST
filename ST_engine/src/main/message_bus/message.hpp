@@ -24,9 +24,9 @@ extern message_allocator msg_memory;
 class message{
 private:
     friend class message_allocator;
-    uint16_t id; //used during allocation and deallocation
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
     //that's how shared_ptr works, if you don't believe me, well google it or something
+    uint16_t id; //used during allocation and deallocation
 
     message(msg_type name, const std::shared_ptr<void>& data, uint16_t id);
 public:

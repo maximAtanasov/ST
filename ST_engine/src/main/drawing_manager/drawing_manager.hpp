@@ -12,13 +12,12 @@
 
 #include <defs.hpp>
 #include <assets_manager/assets.hpp>
-#include <game_manager/level/level_data.hpp>
 #include <game_manager/level/light.hpp>
 #include <console/console.hpp>
 #include <message_bus/message_bus.hpp>
-#include <task_manager/task_manager.hpp>
 #include <game_manager/level/camera.hpp>
 #include <renderer/renderer_sdl/renderer_sdl.hpp>
+#include <game_manager/level/level.hpp>
 
 ///This object is responsible for issuing drawing commands and drawing the current level.
 /**
@@ -59,20 +58,15 @@ class drawing_manager{
     private:
         //external dependencies - injected through main or the message bus
         message_bus* gMessage_bus{};
-        task_manager* gTask_manager{};
-		ST::assets* asset_ptr{};
 
         //a subscriber object - so we can subscribe to and recieve messages
         subscriber msg_sub{};
 
-        //rendering object - the interface
+        //rendering object
         renderer_sdl gRenderer;
 
         //CPU ticks since start - used for animating sprites
-        Uint32 ticks = 0;
-
-        //basically the argument passed to process_lights
-        std::vector<ST::light> lights_arg{};
+        uint32_t ticks = 0;
 
         //Basically the viewport
         ST::camera Camera{};
@@ -110,16 +104,15 @@ class drawing_manager{
         void show_collisions();
         void hide_collisions();
         void set_darkness(uint8_t arg);
-        static void process_lights_task(void* arg);
 
     public:
-        drawing_manager(SDL_Window* win, message_bus* msg_bus, task_manager* tsk_mngr);
+        drawing_manager(SDL_Window* win, message_bus* msg_bus);
         ~drawing_manager();
 
         #ifdef __DEBUG
-        void update(const ST::level_data& temp, double, const console& gConsole);
+        void update(const ST::level& temp, double, const console& gConsole);
         #elif defined(__RELEASE)
-        void update(const ST::level_data& temp);
+        void update(const ST::level& temp);
         #endif
 };
 

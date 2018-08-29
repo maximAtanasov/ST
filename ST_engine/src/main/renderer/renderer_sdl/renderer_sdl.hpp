@@ -31,8 +31,8 @@ private:
 	SDL_Window* window;
 
 	//height and width of the renderer
-	int width;
-	int height;
+	int16_t width;
+	int16_t height;
 
     //Textures with no corresponding surface in our assets need to be freed
     ska::bytell_hash_map<size_t, SDL_Texture*> textures;
@@ -68,7 +68,7 @@ public:
     void upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fonts);
     void vsync_on();
     void vsync_off();
-    int initialize(SDL_Window* win, int width, int height);
+    int initialize(SDL_Window* win, int16_t width, int16_t height);
     void close();
     ~renderer_sdl();
 };
@@ -149,9 +149,9 @@ inline void renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int 
 		SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
 		int temp1 = tex_h/animation_num;
 		int temp2 = tex_w/sprite_num;
-		SDL_Rect src_rect = {x, y - temp1, temp2, temp1};
-		SDL_Rect dst_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
-		SDL_RenderCopy(sdl_renderer, texture->second, &dst_rect, &src_rect);
+		SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
+		SDL_Rect src_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
+		SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
 	}
 }
 
@@ -171,8 +171,8 @@ inline void renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num) c
 		SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
 		int temp1 = tex_h/animation_num;
 		int temp2 = tex_w/sprite_num;
-		SDL_Rect dst_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
-		SDL_RenderCopy(sdl_renderer, texture->second, &dst_rect, nullptr);
+		SDL_Rect src_rect = {sprite*(tex_w/sprite_num), temp1*(animation-1), temp2, temp1};
+		SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, nullptr);
 	}
 }
 

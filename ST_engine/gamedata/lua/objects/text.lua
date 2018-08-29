@@ -33,7 +33,7 @@ function newTextObject(self, x, y, fontSize, font)
     self.__index = self
     if(x ~= nil and y ~= nil) then
         o.ID = newTextID()
-		createTextObject(o.ID, x, y, o.text, font, fontSize);
+		createTextObject(x, y, o.text, font, fontSize);
     end
     return o
 end
