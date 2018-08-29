@@ -1,5 +1,3 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "cert-err58-cpp"
 /* This file is part of the "slavicTales" project.
  * You may use, distribute or modify this code under the terms
  * of the GNU General Public License version 2.
@@ -1183,7 +1181,6 @@ TEST_F(lua_backend_test, test_call_function_createEntity){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1221,7 +1218,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityActive){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1259,7 +1255,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityX){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1297,7 +1292,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityY){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1339,7 +1333,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityX){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1381,7 +1374,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityY){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1419,7 +1411,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityStatic){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1435,7 +1426,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
     game_mngr->get_level_data()->entities.emplace_back(ST::entity(0));
 
     //Test
-    test_subject.run_script("setEntityVelocityX(0, 500)");
+    test_subject.run_script("setEntityVelocityX(0, 120)");
 
     //Check results
     ASSERT_EQ(2, game_mngr->get_level_data_calls);
@@ -1446,7 +1437,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_static);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_affected_by_physics);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).velocity_y);
-    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).velocity_x);
+    ASSERT_EQ(120, game_mngr->get_level_data()->entities.at(0).velocity_x);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_h);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_w);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).texture);
@@ -1457,7 +1448,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1473,7 +1463,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
     game_mngr->get_level_data()->entities.emplace_back(ST::entity(0));
 
     //Test
-    test_subject.run_script("setEntityVelocityY(0, 500)");
+    test_subject.run_script("setEntityVelocityY(0, 120)");
 
     //Check results
     ASSERT_EQ(2, game_mngr->get_level_data_calls);
@@ -1483,7 +1473,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_visible);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_static);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_affected_by_physics);
-    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).velocity_y);
+    ASSERT_EQ(120, game_mngr->get_level_data()->entities.at(0).velocity_y);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).velocity_x);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_h);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_w);
@@ -1495,7 +1485,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1509,13 +1498,13 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
 TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
     //Set up
     game_mngr->get_level_data()->entities.emplace_back(ST::entity(0));
-    game_mngr->get_level_data()->entities.at(0).velocity_x = 500;
+    game_mngr->get_level_data()->entities.at(0).velocity_x = 120;
 
     //Test
     test_subject.run_script("return getEntityVelocityX(0)");
 
     //Check result
-    ASSERT_EQ(500, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+    ASSERT_EQ(120, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 
     //Check that nothing has changed in the entity
     ASSERT_EQ(3, game_mngr->get_level_data_calls);
@@ -1526,7 +1515,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_static);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_affected_by_physics);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).velocity_y);
-    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).velocity_x);
+    ASSERT_EQ(120, game_mngr->get_level_data()->entities.at(0).velocity_x);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_h);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_w);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).texture);
@@ -1537,7 +1526,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1551,13 +1539,13 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
 TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
     //Set up
     game_mngr->get_level_data()->entities.emplace_back(ST::entity(0));
-    game_mngr->get_level_data()->entities.at(0).velocity_y = 500;
+    game_mngr->get_level_data()->entities.at(0).velocity_y = 120;
 
     //Test
     test_subject.run_script("return getEntityVelocityY(0)");
 
     //Check result
-    ASSERT_EQ(500, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+    ASSERT_EQ(120, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 
     //Check that nothing has changed in the entity
     ASSERT_EQ(3, game_mngr->get_level_data_calls);
@@ -1567,7 +1555,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_visible);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_static);
     ASSERT_FALSE(game_mngr->get_level_data()->entities.at(0).is_affected_by_physics);
-    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).velocity_y);
+    ASSERT_EQ(120, game_mngr->get_level_data()->entities.at(0).velocity_y);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).velocity_x);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_h);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).tex_w);
@@ -1579,7 +1567,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1618,7 +1605,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexture){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1656,7 +1642,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexW){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1694,7 +1679,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexH){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1736,7 +1720,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexW){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1778,7 +1761,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexH){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1816,7 +1798,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityVisible){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1850,19 +1831,18 @@ TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_col_x());
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_col_y());
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_col_x());
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
     //Check Collision box
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().bottom);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().left);
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
 }
 
 TEST_F(lua_backend_test, test_call_function_entityCollides){
@@ -1900,19 +1880,18 @@ TEST_F(lua_backend_test, test_call_function_entityCollides){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_col_x());
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_col_y());
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_col_x());
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
     //Check Collision box for entity 1
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_collision_box().bottom);
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_collision_box().left);
-    ASSERT_EQ(1, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
-    ASSERT_EQ(999, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
+    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
+    ASSERT_EQ(1000, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
 
     //Check nothing has been modified in entity 2
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(1).x);
@@ -1928,19 +1907,18 @@ TEST_F(lua_backend_test, test_call_function_entityCollides){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).animation_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).animation);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(1).get_col_x());
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(1).get_col_y());
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(1).get_col_x());
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(1).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).get_col_y_offset());
-    ASSERT_EQ(1, game_mngr->get_level_data()->entities.at(1).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(1).is_active);
 
     //Check Collision box for entity 2
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(1).get_collision_box().bottom);
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(1).get_collision_box().left);
-    ASSERT_EQ(1, game_mngr->get_level_data()->entities.at(1).get_collision_box().top);
-    ASSERT_EQ(999, game_mngr->get_level_data()->entities.at(1).get_collision_box().right);
+    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(1).get_collision_box().top);
+    ASSERT_EQ(1000, game_mngr->get_level_data()->entities.at(1).get_collision_box().right);
 }
 
 TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
@@ -1970,7 +1948,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -1990,7 +1967,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColX){
     test_subject.run_script("return getEntityColX(0)");
 
     //Check result
-    ASSERT_EQ(499, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+    ASSERT_EQ(500, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 
     //Check that nothing has changed in the entity
     ASSERT_EQ(3, game_mngr->get_level_data_calls);
@@ -2008,19 +1985,18 @@ TEST_F(lua_backend_test, test_call_function_getEntityColX){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_col_x());
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_col_y());
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_col_x());
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
     //Check Collision box
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().bottom);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().left);
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
 }
 
 TEST_F(lua_backend_test, test_call_function_getEntityColY){
@@ -2032,7 +2008,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColY){
     test_subject.run_script("return getEntityColY(0)");
 
     //Check result
-    ASSERT_EQ(-499, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+    ASSERT_EQ(-500, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 
     //Check that nothing has changed in the entity
     ASSERT_EQ(3, game_mngr->get_level_data_calls);
@@ -2050,19 +2026,18 @@ TEST_F(lua_backend_test, test_call_function_getEntityColY){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).animation);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_col_x());
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_col_y());
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_col_x());
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
     //Check Collision box
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().bottom);
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_collision_box().left);
-    ASSERT_EQ(-499, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
-    ASSERT_EQ(499, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
+    ASSERT_EQ(-500, game_mngr->get_level_data()->entities.at(0).get_collision_box().top);
+    ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).get_collision_box().right);
 }
 
 TEST_F(lua_backend_test, test_call_function_setEntityMass){
@@ -2092,7 +2067,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityMass){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -2134,7 +2108,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityMass){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(500, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -2172,7 +2145,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimation){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -2210,7 +2182,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -2248,7 +2219,6 @@ TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum){
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_x_offset());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_col_y_offset());
-    ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).get_ID());
     ASSERT_EQ(0, game_mngr->get_level_data()->entities.at(0).mass);
     ASSERT_TRUE(game_mngr->get_level_data()->entities.at(0).is_active);
 
@@ -2263,5 +2233,3 @@ int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
-
-#pragma clang diagnostic pop

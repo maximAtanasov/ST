@@ -40,7 +40,7 @@ TEST(entity_tests, test_entities_collision){
     ASSERT_TRUE(test_subject1.collides(test_subject2));
 }
 
-TEST(entity_tests, test_entities_not_colliding_on_edge){
+TEST(entity_tests, test_entities_colliding_on_edge){
     //Set up
     ST::entity test_subject1(0);
     ST::entity test_subject2(1);
@@ -54,7 +54,7 @@ TEST(entity_tests, test_entities_not_colliding_on_edge){
     test_subject2.set_collision_box(0, 0, 100, 100);
 
     //Test
-    ASSERT_FALSE(test_subject1.collides(test_subject2));
+    ASSERT_TRUE(test_subject1.collides(test_subject2));
 }
 
 TEST(entity_tests, test_entities_colliding_one_pixel_from_edge){

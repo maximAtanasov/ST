@@ -14,6 +14,6 @@
  * @param id A unique ID for the entity.
  */
 ST::entity::entity(unsigned int id){
-    ID = id;
+    //ID = id;
 }
 

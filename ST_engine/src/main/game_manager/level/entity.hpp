@@ -13,7 +13,6 @@
 
 #include <cstdint>
 #include <cstddef>
-#include <string>
 
 namespace ST {
 
@@ -25,7 +24,7 @@ namespace ST {
     class entity {
 
         ///a simple struct defining the collision box for an entity.
-        struct collision_box {
+        struct collision_box { //16 bytes
             int32_t left{0};
             int32_t right{0};
             int32_t top{0};
@@ -33,42 +32,57 @@ namespace ST {
         };
 
     private:
-        uint64_t ID;
-        int32_t col_x = 0;
-        int32_t col_y = 0;
+
+        // 4 bytes
+        int16_t col_x = 0;
+        int16_t col_y = 0;
+
+        //4 bytes+
         int16_t offset_x = 0;
         int16_t offset_y = 0;
+
+        //16 bytes
         collision_box collision;
 
     public:
 
-        //general
+        //8 bytes
         int32_t x = 0;
         int32_t y = 0;
-        int16_t velocity_x = 0;
-        int16_t velocity_y = 0;
-        bool is_active = true;
-        bool is_static = false;//does not move with Camera
-        bool is_visible = true;
 
-        //texture
+        //8 bytes
         size_t texture = 0;
+
+        //4 bytes
         uint16_t tex_w = 0;
         uint16_t tex_h = 0;
 
-        //animation
-        uint16_t sprite_num = 0;
-        uint16_t animation = 0;
-        uint16_t animation_num = 0;
+        //2 bytes
+        uint8_t sprite_num = 0;
+        uint8_t animation = 0;
 
-        //physics
-        bool is_affected_by_physics = false;
+        //2 bytes
+        int8_t velocity_x = 0;
+        int8_t velocity_y = 0;
+
+        //2 bytes
         uint16_t mass = 0;
 
-        explicit entity(unsigned int);
-        uint64_t get_ID() const;
+        //1 byte
+        uint8_t animation_num = 0;
 
-        //physics
+        //1 byte padding
+        uint8_t padding_byte = 0;
+
+        //4 bytes
+        bool is_active = true;
+        bool is_static = false;//does not move with Camera
+        bool is_visible = true;
+        bool is_affected_by_physics = false;
+
+        explicit entity(unsigned int);
+        //uint64_t get_ID() const;
+
         int32_t get_col_x() const;
         int32_t get_col_y() const;
         int16_t get_col_y_offset() const;
@@ -87,9 +101,9 @@ namespace ST {
  *
  * @return The ID of the entity.
  */
-inline uint64_t ST::entity::get_ID() const{
+/*inline uint64_t ST::entity::get_ID() const{
     return ID;
-}
+}*/
 
 
 
@@ -134,15 +148,15 @@ inline int16_t ST::entity::get_col_y_offset() const{
  * @param X The horizontal length of the collision box.
  * @param Y The vertical length of the collision box.
  */
-inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t X, int16_t Y){
-    if(X != 0 && Y != 0){
-        col_x = X - 1;
-        col_y = -Y + 1;
+inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t col_x, int16_t col_y){
+    if(col_x != 0 && col_y != 0){
+        this->col_x = col_x;
+        this->col_y = -col_y;
         offset_x = offsetX;
         offset_y = offsetY;
     }else{
-        col_x = 0;
-        col_y = 0;
+        this->col_x = 0;
+        this->col_y = 0;
         is_affected_by_physics = false;
     }
     update_collision_box();

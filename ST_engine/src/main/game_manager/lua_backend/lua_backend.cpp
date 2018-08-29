@@ -866,7 +866,7 @@ extern "C" int setEntityYLua(lua_State *L){
  */
 extern "C" int setEntityVelocityXLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
-    auto arg = static_cast<int16_t>(lua_tointeger(L, 2));
+    auto arg = static_cast<int8_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->entities.at(id).velocity_x = arg;
     return 0;
 }
@@ -879,7 +879,7 @@ extern "C" int setEntityVelocityXLua(lua_State *L){
  */
 extern "C" int setEntityVelocityYLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
-    auto arg = static_cast<int16_t>(lua_tointeger(L, 2));
+    auto arg = static_cast<int8_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->entities.at(id).velocity_y = arg;
     return 0;
 }
@@ -1153,7 +1153,7 @@ extern "C" int unpausePhysicsLua(lua_State*){
  */
 extern "C" int setEntityAnimationLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->entities.at(id).animation = arg;
     return 0;
 }
@@ -1166,7 +1166,7 @@ extern "C" int setEntityAnimationLua(lua_State *L){
  */
 extern "C" int setEntityAnimationNumLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->entities.at(id).animation_num = arg;
     return 0;
 }
@@ -1179,7 +1179,7 @@ extern "C" int setEntityAnimationNumLua(lua_State *L){
  */
 extern "C" int setEntitySpriteNumLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto arg = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level_data()->entities.at(id).sprite_num = arg;
     return 0;
 }

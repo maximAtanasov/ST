@@ -32,26 +32,27 @@ physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
  * Process horizontal collisions for all entities.
  */
 void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
-    for(auto& i : *entities) {
+    for(uint64_t k = 0; k < entities->size(); k++) {
+        auto& entity = entities->at(k);
         //handle horizontal velocity
-        if (i.is_affected_by_physics) {
-            if (i.velocity_x > 0) {
-                for (int j = 0; j < i.velocity_x; j++) {
-                    if (entity_set_x(i.x + 1, i.get_ID(), entities) == 0) {
+        if (entity.is_affected_by_physics) {
+            if (entity.velocity_x > 0) {
+                for (int j = 0; j < entity.velocity_x; j++) {
+                    if (entity_set_x(entity.x + 1, k, entities) == 0) {
                         break;
                     }
                 }
-                for (int j = 0; j < friction && i.velocity_x > 0; j++) {
-                    (i.velocity_x = (static_cast<int16_t>(i.velocity_x - 1)));
+                for (int j = 0; j < friction && entity.velocity_x > 0; j++) {
+                    (entity.velocity_x = (static_cast<int8_t>(entity.velocity_x - 1)));
                 }
-            } else if (i.velocity_x < 0) {
-                for (int j = 0; j > i.velocity_x; j--) {
-                    if (entity_set_x(i.x - 1, i.get_ID(), entities) == 0) {
+            } else if (entity.velocity_x < 0) {
+                for (int j = 0; j > entity.velocity_x; j--) {
+                    if (entity_set_x(entity.x - 1, k, entities) == 0) {
                         break;
                     }
                 }
-                for (int j = 0; j < friction && i.velocity_x < 0; j++) {
-                    (i.velocity_x = (static_cast<int16_t>(i.velocity_x + 1)));
+                for (int j = 0; j < friction && entity.velocity_x < 0; j++) {
+                    (entity.velocity_x = (static_cast<int8_t>(entity.velocity_x + 1)));
                 }
             }
         }
@@ -62,29 +63,30 @@ void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
  * Process vertical collisions for all entities.
  */
 void physics_manager::process_vertical(std::vector<ST::entity>* entities) {
-    for(auto& i : *entities) {
-        if (i.is_affected_by_physics) {
+    for(uint64_t k = 0; k < entities->size(); k++) {
+        auto& entity = entities->at(k);
+        if (entity.is_affected_by_physics) {
             //handle vertical velocity
-            const int16_t objectVelocity = i.velocity_y + gravity;
+            const int8_t objectVelocity = entity.velocity_y + gravity;
             if (objectVelocity < 0) {
                 for (int j = 0; j > objectVelocity; j--) {
-                    if (entity_set_y(i.y - 1, i.get_ID(), entities) == 0) {
+                    if (entity_set_y(entity.y - 1, k, entities) == 0) {
                         break;
                     }
                 }
             } else if (objectVelocity > 0) {
                 for (int j = 0; j < objectVelocity; j++) {
-                    if (i.y + i.get_col_y_offset() < level_floor) {
-                        if (entity_set_y(i.y + 1, i.get_ID(), entities) == 0) {
+                    if (entity.y + entity.get_col_y_offset() < level_floor) {
+                        if (entity_set_y(entity.y + 1, k, entities) == 0) {
                             break;
                         }
                     }
                 }
             }
             //decrease velocity of objects (apply gravity really)
-            int16_t realVelocity = objectVelocity - gravity;
+            int8_t realVelocity = objectVelocity - gravity;
             if (realVelocity < 0) {
-                i.velocity_y = (static_cast<int16_t>(realVelocity + 2));
+                entity.velocity_y = (static_cast<int8_t>(realVelocity + 2));
             }
         }
     }

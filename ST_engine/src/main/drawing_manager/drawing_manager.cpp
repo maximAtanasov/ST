@@ -42,7 +42,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus, task_
 
 	//Variables for lights
 	darkness_level = 0;
-    lights_quality = 3;
+    lights_quality = 4;
 
 	//Initialize the rendering object
 	gRenderer.initialize(window, w_width, w_height);

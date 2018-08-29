@@ -33,7 +33,7 @@ sudo apt-get install liblua5.3-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-d
 
 Or if you are on Fedora:
 ```
-sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel lua-devel
+sudo dnf install SDL2-devel SDL2_image-devel SDL2_mixer-devel SDL2_ttf-devel
 
 ```
 
