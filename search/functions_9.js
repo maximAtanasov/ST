@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['make_5fcopy',['make_copy',['../classmessage.html#a48d36596a09949e5b4f0f48e107d8563',1,'message']]],
-  ['message_5fallocator',['message_allocator',['../classmessage__allocator.html#ad64d333154a87e579a81cd803665e50e',1,'message_allocator']]]
+  ['physics_5fmanager',['physics_manager',['../classphysics__manager.html#a9f7760a373f4ed8d2b3d2254079d7cf7',1,'physics_manager']]],
+  ['present',['present',['../classrenderer__sdl.html#a6955d75e4f2fafe5476fe4230400ad92',1,'renderer_sdl']]],
+  ['push_5fmessage',['push_message',['../classsubscriber.html#af8f2598d0df147d9e3047be1a571a097',1,'subscriber']]]
 ];

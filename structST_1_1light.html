@@ -103,10 +103,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a27eb688cc25337fc412a6fa0a162c58a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structST_1_1light.html#a27eb688cc25337fc412a6fa0a162c58a">light</a> (uint64_t ID, int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness)</td></tr>
-<tr class="separator:a27eb688cc25337fc412a6fa0a162c58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40c7e4823b123fcf6e04d15461befbd0"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structST_1_1light.html#a40c7e4823b123fcf6e04d15461befbd0">get_ID</a> ()</td></tr>
-<tr class="separator:a40c7e4823b123fcf6e04d15461befbd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc6f9fde3984feff28daca0314d533bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structST_1_1light.html#adc6f9fde3984feff28daca0314d533bb">light</a> (int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness)</td></tr>
+<tr class="separator:adc6f9fde3984feff28daca0314d533bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -128,25 +126,22 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>brightness</b></t
 <tr class="memitem:a2aa5b7f02814721b0c781c7013a21a53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2aa5b7f02814721b0c781c7013a21a53"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_static</b> = false</td></tr>
 <tr class="separator:a2aa5b7f02814721b0c781c7013a21a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca49c00510646b53ed9212f634e329c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca49c00510646b53ed9212f634e329c4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>padding_byte</b></td></tr>
+<tr class="separator:aca49c00510646b53ed9212f634e329c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains the data needed to represent a light source. </p>
 
 <p>Definition at line <a class="el" href="light_8hpp_source.html#l00017">17</a> of file <a class="el" href="light_8hpp_source.html">light.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a27eb688cc25337fc412a6fa0a162c58a"></a>
+<a class="anchor" id="adc6f9fde3984feff28daca0314d533bb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">ST::light::light </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>ID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">int32_t&#160;</td>
           <td class="paramname"><em>origin_x</em>, </td>
         </tr>
@@ -193,33 +188,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_static</b> = false
 </dl>
 
 <p>Definition at line <a class="el" href="light_8cpp_source.html#l00020">20</a> of file <a class="el" href="light_8cpp_source.html">light.cpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a40c7e4823b123fcf6e04d15461befbd0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint64_t ST::light::get_ID </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The ID of the light object </dd></dl>
-
-<p>Definition at line <a class="el" href="light_8hpp_source.html#l00040">40</a> of file <a class="el" href="light_8hpp_source.html">light.hpp</a>.</p>
 
 </div>
 </div>
