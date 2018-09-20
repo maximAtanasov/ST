@@ -813,8 +813,6 @@ extern "C" int setTextObjectVisibleLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int createEntityLua(lua_State*){
-    printf("%ld\n", sizeof(ST::text));
-    printf("%ld\n", sizeof(ST::light));
     gGame_managerLua->get_level()->entities.emplace_back(ST::entity());
     return 0;
 }

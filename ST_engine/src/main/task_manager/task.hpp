@@ -10,6 +10,8 @@
 #ifndef TASK_DEF
 #define TASK_DEF
 
+#include <SDL/SDL_mutex.h>
+
 namespace ST {
 
     ///An object representing a task to be run by the task manager.
@@ -21,12 +23,11 @@ namespace ST {
     class task {
     public:
         void (*task_func)(void *);
-
         void *data;
         SDL_semaphore *lock{};
         SDL_semaphore *dependency{};
         bool has_lock = false;
-        int affinity = -1;
+        int8_t affinity = -1;
         const uint16_t id{};
 
         /**
@@ -37,9 +38,9 @@ namespace ST {
          * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
          * @param affinity Thread affinity for the task
          */
-        task(uint16_t id, void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity) : id(id){
-            task_func = function;
-            data = arg;
+        task(uint16_t id, void (*task_func)(void *), void *data, SDL_semaphore* dependency, int8_t affinity) : id(id){
+            this->task_func = task_func;
+            this->data = data;
             this->dependency = dependency;
             this->affinity = affinity;
         }
@@ -48,8 +49,6 @@ namespace ST {
             has_lock = static_cast<bool>(lock);
             this->lock = lock;
         }
-
-
     };
 }
 

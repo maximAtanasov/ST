@@ -10,6 +10,9 @@
 #ifndef GLOBALDEFS_DEF
 #define GLOBALDEFS_DEF
 
+//I don't think this will ever fail
+static_assert(sizeof(float) == 4, "floats are not 32 bits on this system!");
+
 #include <string>
 #include <cstdlib>
 #include <iostream>

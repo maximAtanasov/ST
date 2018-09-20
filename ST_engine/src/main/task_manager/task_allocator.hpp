@@ -10,7 +10,7 @@
 #ifndef SLAVICTALES_TASK_ALLOCATOR_HPP
 #define SLAVICTALES_TASK_ALLOCATOR_HPP
 
-#define TASK_ALLOCATOR_CAPACITY 20
+#define TASK_ALLOCATOR_CAPACITY 65
 
 #include <defs.hpp>
 #include <task_manager/task.hpp>
@@ -24,7 +24,7 @@ private:
     uint32_t memory_size = TASK_ALLOCATOR_CAPACITY;
     bool allocated[TASK_ALLOCATOR_CAPACITY]{};
 public:
-    ST::task* allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity);
+    ST::task* allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int8_t affinity);
     void deallocate(uint16_t id);
     task_allocator();
     ~task_allocator();
@@ -32,7 +32,7 @@ public:
 
 //INLINED METHODS
 
-inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity){
+inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int8_t affinity){
     uint16_t i = 0;
     SDL_LockMutex(access_mutex);
     //find the next free spot in memory
@@ -44,7 +44,8 @@ inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *a
         }
     }
     if(i == memory_size){
-        return nullptr;
+        fprintf(stderr, "You have started more than %d tasks\nAdjust the amount of tasks allocated! Exiting...", memory_size);
+        exit(1);
     }
     allocated[pointer] = true;
     auto temp = new (memory+pointer) ST::task(pointer, function, arg, dependency, affinity);
@@ -72,7 +73,7 @@ inline void task_allocator::deallocate(uint16_t id){
  * @param affinity Thread affinity for the task
  * @return A new task object
  */
-ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity);
+ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int8_t affinity);
 
 /**
  * Destroys a task using the task allocator

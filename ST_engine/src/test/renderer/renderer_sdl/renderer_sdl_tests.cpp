@@ -37,8 +37,8 @@ protected:
 
         SDL_DisplayMode DM{};
         SDL_GetDisplayMode(0, 0, &DM);
-        test_window_width = DM.w;
-        test_window_height = DM.h;
+        test_window_width = static_cast<int16_t>(DM.w);
+        test_window_height = static_cast<int16_t>(DM.h);
 
         test_window = SDL_CreateWindow("TEST", 0, 0, test_window_width, test_window_height, 0);
 

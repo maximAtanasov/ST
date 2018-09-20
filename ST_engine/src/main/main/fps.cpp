@@ -11,7 +11,6 @@
 
 /**
  * Initializes the fps counter.
- * @return Always 0.
  */
 fps::fps() {
     for(double& i : average) {
