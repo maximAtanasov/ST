@@ -10,7 +10,7 @@
 #ifndef SLAVICTALES_TASK_ALLOCATOR_HPP
 #define SLAVICTALES_TASK_ALLOCATOR_HPP
 
-#define TASK_ALLOCATOR_CAPACITY 20
+#define TASK_ALLOCATOR_CAPACITY 350
 
 #include <defs.hpp>
 #include <task_manager/task.hpp>
@@ -44,7 +44,8 @@ inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *a
         }
     }
     if(i == memory_size){
-        return nullptr;
+        fprintf(stderr, "More than %d tasks have been allocated, exiting!", TASK_ALLOCATOR_CAPACITY);
+        exit(1);
     }
     allocated[pointer] = true;
     auto temp = new (memory+pointer) ST::task(pointer, function, arg, dependency, affinity);
