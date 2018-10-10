@@ -10,7 +10,7 @@
 #ifndef SLAVICTALES_TASK_ALLOCATOR_HPP
 #define SLAVICTALES_TASK_ALLOCATOR_HPP
 
-#define TASK_ALLOCATOR_CAPACITY 65
+#define TASK_ALLOCATOR_CAPACITY 200
 
 #include <defs.hpp>
 #include <task_manager/task.hpp>

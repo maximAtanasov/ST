@@ -72,8 +72,8 @@ class drawing_manager{
         ST::camera Camera{};
 
         //Internal rendering resolution
-        const int w_width = 1920;
-        const int w_height = 1080;
+        const int16_t w_width = 1920;
+        const int16_t w_height = 1080;
 
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};

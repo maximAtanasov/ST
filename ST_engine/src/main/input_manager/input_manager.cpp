@@ -8,7 +8,6 @@
  */
 
 #include <input_manager/input_manager.hpp>
-#include "input_manager.hpp"
 
 
 /**
@@ -52,8 +51,8 @@ void input_manager::update_task(void* mngr){
     self->handle_messages();
     self->save_input_from_previous_frame();
     self->check_events();
-    self->check_keyboard_input();
     self->check_mouse_input();
+    self->check_keyboard_input();
 }
 
 /**
@@ -61,6 +60,9 @@ void input_manager::update_task(void* mngr){
  */
 void input_manager::save_input_from_previous_frame() {
     memcpy(controls.keyboardFramePrev, controls.keyboard, sizeof(controls.keyboardFramePrev));
+    controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
+    controls.mouseClicksFramePrev[1] = controls.mouseClicks[1];
+    controls.mouseClicksFramePrev[2] = controls.mouseClicks[2];
 }
 
 /**
@@ -135,8 +137,8 @@ void input_manager::check_events(){
         }
         if(event.type == SDL_MOUSEMOTION){
             SDL_GetMouseState(&controls.mouseX, &controls.mouseY);
-            controls.mouseX = static_cast<int>(static_cast<float>(controls.mouseX)*ratio_w);
-            controls.mouseY = static_cast<int>(static_cast<float>(controls.mouseY)*ratio_h);
+            controls.mouseX = static_cast<int32_t>(static_cast<float>(controls.mouseX)*ratio_w);
+            controls.mouseY = static_cast<int32_t>(static_cast<float>(controls.mouseY)*ratio_h);
         }
         if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
             r_width = event.window.data1;
@@ -151,10 +153,6 @@ void input_manager::check_events(){
  * Check if the mouse coordinates have changed.
  */
 void input_manager::check_mouse_input() {
-    //Collect mouse input
-    controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
-    controls.mouseClicksFramePrev[1] = controls.mouseClicks[1];
-    controls.mouseClicksFramePrev[2] = controls.mouseClicks[2];
     for (int8_t &i : controls.mouseClicks) {
         i = 0;
     }

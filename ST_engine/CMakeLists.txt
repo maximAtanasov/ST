@@ -10,7 +10,6 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(ST_engine)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS_RELEASE )
 
 include(GoogleTest)
 enable_testing()
