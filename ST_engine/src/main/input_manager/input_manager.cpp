@@ -9,7 +9,6 @@
 
 #include <input_manager/input_manager.hpp>
 
-
 /**
  * initializes the input manager
  * @param msg_bus A pointer to the global message bus.
@@ -49,20 +48,106 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 void input_manager::update_task(void* mngr){
     auto self = static_cast<input_manager*>(mngr);
     self->handle_messages();
-    self->save_input_from_previous_frame();
-    self->check_events();
-    self->check_mouse_input();
-    self->check_keyboard_input();
+    self->take_input();
 }
 
 /**
- * Saves the keyboard/mouse state from the previous frame so that we can compare to that in the current frame.
+ * Checks the state of the keyboard/mouse and sends appropriate messages.
  */
-void input_manager::save_input_from_previous_frame() {
-    memcpy(controls.keyboardFramePrev, controls.keyboard, sizeof(controls.keyboardFramePrev));
-    controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
-    controls.mouseClicksFramePrev[1] = controls.mouseClicks[1];
-    controls.mouseClicksFramePrev[2] = controls.mouseClicks[2];
+void input_manager::take_input(){
+    int length = 0;
+    SDL_GetKeyboardState(&length);
+    for(uint16_t i = 0; i < controls.keys; i++){
+        controls.keyboardFramePrev[i] = controls.keyboard[i];
+    }
+
+    //Collect mouse input
+	controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
+	controls.mouseClicksFramePrev[1] = controls.mouseClicks[1];
+	controls.mouseClicksFramePrev[2] = controls.mouseClicks[2];
+    for(int8_t& i : controls.mouseClicks){
+        i = 0;
+    }
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT))
+        controls.mouseClicks[0] = 1;
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE))
+        controls.mouseClicks[1] = 1;
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT))
+        controls.mouseClicks[2] = 1;
+
+    while(SDL_PollEvent(&event) != 0){
+        if(event.type == SDL_QUIT){
+            gMessage_bus->send_msg(make_msg(END_GAME, nullptr));
+        }
+        if(event.type == SDL_MOUSEWHEEL){
+            controls.mouse_scroll += event.wheel.y;
+            if(controls.mouse_scroll < 0){
+                controls.mouse_scroll = 0;
+            }
+            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
+        }
+        if(event.type == SDL_TEXTINPUT){
+            if(text_input) {
+                composition += event.edit.text;
+
+                #ifdef __DEBUG
+                //Drop the tilde when closing the console, otherwise it just stays there
+                if(!composition.empty() && composition.at(composition.size()-1) == CONSOLE_TOGGLE_KEY){
+                    composition.pop_back();
+                }
+                #endif
+                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
+            }
+        }
+        if(event.type == SDL_KEYDOWN){
+            if(event.key.keysym.sym == SDLK_BACKSPACE) {
+                if (composition.length() > 0) {
+                    composition.pop_back();
+                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
+                }
+            }
+        }
+		if(event.type == SDL_MOUSEMOTION){
+			SDL_GetMouseState(&controls.mouseX, &controls.mouseY);
+			controls.mouseX = static_cast<int>(static_cast<float>(controls.mouseX)*ratio_w);
+			controls.mouseY = static_cast<int>(static_cast<float>(controls.mouseY)*ratio_h);
+		}
+        if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+            r_width = event.window.data1;
+            r_height = event.window.data2;
+            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
+            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
+        }
+    }
+
+    //check if any of the registered keys is pressed and send a message if so
+    for(auto i : registered_keys){
+        if(keypress(i)){
+            gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i))));
+        }
+        else if(keyheld(i)){
+            gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i))));
+        }
+        else if(keyrelease(i)){
+            gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i))));
+        }
+    }
+
+    #ifdef __DEBUG
+    if(keypress(ST::key::TILDE)){
+        gMessage_bus->send_msg(make_msg(CONSOLE_TOGGLE, nullptr));
+    }
+    #endif
+
+    //only send mouse coordinates if they change
+    if(controls.mouseX != controls.mouseX_prev){
+        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouseX)));
+        controls.mouseX_prev = controls.mouseX;
+    }
+    if(controls.mouseY != controls.mouseY_prev){
+        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouseY)));
+        controls.mouseY_prev = controls.mouseY;
+    }
 }
 
 /**
@@ -101,102 +186,6 @@ void input_manager::handle_messages(){
 		destroy_msg(temp);
 		temp = msg_sub.get_next_message();
 	}
-}
-
-void input_manager::check_events(){
-    while(SDL_PollEvent(&event) != 0){
-        if(event.type == SDL_QUIT){
-            gMessage_bus->send_msg(make_msg(END_GAME, nullptr));
-        }
-        if(event.type == SDL_MOUSEWHEEL){
-            controls.mouse_scroll += event.wheel.y;
-            if(controls.mouse_scroll < 0){
-                controls.mouse_scroll = 0;
-            }
-            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
-        }
-        if(event.type == SDL_TEXTINPUT){
-            if(text_input) {
-                composition += event.edit.text;
-#ifdef __DEBUG
-                //Drop the tilde when closing the console, otherwise it just stays there
-                if(!composition.empty() && composition.at(composition.size()-1) == CONSOLE_TOGGLE_KEY){
-                    composition.pop_back();
-                }
-#endif
-                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
-            }
-        }
-        if(event.type == SDL_KEYDOWN){
-            if(event.key.keysym.sym == SDLK_BACKSPACE) {
-                if (composition.length() > 0) {
-                    composition.pop_back();
-                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
-                }
-            }
-        }
-        if(event.type == SDL_MOUSEMOTION){
-            SDL_GetMouseState(&controls.mouseX, &controls.mouseY);
-            controls.mouseX = static_cast<int32_t>(static_cast<float>(controls.mouseX)*ratio_w);
-            controls.mouseY = static_cast<int32_t>(static_cast<float>(controls.mouseY)*ratio_h);
-        }
-        if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
-            r_width = event.window.data1;
-            r_height = event.window.data2;
-            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
-            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
-        }
-    }
-}
-
-/**
- * Check if the mouse coordinates have changed.
- */
-void input_manager::check_mouse_input() {
-    for (int8_t &i : controls.mouseClicks) {
-        i = 0;
-    }
-    if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        controls.mouseClicks[0] = 1;
-    }
-    if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE)){
-        controls.mouseClicks[1] = 1;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        controls.mouseClicks[2] = 1;
-    }
-
-    //only send mouse coordinates if they change
-    if(controls.mouseX != controls.mouseX_prev){
-        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouseX)));
-        controls.mouseX_prev = controls.mouseX;
-    }
-    if(controls.mouseY != controls.mouseY_prev){
-        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouseY)));
-        controls.mouseY_prev = controls.mouseY;
-    }
-}
-
-/**
- * Check if any of the registered keys is pressed and send a message if so.
- */
-void input_manager::check_keyboard_input() {
-    for(auto i : registered_keys){
-        if(keypress(i)){
-            gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i))));
-        }
-        else if(keyheld(i)){
-            gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i))));
-        }
-        else if(keyrelease(i)){
-            gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i))));
-        }
-    }
-    #ifdef __DEBUG
-        if(keypress(ST::key::TILDE)){
-            gMessage_bus->send_msg(make_msg(CONSOLE_TOGGLE, nullptr));
-        }
-    #endif
 }
 
 /**

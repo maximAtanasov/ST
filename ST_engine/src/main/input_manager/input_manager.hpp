@@ -65,7 +65,7 @@ class input_manager{
 
 		int32_t v_width = 1, v_height = 1;
 		int32_t r_width = 1, r_height = 1;
-		float_t ratio_w = 1, ratio_h = 1;
+		float ratio_w = 1, ratio_h = 1;
 		SDL_Event event{};
 		game_controls controls{};
 		message_bus* gMessage_bus{};
@@ -81,10 +81,7 @@ class input_manager{
 		bool keyheld(ST::key) const;
 		bool keyrelease(ST::key) const;
 		void handle_messages();
-        void check_keyboard_input();
-        void check_mouse_input();
-        void check_events();
-        void save_input_from_previous_frame();
+        void take_input();
         static void update_task(void* mngr);
 
     public:

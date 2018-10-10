@@ -107,6 +107,8 @@ task_manager::~task_manager(){
     SDL_DestroySemaphore(work_sem);
 }
 
+//TODO: Task allocator
+
 /**
  * Start a new task on one of the task threads.
  * @param arg The task object to use.
