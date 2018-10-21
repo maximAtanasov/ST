@@ -53,6 +53,10 @@
  * <b>ENABLE_LIGHTING</b> - Enable or disable the lighting.
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
+ *
+ * <b>SET_RESOLUTION</b> - Sets the rendering resolution for the renderer.
+ *
+ * Message must contain: a pointer to a <b>std::tuple<int16_t, int16_t></b> containing the width and the height of the screen. <br>
  */
 class drawing_manager{
     private:
@@ -72,8 +76,8 @@ class drawing_manager{
         ST::camera Camera{};
 
         //Internal rendering resolution
-        const int w_width = 1920;
-        const int w_height = 1080;
+        int16_t w_width = 1920;
+        int16_t w_height = 1080;
 
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};

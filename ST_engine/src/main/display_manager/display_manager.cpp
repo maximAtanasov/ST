@@ -38,8 +38,8 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gTask_manager = tsk_mngr;
     gMessage_bus = msg_bus;
 	SDL_GetDisplayMode(0, 0, &DM);
-	width = DM.w;
-    height = DM.h;
+	width = static_cast<int16_t>(DM.w);
+    height = static_cast<int16_t>(DM.h);
     window = SDL_CreateWindow
     (
         "SlavicTales", 0,

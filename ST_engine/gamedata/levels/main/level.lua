@@ -23,6 +23,7 @@ setBackground("splash.webp")
 setDarkness(254)
 loadLevel("level1") --preload level1
 loadLevel("main_menu")
+loadLevel("levelCard")
 hideMouseCursor()
 splash = 255
 splashUp = 0

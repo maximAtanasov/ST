@@ -23,11 +23,11 @@
  *
  * <b>VIRTUAL_SCREEN_COORDINATES</b> - Tell the input manager what the virtual screen resolution is.
  *
- * Message must contain: a pointer to a <b>std::tuple<int, int></b> containing the width and the height of the viewport. <br>
+ * Message must contain: a pointer to a <b>std::tuple<int16_t, int16_t></b> containing the width and the height of the viewport. <br>
  *
  * <b>REAL_SCREEN_COORDINATES</b> - Tell the input manager what the actual screen resolution is.
  *
- * Message must contain: a pointer to a <b>std::tuple<int, int></b> containing the width and the height of the screen. <br>
+ * Message must contain: a pointer to a <b>std::tuple<int16_t, int16_t></b> containing the width and the height of the screen. <br>
  *
  * <b>START_TEXT_INPUT</b> - Starts taking all keyboard input and sends <b>TEXT_STREAM</b> messages.
  *

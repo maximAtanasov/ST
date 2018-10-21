@@ -78,7 +78,7 @@ long get_file_size(const std::string& path){
     return size;
 }
 
-int8_t copy_file(const std::string& src, const std::string& dest){
+void copy_file(const std::string& src, const std::string& dest){
     FILE* src_file = fopen(src.c_str(), "rb");
     FILE* dest_file = fopen(dest.c_str(), "wb");
 

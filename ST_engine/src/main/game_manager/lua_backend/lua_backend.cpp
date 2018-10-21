@@ -86,6 +86,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setLevelFloor", setLevelFloorLua);
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
+    lua_register(L, "setInternalResolution", setInternalResolutionLua);
 
     //Physics functions.
     lua_register(L, "setGravity", setGravityLua);
@@ -1238,6 +1239,19 @@ extern "C" int vsyncOffLua(lua_State*){
 extern "C" int getVsyncStateLua(lua_State* L){
     lua_pushboolean(L, gGame_managerLua->vsync_flag);
     return 1;
+}
+
+/**
+ * Set the internal rendering resolution.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setInternalResolutionLua(lua_State* L){
+    auto width = static_cast<int16_t>(lua_tointeger(L, 1));
+    auto height = static_cast<int16_t>(lua_tointeger(L, 2));
+    gMessage_busLua->send_msg(make_msg(SET_INTERNAL_RESOLUTION, make_data(std::make_tuple(width, height))));
+    return 0;
 }
 
 /**

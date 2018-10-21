@@ -34,8 +34,9 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 	gMessage_bus->subscribe(SET_DARKNESS, &msg_sub);
 	gMessage_bus->subscribe(ASSETS, &msg_sub);
     gMessage_bus->subscribe(ENABLE_LIGHTING, &msg_sub);
+    gMessage_bus->subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
 
-	//debug collisions aren't shown by default
+    //debug collisions aren't shown by default
 	collisions_shown = false;
 
 	//Variables for lights
@@ -302,6 +303,13 @@ void drawing_manager::handle_messages(){
             ST::assets* temp_ast = *gAssets;
             gRenderer.upload_surfaces(&temp_ast->surfaces);
             gRenderer.upload_fonts(&temp_ast->fonts);
+        }
+        else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
+            auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
+            gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data(res)));
+            gRenderer.set_resolution(std::get<0>(res), std::get<1>(res));
+            w_width = std::get<0>(res);
+            w_height = std::get<1>(res);
         }
         destroy_msg(temp);
         temp = msg_sub.get_next_message();

@@ -158,13 +158,13 @@ void input_manager::handle_messages(){
 	message* temp = msg_sub.get_next_message();
 	while(temp != nullptr){
 		if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
-            auto data = static_cast<std::tuple<int, int>*>(temp->get_data());
+            auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
             v_width = std::get<0> (*data);
             v_height = std::get<1> (*data);
             ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
             ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
 		}else if(temp->msg_name == REAL_SCREEN_COORDINATES) {
-            auto data = static_cast<std::tuple<int, int>*>(temp->get_data());
+            auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
             r_width = std::get<0>(*data);
             r_height = std::get<1>(*data);
             ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);

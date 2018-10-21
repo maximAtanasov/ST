@@ -34,6 +34,8 @@ private:
 	int16_t width;
 	int16_t height;
 
+	bool vsync = false;
+
     //Textures with no corresponding surface in our assets need to be freed
     ska::bytell_hash_map<size_t, SDL_Texture*> textures;
 
@@ -51,7 +53,7 @@ private:
     void cache_font(TTF_Font* Font, std::string font_and_size);
     void draw_text_lru_cached(std::string, std::string, int, int, SDL_Color, int);
     void draw_text_cached_glyphs(std::string, std::string, int, int, SDL_Color, int) const;
-	int initialize_with_vsync(SDL_Window* win, int width, int height, bool vsync);
+	int initialize_with_vsync(SDL_Window* window, int16_t width, int16_t height, bool vsync);
 
 public:
     void set_draw_color(uint8_t,uint8_t,uint8_t,uint8_t) ;
@@ -71,6 +73,8 @@ public:
     int initialize(SDL_Window* win, int16_t width, int16_t height);
     void close();
     ~renderer_sdl();
+
+	void set_resolution(int16_t width, int16_t height);
 };
 
 //INLINED METHODS
@@ -199,6 +203,15 @@ inline void renderer_sdl::set_draw_color(uint8_t r, uint8_t g, uint8_t b, uint8_
  */
 inline void renderer_sdl::present() const{
 	SDL_RenderPresent(sdl_renderer);
+}
+
+inline void renderer_sdl::set_resolution(int16_t width, int16_t height) {
+    close();
+	this->width = width;
+	this->height = height;
+	initialize_with_vsync(window, width, height, vsync);
+    upload_surfaces(surfaces_pointer);
+    upload_fonts(fonts_pointer);
 }
 
 #endif //RENDER_SDL_DEF

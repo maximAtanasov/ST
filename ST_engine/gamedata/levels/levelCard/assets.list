@@ -1,0 +1,21 @@
+# Copyright (C) 2018 Maxim Atanasov - All Rights Reserved
+# You may not use, distribute or modify this code.
+# This code is proprietary and belongs to the "slavicTales"
+# project. See LICENCE.txt in the root directory of the project.
+#
+# E-mail: atanasovmaksim1@gmail.com
+
+fonts/font1.ttf 80
+fonts/font1.ttf 50
+fonts/font1.ttf 70
+fonts/font2.ttf 80
+fonts/font2.ttf 50
+fonts/font2.ttf 70
+assets/levelCard/card.png
+assets/levelCard/card2.png
+assets/levelCard/card3.png
+assets/levelCard/card4.png
+assets/levelCard/card5.png
+assets/levelCard/card6.png
+assets/levelCard/table.png
+assets/levelCard/cardback.png

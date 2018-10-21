@@ -39,8 +39,8 @@ class display_manager{
         SDL_DisplayMode DM{};
         task_manager* gTask_manager{};
         message_bus* gMessage_bus{};
-        int height = 0;
-        int width = 0;
+        int16_t height = 0;
+        int16_t width = 0;
         subscriber msg_sub{};
 
         void set_fullscreen(bool arg);

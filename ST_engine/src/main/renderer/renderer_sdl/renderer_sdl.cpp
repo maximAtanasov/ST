@@ -39,7 +39,7 @@ int renderer_sdl::initialize(SDL_Window* window, int16_t width, int16_t height){
  * @param vsync True to enable VSYNC, false otherwise.
  * @return Always 0.
  */
-int renderer_sdl::initialize_with_vsync(SDL_Window* window, int width, int height, bool vsync){
+int renderer_sdl::initialize_with_vsync(SDL_Window* window, int16_t width, int16_t height, bool vsync){
     gFont_cache.set_max(100);
     //initialize renderer
 	if(vsync){
@@ -257,7 +257,8 @@ void renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
  */
 void renderer_sdl::vsync_on(){
 	close();
-	initialize_with_vsync(window, width, height, true);
+	vsync = true;
+	initialize_with_vsync(window, width, height, vsync);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
 }
@@ -267,7 +268,8 @@ void renderer_sdl::vsync_on(){
  */
 void renderer_sdl::vsync_off(){
 	close();
-	initialize_with_vsync(window, width, height, false);
+	vsync = false;
+	initialize_with_vsync(window, width, height, vsync);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
 }
