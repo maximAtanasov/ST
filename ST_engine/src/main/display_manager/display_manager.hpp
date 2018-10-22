@@ -53,6 +53,8 @@ class display_manager{
         ~display_manager();
         void update();
         SDL_Window* get_window();
+
+
 };
 
 

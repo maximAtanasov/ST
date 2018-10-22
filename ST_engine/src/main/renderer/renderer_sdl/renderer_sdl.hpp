@@ -34,8 +34,6 @@ private:
 	int16_t width;
 	int16_t height;
 
-	bool vsync = false;
-
     //Textures with no corresponding surface in our assets need to be freed
     ska::bytell_hash_map<size_t, SDL_Texture*> textures;
 
@@ -50,7 +48,9 @@ private:
     //we do however need to cleanup the cache as that lives on the GPU
     ska::bytell_hash_map<std::string, std::vector<SDL_Texture*>> fonts_cache;
 
-    void cache_font(TTF_Font* Font, std::string font_and_size);
+	bool vsync = false;
+
+	void cache_font(TTF_Font* Font, std::string font_and_size);
     void draw_text_lru_cached(std::string, std::string, int, int, SDL_Color, int);
     void draw_text_cached_glyphs(std::string, std::string, int, int, SDL_Color, int) const;
 	int initialize_with_vsync(SDL_Window* window, int16_t width, int16_t height, bool vsync);
@@ -73,7 +73,6 @@ public:
     int initialize(SDL_Window* win, int16_t width, int16_t height);
     void close();
     ~renderer_sdl();
-
 	void set_resolution(int16_t width, int16_t height);
 };
 

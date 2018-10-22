@@ -19,6 +19,8 @@
 #include <console/log.hpp>
 #include <ST_util/string_util.hpp>
 #include <game_manager/level/light.hpp>
+#include "lua_backend.hpp"
+
 
 //local to the file, as lua bindings cannot be in a class
 static message_bus*  gMessage_busLua;
@@ -87,6 +89,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
     lua_register(L, "setInternalResolution", setInternalResolutionLua);
+    lua_register(L, "setWindowResolution", setWindowResolutionLua);
 
     //Physics functions.
     lua_register(L, "setGravity", setGravityLua);
@@ -1251,6 +1254,19 @@ extern "C" int setInternalResolutionLua(lua_State* L){
     auto width = static_cast<int16_t>(lua_tointeger(L, 1));
     auto height = static_cast<int16_t>(lua_tointeger(L, 2));
     gMessage_busLua->send_msg(make_msg(SET_INTERNAL_RESOLUTION, make_data(std::make_tuple(width, height))));
+    return 0;
+}
+
+/**
+ * Set the resolution for the window.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+int setWindowResolutionLua(lua_State *L) {
+    auto width = static_cast<int16_t>(lua_tointeger(L, 1));
+    auto height = static_cast<int16_t>(lua_tointeger(L, 2));
+    gMessage_busLua->send_msg(make_msg(SET_WINDOW_RESOLUTION, make_data(std::make_tuple(width, height))));
     return 0;
 }
 

@@ -41,6 +41,9 @@ int renderer_sdl::initialize(SDL_Window* window, int16_t width, int16_t height){
  */
 int renderer_sdl::initialize_with_vsync(SDL_Window* window, int16_t width, int16_t height, bool vsync){
     gFont_cache.set_max(100);
+    this->window = window;
+    this->width = width;
+    this->height = height;
     //initialize renderer
 	if(vsync){
     	sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
