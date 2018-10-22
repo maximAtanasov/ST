@@ -7,8 +7,8 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 grass = entity:new()
-grass.texture = "grass.webp";
-grass.texWidth = 400;
-grass.texHeight = 100;
+grass.texture = "grass.webp"
+grass.texWidth = 400
+grass.texHeight = 100
 grass.isVisible = true
 

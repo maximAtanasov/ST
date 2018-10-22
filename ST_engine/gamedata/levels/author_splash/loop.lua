@@ -13,9 +13,9 @@ elseif splashUp < 255 then
     splashUp = splashUp + 1
     setDarkness(splashUp)
 else
-    startLevel("author_splash")
+    startLevel("main_menu")
 end
 
 if keyPressed("START") or keyPressed("ESCAPE") then
-    startLevel("author_splash")
+    startLevel("main_menu")
 end

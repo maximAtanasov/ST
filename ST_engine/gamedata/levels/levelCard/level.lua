@@ -6,7 +6,7 @@
 -- E-mail: atanasovmaksim1@gmail.com
 
 setFullscreen(false)
-setWindowResolution(720, 1280)
+setWindowResolution(432, 768)
 setInternalResolution(1080, 1920)
 showMouseCursor()
 stopMusic();

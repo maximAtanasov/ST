@@ -49,6 +49,9 @@ ST::level::~level(){
     //unload entities.
     entities.clear();
 
+    //unload text objects
+    text_objects.clear();
+
     //unload lights
     lights.clear();
 }
@@ -71,6 +74,12 @@ void ST::level::unload(){
 
     //unload entities
     entities.clear();
+
+    //unload text objects
+    text_objects.clear();
+
+    //unload lights
+    lights.clear();
 }
 
 /**

@@ -8,10 +8,10 @@
 
 label = entity:new()
 label.isVisible = true;
-label.text = textObject:new()
+label.text = nil;
 
 function label:new(x, y, text, font, fontSize)
-    local newLabel = entity:new(self, x, y)
+    local newLabel = newEntity(self, x, y)
     newLabel.text = textObject:new(x,y, fontSize, font)
     newLabel.text:setText(text)
     return newLabel

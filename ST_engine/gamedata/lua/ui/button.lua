@@ -9,7 +9,7 @@
 button = entity:new()
 button.soundPlayed = 0
 button.isVisible = true
-button.text = textObject:new()
+button.text = nil
 button.colX = 0
 button.colY = 0
 button.clickKey = ""

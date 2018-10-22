@@ -56,6 +56,10 @@ function player:update()
         playSound("sound/death.wav")
         startLevel("level1")
     end
+
+    if self:overObject(grass26) then
+        startLevel("levelCard")
+    end
 end
 
 function player:jump()

@@ -198,6 +198,7 @@ void game_manager::start_level(const std::string& level_name){
     }
     get_level()->lights.clear();
     get_level()->entities.clear();
+    get_level()->text_objects.clear();
 
     //construct level
     get_level()->Camera.x = 0;

@@ -134,6 +134,8 @@ grass23 = grass:new(8800, 1081)
 grass24 = grass:new(9200, 1081)
 grass25 = grass:new(9600, 1081)
 grass26 = grass:new(10000, 1081)
+grass26:setCollision(0, 0, 400, 100)
+
 
 coin1 = coin:new(1400, 1000)
 coin1:spin()

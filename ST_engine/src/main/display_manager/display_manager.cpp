@@ -46,7 +46,7 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         0,
 		width,
         height,
-        SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL
+        SDL_WINDOW_OPENGL
     );
     log(INFO, "Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height));
 	gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
@@ -90,7 +90,7 @@ void display_manager::handle_messages(){
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
             gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(res)));
             SDL_SetWindowSize(window, std::get<0>(res), std::get<1>(res));
-            
+            SDL_SetWindowPosition(window, 100, 100);
             width = std::get<0>(res);
             height = std::get<1>(res);
         }

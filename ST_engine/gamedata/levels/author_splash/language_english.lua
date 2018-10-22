@@ -6,16 +6,7 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
-if splash > 0 then
-    splash = splash - 1
-    setDarkness(splash)
-elseif splashUp < 255 then
-    splashUp = splashUp + 1
-    setDarkness(splashUp)
-else
-    startLevel("author_splash")
-end
-
-if keyPressed("START") or keyPressed("ESCAPE") then
-    startLevel("author_splash")
-end
+LABEL_TEXT = "Maxim Atanasov"
+LABEL_OFFSET = 365
+FONT = "font1.ttf"
+FONT_SIZE = 80
