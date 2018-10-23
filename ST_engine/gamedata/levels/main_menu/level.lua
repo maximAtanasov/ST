@@ -15,15 +15,17 @@ setBackground("menu.webp")
 setDarkness(255)
 
 darkness = 255
-initialVolume = 100
+initialVolume = getVolume()
 setVolume(initialVolume)
 function introFading()
     if darkness > 0 then
         darkness = darkness - 1
         setDarkness(darkness)
         if(darkness % 4 == 0) then
-            initialVolume = initialVolume - 1
-            setVolume(initialVolume)
+            if initialVolume > 36 then
+                initialVolume = initialVolume - 1
+                setVolume(initialVolume)
+            end
         end
     elseif darkness == 0 then
         enableLighting(false)
@@ -67,7 +69,7 @@ function button_newGame:onHover()
     if(self.soundPlayed == 1) then
         playSound("buttonSelected.wav", 100, 0)
         self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
+        self.text:setTextColor(255, 50, 50, 255)
     end
 end
 
@@ -95,13 +97,15 @@ function button_settings:onClick()
     button_vsync:show()
     button_switch2:show()
     button_switch3:show()
+    button_languageSelection:show()
+    button_languageSelectionLabel:show()
 end
 
 function button_settings:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
+        self.text:setTextColor(255, 50, 50, 255)
     end
 end
 
@@ -125,7 +129,7 @@ function button_exit:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
+        self.text:setTextColor(255, 50, 50, 255)
     end
 end
 
@@ -139,38 +143,6 @@ end
 --SETTINGS
 
 --Buttons and their update functions
-button_back = button:new(50, 800, BACK_TEXT, FONT, 70)
-button_back:setMarginX(200)
-button_back:setMarginY(65)
-button_back:hide()
-button_back:setClickKey(all_buttons_key)
-
-function button_back:onClick()
-    room = "main"
-    button_newGame:show()
-    button_settings:show()
-    button_exit:show()
-    button_back:hide()
-    button_fullscreen:hide()
-    button_soundSwitch:hide()
-    button_switch1:hide()
-    button_vsync:hide()
-    button_switch2:hide()
-    button_switch3:hide()
-end
-
-function button_back:onHover()
-    if(self.soundPlayed == 1) then
-        playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
-    end
-end
-
-function button_back:onNothing()
-    self.soundPlayed = 1
-    self.text:setTextColor(255, 255, 255, 255)
-end
 
 --SOUND BUTTON
 button_soundSwitch = button:new(50, 500, SOUND_TEXT, FONT, 70)
@@ -188,7 +160,7 @@ function button_soundSwitch:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
+        self.text:setTextColor(255, 50, 50, 255)
     end
 end
 
@@ -209,8 +181,55 @@ function button_switch1:update()
     end
 end
 
+--LANGUAGE SELECTION
+button_languageSelection = button:new(50, 600, LANGUAGE_TEXT, FONT, 70)
+button_languageSelection:setMarginX(240)
+button_languageSelection:setMarginY(65)
+button_languageSelection:hide()
+button_languageSelection:setClickKey(all_buttons_key)
+
+function button_languageSelection:onClick()
+    if(language == "russian") then
+        setLanguage("english")
+    else
+        setLanguage("russian")
+    end
+    playSound(all_buttons_sound, 100, 0)
+    startLevel("main_menu")
+end
+
+function button_languageSelection:onHover()
+    if(self.soundPlayed == 1) then
+        playSound(all_buttons_sound, 100, 0)
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 50, 50, 255)
+    end
+end
+
+function button_languageSelection:onNothing()
+    self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
+end
+
+--LANGUAGE NAME LABEL
+button_languageSelectionLabel = button:new(LANUAGE_OFFSET, 600, language, FONT, 50)
+button_languageSelectionLabel:hide()
+if language == "english" then
+    button_languageSelectionLabel:setText("English")
+else
+    button_languageSelectionLabel:setText("Русский")
+end
+
+function button_languageSelectionLabel:update()
+    --[[if language == "english" then
+        button_switch1:setText("English")
+    else
+        button_switch1:setText("Russian")
+    end]]
+end
+
 --VSYNC button
-button_vsync = button:new(50, 600, VSYNC_TEXT, FONT, 70)
+button_vsync = button:new(50, 700, VSYNC_TEXT, FONT, 70)
 button_vsync:setMarginX(VSYNC_MARGINS)
 button_vsync:setMarginY(60)
 button_vsync:hide()
@@ -220,7 +239,7 @@ function button_vsync:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
+        self.text:setTextColor(255, 50, 50, 255)
     end
 end
 
@@ -241,7 +260,7 @@ end
 
 --ON SWITCH FOR VSYNC
  
-button_switch2 = checkbox:new(VSYNC_CHECKBOX, 620 - VSYNC_CHECKBOX_Y_OFFSET)
+button_switch2 = checkbox:new(VSYNC_CHECKBOX, 720 - VSYNC_CHECKBOX_Y_OFFSET)
 button_switch2:hide()
 button_switch2:setClickKey(all_buttons_key)
 if getVsyncState() then
@@ -262,7 +281,7 @@ end
 
 --Fullscreen button
 
-button_fullscreen = button:new(50, 700, FULLSCREEN_TEXT, FONT, 70)
+button_fullscreen = button:new(50, 800, FULLSCREEN_TEXT, FONT, 70)
 button_fullscreen:setMarginX(FULLSCREEN_MARGINS)
 button_fullscreen:setMarginY(60)
 button_fullscreen:hide()
@@ -281,7 +300,7 @@ function button_fullscreen:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
-        self.text:setTextColor(255, 100, 100, 255)
+        self.text:setTextColor(255, 50, 50, 255)
     end
 end
 
@@ -292,7 +311,7 @@ end
 
 
 --ON SWITCH FOR FULLSCREEN
-button_switch3 = button:new(ON3_OFFSET, 700, ON_TEXT, FONT, 50)
+button_switch3 = button:new(ON3_OFFSET, 800, ON_TEXT, FONT, 50)
 button_switch3:hide()
 
 function button_switch3:update()
@@ -301,4 +320,40 @@ function button_switch3:update()
     else
         button_switch3:setText(OFF_TEXT)
     end
+end
+
+--BACK BUTTON
+button_back = button:new(50, 900, BACK_TEXT, FONT, 70)
+button_back:setMarginX(200)
+button_back:setMarginY(65)
+button_back:hide()
+button_back:setClickKey(all_buttons_key)
+
+function button_back:onClick()
+    room = "main"
+    button_newGame:show()
+    button_settings:show()
+    button_exit:show()
+    button_back:hide()
+    button_fullscreen:hide()
+    button_soundSwitch:hide()
+    button_switch1:hide()
+    button_vsync:hide()
+    button_switch2:hide()
+    button_switch3:hide()
+    button_languageSelection:hide()
+    button_languageSelectionLabel:hide()
+end
+
+function button_back:onHover()
+    if(self.soundPlayed == 1) then
+        playSound(all_buttons_sound, 100, 0)
+        self.soundPlayed = 0
+        self.text:setTextColor(255, 50, 50, 255)
+    end
+end
+
+function button_back:onNothing()
+    self.soundPlayed = 1
+    self.text:setTextColor(255, 255, 255, 255)
 end

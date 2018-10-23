@@ -1603,7 +1603,7 @@ extern "C" int showCollisionsLua(lua_State* L){
 extern "C" int logLua(lua_State* L){
     auto type = static_cast<uint8_t>(lua_tointeger(L, 1));
     auto arg = static_cast<std::string>(lua_tostring(L, 2));
-    gMessage_busLua->send_msg(make_msg(CONSOLE_WRITE, make_data<ST::console_log>(ST::console_log((ST::log_type)type, arg))));
+    gMessage_busLua->send_msg(make_msg(CONSOLE_WRITE, make_data(ST::console_log((ST::log_type)type, arg))));
     return 0;
 }
 

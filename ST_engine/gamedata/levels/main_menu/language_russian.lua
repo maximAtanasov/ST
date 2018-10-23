@@ -16,6 +16,9 @@ VSYNC_TEXT = "Верт. синхр.:"
 ON_TEXT = "Вкл."
 OFF_TEXT = "Выкл."
 FULLSCREEN_TEXT = "Полный экран:"
+LANGUAGE_TEXT = "Язык: "
+LANUAGE_OFFSET = 250
+
 
 ON1_OFFSET = 240
 ON2_OFFSET = 420

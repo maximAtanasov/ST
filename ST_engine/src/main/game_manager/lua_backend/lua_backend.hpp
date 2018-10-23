@@ -87,7 +87,6 @@ extern "C" int setVolumeLua(lua_State* L);
 extern "C" int setInternalResolutionLua(lua_State* L);
 extern "C" int setWindowResolutionLua(lua_State* L);
 
-
 //Text Object lua bindings definitions
 
 extern "C" int createTextObjectLua(lua_State* L);

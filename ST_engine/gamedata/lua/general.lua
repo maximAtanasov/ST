@@ -6,6 +6,7 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
+local io = require "io"
 
 currentID = 0 --MUST start at 0
 currentTextID = 0 --MUST start at 0
@@ -27,3 +28,23 @@ function exit()
     endGame()
 end
 
+function setLanguage(language_string)
+    --
+    --  Read the file
+    --
+    local f = io.open("lua/global_properties.lua", "r")
+    local content = f:read("*all")
+    f:close()
+
+
+    --
+    -- Edit the string
+    --
+    content = string.gsub(content, language, language_string)
+    --
+    -- Write it out
+    --
+    local f = io.open("lua/global_properties.lua", "w")
+    f:write(content)
+    f:close()
+end

@@ -8,8 +8,4 @@
 
 --Contains global variable definitions
 
-
---SUPPORTED:
---English
---Russian
 language = "russian"

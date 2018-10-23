@@ -28,4 +28,6 @@ elseif(room == "settings") then
     button_vsync:update()
     button_switch2:update()
     button_switch3:update()
+    button_languageSelection:update()
+    button_languageSelectionLabel:update()
 end
