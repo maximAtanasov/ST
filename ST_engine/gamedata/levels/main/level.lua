@@ -6,7 +6,7 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
-
+playMusic("skowroneczek.ogg", 100, -1)
 enableLighting(true)
 
 --Load the appropriate language configuration

@@ -95,7 +95,7 @@ void audio_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data(volume)));
         }
         else if(temp->msg_name == ASSETS){
-            auto temp_ptr = (ST::assets**)temp->get_data();
+            auto temp_ptr = static_cast<ST::assets**>(temp->get_data());
             assets_ptr = *temp_ptr;
         }
         else if(temp->msg_name == SET_VOLUME){

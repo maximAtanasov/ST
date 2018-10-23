@@ -13,6 +13,7 @@ elseif splashUp < 255 then
     splashUp = splashUp + 1
     setDarkness(splashUp)
 else
+    --delay(2000)
     startLevel("author_splash")
 end
 

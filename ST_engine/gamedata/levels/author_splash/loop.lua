@@ -6,6 +6,14 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
+if startCounter < 100 then
+    startCounter = startCounter + 1
+    if keyPressed("START") or keyPressed("ESCAPE") then
+        startCounter = 100
+    end
+    return
+end
+
 if splash > 0 then
     splash = splash - 1
     setDarkness(splash)

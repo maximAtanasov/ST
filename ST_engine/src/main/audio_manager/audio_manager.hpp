@@ -105,6 +105,7 @@ inline void audio_manager::update(){
  */
 inline void audio_manager::set_volume(uint8_t arg) {
     volume = arg;
+    unmute();
 }
 
 /**
@@ -130,7 +131,7 @@ inline void audio_manager::unmute(){
  * @param loops How many times to play it.
  */
 inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
-    auto data = static_cast<Mix_Chunk*>(assets_ptr->chunks[arg]);
+    Mix_Chunk* data = assets_ptr->chunks[arg];
     if(data != nullptr){
         Mix_VolumeChunk(data, volume);
         if(Mix_PlayChannel( -1, data, loops ) == -1){

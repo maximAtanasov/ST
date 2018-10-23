@@ -24,3 +24,5 @@ splash = 255
 splashUp = 0
 
 label:new(960-LABEL_OFFSET, 565, LABEL_TEXT, FONT, FONT_SIZE)
+
+startCounter = 0

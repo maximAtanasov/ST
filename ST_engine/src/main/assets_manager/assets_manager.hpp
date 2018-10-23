@@ -61,12 +61,13 @@ private:
         int8_t load_assets_from_binary(const std::string& path);
         int8_t unload_assets_from_binary(const std::string& path);
         void handle_messages();
-        static void update_task(void* arg);
 
-    public:
+public:
         assets_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         ~assets_manager();
         void update();
+
+    static void update_task(void* arg);
 };
 
 //INLINED METHODS

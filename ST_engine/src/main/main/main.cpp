@@ -29,13 +29,13 @@ int main(int argc, char** argv){
     console gConsole(&gMessage_bus);
     #endif
     task_manager gTask_manager(&gMessage_bus);
+    audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);
     display_manager gDisplay_manager(&gMessage_bus, &gTask_manager);
     drawing_manager gDrawing_manager(gDisplay_manager.get_window(), &gMessage_bus);
     assets_manager gAssets_manager(&gMessage_bus, &gTask_manager);
     physics_manager gPhysics_manager(&gMessage_bus, &gTask_manager);
     game_manager gGame_manager(&gMessage_bus, &gTask_manager);// will load "levels/main"
-    audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     timer gTimer;
 
     #ifdef __DEBUG
@@ -52,6 +52,10 @@ int main(int argc, char** argv){
     double current_time = gTimer.time_since_start();
     double frame_time = 0;
     double new_time = 0;
+
+    //Temporary fix for an occasional startup crash
+    assets_manager::update_task(&gAssets_manager);
+    gDisplay_manager.update();
 
     //main loop
     while(gGame_manager.game_is_running()){
@@ -70,9 +74,9 @@ int main(int argc, char** argv){
             }
             while (total_time >= UPDATE_RATE);
             //All three start their own update tasks which run in the background
-            gAudio_manager.update();
             gAssets_manager.update();
             gDisplay_manager.update();
+            gAudio_manager.update();
         }
 
         //Update the Console and fps counter in a debug build

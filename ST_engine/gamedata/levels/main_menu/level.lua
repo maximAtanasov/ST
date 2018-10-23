@@ -15,19 +15,22 @@ setBackground("menu.webp")
 setDarkness(255)
 
 darkness = 255
-
+initialVolume = 100
+setVolume(initialVolume)
 function introFading()
     if darkness > 0 then
         darkness = darkness - 1
         setDarkness(darkness)
+        if(darkness % 4 == 0) then
+            initialVolume = initialVolume - 1
+            setVolume(initialVolume)
+        end
     elseif darkness == 0 then
         enableLighting(false)
         introFading = function () end
     end
 end
 
-
-playMusic("AlaFlair.ogg", 100, -1)
 
 --Load the appropriate language configuration
 if language == "russian" then
