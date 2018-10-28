@@ -31,7 +31,7 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
-    if(IMG_Init(IMG_INIT_PNG) < 0){
+    if(IMG_Init(IMG_INIT_PNG | IMG_INIT_WEBP) < 0){
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);
     }
@@ -46,7 +46,7 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         0,
 		width,
         height,
-        SDL_WINDOW_OPENGL
+        SDL_WINDOW_SHOWN
     );
     log(INFO, "Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height));
 	gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
@@ -112,11 +112,20 @@ SDL_Window* display_manager::get_window(){
  * @param arg True for fullscreen or false for windowed.
  */
 void display_manager::set_fullscreen(bool arg){
+    //Running fullscreen on windows causes issues (like not being able to alt-tab out of it, like ever!!??)
+#ifdef _MSC_VER
+    SDL_GetDisplayMode(0, 0, &DM);
+	width = static_cast<int16_t>(DM.w);
+    height = static_cast<int16_t>(DM.h);
+    SDL_SetWindowPosition(window, 0, 0);
+    SDL_SetWindowSize(window, width, height);
+#else
     if(arg) {
         SDL_SetWindowFullscreen(window, 1);
     }else{
         SDL_SetWindowFullscreen(window, 0);
     }
+#endif
 }
 
 /**

@@ -40,15 +40,9 @@ int main(int argc, char** argv){
 
     #ifdef __DEBUG
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
-#endif
-#ifdef _MSC_VER
-	//Don't start in fullscreen on windows, because you won't be able to get out
-	//instead just use borderless (set res to screen size)
-	gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(false)));
-#else
+    #endif
+
 	gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
-#endif
-    
     gMessage_bus.send_msg(make_msg(VSYNC_ON, nullptr));
 
     //time keeping variables
