@@ -5,8 +5,8 @@
 --
 -- E-mail: atanasovmaksim1@gmail.com
 
-setFullscreen(false)
 setWindowResolution(432, 768)
+setFullscreen(false)
 setInternalResolution(1080, 1920)
 showMouseCursor()
 stopMusic();

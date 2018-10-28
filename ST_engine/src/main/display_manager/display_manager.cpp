@@ -42,11 +42,10 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     height = static_cast<int16_t>(DM.h);
     window = SDL_CreateWindow
     (
-        "SlavicTales", 0,
-        0,
+        "SlavicTales", 0, 0,
 		width,
         height,
-        SDL_WINDOW_SHOWN
+		SDL_WINDOW_OPENGL
     );
     log(INFO, "Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height));
 	gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
@@ -90,7 +89,7 @@ void display_manager::handle_messages(){
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
             gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(res)));
             SDL_SetWindowSize(window, std::get<0>(res), std::get<1>(res));
-            SDL_SetWindowPosition(window, 100, 100);
+            SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
             width = std::get<0>(res);
             height = std::get<1>(res);
         }
@@ -112,20 +111,15 @@ SDL_Window* display_manager::get_window(){
  * @param arg True for fullscreen or false for windowed.
  */
 void display_manager::set_fullscreen(bool arg){
-    //Running fullscreen on windows causes issues (like not being able to alt-tab out of it, like ever!!??)
-#ifdef _MSC_VER
-    SDL_GetDisplayMode(0, 0, &DM);
-	width = static_cast<int16_t>(DM.w);
-    height = static_cast<int16_t>(DM.h);
-    SDL_SetWindowPosition(window, 0, 0);
-    SDL_SetWindowSize(window, width, height);
-#else
     if(arg) {
-        SDL_SetWindowFullscreen(window, 1);
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
     }else{
-        SDL_SetWindowFullscreen(window, 0);
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_SetWindowFullscreen(window, 0);
+		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
     }
-#endif
 }
 
 /**
