@@ -14,8 +14,6 @@ showMouseCursor()
 setBackground("menu.webp")
 setDarkness(255)
 
-setFullscreen(false)
-
 darkness = 255
 initialVolume = getVolume()
 setVolume(initialVolume)
