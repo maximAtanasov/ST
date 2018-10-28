@@ -40,10 +40,15 @@ int main(int argc, char** argv){
 
     #ifdef __DEBUG
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
-    #elif defined(__RELEASE)
-    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
-    #endif
-    gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(false)));
+#endif
+#ifdef _MSC_VER
+	//Don't start in fullscreen on windows, because you won't be able to get out
+	//instead just use borderless (set res to screen size)
+	gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(false)));
+#else
+	gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
+#endif
+    
     gMessage_bus.send_msg(make_msg(VSYNC_ON, nullptr));
 
     //time keeping variables
@@ -66,8 +71,15 @@ int main(int argc, char** argv){
 
         if(total_time >= UPDATE_RATE){
             //will start an update task
-            gInput_manager.update();
-            do{
+#ifdef _MSC_VER
+			//the task must be run from the main thread on windows, because of the way
+			//the main thread is coupled to SDL events.
+			input_manager::update_task(&gInput_manager);
+#else
+			//On linux, this can run on the task manager
+			gInput_manager.update();
+#endif
+			do{
                 gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 gGame_manager.update();
                 total_time -= UPDATE_RATE;

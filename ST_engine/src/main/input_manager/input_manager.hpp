@@ -82,9 +82,14 @@ class input_manager{
 		bool keyrelease(ST::key) const;
 		void handle_messages();
         void take_input();
-        static void update_task(void* mngr);
-
+       
+#ifdef _MSC_VER
     public:
+		static void update_task(void* mngr); // Make this public on windows (see main())
+#else
+		static void update_task(void* mngr); //And private on linux
+	public:
+#endif
         input_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         void update();
 };
