@@ -123,7 +123,7 @@ TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_blue){
 
 TEST_F(renderer_sdl_tests, test_draw_background){
     SDL_Surface* test_surface = IMG_Load("test_image_2.png");
-    ASSERT_EQ(true, static_cast<bool>(test_surface));
+    ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->upload_surfaces(&test_assets);
@@ -134,7 +134,7 @@ TEST_F(renderer_sdl_tests, test_draw_background){
 
 TEST_F(renderer_sdl_tests, test_draw_texture){
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
-    ASSERT_EQ(true, static_cast<bool>(test_surface));
+    ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->upload_surfaces(&test_assets);
@@ -146,7 +146,7 @@ TEST_F(renderer_sdl_tests, test_draw_texture){
 TEST_F(renderer_sdl_tests, test_draw_font_english_small){
     int font_size = 20;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
-    ASSERT_EQ(true, static_cast<bool>(test_font));
+    ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
     test_subject->upload_fonts(&test_assets);
@@ -158,7 +158,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_small){
 TEST_F(renderer_sdl_tests, test_draw_font_english_medium){
     int font_size = 50;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
-    ASSERT_EQ(true, static_cast<bool>(test_font));
+    ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
     test_subject->upload_fonts(&test_assets);
@@ -170,7 +170,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_medium){
 TEST_F(renderer_sdl_tests, test_draw_font_english_large){
     int font_size = 90;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
-    ASSERT_EQ(true, static_cast<bool>(test_font));
+    ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
     test_subject->upload_fonts(&test_assets);
@@ -182,7 +182,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_large){
 TEST_F(renderer_sdl_tests, test_draw_font_russian_small){
     int font_size = 20;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
-    ASSERT_EQ(true, static_cast<bool>(test_font));
+    ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
     test_subject->upload_fonts(&test_assets);
@@ -194,7 +194,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_small){
 TEST_F(renderer_sdl_tests, test_draw_font_russian_medium){
     int font_size = 50;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
-    ASSERT_EQ(true, static_cast<bool>(test_font));
+    ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
     test_subject->upload_fonts(&test_assets);
@@ -206,7 +206,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_medium){
 TEST_F(renderer_sdl_tests, test_draw_font_russian_large){
     int font_size = 90;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
-    ASSERT_EQ(true, static_cast<bool>(test_font));
+    ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
     test_subject->upload_fonts(&test_assets);
@@ -217,7 +217,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_large){
 
 TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
     SDL_Surface* test_surface = IMG_Load("test_sprite.png");
-    ASSERT_EQ(true, static_cast<bool>(test_surface));
+    ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->upload_surfaces(&test_assets);
@@ -232,7 +232,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
 
 TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
     SDL_Surface* test_surface = IMG_Load("test_sprite.png");
-    ASSERT_EQ(true, static_cast<bool>(test_surface));
+    ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->vsync_on();
@@ -248,7 +248,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
 
 TEST_F(renderer_sdl_tests, test_draw_overlay){
     SDL_Surface* test_surface = IMG_Load("test_overlay.png");
-    ASSERT_EQ(true, static_cast<bool>(test_surface));
+    ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->upload_surfaces(&test_assets);

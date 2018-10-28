@@ -104,6 +104,7 @@ PATHS
 /opt/local # DarwinPorts
 /opt/csw # Blastwave
 /opt
+../external/SDL2/SDL2_ttf/include
 )
 
 # Lookup the 64 bit libs on x64
@@ -122,6 +123,7 @@ PATHS
 /opt/local
 /opt/csw
 /opt
+../external/SDL2/SDL2_ttf/lib/x64
 )
 # On 32bit build find the 32bit libs
 ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -139,6 +141,7 @@ PATHS
 /opt/local
 /opt/csw
 /opt
+../external/SDL2/SDL2_ttf/lib/x86
 )
 ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 

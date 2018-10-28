@@ -31,10 +31,13 @@ set(LUA_LIB_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ltablib.c 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/lutf8lib.c 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/loadlib.c 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/linit.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/luac.c)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/linit.c)
 set(LUA_LIB_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-add_library(lua_static STATIC ${LUA_LIB_SRCS})
-target_include_directories(lua_static PUBLIC ${LUA_LIB_INCLUDE})
-target_compile_definitions(lua_static PUBLIC LUA_USE_POSIX)
+add_library(lua ${LUA_LIB_SRCS})
+target_include_directories(lua PUBLIC ${LUA_LIB_INCLUDE})
 
+if(MSVC)
+    target_compile_definitions(lua PUBLIC)
+else()
+    target_compile_definitions(lua PUBLIC LUA_USE_POSIX)
+endif()

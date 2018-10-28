@@ -8,10 +8,10 @@
  */
 
 #include <fstream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 void initialize_SDL(){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -30,7 +30,10 @@ void initialize_SDL(){
         fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
         exit(1);
     }
-    Mix_Init(MIX_INIT_OGG);
+    if(Mix_Init(MIX_INIT_OGG) < 0){
+        fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", Mix_GetError());
+        exit(1);
+    }
     if(Mix_OpenAudio(22050,AUDIO_S16SYS,2,640) < 0){
         fprintf(stderr, "Failiure to initialize audio\n");
         exit(1);
@@ -82,11 +85,10 @@ void copy_file(const std::string& src, const std::string& dest){
     FILE* src_file = fopen(src.c_str(), "rb");
     FILE* dest_file = fopen(dest.c_str(), "wb");
 
-    uint32_t size = 16384;
-    char buffer[size];
+    char buffer[16384];
 
     while(!feof(src_file)){
-        size_t n = fread(buffer, 1, size, src_file);
+        size_t n = fread(buffer, 1, 16384, src_file);
         fwrite(buffer, 1, n, dest_file);
     }
 

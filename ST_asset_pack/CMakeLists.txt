@@ -55,9 +55,6 @@ target_link_libraries(ST_asset_pack_tests
 
 gtest_add_tests(TARGET ST_asset_pack_tests)
 
-# Always build the tests
-add_dependencies(ST_asset_pack ST_asset_pack_tests)
-
 # Run the tests on every build
 add_custom_command(TARGET ST_asset_pack
         POST_BUILD

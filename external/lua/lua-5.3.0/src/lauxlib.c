@@ -240,7 +240,7 @@ LUALIB_API int luaL_fileresult (lua_State *L, int stat, const char *fname) {
 
 #if !defined(l_inspectstat)	/* { */
 
-#if defined(LUA_USE_POSIX)
+#ifdef LUA_USE_POSIX
 
 #include <sys/wait.h>
 

@@ -11,7 +11,7 @@
 #define SLAVICTALES_GAME_MANAGER_MOCK_HPP
 
 #include <vector>
-#include <SDL2/SDL_atomic.h>
+#include <SDL_atomic.h>
 #include <task_manager/task_manager.hpp>
 #include <message_bus/message_bus.hpp>
 #include <game_manager/level/level.hpp>

@@ -42,24 +42,47 @@ FIND_PATH(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
         /opt/local/include/SDL2 # DarwinPorts
         /opt/csw/include/SDL2 # Blastwave
         /opt/include/SDL2
+        ../external/SDL2/SDL2_mixer/include
         )
 
+
+# Lookup the 64 bit libs on x64
+IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 FIND_LIBRARY(SDL2_MIXER_LIBRARY
-        NAMES SDL2_mixer
-        HINTS
-        $ENV{SDL2_MIXER_DIR}
-        $ENV{SDL2_DIR}
-        PATH_SUFFIXES lib64 lib
-        PATHS
-        ~/Library/Frameworks
-        /Library/Frameworks
-        /usr/local
-        /usr
-        /sw
-        /opt/local
-        /opt/csw
-        /opt
-        )
+NAMES SDL2_mixer
+HINTS
+${SDL2}
+$ENV{SDL2}
+$ENV{SDL2_mixer}
+PATH_SUFFIXES lib64 lib
+lib/x64
+x86_64-w64-mingw32/lib
+PATHS
+/sw
+/opt/local
+/opt/csw
+/opt
+../external/SDL2/SDL2_mixer/lib/x64
+)
+# On 32bit build find the 32bit libs
+ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
+FIND_LIBRARY(SDL2_MIXER_LIBRARY
+NAMES SDL2_mixer
+HINTS
+${SDL2}
+$ENV{SDL2}
+$ENV{SDL2_mixer}
+PATH_SUFFIXES lib
+lib/x86
+i686-w64-mingw32/lib
+PATHS
+/sw
+/opt/local
+/opt/csw
+/opt
+../external/SDL2/SDL2_mixer/lib/x86
+)
+ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
 SET(SDL2_MIXER_FOUND "NO")
 IF(SDL2_MIXER_LIBRARY AND SDL2_MIXER_INCLUDE_DIR)

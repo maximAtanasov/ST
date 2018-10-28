@@ -13,16 +13,16 @@
 #include <string>
 
 #include <ST_util/bytell_hash_map.hpp>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_mixer.h"
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 
 namespace ST {
 
     ///A container that holds all asset types used in the game
     struct assets {
-        ska::bytell_hash_map<size_t,SDL_Surface *> surfaces;
+        ska::bytell_hash_map<size_t, SDL_Surface *> surfaces;
         ska::bytell_hash_map<std::string, TTF_Font *> fonts;
         ska::bytell_hash_map<size_t, Mix_Music *> music;
         ska::bytell_hash_map<size_t, Mix_Chunk *> chunks;

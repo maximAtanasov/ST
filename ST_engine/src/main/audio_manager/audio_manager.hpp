@@ -10,8 +10,8 @@
 #ifndef AUDIO_MNGR_DEF
 #define AUDIO_MNGR_DEF
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL.h>
+#include <SDL_mixer.h>
 #include <assets_manager/assets.hpp>
 #include <message_bus/message_bus.hpp>
 #include <task_manager/task_manager.hpp>

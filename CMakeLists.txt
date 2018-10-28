@@ -10,6 +10,13 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(slavicTales)
 
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    set(CMAKE_CXX_FLAGS_RELEASE "/MD")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MDd")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE /STACK:10000000")
+endif()
+
 add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)
 add_subdirectory(ST_asset_pack)

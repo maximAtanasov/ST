@@ -16,7 +16,6 @@
 #include <message_bus/subscriber.hpp>
 #include <message_bus/message.hpp>
 #include <ST_util/bytell_hash_map.hpp>
-#include <SDL2/SDL.h>
 #include <memory>
 #include <vector>
 #include <cstring>

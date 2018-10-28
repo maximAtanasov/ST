@@ -27,7 +27,7 @@ include_directories(../ST_engine/src/main)
 include_directories(../external/googletest/googletest/include)
 include_directories(../external/googletest/googlemock/include)
 include_directories(../external/lua/lua-5.3.0/src)
-include_directories(${LUA_INCLUDE_DIR})
+
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 include_directories(${SDL2_MIXER_INCLUDE_DIR})
@@ -96,7 +96,7 @@ add_executable(ST_engine
 target_link_libraries(ST_engine
         ST_util
         ST_loaders
-        lua_static
+        lua
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -389,7 +389,7 @@ target_link_libraries(lua_backend_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
-        lua_static)
+        lua)
 
 include_directories(lua_backend_test ../ST_engine/src
         ../ST_engine/src/test ../ST_loaders/include)

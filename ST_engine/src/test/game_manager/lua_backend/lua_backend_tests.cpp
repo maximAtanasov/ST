@@ -235,7 +235,13 @@ TEST_F(lua_backend_test, test_run_simple_script){
 
 TEST_F(lua_backend_test, test_fail_on_broken_script){
     ::testing::FLAGS_gtest_death_test_style = "threadsafe";
+#ifdef _MSC_VER
+    //Exit code 3 on WINDOWS
+    ASSERT_EXIT(test_subject.run_file("lua_scripts/test_script_broken.lua"), ::testing::ExitedWithCode(3), ".*");
+#else
+    //SIGABRT on UNIX
     ASSERT_EXIT(test_subject.run_file("lua_scripts/test_script_broken.lua"), ::testing::KilledBySignal(SIGABRT), ".*");
+#endif
 }
 
 TEST_F(lua_backend_test, test_call_function_setFullscreen){

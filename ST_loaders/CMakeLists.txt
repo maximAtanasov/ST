@@ -22,6 +22,11 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
+include_directories(${SDL2_INCLUDE_DIR})
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
+include_directories(${SDL2_TTF_INCLUDE_DIR})
+
 add_library(ST_loaders STATIC
         src/main/loaders.cpp
         include/ST_loaders/loaders.hpp)

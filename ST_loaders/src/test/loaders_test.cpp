@@ -90,7 +90,7 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     remove("test_sound_1.wav");
     remove("test_sound_2.wav");
     close_SDL();
-    ASSERT_EQ(0, chdir("../"));
+    ASSERT_EQ(0, _chdir("../"));
 }
 
 

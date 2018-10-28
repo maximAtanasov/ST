@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <SDL2/SDL_mutex.h>
+#include <SDL_mutex.h>
 #include <memory>
 #include <message_bus/message_allocator.hpp>
 

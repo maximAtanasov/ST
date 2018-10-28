@@ -159,7 +159,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
         auto buffer = static_cast<char*>(malloc((size_t) input->size(input)));
         size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
         if (read > 0) {
-            std::string* file = new std::string(buffer);
+            auto file = new std::string(buffer);
             std::vector<std::string> file_names;
             std::vector<size_t> sizes;
 
@@ -274,7 +274,7 @@ int8_t ST::unpack_binary_to_disk(const std::string& path){
         auto buffer = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
         size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
         if (read > 0) {
-            std::string* file = new std::string(buffer);
+            auto file = new std::string(buffer);
             std::vector<std::string> file_names;
             std::vector<size_t> sizes;
             //read filename
@@ -349,7 +349,7 @@ int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string
         auto buffer = static_cast<char*>(malloc((size_t) input->size(input)));
         size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
         if (read > 0) {
-            std::string *file = new std::string(buffer);
+            auto file = new std::string(buffer);
             std::string header;
 
             //read filename
@@ -379,8 +379,6 @@ int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string
             }
             free(buffer);
             input->seek(input, pointer, RW_SEEK_SET);
-            uint64_t seek = pointer;
-            uint64_t i = 0;
 
             std::string header_no_total;
             bool write = false;
@@ -397,4 +395,5 @@ int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string
         }
     }
     //TODO: IMPLEMENT
+    return 0;
 }

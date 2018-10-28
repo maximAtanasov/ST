@@ -20,24 +20,30 @@ protected:
         test_mngr->assets_ptr = assets;
     }
 
-    void play_sound(size_t arg, int volume, int loops){
+    void play_sound(size_t arg, uint8_t volume, uint8_t loops){
         test_mngr->play_sound(arg, volume, loops);
     }
 
-    void play_music(size_t arg, int volume, int loops){
+    void play_music(size_t arg, uint8_t volume, uint8_t loops){
         test_mngr->play_music(arg, volume, loops);
     }
 
     audio_manager* test_mngr{};
 
-    void SetUp() override{
+    static void SetUpTestCase(){
         initialize_SDL();
+    }
+
+    static void TearDownTestCase(){
+        close_SDL();
+    }
+
+    void SetUp() override{
         test_mngr = new audio_manager(new message_bus(), nullptr);
     }
 
     void TearDown() override{
         delete test_mngr;
-        close_SDL();
     }
 };
 
@@ -49,6 +55,7 @@ TEST_F(audio_manager_test, test_play_wav_full_volume) {
     set_assets(&assets);
     play_sound(1, MIX_MAX_VOLUME, 0);
     SDL_Delay(1000);
+    Mix_FreeChunk(test_wav);
 }
 
 TEST_F(audio_manager_test, test_play_wav_half_volume) {

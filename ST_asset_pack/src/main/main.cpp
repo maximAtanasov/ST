@@ -28,8 +28,10 @@ int main(int argc, char *argv[]) {
 #elif defined(TESTING)
 int asset_pack_main(int argc, char *argv[]) {
 #endif
+#ifndef TESTING
      initialize_SDL();
-
+#endif
+     
      if (argc < 3) {
          fprintf(stderr, "Not enough arguments!\n");
          return -1;
@@ -65,7 +67,8 @@ int asset_pack_main(int argc, char *argv[]) {
      } else {
          fprintf(stderr, "Unknown argument!\n");
      }
-
-     close_SDL();
+#ifndef TESTING
+    close_SDL();
+#endif
      return 0;
  }
