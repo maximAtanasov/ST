@@ -11,6 +11,10 @@
 #include <ST_loaders/loaders.hpp>
 #include <ST_util/test_util.hpp>
 
+#ifdef _MSC_VER
+#define chdir _chdir
+#endif
+
 TEST(loaders_tests, test_get_file_extension){
     std::string test_wav = "sound.wav";
     std::string test_mp3 = "music.mp3";
@@ -90,7 +94,7 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     remove("test_sound_1.wav");
     remove("test_sound_2.wav");
     close_SDL();
-    ASSERT_EQ(0, _chdir("../"));
+    ASSERT_EQ(0, chdir("../"));
 }
 
 
