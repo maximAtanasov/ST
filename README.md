@@ -4,11 +4,11 @@
 A 2D Platformer project built with C++, SDL2 and Lua.
 =====================================================
 
-![](https://raw.githubusercontent.com/maximAtanasov/slavicTales/master/ST_engine/docs/screenshots/screenshot1.png)
+![](ST_engine/docs/screenshots/screenshot1.png?raw=true)
 
-![](https://raw.githubusercontent.com/maximAtanasov/slavicTales/master/ST_engine/docs/screenshots/screenshot2.png)
+![](ST_engine/docs/screenshots/screenshot2.png?raw=true)
 
-![](https://raw.githubusercontent.com/maximAtanasov/slavicTales/master/ST_engine/docs/screenshots/screenshot3.png)
+![](ST_engine/docs/screenshots/screenshot3.png?raw=true)
 
 [A short video](https://youtu.be/7citcBJ2SI4)
 
