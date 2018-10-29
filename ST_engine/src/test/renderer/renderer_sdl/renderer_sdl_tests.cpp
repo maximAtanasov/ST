@@ -60,7 +60,7 @@ protected:
 
 TEST_F(renderer_sdl_tests, test_set_draw_color){
     int counter = 0;
-    for(int i = 0; i < wait_duration/180; i++) {
+    for(uint32_t i = 0; i < wait_duration/180; i++) {
         if(counter == 0) {
             test_subject->set_draw_color(255, 0, 0, 255);
         }else if(counter == 1){
@@ -221,7 +221,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->upload_surfaces(&test_assets);
-    for(int i = 0; i < wait_duration/16; i++) {
+    for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
         test_subject->clear_screen();
         test_subject->draw_sprite(1, 300, 500, time % 6, 1, 6, 6);
@@ -237,7 +237,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
     test_assets[1] = test_surface;
     test_subject->vsync_on();
     test_subject->upload_surfaces(&test_assets);
-    for(int i = 0; i < wait_duration/16; i++) {
+    for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
         test_subject->clear_screen();
         test_subject->draw_sprite(1, 300, 500, time % 6, 3, 6, 6);
@@ -252,7 +252,7 @@ TEST_F(renderer_sdl_tests, test_draw_overlay){
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     test_subject->upload_surfaces(&test_assets);
-    for(int i = 0; i < wait_duration/16; i++) {
+    for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
         test_subject->clear_screen();
         test_subject->draw_overlay(1, time % 6, 17);

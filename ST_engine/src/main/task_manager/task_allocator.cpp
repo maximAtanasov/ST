@@ -17,7 +17,7 @@ task_allocator::task_allocator(){
     access_mutex = SDL_CreateMutex();
     pointer = 0;
     memory = static_cast<ST::task*>(malloc(sizeof(ST::task)*memory_size));
-    for(int i = 0; i < memory_size; i++){
+    for(uint32_t i = 0; i < memory_size; i++){
         allocated[i] = false; //mark all memory as free
     }
 }

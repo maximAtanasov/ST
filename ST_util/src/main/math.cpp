@@ -10,8 +10,8 @@
 #include <ST_util/math.hpp>
 
 int ST::random_int(int max){
-    static long seed(std::chrono::system_clock::now().time_since_epoch().count());
-    static std::mt19937 gen(seed);
+    static uint64_t seed(std::chrono::system_clock::now().time_since_epoch().count());
+    static std::mt19937 gen(static_cast<uint32_t>(seed));
     std::uniform_int_distribution<int> dis(0, max - 1);
     return dis(gen);
 }

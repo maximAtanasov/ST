@@ -47,7 +47,7 @@ typedef ska::bytell_hash_map<font_cache_tuple, cache_list::iterator> cache_hash;
  */
 class font_cache{
     private:
-        int entries = 0;
+        uint32_t entries = 0;
         cache_list cache;
         cache_hash hash;
         uint32_t cache_size = 0;

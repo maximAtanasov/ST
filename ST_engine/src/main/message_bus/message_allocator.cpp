@@ -19,7 +19,7 @@ message_allocator::message_allocator(){
     access_mutex = SDL_CreateMutex();
     pointer = 0;
     memory = (message*)malloc(sizeof(message)*memory_size);
-    for(int i = 0; i < memory_size; i++){
+    for(uint32_t i = 0; i < memory_size; i++){
         allocated[i] = false; //mark all memory as free
     }
 }

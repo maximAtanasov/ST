@@ -60,7 +60,8 @@ protected:
     }
 
     void TearDown() override{
-        delete test_mngr;
+        test_mngr->~assets_manager();
+
     }
 };
 
@@ -206,6 +207,7 @@ TEST_F(asset_manager_test, loadBinary_complex) {
         ASSERT_EQ(expected_chunk_1->abuf[i], result_chunk_1->abuf[i]);
     }
     Mix_FreeChunk(expected_chunk_1);
+    Mix_FreeChunk(result_chunk_1);
 
     //Test sound_2
     Mix_Chunk* expected_chunk_2 = Mix_LoadWAV("test_sound_2.wav");
@@ -217,6 +219,7 @@ TEST_F(asset_manager_test, loadBinary_complex) {
         ASSERT_EQ(expected_chunk_2->abuf[i], result_chunk_2->abuf[i]);
     }
     Mix_FreeChunk(expected_chunk_2);
+    Mix_FreeChunk(result_chunk_2);
 
     //Test image_1
     SDL_Surface* test_surface_1 = IMG_Load("test_image_1.png");

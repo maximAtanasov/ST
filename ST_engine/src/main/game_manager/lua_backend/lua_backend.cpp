@@ -399,7 +399,7 @@ std::string lua_backend::hash_string(std::string& temp){
         while(temp.find("playSound(\"") != std::string::npos) {
             std::string to_find = "playSound(\"";
             std::string temp_buf;
-            for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+            for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
             std::hash<std::string> hash_f;
@@ -410,7 +410,7 @@ std::string lua_backend::hash_string(std::string& temp){
         while(temp.find("playMusic(\"") != std::string::npos) {
             std::string to_find = "playMusic(\"";
             std::string temp_buf;
-            for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+            for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
             std::hash<std::string> hash_f;
@@ -421,7 +421,7 @@ std::string lua_backend::hash_string(std::string& temp){
         while(temp.find("keyHeld(\"") != std::string::npos) {
             std::string to_find = "keyHeld(\"";
             std::string temp_buf;
-            for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+            for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
             std::hash<std::string> hash_f;
@@ -432,7 +432,7 @@ std::string lua_backend::hash_string(std::string& temp){
         while(temp.find("keyPressed(\"") != std::string::npos) {
             std::string to_find = "keyPressed(\"";
             std::string temp_buf;
-            for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+            for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
             std::hash<std::string> hash_f;
@@ -443,7 +443,7 @@ std::string lua_backend::hash_string(std::string& temp){
         while(temp.find("keyReleased(\"") != std::string::npos) {
             std::string to_find = "keyReleased(\"";
             std::string temp_buf;
-            for(unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+            for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
             std::hash<std::string> hash_f;
@@ -454,7 +454,7 @@ std::string lua_backend::hash_string(std::string& temp){
         while(temp.find("setClickKey(\"") != std::string::npos) {
             std::string to_find = "setClickKey(\"";
             std::string temp_buf;
-            for (unsigned long i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++) {
+            for (size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++) {
                 temp_buf.push_back((temp.at(i)));
             }
             std::hash<std::string> hash_f;
