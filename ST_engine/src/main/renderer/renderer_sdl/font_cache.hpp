@@ -10,9 +10,10 @@
 #ifndef FONT_CACHE_DEF
 #define FONT_CACHE_DEF
 
-#include <defs.hpp>
 #include <list>
 #include <tuple>
+#include <ST_util/bytell_hash_map.hpp>
+#include <SDL_system.h>
 
 #ifndef CACHEHASH_DEF
 #define CACHEHASH_DEF
@@ -45,20 +46,23 @@ typedef ska::bytell_hash_map<font_cache_tuple, cache_list::iterator> cache_hash;
 /**
  * Caches textures and the string, font+size used to render them.
  */
-class font_cache{
-    private:
-        uint32_t entries = 0;
-        cache_list cache;
-        cache_hash hash;
-        uint32_t cache_size = 0;
-        void move_to_front(std::list<key_pair>& list,std::list<key_pair>::iterator element);
-    public:
-        font_cache() = default;
-        void set_max(uint32_t max);
-        ~font_cache();
-        void cache_string(std::string str, SDL_Texture* texture, std::string font, uint8_t size);
-        SDL_Texture* get_cached_string(std::string str, std::string font, uint8_t size);
-        void clear();
-};
+namespace ST {
+    namespace renderer_sdl {
+        namespace font_cache {
+
+            void move_to_front(std::list<key_pair> &list, std::list<key_pair>::iterator element);
+
+            void set_max(uint32_t max);
+
+            void cache_string(std::string str, SDL_Texture *texture, std::string font, uint8_t size);
+
+            SDL_Texture *get_cached_string(std::string str, std::string font, uint8_t size);
+
+            void clear();
+
+            void close();
+        };
+    }
+}
 
 #endif // FONT_CACHE_DEF

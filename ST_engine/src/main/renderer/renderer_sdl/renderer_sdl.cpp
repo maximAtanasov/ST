@@ -5,9 +5,48 @@
  *
  * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
+ *
  */
 
+#include <defs.hpp>
+#include <renderer/renderer_sdl/font_cache.hpp>
 #include <renderer/renderer_sdl/renderer_sdl.hpp>
+
+namespace ST {
+    namespace renderer_sdl {
+
+        void cache_font(TTF_Font *Font, std::string font_and_size);
+        void draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
+                                  uint8_t size);
+        void draw_text_cached_glyphs(std::string, std::string, int, int, SDL_Color, int);
+        int initialize_with_vsync(SDL_Window *r_window, int16_t r_width, int16_t r_height, bool vsync);
+    }
+}
+
+static SDL_Renderer *sdl_renderer;
+
+//reference to a window
+static SDL_Window *window;
+
+//height and width of the renderer
+static int16_t width;
+static int16_t height;
+
+//Textures with no corresponding surface in our assets need to be freed
+static ska::bytell_hash_map<size_t, SDL_Texture *> textures;
+
+static ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces_pointer;
+static ska::bytell_hash_map<std::string, TTF_Font *> *fonts_pointer;
+
+
+//the fonts in this table do not need to be cleaned - these are just pointer to Fonts stored in the asset_manager and
+//that will handle the cleanup
+static ska::bytell_hash_map<std::string, TTF_Font *> fonts;
+
+//we do however need to cleanup the cache as that lives on the GPU
+static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache;
+
+static bool vsync = false;
 
 /**
  * Initializes the renderer.
@@ -16,14 +55,14 @@
  * @param height The virtual height of the window.
  * @return Always 0.
  */
-int renderer_sdl::initialize(SDL_Window* window, int16_t width, int16_t height){
-    gFont_cache.set_max(100);
+int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16_t r_height){
+    font_cache::set_max(100);
     //initialize renderer
-	this->window = window;
-	this->width = width;
-	this->height = height;
-    sdl_renderer = SDL_CreateRenderer( this->window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_RenderSetLogicalSize(sdl_renderer, this->width, this->height);
+	window = r_window;
+	width = r_width;
+	height = r_height;
+    sdl_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_RenderSetLogicalSize(sdl_renderer, width, height);
     SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
     set_draw_color(0, 0, 0, 255);
@@ -39,11 +78,11 @@ int renderer_sdl::initialize(SDL_Window* window, int16_t width, int16_t height){
  * @param vsync True to enable VSYNC, false otherwise.
  * @return Always 0.
  */
-int renderer_sdl::initialize_with_vsync(SDL_Window* window, int16_t width, int16_t height, bool vsync){
-    gFont_cache.set_max(100);
-    this->window = window;
-    this->width = width;
-    this->height = height;
+int ST::renderer_sdl::initialize_with_vsync(SDL_Window* r_window, int16_t r_width, int16_t r_height, bool vsync){
+    font_cache::set_max(100);
+    window = r_window;
+    width = r_width;
+    height = r_height;
     //initialize renderer
 	if(vsync){
     	sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -60,14 +99,14 @@ int renderer_sdl::initialize_with_vsync(SDL_Window* window, int16_t width, int16
 /**
  * Closes the renderer. Deletes all textures and fonts.
  */
-void renderer_sdl::close(){
+void ST::renderer_sdl::close(){
     for (auto& it : fonts) {
         if (it.second != nullptr) {
-            if (this->fonts[it.first] != nullptr) {
+            if (fonts[it.first] != nullptr) {
                 for(auto& k : fonts_cache[it.first]) {
                     SDL_DestroyTexture(k);
                 }
-                this->fonts[it.first] = nullptr;
+                fonts[it.first] = nullptr;
             }
             it.second = nullptr;
         }
@@ -78,7 +117,8 @@ void renderer_sdl::close(){
             it.second = nullptr;
         }
     }
-    gFont_cache.clear();
+    font_cache::clear();
+    font_cache::close();
     SDL_DestroyRenderer(sdl_renderer);
     sdl_renderer = nullptr;
 }
@@ -94,12 +134,12 @@ void renderer_sdl::close(){
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void renderer_sdl::draw_text_lru_cached(std::string arg, std::string arg2, int x, int y, SDL_Color color_font, int size){
+void ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font, uint8_t size){
     std::string font_and_size = arg+std::to_string(size);
     TTF_Font* font = fonts[font_and_size];
     if(font != nullptr){
         int texW, texH;
-        SDL_Texture* cached_texture = gFont_cache.get_cached_string(arg2, arg, size);
+        SDL_Texture* cached_texture = font_cache::get_cached_string(arg2, arg, size);
         if(cached_texture != nullptr){ //if the given string (with same size and font) is already cached, get it from cache
             SDL_QueryTexture(cached_texture, nullptr, nullptr, &texW, &texH);
             SDL_Rect Rect = {x, y, texW, texH};
@@ -113,7 +153,7 @@ void renderer_sdl::draw_text_lru_cached(std::string arg, std::string arg2, int x
             SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
             SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
             SDL_FreeSurface(text);
-            gFont_cache.cache_string(arg2, texture, arg, size);
+            font_cache::cache_string(arg2, texture, arg, size);
         }
     }
 }
@@ -130,8 +170,8 @@ void renderer_sdl::draw_text_lru_cached(std::string arg, std::string arg2, int x
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void renderer_sdl::draw_text_cached_glyphs(const std::string arg, const std::string arg2, const int x, const int y,
-                                           const SDL_Color color_font, const int size) const{
+void ST::renderer_sdl::draw_text_cached_glyphs(const std::string arg, const std::string arg2, const int x, const int y,
+                                           const SDL_Color color_font, const int size) {
     std::string font_and_size = arg+std::to_string(size);
     auto cached_vector = fonts_cache.find(font_and_size);
     if(cached_vector != fonts_cache.end()){
@@ -166,7 +206,7 @@ void renderer_sdl::draw_text_cached_glyphs(const std::string arg, const std::str
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag){
+void ST::renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag){
     if(flag == 1){
         draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }else if(flag == 0){
@@ -186,20 +226,20 @@ void renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SD
  * Upload all surface to the GPU. (Create textures from them).
  * @param surfaces The surfaces to upload.
  */
-void renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*>* surfaces){
+void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*>* surfaces){
 	if(surfaces != nullptr){
-		this->surfaces_pointer = surfaces;
+		surfaces_pointer = surfaces;
         for ( auto& it : *surfaces){
             if(it.second == nullptr && textures[it.first] != nullptr){
                 SDL_DestroyTexture(textures[it.first]);
                 textures[it.first] = nullptr;
             }
             else if(it.second != nullptr){
-                if(this->textures[it.first] != nullptr){
-                    SDL_DestroyTexture(this->textures[it.first]);
-                    this->textures[it.first] = nullptr;
+                if(textures[it.first] != nullptr){
+                    SDL_DestroyTexture(textures[it.first]);
+                    textures[it.first] = nullptr;
                 }
-                this->textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
+                textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
             }
         }
     }
@@ -208,25 +248,25 @@ void renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*>* s
 /**
  * Upload fonts to the GPU. (save and cache their glyphs).
  */
-void renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fonts){
-    if(fonts != nullptr){
-		this->fonts_pointer = fonts;
-        for ( auto& it : *fonts){
+void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fonts_t){
+    if(fonts_t != nullptr){
+		fonts_pointer = fonts_t;
+        for ( auto& it : *fonts_t){
             if(it.second == nullptr){
                 for(auto& k : fonts_cache[it.first]){
                     SDL_DestroyTexture(k);
                 }
-                this->fonts[it.first] = nullptr;
+                fonts[it.first] = nullptr;
             }
             else if(it.second != nullptr){
-                if(this->fonts[it.first] != nullptr){
+                if(fonts[it.first] != nullptr){
                     for(auto& k : fonts_cache[it.first]){
                         SDL_DestroyTexture(k);
                     }
-                    this->fonts[it.first] = nullptr;
+                    fonts[it.first] = nullptr;
                 }
-                this->fonts[it.first] = it.second;
-                cache_font(this->fonts[it.first], it.first);
+                fonts[it.first] = it.second;
+                cache_font(fonts[it.first], it.first);
             }
         }
     }
@@ -240,7 +280,7 @@ void renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fo
  * @param Font The Font to render with.
  * @param font_and_size The name+size of the font.
  */
-void renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
+void ST::renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
     temp[1] = 0;
@@ -258,7 +298,7 @@ void renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
 /**
  * Turns on vsync.
  */
-void renderer_sdl::vsync_on(){
+void ST::renderer_sdl::vsync_on(){
 	close();
 	vsync = true;
 	initialize_with_vsync(window, width, height, vsync);
@@ -269,7 +309,7 @@ void renderer_sdl::vsync_on(){
 /**
  * Turns off vsync.
  */
-void renderer_sdl::vsync_off(){
+void ST::renderer_sdl::vsync_off(){
 	close();
 	vsync = false;
 	initialize_with_vsync(window, width, height, vsync);
@@ -277,9 +317,139 @@ void renderer_sdl::vsync_off(){
 	upload_fonts(fonts_pointer);
 }
 
+//INLINED METHODS
+
 /**
- * Destroys this renderer object.
+ * Draw a texture at a given position.
+ * @param arg The hash of the texture name.
+ * @param x The X position to render at.
+ * @param y The Y position to render at.
  */
-renderer_sdl::~renderer_sdl(){
-    this->close();
+void ST::renderer_sdl::draw_texture(const size_t arg, int x, int y) {
+    auto texture = textures.find(arg);
+    if (texture != textures.end()) {
+        int tex_w, tex_h;
+        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+        SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
+        SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &src_rect);
+    }
+}
+
+/**
+ * Draws a filled rectangle on the screen.
+ * @param x The X position to draw at.
+ * @param y The Y position to draw at.
+ * @param w The width of the rectangle.
+ * @param h The height of the rectangle.
+ * @param color The color of the rectangle.
+ */
+void ST::renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color) {
+    SDL_Rect Rect = {x, y, w, h};
+    SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(sdl_renderer, &Rect);
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+}
+
+/**
+ * Draws a rectangle on the screen.
+ * @param x The X position to draw at.
+ * @param y The Y position to draw at.
+ * @param w The width of the rectangle.
+ * @param h The height of the rectangle.
+ * @param color The color of the rectangle.
+ */
+void ST::renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color color) {
+    SDL_Rect Rect = {x, y, w, h};
+    SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderDrawRect(sdl_renderer, &Rect);
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+}
+
+/**
+ * Draws a texture that fills the entire screen (Background).
+ * @param arg The hash of the texture name.
+ */
+void ST::renderer_sdl::draw_background(const size_t arg) {
+    auto texture = textures.find(arg);
+    if (texture != textures.end()) {
+        SDL_RenderCopy(sdl_renderer, texture->second, nullptr, nullptr);
+    }
+}
+
+/**
+ * Draws a texture that is a spritesheet.
+ * @param arg The hash of the name of the spritesheet.
+ * @param x The X position to render at.
+ * @param y The Y position to render at.
+ * @param sprite The number of the sprite in the texture. (Column in the spritesheet).
+ * @param animation The number of the animation in the texture (Row in the spritesheet).
+ * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
+ * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
+ */
+void ST::renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num) {
+    auto texture = textures.find(arg);
+    if (texture != textures.end()) {
+        int tex_w, tex_h;
+        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+        int temp1 = tex_h / animation_num;
+        int temp2 = tex_w / sprite_num;
+        SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
+        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
+    }
+}
+
+/**
+ * Draws an animated overlay.
+ * Works similary to draw_sprite, except only one animation is supported.
+ * @param arg The hash of the texture name.
+ * @param sprite The number of the sprite to use.
+ * @param sprite_num The total number of frames this spritesheet has.
+ */
+void ST::renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num) {
+    int animation_num = 1;
+    int animation = 1;
+    auto texture = textures.find(arg);
+    if (texture != textures.end()) {
+        int tex_w, tex_h;
+        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+        int temp1 = tex_h / animation_num;
+        int temp2 = tex_w / sprite_num;
+        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, nullptr);
+    }
+}
+
+/**
+ * Clears the screen.
+ */
+void ST::renderer_sdl::clear_screen() {
+    SDL_RenderClear(sdl_renderer);
+}
+
+/**
+ * Sets a draw color.
+ * @param r Red value.
+ * @param g Green value.
+ * @param b Blue value.
+ * @param a Alpha value.
+ */
+void ST::renderer_sdl::set_draw_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+    SDL_SetRenderDrawColor(sdl_renderer, r, g, b, a);
+}
+
+/**
+ * Presents the framebuffer to the window.
+ */
+void ST::renderer_sdl::present() {
+    SDL_RenderPresent(sdl_renderer);
+}
+
+void ST::renderer_sdl::set_resolution(int16_t r_width, int16_t r_height) {
+    close();
+    width = r_width;
+    height = r_height;
+    initialize_with_vsync(window, width, height, vsync);
+    upload_surfaces(surfaces_pointer);
+    upload_fonts(fonts_pointer);
 }

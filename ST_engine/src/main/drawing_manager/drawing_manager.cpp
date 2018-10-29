@@ -44,7 +44,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
     lights_quality = 4;
 
 	//Initialize the rendering object
-	gRenderer.initialize(window, w_width, w_height);
+	ST::renderer_sdl::initialize(window, w_width, w_height);
 	gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data(std::make_tuple(w_width, w_height))));
 }
 
@@ -64,11 +64,11 @@ void drawing_manager::update(const ST::level& temp){
 	handle_messages();
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
-	gRenderer.clear_screen();
-	gRenderer.draw_background(temp.background);
+    ST::renderer_sdl::clear_screen();
+    ST::renderer_sdl::draw_background(temp.background);
 	draw_entities(temp.entities);
 
-	gRenderer.draw_overlay(temp.overlay, ticks % temp.overlay_spriteNum, temp.overlay_spriteNum);
+    ST::renderer_sdl::draw_overlay(temp.overlay, ticks % temp.overlay_spriteNum, temp.overlay_spriteNum);
     draw_text_objects(temp.text_objects);
 
     //draw the lights when we are sure they are processed
@@ -87,7 +87,7 @@ void drawing_manager::update(const ST::level& temp){
 	draw_console(cnsl);
     #endif
 
-	gRenderer.present();
+    ST::renderer_sdl::present();
 }
 
 /**
@@ -97,7 +97,7 @@ void drawing_manager::update(const ST::level& temp){
 void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
     for(auto& i : objects) {
         if (is_onscreen(i)) {
-            gRenderer.draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
+            ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
         }
     }
 }
@@ -109,7 +109,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
 void drawing_manager::draw_fps(double fps){
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
-        gRenderer.draw_text(DEFAULT_FONT, "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);
+        ST::renderer_sdl::draw_text(DEFAULT_FONT, "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);
     }
 }
 
@@ -119,18 +119,18 @@ void drawing_manager::draw_fps(double fps){
  */
 void drawing_manager::draw_console(const console& cnsl){
     if(cnsl.is_open()){
-        gRenderer.draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
+        ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
             if (pos - cnsl.font_size - 50 + cnsl.scroll_offset <= w_height / 2 - cnsl.font_size * 2) {
-                gRenderer.draw_text(DEFAULT_FONT, i->text, 0,
+                ST::renderer_sdl::draw_text(DEFAULT_FONT, i->text, 0,
                                      pos - cnsl.font_size - 20 + cnsl.scroll_offset - 50, i->color,
                                      cnsl.font_size, -1);
             }
             pos -= cnsl.font_size + 5;
         }
-        gRenderer.draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-        gRenderer.draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
+        ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
+        ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
                              cnsl.font_size, -1);
     }
 }
@@ -237,7 +237,7 @@ void drawing_manager::draw_lights() const{
                 tempRect.y = j - a*lights_quality;
                 tempRect.h = (a+1)*lights_quality;
                 SDL_Color light_color = {0, 0, 0, lightmap[i][j]};
-                gRenderer.draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
+                ST::renderer_sdl::draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
             }
             else if(lightmap[i][j] == lightmap[i][j+lights_quality]){
                 a++;
@@ -245,7 +245,7 @@ void drawing_manager::draw_lights() const{
                 tempRect.h = a*lights_quality;
                 tempRect.y = j - a*lights_quality;
                 SDL_Color light_color = {0, 0, 0, lightmap[i][j]};
-                gRenderer.draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
+                ST::renderer_sdl::draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
                 a = 1;
             }
         }
@@ -261,11 +261,11 @@ void drawing_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == VSYNC_ON){
-            gRenderer.vsync_on();
+            ST::renderer_sdl::vsync_on();
             gMessage_bus->send_msg(make_msg(VSYNC_IS_ON, nullptr));
         }
         else if(temp->msg_name == VSYNC_OFF){
-            gRenderer.vsync_off();
+            ST::renderer_sdl::vsync_off();
             gMessage_bus->send_msg(make_msg(VSYNC_IS_OFF, nullptr));
         }
         else if(temp->msg_name == SET_DARKNESS){
@@ -301,13 +301,13 @@ void drawing_manager::handle_messages(){
         else if(temp->msg_name == ASSETS) {
             auto gAssets = static_cast<ST::assets**>(temp->get_data());
             ST::assets* temp_ast = *gAssets;
-            gRenderer.upload_surfaces(&temp_ast->surfaces);
-            gRenderer.upload_fonts(&temp_ast->fonts);
+            ST::renderer_sdl::upload_surfaces(&temp_ast->surfaces);
+            ST::renderer_sdl::upload_fonts(&temp_ast->fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
             gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data(res)));
-            gRenderer.set_resolution(std::get<0>(res), std::get<1>(res));
+            ST::renderer_sdl::set_resolution(std::get<0>(res), std::get<1>(res));
             w_width = std::get<0>(res);
             w_height = std::get<1>(res);
         }
@@ -337,18 +337,18 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
         if(is_onscreen(i)){
             if(i.animation_num == 0){
                 if(i.is_static){
-                    gRenderer.draw_texture(i.texture, i.x, i.y);
+                    ST::renderer_sdl::draw_texture(i.texture, i.x, i.y);
 				}
                 else{
-                    gRenderer.draw_texture(i.texture, i.x - Camera.x, i.y - Camera.y);
+                    ST::renderer_sdl::draw_texture(i.texture, i.x - Camera.x, i.y - Camera.y);
 				}
             }
             else{
                 uint32_t time = ticks >> 7U; //ticks/128
                 if(i.is_static){
-                    gRenderer.draw_sprite(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
+                    ST::renderer_sdl::draw_sprite(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
                 }else{
-					gRenderer.draw_sprite(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
+                    ST::renderer_sdl::draw_sprite(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
 				}
             }
         }
@@ -399,12 +399,12 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
             }
             if (i.is_affected_by_physics) {
                 SDL_Colour colour = {240, 0, 0, 100};
-                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
+                ST::renderer_sdl::draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
                                                 i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
                                                 colour);
             } else {
                 SDL_Colour colour2 = {0, 0, 220, 100};
-                gRenderer.draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
+                ST::renderer_sdl::draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
                                                 i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
                                                 colour2);
             }
@@ -431,9 +431,9 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities){
                 std::string tempX = "x: " + std::to_string(i.x);
                 std::string tempY = "y: " + std::to_string(i.y);
                 SDL_Colour colour_text = {255, 255, 0, 255};
-                gRenderer.draw_text(DEFAULT_FONT, tempX, i.x - Xoffset,
+                ST::renderer_sdl::draw_text(DEFAULT_FONT, tempX, i.x - Xoffset,
                                      i.y - Yoffset - i.tex_h, colour_text, 25, 1);
-                gRenderer.draw_text(DEFAULT_FONT, tempY, i.x - Xoffset,
+                ST::renderer_sdl::draw_text(DEFAULT_FONT, tempY, i.x - Xoffset,
                                      i.y - Yoffset - i.tex_h + 30, colour_text, 25, 1);
             }
         }
@@ -459,5 +459,6 @@ void drawing_manager::hide_collisions(){
  * Quits the Font subsystem and destroys the renderer object.
  */
 drawing_manager::~drawing_manager(){
+    ST::renderer_sdl::close();
 	TTF_Quit();
 }

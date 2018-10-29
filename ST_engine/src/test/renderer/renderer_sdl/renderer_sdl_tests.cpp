@@ -1,4 +1,4 @@
-/* This file is part of the "slavicTales" project.
+/*This file is part of the "slavicTales" project.
  * You may use, distribute or modify this code under the terms
  * of the GNU General Public License version 2.
  * See LICENCE.txt in the root directory of the project.
@@ -6,6 +6,7 @@
  * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
+
 
 #include <gtest/gtest.h>
 
@@ -26,34 +27,30 @@ protected:
     uint32_t wait_duration = 1500;
     uint32_t fullscreen = 1;
 
-
-    renderer_sdl* test_subject{};
     SDL_Window* test_window{};
-    int test_window_width = 0;
-    int test_window_height = 0;
+    int16_t test_window_width = 0;
+    int16_t test_window_height = 0;
 
     void SetUp() override{
         initialize_SDL();
 
         SDL_DisplayMode DM{};
         SDL_GetDisplayMode(0, 0, &DM);
-        test_window_width = DM.w;
-        test_window_height = DM.h;
+        test_window_width = static_cast<int16_t>(DM.w);
+        test_window_height = static_cast<int16_t>(DM.h);
 
         test_window = SDL_CreateWindow("TEST", 0, 0, test_window_width, test_window_height, 0);
 
-        test_subject = new renderer_sdl();
-        test_subject->initialize(test_window, test_window_width, test_window_height);
+        ST::renderer_sdl::initialize(test_window, test_window_width, test_window_height);
 
         SDL_SetWindowFullscreen(test_window, fullscreen);
         SDL_ShowCursor(0);
 
-        test_subject->clear_screen();
+        ST::renderer_sdl::clear_screen();
     }
 
     void TearDown() override{
-        test_subject->close();
-        delete test_subject;
+        ST::renderer_sdl::close();
         close_SDL();
     }
 };
@@ -62,62 +59,62 @@ TEST_F(renderer_sdl_tests, test_set_draw_color){
     int counter = 0;
     for(uint32_t i = 0; i < wait_duration/180; i++) {
         if(counter == 0) {
-            test_subject->set_draw_color(255, 0, 0, 255);
+            ST::renderer_sdl::set_draw_color(255, 0, 0, 255);
         }else if(counter == 1){
-            test_subject->set_draw_color(0, 255, 0, 255);
+            ST::renderer_sdl::set_draw_color(0, 255, 0, 255);
         }else if(counter == 2){
-            test_subject->set_draw_color(0, 0, 255, 255);
+            ST::renderer_sdl::set_draw_color(0, 0, 255, 255);
         }else if(counter == 3){
-            test_subject->set_draw_color(255, 0, 255, 255);
+            ST::renderer_sdl::set_draw_color(255, 0, 255, 255);
         }else if(counter == 4){
-            test_subject->set_draw_color(0, 255, 255, 255);
+            ST::renderer_sdl::set_draw_color(0, 255, 255, 255);
         }else if(counter == 5){
-            test_subject->set_draw_color(255, 255, 0, 255);
+            ST::renderer_sdl::set_draw_color(255, 255, 0, 255);
         }else if(counter == 6){
-            test_subject->set_draw_color(255, 100, 20, 255);
+            ST::renderer_sdl::set_draw_color(255, 100, 20, 255);
         }else{
             counter = 0;
         }
         counter++;
-        test_subject->clear_screen();
-        test_subject->present();
+        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::present();
         SDL_Delay(160);
     }
 }
 
 TEST_F(renderer_sdl_tests, test_draw_rectangle_white){
-    test_subject->draw_rectangle(100, 100, 300, 300, {255, 255, 255, 255});
-    test_subject->present();
+    ST::renderer_sdl::draw_rectangle(100, 100, 300, 300, {255, 255, 255, 255});
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
 TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_white){
-    test_subject->draw_rectangle_filled(100, 100, 300, 300, {255, 255, 255, 255});
-    test_subject->present();
+    ST::renderer_sdl::draw_rectangle_filled(100, 100, 300, 300, {255, 255, 255, 255});
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
 TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_white_transparent){
-    test_subject->draw_rectangle_filled(100, 100, 300, 300, {255, 255, 255, 50});
-    test_subject->present();
+    ST::renderer_sdl::draw_rectangle_filled(100, 100, 300, 300, {255, 255, 255, 50});
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
 TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_red){
-    test_subject->draw_rectangle_filled(100, 100, 300, 300, {255, 0, 0, 255});
-    test_subject->present();
+    ST::renderer_sdl::draw_rectangle_filled(100, 100, 300, 300, {255, 0, 0, 255});
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
 TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_green){
-    test_subject->draw_rectangle_filled(100, 100, 300, 300, {0, 255, 0, 255});
-    test_subject->present();
+    ST::renderer_sdl::draw_rectangle_filled(100, 100, 300, 300, {0, 255, 0, 255});
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
 TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_blue){
-    test_subject->draw_rectangle_filled(100, 100, 300, 300, {0, 0, 255, 255});
-    test_subject->present();
+    ST::renderer_sdl::draw_rectangle_filled(100, 100, 300, 300, {0, 0, 255, 255});
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -126,9 +123,9 @@ TEST_F(renderer_sdl_tests, test_draw_background){
     ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
-    test_subject->upload_surfaces(&test_assets);
-    test_subject->draw_background(1);
-    test_subject->present();
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    ST::renderer_sdl::draw_background(1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -137,9 +134,9 @@ TEST_F(renderer_sdl_tests, test_draw_texture){
     ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
-    test_subject->upload_surfaces(&test_assets);
-    test_subject->draw_texture(1, 300, 300);
-    test_subject->present();
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    ST::renderer_sdl::draw_texture(1, 300, 300);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -149,9 +146,9 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_small){
     ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
-    test_subject->upload_fonts(&test_assets);
-    test_subject->draw_text("test_font.ttf", "The quick brown fox!", 300, 300, {255, 0, 0, 255}, font_size, -1);
-    test_subject->present();
+    ST::renderer_sdl::upload_fonts(&test_assets);
+    ST::renderer_sdl::draw_text("test_font.ttf", "The quick brown fox!", 300, 300, {255, 0, 0, 255}, font_size, -1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -161,9 +158,9 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_medium){
     ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
-    test_subject->upload_fonts(&test_assets);
-    test_subject->draw_text("test_font.ttf", "The quick brown fox!", 200, 300, {0, 255, 0, 255}, font_size, -1);
-    test_subject->present();
+    ST::renderer_sdl::upload_fonts(&test_assets);
+    ST::renderer_sdl::draw_text("test_font.ttf", "The quick brown fox!", 200, 300, {0, 255, 0, 255}, font_size, -1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -173,9 +170,9 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_large){
     ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
-    test_subject->upload_fonts(&test_assets);
-    test_subject->draw_text("test_font.ttf", "The quick brown fox!", 100, 300, {0, 0, 255, 255}, font_size, -1);
-    test_subject->present();
+    ST::renderer_sdl::upload_fonts(&test_assets);
+    ST::renderer_sdl::draw_text("test_font.ttf", "The quick brown fox!", 100, 300, {0, 0, 255, 255}, font_size, -1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -185,9 +182,9 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_small){
     ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
-    test_subject->upload_fonts(&test_assets);
-    test_subject->draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 300, 300, {255, 0, 0, 255}, font_size, -1);
-    test_subject->present();
+    ST::renderer_sdl::upload_fonts(&test_assets);
+    ST::renderer_sdl::draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 300, 300, {255, 0, 0, 255}, font_size, -1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -197,9 +194,9 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_medium){
     ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
-    test_subject->upload_fonts(&test_assets);
-    test_subject->draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 200, 300, {0, 255, 0, 255}, font_size, -1);
-    test_subject->present();
+    ST::renderer_sdl::upload_fonts(&test_assets);
+    ST::renderer_sdl::draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 200, 300, {0, 255, 0, 255}, font_size, -1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -209,9 +206,9 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_large){
     ASSERT_TRUE(static_cast<bool>(test_font));
     ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
     test_assets["test_font.ttf" + std::to_string(font_size)] = test_font;
-    test_subject->upload_fonts(&test_assets);
-    test_subject->draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 100, 300, {0, 0, 255, 255}, font_size, -1);
-    test_subject->present();
+    ST::renderer_sdl::upload_fonts(&test_assets);
+    ST::renderer_sdl::draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 100, 300, {0, 0, 255, 255}, font_size, -1);
+    ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
 
@@ -220,12 +217,12 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
     ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
-    test_subject->upload_surfaces(&test_assets);
+    ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        test_subject->clear_screen();
-        test_subject->draw_sprite(1, 300, 500, time % 6, 1, 6, 6);
-        test_subject->present();
+        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 1, 6, 6);
+        ST::renderer_sdl::present();
         SDL_Delay(16);
     }
 }
@@ -235,13 +232,13 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
     ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
-    test_subject->vsync_on();
-    test_subject->upload_surfaces(&test_assets);
+    ST::renderer_sdl::vsync_on();
+    ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        test_subject->clear_screen();
-        test_subject->draw_sprite(1, 300, 500, time % 6, 3, 6, 6);
-        test_subject->present();
+        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 3, 6, 6);
+        ST::renderer_sdl::present();
         SDL_Delay(16);
     }
 }
@@ -251,12 +248,12 @@ TEST_F(renderer_sdl_tests, test_draw_overlay){
     ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
-    test_subject->upload_surfaces(&test_assets);
+    ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        test_subject->clear_screen();
-        test_subject->draw_overlay(1, time % 6, 17);
-        test_subject->present();
+        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::draw_overlay(1, time % 6, 17);
+        ST::renderer_sdl::present();
         SDL_Delay(16);
     }
 }

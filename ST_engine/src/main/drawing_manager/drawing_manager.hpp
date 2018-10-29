@@ -66,9 +66,6 @@ class drawing_manager{
         //a subscriber object - so we can subscribe to and recieve messages
         subscriber msg_sub{};
 
-        //rendering object
-        renderer_sdl gRenderer;
-
         //CPU ticks since start - used for animating sprites
         uint32_t ticks = 0;
 
