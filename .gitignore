@@ -15,6 +15,7 @@ message_bus_test
 map_test
 
 *.exe
+*.manifest
 
 CMakeCache.txt
 CMakeFiles

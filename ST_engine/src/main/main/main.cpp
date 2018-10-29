@@ -64,15 +64,7 @@ int main(int argc, char** argv){
         total_time += frame_time;
 
         if(total_time >= UPDATE_RATE){
-            //will start an update task
-#ifdef _MSC_VER
-			//the task must be run from the main thread on windows, because of the way
-			//the main thread is coupled to SDL events.
-			input_manager::update_task(&gInput_manager);
-#else
-			//On linux, this can run on the task manager
 			gInput_manager.update();
-#endif
 			do{
                 gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 gGame_manager.update();

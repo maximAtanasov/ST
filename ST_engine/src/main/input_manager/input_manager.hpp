@@ -81,15 +81,11 @@ class input_manager{
 		bool keyheld(ST::key) const;
 		bool keyrelease(ST::key) const;
 		void handle_messages();
-        void take_input();
-       
-#ifdef _MSC_VER
-    public:
-		static void update_task(void* mngr); // Make this public on windows (see main())
-#else
+        void take_input();	
 		static void update_task(void* mngr); //And private on linux
+
 	public:
-#endif
+
         input_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         void update();
 };
@@ -100,7 +96,11 @@ class input_manager{
  * Starts the update_task() method using the task manager.
  */
 inline void input_manager::update(){
+#ifdef _MSC_VER
+	input_manager::update_task(this);
+#else
 	gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr, -1));
+#endif
 }
 
 #endif

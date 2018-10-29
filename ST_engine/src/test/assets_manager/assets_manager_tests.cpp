@@ -214,7 +214,7 @@ TEST_F(asset_manager_test, loadBinary_complex) {
     ASSERT_TRUE(result_chunk_2);
     ASSERT_EQ(expected_chunk_2->alen, result_chunk_2->alen);
     for(Uint32 i = 0; i < expected_chunk_2->alen; i++){
-    //TODO:    ASSERT_EQ(expected_chunk_2->abuf[i], result_chunk_2->abuf[i]);
+        ASSERT_EQ(expected_chunk_2->abuf[i], result_chunk_2->abuf[i]);
     }
     Mix_FreeChunk(expected_chunk_2);
 
@@ -266,7 +266,7 @@ TEST_F(asset_manager_test, test_load_assets_from_list){
     ASSERT_TRUE(result_chunk_1);
     ASSERT_EQ(expected_chunk_1->alen, result_chunk_1->alen);
     for(Uint32 i = 0; i < expected_chunk_1->alen; i++){
-        //TODO: ASSERT_EQ(expected_chunk_1->abuf[i], result_chunk_1->abuf[i]);
+        ASSERT_EQ(expected_chunk_1->abuf[i], result_chunk_1->abuf[i]);
     }
     Mix_FreeChunk(expected_chunk_1);
 
@@ -277,7 +277,7 @@ TEST_F(asset_manager_test, test_load_assets_from_list){
     ASSERT_TRUE(result_chunk_2);
     ASSERT_EQ(expected_chunk_2->alen, result_chunk_2->alen);
     for(Uint32 i = 0; i < expected_chunk_2->alen; i++){
-        //TODO: ASSERT_EQ(expected_chunk_2->abuf[i], result_chunk_2->abuf[i]);
+        ASSERT_EQ(expected_chunk_2->abuf[i], result_chunk_2->abuf[i]);
     }
     Mix_FreeChunk(expected_chunk_2);
 }
