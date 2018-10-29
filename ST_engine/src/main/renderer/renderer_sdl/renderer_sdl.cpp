@@ -15,10 +15,10 @@
 namespace ST {
     namespace renderer_sdl {
 
-        void cache_font(TTF_Font *Font, std::string font_and_size);
+        void cache_font(TTF_Font *Font, const std::string& font_and_size);
         void draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
                                   uint8_t size);
-        void draw_text_cached_glyphs(std::string, std::string, int, int, SDL_Color, int);
+        void draw_text_cached_glyphs(const std::string &arg, const std::string &arg2, int, int, SDL_Color, int);
         int initialize_with_vsync(SDL_Window *r_window, int16_t r_width, int16_t r_height, bool vsync);
     }
 }
@@ -33,7 +33,7 @@ static int16_t width;
 static int16_t height;
 
 //Textures with no corresponding surface in our assets need to be freed
-static ska::bytell_hash_map<size_t, SDL_Texture *> textures;
+static ska::bytell_hash_map<size_t, SDL_Texture *> textures{};
 
 static ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces_pointer;
 static ska::bytell_hash_map<std::string, TTF_Font *> *fonts_pointer;
@@ -41,10 +41,10 @@ static ska::bytell_hash_map<std::string, TTF_Font *> *fonts_pointer;
 
 //the fonts in this table do not need to be cleaned - these are just pointer to Fonts stored in the asset_manager and
 //that will handle the cleanup
-static ska::bytell_hash_map<std::string, TTF_Font *> fonts;
+static ska::bytell_hash_map<std::string, TTF_Font *> fonts{};
 
 //we do however need to cleanup the cache as that lives on the GPU
-static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache;
+static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache{};
 
 static bool vsync = false;
 
@@ -170,7 +170,7 @@ void ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::s
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void ST::renderer_sdl::draw_text_cached_glyphs(const std::string arg, const std::string arg2, const int x, const int y,
+void ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std::string& arg2, const int x, const int y,
                                            const SDL_Color color_font, const int size) {
     std::string font_and_size = arg+std::to_string(size);
     auto cached_vector = fonts_cache.find(font_and_size);
@@ -206,7 +206,7 @@ void ST::renderer_sdl::draw_text_cached_glyphs(const std::string arg, const std:
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void ST::renderer_sdl::draw_text(std::string arg, std::string arg2, int x, int y, SDL_Color color_font , int size, int flag){
+void ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font , uint8_t size, int flag){
     if(flag == 1){
         draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }else if(flag == 0){
@@ -280,7 +280,7 @@ void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>
  * @param Font The Font to render with.
  * @param font_and_size The name+size of the font.
  */
-void ST::renderer_sdl::cache_font(TTF_Font* Font, std::string font_and_size){
+void ST::renderer_sdl::cache_font(TTF_Font* Font, const std::string& font_and_size){
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
     temp[1] = 0;
@@ -445,6 +445,11 @@ void ST::renderer_sdl::present() {
     SDL_RenderPresent(sdl_renderer);
 }
 
+/**
+ * Sets the internal rendering resolution
+ * @param r_width Width
+ * @param r_height Height
+ */
 void ST::renderer_sdl::set_resolution(int16_t r_width, int16_t r_height) {
     close();
     width = r_width;
