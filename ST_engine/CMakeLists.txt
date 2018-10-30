@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD 14)
 include(GoogleTest)
 enable_testing()
 
+add_subdirectory(ST_renderer)
+
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
 find_package(SDL2 REQUIRED)
@@ -24,6 +26,7 @@ find_package(SDL2_ttf REQUIRED)
 include_directories(../ST_loaders/include)
 include_directories(../ST_util/include)
 include_directories(../ST_engine/src/main)
+include_directories(../ST_engine/ST_renderer/include)
 include_directories(../external/googletest/googletest/include)
 include_directories(../external/googletest/googlemock/include)
 include_directories(../external/lua/lua-5.3.0/src)
@@ -50,8 +53,8 @@ add_executable(ST_engine
         src/main/drawing_manager/drawing_manager.cpp
         src/main/drawing_manager/drawing_manager.hpp
         src/main/game_manager/level/entity.hpp
-        src/main/renderer/renderer_sdl/font_cache.cpp
-        src/main/renderer/renderer_sdl/font_cache.hpp
+        ST_renderer/src/main/renderer_sdl/font_cache.cpp
+        ST_renderer/src/main/renderer_sdl/font_cache.hpp
         src/main/game_manager/game_manager.cpp
         src/main/game_manager/game_manager.hpp
         src/main/input_manager/input_manager.cpp
@@ -67,8 +70,8 @@ add_executable(ST_engine
         src/main/physics_manager/physics_manager.cpp
         src/main/physics_manager/physics_manager.hpp
         ../ST_util/include/ST_util/atomic_queue/readerwriterqueue.h
-        src/main/renderer/renderer_sdl/renderer_sdl.cpp
-        src/main/renderer/renderer_sdl/renderer_sdl.hpp
+        ST_renderer/src/main/renderer_sdl/renderer_sdl.cpp
+        ST_renderer/include/renderer_sdl.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
@@ -96,6 +99,7 @@ add_executable(ST_engine
 target_link_libraries(ST_engine
         ST_util
         ST_loaders
+        ST_renderer
         lua
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -223,25 +227,6 @@ add_executable(display_manager_test
 include_directories(display_manager_test ../ST_engine/src/test)
 
 target_link_libraries(display_manager_test
-        ST_loaders
-        ST_util
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
-
-add_executable(renderer_sdl_test
-        src/main/defs.hpp
-        src/main/renderer/renderer_sdl/renderer_sdl.cpp
-        src/main/renderer/renderer_sdl/renderer_sdl.hpp
-        src/test/renderer/renderer_sdl/renderer_sdl_tests.cpp
-        src/main/renderer/renderer_sdl/font_cache.cpp
-        src/main/renderer/renderer_sdl/font_cache.hpp)
-
-include_directories(renderer_sdl_test ../ST_engine/src/test ../ST_loaders/include)
-
-target_link_libraries(renderer_sdl_test
         ST_loaders
         ST_util
         gtest
@@ -404,7 +389,6 @@ set(ALL_TESTS
         audio_manager_test
         display_manager_test
         asset_manager_test
-        renderer_sdl_test
         entity_test
         level_test
         lua_backend_test)

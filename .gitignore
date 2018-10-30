@@ -16,6 +16,7 @@ map_test
 
 *.exe
 *.manifest
+CMakeSettings.json
 
 CMakeCache.txt
 CMakeFiles
@@ -87,8 +88,6 @@ atlassian-ide-plugin.xml
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
 bld/
 [Bb]in/
 [Oo]bj/

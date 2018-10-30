@@ -416,7 +416,7 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
  * Draws the coordinates for entities that are affected by physics.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities){
+void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
         if (is_onscreen(i)) {
             if (i.is_affected_by_physics) {

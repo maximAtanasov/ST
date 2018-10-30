@@ -16,7 +16,7 @@
 #include <console/console.hpp>
 #include <message_bus/message_bus.hpp>
 #include <game_manager/level/camera.hpp>
-#include <renderer/renderer_sdl/renderer_sdl.hpp>
+#include <renderer_sdl.hpp>
 #include <game_manager/level/level.hpp>
 
 ///This object is responsible for issuing drawing commands and drawing the current level.
@@ -89,7 +89,7 @@ class drawing_manager{
         //Drawing functions
         void draw_entities(const std::vector<ST::entity>&) const;
         void draw_collisions(const std::vector<ST::entity>&) const;
-        void draw_coordinates(const std::vector<ST::entity>&);
+        void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
         void draw_fps(double fps);
         void draw_console(const console& cnsl);
