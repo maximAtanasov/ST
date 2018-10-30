@@ -33,7 +33,6 @@ protected:
 
     void SetUp() override{
         initialize_SDL();
-
         SDL_DisplayMode DM{};
         SDL_GetDisplayMode(0, 0, &DM);
         test_window_width = static_cast<int16_t>(DM.w);
@@ -47,11 +46,12 @@ protected:
         SDL_ShowCursor(0);
 
         ST::renderer_sdl::clear_screen();
+        close_SDL();
     }
 
     void TearDown() override{
         ST::renderer_sdl::close();
-        close_SDL();
+        SDL_DestroyWindow(test_window);
     }
 };
 

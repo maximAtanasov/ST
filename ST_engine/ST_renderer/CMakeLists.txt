@@ -53,3 +53,5 @@ target_link_libraries(renderer_sdl_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
+
+set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
