@@ -46,12 +46,12 @@ protected:
         SDL_ShowCursor(0);
 
         ST::renderer_sdl::clear_screen();
-        close_SDL();
     }
 
     void TearDown() override{
         ST::renderer_sdl::close();
         SDL_DestroyWindow(test_window);
+        close_SDL();
     }
 };
 

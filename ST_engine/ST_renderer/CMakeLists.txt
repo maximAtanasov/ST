@@ -43,7 +43,7 @@ add_executable(renderer_sdl_test
         ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.cpp
         ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.hpp)
 
-include_directories(renderer_sdl_test ../ST_engine/src/test ../ST_loaders/include)
+include_directories(renderer_sdl_test ../w/src/test ../ST_loaders/include)
 
 target_link_libraries(renderer_sdl_test
         ST_loaders
