@@ -338,9 +338,10 @@ int8_t assets_manager::unload_asset(std::string path){
     if(extention == "png" || extention == "webp"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
-        if(all_assets.surfaces[string_hash] != static_cast<SDL_Surface*>(static_cast<void*>(&SURFACE_FREED_AND_IN_USE))){
+#ifdef linux
+        if(all_assets.surfaces[string_hash] != ST::renderer_sdl::SURFACE_FREED_AND_TEXTURE_IN_USE)
+#endif
             SDL_FreeSurface(all_assets.surfaces[string_hash]);
-        }
         all_assets.surfaces[string_hash] = nullptr;
         count[path]--;
     }else if(extention == "wav"){

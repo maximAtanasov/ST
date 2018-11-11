@@ -18,7 +18,6 @@ namespace ST {
         void draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
                                   uint8_t size);
         void draw_text_cached_glyphs(const std::string &arg, const std::string &arg2, int, int, SDL_Color, int);
-        int initialize_with_vsync(SDL_Window *r_window, int16_t r_width, int16_t r_height, bool vsync);
     }
 }
 
@@ -47,6 +46,10 @@ static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache
 
 static bool vsync = false;
 
+#ifdef linux
+SDL_Surface* ST::renderer_sdl::SURFACE_FREED_AND_TEXTURE_IN_USE;
+#endif
+
 /**
  * Initializes the renderer.
  * @param window The window to bind this renderer to.
@@ -55,41 +58,21 @@ static bool vsync = false;
  * @return Always 0.
  */
 int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16_t r_height){
+#ifdef linux
+    SURFACE_FREED_AND_TEXTURE_IN_USE = SDL_CreateRGBSurface(0, 10, 10, 4, 0, 0, 0, 0);
+#endif
     font_cache::set_max(100);
     //initialize renderer
 	window = r_window;
 	width = r_width;
 	height = r_height;
-    sdl_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if(vsync){
+        sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    }else{
+        sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
+    }
     SDL_RenderSetLogicalSize(sdl_renderer, width, height);
     SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
-    set_draw_color(0, 0, 0, 255);
-    return 0;
-}
-
-/**
- * Initializes the renderer.
- * Same as the regular initialization method, except for an additional parameter that specify if VSYNC should be on or off.
- * @param window The window to bind this renderer to.
- * @param width The virtual width of the window.
- * @param height The virtual height of the window.
- * @param vsync True to enable VSYNC, false otherwise.
- * @return Always 0.
- */
-int ST::renderer_sdl::initialize_with_vsync(SDL_Window* r_window, int16_t r_width, int16_t r_height, bool vsync){
-    font_cache::set_max(100);
-    window = r_window;
-    width = r_width;
-    height = r_height;
-    //initialize renderer
-	if(vsync){
-    	sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	}else{
-		sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
-	}
-    SDL_RenderSetLogicalSize(sdl_renderer, width, height);
- 	SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
     set_draw_color(0, 0, 0, 255);
     return 0;
@@ -221,8 +204,6 @@ void ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2
     }
 }
 
-uint8_t SURFACE_FREED_AND_IN_USE = 0;
-
 /**
  * Upload all surface to the GPU. (Create textures from them).
  * @param surfaces The surfaces to upload.
@@ -235,14 +216,20 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*
                 SDL_DestroyTexture(textures[it.first]);
                 textures[it.first] = nullptr;
             }
-            else if(it.second != nullptr && it.second != static_cast<SDL_Surface*>(static_cast<void*>(&SURFACE_FREED_AND_IN_USE))){
-                if(textures[it.first] != nullptr){
+#ifdef linux
+            else if(it.second != nullptr && it.second != SURFACE_FREED_AND_TEXTURE_IN_USE){
+#else
+            else if(it.second != nullptr){
+#endif
+                    if(textures[it.first] != nullptr){
                     SDL_DestroyTexture(textures[it.first]);
                     textures[it.first] = nullptr;
                 }
                 textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
                 SDL_FreeSurface(it.second);
-                it.second = static_cast<SDL_Surface*>(static_cast<void*>(&SURFACE_FREED_AND_IN_USE));
+#ifdef linux
+                it.second = SURFACE_FREED_AND_TEXTURE_IN_USE;
+#endif
             }
         }
     }
@@ -303,12 +290,12 @@ void ST::renderer_sdl::cache_font(TTF_Font* Font, const std::string& font_and_si
  */
 void ST::renderer_sdl::vsync_on(){
     vsync = true;
-#ifdef _MSC_VER
+#ifndef linux
     close();
-	initialize_with_vsync(window, width, height, vsync);
+	initialize(window, width, height);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
-#elif defined(linux)
+#else
 	SDL_GL_SetSwapInterval(-1);
 #endif
 }
@@ -317,14 +304,13 @@ void ST::renderer_sdl::vsync_on(){
  * Turns off vsync.
  */
 void ST::renderer_sdl::vsync_off(){
-
     vsync = false;
-#ifdef _MSC_VER
+#ifndef linux
     close();
-	initialize_with_vsync(window, width, height, vsync);
+	initialize(window, width, height);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
-#elif defined(linux)
+#else
     SDL_GL_SetSwapInterval(0);
 #endif
 }
@@ -466,7 +452,7 @@ void ST::renderer_sdl::set_resolution(int16_t r_width, int16_t r_height) {
     close();
     width = r_width;
     height = r_height;
-    initialize_with_vsync(window, width, height, vsync);
+    initialize(window, width, height);
     upload_surfaces(surfaces_pointer);
     upload_fonts(fonts_pointer);
 }

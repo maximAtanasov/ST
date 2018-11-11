@@ -21,11 +21,12 @@
  * rendering techniques to draw textures, text and primitives to the screen.
  */
 
-extern uint8_t SURFACE_FREED_AND_IN_USE;
-
-
 namespace ST {
     namespace renderer_sdl {
+
+#ifdef linux
+        extern SDL_Surface* SURFACE_FREED_AND_TEXTURE_IN_USE;
+#endif
 
         void set_draw_color(uint8_t, uint8_t, uint8_t, uint8_t);
 
