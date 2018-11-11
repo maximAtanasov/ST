@@ -24,10 +24,6 @@ int main(int argc, char** argv){
 
     //Order of subsystem initialization is crucial
     message_bus gMessage_bus;
-    #ifdef __DEBUG
-    fps gFps;
-    console gConsole(&gMessage_bus);
-    #endif
     task_manager gTask_manager(&gMessage_bus);
     audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);
@@ -37,8 +33,10 @@ int main(int argc, char** argv){
     physics_manager gPhysics_manager(&gMessage_bus, &gTask_manager);
     game_manager gGame_manager(&gMessage_bus, &gTask_manager);// will load "levels/main"
     timer gTimer;
-
+    
     #ifdef __DEBUG
+    fps gFps;
+    console gConsole(&gMessage_bus);
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
     #endif
 

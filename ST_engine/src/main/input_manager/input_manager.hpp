@@ -71,7 +71,9 @@ class input_manager{
 		message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
 		subscriber msg_sub{};
-		std::vector<ST::key> registered_keys;
+
+		//Store ST::keys and the amount of times the have been registered as values;
+		ska::bytell_hash_map<ST::key, uint8_t> registered_keys;
 
         //this is where we save the text stream from our input manager
         std::string composition;

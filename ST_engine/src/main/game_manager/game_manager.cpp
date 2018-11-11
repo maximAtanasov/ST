@@ -196,6 +196,7 @@ void game_manager::start_level(const std::string& level_name){
             break;
         }
     }
+
     get_level()->lights.clear();
     get_level()->entities.clear();
     get_level()->text_objects.clear();
@@ -216,10 +217,6 @@ void game_manager::start_level(const std::string& level_name){
     gScript_backend.load_file(temp);
     gScript_backend.set_global("loop");
 
-    //Register all the keys this level uses with the input manager.
-    for(auto i : get_level()->actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(i.second)));
-    }
 }
 
 /**

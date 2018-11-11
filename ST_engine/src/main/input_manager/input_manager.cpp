@@ -122,14 +122,14 @@ void input_manager::take_input(){
 
     //check if any of the registered keys is pressed and send a message if so
     for(auto i : registered_keys){
-        if(keypress(i)){
-            gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i))));
-        }
-        else if(keyheld(i)){
-            gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i))));
-        }
-        else if(keyrelease(i)){
-            gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i))));
+        if(i.second > 0) {
+            if (keypress(i.first)) {
+                gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i.first))));
+            } else if (keyheld(i.first)) {
+                gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i.first))));
+            } else if (keyrelease(i.first)) {
+                gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i.first))));
+            }
         }
     }
 
@@ -178,10 +178,12 @@ void input_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
         }else if(temp->msg_name == REGISTER_KEY){
             auto key_val = static_cast<ST::key*>(temp->get_data());
-            registered_keys.push_back(*key_val);
+            ++registered_keys[*key_val];
         }else if(temp->msg_name == UNREGISTER_KEY){
             auto key_val = static_cast<ST::key*>(temp->get_data());
-            registered_keys.erase(std::remove(registered_keys.begin(), registered_keys.end(), *key_val), registered_keys.end());
+            if(registered_keys[*key_val] > 0) {
+                --registered_keys[*key_val];
+            }
         }
 		destroy_msg(temp);
 		temp = msg_sub.get_next_message();

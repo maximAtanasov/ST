@@ -26,6 +26,10 @@ ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
  */
 void ST::level::load(){
     load_input_conf();
+    //Register all the keys this level uses with the input manager.
+    for(auto i : actions_Buttons) {
+        gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(i.second)));
+    }
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
 }
