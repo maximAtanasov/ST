@@ -13,7 +13,6 @@
 
 namespace ST {
     namespace renderer_sdl {
-
         void cache_font(TTF_Font *Font, const std::string& font_and_size);
         void draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
                                   uint8_t size);
