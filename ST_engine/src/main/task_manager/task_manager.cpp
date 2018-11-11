@@ -11,17 +11,21 @@
 #include <console/log.hpp>
 #include <task_manager/task_allocator.hpp>
 
+static uint8_t thread_ids = 0;
+
 /**
  * The function each task thread runs.
  * @param arg A pointer to the task_manager.
  * @return Always 0. (This function only returns when at engine-shutdown).
  */
 int task_manager::task_thread(void* arg){
+    SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
 	auto self = static_cast<task_manager*>(arg);
+	uint8_t thread_id = thread_ids;
 	ST::task* work;
 	while(SDL_AtomicGet(&self->run_threads) == 1){
         SDL_SemWait(self->work_sem);
-		if(self->task_queue.try_dequeue(work)){ //get a function pointer and data
+		if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
             self->do_work(work);
 		}
 	}
@@ -52,6 +56,8 @@ void task_manager::do_work(ST::task* work) {
  */
 task_manager::task_manager(message_bus *msg_bus){
 
+    SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
+
     //Set our external dependency
     gMessage_bus = msg_bus;
 
@@ -72,6 +78,7 @@ task_manager::task_manager(message_bus *msg_bus){
 
 	for (uint16_t i = 0; i < thread_num - 1; i++) {
 		task_threads.emplace_back(SDL_CreateThread(task_thread, "tsk_thr", this));
+        thread_ids++;
 	}
 	log(INFO, std::to_string(thread_num-1) + " task threads started.");
 }
@@ -100,7 +107,7 @@ task_manager::~task_manager(){
 
     //finish running any remaining tasks
 	ST::task* new_task;
-	while(task_queue.try_dequeue(new_task)){ //get a function pointer and data
+	while(global_task_queue.try_dequeue(new_task)){ //get a function pointer and data
         SDL_DestroySemaphore(new_task->lock);
 		delete new_task;
 	}
@@ -119,7 +126,7 @@ task_id task_manager::start_task(ST::task* arg){
     //This may depend on the platform (OS implementation of Semaphores)
     SDL_semaphore *lock = SDL_CreateSemaphore(0);
     arg->set_lock(lock);
-    task_queue.enqueue(arg);
+    global_task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
     return lock;
 }
@@ -130,7 +137,10 @@ task_id task_manager::start_task(ST::task* arg){
  */
 void task_manager::start_task_lockfree(ST::task* arg){
     arg->set_lock(nullptr);
-    task_queue.enqueue(arg);
+    if(arg->affinity != -1){
+        task_queues[arg->affinity].enqueue(arg);
+    }
+    global_task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
 }
 
@@ -143,7 +153,7 @@ void task_manager::wait_for_task(task_id id){
         while(SDL_SemTryWait(id) != 0) {
             ST::task* work;
             if(SDL_AtomicGet(&run_threads) == 1){
-                if(task_queue.try_dequeue(work)){ //get a function pointer and data
+                if(global_task_queue.try_dequeue(work)){ //get a function pointer and data
                     do_work(work);
                 }
             }

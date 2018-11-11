@@ -31,7 +31,7 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         exit(1);
     }
     Mix_Init(MIX_INIT_OGG);
-    if(Mix_OpenAudio(22050,AUDIO_S16SYS,2,640) == -1){
+    if(Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 640) == -1){
         fprintf(stderr, "Failiure to initialize audio\n");
         exit(1);
     }
@@ -67,7 +67,7 @@ void audio_manager::handle_messages(){
             play_sound(name, volume, loops);
         }
         else if(temp->msg_name == PLAY_MUSIC){
-            auto data = (std::tuple<size_t, uint8_t, int8_t>*)temp->get_data();
+            auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(temp->get_data());
             size_t name = std::get<0> (*data);
             uint8_t volume = std::get<1> (*data);
             int8_t loops = std::get<2> (*data);

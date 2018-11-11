@@ -221,6 +221,8 @@ void ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2
     }
 }
 
+uint8_t SURFACE_FREED_AND_IN_USE = 0;
+
 /**
  * Upload all surface to the GPU. (Create textures from them).
  * @param surfaces The surfaces to upload.
@@ -233,12 +235,14 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*
                 SDL_DestroyTexture(textures[it.first]);
                 textures[it.first] = nullptr;
             }
-            else if(it.second != nullptr){
+            else if(it.second != nullptr && it.second != static_cast<SDL_Surface*>(static_cast<void*>(&SURFACE_FREED_AND_IN_USE))){
                 if(textures[it.first] != nullptr){
                     SDL_DestroyTexture(textures[it.first]);
                     textures[it.first] = nullptr;
                 }
                 textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
+                SDL_FreeSurface(it.second);
+                it.second = static_cast<SDL_Surface*>(static_cast<void*>(&SURFACE_FREED_AND_IN_USE));
             }
         }
     }
@@ -298,22 +302,31 @@ void ST::renderer_sdl::cache_font(TTF_Font* Font, const std::string& font_and_si
  * Turns on vsync.
  */
 void ST::renderer_sdl::vsync_on(){
-	close();
-	vsync = true;
+    vsync = true;
+#ifdef _MSC_VER
+    close();
 	initialize_with_vsync(window, width, height, vsync);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
+#elif defined(linux)
+	SDL_GL_SetSwapInterval(-1);
+#endif
 }
 
 /**
  * Turns off vsync.
  */
 void ST::renderer_sdl::vsync_off(){
-	close();
-	vsync = false;
+
+    vsync = false;
+#ifdef _MSC_VER
+    close();
 	initialize_with_vsync(window, width, height, vsync);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
+#elif defined(linux)
+    SDL_GL_SetSwapInterval(0);
+#endif
 }
 
 //INLINED METHODS

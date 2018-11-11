@@ -18,5 +18,6 @@ else
 end
 
 if keyPressed("START") or keyPressed("ESCAPE") then
+    unloadLevel("main")
     startLevel("author_splash")
 end

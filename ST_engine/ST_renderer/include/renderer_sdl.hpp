@@ -20,6 +20,10 @@
  * This renderer is based entirely on the SDL2 renderer and uses it, along with some helper methods and
  * rendering techniques to draw textures, text and primitives to the screen.
  */
+
+extern uint8_t SURFACE_FREED_AND_IN_USE;
+
+
 namespace ST {
     namespace renderer_sdl {
 

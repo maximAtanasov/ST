@@ -58,6 +58,8 @@ function player:update()
     end
 
     if self:overObject(grass26) then
+        unloadLevel("level1")
+        loadLevel("levelCard")
         startLevel("levelCard")
     end
 end

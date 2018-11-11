@@ -6,6 +6,9 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
+
+loadLevel("level1")
+
 enableLighting(true)
 setLevelSize(3000, 3000)
 setGravity(0)
@@ -62,6 +65,7 @@ button_newGame:setClickKey(all_buttons_key)
 
 
 function button_newGame:onClick()
+    unloadLevel("main_menu")
     startLevel("level1")
 end
 

@@ -21,9 +21,7 @@ label = label:new(960-LABEL_OFFSET, 870, LABEL_TEXT, FONT, FONT_SIZE)
 setGravity(0)
 setBackground("splash.webp")
 setDarkness(254)
-loadLevel("level1") --preload level1
-loadLevel("main_menu")
-loadLevel("levelCard")
+loadLevel("author_splash")
 hideMouseCursor()
 splash = 255
 splashUp = 0

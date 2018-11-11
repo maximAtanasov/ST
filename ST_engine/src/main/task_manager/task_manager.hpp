@@ -29,7 +29,8 @@ class task_manager{
         std::vector<SDL_Thread*> task_threads{};
         SDL_atomic_t run_threads{};
         SDL_semaphore* work_sem{};
-        moodycamel::ConcurrentQueue<ST::task*> task_queue;
+        std::vector<moodycamel::ConcurrentQueue<ST::task*>> task_queues;
+        moodycamel::ConcurrentQueue<ST::task*> global_task_queue;
 
         static int task_thread(void* arg);
         void do_work(ST::task* work);

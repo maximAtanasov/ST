@@ -136,6 +136,7 @@ include_directories(asset_manager_test ../ST_engine/src/test)
 target_link_libraries(asset_manager_test
         ST_loaders
         ST_util
+        ST_renderer
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}

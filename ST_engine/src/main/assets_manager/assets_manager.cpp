@@ -10,6 +10,7 @@
 #include <ST_loaders/loaders.hpp>
 #include <console/log.hpp>
 #include <assets_manager/assets_manager.hpp>
+#include <renderer_sdl.hpp>
 
 /**
  * Initializes the asset_manager.
@@ -334,10 +335,12 @@ int8_t assets_manager::unload_asset(std::string path){
     std::string extention;
     extention = ST::get_file_extension(path);
     log(INFO, "Unloading " + path);
-    if(extention == "png"){
+    if(extention == "png" || extention == "webp"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
-        SDL_FreeSurface(all_assets.surfaces[string_hash]);
+        if(all_assets.surfaces[string_hash] != static_cast<SDL_Surface*>(static_cast<void*>(&SURFACE_FREED_AND_IN_USE))){
+            SDL_FreeSurface(all_assets.surfaces[string_hash]);
+        }
         all_assets.surfaces[string_hash] = nullptr;
         count[path]--;
     }else if(extention == "wav"){
