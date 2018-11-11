@@ -61,6 +61,7 @@ int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16
     SURFACE_FREED_AND_TEXTURE_IN_USE = SDL_CreateRGBSurface(0, 10, 10, 4, 0, 0, 0, 0);
 #endif
     font_cache::set_max(100);
+
     //initialize renderer
 	window = r_window;
 	width = r_width;
@@ -93,11 +94,14 @@ void ST::renderer_sdl::close(){
         }
     }
     for ( auto& it : textures){
-        if(it.second != nullptr){
+        if(it.second != nullptr ){
             SDL_DestroyTexture(textures[it.first]);
             it.second = nullptr;
         }
     }
+#ifdef linux
+    SDL_FreeSurface(SURFACE_FREED_AND_TEXTURE_IN_USE);
+#endif
     font_cache::clear();
     font_cache::close();
     SDL_DestroyRenderer(sdl_renderer);
@@ -225,8 +229,8 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*
                     textures[it.first] = nullptr;
                 }
                 textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
-                SDL_FreeSurface(it.second);
 #ifdef linux
+                SDL_FreeSurface(it.second);
                 it.second = SURFACE_FREED_AND_TEXTURE_IN_USE;
 #endif
             }
@@ -448,10 +452,7 @@ void ST::renderer_sdl::present() {
  * @param r_height Height
  */
 void ST::renderer_sdl::set_resolution(int16_t r_width, int16_t r_height) {
-    close();
     width = r_width;
     height = r_height;
-    initialize(window, width, height);
-    upload_surfaces(surfaces_pointer);
-    upload_fonts(fonts_pointer);
+    SDL_RenderSetLogicalSize(sdl_renderer, width, height);
 }

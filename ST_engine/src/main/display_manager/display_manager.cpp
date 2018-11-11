@@ -115,10 +115,9 @@ void display_manager::set_fullscreen(bool arg){
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
     }else{
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, 0);
 		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
     }
 }
 

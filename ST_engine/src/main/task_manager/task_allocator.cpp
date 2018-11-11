@@ -40,8 +40,8 @@ static task_allocator gTask_allocator{};
  * @param affinity Thread affinity for the task
  * @return A new task object
  */
-ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency, int affinity){
-    return gTask_allocator.allocate_task(function, arg, dependency, affinity);
+ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency){
+    return gTask_allocator.allocate_task(function, arg, dependency);
 }
 
 /**

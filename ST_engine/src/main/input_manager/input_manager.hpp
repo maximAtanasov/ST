@@ -101,7 +101,7 @@ inline void input_manager::update(){
 #ifdef _MSC_VER
 	input_manager::update_task(this);
 #else
-	gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr, -1));
+	gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr));
 #endif
 }
 

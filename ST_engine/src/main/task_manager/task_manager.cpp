@@ -11,8 +11,6 @@
 #include <console/log.hpp>
 #include <task_manager/task_allocator.hpp>
 
-static uint8_t thread_ids = 0;
-
 /**
  * The function each task thread runs.
  * @param arg A pointer to the task_manager.
@@ -21,13 +19,12 @@ static uint8_t thread_ids = 0;
 int task_manager::task_thread(void* arg){
     SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
 	auto self = static_cast<task_manager*>(arg);
-	uint8_t thread_id = thread_ids;
 	ST::task* work;
 	while(SDL_AtomicGet(&self->run_threads) == 1){
-        SDL_SemWait(self->work_sem);
-		if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
+	    SDL_SemWait(self->work_sem);
+        if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
             self->do_work(work);
-		}
+        }
 	}
     return 0;
 }
@@ -78,7 +75,6 @@ task_manager::task_manager(message_bus *msg_bus){
 
 	for (uint16_t i = 0; i < thread_num - 1; i++) {
 		task_threads.emplace_back(SDL_CreateThread(task_thread, "tsk_thr", this));
-        thread_ids++;
 	}
 	log(INFO, std::to_string(thread_num-1) + " task threads started.");
 }
@@ -137,9 +133,6 @@ task_id task_manager::start_task(ST::task* arg){
  */
 void task_manager::start_task_lockfree(ST::task* arg){
     arg->set_lock(nullptr);
-    if(arg->affinity != -1){
-        task_queues[arg->affinity].enqueue(arg);
-    }
     global_task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
 }

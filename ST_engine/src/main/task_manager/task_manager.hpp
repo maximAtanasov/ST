@@ -24,12 +24,11 @@ typedef SDL_semaphore* task_id;
 class task_manager{
 
     private:
-        int thread_num = 0;
+        uint8_t thread_num = 0;
         message_bus* gMessage_bus{};
         std::vector<SDL_Thread*> task_threads{};
         SDL_atomic_t run_threads{};
         SDL_semaphore* work_sem{};
-        std::vector<moodycamel::ConcurrentQueue<ST::task*>> task_queues;
         moodycamel::ConcurrentQueue<ST::task*> global_task_queue;
 
         static int task_thread(void* arg);

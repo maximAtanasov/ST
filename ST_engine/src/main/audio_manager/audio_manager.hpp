@@ -95,7 +95,7 @@ class audio_manager{
  * Starts the update_task() method using the task manager.
  */
 inline void audio_manager::update(){
-    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr, -1));
+    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr));
 }
 
 

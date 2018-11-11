@@ -172,12 +172,22 @@ void game_manager::load_level(const std::string& level_name){
  * @param level_name The name of the level to unload (this must the name of the folder).
  */
 void game_manager::unload_level(const std::string& level_name){
-    for(Uint32 i = 0; i < levels.size(); i++)
-        if(levels[i].get_name() == level_name){
+    for(Uint32 i = 0; i < levels.size(); i++) {
+        if (levels[i].get_name() == level_name) {
             levels[i].unload();
-            levels.erase(levels.begin()+i);
+            levels.erase(levels.begin() + i);
             break;
         }
+    }
+
+    //current level pointer must be reset, because apparently adding to the vector changes the pointer address
+    //(makes sense as it has to reallocate the whole thing)
+    for (auto &level : levels) {
+        if(level.get_name() == active_level){
+            current_level_pointer = &level;
+            break;
+        }
+    }
 }
 
 /**

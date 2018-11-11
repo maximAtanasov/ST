@@ -23,6 +23,8 @@ use("coin.lua")
 use("wolf.lua")
 use("torch.lua")
 
+loadLevel("levelCard")
+
 pause = 0
 
 stopAllSounds()

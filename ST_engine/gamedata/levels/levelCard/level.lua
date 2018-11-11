@@ -78,9 +78,3 @@ all_buttons_key = "MOUSE1"
 
 ----@Audio
 all_buttons_sound = "buttonSelected.wav"
-
-function reload()
-    unloadLevel("level1")
-    loadLevel("level1")
-    startLevel("level1")
-end

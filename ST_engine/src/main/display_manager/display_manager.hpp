@@ -64,7 +64,7 @@ class display_manager{
  * Starts an the update_task() method using the task manager.
  */
 inline void display_manager::update(){
-    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr, -1));
+    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr));
 }
 
 #endif

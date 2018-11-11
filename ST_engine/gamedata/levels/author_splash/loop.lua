@@ -21,6 +21,7 @@ elseif splashUp < 255 then
     splashUp = splashUp + 1
     setDarkness(splashUp)
 else
+    unloadLevel("author_splash")
     startLevel("main_menu")
 end
 
