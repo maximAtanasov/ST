@@ -186,11 +186,7 @@ int8_t assets_manager::load_asset(std::string path){
     if(extention == "png" || extention == "webp"){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
-            for(Uint32 i = 0; i < path.size(); i++) {
-                if (path.at(i) == '/') {
-                    path.erase(0, i+1);
-                }
-            }
+            path = trim_path(path);
             size_t string_hash = hash_f(path);
             all_assets.surfaces[string_hash] = temp1;
             count[path]++;

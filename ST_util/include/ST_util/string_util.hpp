@@ -13,5 +13,6 @@
 #include <string>
 
 bool replace_string(std::string& str, const std::string& from, const std::string& to);
+std::string trim_path(std::string path);
 
 #endif //SLAVICTALES_STRING_UTIL_HPP

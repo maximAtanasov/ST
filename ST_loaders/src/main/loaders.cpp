@@ -75,7 +75,7 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
     for (const std::string& filename : args) {
         SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
         if (input != nullptr) {
-            std::string h_filename = "filename:" + filename + "\n";
+            std::string h_filename = "filename:" + trim_path(filename) + "\n";
             std::string ext = get_file_extension(filename);
             if(ext == "png" || "webp") {
                 surfaces_names.emplace_back(h_filename);
@@ -343,57 +343,194 @@ int8_t ST::unpack_binary_to_disk(const std::string& path){
 }
 
 int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string> args_){
-    SDL_RWops *input = SDL_RWFromFile(binary_name.c_str(), "r+");
-    std::string new_header;
-    if (input != nullptr) {
-        auto buffer = static_cast<char*>(malloc((size_t) input->size(input)));
-        size_t read = input->read(input, buffer, 1, (size_t) input->size(input));
+
+    SDL_RWops *output = SDL_RWFromFile(binary_name.c_str(), "r+");
+
+    std::vector<std::string> args;
+
+    //ignore duplicate file names
+    for (auto arg : args_) {
+        if(std::find(args.begin(), args.end(), arg) == args.end()){
+            args.emplace_back(arg);
+        }
+    }
+
+    //Read in the old header first
+    std::vector<std::string> old_header_file_names;
+    std::vector<size_t> old_header_sizes;
+    uint64_t old_header_total_num = 0;
+    uint64_t seek = 0;
+
+    if (output != nullptr) {
+        auto buffer = static_cast<char*>(malloc(static_cast<size_t>(output->size(output))));
+        size_t read = output->read(output, buffer, 1, (size_t) output->size(output));
         if (read > 0) {
             auto file = new std::string(buffer);
-            std::string header;
-
             //read filename
             std::string temp;
-            uint64_t total_num = 0;
             uint64_t counter = 0;
             uint64_t pointer = 0;
             for (char i : *file) {
                 pointer++;
                 temp += i;
                 if (i == '\n') {
-                    if(temp.find("filename:") != std::string::npos) {
-                        counter++;
-                    }else if (temp.find("total:") != std::string::npos) {
+                    if (temp.find("filename:") != std::string::npos) {
+                        temp.pop_back();
+                        replace_string(temp, "filename:", "");
+                        old_header_file_names.emplace_back(temp);
+                        temp.clear();
+                    } else if (temp.find("total:") != std::string::npos) {
                         temp.pop_back();
                         replace_string(temp, "total:", "");
                         std::stringstream s_stream(temp);
-                        s_stream >> total_num;
+                        s_stream >> old_header_total_num;
                         temp.clear();
+                    } else if (temp.find("size:") != std::string::npos) {
+                        temp.pop_back();
+                        replace_string(temp, "size:", "");
+                        std::stringstream s_stream(temp);
+                        int size;
+                        s_stream >> size;
+                        old_header_sizes.emplace_back(size);
+                        temp.clear();
+                        counter++;
                     }
-                    if (counter == total_num) {
-                        header.append(1, i);
+                    if (counter == old_header_total_num) {
                         break;
                     }
                 }
-                header.append(1, i);
             }
             free(buffer);
-            input->seek(input, pointer, RW_SEEK_SET);
 
-            std::string header_no_total;
-            bool write = false;
-            for(char k : header){
-                if(k == '\n'){
-                    write = true;
-                }
-                if(write){
-                    header_no_total += k;
-                }
+            output->seek(output, pointer, RW_SEEK_SET);
+            seek = pointer;
+        }
+    }else{
+        //If the file could not be read
+        return -1;
+    }
+
+    //Check for duplicate file names inside the existing library, stop execution if any are found
+    for(const std::string& name : args){
+        for(const std::string& existing_name : old_header_file_names){
+            if(trim_path(name) == existing_name){
+                output->close(output);
+                return -2;
             }
-            new_header = "total:" + std::to_string((total_num + args_.size())) + header_no_total;
-            printf("%s\n", new_header.c_str());
         }
     }
-    //TODO: IMPLEMENT
+
+
+    //Save the old binary data
+    size_t old_binary_data_size = output->size(output) - seek;
+    auto buffer = static_cast<char*>(malloc(static_cast<size_t>(old_binary_data_size)));
+    output->read(output, buffer, 1, old_binary_data_size);
+
+    //Read in new files
+
+    std::vector<std::string> surfaces_names;
+    std::vector<char*> surfaces;
+    std::vector<size_t> surfaces_sizes;
+
+    std::vector<std::string> chunks_names;
+    std::vector<char*> chunks;
+    std::vector<size_t> chunk_sizes;
+
+    std::vector<std::string> music_names;
+    std::vector<char*> music;
+    std::vector<size_t> music_sizes;
+
+    for (const std::string& filename : args) {
+        SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
+        if (input != nullptr) {
+            std::string h_filename = "filename:" + trim_path(filename) + "\n";
+            std::string ext = get_file_extension(filename);
+            if(ext == "png" || "webp") {
+                surfaces_names.emplace_back(h_filename);
+                auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
+                input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
+                surfaces.emplace_back(temp);
+                surfaces_sizes.emplace_back(static_cast<size_t>(input->size(input)));
+            }else if(ext == "wav") {
+                chunks_names.emplace_back(h_filename);
+                auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
+                input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
+                chunks.emplace_back(temp);
+                chunk_sizes.emplace_back(static_cast<size_t>(input->size(input)));
+            }else if(ext == "ogg") {
+                music_names.emplace_back(h_filename);
+                auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
+                input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
+                music.emplace_back(temp);
+                music_sizes.emplace_back(static_cast<size_t>(input->size(input)));
+            }
+            input->close(input);
+        }
+    }
+
+    //Package into a single file
+
+    //write our header==================================================
+
+    //Delete old binary and create a new one
+    output->close(output);
+    output = SDL_RWFromFile(binary_name.c_str(), "w+");
+
+    //Write the new total
+    uint64_t total_size = surfaces_names.size() + music_names.size() + chunks_names.size();
+    std::string total_num = "total:" + std::to_string(total_size+old_header_total_num) + "\n";
+    output->write(output, total_num.c_str(), 1, total_num.size());
+
+    //The old data gets written first
+    for(uint64_t i = 0; i < old_header_file_names.size(); i++) {
+        std::string h_filename = "filename:" + old_header_file_names[i] + "\n";
+        output->write(output, h_filename.c_str(), 1, h_filename.size());
+        std::string size = "size:" + std::to_string(old_header_sizes[i]) + "\n";
+        output->write(output, size.c_str(), 1, size.size());
+    }
+
+    //And now the new files =============================================
+
+    //Names and sizes for surfaces, chunks and music
+    for(uint64_t i = 0; i < surfaces_sizes.size(); i++) {
+        output->write(output, surfaces_names[i].c_str(), 1, surfaces_names[i].size());
+        std::string size = "size:" + std::to_string(surfaces_sizes[i]) + "\n";
+        output->write(output, size.c_str(), 1, size.size());
+    }
+
+    for(uint64_t i = 0; i < chunk_sizes.size(); i++) {
+        output->write(output, chunks_names[i].c_str(), 1, chunks_names[i].size());
+        std::string size = "size:" + std::to_string(chunk_sizes[i]) + "\n";
+        output->write(output, size.c_str(), 1, size.size());
+    }
+
+    for(uint64_t i = 0; i < music_sizes.size(); i++) {
+        output->write(output, music_names[i].c_str(), 1, music_names[i].size());
+        std::string size = "size:" + std::to_string(music_sizes[i]) + "\n";
+        output->write(output, size.c_str(), 1, size.size());
+    }
+
+    //Write the data===
+
+    //Write the old binary data
+    output->write(output, buffer, 1, old_binary_data_size);
+
+    // Write the new binary data
+
+    //Write image data
+    for(uint64_t i = 0; i < surfaces.size(); i++) {
+        output->write(output, surfaces[i], 1, surfaces_sizes[i]);
+    }
+
+    //Write chunks data
+    for(uint64_t i = 0; i < chunks.size(); i++) {
+        output->write(output, chunks[i], 1, chunk_sizes[i]);
+    }
+
+    //Write music data
+    for(uint64_t i = 0; i < music.size(); i++) {
+        output->write(output, music[i], 1, music_sizes[i]);
+    }
+    output->close(output);
     return 0;
 }

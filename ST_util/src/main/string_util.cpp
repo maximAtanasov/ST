@@ -16,3 +16,12 @@ bool replace_string(std::string& str, const std::string& from, const std::string
     str.replace(start_pos, from.length(), to);
     return true;
 }
+
+std::string trim_path(std::string path){
+    for(uint32_t i = 0; i < path.size(); i++) {
+        if (path.at(i) == '/') {
+            path.erase(0, i+1);
+        }
+    }
+    return path;
+}
