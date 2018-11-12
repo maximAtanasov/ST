@@ -86,6 +86,25 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     ASSERT_EQ(test_value, 12);
 }
 
+TEST_F(task_manager_tests, test_do_work_while_waiting){
+    //Set up
+    task_manager test_subject(new message_bus());
+    uint8_t test_value1 = 10;
+    uint8_t test_value2 = 20;
+
+    //Test
+    uint64_t start = SDL_GetTicks();
+    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
+    test_subject.start_task_lockfree(make_task(test_task_function2, &test_value2, nullptr));
+
+    test_subject.wait_for_task(id1);
+    uint64_t end = SDL_GetTicks();
+
+    ASSERT_NEAR(end-start, 2100, 100);
+    ASSERT_EQ(test_value1, 11);
+    ASSERT_EQ(test_value2, 21);
+}
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
