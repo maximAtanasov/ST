@@ -44,9 +44,9 @@ std::string ST::get_file_extension(const std::string& filename){
  * @param binary The name of the binary that is going to be created.
  * @param args The filenames of the assets to read from.
  */
-void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args_){
+int8_t ST::pack_to_binary(const std::string& binary, std::vector<std::string> args_){
     if(fopen(binary.c_str(), "r+") != nullptr){
-        ST::add_to_binary(binary, args_);
+        return ST::add_to_binary(binary, args_);
     }
     SDL_RWops *output = SDL_RWFromFile(binary.c_str(), "a+");
 
@@ -145,6 +145,7 @@ void ST::pack_to_binary(const std::string& binary, std::vector<std::string> args
         output->write(output, music[i], 1, music_sizes[i]);
     }
     output->close(output);
+    return 0;
 }
 
 /**
@@ -342,6 +343,13 @@ int8_t ST::unpack_binary_to_disk(const std::string& path){
     return 0;
 }
 
+
+/**
+ * 
+ * @param binary_name The name of the already existing binary.
+ * @param args_ The new files to add to it.
+ * @return -1 if the existing binary is not found. -2 if file names are clashing with the ones in the existing library. 0 on success.
+ */
 int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string> args_){
 
     SDL_RWops *output = SDL_RWFromFile(binary_name.c_str(), "r+");

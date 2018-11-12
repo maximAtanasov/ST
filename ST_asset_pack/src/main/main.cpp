@@ -49,7 +49,12 @@ int asset_pack_main(int argc, char *argv[]) {
          std::string binary_name = args.at(0);
          args.erase(args.begin(), args.begin() + 1);
          #ifndef TESTING
-         ST::pack_to_binary(binary_name, args);
+         int8_t return_code = ST::pack_to_binary(binary_name, args);
+         if(return_code == -1){
+            fprintf(stderr, "Error packing files to existing binary, maybe it is corrupted!");
+         }else if(return_code == -2){
+             fprintf(stderr, "Error packing files to existing binary, it already cointains a file named the same as one of the ones you are adding!");
+         }
          #endif
          fprintf(stdout, "Binary generated!\n");
      } else if (pack_arg == "-u") { //Or unpack a binary to disk

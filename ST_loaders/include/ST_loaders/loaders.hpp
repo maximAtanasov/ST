@@ -31,7 +31,7 @@ namespace ST {
     };
 
     ST::assets_named* unpack_binary(const std::string &path);
-    void pack_to_binary(const std::string &path, std::vector<std::string> args);
+    int8_t pack_to_binary(const std::string &path, std::vector<std::string> args);
     int8_t unpack_binary_to_disk(const std::string &path);
     std::string get_file_extension(const std::string &filename);
     int8_t add_to_binary(const std::string &binary_name, std::vector<std::string> args_);

@@ -309,6 +309,34 @@ TEST(loaders_tests, test_exit_when_duplicate_name_in_different_directory_found_i
     ASSERT_EQ(0, chdir("../"));
 }
 
+TEST(loaders_tests, test_pack_to_binary_calls_add_to_binary_on_existing_file) {
+
+    //Set up========================================
+
+    initialize_SDL();
+    ASSERT_EQ(0, chdir("unpack_test/"));
+    std::vector<std::string> filenames = {"../test_image_2.png", "test_image_5.png"};
+
+    std::string input_binary_name = "test_binary_complex.bin";
+    std::string result_binary_name = "test_binary_complex_copy.bin";
+
+    //Create a copy of the test binary
+    std::ifstream  src(input_binary_name, std::ios::binary);
+    std::ofstream  dst(result_binary_name,   std::ios::binary);
+    dst << src.rdbuf();
+
+    //Test==========================================
+
+    //We test this by checking for clashing names with the existing binary.
+    //If add_to_binary was called, -2 should be returned.
+    ASSERT_EQ(-2, ST::pack_to_binary(result_binary_name, filenames));
+
+    //Tear down
+    close_SDL();
+    remove(result_binary_name.c_str());
+    ASSERT_EQ(0, chdir("../"));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
