@@ -379,6 +379,31 @@ target_link_libraries(lua_backend_test
 include_directories(lua_backend_test ../ST_engine/src
         ../ST_engine/src/test ../ST_loaders/include)
 
+add_executable(task_manager_test
+        src/main/message_bus/message_types.hpp
+        src/main/message_bus/message_allocator.cpp
+        src/main/message_bus/message_allocator.hpp
+        src/main/message_bus/message_bus.cpp
+        src/main/message_bus/message_bus.hpp
+        src/main/message_bus/subscriber.cpp
+        src/main/message_bus/subscriber.hpp
+        src/main/task_manager/task_manager.cpp
+        src/main/task_manager/task_manager.hpp
+        src/main/task_manager/task.hpp
+        src/main/task_manager/task_allocator.cpp
+        src/main/task_manager/task_allocator.hpp
+        src/test/task_manager/task_manager_tests.cpp
+        src/main/message_bus/message.hpp
+        src/main/console/console_log.cpp
+        src/main/console/console_log.hpp)
+
+target_link_libraries(task_manager_test
+        ST_util
+        gtest
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
 
 set(ALL_TESTS
         message_allocator_test
@@ -391,7 +416,8 @@ set(ALL_TESTS
         asset_manager_test
         entity_test
         level_test
-        lua_backend_test)
+        lua_backend_test
+        task_manager_test)
 
 set(RUN_ON_BUILD_TESTS
         message_allocator_test
@@ -402,7 +428,8 @@ set(RUN_ON_BUILD_TESTS
         asset_manager_test
         entity_test
         level_test
-        lua_backend_test)
+        lua_backend_test
+        task_manager_test)
 
 gtest_add_tests(TARGET ${ALL_TESTS})
 add_dependencies(ST_engine ${ALL_TESTS})
