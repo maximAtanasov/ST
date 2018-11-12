@@ -45,10 +45,6 @@ static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache
 
 static bool vsync = false;
 
-#ifdef linux
-SDL_Surface* ST::renderer_sdl::SURFACE_FREED_AND_TEXTURE_IN_USE;
-#endif
-
 /**
  * Initializes the renderer.
  * @param window The window to bind this renderer to.
@@ -57,9 +53,6 @@ SDL_Surface* ST::renderer_sdl::SURFACE_FREED_AND_TEXTURE_IN_USE;
  * @return Always 0.
  */
 int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16_t r_height){
-#ifdef linux
-    SURFACE_FREED_AND_TEXTURE_IN_USE = SDL_CreateRGBSurface(0, 10, 10, 4, 0, 0, 0, 0);
-#endif
     font_cache::set_max(100);
 
     //initialize renderer
@@ -99,9 +92,6 @@ void ST::renderer_sdl::close(){
             it.second = nullptr;
         }
     }
-#ifdef linux
-    SDL_FreeSurface(SURFACE_FREED_AND_TEXTURE_IN_USE);
-#endif
     font_cache::clear();
     font_cache::close();
     SDL_DestroyRenderer(sdl_renderer);
@@ -219,20 +209,12 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*
                 SDL_DestroyTexture(textures[it.first]);
                 textures[it.first] = nullptr;
             }
-#ifdef linux
-            else if(it.second != nullptr && it.second != SURFACE_FREED_AND_TEXTURE_IN_USE){
-#else
             else if(it.second != nullptr){
-#endif
                     if(textures[it.first] != nullptr){
                     SDL_DestroyTexture(textures[it.first]);
                     textures[it.first] = nullptr;
                 }
                 textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
-#ifdef linux
-                SDL_FreeSurface(it.second);
-                it.second = SURFACE_FREED_AND_TEXTURE_IN_USE;
-#endif
             }
         }
     }
@@ -293,14 +275,10 @@ void ST::renderer_sdl::cache_font(TTF_Font* Font, const std::string& font_and_si
  */
 void ST::renderer_sdl::vsync_on(){
     vsync = true;
-#ifndef linux
     close();
 	initialize(window, width, height);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
-#else
-	SDL_GL_SetSwapInterval(-1);
-#endif
 }
 
 /**
@@ -308,14 +286,10 @@ void ST::renderer_sdl::vsync_on(){
  */
 void ST::renderer_sdl::vsync_off(){
     vsync = false;
-#ifndef linux
     close();
 	initialize(window, width, height);
 	upload_surfaces(surfaces_pointer);
 	upload_fonts(fonts_pointer);
-#else
-    SDL_GL_SetSwapInterval(0);
-#endif
 }
 
 //INLINED METHODS
