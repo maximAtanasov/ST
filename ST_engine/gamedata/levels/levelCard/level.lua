@@ -7,6 +7,7 @@
 
 setWindowResolution(432, 768)
 setFullscreen(false)
+setFullscreen(false)
 setInternalResolution(1080, 1920)
 showMouseCursor()
 stopMusic();

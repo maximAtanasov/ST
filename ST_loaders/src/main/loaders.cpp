@@ -45,7 +45,9 @@ std::string ST::get_file_extension(const std::string& filename){
  * @param args The filenames of the assets to read from.
  */
 int8_t ST::pack_to_binary(const std::string& binary, std::vector<std::string> args_){
-    if(fopen(binary.c_str(), "r+") != nullptr){
+    FILE* file = fopen(binary.c_str(), "r+");
+    if(file != nullptr){
+        fclose(file);
         return ST::add_to_binary(binary, args_);
     }
     SDL_RWops *output = SDL_RWFromFile(binary.c_str(), "a+");
@@ -415,6 +417,7 @@ int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string
         }
     }else{
         //If the file could not be read
+        printf("HAHAA");
         return -1;
     }
 

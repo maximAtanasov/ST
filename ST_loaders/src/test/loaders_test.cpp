@@ -12,6 +12,7 @@
 #include <ST_util/test_util.hpp>
 #include <fstream>
 
+
 #ifdef _MSC_VER
 #define chdir _chdir
 #endif
@@ -87,11 +88,11 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     ASSERT_TRUE(IMG_Load("test_image_3.webp"));
 
     //Tear Down
+    remove("test_music_1.ogg");
+    remove("test_music_2.ogg");
     remove("test_image_1.png");
     remove("test_image_2.png");
     remove("test_image_3.webp");
-    remove("test_music_1.ogg");
-    remove("test_music_2.ogg");
     remove("test_sound_1.wav");
     remove("test_sound_2.wav");
     close_SDL();
@@ -155,20 +156,18 @@ TEST(loaders_tests, test_can_add_to_existing_binary){
     //Set up========================================
 
     initialize_SDL();
-    ASSERT_EQ(0, chdir("unpack_test/"));
+    ASSERT_EQ(0, chdir("add_to_binary_test/"));
     std::vector<std::string> filenames = {"test_image_4.png", "test_image_5.png"};
 
-    std::string input_binary_name = "test_binary_complex.bin";
-    std::string result_binary_name = "test_binary_complex_copy.bin";
+    std::string input_binary_name = "test_binary.bin";
+    std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name,   std::ios::binary);
-    dst << src.rdbuf();
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
-    ST::add_to_binary(result_binary_name, filenames);
+    ASSERT_EQ(0, ST::add_to_binary(result_binary_name, filenames));
 
     //Check that the filesize is about right
     long expected_size = get_file_size(filenames.at(0)) + get_file_size(filenames.at(1))
@@ -216,16 +215,14 @@ TEST(loaders_tests, test_exit_when_duplicate_name_found_in_exisitng_library) {
     //Set up========================================
 
     initialize_SDL();
-    ASSERT_EQ(0, chdir("unpack_test/"));
+    ASSERT_EQ(0, chdir("add_to_binary_test/"));
     std::vector<std::string> filenames = {"test_image_2.png", "test_image_5.png"};
 
-    std::string input_binary_name = "test_binary_complex.bin";
-    std::string result_binary_name = "test_binary_complex_copy.bin";
+    std::string input_binary_name = "test_binary.bin";
+    std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name,   std::ios::binary);
-    dst << src.rdbuf();
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
@@ -265,16 +262,14 @@ TEST(loaders_tests, test_exit_when_duplicate_name_in_different_directory_found_i
     //Set up========================================
 
     initialize_SDL();
-    ASSERT_EQ(0, chdir("unpack_test/"));
+    ASSERT_EQ(0, chdir("add_to_binary_test/"));
     std::vector<std::string> filenames = {"../test_image_2.png", "test_image_5.png"};
 
-    std::string input_binary_name = "test_binary_complex.bin";
-    std::string result_binary_name = "test_binary_complex_copy.bin";
+    std::string input_binary_name = "test_binary.bin";
+    std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name,   std::ios::binary);
-    dst << src.rdbuf();
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
@@ -314,16 +309,14 @@ TEST(loaders_tests, test_pack_to_binary_calls_add_to_binary_on_existing_file) {
     //Set up========================================
 
     initialize_SDL();
-    ASSERT_EQ(0, chdir("unpack_test/"));
+    ASSERT_EQ(0, chdir("add_to_binary_test/"));
     std::vector<std::string> filenames = {"../test_image_2.png", "test_image_5.png"};
 
-    std::string input_binary_name = "test_binary_complex.bin";
-    std::string result_binary_name = "test_binary_complex_copy.bin";
+    std::string input_binary_name = "test_binary.bin";
+    std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name,   std::ios::binary);
-    dst << src.rdbuf();
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
