@@ -108,7 +108,9 @@ class game_manager{
     public:
         bool vsync_flag = true;
         bool fullscreen_status = false;
-        uint8_t volume_level = 0;
+        uint8_t music_volume_level = 100;
+        uint8_t sounds_volume_level = 100;
+        bool audio_enabled = true;
 
         game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         ~game_manager();
@@ -122,6 +124,7 @@ class game_manager{
         bool game_is_running() const;
         ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
+
 };
 
 //INLINED METHODS

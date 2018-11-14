@@ -111,9 +111,13 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "playSound", playSoundLua);
     lua_register(L, "playMusic", playMusicLua);
     lua_register(L, "stopMusic", stopMusicLua);
-    lua_register(L, "toggleAudio", toggleAudioLua);
-    lua_register(L, "getVolume", getVolumeLua);
-    lua_register(L, "setVolume", setVolumeLua);
+    lua_register(L, "pauseMusic", pauseMusicLua);
+    lua_register(L, "setAudioEnabled", setAudioEnabledLua);
+    lua_register(L, "isAudioEnabled", isAudioEnabledLua);
+    lua_register(L, "getSoundsVolume", getSoundsVolumeLua);
+    lua_register(L, "getMusicVolume", getMusicVolumeLua);
+    lua_register(L, "setSoundsVolume", setSoundsVolumeLua);
+    lua_register(L, "setMusicVolume", setMusicVolumeLua);
     lua_register(L, "stopAllSounds", stopAllSoundsLua);
 
     //lights
@@ -1493,12 +1497,13 @@ extern "C" int keyReleasedLua(lua_State* L){
 //AUDIO
 
 /**
- * Toggles the audio. Sends a <b>TOGGLE_AUDIO</b> message.
+ * Toggles the audio. Sends a <b>SET_AUDIO_ENABLED</b> message.
  * See the Lua docs for more information.
  * @return Always 0.
  */
-extern "C" int toggleAudioLua(lua_State*){
-    message* msg_temp = make_msg(TOGGLE_AUDIO, nullptr);
+extern "C" int setAudioEnabledLua(lua_State* L){
+    auto arg = static_cast<bool>(lua_toboolean(L, 1));
+    message* msg_temp = make_msg(SET_AUDIO_ENABLED, make_data<>(arg));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1557,26 +1562,66 @@ extern "C" int stopAllSoundsLua(lua_State*){
     return 0;
 }
 
-/**
- * Gets the current audio volume.
- * See the Lua docs for more information.
- * @param L The global Lua state.
- * @return Always 1.
- */
-extern "C" int getVolumeLua(lua_State* L){
-    lua_pushnumber(L, gGame_managerLua->volume_level);
+extern "C" int isAudioEnabledLua(lua_State* L){
+    lua_pushboolean(L, gGame_managerLua->audio_enabled);
     return 1;
 }
 
+
 /**
- * Sets the current audio volume.
+ * Sets the current music volume.
  * See the Lua docs for more information.
  * @param L The global Lua state.
  * @return Always 0.
  */
-extern "C" int setVolumeLua(lua_State* L){
+extern "C" int setMusicVolumeLua(lua_State* L){
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_VOLUME, make_data<uint8_t>(arg)));
+    gMessage_busLua->send_msg(make_msg(SET_MUSIC_VOLUME, make_data<uint8_t>(arg)));
+    return 0;
+}
+
+/**
+ * Sets the current music volume.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
+extern "C" int setSoundsVolumeLua(lua_State* L){
+    auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
+    gMessage_busLua->send_msg(make_msg(SET_SOUNDS_VOLUME, make_data<uint8_t>(arg)));
+    return 0;
+}
+
+/**
+ * Gets the current sounds volume.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
+extern "C" int getSoundsVolumeLua(lua_State* L){
+    lua_pushnumber(L, gGame_managerLua->sounds_volume_level);
+    return 1;
+}
+
+/**
+ * Gets the current music volume.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 1.
+ */
+extern "C" int getMusicVolumeLua(lua_State* L){
+    lua_pushnumber(L, gGame_managerLua->music_volume_level);
+    return 1;
+}
+
+/**
+ * Pauses the music. Sends a <b>PAUSE_MUSIC</b> message.
+ * See the Lua docs for more information.
+ * @return Always 0.
+ */
+extern "C" int pauseMusicLua(lua_State*){
+    message* msg_temp = make_msg(PAUSE_MUSIC, nullptr);
+    gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
 

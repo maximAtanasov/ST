@@ -41,9 +41,9 @@
  *
  * Message must contain: a <b>nullptr</b>.<br>
  *
- * <b>TOGGLE_AUDIO</b> - Toggles the audio on or off.
+ * <b>SET_AUDIO_ENABLED</b> - Toggles the audio on or off.
  *
- * Message must contain: a <b>nullptr</b>.<br>
+ * Message must contain: a pointer to a <b>bool</b>.<br>
  *
  * <b>ASSETS</b> - Updates the internal pointer to the assets. This messages is recieved from the asset manager
  * whenever new assets are loaded. <br>
@@ -59,7 +59,12 @@ class audio_manager{
     friend class audio_manager_test;
     private:
 
-        int volume = MIX_MAX_VOLUME;
+        uint8_t chunk_volume = MIX_MAX_VOLUME;
+        uint8_t music_volume = MIX_MAX_VOLUME;
+        bool muted = false;
+        //ratio: MIX_MAX_VOLUME/volume
+        float chunk_playback_volume_ratio;
+        float music_playback_volume_ratio;
 
         ///subscriber object to receive messages
         subscriber msg_sub{};
@@ -79,8 +84,10 @@ class audio_manager{
         void mute();
         void unmute();
         void stop_music();
+        void pause_music();
         void stop_channels();
-        void set_volume(uint8_t arg);
+        void set_chunk_volume(uint8_t arg);
+        void set_music_volume(uint8_t arg);
         static void update_task(void* arg);
 
     public:
@@ -100,12 +107,27 @@ inline void audio_manager::update(){
 
 
 /**
- * Sets the current playback volume.
+ * Sets the current playback volume for chunks.
  * @param arg the volume level - valid from 0 to 128.
  */
-inline void audio_manager::set_volume(uint8_t arg) {
-    volume = arg;
-    unmute();
+inline void audio_manager::set_chunk_volume(uint8_t arg) {
+    chunk_volume = arg;
+    chunk_playback_volume_ratio = static_cast<float>(MIX_MAX_VOLUME)/chunk_volume;
+    if(!muted){
+        Mix_Volume(-1, chunk_volume);
+    }
+}
+
+/**
+ * Sets the current playback volume for music.
+ * @param arg the volume level - valid from 0 to 128.
+ */
+inline void audio_manager::set_music_volume(uint8_t arg) {
+    music_volume = arg;
+    music_playback_volume_ratio = static_cast<float>(MIX_MAX_VOLUME)/music_volume;
+    if(!muted){
+        Mix_VolumeMusic(music_volume);
+    }
 }
 
 /**
@@ -114,14 +136,16 @@ inline void audio_manager::set_volume(uint8_t arg) {
 inline void audio_manager::mute(){
     Mix_Volume(-1, 0);
     Mix_VolumeMusic(0);
+    muted = true;
 }
 
 /**
  * Unmutes all audio channels.
  */
 inline void audio_manager::unmute(){
-    Mix_Volume(-1, volume);
-    Mix_VolumeMusic(volume);
+    Mix_Volume(-1, chunk_volume);
+    Mix_VolumeMusic(music_volume);
+    muted = false;
 }
 
 /**
@@ -132,8 +156,8 @@ inline void audio_manager::unmute(){
  */
 inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
     Mix_Chunk* data = assets_ptr->chunks[arg];
-    if(data != nullptr){
-        Mix_VolumeChunk(data, volume);
+    if(data != nullptr && !muted){
+        Mix_VolumeChunk(data, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
         if(Mix_PlayChannel( -1, data, loops ) == -1){
             log(ERROR, "Mix_PlayChannel Error " + std::string(Mix_GetError()));
         }
@@ -148,12 +172,12 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
  */
 inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
     Mix_Music* data = assets_ptr->music[arg];
-    if(data != nullptr){
-        Mix_VolumeMusic(volume);
+    if(data != nullptr && !muted){
+        Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         if(Mix_PlayMusic(data, loops) == -1){
             log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
         }
-        Mix_VolumeMusic(this->volume);
+        Mix_VolumeMusic(this->music_volume);
     }
 }
 
@@ -161,6 +185,13 @@ inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) 
  * Stop the music that is currently playing.
  */
 inline void audio_manager::stop_music(){
+    Mix_HaltMusic();
+}
+
+/**
+ * Stop the music that is currently playing.
+ */
+inline void audio_manager::pause_music(){
     Mix_PauseMusic();
 }
 

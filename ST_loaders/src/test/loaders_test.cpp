@@ -31,7 +31,7 @@ TEST(loaders_tests, test_get_file_extension){
     EXPECT_EQ("webp", ST::get_file_extension(test_webp));
     EXPECT_EQ("bin", ST::get_file_extension(test_bin));
     EXPECT_EQ("unknown", ST::get_file_extension("no_extension"));
- }
+}
 
 TEST(loaders_tests, test_get_file_extension_unknown){
     std::string test_wav = "soundwav";

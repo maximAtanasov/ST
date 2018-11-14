@@ -38,18 +38,20 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
-    Mix_VolumeMusic(MIX_MAX_VOLUME);
+    Mix_Volume(-1, chunk_volume);
+    Mix_VolumeMusic(music_volume);
     Mix_AllocateChannels(16);
 
     //subscribe to messages
     gMessage_bus->subscribe(PLAY_SOUND, &msg_sub);
     gMessage_bus->subscribe(PLAY_MUSIC, &msg_sub);
     gMessage_bus->subscribe(STOP_MUSIC, &msg_sub);
-    gMessage_bus->subscribe(TOGGLE_AUDIO, &msg_sub);
+    gMessage_bus->subscribe(SET_AUDIO_ENABLED, &msg_sub);
     gMessage_bus->subscribe(ASSETS, &msg_sub);
 	gMessage_bus->subscribe(STOP_ALL_SOUNDS, &msg_sub);
-    gMessage_bus->subscribe(SET_VOLUME, &msg_sub);
-    volume = MIX_MAX_VOLUME;
+    gMessage_bus->subscribe(SET_MUSIC_VOLUME, &msg_sub);
+    gMessage_bus->subscribe(SET_SOUNDS_VOLUME, &msg_sub);
+    gMessage_bus->subscribe(PAUSE_MUSIC, &msg_sub);
 }
 
 /**
@@ -77,31 +79,43 @@ void audio_manager::handle_messages(){
             stop_music();
             log(SUCCESS, "Music stopped");
         }
+        else if(temp->msg_name == PAUSE_MUSIC){
+            stop_music();
+            log(SUCCESS, "Music stopped");
+        }
         else if(temp->msg_name == STOP_ALL_SOUNDS){
 			stop_channels();
             log(SUCCESS, "Sounds stopped");
         }
-        else if(temp->msg_name == TOGGLE_AUDIO){
-            if(volume > 0){
+        else if(temp->msg_name == SET_AUDIO_ENABLED){
+            auto arg = static_cast<bool*>(temp->get_data());
+            if(!*arg){
                 log(SUCCESS, "Audio OFF");
                 mute();
-                 set_volume(0);
             }
             else{
-                set_volume(MIX_MAX_VOLUME);
                 unmute();
                 log(SUCCESS, "Audio ON");
             }
-            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data(volume)));
+            gMessage_bus->send_msg(make_msg(AUDIO_ENABLED, make_data(*arg)));
         }
         else if(temp->msg_name == ASSETS){
             auto temp_ptr = static_cast<ST::assets**>(temp->get_data());
             assets_ptr = *temp_ptr;
         }
-        else if(temp->msg_name == SET_VOLUME){
+        else if(temp->msg_name == SET_SOUNDS_VOLUME){
             auto arg = static_cast<uint8_t*>(temp->get_data());
-            set_volume(*arg);
-            gMessage_bus->send_msg(make_msg(VOLUME_LEVEL, make_data(volume)));
+            set_chunk_volume(*arg);
+            if(!muted) {
+                gMessage_bus->send_msg(make_msg(SOUNDS_VOLUME_LEVEL, make_data(chunk_volume)));
+            }
+        }
+        else if(temp->msg_name == SET_MUSIC_VOLUME){
+            auto arg = static_cast<uint8_t*>(temp->get_data());
+            set_music_volume(*arg);
+            if(!muted) {
+                gMessage_bus->send_msg(make_msg(MUSIC_VOLUME_LEVEL, make_data(music_volume)));
+            }
         }
         destroy_msg(temp);
         temp = msg_sub.get_next_message();

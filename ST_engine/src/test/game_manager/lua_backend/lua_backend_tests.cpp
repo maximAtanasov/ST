@@ -548,20 +548,20 @@ TEST_F(lua_backend_test, test_call_function_stopMusic){
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_toggleAudio){
+TEST_F(lua_backend_test, test_call_function_setAudioEnabled){
     //Set up
     subscriber subscriber1;
-    msg_bus->subscribe(TOGGLE_AUDIO, &subscriber1);
+    msg_bus->subscribe(SET_AUDIO_ENABLED, &subscriber1);
 
     //Test
-    test_subject.run_script("toggleAudio()");
+    test_subject.run_script("setAudioEnabled(true)");
 
     //Check result - expect to see a message with appropriate content
     message* result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
-    ASSERT_EQ(TOGGLE_AUDIO, result->msg_name);
-    ASSERT_FALSE(result->get_data());
+    ASSERT_EQ(SET_AUDIO_ENABLED, result->msg_name);
+    ASSERT_TRUE(*static_cast<bool*>(result->get_data()));
 }
 
 TEST_F(lua_backend_test, test_call_function_stopAllSounds){
@@ -580,19 +580,35 @@ TEST_F(lua_backend_test, test_call_function_stopAllSounds){
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_setVolume){
+TEST_F(lua_backend_test, test_call_function_setMusicVolume){
     //Set up
     subscriber subscriber1;
-    msg_bus->subscribe(SET_VOLUME, &subscriber1);
+    msg_bus->subscribe(SET_MUSIC_VOLUME, &subscriber1);
 
     //Test
-    test_subject.run_script("setVolume(50)");
+    test_subject.run_script("setMusicVolume(50)");
 
     //Check result - expect to see a message with appropriate content
     message* result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
-    ASSERT_EQ(SET_VOLUME, result->msg_name);
+    ASSERT_EQ(SET_MUSIC_VOLUME, result->msg_name);
+    ASSERT_EQ(50, *static_cast<uint8_t*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_SOUNDS_VOLUME, &subscriber1);
+
+    //Test
+    test_subject.run_script("setSoundsVolume(50)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_SOUNDS_VOLUME, result->msg_name);
     ASSERT_EQ(50, *static_cast<uint8_t*>(result->get_data()));
 }
 
@@ -683,12 +699,27 @@ TEST_F(lua_backend_test, test_call_function_setOverlay){
     ASSERT_EQ(hash_f("some_bg.webp"), game_mngr->get_level()->overlay);
 }
 
-TEST_F(lua_backend_test, test_call_function_getVolume){
-    game_mngr->volume_level = 123;
-    test_subject.run_script("return getVolume()");
+TEST_F(lua_backend_test, test_call_function_getMusicVolume){
+    game_mngr->music_volume_level = 123;
+    test_subject.run_script("return getMusicVolume()");
 
     //Check result
     ASSERT_EQ(123, lua_tointeger(get_lua_state(), -1));
+}
+
+TEST_F(lua_backend_test, test_call_function_getSoundsVolume){
+    game_mngr->sounds_volume_level = 123;
+    test_subject.run_script("return getSoundsVolume()");
+
+    //Check result
+    ASSERT_EQ(123, lua_tointeger(get_lua_state(), -1));
+}
+
+TEST_F(lua_backend_test, test_call_function_isAudioEnabled){
+    test_subject.run_script("return isAudioEnabled()");
+
+    //Check result
+    ASSERT_TRUE(lua_toboolean(get_lua_state(), -1));
 }
 
 TEST_F(lua_backend_test, test_call_function_centerCamera){
