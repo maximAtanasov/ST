@@ -84,9 +84,9 @@ long get_file_size(const std::string& path){
 
 void copy_file(const std::string& src, const std::string& dest){
 #ifndef _MSC_VER
-    std::ifstream  src(src, std::ios::binary);
-    std::ofstream  dst(dest, std::ios::binary);
-    dst << src.rdbuf();
+    std::ifstream  src_(src, std::ios::binary);
+    std::ofstream  dst_(dest, std::ios::binary);
+    dst_ << src_.rdbuf();
 #else
     CopyFile(src.c_str(), dest.c_str(), false);
 #endif
