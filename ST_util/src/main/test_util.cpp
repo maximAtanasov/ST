@@ -13,6 +13,10 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 
+#ifdef _MSC_VER
+#include <Windows.h>
+#endif
+
 void initialize_SDL(){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
@@ -79,17 +83,11 @@ long get_file_size(const std::string& path){
 }
 
 void copy_file(const std::string& src, const std::string& dest){
-    FILE* src_file = fopen(src.c_str(), "rb");
-    FILE* dest_file = fopen(dest.c_str(), "wb");
-
-    char buffer[16384];
-
-    while(!feof(src_file)){
-        size_t n = fread(buffer, 1, 16384, src_file);
-        fwrite(buffer, 1, n, dest_file);
-    }
-
-    fflush(dest_file);
-    fclose(src_file);
-    fclose(dest_file);
+#ifndef _MSC_VER
+    std::ifstream  src(src, std::ios::binary);
+    std::ofstream  dst(dest, std::ios::binary);
+    dst << src.rdbuf();
+#else
+    CopyFile(src.c_str(), dest.c_str(), false);
+#endif
 }

@@ -14,7 +14,6 @@
 
 
 #ifdef _MSC_VER
-#include <Windows.h>
 #define chdir _chdir
 #endif
 
@@ -164,13 +163,8 @@ TEST(loaders_tests, test_can_add_to_existing_binary){
     std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-#ifndef _MSC_VER
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name, std::ios::binary);
-    dst << src.rdbuf();
-#else
-    CopyFile(input_binary_name.c_str(), result_binary_name.c_str(), false);
-#endif
+    copy_file(input_binary_name, result_binary_name);
+
     //Test==========================================
 
     ASSERT_EQ(0, ST::add_to_binary(result_binary_name, filenames));
@@ -228,13 +222,7 @@ TEST(loaders_tests, test_exit_when_duplicate_name_found_in_exisitng_library) {
     std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-#ifndef _MSC_VER
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name, std::ios::binary);
-    dst << src.rdbuf();
-#else
-    CopyFile(input_binary_name.c_str(), result_binary_name.c_str(), false);
-#endif
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
@@ -281,13 +269,7 @@ TEST(loaders_tests, test_exit_when_duplicate_name_in_different_directory_found_i
     std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-#ifndef _MSC_VER
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name, std::ios::binary);
-    dst << src.rdbuf();
-#else
-    CopyFile(input_binary_name.c_str(), result_binary_name.c_str(), false);
-#endif
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
@@ -334,13 +316,7 @@ TEST(loaders_tests, test_pack_to_binary_calls_add_to_binary_on_existing_file) {
     std::string result_binary_name = "test_binary_copy.bin";
 
     //Create a copy of the test binary
-#ifndef _MSC_VER
-    std::ifstream  src(input_binary_name, std::ios::binary);
-    std::ofstream  dst(result_binary_name, std::ios::binary);
-    dst << src.rdbuf();
-#else
-    CopyFile(input_binary_name.c_str(), result_binary_name.c_str(), false);
-#endif
+    copy_file(input_binary_name, result_binary_name);
 
     //Test==========================================
 
