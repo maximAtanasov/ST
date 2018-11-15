@@ -14,8 +14,6 @@
 //to define a new one just add its name here - they are all used as integers
 
 enum msg_type {
-    VSYNC_ON,
-    VSYNC_OFF,
     SET_DARKNESS,
     PLAY_SOUND,
     PLAY_MUSIC,
@@ -40,8 +38,6 @@ enum msg_type {
     SET_GRAVITY,
     SET_FRICTION,
     SET_FLOOR,
-    VSYNC_IS_OFF,
-    VSYNC_IS_ON,
     END_GAME,
     VOLUME_LEVEL,
     STOP_ALL_SOUNDS,
@@ -67,7 +63,9 @@ enum msg_type {
     UNLOAD_ASSET,
     LOAD_BINARY,
     SET_INTERNAL_RESOLUTION,
-    SET_WINDOW_RESOLUTION
+    SET_WINDOW_RESOLUTION,
+    SET_VSYNC,
+    VSYNC_STATE
 };
 
 #endif //SLAVIC_TALES_MESSAGE_TYPES_HPP

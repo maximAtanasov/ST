@@ -44,7 +44,7 @@ int main(int argc, char** argv){
 
 
 	gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
-    gMessage_bus.send_msg(make_msg(VSYNC_ON, nullptr));
+    gMessage_bus.send_msg(make_msg(SET_VSYNC, make_data<>(true)));
 
     //time keeping variables
     const double UPDATE_RATE = 16.666667; //GAME LOGIC RUNS AT 60 FPS (or less)

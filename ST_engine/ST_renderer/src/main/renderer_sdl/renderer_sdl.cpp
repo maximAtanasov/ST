@@ -14,9 +14,9 @@
 namespace ST {
     namespace renderer_sdl {
         void cache_font(TTF_Font *Font, const std::string& font_and_size);
-        void draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
+        uint16_t draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
                                   uint8_t size);
-        void draw_text_cached_glyphs(const std::string &arg, const std::string &arg2, int, int, SDL_Color, int);
+        uint16_t draw_text_cached_glyphs(const std::string &arg, const std::string &arg2, int, int, SDL_Color, int);
     }
 }
 
@@ -106,14 +106,16 @@ void ST::renderer_sdl::close(){
  * @param y The y position to render at.
  * @param color_font The color to render with.
  * @param size The size of the font to render at.
+ * @return The width of the rendered string in pixels
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font, uint8_t size){
+uint16_t ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font, uint8_t size){
     std::string font_and_size = arg+std::to_string(size);
     TTF_Font* font = fonts[font_and_size];
+    int texW = 0;
     if(font != nullptr){
-        int texW, texH;
+        int texH;
         SDL_Texture* cached_texture = font_cache::get_cached_string(arg2, arg, size);
         if(cached_texture != nullptr){ //if the given string (with same size and font) is already cached, get it from cache
             SDL_QueryTexture(cached_texture, nullptr, nullptr, &texW, &texH);
@@ -131,6 +133,7 @@ void ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::s
             font_cache::cache_string(arg2, texture, arg, size);
         }
     }
+    return static_cast<uint16_t>(texW);
 }
 
 /**
@@ -142,18 +145,20 @@ void ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::s
  * @param y The y position to render at.
  * @param color_font The color to render with.
  * @param size The size of the font to render at.
+ * @return The width of the rendered string in pixels
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std::string& arg2, const int x, const int y,
+uint16_t ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std::string& arg2, const int x, const int y,
                                            const SDL_Color color_font, const int size) {
     std::string font_and_size = arg+std::to_string(size);
+    uint16_t tempX = 0;
     auto cached_vector = fonts_cache.find(font_and_size);
     if(cached_vector != fonts_cache.end()){
         std::vector<SDL_Texture*> tempVector = cached_vector->second;
         if(!tempVector.empty()){
             int texW, texH;
-            int tempX = x;
+            tempX = x;
             const char* arg3 = arg2.c_str();
             for(int j = 0; arg3[j] != 0; j++){
                 SDL_Texture* texture = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
@@ -165,6 +170,7 @@ void ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std
             }
         }
     }
+    return tempX;
 }
 
 /**
@@ -178,22 +184,22 @@ void ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std
  * @param size The size of the font to render at.
  * @param flag 1 to render with draw_text_cached, 0 to render with draw_text_normal
  * and any other value will cause a method to be picked automatically.
+ * @return The width of the rendered string in pixels
  *
  * Note that the font must previously be loaded at the selected size.
  */
-void ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font , uint8_t size, int flag){
+uint16_t ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font , uint8_t size, int flag){
     if(flag == 1){
-        draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
+        return draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }else if(flag == 0){
-        draw_text_lru_cached(arg, arg2, x, y, color_font, size);
+        return draw_text_lru_cached(arg, arg2, x, y, color_font, size);
     }else{
         for(unsigned int i = 0; i < arg2.size(); i++) {
             if (arg2.at(i) > 126 || (arg2.at(i) < 32)) {
-                draw_text_lru_cached(arg, arg2, x, y, color_font, size);
-                return;
+                return draw_text_lru_cached(arg, arg2, x, y, color_font, size);
             }
         }
-        draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
+        return draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }
 }
 

@@ -63,7 +63,7 @@ class console{
         subscriber msg_sub{};
         bool shown = false;
         std::vector<ST::console_log> entries;
-        int font_size = 0;
+        uint8_t font_size = 0;
         int scroll_offset = 0;
 
         //things to do with inputting text commands

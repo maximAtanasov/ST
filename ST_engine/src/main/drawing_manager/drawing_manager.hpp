@@ -25,13 +25,9 @@
  *
  * Messages this subsystem listens to: <br>
  *
- * <b>VSYNC_ON</b> - Activates VSYNC.
+ * <b>SET_VSYNC</b> - Enables or disables VSYNC.
  *
- * Message must contain: a <b>nullptr</b>. <br>
- *
- * <b>VSYNC_OFF</b> - Disables VSYNC.
- *
- * Message must contain: a <b>nullptr</b>. <br>
+ * Message must contain: a pointer to a <b>bool</b>. <br>
  *
  * <b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates in a __DEBUG build.
  *
@@ -76,6 +72,10 @@ class drawing_manager{
         int16_t w_width = 1920;
         int16_t w_height = 1080;
 
+#ifdef __DEBUG
+        //Console cursor timer
+        uint64_t cnsl_cursor_timer = 0;
+#endif
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};
         uint8_t darkness_level = 0;

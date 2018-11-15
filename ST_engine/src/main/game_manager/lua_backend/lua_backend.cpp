@@ -74,8 +74,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "hashString", hashStringLua);
     lua_register(L, "delay", delayLua);
     lua_register(L, "use", useLua);
-    lua_register(L, "vsyncOn", vsyncOnLua);
-    lua_register(L, "vsyncOff", vsyncOffLua);
+    lua_register(L, "setVsync", setVsyncLua);
     lua_register(L, "getVsyncState", getVsyncStateLua);
     lua_register(L, "setBrightness", setBrightnessLua);
     lua_register(L, "startLevelLua", startLevelLua);
@@ -1214,22 +1213,13 @@ extern "C" int setLevelFloorLua(lua_State* L){
 }
 
 /**
- * Sets VSYNC to on.
+ * Sets VSYNC on or off.
  * See the Lua docs for more information.
  * @return Always 0.
  */
-extern "C" int vsyncOnLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(VSYNC_ON, nullptr));
-    return 0;
-}
-
-/**
- * Sets VSYNC to off.
- * See the Lua docs for more information.
- * @return Always 0.
- */
-extern "C" int vsyncOffLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(VSYNC_OFF, nullptr));
+extern "C" int setVsyncLua(lua_State* L){
+    auto arg = static_cast<bool>(lua_toboolean(L, 1));
+    gMessage_busLua->send_msg(make_msg(SET_VSYNC, make_data<>(arg)));
     return 0;
 }
 

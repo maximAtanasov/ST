@@ -55,13 +55,9 @@
  *
  * Message must contain: a pointer to a <b>uint8_t</b>. <br>
  *
- * <b>VSYNC_IS_ON</b> - An event meaning vsync is on <br>
+ * <b>VSYNC_STATE</b> - An event meaning vsync is on <br>
  *
- * Message must contain: a <b>nullptr</b>. <br>
- *
- * <b>VSYNC_IS_OFF</b> - An event meaning vsync is off <br>
- *
- * Message must contain: a <b>nullptr</b>. <br>
+ * Message must contain: a pointer to a <b>bool</b>. <br>
  *
  * <b>END_GAME</b> - Recieving this event causes the application to shutdown. <br>
  *

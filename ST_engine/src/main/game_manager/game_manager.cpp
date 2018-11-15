@@ -32,8 +32,7 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus->subscribe(KEY_RELEASED, &msg_sub);
     gMessage_bus->subscribe(MOUSE_X, &msg_sub);
     gMessage_bus->subscribe(MOUSE_Y, &msg_sub);
-    gMessage_bus->subscribe(VSYNC_IS_ON, &msg_sub);
-    gMessage_bus->subscribe(VSYNC_IS_OFF, &msg_sub);
+    gMessage_bus->subscribe(VSYNC_STATE, &msg_sub);
     gMessage_bus->subscribe(END_GAME, &msg_sub);
     gMessage_bus->subscribe(VOLUME_LEVEL, &msg_sub);
     gMessage_bus->subscribe(SHOW_MOUSE, &msg_sub);
@@ -109,11 +108,9 @@ void game_manager::handle_messages(){
             uint8_t val = *static_cast<uint8_t*>(temp->get_data());
             volume_level = val;
         }
-        else if(temp->msg_name == VSYNC_IS_ON){
-            vsync_flag = true;
-        }
-        else if(temp->msg_name == VSYNC_IS_OFF){
-            vsync_flag = false;
+        else if(temp->msg_name == VSYNC_STATE){
+            auto arg = static_cast<bool*>(temp->get_data());
+            vsync_flag = *arg;
         }
         else if(temp->msg_name == END_GAME){
             SDL_AtomicSet(&end_game, 0);

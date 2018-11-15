@@ -254,10 +254,10 @@ end
 
 function button_vsync:onClick()
     if getVsyncState() then
-        vsyncOff()
+        setVsync(false)
         button_switch2:uncheck()
     else
-        vsyncOn()
+        setVsync(true)
         button_switch2:check()
     end
 end
@@ -275,10 +275,10 @@ end
 
 function button_switch2:onClick()
     if getVsyncState() then
-        vsyncOff()
+        setVsync(false)
         self:uncheck()
     else
-        vsyncOn()
+        setVsync(true)
         self:check()
     end
 end

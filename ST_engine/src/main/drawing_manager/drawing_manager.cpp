@@ -27,8 +27,8 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
     gMessage_bus = msg_bus;
 
 	//Subscribe to certain messages
-	gMessage_bus->subscribe(VSYNC_ON, &msg_sub);
-	gMessage_bus->subscribe(VSYNC_OFF, &msg_sub);
+	gMessage_bus->subscribe(VSYNC_STATE, &msg_sub);
+	gMessage_bus->subscribe(SET_VSYNC, &msg_sub);
 	gMessage_bus->subscribe(SHOW_COLLISIONS, &msg_sub);
     gMessage_bus->subscribe(SHOW_FPS, &msg_sub);
 	gMessage_bus->subscribe(SET_DARKNESS, &msg_sub);
@@ -130,8 +130,16 @@ void drawing_manager::draw_console(const console& cnsl){
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-        ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
+        uint16_t text_width = ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
                              cnsl.font_size, -1);
+
+        if(ticks - cnsl_cursor_timer >= 1000) {
+            cnsl_cursor_timer = ticks;
+        }else if (ticks - cnsl_cursor_timer < 500) {
+            ST::renderer_sdl::draw_rectangle_filled(
+                    text_width + 2, w_height / 2 - 50 + 5, 3,
+                    cnsl.font_size, cnsl.color_text);
+        }
     }
 }
 
@@ -260,13 +268,14 @@ void drawing_manager::draw_lights() const{
 void drawing_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == VSYNC_ON){
-            ST::renderer_sdl::vsync_on();
-            gMessage_bus->send_msg(make_msg(VSYNC_IS_ON, nullptr));
-        }
-        else if(temp->msg_name == VSYNC_OFF){
-            ST::renderer_sdl::vsync_off();
-            gMessage_bus->send_msg(make_msg(VSYNC_IS_OFF, nullptr));
+        if(temp->msg_name == SET_VSYNC){
+            auto arg = static_cast<bool*>(temp->get_data());
+            if(*arg){
+                ST::renderer_sdl::vsync_on();
+            }else{
+                ST::renderer_sdl::vsync_off();
+            }
+            gMessage_bus->send_msg(make_msg(VSYNC_STATE, make_data<>(*arg)));
         }
         else if(temp->msg_name == SET_DARKNESS){
             set_darkness(*(uint8_t*)temp->get_data());

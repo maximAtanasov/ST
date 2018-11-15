@@ -100,7 +100,7 @@ TEST_F(task_manager_tests, test_do_work_while_waiting){
     test_subject.wait_for_task(id1);
     uint64_t end = SDL_GetTicks();
 
-    ASSERT_NEAR(end-start, 2100, 100);
+    ASSERT_NEAR(static_cast<double>(end-start), 2100, 100);
     ASSERT_EQ(test_value1, 11);
     ASSERT_EQ(test_value2, 21);
 }

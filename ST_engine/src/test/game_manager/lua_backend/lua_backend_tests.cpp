@@ -275,7 +275,7 @@ TEST_F(lua_backend_test, test_call_function_hashString){
 TEST_F(lua_backend_test, test_call_function_delay){
     //Set up
     timer test_timer;
-    uint64_t runtime = 500;
+    double runtime = 500;
 
     //Test
     double start_time = test_timer.time_since_start();
@@ -285,37 +285,22 @@ TEST_F(lua_backend_test, test_call_function_delay){
     ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time-start_time), 20);
 }
 
-TEST_F(lua_backend_test, test_call_function_vsyncOn){
+TEST_F(lua_backend_test, test_call_function_setVsync){
     //Set up
     subscriber subscriber1;
-    msg_bus->subscribe(VSYNC_ON, &subscriber1);
+    msg_bus->subscribe(SET_VSYNC, &subscriber1);
 
     //Test
-    test_subject.run_script("vsyncOn()");
+    test_subject.run_script("setVsync(true)");
 
     //Check result - expect to see a message with appropriate content
     message* result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
-    ASSERT_EQ(VSYNC_ON, result->msg_name);
-    ASSERT_FALSE(result->get_data());
+    ASSERT_EQ(SET_VSYNC, result->msg_name);
+    ASSERT_TRUE(*static_cast<bool*>(result->get_data()));
 }
 
-TEST_F(lua_backend_test, test_call_function_vsyncOff){
-    //Set up
-    subscriber subscriber1;
-    msg_bus->subscribe(VSYNC_OFF, &subscriber1);
-
-    //Test
-    test_subject.run_script("vsyncOff()");
-
-    //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
-
-    ASSERT_TRUE(result);
-    ASSERT_EQ(VSYNC_OFF, result->msg_name);
-    ASSERT_FALSE(result->get_data());
-}
 
 TEST_F(lua_backend_test, test_call_function_startLevelLua){
     //Set up
