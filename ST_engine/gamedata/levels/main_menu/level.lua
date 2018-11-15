@@ -18,8 +18,7 @@ setBackground("menu.webp")
 setDarkness(255)
 
 darkness = 255
-initialVolume = getVolume()
-setVolume(initialVolume)
+initialVolume = getMusicVolume()
 function introFading()
     if darkness > 0 then
         darkness = darkness - 1
@@ -27,7 +26,7 @@ function introFading()
         if(darkness % 4 == 0) then
             if initialVolume > 36 then
                 initialVolume = initialVolume - 1
-                setVolume(initialVolume)
+                setMusicVolume(initialVolume)
             end
         end
     elseif darkness == 0 then
@@ -156,7 +155,11 @@ button_soundSwitch:hide()
 button_soundSwitch:setClickKey(all_buttons_key)
 
 function button_soundSwitch:onClick()
-    toggleAudio()
+    if isAudioEnabled() then
+        setAudioEnabled(false)
+    else
+        setAudioEnabled(true)
+    end
     playSound(all_buttons_sound, 100, 0)
 end
 
@@ -178,7 +181,7 @@ button_switch1 = button:new(ON1_OFFSET, 500, ON_TEXT, FONT, 50)
 button_switch1:hide()
 
 function button_switch1:update()
-    if getVolume() > 0 then
+    if isAudioEnabled() then
         button_switch1:setText(ON_TEXT)
     else
         button_switch1:setText(OFF_TEXT)

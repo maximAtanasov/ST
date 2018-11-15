@@ -30,7 +30,7 @@ protected:
 
 TEST_F(message_bus_tests, test_one_subscriber_to_message){
     //Set up
-    msg_type msg = SET_VOLUME;
+    msg_type msg = SET_MUSIC_VOLUME;
     message_bus test_subject;
     subscriber test_subscriber;
 
@@ -43,7 +43,7 @@ TEST_F(message_bus_tests, test_one_subscriber_to_message){
 
 TEST_F(message_bus_tests, test_five_subscribers_to_message){
     //Set up
-    msg_type msg = SET_VOLUME;
+    msg_type msg = SET_MUSIC_VOLUME;
     message_bus test_subject;
     subscriber test_subscriber1;
     subscriber test_subscriber2;
@@ -70,7 +70,7 @@ TEST_F(message_bus_tests, test_five_subscribers_to_message){
 
 TEST_F(message_bus_tests, test_one_subscriber_to_two_messages){
     //Set up
-    msg_type msg1 = SET_VOLUME;
+    msg_type msg1 = SET_MUSIC_VOLUME;
     msg_type msg2 = SET_DARKNESS;
     message_bus test_subject;
     subscriber test_subscriber;
@@ -92,7 +92,7 @@ TEST_F(message_bus_tests, test_one_subscriber_to_two_messages){
 TEST_F(message_bus_tests, test_send_message_to_one_subscriber){
 
     //Set up
-    msg_type msg = SET_VOLUME;
+    msg_type msg = SET_MUSIC_VOLUME;
     message_bus test_subject;
     subscriber test_subscriber;
     test_subject.subscribe(msg, &test_subscriber);
@@ -109,7 +109,7 @@ TEST_F(message_bus_tests, test_send_message_to_one_subscriber){
 TEST_F(message_bus_tests, test_send_message_to_two_subscribers){
 
     //Set up
-    msg_type msg = SET_VOLUME;
+    msg_type msg = SET_MUSIC_VOLUME;
     message_bus test_subject;
     subscriber test_subscriber1;
     subscriber test_subscriber2;
@@ -135,7 +135,7 @@ TEST_F(message_bus_tests, test_send_message_to_two_subscribers){
 TEST_F(message_bus_tests, test_send_two_messages_to_one_subscriber){
 
     //Set up
-    msg_type msg1 = SET_VOLUME;
+    msg_type msg1 = SET_MUSIC_VOLUME;
     msg_type msg2 = SET_DARKNESS;
     message_bus test_subject;
     subscriber test_subscriber;

@@ -45,7 +45,9 @@ public:
 
     bool fullscreen_status = false;
     bool vsync_flag = true;
-    uint8_t volume_level = 0;
+    uint8_t music_volume_level = 100;
+    uint8_t sounds_volume_level = 100;
+    bool audio_enabled = true;
 
     game_manager(message_bus* msg_bus, task_manager* tsk_mngr){}
     ~game_manager() = default;

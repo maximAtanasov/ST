@@ -34,16 +34,14 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus->subscribe(MOUSE_Y, &msg_sub);
     gMessage_bus->subscribe(VSYNC_STATE, &msg_sub);
     gMessage_bus->subscribe(END_GAME, &msg_sub);
-    gMessage_bus->subscribe(VOLUME_LEVEL, &msg_sub);
+    gMessage_bus->subscribe(MUSIC_VOLUME_LEVEL, &msg_sub);
+    gMessage_bus->subscribe(SOUNDS_VOLUME_LEVEL, &msg_sub);
     gMessage_bus->subscribe(SHOW_MOUSE, &msg_sub);
     gMessage_bus->subscribe(EXECUTE_SCRIPT, &msg_sub);
     gMessage_bus->subscribe(FULLSCREEN_STATUS, &msg_sub);
+    gMessage_bus->subscribe(AUDIO_ENABLED, &msg_sub);
     //initialize initial states of keys
     reset_keys();
-
-    vsync_flag = true;
-    fullscreen_status = false;
-    volume_level = 100;
 
     //Load the first level
     load_level(FIRST_LEVEL_NAME);
@@ -104,9 +102,17 @@ void game_manager::handle_messages(){
             int32_t y = *static_cast<int32_t*>(temp->get_data());
             mouse_y = y;
         }
-        else if(temp->msg_name == VOLUME_LEVEL){
+        else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
             uint8_t val = *static_cast<uint8_t*>(temp->get_data());
-            volume_level = val;
+            music_volume_level = val;
+        }
+        else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
+            uint8_t val = *static_cast<uint8_t*>(temp->get_data());
+            sounds_volume_level = val;
+        }
+        else if(temp->msg_name == AUDIO_ENABLED){
+            auto val = static_cast<bool*>(temp->get_data());
+            audio_enabled = *val;
         }
         else if(temp->msg_name == VSYNC_STATE){
             auto arg = static_cast<bool*>(temp->get_data());
