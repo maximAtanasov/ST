@@ -40,7 +40,7 @@ void task_manager::do_work(ST::task* work) {
         SDL_DestroySemaphore(work->dependency);
     }
     work->task_func(work->data); // call it
-    if(work->has_lock) {
+    if(work->lock != nullptr) {
         SDL_SemPost(work->lock); //increment the semaphore
     }
     destroy_task(work);
@@ -110,8 +110,6 @@ task_manager::~task_manager(){
     SDL_DestroySemaphore(work_sem);
 }
 
-//TODO: Task allocator
-
 /**
  * Start a new task on one of the task threads.
  * @param arg The task object to use.
@@ -121,7 +119,7 @@ task_id task_manager::start_task(ST::task* arg){
     //Aparrently a bit cheaper to create a new semaphore instead of reusing old ones
     //This may depend on the platform (OS implementation of Semaphores)
     SDL_semaphore *lock = SDL_CreateSemaphore(0);
-    arg->set_lock(lock);
+    arg->lock = lock;
     global_task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
     return lock;
@@ -132,7 +130,6 @@ task_id task_manager::start_task(ST::task* arg){
  * @param arg The task object to use.
  */
 void task_manager::start_task_lockfree(ST::task* arg){
-    arg->set_lock(nullptr);
     global_task_queue.enqueue(arg);
     SDL_SemPost(work_sem);
 }
@@ -153,4 +150,38 @@ void task_manager::wait_for_task(task_id id){
         }
         SDL_DestroySemaphore(id);
     }
+}
+
+void task_manager::set_task_thread_amount(uint8_t amount){
+
+    //STOP ALL THREADS
+    SDL_AtomicSet(&run_threads, 0);
+    for(int i = 0; i < thread_num-1; i++){
+        SDL_SemPost(work_sem);
+    }
+    for(int i = 0; i < thread_num-1; i++) {
+        SDL_WaitThread(task_threads[i], nullptr);
+    }
+    for(int i = 0; i < thread_num-1; i++){
+        SDL_SemTryWait(work_sem);
+    }
+
+    //finish running any remaining tasks
+    ST::task* new_task;
+    while(global_task_queue.try_dequeue(new_task)){ //get a function pointer and data
+        SDL_DestroySemaphore(new_task->lock);
+        delete new_task;
+    }
+    SDL_DestroySemaphore(work_sem);
+    task_threads.clear();
+
+    //REINITIALZE
+    thread_num = static_cast<uint8_t>(amount + 1);
+    work_sem = SDL_CreateSemaphore(0);
+
+    for (uint16_t i = 0; i < thread_num - 1; i++) {
+        task_threads.emplace_back(SDL_CreateThread(task_thread, "tsk_thr", this));
+    }
+    log(INFO, std::to_string(thread_num-1) + " task threads started.");
+    SDL_AtomicSet(&run_threads, 1);
 }

@@ -65,8 +65,8 @@ TEST(loaders_tests, test_pack_to_binary){
     long binary_size = get_file_size(binary_name);
 
     //Tear Down
-    remove(binary_name.c_str());
     close_SDL();
+    remove(binary_name.c_str());
 
     ASSERT_NEAR(expected_size, binary_size, 200);
 }
@@ -88,6 +88,7 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     ASSERT_TRUE(IMG_Load("test_image_3.webp"));
 
     //Tear Down
+    close_SDL();
     remove("test_music_1.ogg");
     remove("test_music_2.ogg");
     remove("test_image_1.png");
@@ -95,7 +96,6 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     remove("test_image_3.webp");
     remove("test_sound_1.wav");
     remove("test_sound_2.wav");
-    close_SDL();
     ASSERT_EQ(0, chdir("../"));
 }
 
@@ -205,8 +205,8 @@ TEST(loaders_tests, test_can_add_to_existing_binary){
     SDL_FreeSurface(result->surfaces.at("test_image_4.png"));
     SDL_FreeSurface(result->surfaces.at("test_image_5.png"));
 
-    remove(result_binary_name.c_str());
     close_SDL();
+    remove(result_binary_name.c_str());
     ASSERT_EQ(0, chdir("../"));
 }
 

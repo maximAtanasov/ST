@@ -25,9 +25,8 @@ namespace ST {
         void (*task_func)(void *);
 
         void *data;
-        SDL_semaphore *lock{};
+        SDL_semaphore *lock = nullptr;
         SDL_semaphore *dependency{};
-        bool has_lock = false;
         const uint16_t id{};
 
         /**
@@ -43,13 +42,6 @@ namespace ST {
             data = arg;
             this->dependency = dependency;
         }
-
-        void set_lock(SDL_semaphore *lock) {
-            has_lock = static_cast<bool>(lock);
-            this->lock = lock;
-        }
-
-
     };
 }
 

@@ -41,6 +41,7 @@ class task_manager{
 		task_id start_task(ST::task* arg);
         void start_task_lockfree(ST::task* arg);
         void wait_for_task(task_id id);
+        void set_task_thread_amount(uint8_t amount);
 };
 
 #endif //TASK_MNGR_DEF

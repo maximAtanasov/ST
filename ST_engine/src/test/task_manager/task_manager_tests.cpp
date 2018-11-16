@@ -12,7 +12,7 @@
 #include <ST_util/test_util.hpp>
 #include <task_manager/task_allocator.hpp>
 
-class task_manager_tests : public::testing::Test {
+class task_manager_tests : public::testing::TestWithParam<int>{
 
 protected:
 
@@ -32,7 +32,7 @@ static void test_task_function(void* arg){
 
 static void test_task_function2(void* arg){
     auto val = static_cast<uint8_t*>(arg);
-    SDL_Delay(2000);
+    SDL_Delay(3000);
     ++*val;
 }
 
@@ -82,28 +82,37 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value, nullptr));
     test_subject.start_task_lockfree(make_task(test_task_function, &test_value, id1));
 
-    SDL_Delay(3000);
+    SDL_Delay(4000);
     ASSERT_EQ(test_value, 12);
 }
 
-TEST_F(task_manager_tests, test_do_work_while_waiting){
+TEST_P(task_manager_tests, test_do_work_while_waiting){
     //Set up
     task_manager test_subject(new message_bus());
+    //test_subject.set_task_thread_amount(4);
     uint8_t test_value1 = 10;
     uint8_t test_value2 = 20;
-
     //Test
     uint64_t start = SDL_GetTicks();
-    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
-    test_subject.start_task_lockfree(make_task(test_task_function2, &test_value2, nullptr));
 
+    SDL_semaphore* semaphore = SDL_CreateSemaphore(0);
+
+    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
+    test_subject.start_task_lockfree(make_task(test_task_function, &test_value2, semaphore));
+
+    SDL_SemPost(semaphore);
     test_subject.wait_for_task(id1);
+
     uint64_t end = SDL_GetTicks();
 
-    ASSERT_NEAR(static_cast<double>(end-start), 2100, 100);
+    ASSERT_NEAR(static_cast<double>(end-start), 3100, 200);
     ASSERT_EQ(test_value1, 11);
     ASSERT_EQ(test_value2, 21);
 }
+
+
+INSTANTIATE_TEST_CASE_P(Instantiation, task_manager_tests, ::testing::Range(0, 10));
+
 
 
 int main(int argc, char **argv) {
