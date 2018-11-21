@@ -102,6 +102,32 @@ function setFullscreen(arg)
     setFullscreenLua(arg)
 end
 
+function setVsync(arg)
+    --
+    --  Read the file
+    --
+    local f = io.open("lua/global_properties.lua", "r")
+    local content = f:read("*all")
+    f:close()
+
+    --
+    -- Edit the string
+    --
+    if(arg == true) then
+        content = string.gsub(content, "\"vsyncDisabled\"", "\"vsyncEnabled\"")
+    else
+        content = string.gsub(content, "\"vsyncEnabled\"", "\"vsyncDisabled\"")
+    end
+    --
+    -- Write it out
+    --
+    local f = io.open("lua/global_properties.lua", "w")
+    f:write(content)
+    f:close()
+
+    setVsyncLua(arg)
+end
+
 if(audio == "audioEnabled") then
     setAudioEnabledLua(true)
 else
@@ -112,4 +138,10 @@ if(fullscreen == "fullscreenEnabled") then
     setFullscreenLua(true)
 else
     setFullscreenLua(false)
+end
+
+if(vsync == "vsyncEnabled") then
+    setVsyncLua(true)
+else
+    setVsyncLua(false)
 end

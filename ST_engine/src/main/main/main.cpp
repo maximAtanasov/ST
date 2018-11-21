@@ -41,8 +41,6 @@ int main(int argc, char** argv){
     game_manager gGame_manager(&gMessage_bus, &gTask_manager);// will load "levels/main"
     timer gTimer;
 
-    gMessage_bus.send_msg(make_msg(SET_VSYNC, make_data<>(true)));
-
     //time keeping variables
     const double UPDATE_RATE = 16.666667; //GAME LOGIC RUNS AT 60 FPS (or less)
     double total_time = 0;

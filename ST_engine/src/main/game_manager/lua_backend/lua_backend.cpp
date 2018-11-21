@@ -64,7 +64,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "hashString", hashStringLua);
     lua_register(L, "delay", delayLua);
     lua_register(L, "use", useLua);
-    lua_register(L, "setVsync", setVsyncLua);
+    lua_register(L, "setVsyncLua", setVsyncLua);
     lua_register(L, "getVsyncState", getVsyncStateLua);
     lua_register(L, "setBrightness", setBrightnessLua);
     lua_register(L, "startLevelLua", startLevelLua);

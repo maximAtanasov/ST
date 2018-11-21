@@ -79,7 +79,7 @@ class drawing_manager{
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};
         uint8_t darkness_level = 0;
-        int lights_quality = 0;
+        uint8_t lights_quality = 0;
 
         //debug
         bool collisions_shown = false;

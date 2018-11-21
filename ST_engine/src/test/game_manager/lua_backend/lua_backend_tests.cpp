@@ -285,13 +285,13 @@ TEST_F(lua_backend_test, test_call_function_delay){
     ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time-start_time), 20);
 }
 
-TEST_F(lua_backend_test, test_call_function_setVsync){
+TEST_F(lua_backend_test, test_call_function_setVsyncLua){
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_VSYNC, &subscriber1);
 
     //Test
-    test_subject.run_script("setVsync(true)");
+    test_subject.run_script("setVsyncLua(true)");
 
     //Check result - expect to see a message with appropriate content
     message* result = subscriber1.get_next_message();
