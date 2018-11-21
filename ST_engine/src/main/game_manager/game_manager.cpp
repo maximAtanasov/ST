@@ -19,8 +19,8 @@
  */
 game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
 
-    gScript_backend.initialize(gMessage_bus, this);
     gMessage_bus = msg_bus;
+    gScript_backend.initialize(gMessage_bus, this);
     gTask_manager = tsk_mngr;
 
     //subscribe to messages

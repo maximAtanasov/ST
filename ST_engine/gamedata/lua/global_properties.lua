@@ -9,3 +9,4 @@
 --Contains global variable definitions
 
 language = "english"
+audio = "audioEnabled"

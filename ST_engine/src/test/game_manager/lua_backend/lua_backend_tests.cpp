@@ -533,13 +533,13 @@ TEST_F(lua_backend_test, test_call_function_stopMusic){
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_setAudioEnabled){
+TEST_F(lua_backend_test, test_call_function_setAudioEnabledLua){
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_AUDIO_ENABLED, &subscriber1);
 
     //Test
-    test_subject.run_script("setAudioEnabled(true)");
+    test_subject.run_script("setAudioEnabledLua(true)");
 
     //Check result - expect to see a message with appropriate content
     message* result = subscriber1.get_next_message();

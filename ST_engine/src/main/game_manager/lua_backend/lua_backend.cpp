@@ -49,16 +49,6 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     }
     luaL_openlibs(L);
 
-    luaL_dofile(L, "lua/general.lua");
-    luaL_dofile(L, "lua/debug.lua");
-    luaL_dofile(L, "lua/objects/entity.lua");
-    luaL_dofile(L, "lua/objects/text.lua");
-    luaL_dofile(L, "lua/objects/light.lua");
-    luaL_dofile(L, "lua/ui/button.lua");
-    luaL_dofile(L, "lua/ui/label.lua");
-    luaL_dofile(L, "lua/ui/checkbox.lua");
-    luaL_dofile(L, "lua/global_properties.lua");
-
     //register lua binding functions
 
     #ifdef __DEBUG
@@ -111,7 +101,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "playMusic", playMusicLua);
     lua_register(L, "stopMusic", stopMusicLua);
     lua_register(L, "pauseMusic", pauseMusicLua);
-    lua_register(L, "setAudioEnabled", setAudioEnabledLua);
+    lua_register(L, "setAudioEnabledLua", setAudioEnabledLua);
     lua_register(L, "isAudioEnabled", isAudioEnabledLua);
     lua_register(L, "getSoundsVolume", getSoundsVolumeLua);
     lua_register(L, "getMusicVolume", getMusicVolumeLua);
@@ -182,6 +172,16 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setEntityAnimation", setEntityAnimationLua);
     lua_register(L, "setEntityAnimationNum", setEntityAnimationNumLua);
     lua_register(L, "setEntitySpriteNum", setEntitySpriteNumLua);
+
+    luaL_dofile(L, "lua/global_properties.lua");
+    luaL_dofile(L, "lua/general.lua");
+    luaL_dofile(L, "lua/debug.lua");
+    luaL_dofile(L, "lua/objects/entity.lua");
+    luaL_dofile(L, "lua/objects/text.lua");
+    luaL_dofile(L, "lua/objects/light.lua");
+    luaL_dofile(L, "lua/ui/button.lua");
+    luaL_dofile(L, "lua/ui/label.lua");
+    luaL_dofile(L, "lua/ui/checkbox.lua");
 
     return 0;
 }

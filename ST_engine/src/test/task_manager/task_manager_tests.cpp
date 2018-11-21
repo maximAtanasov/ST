@@ -111,10 +111,6 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
 }
 
 
-INSTANTIATE_TEST_CASE_P(Instantiation, task_manager_tests, ::testing::Range(0, 10));
-
-
-
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

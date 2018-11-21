@@ -48,3 +48,36 @@ function setLanguage(language_string)
     f:write(content)
     f:close()
 end
+
+function setAudioEnabled(arg)
+    --
+    --  Read the file
+    --
+    local f = io.open("lua/global_properties.lua", "r")
+    local content = f:read("*all")
+    f:close()
+
+
+    --
+    -- Edit the string
+    --
+    if(arg == true) then
+        content = string.gsub(content, "\"audioDisabled\"", "\"audioEnabled\"")
+    else
+        content = string.gsub(content, "\"audioEnabled\"", "\"audioDisabled\"")
+    end
+    --
+    -- Write it out
+    --
+    local f = io.open("lua/global_properties.lua", "w")
+    f:write(content)
+    f:close()
+
+    setAudioEnabledLua(arg)
+end
+
+if(audio == "audioEnabled") then
+    setAudioEnabledLua(true)
+else
+    setAudioEnabledLua(false)
+end

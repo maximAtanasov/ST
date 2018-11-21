@@ -156,8 +156,10 @@ inline void audio_manager::unmute(){
  */
 inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
     Mix_Chunk* data = assets_ptr->chunks[arg];
-    if(data != nullptr && !muted){
-        Mix_VolumeChunk(data, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
+    if(data != nullptr){
+        if(!muted){
+            Mix_VolumeChunk(data, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
+        }
         if(Mix_PlayChannel( -1, data, loops ) == -1){
             log(ERROR, "Mix_PlayChannel Error " + std::string(Mix_GetError()));
         }
@@ -172,8 +174,10 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
  */
 inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
     Mix_Music* data = assets_ptr->music[arg];
-    if(data != nullptr && !muted){
-        Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
+    if(data != nullptr ){
+        if(!muted) {
+            Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
+        }
         if(Mix_PlayMusic(data, loops) == -1){
             log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
         }
