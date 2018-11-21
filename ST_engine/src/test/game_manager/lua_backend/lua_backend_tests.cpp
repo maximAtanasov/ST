@@ -244,13 +244,13 @@ TEST_F(lua_backend_test, test_fail_on_broken_script){
 #endif
 }
 
-TEST_F(lua_backend_test, test_call_function_setFullscreen){
+TEST_F(lua_backend_test, test_call_function_setFullscreenLua){
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_FULLSCREEN, &subscriber1);
 
     //Test
-    test_subject.run_script("setFullscreen(true)");
+    test_subject.run_script("setFullscreenLua(true)");
 
 
     //Check result - expect to see a message with appropriate content

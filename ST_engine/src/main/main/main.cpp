@@ -41,9 +41,6 @@ int main(int argc, char** argv){
     game_manager gGame_manager(&gMessage_bus, &gTask_manager);// will load "levels/main"
     timer gTimer;
 
-
-
-	gMessage_bus.send_msg(make_msg(SET_FULLSCREEN, make_data(true)));
     gMessage_bus.send_msg(make_msg(SET_VSYNC, make_data<>(true)));
 
     //time keeping variables

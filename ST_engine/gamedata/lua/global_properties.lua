@@ -10,3 +10,4 @@
 
 language = "english"
 audio = "audioEnabled"
+fullscreen = "fullscreenEnabled"

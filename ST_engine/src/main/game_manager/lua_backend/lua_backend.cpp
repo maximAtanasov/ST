@@ -59,7 +59,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     #endif
 
     //General Functions
-    lua_register(L, "setFullscreen", setFullscreenLua);
+    lua_register(L, "setFullscreenLua", setFullscreenLua);
     lua_register(L, "getFullscreenStatus", getFullscreenStatusLua);
     lua_register(L, "hashString", hashStringLua);
     lua_register(L, "delay", delayLua);

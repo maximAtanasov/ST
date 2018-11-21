@@ -76,8 +76,40 @@ function setAudioEnabled(arg)
     setAudioEnabledLua(arg)
 end
 
+function setFullscreen(arg)
+    --
+    --  Read the file
+    --
+    local f = io.open("lua/global_properties.lua", "r")
+    local content = f:read("*all")
+    f:close()
+
+    --
+    -- Edit the string
+    --
+    if(arg == true) then
+        content = string.gsub(content, "\"fullscreenDisabled\"", "\"fullscreenEnabled\"")
+    else
+        content = string.gsub(content, "\"fullscreenEnabled\"", "\"fullscreenDisabled\"")
+    end
+    --
+    -- Write it out
+    --
+    local f = io.open("lua/global_properties.lua", "w")
+    f:write(content)
+    f:close()
+
+    setFullscreenLua(arg)
+end
+
 if(audio == "audioEnabled") then
     setAudioEnabledLua(true)
 else
     setAudioEnabledLua(false)
+end
+
+if(fullscreen == "fullscreenEnabled") then
+    setFullscreenLua(true)
+else
+    setFullscreenLua(false)
 end

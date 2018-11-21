@@ -32,7 +32,7 @@ static void test_task_function(void* arg){
 
 static void test_task_function2(void* arg){
     auto val = static_cast<uint8_t*>(arg);
-    SDL_Delay(3000);
+    SDL_Delay(2000);
     ++*val;
 }
 
@@ -105,7 +105,7 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
 
     uint64_t end = SDL_GetTicks();
 
-    ASSERT_NEAR(static_cast<double>(end-start), 3100, 200);
+    ASSERT_NEAR(static_cast<double>(end-start), 2100, 200);
     ASSERT_EQ(test_value1, 11);
     ASSERT_EQ(test_value2, 21);
 }
