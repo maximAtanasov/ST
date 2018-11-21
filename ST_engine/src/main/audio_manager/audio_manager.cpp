@@ -80,7 +80,7 @@ void audio_manager::handle_messages(){
             log(SUCCESS, "Music stopped");
         }
         else if(temp->msg_name == PAUSE_MUSIC){
-            stop_music();
+            pause_music();
             log(SUCCESS, "Music stopped");
         }
         else if(temp->msg_name == STOP_ALL_SOUNDS){

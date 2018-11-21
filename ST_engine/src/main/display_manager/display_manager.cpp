@@ -112,10 +112,11 @@ SDL_Window* display_manager::get_window(){
  */
 void display_manager::set_fullscreen(bool arg){
 #ifdef _MSC_VER
-    if(arg) {
+    if(arg && !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)) {
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-    }else{
+    }
+    else if(!arg && (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)){
 	    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, 0);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -123,9 +124,10 @@ void display_manager::set_fullscreen(bool arg){
 		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
     }
 #else
-    if(arg) {
+    if(arg && !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)) {
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-    }else{
+    }
+    else if(!arg && (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)){
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, 0);
 		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);

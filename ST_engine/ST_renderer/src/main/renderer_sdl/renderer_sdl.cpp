@@ -44,7 +44,6 @@ static ska::bytell_hash_map<std::string, TTF_Font *> fonts{};
 static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache{};
 
 static bool vsync = false;
-static bool vsync_set_flag = false;
 
 /**
  * Initializes the renderer.
@@ -281,23 +280,14 @@ void ST::renderer_sdl::cache_font(TTF_Font* Font, const std::string& font_and_si
  * Turns on vsync.
  */
 void ST::renderer_sdl::vsync_on(){
-
-    //Don't change the state of vsync if it has been set once already and is not changing
-    if(!vsync_set_flag) {
+    SDL_RendererInfo info;
+    SDL_GetRendererInfo(sdl_renderer, &info);
+    if(!(info.flags & SDL_RENDERER_PRESENTVSYNC)){
         vsync = true;
         close();
         initialize(window, width, height);
         upload_surfaces(surfaces_pointer);
         upload_fonts(fonts_pointer);
-        vsync_set_flag = true;
-    }else{
-        if(!vsync){
-            vsync = true;
-            close();
-            initialize(window, width, height);
-            upload_surfaces(surfaces_pointer);
-            upload_fonts(fonts_pointer);
-        }
     }
 }
 
@@ -305,23 +295,14 @@ void ST::renderer_sdl::vsync_on(){
  * Turns off vsync.
  */
 void ST::renderer_sdl::vsync_off(){
-
-    //Don't change the state of vsync if it has been set once already and is not changing
-    if(!vsync_set_flag) {
+    SDL_RendererInfo info;
+    SDL_GetRendererInfo(sdl_renderer, &info);
+    if(info.flags & SDL_RENDERER_PRESENTVSYNC){
         vsync = false;
         close();
         initialize(window, width, height);
         upload_surfaces(surfaces_pointer);
         upload_fonts(fonts_pointer);
-        vsync_set_flag = true;
-    }else{
-        if(vsync){
-            vsync = false;
-            close();
-            initialize(window, width, height);
-            upload_surfaces(surfaces_pointer);
-            upload_fonts(fonts_pointer);
-        }
     }
 }
 

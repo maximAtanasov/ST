@@ -181,7 +181,9 @@ inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) 
         if(Mix_PlayMusic(data, loops) == -1){
             log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
         }
-        Mix_VolumeMusic(this->music_volume);
+        if(!muted) {
+            Mix_VolumeMusic(this->music_volume);
+        }
     }
 }
 
