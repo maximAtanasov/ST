@@ -8,6 +8,7 @@
  */
 
 #include <input_manager/input_manager.hpp>
+#include <console/log.hpp>
 
 /**
  * initializes the input manager
@@ -19,6 +20,10 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     //SET OUR EXTERNAL DEPENDENCIES
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
+
+    if( SDL_Init(SDL_INIT_JOYSTICK) < 0 ){
+        log(ERROR, "Could not initialize gamepad subsystem!");
+    }
 
     //Initialize controls
     int32_t length = 0;
