@@ -13,6 +13,7 @@
 
 #include <SDL_ttf.h>
 #include <ST_util/bytell_hash_map.hpp>
+#include <string>
 
 ///The renderer for the engine.
 /**

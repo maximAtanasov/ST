@@ -102,5 +102,5 @@ endforeach()
 add_custom_command(
         TARGET ST_message_bus
         POST_BUILD
-        COMMAND export GTEST_COLOR=1 && ctest -VV
+        COMMAND ctest -VV
 )
