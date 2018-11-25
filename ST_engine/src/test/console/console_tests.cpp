@@ -25,12 +25,16 @@ protected:
         test_cnsl->write(log);
     }
 
+    message_bus* msg_bus;
+
     void SetUp() override{
-        test_cnsl = new console(new message_bus());
+        msg_bus = new message_bus();
+        test_cnsl = new console(msg_bus);
     }
 
     void TearDown() override{
         delete test_cnsl;
+        delete msg_bus;
     }
 };
 

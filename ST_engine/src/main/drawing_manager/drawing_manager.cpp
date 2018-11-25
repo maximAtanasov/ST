@@ -8,6 +8,7 @@
  */
 
 #include <drawing_manager/drawing_manager.hpp>
+#include <main/message_types.hpp>
 
 #define DEFAULT_FONT "OpenSans-Regular.ttf"
 

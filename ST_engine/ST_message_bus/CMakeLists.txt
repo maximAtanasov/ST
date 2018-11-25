@@ -30,7 +30,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
 
 add_library(ST_message_bus STATIC
-        ${PROJECT_SOURCE_DIR}/src/main/message_types.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
         ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp

@@ -12,7 +12,6 @@
 
 
 #include "message.hpp"
-#include "message_types.hpp"
 #include <SDL_mutex.h>
 
 #define MESSAGE_ALLOCATOR_CAPACITY 300
@@ -34,7 +33,7 @@ private:
 
 public:
     message_allocator();
-    message* allocate_message(msg_type name, std::shared_ptr<void> data);
+    message* allocate_message(int name, std::shared_ptr<void> data);
     void deallocate(uint16_t id);
     ~message_allocator();
 };

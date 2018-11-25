@@ -31,8 +31,10 @@ class message_bus{
         friend class message_bus_tests;
         ska::bytell_hash_map<int, std::vector<subscriber*>> subscribers; //each message enum maps to a list of subscribers for that message
     public:
+        message_bus();
+        ~message_bus();
         void send_msg(message* msg);
-        void subscribe(msg_type msg, subscriber* sub);
+        void subscribe(int msg, subscriber* sub);
 };
 
 /**
@@ -45,7 +47,7 @@ class message_bus{
  * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
  * @return A new message object.
  */
-inline message* make_msg(msg_type name, const std::shared_ptr<void>& data){
+inline message* make_msg(int name, const std::shared_ptr<void>& data){
     return msg_memory.allocate_message(name, data);
 }
 
