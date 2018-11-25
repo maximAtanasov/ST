@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 
 /**
  * The allocator is declared globally.

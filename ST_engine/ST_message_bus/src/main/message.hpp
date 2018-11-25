@@ -12,7 +12,7 @@
 
 
 #include <memory>
-#include <message_bus/message_types.hpp>
+#include "message_types.hpp"
 
 class message_allocator;
 extern message_allocator msg_memory;

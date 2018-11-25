@@ -15,6 +15,7 @@ include(GoogleTest)
 enable_testing()
 
 add_subdirectory(ST_renderer)
+add_subdirectory(ST_message_bus)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
@@ -27,6 +28,7 @@ include_directories(../ST_loaders/include)
 include_directories(../ST_util/include)
 include_directories(../ST_engine/src/main)
 include_directories(../ST_engine/ST_renderer/include)
+include_directories(../ST_engine/ST_message_bus/include)
 include_directories(../external/googletest/googletest/include)
 include_directories(../external/googletest/googlemock/include)
 include_directories(../external/lua/lua-5.3.0/src)
@@ -40,11 +42,9 @@ add_executable(ST_engine
         src/main/assets_manager/assets.hpp
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
-        ../ST_util/include/ST_util/atomic_queue/atomicops.h
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
-        ../ST_util/include/ST_util/atomic_queue/concurrentqueue.h
         src/main/console/console.cpp
         src/main/console/console.hpp
         src/main/defs.hpp
@@ -65,11 +65,10 @@ add_executable(ST_engine
         src/main/game_manager/level/light.hpp
         src/main/main/main.cpp
         src/main/main/main.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
+        ST_message_bus/src/main/message_bus.cpp
+        ST_message_bus/include/message_bus.hpp
         src/main/physics_manager/physics_manager.cpp
         src/main/physics_manager/physics_manager.hpp
-        ../ST_util/include/ST_util/atomic_queue/readerwriterqueue.h
         ST_renderer/src/main/renderer_sdl/renderer_sdl.cpp
         ST_renderer/include/renderer_sdl.hpp
         src/main/task_manager/task.hpp
@@ -87,12 +86,6 @@ add_executable(ST_engine
         src/main/console/console_log.hpp
         src/main/console/log.hpp
         src/main/game_manager/level/text.cpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
 
@@ -100,6 +93,7 @@ target_link_libraries(ST_engine
         ST_util
         ST_loaders
         ST_renderer
+        ST_message_bus
         lua
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -112,8 +106,6 @@ add_executable(asset_manager_test
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
         src/main/defs.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
@@ -121,12 +113,6 @@ add_executable(asset_manager_test
         src/main/console/console_log.hpp
         src/main/console/log.hpp
         src/test/assets_manager/assets_manager_tests.cpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
 
@@ -136,6 +122,7 @@ include_directories(asset_manager_test ../ST_engine/src/test)
 target_link_libraries(asset_manager_test
         ST_loaders
         ST_util
+        ST_message_bus
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -148,8 +135,6 @@ add_executable(audio_manager_test
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
         src/main/defs.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
@@ -157,18 +142,13 @@ add_executable(audio_manager_test
         src/main/console/console_log.hpp
         src/main/console/log.hpp
         src/test/audio_manager/audio_manager_tests.cpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
 
 target_link_libraries(audio_manager_test
         ST_loaders
         ST_util
+        ST_message_bus
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -179,15 +159,7 @@ include_directories(audio_manager_test ../ST_engine/src/test)
 
 add_executable(console_test
         src/main/defs.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
         src/main/console/log.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp
         src/main/console/console.cpp
         src/main/console/console.hpp
         src/main/console/console_log.cpp
@@ -199,6 +171,7 @@ include_directories(console_test ../ST_engine/src/test)
 target_link_libraries(console_test
         ST_loaders
         ST_util
+        ST_message_bus
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -210,17 +183,9 @@ add_executable(display_manager_test
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/test/display_manager/display_manager_tests.cpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
         src/main/console/log.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_types.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
 
@@ -229,76 +194,7 @@ include_directories(display_manager_test ../ST_engine/src/test)
 target_link_libraries(display_manager_test
         ST_loaders
         ST_util
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
-
-add_executable(message_test
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/test/message_bus/message_tests.cpp
-        src/main/message_bus/message.hpp)
-
-target_link_libraries(message_test
-        ST_util
-        gtest
-        ${SDL2_LIBRARY})
-
-add_executable(message_allocator_test
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/test/message_bus/message_allocator_tests.cpp
-        src/main/message_bus/message.hpp)
-
-target_link_libraries(message_allocator_test
-        ST_util
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
-
-add_executable(subscriber_test
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/test/message_bus/subscriber_tests.cpp
-        src/main/message_bus/message.hpp)
-
-target_link_libraries(subscriber_test
-        ST_util
-        gtest
-        ${SDL2_LIBRARY})
-
-add_executable(message_bus_test
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
-        src/test/message_bus/message_bus_tests.cpp)
-
-target_link_libraries(message_bus_test
-        ST_util
+        ST_message_bus
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -318,14 +214,6 @@ add_executable(level_test
         src/main/game_manager/level/entity.hpp
         src/main/game_manager/level/light.cpp
         src/main/game_manager/level/light.hpp
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
         src/main/game_manager/level/level.cpp
         src/main/game_manager/level/level.hpp
         src/test/game_manager/level/level_tests.cpp
@@ -337,6 +225,7 @@ add_executable(level_test
 target_link_libraries(level_test
         ST_util
         gtest
+        ST_message_bus
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
@@ -346,14 +235,6 @@ add_executable(lua_backend_test
         src/main/game_manager/level/entity.hpp
         src/main/game_manager/level/light.cpp
         src/main/game_manager/level/light.hpp
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
-        src/main/message_bus/message.hpp
         src/main/game_manager/level/level.cpp
         src/main/game_manager/level/level.hpp
         src/main/console/console.cpp
@@ -369,6 +250,7 @@ add_executable(lua_backend_test
 
 target_link_libraries(lua_backend_test
         ST_util
+        ST_message_bus
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -380,25 +262,19 @@ include_directories(lua_backend_test ../ST_engine/src
         ../ST_engine/src/test ../ST_loaders/include)
 
 add_executable(task_manager_test
-        src/main/message_bus/message_types.hpp
-        src/main/message_bus/message_allocator.cpp
-        src/main/message_bus/message_allocator.hpp
-        src/main/message_bus/message_bus.cpp
-        src/main/message_bus/message_bus.hpp
-        src/main/message_bus/subscriber.cpp
-        src/main/message_bus/subscriber.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp
         src/test/task_manager/task_manager_tests.cpp
-        src/main/message_bus/message.hpp
+        ST_message_bus/src/main/message.hpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp)
 
 target_link_libraries(task_manager_test
         ST_util
+        ST_message_bus
         gtest
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -406,10 +282,6 @@ target_link_libraries(task_manager_test
         ${SDL2_MIXER_LIBRARY})
 
 set(ALL_TESTS
-        message_allocator_test
-        message_test
-        subscriber_test
-        message_bus_test
         console_test
         audio_manager_test
         display_manager_test
@@ -420,10 +292,6 @@ set(ALL_TESTS
         task_manager_test)
 
 set(RUN_ON_BUILD_TESTS
-        message_allocator_test
-        message_test
-        subscriber_test
-        message_bus_test
         console_test
         asset_manager_test
         entity_test

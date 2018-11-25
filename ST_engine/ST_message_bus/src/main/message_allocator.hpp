@@ -11,9 +11,9 @@
 #define SLAVIC_TALES_MESSAGE_ALLOCATOR_HPP
 
 
-#include <message_bus/message.hpp>
-#include <message_bus/message_types.hpp>
-#include <defs.hpp>
+#include "message.hpp"
+#include "message_types.hpp"
+#include <SDL_mutex.h>
 
 #define MESSAGE_ALLOCATOR_CAPACITY 300
 

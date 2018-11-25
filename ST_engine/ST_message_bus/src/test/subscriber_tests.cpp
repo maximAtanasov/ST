@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <message_bus/message_bus.hpp>
+#include "../../include/message_bus.hpp"
 
 TEST(message_test, test_push_message_and_get_one_message) {
     auto test_subject = new subscriber();

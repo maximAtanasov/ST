@@ -13,14 +13,13 @@
 #include <cstdlib>
 #include <iostream>
 #include <ST_util/atomic_queue/concurrentqueue.h>
-#include <message_bus/subscriber.hpp>
-#include <message_bus/message.hpp>
+#include "../src/main/message.hpp"
 #include <ST_util/bytell_hash_map.hpp>
 #include <memory>
 #include <vector>
 #include <cstring>
-#include <message_bus/message_allocator.hpp>
-
+#include "../src/main/message_allocator.hpp"
+#include "../src/main/subscriber.hpp"
 
 ///The centeral messaging system of the engine. All subsystem make extensive use of it.
 /**

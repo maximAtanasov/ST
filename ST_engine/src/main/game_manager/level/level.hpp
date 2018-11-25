@@ -15,7 +15,7 @@
 #include <game_manager/level/entity.hpp>
 #include <game_manager/level/text.hpp>
 #include <game_manager/level/light.hpp>
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 #include <game_manager/level/camera.hpp>
 #include <input_manager/input_manager.hpp>
 

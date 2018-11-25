@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <message_bus/message_bus.hpp>
+#include "../../../ST_message_bus/include/message_bus.hpp"
 #include <console/console.hpp>
 
 /// Tests fixture for the console

@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <message_bus/message_bus.hpp>
+#include "../../include/message_bus.hpp"
 #include <ST_util/test_util.hpp>
 
 class message_allocator_tests : public::testing::Test {
