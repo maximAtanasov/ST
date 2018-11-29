@@ -45,6 +45,7 @@ add_executable(ST_engine
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
+        src/main/main/message_types.hpp
         src/main/console/console.cpp
         src/main/console/console.hpp
         src/main/defs.hpp

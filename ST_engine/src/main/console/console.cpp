@@ -9,6 +9,7 @@
 
 #include <console/console.hpp>
 #include <input_manager/key_definitions.hpp>
+#include <main/message_types.hpp>
 
 /**
  *

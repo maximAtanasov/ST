@@ -9,6 +9,7 @@
 
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
+#include <main/message_types.hpp>
 
 #define FIRST_LEVEL_NAME "main"
 

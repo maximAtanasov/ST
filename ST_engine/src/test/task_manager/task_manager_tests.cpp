@@ -16,11 +16,15 @@ class task_manager_tests : public::testing::TestWithParam<int>{
 
 protected:
 
+    message_bus* msg_bus{};
+
     void SetUp() override{
         initialize_SDL();
+        msg_bus = new message_bus();
     }
 
     void TearDown() override{
+        delete msg_bus;
         close_SDL();
     }
 };
@@ -38,7 +42,7 @@ static void test_task_function2(void* arg){
 
 TEST_F(task_manager_tests, test_start_task_without_dependency){
     //Set up
-    task_manager test_subject(new message_bus());
+    task_manager test_subject(msg_bus);
     uint8_t test_value = 10;
 
     //Test
@@ -49,7 +53,7 @@ TEST_F(task_manager_tests, test_start_task_without_dependency){
 
 TEST_F(task_manager_tests, test_start_tasks_with_dependency){
     //Set up
-    task_manager test_subject(new message_bus());
+    task_manager test_subject(msg_bus);
     uint8_t test_value = 10;
 
     //Test
@@ -62,7 +66,7 @@ TEST_F(task_manager_tests, test_start_tasks_with_dependency){
 
 TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
     //Set up
-    task_manager test_subject(new message_bus());
+    task_manager test_subject(msg_bus);
     uint8_t test_value = 10;
 
     //Test
@@ -75,7 +79,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
 
 TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     //Set up
-    task_manager test_subject(new message_bus());
+    task_manager test_subject(msg_bus);
     uint8_t test_value = 10;
 
     //Test
@@ -88,7 +92,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
 
 TEST_P(task_manager_tests, test_do_work_while_waiting){
     //Set up
-    task_manager test_subject(new message_bus());
+    task_manager test_subject(msg_bus);
     //test_subject.set_task_thread_amount(4);
     uint8_t test_value1 = 10;
     uint8_t test_value2 = 20;

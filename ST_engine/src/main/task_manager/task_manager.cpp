@@ -206,7 +206,7 @@ task_manager::task_manager(message_bus *msg_bus){
     //initialize semaphore for worker threads
     work_sem = SDL_CreateSemaphore(0);
 
-    fprintf(stdout, "This system has %d physical cores", thread_num);
+    fprintf(stdout, "This system has %d physical cores\n", thread_num);
 
     //if we can't tell or there is only one core, then start one worker thread
     if(thread_num == 0 || thread_num == 1){
