@@ -13,7 +13,8 @@
 
 #include "message.hpp"
 #include "message_types.hpp"
-#include <SDL_mutex.h>
+#include <mutex>
+#include <atomic>
 
 #define MESSAGE_ALLOCATOR_CAPACITY 300
 
@@ -26,11 +27,11 @@
  */
 class message_allocator{
 private:
-    SDL_mutex* access_mutex{};
+    std::mutex access_mutex;
     uint16_t pointer = 0;
     message* memory{};
     uint32_t memory_size = MESSAGE_ALLOCATOR_CAPACITY;
-    bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
+    std::atomic_bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
     message_allocator();
