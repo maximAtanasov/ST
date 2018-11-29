@@ -10,5 +10,5 @@
 
 language = "english"
 audio = "audioDisabled"
-fullscreen = "fullscreenEnabled"
+fullscreen = "fullscreenDisabled"
 vsync = "vsyncEnabled"
