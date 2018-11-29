@@ -9,9 +9,7 @@
 
 #include <gtest/gtest.h>
 #include "../../include/message_bus.hpp"
-#include <ST_util/test_util.hpp>
 #include <message_bus.hpp>
-
 
 class message_bus_tests : public::testing::Test {
 
@@ -19,14 +17,6 @@ protected:
 
     std::vector<subscriber*> get_subscribers(message_bus* test_subject, int msg){
         return test_subject->subscribers[msg];
-    }
-
-    void SetUp() override{
-        initialize_SDL();
-    }
-
-    void TearDown() override{
-        close_SDL();
     }
 };
 

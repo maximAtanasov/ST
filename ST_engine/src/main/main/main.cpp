@@ -24,6 +24,7 @@ int main(int argc, char** argv){
 
     //Order of subsystem initialization is crucial
     message_bus gMessage_bus;
+
     task_manager gTask_manager(&gMessage_bus);
     audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);

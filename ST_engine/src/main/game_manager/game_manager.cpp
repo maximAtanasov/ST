@@ -47,7 +47,7 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     //Load the first level
     load_level(FIRST_LEVEL_NAME);
     start_level(FIRST_LEVEL_NAME);
-    SDL_AtomicSet(&end_game, 1);
+    game_is_running_ = true;
 }
 
 /**
@@ -120,7 +120,7 @@ void game_manager::handle_messages(){
             vsync_flag = *arg;
         }
         else if(temp->msg_name == END_GAME){
-            SDL_AtomicSet(&end_game, 0);
+            game_is_running_ = false;
         }
         else if(temp->msg_name == SHOW_MOUSE){
             auto arg = static_cast<bool*>(temp->get_data());

@@ -82,9 +82,8 @@ class game_manager{
         std::string active_level{};
         ST::level* current_level_pointer{};
         subscriber msg_sub{};
-        SDL_atomic_t end_game{};
+        std::atomic_bool game_is_running_;
         lua_backend gScript_backend{};
-
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
         bool keys_pressed_data[64]{};
@@ -161,7 +160,7 @@ inline ST::level* game_manager::get_level() const{
  * @return True if running, false otherwise.
  */
 inline bool game_manager::game_is_running() const{
-    return static_cast<bool>(SDL_AtomicGet(const_cast<SDL_atomic_t*>(&end_game)));
+    return game_is_running_;
 }
 
 /**
