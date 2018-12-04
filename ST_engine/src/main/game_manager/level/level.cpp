@@ -27,8 +27,10 @@ ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
 void ST::level::load(){
     load_input_conf();
     //Register all the keys this level uses with the input manager.
-    for(auto i : actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(i.second)));
+    for(const auto &i : actions_Buttons) {
+        for(const auto& key : i.second) {
+            gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(key)));
+        }
     }
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
@@ -65,7 +67,7 @@ ST::level::~level(){
  * Sends a UNLOAD_LIST message to unload all assets and unregisters all keys.
  */
 void ST::level::unload(){
-    for(auto i : actions_Buttons) {
+    for(const auto &i : actions_Buttons) {
         gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
     }
     //unload fonts
@@ -103,7 +105,6 @@ int8_t ST::level::load_input_conf(){
         int actionRead = 0;
         while(!file.eof()){
             auto a = static_cast<char>(file.get());
-
             //Ignore comments
             if(a ==  '#'){
                 while(a != '\n'){
@@ -121,7 +122,14 @@ int8_t ST::level::load_input_conf(){
             }
             else if(a ==  '\n' || file.eof()){
                 std::hash<std::string> hash_f;
-                actions_Buttons[hash_f(action)] = key_index(button);
+                std::istringstream buf(button);
+                std::istream_iterator<std::string> beg(buf), end;
+                std::vector<std::string> tokens(beg, end);
+                actions_Buttons.emplace(hash_f(action), std::vector<ST::key>());
+                std::vector<ST::key>* buttons_for_action = &actions_Buttons.at(hash_f(action));
+                for(const auto &token : tokens) {
+                    buttons_for_action->emplace_back(key_index(token));
+                }
                 actionRead = 0;
                 action.clear();
                 button.clear();

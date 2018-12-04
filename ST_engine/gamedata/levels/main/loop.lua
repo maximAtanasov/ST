@@ -17,7 +17,7 @@ else
     startLevel("author_splash")
 end
 
-if keyPressed("START") or keyPressed("ESCAPE") or keyPressed("START_C") then
+if keyPressed("START") then
     unloadLevel("main")
     startLevel("author_splash")
 end

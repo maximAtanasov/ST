@@ -185,7 +185,12 @@ inline int game_manager::get_mouse_y() const{
  * @return True if pressed, false otherwise.
  */
 inline bool game_manager::key_pressed(size_t arg) const{
-    return keys_pressed_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
+    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+        if(keys_pressed_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -194,7 +199,12 @@ inline bool game_manager::key_pressed(size_t arg) const{
  * @return True if held, false otherwise.
  */
 inline bool game_manager::key_held(size_t arg) const{
-    return keys_held_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
+    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+        if(keys_held_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -203,7 +213,12 @@ inline bool game_manager::key_held(size_t arg) const{
  * @return True if released, false otherwise.
  */
 inline bool game_manager::key_released(size_t arg) const{
-    return keys_released_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
+    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+        if(keys_released_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 /**

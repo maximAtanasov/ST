@@ -10,7 +10,7 @@
 --code is run in a loop inside the main executable
 
 if(pause == 0) then
-    if keyPressed("PAUSE") or keyPressed("PAUSE_C") then
+    if keyPressed("PAUSE") then
         pauseGame()
     end
 
@@ -49,7 +49,7 @@ elseif(pause == 1) then
     setDarkness(0)
     button_continue:update()
     button_exit:update()
-    if keyPressed("PAUSE") or keyPressed("PAUSE_C") then
+    if keyPressed("PAUSE") then
         unpauseGame()
     end
 end

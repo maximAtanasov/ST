@@ -8,7 +8,7 @@
 
 if startCounter < 100 then
     startCounter = startCounter + 1
-    if keyPressed("START") or keyPressed("ESCAPE") or keyPressed("START_C") then
+    if keyPressed("START") then
         startCounter = 100
     end
     return
@@ -25,7 +25,7 @@ else
     startLevel("main_menu")
 end
 
-if keyPressed("START") or keyPressed("ESCAPE") or keyPressed("START_C") then
+if keyPressed("START") then
     unloadLevel("author_splash")
     startLevel("main_menu")
 end
