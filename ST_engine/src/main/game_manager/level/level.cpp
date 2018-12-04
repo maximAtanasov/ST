@@ -110,9 +110,6 @@ int8_t ST::level::load_input_conf(){
                     a = static_cast<char>(file.get());;
                 }
             }
-            else if(a ==  ' ') {
-                continue;
-            }
             else if(a == '=') {
                 actionRead = 1;
             }
@@ -337,6 +334,48 @@ ST::key ST::level::key_index(std::string arg){
     }
     else if(arg == "mouseRight"){
         index = key::MOUSERIGHT;
+    }
+    else if(arg == "controllerA"){
+        index = key::CONTROLLER_BUTTON_A;
+    }
+    else if(arg == "controllerB"){
+        index = key::CONTROLLER_BUTTON_B;
+    }
+    else if(arg == "controllerX"){
+        index = key::CONTROLLER_BUTTON_X;
+    }
+    else if(arg == "controllerY"){
+        index = key::CONTROLLER_BUTTON_Y;
+    }
+    else if(arg == "controllerSelect"){
+        index = key::CONTROLLER_BUTTON_SELECT;
+    }
+    else if(arg == "controllerStart"){
+        index = key::CONTROLLER_BUTTON_START;
+    }
+    else if(arg == "controllerLeftStick"){
+        index = key::CONTROLLER_BUTTON_LEFTSTICK;
+    }
+    else if(arg == "controllerRightStick"){
+        index = key::CONTROLLER_BUTTON_RIGHTSTICK;
+    }
+    else if(arg == "controllerLeftShoulder"){
+        index = key::CONTROLLER_BUTTON_RIGHTSHOULDER;
+    }
+    else if(arg == "controllerRightShoulder"){
+        index = key::CONTROLLER_BUTTON_LEFTSHOULDER;
+    }
+    else if(arg == "controllerDpadUp"){
+        index = key::CONTROLLER_BUTTON_DPAD_UP;
+    }
+    else if(arg == "controllerDpadDown"){
+        index = key::CONTROLLER_BUTTON_DPAD_DOWN;
+    }
+    else if(arg == "controllerDpadLeft"){
+        index = key::CONTROLLER_BUTTON_DPAD_LEFT;
+    }
+    else if(arg == "controllerDpadRight"){
+        index = key::CONTROLLER_BUTTON_DPAD_RIGHT;
     }
     return index;
 }

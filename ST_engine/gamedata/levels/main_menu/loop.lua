@@ -11,7 +11,7 @@ introFading()
 
 
 if(room == "main") then
-    if keyPressed("START") and darkness == 0 then
+    if keyPressed("START") or keyPressed("START_C") and darkness == 0 then
         button_newGame:onClick()
     end
     button_settings:update()

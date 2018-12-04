@@ -76,6 +76,7 @@ public:
         void set_log_level(ST::log_type arg);
         bool is_open() const;
         void update();
+        void post_init() const;
 };
 
 //INLINED METHODS

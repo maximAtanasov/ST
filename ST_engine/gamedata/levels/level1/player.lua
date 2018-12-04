@@ -30,14 +30,14 @@ player.affectedByPhysics = true
 player.mass = 10;
 
 function player:update()
-    if keyHeld("LEFT") then
+    if keyHeld("LEFT") or keyHeld("LEFT_C") then
         self:moveLeft()
-    elseif keyHeld("RIGHT") then
+    elseif keyHeld("RIGHT") or keyHeld("RIGHT_C") then
         self:moveRight()
     else
         self:idle()
     end
-    if keyPressed("JUMP") then
+    if keyPressed("JUMP") or keyPressed("JUMP_C") then
         self:jump()
     end
 

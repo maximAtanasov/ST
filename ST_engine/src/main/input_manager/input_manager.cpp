@@ -21,8 +21,15 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
-    if( SDL_Init(SDL_INIT_JOYSTICK) < 0 ){
+    if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0 ){
         log(ERROR, "Could not initialize gamepad subsystem!");
+    }else{
+        SDL_GameController* controller = SDL_GameControllerOpen(0);
+        for(uint8_t i = 1; controller != nullptr && i < 255; i++) {
+            controllers.emplace_back(controller);
+            log(INFO, "Found a valid controller: " + std::string(SDL_GameControllerName(controller)));
+            controller = SDL_GameControllerOpen(i);
+        }
     }
 
     //Initialize controls
@@ -65,6 +72,7 @@ void input_manager::take_input(){
     for(uint16_t i = 0; i < controls.keys; i++){
         controls.keyboardFramePrev[i] = controls.keyboard[i];
     }
+    controller_button_prev_frame = controller_buttons;
 
     //Collect mouse input
 	controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
@@ -73,12 +81,74 @@ void input_manager::take_input(){
     for(int8_t& i : controls.mouseClicks){
         i = 0;
     }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT))
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
         controls.mouseClicks[0] = 1;
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE))
+    }
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE)) {
         controls.mouseClicks[1] = 1;
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT))
+    }
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
         controls.mouseClicks[2] = 1;
+    }
+
+    controller_buttons.a = 0;
+    controller_buttons.b = 0;
+    controller_buttons.x = 0;
+    controller_buttons.y = 0;
+    controller_buttons.dpad_up = 0;
+    controller_buttons.dpad_right = 0;
+    controller_buttons.dpad_down = 0;
+    controller_buttons.dpad_left = 0;
+    controller_buttons.left_stick = 0;
+    controller_buttons.right_stick = 0;
+    controller_buttons.left_shoulder = 0;
+    controller_buttons.right_shoulder = 0;
+    controller_buttons.select = 0;
+    controller_buttons.start = 0;
+    for(SDL_GameController* c : controllers) {
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_A)){
+            controller_buttons.a = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_B)){
+            controller_buttons.b = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_X)){
+            controller_buttons.x = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_Y)){
+            controller_buttons.y = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_UP)){
+            controller_buttons.dpad_up = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_DOWN)){
+            controller_buttons.dpad_down = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_LEFT)){
+            controller_buttons.dpad_left = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)){
+            controller_buttons.dpad_right = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSTICK)){
+            controller_buttons.left_stick = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSTICK)){
+            controller_buttons.right_stick = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSHOULDER)){
+            controller_buttons.left_shoulder = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)){
+            controller_buttons.right_shoulder = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_START)){
+            controller_buttons.start = 1;
+        }
+        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_BACK)){
+            controller_buttons.select = 1;
+        }
+    }
 
     while(SDL_PollEvent(&event) != 0){
         if(event.type == SDL_QUIT){
@@ -137,12 +207,6 @@ void input_manager::take_input(){
             }
         }
     }
-
-    #ifdef __DEBUG
-    if(keypress(ST::key::TILDE)){
-        gMessage_bus->send_msg(make_msg(CONSOLE_TOGGLE, nullptr));
-    }
-    #endif
 
     //only send mouse coordinates if they change
     if(controls.mouseX != controls.mouseX_prev){
@@ -455,6 +519,62 @@ bool input_manager::keypress(ST::key arg) const{
         if(!controls.mouseClicksFramePrev[2] && controls.mouseClicks[2])
             pressed = true;
     }
+    else if(arg == ST::key::CONTROLLER_BUTTON_A){
+        if(!controller_button_prev_frame.a && controller_buttons.a)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_B){
+        if(!controller_button_prev_frame.b && controller_buttons.b)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_X){
+        if(!controller_button_prev_frame.x && controller_buttons.x)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_Y){
+        if(!controller_button_prev_frame.y && controller_buttons.y)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSTICK){
+        if(!controller_button_prev_frame.left_stick && controller_buttons.left_stick)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSTICK){
+        if(!controller_button_prev_frame.right_stick && controller_buttons.right_stick)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_UP){
+        if(!controller_button_prev_frame.dpad_up && controller_buttons.dpad_up)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_DOWN){
+        if(!controller_button_prev_frame.dpad_down && controller_buttons.dpad_down)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_LEFT){
+        if(!controller_button_prev_frame.dpad_left && controller_buttons.dpad_left)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_RIGHT){
+        if(!controller_button_prev_frame.dpad_right && controller_buttons.dpad_right)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSHOULDER){
+        if(!controller_button_prev_frame.left_shoulder && controller_buttons.left_shoulder)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER){
+        if(!controller_button_prev_frame.right_shoulder && controller_buttons.right_shoulder)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_SELECT){
+        if(!controller_button_prev_frame.select && controller_buttons.select)
+            pressed = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_START){
+        if(!controller_button_prev_frame.start && controller_buttons.start)
+            pressed = true;
+    }
     return pressed;
 }
 
@@ -718,6 +838,62 @@ bool input_manager::keyheld(ST::key arg) const{
         if(controls.mouseClicksFramePrev[2] && controls.mouseClicks[2])
             held = true;
     }
+    else if(arg == ST::key::CONTROLLER_BUTTON_A){
+        if(controller_button_prev_frame.a && controller_buttons.a)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_B){
+        if(controller_button_prev_frame.b && controller_buttons.b)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_X){
+        if(controller_button_prev_frame.x && controller_buttons.x)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_Y){
+        if(controller_button_prev_frame.y && controller_buttons.y)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSTICK){
+        if(controller_button_prev_frame.left_stick && controller_buttons.left_stick)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSTICK){
+        if(controller_button_prev_frame.right_stick && controller_buttons.right_stick)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_UP){
+        if(controller_button_prev_frame.dpad_up && controller_buttons.dpad_up)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_DOWN){
+        if(controller_button_prev_frame.dpad_down && controller_buttons.dpad_down)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_LEFT){
+        if(controller_button_prev_frame.dpad_left && controller_buttons.dpad_left)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_RIGHT){
+        if(controller_button_prev_frame.dpad_right && controller_buttons.dpad_right)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSHOULDER){
+        if(controller_button_prev_frame.left_shoulder && controller_buttons.left_shoulder)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER){
+        if(controller_button_prev_frame.right_shoulder && controller_buttons.right_shoulder)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_SELECT){
+        if(controller_button_prev_frame.select && controller_buttons.select)
+            held = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_START){
+        if(controller_button_prev_frame.start && controller_buttons.start)
+            held = true;
+    }
     return held;
 }
 
@@ -979,6 +1155,62 @@ bool input_manager::keyrelease(ST::key arg) const{
     }
     else if(arg == ST::key::MOUSERIGHT){
         if(controls.mouseClicksFramePrev[2] && !controls.mouseClicks[2])
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_A){
+        if(controller_button_prev_frame.a && !controller_buttons.a)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_B){
+        if(controller_button_prev_frame.b && !controller_buttons.b)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_X){
+        if(controller_button_prev_frame.x && !controller_buttons.x)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_Y){
+        if(controller_button_prev_frame.y && !controller_buttons.y)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSTICK){
+        if(controller_button_prev_frame.left_stick && !controller_buttons.left_stick)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSTICK){
+        if(controller_button_prev_frame.right_stick && !controller_buttons.right_stick)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_UP){
+        if(controller_button_prev_frame.dpad_up && !controller_buttons.dpad_up)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_DOWN){
+        if(controller_button_prev_frame.dpad_down && !controller_buttons.dpad_down)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_LEFT){
+        if(controller_button_prev_frame.dpad_left && !controller_buttons.dpad_left)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_RIGHT){
+        if(controller_button_prev_frame.dpad_right && !controller_buttons.dpad_right)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSHOULDER){
+        if(controller_button_prev_frame.left_shoulder && !controller_buttons.left_shoulder)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER){
+        if(controller_button_prev_frame.right_shoulder && !controller_buttons.right_shoulder)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_SELECT){
+        if(controller_button_prev_frame.select && !controller_buttons.select)
+            released = true;
+    }
+    else if(arg == ST::key::CONTROLLER_BUTTON_START){
+        if(controller_button_prev_frame.start && !controller_buttons.start)
             released = true;
     }
     return released;
