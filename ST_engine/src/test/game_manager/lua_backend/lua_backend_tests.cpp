@@ -739,6 +739,20 @@ TEST_F(lua_backend_test, test_call_function_getMouseY){
     ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
+TEST_F(lua_backend_test, test_call_function_leftTrigger){
+    test_subject.run_script("return leftTrigger()");
+
+    //Check result
+    ASSERT_EQ(100, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_rightTrigger){
+    test_subject.run_script("return rightTrigger()");
+
+    //Check result
+    ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
 TEST_F(lua_backend_test, test_call_function_keyHeld){
     test_subject.run_script("return keyHeld(\"SOME_KEY\")");
 

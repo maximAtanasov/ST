@@ -60,12 +60,11 @@ void input_manager::update_task(void* mngr){
  * Checks the state of the keyboard/mouse and sends appropriate messages.
  */
 void input_manager::take_input(){
-    int length = 0;
-    SDL_GetKeyboardState(&length);
     for(uint16_t i = 0; i < controls.keys; i++){
         controls.keyboardFramePrev[i] = controls.keyboard[i];
     }
-    controller_button_prev_frame = controller_buttons;
+
+    take_controller_input();
 
     //Collect mouse input
 	controls.mouseClicksFramePrev[0] = controls.mouseClicks[0];
@@ -84,6 +83,102 @@ void input_manager::take_input(){
         controls.mouseClicks[2] = 1;
     }
 
+    while(SDL_PollEvent(&event) != 0){
+        if(event.type == SDL_QUIT){
+            gMessage_bus->send_msg(make_msg(END_GAME, nullptr));
+        }
+        if(event.type == SDL_MOUSEWHEEL){
+            controls.mouse_scroll += event.wheel.y;
+            if(controls.mouse_scroll < 0){
+                controls.mouse_scroll = 0;
+            }
+            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
+        }
+        if(event.type == SDL_TEXTINPUT){
+            if(text_input) {
+                composition += event.edit.text;
+                //Drop the tilde when closing the console, otherwise it just stays there
+                while(!composition.empty() && composition.at(composition.size()-1) == CONSOLE_TOGGLE_KEY){
+                    composition.pop_back();
+                }
+                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
+            }
+        }
+        if(event.type == SDL_KEYDOWN){
+            if(event.key.keysym.sym == SDLK_BACKSPACE) {
+                if (composition.length() > 0) {
+                    composition.pop_back();
+                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
+                }
+            }
+        }
+		if(event.type == SDL_MOUSEMOTION){
+			SDL_GetMouseState(&controls.mouseX, &controls.mouseY);
+			controls.mouseX = static_cast<int>(static_cast<float>(controls.mouseX)*ratio_w);
+			controls.mouseY = static_cast<int>(static_cast<float>(controls.mouseY)*ratio_h);
+		}
+        if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+            r_width = event.window.data1;
+            r_height = event.window.data2;
+            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
+            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
+        }
+        if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
+            SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
+            controllers.emplace_back(controller);
+            log(INFO, "Found a controller: " + std::string(SDL_GameControllerName(controller)));
+        }
+        if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
+            uint8_t number = 0;
+            for(uint8_t i = 0; i < controllers.size(); i++){
+                if(SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controllers.at(i))) == event.cdevice.which){
+                    number = i;
+                }
+            }
+            controllers.erase(controllers.begin() + number);
+            log(INFO, "Controller " + std::to_string(number+1) + " disconnected");
+        }
+    }
+
+    //check if any of the registered keys is pressed and send a message if so
+    for(auto i : registered_keys){
+        if(i.second > 0) {
+            if (keypress(i.first)) {
+                gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i.first))));
+            } else if (keyheld(i.first)) {
+                gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i.first))));
+            } else if (keyrelease(i.first)) {
+                gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i.first))));
+            }
+        }
+    }
+
+    //only send mouse coordinates if they change
+    if(controls.mouseX != controls.mouseX_prev){
+        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouseX)));
+        controls.mouseX_prev = controls.mouseX;
+    }
+    if(controls.mouseY != controls.mouseY_prev){
+        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouseY)));
+        controls.mouseY_prev = controls.mouseY;
+    }
+
+    //only send controller axis values if the change
+    if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
+        gMessage_bus->send_msg(make_msg(LEFT_TRIGGER, make_data(controller_buttons.left_trigger)));
+    }
+
+    //only send controller axis values if the change
+    if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
+        gMessage_bus->send_msg(make_msg(RIGHT_TRIGGER, make_data(controller_buttons.right_trigger)));
+    }
+}
+
+/**
+ * Takes input from all available controllers.
+ */
+void input_manager::take_controller_input(){
+    controller_button_prev_frame = controller_buttons;
     controller_buttons.a = 0;
     controller_buttons.b = 0;
     controller_buttons.x = 0;
@@ -98,6 +193,12 @@ void input_manager::take_input(){
     controller_buttons.right_shoulder = 0;
     controller_buttons.select = 0;
     controller_buttons.start = 0;
+    controller_buttons.left_trigger = 0;
+    controller_buttons.right_trigger = 0;
+    controller_buttons.right_stick_vertical = 0;
+    controller_buttons.right_stick_horizontal = 0;
+    controller_buttons.left_stick_vertical = 0;
+    controller_buttons.left_stick_horizontal = 0;
     for(SDL_GameController* c : controllers) {
         if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_A)){
             controller_buttons.a = 1;
@@ -141,89 +242,12 @@ void input_manager::take_input(){
         if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_BACK)){
             controller_buttons.select = 1;
         }
-    }
-
-    while(SDL_PollEvent(&event) != 0){
-        if(event.type == SDL_QUIT){
-            gMessage_bus->send_msg(make_msg(END_GAME, nullptr));
-        }
-        if(event.type == SDL_MOUSEWHEEL){
-            controls.mouse_scroll += event.wheel.y;
-            if(controls.mouse_scroll < 0){
-                controls.mouse_scroll = 0;
-            }
-            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
-        }
-        if(event.type == SDL_TEXTINPUT){
-            if(text_input) {
-                composition += event.edit.text;
-
-                #ifdef __DEBUG
-                //Drop the tilde when closing the console, otherwise it just stays there
-                if(!composition.empty() && composition.at(composition.size()-1) == CONSOLE_TOGGLE_KEY){
-                    composition.pop_back();
-                }
-                #endif
-                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
-            }
-        }
-        if(event.type == SDL_KEYDOWN){
-            if(event.key.keysym.sym == SDLK_BACKSPACE) {
-                if (composition.length() > 0) {
-                    composition.pop_back();
-                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
-                }
-            }
-        }
-		if(event.type == SDL_MOUSEMOTION){
-			SDL_GetMouseState(&controls.mouseX, &controls.mouseY);
-			controls.mouseX = static_cast<int>(static_cast<float>(controls.mouseX)*ratio_w);
-			controls.mouseY = static_cast<int>(static_cast<float>(controls.mouseY)*ratio_h);
-		}
-        if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
-            r_width = event.window.data1;
-            r_height = event.window.data2;
-            ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
-            ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
-        }
-        if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
-            SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
-            controllers.emplace_back(controller);
-            log(INFO, "Found a valid controller: " + std::string(SDL_GameControllerName(controller)));
-        }
-        if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
-            uint8_t number = 0;
-            for(uint8_t i = 0; i < controllers.size(); i++){
-                if(SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controllers.at(i))) == event.cdevice.which){
-                    number = i;
-                }
-            }
-            controllers.erase(controllers.begin() + number);
-            log(INFO, "Controller " + std::to_string(number+1) + " removed");
-        }
-    }
-
-    //check if any of the registered keys is pressed and send a message if so
-    for(auto i : registered_keys){
-        if(i.second > 0) {
-            if (keypress(i.first)) {
-                gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i.first))));
-            } else if (keyheld(i.first)) {
-                gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i.first))));
-            } else if (keyrelease(i.first)) {
-                gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i.first))));
-            }
-        }
-    }
-
-    //only send mouse coordinates if they change
-    if(controls.mouseX != controls.mouseX_prev){
-        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouseX)));
-        controls.mouseX_prev = controls.mouseX;
-    }
-    if(controls.mouseY != controls.mouseY_prev){
-        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouseY)));
-        controls.mouseY_prev = controls.mouseY;
+        controller_buttons.left_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+        controller_buttons.right_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+        controller_buttons.right_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTX);
+        controller_buttons.right_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTY);
+        controller_buttons.left_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTX);
+        controller_buttons.left_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY);
     }
 }
 

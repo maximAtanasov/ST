@@ -91,6 +91,8 @@ class game_manager{
         bool keys_released_data[77]{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
+        int16_t left_trigger;
+        int16_t right_trigger;
 
         //methods
         void handle_messages();
@@ -115,10 +117,13 @@ class game_manager{
         bool key_released(size_t arg) const;
         int32_t get_mouse_x() const;
         int32_t get_mouse_y() const;
+        int16_t get_left_trigger() const;
+        int16_t get_right_trigger() const;
         void update();
         bool game_is_running() const;
         ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
+
 
 };
 

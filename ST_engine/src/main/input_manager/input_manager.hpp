@@ -67,6 +67,13 @@ class input_manager{
 			uint8_t right_shoulder = 0;
 			uint8_t start = 0;
 			uint8_t select = 0;
+			int16_t left_trigger = 0;
+            int16_t right_trigger = 0;
+            int16_t right_stick_vertical = 0;
+            int16_t right_stick_horizontal = 0;
+            int16_t left_stick_vertical = 0;
+            int16_t left_stick_horizontal = 0;
+
 		};
 
         struct game_controls{
@@ -103,7 +110,8 @@ class input_manager{
 		bool keyheld(ST::key) const;
 		bool keyrelease(ST::key) const;
 		void handle_messages();
-        void take_input();	
+        void take_input();
+        void take_controller_input();
 		static void update_task(void* mngr); //And private on linux
 
 	public:

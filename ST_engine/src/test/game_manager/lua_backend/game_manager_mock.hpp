@@ -66,6 +66,12 @@ public:
     void update() {};
     bool game_is_running() const { return true; };
     void center_camera_on_entity(uint64_t id){center_camera_on_entity_calls++;}
+    int16_t get_left_trigger() const{
+        return 100;
+    }
+    int16_t get_right_trigger() const{
+        return 200;
+    }
 
     //Variables to keep track of method calls
     uint8_t get_level_calls = 0;

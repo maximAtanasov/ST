@@ -9,6 +9,8 @@
 
 --code is run in a loop inside the main executable
 
+log(INFO, "leftTrigger: "..tostring(leftTrigger()).." rightTrigger: "..tostring(rightTrigger()))
+
 if(pause == 0) then
     if keyPressed("PAUSE") then
         pauseGame()
