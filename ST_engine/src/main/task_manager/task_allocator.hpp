@@ -14,15 +14,16 @@
 
 #include <defs.hpp>
 #include <task_manager/task.hpp>
+#include <mutex>
 
 ///An allocator for task objects
 class task_allocator {
 private:
-    SDL_mutex* access_mutex{};
+    std::mutex access_mutex;
     uint16_t pointer = 0;
     ST::task* memory{};
     uint32_t memory_size = TASK_ALLOCATOR_CAPACITY;
-    bool allocated[TASK_ALLOCATOR_CAPACITY]{};
+    std::atomic_bool allocated[TASK_ALLOCATOR_CAPACITY]{};
 public:
     ST::task* allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency);
     void deallocate(uint16_t id);
@@ -34,7 +35,7 @@ public:
 
 inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency){
     uint16_t i = 0;
-    SDL_LockMutex(access_mutex);
+    access_mutex.lock();
     //find the next free spot in memory
     while(allocated[pointer] && i < memory_size){
         pointer++;
@@ -49,7 +50,7 @@ inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *a
     }
     allocated[pointer] = true;
     auto temp = new (memory+pointer) ST::task(pointer, function, arg, dependency);
-    SDL_UnlockMutex(access_mutex);
+    access_mutex.unlock();
     return temp;
 }
 
@@ -60,9 +61,7 @@ inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *a
  */
 inline void task_allocator::deallocate(uint16_t id){
     //with the help of the id we can mark the unused memory as free in our array
-    SDL_LockMutex(access_mutex);
     allocated[id] = false;
-    SDL_UnlockMutex(access_mutex);
 }
 
 /**

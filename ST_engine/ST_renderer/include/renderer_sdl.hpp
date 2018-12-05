@@ -11,9 +11,9 @@
 #define RENDER_SDL_DEF
 
 
-#include "../src/main/renderer_sdl/font_cache.hpp"
-#include "../../../ST_util/include/ST_util/bytell_hash_map.hpp"
-#include "../../src/main/defs.hpp"
+#include <SDL_ttf.h>
+#include <ST_util/bytell_hash_map.hpp>
+#include <string>
 
 ///The renderer for the engine.
 /**

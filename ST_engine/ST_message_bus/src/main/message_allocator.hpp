@@ -11,9 +11,9 @@
 #define SLAVIC_TALES_MESSAGE_ALLOCATOR_HPP
 
 
-#include <message_bus/message.hpp>
-#include <message_bus/message_types.hpp>
-#include <defs.hpp>
+#include "message.hpp"
+#include <mutex>
+#include <atomic>
 
 #define MESSAGE_ALLOCATOR_CAPACITY 300
 
@@ -26,15 +26,15 @@
  */
 class message_allocator{
 private:
-    SDL_mutex* access_mutex{};
+    std::mutex access_mutex;
     uint16_t pointer = 0;
     message* memory{};
     uint32_t memory_size = MESSAGE_ALLOCATOR_CAPACITY;
-    bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
+    std::atomic_bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
     message_allocator();
-    message* allocate_message(msg_type name, std::shared_ptr<void> data);
+    message* allocate_message(int name, std::shared_ptr<void> data);
     void deallocate(uint16_t id);
     ~message_allocator();
 };

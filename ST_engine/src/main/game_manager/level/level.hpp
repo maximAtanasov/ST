@@ -15,7 +15,7 @@
 #include <game_manager/level/entity.hpp>
 #include <game_manager/level/text.hpp>
 #include <game_manager/level/light.hpp>
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 #include <game_manager/level/camera.hpp>
 #include <input_manager/input_manager.hpp>
 
@@ -44,7 +44,7 @@ namespace ST {
          * Contains all entities, lights and text objects.
          * Contains the background overlay and the camera.
          */
-        ska::bytell_hash_map<size_t, key> actions_Buttons{};
+        ska::bytell_hash_map<size_t, std::vector<ST::key>> actions_Buttons{};
         std::vector<entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};

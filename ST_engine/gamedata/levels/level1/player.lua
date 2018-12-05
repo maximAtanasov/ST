@@ -30,10 +30,19 @@ player.affectedByPhysics = true
 player.mass = 10;
 
 function player:update()
-    if keyHeld("LEFT") then
-        self:moveLeft()
+    leftStick = leftStickHorizontal()
+    if leftStick < -2000 and leftStick > -15000 then
+       self:moveLeft(5)
+    elseif leftStick < -15000 then
+        self:moveLeft(10)
+    elseif leftStick > 2000 and leftStick < 15000 then
+        self:moveRight(5)
+    elseif leftStick > 15000 then
+        self:moveRight(10)
+    elseif keyHeld("LEFT") then
+        self:moveLeft(10)
     elseif keyHeld("RIGHT") then
-        self:moveRight()
+        self:moveRight(10)
     else
         self:idle()
     end
@@ -69,14 +78,14 @@ function player:jump()
     end
 end
 
-function player:moveRight()
+function player:moveRight(speed)
     self.lastDirection = 0;
-    self:setVelocityX(10)
+    self:setVelocityX(speed)
     self:playAnimation(self.rightAnim)
 end
 
-function player:moveLeft()
-    self:setVelocityX(-10)
+function player:moveLeft(speed)
+    self:setVelocityX(-speed)
     self.lastDirection = 1;
     self:playAnimation(self.leftAnim)
 end

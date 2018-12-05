@@ -13,7 +13,7 @@
 #include <SDL.h>
 #include <SDL_mixer.h>
 #include <assets_manager/assets.hpp>
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 #include <task_manager/task_manager.hpp>
 #include <console/log.hpp>
 #include <task_manager/task_allocator.hpp>

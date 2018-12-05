@@ -12,7 +12,6 @@
 
 
 #include <memory>
-#include <message_bus/message_types.hpp>
 
 class message_allocator;
 extern message_allocator msg_memory;
@@ -28,9 +27,9 @@ private:
     //that's how shared_ptr works, if you don't believe me, well google it or something
     uint16_t id; //used during allocation and deallocation
 
-    message(msg_type name, const std::shared_ptr<void>& data, uint16_t id);
+    message(int name, const std::shared_ptr<void>& data, uint16_t id);
 public:
-    msg_type msg_name;
+    int msg_name;
     uint16_t get_id() const;
     void* get_data() const;
     message* make_copy() const;
@@ -43,7 +42,7 @@ public:
 /**
  * constructor - only ever used by the message_allocator class.
  */
-inline message::message(msg_type name, const std::shared_ptr<void>& data, uint16_t id){
+inline message::message(int name, const std::shared_ptr<void>& data, uint16_t id){
     msg_name = name;
     this->data = data;
     this->id = id;

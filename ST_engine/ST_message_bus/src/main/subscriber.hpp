@@ -10,8 +10,8 @@
 #ifndef SLAVIC_TALES_SUBSCRIBER_HPP
 #define SLAVIC_TALES_SUBSCRIBER_HPP
 
-#include <message_bus/message.hpp>
 #include <ST_util/atomic_queue/concurrentqueue.h>
+#include "message.hpp"
 
 ///This class handles a small queue for messages.
 /**

@@ -14,7 +14,6 @@
  * Allocates memory for tasks.
  */
 task_allocator::task_allocator(){
-    access_mutex = SDL_CreateMutex();
     pointer = 0;
     memory = static_cast<ST::task*>(malloc(sizeof(ST::task)*memory_size));
     for(uint32_t i = 0; i < memory_size; i++){
@@ -26,7 +25,6 @@ task_allocator::task_allocator(){
  * Destructor for the allocator - frees all allocated memory.
  */
 task_allocator::~task_allocator(){
-    SDL_DestroyMutex(access_mutex);
     free(memory);
 }
 

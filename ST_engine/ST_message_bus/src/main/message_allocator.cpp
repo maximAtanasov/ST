@@ -7,16 +7,14 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <SDL_mutex.h>
 #include <memory>
-#include <message_bus/message_allocator.hpp>
+#include <message_allocator.hpp>
 
 /**
  * Constructor for the message allocator.
  * Allocates memory for messages.
  */
 message_allocator::message_allocator(){
-    access_mutex = SDL_CreateMutex();
     pointer = 0;
     memory = (message*)malloc(sizeof(message)*memory_size);
     for(uint32_t i = 0; i < memory_size; i++){
@@ -30,9 +28,9 @@ message_allocator::message_allocator(){
  * @param data The message data.
  * @return The new message.
  */
-message* message_allocator::allocate_message(msg_type name, std::shared_ptr<void> data){
+message* message_allocator::allocate_message(int name, std::shared_ptr<void> data){
     uint16_t i = 0;
-    SDL_LockMutex(access_mutex);
+    access_mutex.lock();
     //find the next free spot in memory
     while(allocated[pointer] && i < memory_size){
         pointer++;
@@ -46,7 +44,7 @@ message* message_allocator::allocate_message(msg_type name, std::shared_ptr<void
     }
     allocated[pointer] = true;
     auto temp = new (memory+pointer) message(name, data, pointer);
-    SDL_UnlockMutex(access_mutex);
+    access_mutex.unlock();
     return temp;
 }
 
@@ -57,15 +55,12 @@ message* message_allocator::allocate_message(msg_type name, std::shared_ptr<void
  */
 void message_allocator::deallocate(uint16_t id){
     //with the help of the id we can mark the unused memory as free in our array
-    SDL_LockMutex(access_mutex);
     allocated[id] = false;
-    SDL_UnlockMutex(access_mutex);
 }
 
 /**
  * Destructor for the allocator - frees all allocated memory.
  */
 message_allocator::~message_allocator(){
-    SDL_DestroyMutex(access_mutex);
     free(memory);
 }

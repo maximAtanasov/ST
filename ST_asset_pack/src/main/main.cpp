@@ -45,31 +45,36 @@ int asset_pack_main(int argc, char *argv[]) {
          args.emplace_back(std::string(argv[i]));
      }
 
-     if (pack_arg == "-p") { //Pack assets to a binary
+     if (pack_arg == "-p" || pack_arg == "--pack") { //Pack assets to a binary
          std::string binary_name = args.at(0);
          args.erase(args.begin(), args.begin() + 1);
          #ifndef TESTING
          int8_t return_code = ST::pack_to_binary(binary_name, args);
          if(return_code == -1){
             fprintf(stderr, "Error packing files to existing binary, maybe it is corrupted!\n");
-         }else if(return_code == -2){
+         }
+         else if(return_code == -2){
              fprintf(stderr, "Error packing files to existing binary, it already cointains a file named the same as one of the ones you are adding!\n");
-         }else if(return_code == 0)
+         }
+         else if(return_code == 0)
          #endif
-         fprintf(stdout, "Binary generated!\n");
-     } else if (pack_arg == "-u") { //Or unpack a binary to disk
+            fprintf(stdout, "Binary generated!\n");
+     }
+     else if (pack_arg == "-u" || pack_arg == "--unpack") { //Or unpack a binary to disk
          for (const auto &path : args) {
             #ifndef TESTING
             if(ST::unpack_binary_to_disk(path) == 0){
                 fprintf(stdout, "Binary unpacked!\n");
-            } else{
+            }
+            else{
                 fprintf(stderr, "Error unpacking!\n");
             }
             #elif defined(TESTING)
             fprintf(stdout, "Binary unpacked!\n");
             #endif
          }
-     } else {
+     }
+     else {
          fprintf(stderr, "Unknown argument!\n");
      }
 #ifndef TESTING

@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 
 /**
  * The allocator is declared globally.
@@ -38,12 +38,30 @@ void message_bus::send_msg(message* arg){
     }
 }
 
+static bool singleton_initialized = false;
+
+/**
+ * Default constructor for the message bus.
+ * Throws exception if initialized twice.
+ */
+message_bus::message_bus() {
+    if(singleton_initialized){
+        throw std::runtime_error("The message bus cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+}
+
+message_bus::~message_bus() {
+    singleton_initialized = false;
+}
+
 /**
  * Subscribe to a message type - adds the subscriber object to the list of subscribers for the given message type.
  * @param msg The type of the message.
  * @param sub The subscriber object.
  */
-void message_bus::subscribe(msg_type msg, subscriber* sub){
+void message_bus::subscribe(int msg, subscriber* sub){
     int temp = msg;
     subscribers[temp].push_back(sub);
 }

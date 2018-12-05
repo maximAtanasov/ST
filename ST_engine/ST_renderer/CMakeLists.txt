@@ -7,7 +7,7 @@
 # E-mail: atanasovmaksim1@gmail.com
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
-project(ST_util)
+project(ST_renderer)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -26,7 +26,9 @@ include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 include_directories(${SDL2_MIXER_INCLUDE_DIR})
 include_directories(${SDL2_TTF_INCLUDE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/../..ST_util/include)
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/src/main/renderer_sdl)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
 
 add_library(ST_renderer STATIC

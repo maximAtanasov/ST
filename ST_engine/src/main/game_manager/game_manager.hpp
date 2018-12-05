@@ -12,7 +12,7 @@
 
 #include <defs.hpp>
 #include <game_manager/level/level.hpp>
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 #include <game_manager/lua_backend/lua_backend.hpp>
 
 ///This class is responsible for managing all levels and the lua backend, it is the heart of the engine.
@@ -82,16 +82,21 @@ class game_manager{
         std::string active_level{};
         ST::level* current_level_pointer{};
         subscriber msg_sub{};
-        SDL_atomic_t end_game{};
+        std::atomic_bool game_is_running_;
         lua_backend gScript_backend{};
-
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
-        bool keys_pressed_data[64]{};
-        bool keys_held_data[64]{};
-        bool keys_released_data[64]{};
+        bool keys_pressed_data[77]{};
+        bool keys_held_data[77]{};
+        bool keys_released_data[77]{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
+        int16_t left_trigger;
+        int16_t right_trigger;
+        int16_t left_stick_horizontal;
+        int16_t left_stick_vertical;
+        int16_t right_stick_vertical;
+        int16_t right_stick_horizontal;
 
         //methods
         void handle_messages();
@@ -116,6 +121,12 @@ class game_manager{
         bool key_released(size_t arg) const;
         int32_t get_mouse_x() const;
         int32_t get_mouse_y() const;
+        int16_t get_left_trigger() const;
+        int16_t get_right_trigger() const;
+        int16_t get_left_stick_horizontal() const;
+        int16_t get_left_stick_vertical() const;
+        int16_t get_right_stick_vertical() const;
+        int16_t get_right_stick_horizontal() const;
         void update();
         bool game_is_running() const;
         ST::level* get_level() const;
@@ -161,7 +172,7 @@ inline ST::level* game_manager::get_level() const{
  * @return True if running, false otherwise.
  */
 inline bool game_manager::game_is_running() const{
-    return static_cast<bool>(SDL_AtomicGet(const_cast<SDL_atomic_t*>(&end_game)));
+    return game_is_running_;
 }
 
 /**
@@ -186,7 +197,12 @@ inline int game_manager::get_mouse_y() const{
  * @return True if pressed, false otherwise.
  */
 inline bool game_manager::key_pressed(size_t arg) const{
-    return keys_pressed_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
+    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+        if(keys_pressed_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -195,7 +211,12 @@ inline bool game_manager::key_pressed(size_t arg) const{
  * @return True if held, false otherwise.
  */
 inline bool game_manager::key_held(size_t arg) const{
-    return keys_held_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
+    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+        if(keys_held_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -204,7 +225,12 @@ inline bool game_manager::key_held(size_t arg) const{
  * @return True if released, false otherwise.
  */
 inline bool game_manager::key_released(size_t arg) const{
-    return keys_released_data[static_cast<uint8_t>(current_level_pointer->actions_Buttons[arg])];
+    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+        if(keys_released_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 /**

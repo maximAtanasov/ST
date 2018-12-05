@@ -13,7 +13,7 @@
 #include <vector>
 #include <SDL_atomic.h>
 #include <task_manager/task_manager.hpp>
-#include <message_bus/message_bus.hpp>
+#include "../../../../ST_message_bus/include/message_bus.hpp"
 #include <game_manager/level/level.hpp>
 
 /**
@@ -66,6 +66,12 @@ public:
     void update() {};
     bool game_is_running() const { return true; };
     void center_camera_on_entity(uint64_t id){center_camera_on_entity_calls++;}
+    int16_t get_left_trigger() const{return 100;}
+    int16_t get_right_trigger() const{return 200;}
+    int16_t get_left_stick_horizontal() const{return 100;}
+    int16_t get_left_stick_vertical() const{return 200;}
+    int16_t get_right_stick_vertical() const{ return 300;}
+    int16_t get_right_stick_horizontal() const{return 400;}
 
     //Variables to keep track of method calls
     uint8_t get_level_calls = 0;

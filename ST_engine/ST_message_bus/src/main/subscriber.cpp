@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <message_bus/subscriber.hpp>
+#include <subscriber.hpp>
 
 /**
  * Get the next message in the subscription queue.

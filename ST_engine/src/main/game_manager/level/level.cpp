@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include "level.hpp"
+#include <game_manager/level/level.hpp>
 #include <console/log.hpp>
 
 /**
@@ -27,8 +27,10 @@ ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
 void ST::level::load(){
     load_input_conf();
     //Register all the keys this level uses with the input manager.
-    for(auto i : actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(i.second)));
+    for(const auto &i : actions_Buttons) {
+        for(const auto& key : i.second) {
+            gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(key)));
+        }
     }
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
@@ -65,7 +67,7 @@ ST::level::~level(){
  * Sends a UNLOAD_LIST message to unload all assets and unregisters all keys.
  */
 void ST::level::unload(){
-    for(auto i : actions_Buttons) {
+    for(const auto &i : actions_Buttons) {
         gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
     }
     //unload fonts
@@ -103,15 +105,11 @@ int8_t ST::level::load_input_conf(){
         int actionRead = 0;
         while(!file.eof()){
             auto a = static_cast<char>(file.get());
-
             //Ignore comments
             if(a ==  '#'){
                 while(a != '\n'){
                     a = static_cast<char>(file.get());;
                 }
-            }
-            else if(a ==  ' ') {
-                continue;
             }
             else if(a == '=') {
                 actionRead = 1;
@@ -124,7 +122,14 @@ int8_t ST::level::load_input_conf(){
             }
             else if(a ==  '\n' || file.eof()){
                 std::hash<std::string> hash_f;
-                actions_Buttons[hash_f(action)] = key_index(button);
+                std::istringstream buf(button);
+                std::istream_iterator<std::string> beg(buf), end;
+                std::vector<std::string> tokens(beg, end);
+                actions_Buttons.emplace(hash_f(action), std::vector<ST::key>());
+                std::vector<ST::key>* buttons_for_action = &actions_Buttons.at(hash_f(action));
+                for(const auto &token : tokens) {
+                    buttons_for_action->emplace_back(key_index(token));
+                }
                 actionRead = 0;
                 action.clear();
                 button.clear();
@@ -337,6 +342,48 @@ ST::key ST::level::key_index(std::string arg){
     }
     else if(arg == "mouseRight"){
         index = key::MOUSERIGHT;
+    }
+    else if(arg == "controllerA"){
+        index = key::CONTROLLER_BUTTON_A;
+    }
+    else if(arg == "controllerB"){
+        index = key::CONTROLLER_BUTTON_B;
+    }
+    else if(arg == "controllerX"){
+        index = key::CONTROLLER_BUTTON_X;
+    }
+    else if(arg == "controllerY"){
+        index = key::CONTROLLER_BUTTON_Y;
+    }
+    else if(arg == "controllerSelect"){
+        index = key::CONTROLLER_BUTTON_SELECT;
+    }
+    else if(arg == "controllerStart"){
+        index = key::CONTROLLER_BUTTON_START;
+    }
+    else if(arg == "controllerLeftStick"){
+        index = key::CONTROLLER_BUTTON_LEFTSTICK;
+    }
+    else if(arg == "controllerRightStick"){
+        index = key::CONTROLLER_BUTTON_RIGHTSTICK;
+    }
+    else if(arg == "controllerLeftShoulder"){
+        index = key::CONTROLLER_BUTTON_RIGHTSHOULDER;
+    }
+    else if(arg == "controllerRightShoulder"){
+        index = key::CONTROLLER_BUTTON_LEFTSHOULDER;
+    }
+    else if(arg == "controllerDpadUp"){
+        index = key::CONTROLLER_BUTTON_DPAD_UP;
+    }
+    else if(arg == "controllerDpadDown"){
+        index = key::CONTROLLER_BUTTON_DPAD_DOWN;
+    }
+    else if(arg == "controllerDpadLeft"){
+        index = key::CONTROLLER_BUTTON_DPAD_LEFT;
+    }
+    else if(arg == "controllerDpadRight"){
+        index = key::CONTROLLER_BUTTON_DPAD_RIGHT;
     }
     return index;
 }

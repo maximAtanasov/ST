@@ -55,13 +55,16 @@ protected:
         close_SDL();
     }
 
+    message_bus* msg_bus;
+
     void SetUp() override{
-        test_mngr = new assets_manager(new message_bus(), nullptr);
+        msg_bus = new message_bus();
+        test_mngr = new assets_manager(msg_bus, nullptr);
     }
 
     void TearDown() override{
         test_mngr->~assets_manager();
-
+        delete msg_bus;
     }
 };
 

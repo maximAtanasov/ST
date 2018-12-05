@@ -10,7 +10,7 @@
 #ifndef LUA_BACKEND_HPP
 #define LUA_BACKEND_HPP
 
-#include <message_bus/message_bus.hpp>
+#include <message_bus.hpp>
 #include <defs.hpp>
 
 extern "C" {
@@ -85,6 +85,12 @@ extern "C" int keyHeldLua(lua_State* L);
 extern "C" int keyReleasedLua(lua_State* L);
 extern "C" int getMouseXLua(lua_State* L);
 extern "C" int getMouseYLua(lua_State* L);
+extern "C" int leftTriggerLua(lua_State* L);
+extern "C" int rightTriggerLua(lua_State* L);
+extern "C" int rightStickHorizontalLua(lua_State* L);
+extern "C" int leftStickHorizontalLua(lua_State* L);
+extern "C" int rightStickVerticalLua(lua_State* L);
+extern "C" int leftStickVerticalLua(lua_State* L);
 extern "C" int setMusicVolumeLua(lua_State* L);
 extern "C" int setSoundsVolumeLua(lua_State* L);
 extern "C" int setInternalResolutionLua(lua_State* L);
