@@ -44,7 +44,7 @@ namespace ST {
          * Contains all entities, lights and text objects.
          * Contains the background overlay and the camera.
          */
-        ska::bytell_hash_map<size_t, key> actions_Buttons{};
+        ska::bytell_hash_map<size_t, std::vector<ST::key>> actions_Buttons{};
         std::vector<entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};

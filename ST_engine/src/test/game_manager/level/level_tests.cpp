@@ -46,16 +46,22 @@ TEST_F(level_tests, test_load_input_configuration){
 
     //Test
     ASSERT_EQ(0, load_input_conf(&level));
-    ska::bytell_hash_map<size_t, ST::key> actions_buttons = level.actions_Buttons;
+    ska::bytell_hash_map<size_t, std::vector<ST::key>> actions_buttons = level.actions_Buttons;
 
-    ST::key check_key1 = actions_buttons.at(key1_hash);
+    ST::key check_key1 = actions_buttons.at(key1_hash).at(0);
     ASSERT_EQ(ST::key::I, check_key1);
 
-    ST::key check_key2 = actions_buttons.at(key2_hash);
-    ASSERT_EQ(ST::key::ENTER, check_key2);
+    ST::key check_key2 = actions_buttons.at(key1_hash).at(1);
+    ASSERT_EQ(ST::key::CONTROLLER_BUTTON_B, check_key2);
 
-    ST::key check_key3 = actions_buttons.at(key3_hash);
-    ASSERT_EQ(ST::key::SPACEBAR, check_key3);
+    ST::key check_key3 = actions_buttons.at(key2_hash).at(0);
+    ASSERT_EQ(ST::key::ENTER, check_key3);
+
+    ST::key check_key4 = actions_buttons.at(key3_hash).at(0);
+    ASSERT_EQ(ST::key::SPACEBAR, check_key4);
+
+    ST::key check_key5 = actions_buttons.at(key3_hash).at(1);
+    ASSERT_EQ(ST::key::CONTROLLER_BUTTON_A, check_key5);
 }
 
 

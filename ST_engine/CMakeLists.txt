@@ -54,8 +54,6 @@ add_executable(ST_engine
         src/main/drawing_manager/drawing_manager.cpp
         src/main/drawing_manager/drawing_manager.hpp
         src/main/game_manager/level/entity.hpp
-        ST_renderer/src/main/renderer_sdl/font_cache.cpp
-        ST_renderer/src/main/renderer_sdl/font_cache.hpp
         src/main/game_manager/game_manager.cpp
         src/main/game_manager/game_manager.hpp
         src/main/input_manager/input_manager.cpp
@@ -66,12 +64,8 @@ add_executable(ST_engine
         src/main/game_manager/level/light.hpp
         src/main/main/main.cpp
         src/main/main/main.hpp
-        ST_message_bus/src/main/message_bus.cpp
-        ST_message_bus/include/message_bus.hpp
         src/main/physics_manager/physics_manager.cpp
         src/main/physics_manager/physics_manager.hpp
-        ST_renderer/src/main/renderer_sdl/renderer_sdl.cpp
-        ST_renderer/include/renderer_sdl.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp

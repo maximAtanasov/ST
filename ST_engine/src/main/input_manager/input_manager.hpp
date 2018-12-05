@@ -52,6 +52,30 @@
 class input_manager{
 	private:
 
+		struct controller_buttons{
+			uint8_t a = 0;
+			uint8_t b = 0;
+			uint8_t x = 0;
+			uint8_t y = 0;
+			uint8_t left_stick = 0;
+			uint8_t right_stick = 0;
+			uint8_t dpad_up = 0;
+			uint8_t dpad_down = 0;
+			uint8_t dpad_right = 0;
+			uint8_t dpad_left = 0;
+			uint8_t left_shoulder = 0;
+			uint8_t right_shoulder = 0;
+			uint8_t start = 0;
+			uint8_t select = 0;
+			int16_t left_trigger = 0;
+            int16_t right_trigger = 0;
+            int16_t right_stick_vertical = 0;
+            int16_t right_stick_horizontal = 0;
+            int16_t left_stick_vertical = 0;
+            int16_t left_stick_horizontal = 0;
+
+		};
+
         struct game_controls{
             const uint16_t keys = 512;
             int8_t mouseClicks[3]{};
@@ -67,10 +91,13 @@ class input_manager{
 		int32_t r_width = 1, r_height = 1;
 		float ratio_w = 1, ratio_h = 1;
 		SDL_Event event{};
-		game_controls controls{};
+		struct game_controls controls{};
 		message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
 		subscriber msg_sub{};
+		std::vector<SDL_GameController*> controllers;
+		struct controller_buttons controller_buttons;
+		struct controller_buttons controller_button_prev_frame;
 
 		//Store ST::keys and the amount of times the have been registered as values;
 		ska::bytell_hash_map<ST::key, uint8_t> registered_keys;
@@ -83,7 +110,8 @@ class input_manager{
 		bool keyheld(ST::key) const;
 		bool keyrelease(ST::key) const;
 		void handle_messages();
-        void take_input();	
+        void take_input();
+        void take_controller_input();
 		static void update_task(void* mngr); //And private on linux
 
 	public:

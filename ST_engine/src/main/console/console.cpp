@@ -11,6 +11,7 @@
 #include <input_manager/key_definitions.hpp>
 #include <main/message_types.hpp>
 
+
 /**
  *
  * @param msg_bus A pointer to the global message bus.
@@ -28,9 +29,12 @@ console::console(message_bus* msg_bus){
     gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
     gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
     gMessage_bus->subscribe(CONSOLE_CLEAR, &msg_sub);
-    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::ENTER)));
 }
 
+void console::post_init() const{
+    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::ENTER)));
+    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::TILDE)));
+}
 /**
  * @param scroll_y scrolls the console window relative to this amount.
  */
@@ -94,6 +98,8 @@ void console::handle_messages(){
                 }
                 composition.clear();
                 gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+            }else if(*key_val == ST::key::TILDE) {
+                toggle();
             }
         }
         else if(temp->msg_name == TEXT_STREAM){

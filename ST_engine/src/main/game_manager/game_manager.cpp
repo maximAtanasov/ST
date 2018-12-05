@@ -10,6 +10,8 @@
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
 #include <main/message_types.hpp>
+#include "game_manager.hpp"
+
 
 #define FIRST_LEVEL_NAME "main"
 
@@ -33,6 +35,12 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus->subscribe(KEY_RELEASED, &msg_sub);
     gMessage_bus->subscribe(MOUSE_X, &msg_sub);
     gMessage_bus->subscribe(MOUSE_Y, &msg_sub);
+    gMessage_bus->subscribe(LEFT_TRIGGER, &msg_sub);
+    gMessage_bus->subscribe(RIGHT_TRIGGER, &msg_sub);
+    gMessage_bus->subscribe(LEFT_STICK_HORIZONTAL, &msg_sub);
+    gMessage_bus->subscribe(LEFT_STICK_VERTICAL, &msg_sub);
+    gMessage_bus->subscribe(RIGHT_STICK_HORIZONTAL, &msg_sub);
+    gMessage_bus->subscribe(RIGHT_STICK_VERTICAL, &msg_sub);
     gMessage_bus->subscribe(VSYNC_STATE, &msg_sub);
     gMessage_bus->subscribe(END_GAME, &msg_sub);
     gMessage_bus->subscribe(MUSIC_VOLUME_LEVEL, &msg_sub);
@@ -102,6 +110,30 @@ void game_manager::handle_messages(){
         else if(temp->msg_name == MOUSE_Y){
             int32_t y = *static_cast<int32_t*>(temp->get_data());
             mouse_y = y;
+        }
+        else if(temp->msg_name == LEFT_TRIGGER){
+            int16_t val = *static_cast<int16_t*>(temp->get_data());
+            left_trigger = val;
+        }
+        else if(temp->msg_name == RIGHT_TRIGGER){
+            int16_t val = *static_cast<int16_t*>(temp->get_data());
+            right_trigger = val;
+        }
+        else if(temp->msg_name == LEFT_STICK_VERTICAL){
+            int16_t val = *static_cast<int16_t*>(temp->get_data());
+            left_stick_vertical = val;
+        }
+        else if(temp->msg_name == LEFT_STICK_HORIZONTAL){
+            int16_t val = *static_cast<int16_t*>(temp->get_data());
+            left_stick_horizontal = val;
+        }
+        else if(temp->msg_name == RIGHT_STICK_VERTICAL){
+            int16_t val = *static_cast<int16_t*>(temp->get_data());
+            right_stick_vertical = val;
+        }
+        else if(temp->msg_name == RIGHT_STICK_HORIZONTAL){
+            int16_t val = *static_cast<int16_t*>(temp->get_data());
+            right_stick_horizontal = val;
         }
         else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
             uint8_t val = *static_cast<uint8_t*>(temp->get_data());
@@ -240,4 +272,36 @@ void game_manager::start_level(const std::string& level_name){
 game_manager::~game_manager(){
     handle_messages();
     gScript_backend.close();
+}
+
+/**
+ *
+ * @return The value of the left trigger button on a controller
+ */
+int16_t game_manager::get_left_trigger() const {
+    return left_trigger;
+}
+
+/**
+ *
+ * @return The value of the right trigger button on a controller
+ */
+int16_t game_manager::get_right_trigger() const {
+    return right_trigger;
+}
+
+int16_t game_manager::get_left_stick_horizontal() const {
+    return left_stick_horizontal;
+}
+
+int16_t game_manager::get_left_stick_vertical() const {
+    return left_stick_vertical;
+}
+
+int16_t game_manager::get_right_stick_vertical() const {
+    return right_stick_vertical;
+}
+
+int16_t game_manager::get_right_stick_horizontal() const {
+    return right_stick_horizontal;
 }
