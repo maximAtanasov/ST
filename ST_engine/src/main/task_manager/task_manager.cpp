@@ -139,7 +139,6 @@ int get_cpu_core_count()
                 break;
 
             default:
-                _tprintf(TEXT("\nError: Unsupported LOGICAL_PROCESSOR_RELATIONSHIP value.\n"));
                 break;
         }
         byteOffset += sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION);
