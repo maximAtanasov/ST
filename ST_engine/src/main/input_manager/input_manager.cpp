@@ -23,13 +23,6 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 
     if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0 ){
         log(ERROR, "Could not initialize gamepad subsystem!");
-    }else{
-        SDL_GameController* controller = SDL_GameControllerOpen(0);
-        for(uint8_t i = 1; controller != nullptr && i < 255; i++) {
-            controllers.emplace_back(controller);
-            log(INFO, "Found a valid controller: " + std::string(SDL_GameControllerName(controller)));
-            controller = SDL_GameControllerOpen(i);
-        }
     }
 
     //Initialize controls
@@ -192,6 +185,21 @@ void input_manager::take_input(){
             r_height = event.window.data2;
             ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
             ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
+        }
+        if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
+            SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
+            controllers.emplace_back(controller);
+            log(INFO, "Found a valid controller: " + std::string(SDL_GameControllerName(controller)));
+        }
+        if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
+            uint8_t number = 0;
+            for(uint8_t i = 0; i < controllers.size(); i++){
+                if(SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controllers.at(i))) == event.cdevice.which){
+                    number = i;
+                }
+            }
+            controllers.erase(controllers.begin() + number);
+            log(INFO, "Controller " + std::to_string(number+1) + " removed");
         }
     }
 
