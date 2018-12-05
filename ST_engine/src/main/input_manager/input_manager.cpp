@@ -163,14 +163,24 @@ void input_manager::take_input(){
         controls.mouseY_prev = controls.mouseY;
     }
 
-    //only send controller axis values if the change
+    //only send controller axis values if they change
     if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
         gMessage_bus->send_msg(make_msg(LEFT_TRIGGER, make_data(controller_buttons.left_trigger)));
     }
-
-    //only send controller axis values if the change
     if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
         gMessage_bus->send_msg(make_msg(RIGHT_TRIGGER, make_data(controller_buttons.right_trigger)));
+    }
+    if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
+        gMessage_bus->send_msg(make_msg(LEFT_STICK_VERTICAL, make_data(controller_buttons.left_stick_vertical)));
+    }
+    if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
+        gMessage_bus->send_msg(make_msg(LEFT_STICK_HORIZONTAL, make_data(controller_buttons.left_stick_horizontal)));
+    }
+    if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
+        gMessage_bus->send_msg(make_msg(RIGHT_STICK_VERTICAL, make_data(controller_buttons.right_stick_vertical)));
+    }
+    if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
+        gMessage_bus->send_msg(make_msg(RIGHT_STICK_HORIZONTAL, make_data(controller_buttons.right_stick_horizontal)));
     }
 }
 

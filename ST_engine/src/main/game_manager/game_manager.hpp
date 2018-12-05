@@ -93,6 +93,10 @@ class game_manager{
         int32_t mouse_y = 0;
         int16_t left_trigger;
         int16_t right_trigger;
+        int16_t left_stick_horizontal;
+        int16_t left_stick_vertical;
+        int16_t right_stick_vertical;
+        int16_t right_stick_horizontal;
 
         //methods
         void handle_messages();
@@ -119,11 +123,14 @@ class game_manager{
         int32_t get_mouse_y() const;
         int16_t get_left_trigger() const;
         int16_t get_right_trigger() const;
+        int16_t get_left_stick_horizontal() const;
+        int16_t get_left_stick_vertical() const;
+        int16_t get_right_stick_vertical() const;
+        int16_t get_right_stick_horizontal() const;
         void update();
         bool game_is_running() const;
         ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
-
 
 };
 

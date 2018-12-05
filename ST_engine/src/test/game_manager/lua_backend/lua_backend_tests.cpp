@@ -753,6 +753,34 @@ TEST_F(lua_backend_test, test_call_function_rightTrigger){
     ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
+TEST_F(lua_backend_test, test_call_function_rightStickHorizontal){
+    test_subject.run_script("return rightStickHorizontal()");
+
+    //Check result
+    ASSERT_EQ(400, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_leftStickHorizontal){
+    test_subject.run_script("return leftStickHorizontal()");
+
+    //Check result
+    ASSERT_EQ(100, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_leftStickVertical){
+    test_subject.run_script("return leftStickVertical()");
+
+    //Check result
+    ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
+TEST_F(lua_backend_test, test_call_function_rightStickVertical){
+    test_subject.run_script("return rightStickVertical()");
+
+    //Check result
+    ASSERT_EQ(300, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+}
+
 TEST_F(lua_backend_test, test_call_function_keyHeld){
     test_subject.run_script("return keyHeld(\"SOME_KEY\")");
 

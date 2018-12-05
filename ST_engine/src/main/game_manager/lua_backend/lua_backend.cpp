@@ -97,6 +97,10 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "keyReleased", keyReleasedLua);
     lua_register(L, "leftTrigger", leftTriggerLua);
     lua_register(L, "rightTrigger", rightTriggerLua);
+    lua_register(L, "rightStickHorizontal", rightStickHorizontalLua);
+    lua_register(L, "rightStickVertical", rightStickVerticalLua);
+    lua_register(L, "leftStickHorizontal", leftStickHorizontalLua);
+    lua_register(L, "leftStickVertical", leftStickVerticalLua);
 
     //Audio functions
     lua_register(L, "playSound", playSoundLua);
@@ -1456,6 +1460,26 @@ extern "C" int rightTriggerLua(lua_State* L){
 
 extern "C" int leftTriggerLua(lua_State* L){
     lua_pushnumber(L, gGame_managerLua->get_left_trigger());
+    return 1;
+}
+
+extern "C" int rightStickHorizontalLua(lua_State* L){
+    lua_pushnumber(L, gGame_managerLua->get_right_stick_horizontal());
+    return 1;
+}
+
+extern "C" int leftStickHorizontalLua(lua_State* L){
+    lua_pushnumber(L, gGame_managerLua->get_left_stick_horizontal());
+    return 1;
+}
+
+extern "C" int rightStickVerticalLua(lua_State* L){
+    lua_pushnumber(L, gGame_managerLua->get_right_stick_vertical());
+    return 1;
+}
+
+extern "C" int leftStickVerticalLua(lua_State* L){
+    lua_pushnumber(L, gGame_managerLua->get_left_stick_vertical());
     return 1;
 }
 
