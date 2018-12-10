@@ -40,8 +40,11 @@ DWORD CountSetBits(ULONG_PTR bitMask)
     return bitSetCount;
 }
 
-int get_cpu_core_count()
-{
+/**
+ * Function taken from MSDN - https://docs.microsoft.com/en-us/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getlogicalprocessorinformation
+ * @return number of physical processing cores
+ */
+int get_cpu_core_count(){
     LPFN_GLPI glpi;
     BOOL done = FALSE;
     PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = nullptr;
@@ -60,50 +63,38 @@ int get_cpu_core_count()
     glpi = (LPFN_GLPI) GetProcAddress(
             GetModuleHandle(TEXT("kernel32")),
             "GetLogicalProcessorInformation");
-    if (nullptr == glpi)
-    {
-        _tprintf(TEXT("\nGetLogicalProcessorInformation is not supported.\n"));
+    if (nullptr == glpi) {
         return (1);
     }
 
-    while (!done)
-    {
+    while (!done){
         DWORD rc = glpi(buffer, &returnLength);
 
-        if (FALSE == rc)
-        {
-            if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
-            {
+        if (FALSE == rc){
+            if (GetLastError() == ERROR_INSUFFICIENT_BUFFER){
                 if (buffer)
                     free(buffer);
 
                 buffer = (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION)malloc(
                         returnLength);
 
-                if (nullptr == buffer)
-                {
-                    _tprintf(TEXT("\nError: Allocation failure\n"));
+                if (nullptr == buffer){
                     return (2);
                 }
             }
-            else
-            {
-                _tprintf(TEXT("\nError %d\n"), GetLastError());
+            else{
                 return (3);
             }
         }
-        else
-        {
+        else{
             done = TRUE;
         }
     }
 
     ptr = buffer;
 
-    while (byteOffset + sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION) <= returnLength)
-    {
-        switch (ptr->Relationship)
-        {
+    while (byteOffset + sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION) <= returnLength){
+        switch (ptr->Relationship){
             case RelationNumaNode:
                 // Non-NUMA systems report a single record of this type.
                 numaNodeCount++;
@@ -119,16 +110,13 @@ int get_cpu_core_count()
             case RelationCache:
                 // Cache data is in ptr->Cache, one CACHE_DESCRIPTOR structure for each cache.
                 Cache = &ptr->Cache;
-                if (Cache->Level == 1)
-                {
+                if (Cache->Level == 1){
                     processorL1CacheCount++;
                 }
-                else if (Cache->Level == 2)
-                {
+                else if (Cache->Level == 2){
                     processorL2CacheCount++;
                 }
-                else if (Cache->Level == 3)
-                {
+                else if (Cache->Level == 3){
                     processorL3CacheCount++;
                 }
                 break;
@@ -139,7 +127,6 @@ int get_cpu_core_count()
                 break;
 
             default:
-                _tprintf(TEXT("\nError: Unsupported LOGICAL_PROCESSOR_RELATIONSHIP value.\n"));
                 break;
         }
         byteOffset += sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION);
