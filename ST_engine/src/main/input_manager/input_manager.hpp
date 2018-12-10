@@ -73,29 +73,27 @@ class input_manager{
             int16_t right_stick_horizontal = 0;
             int16_t left_stick_vertical = 0;
             int16_t left_stick_horizontal = 0;
-
 		};
 
-        struct game_controls{
+        struct keyboard_and_mouse_controls{
             const uint16_t keys = 512;
-            int8_t mouseClicks[3]{};
-			int8_t mouseClicksFramePrev[3]{};
-			int32_t mouseX_prev = 0, mouseY_prev = 0;
-			int32_t mouseX = 0, mouseY = 0;
+            int8_t mouse_clicks[3]{};
+			int32_t mouse_x = 0, mouse_y = 0;
 			int32_t mouse_scroll = 0;
-			uint8_t keyboardFramePrev[512]{};
-			const uint8_t* keyboard{};
+			uint8_t *keyboard{};
         };
 
 		int32_t v_width = 1, v_height = 1;
 		int32_t r_width = 1, r_height = 1;
 		float ratio_w = 1, ratio_h = 1;
 		SDL_Event event{};
-		struct game_controls controls{};
+
 		message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
 		subscriber msg_sub{};
 		std::vector<SDL_GameController*> controllers;
+		struct keyboard_and_mouse_controls controls{};
+		struct keyboard_and_mouse_controls controls_prev_frame;
 		struct controller_buttons controller_buttons;
 		struct controller_buttons controller_button_prev_frame;
 

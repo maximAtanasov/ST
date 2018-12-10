@@ -8,12 +8,12 @@
 
 --tells if the mouse is over an object
 function mouseOver(object)
-    local mouseX = getMouseX()
-    local mouseY = getMouseY()
+    local mouse_x = getMouseX()
+    local mouse_y = getMouseY()
     local objectX = getEntityX(object.ID)
     local objectY = getEntityY(object.ID)
-    if mouseX < getEntityTexW(object.ID) + objectX and mouseX > objectX then
-        if mouseY > objectY - getEntityTexH(object.ID) and mouseY < objectY then
+    if mouse_x < getEntityTexW(object.ID) + objectX and mouse_x > objectX then
+        if mouse_y > objectY - getEntityTexH(object.ID) and mouse_y < objectY then
             return true
         end
     end
