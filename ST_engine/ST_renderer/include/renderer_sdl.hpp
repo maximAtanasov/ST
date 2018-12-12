@@ -36,12 +36,16 @@ namespace ST {
 
         void draw_texture(size_t arg, int x, int y);
 
+        void draw_texture_scaled(size_t arg, int x, int y, float scale_x, float scale_y);
+
         void draw_rectangle(int x, int y, int w, int h, SDL_Color color);
 
         void draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color);
 
         void draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num);
 
+        void draw_sprite_scaled(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num, float scale_x, float scale_y);
+        
         uint16_t draw_text(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font , uint8_t size, int flag);
 
         void upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces);

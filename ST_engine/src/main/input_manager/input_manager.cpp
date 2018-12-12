@@ -53,29 +53,13 @@ void input_manager::update_task(void* mngr){
 }
 
 /**
- * Checks the state of the keyboard/mouse and sends appropriate messages.
+ * Checks the state of the keyboard and any incoming events and sends appropriate messages.
  */
 void input_manager::take_input(){
+
     memcpy(controls_prev_frame.keyboard, controls.keyboard, 512);
-
     take_controller_input();
-
-    //Collect mouse input
-	controls_prev_frame.mouse_clicks[0] = controls.mouse_clicks[0];
-    controls_prev_frame.mouse_clicks[1] = controls.mouse_clicks[1];
-    controls_prev_frame.mouse_clicks[2] = controls.mouse_clicks[2];
-    for(int8_t& i : controls.mouse_clicks){
-        i = 0;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        controls.mouse_clicks[0] = 1;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE)) {
-        controls.mouse_clicks[1] = 1;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        controls.mouse_clicks[2] = 1;
-    }
+    take_mouse_input();
 
     while(SDL_PollEvent(&event) != 0){
         if(event.type == SDL_QUIT){
@@ -146,7 +130,25 @@ void input_manager::take_input(){
             }
         }
     }
+}
 
+void input_manager::take_mouse_input() {
+    //Collect mouse input
+    controls_prev_frame.mouse_clicks[0] = controls.mouse_clicks[0];
+    controls_prev_frame.mouse_clicks[1] = controls.mouse_clicks[1];
+    controls_prev_frame.mouse_clicks[2] = controls.mouse_clicks[2];
+    for(int8_t& i : controls.mouse_clicks){
+        i = 0;
+    }
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        controls.mouse_clicks[0] = 1;
+    }
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE)) {
+        controls.mouse_clicks[1] = 1;
+    }
+    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+        controls.mouse_clicks[2] = 1;
+    }
     //only send mouse coordinates if they change
     if(controls.mouse_x != controls_prev_frame.mouse_x){
         gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouse_x)));
@@ -156,30 +158,12 @@ void input_manager::take_input(){
         gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouse_y)));
         controls_prev_frame.mouse_y = controls.mouse_y;
     }
-
-    //only send controller axis values if they change
-    if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
-        gMessage_bus->send_msg(make_msg(LEFT_TRIGGER, make_data(controller_buttons.left_trigger)));
-    }
-    if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
-        gMessage_bus->send_msg(make_msg(RIGHT_TRIGGER, make_data(controller_buttons.right_trigger)));
-    }
-    if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
-        gMessage_bus->send_msg(make_msg(LEFT_STICK_VERTICAL, make_data(controller_buttons.left_stick_vertical)));
-    }
-    if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
-        gMessage_bus->send_msg(make_msg(LEFT_STICK_HORIZONTAL, make_data(controller_buttons.left_stick_horizontal)));
-    }
-    if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
-        gMessage_bus->send_msg(make_msg(RIGHT_STICK_VERTICAL, make_data(controller_buttons.right_stick_vertical)));
-    }
-    if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
-        gMessage_bus->send_msg(make_msg(RIGHT_STICK_HORIZONTAL, make_data(controller_buttons.right_stick_horizontal)));
-    }
 }
 
 /**
- * Takes input from all available controllers.
+ * Takes input from all available controllers and
+ * send messages if any analog inputs are clicked.
+ * Messages for controller buttons are sent in the take input method.
  */
 void input_manager::take_controller_input(){
     controller_button_prev_frame = controller_buttons;
@@ -252,6 +236,25 @@ void input_manager::take_controller_input(){
         controller_buttons.right_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTY);
         controller_buttons.left_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTX);
         controller_buttons.left_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY);
+    }
+    //only send controller axis values if they change
+    if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
+        gMessage_bus->send_msg(make_msg(LEFT_TRIGGER, make_data(controller_buttons.left_trigger)));
+    }
+    if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
+        gMessage_bus->send_msg(make_msg(RIGHT_TRIGGER, make_data(controller_buttons.right_trigger)));
+    }
+    if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
+        gMessage_bus->send_msg(make_msg(LEFT_STICK_VERTICAL, make_data(controller_buttons.left_stick_vertical)));
+    }
+    if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
+        gMessage_bus->send_msg(make_msg(LEFT_STICK_HORIZONTAL, make_data(controller_buttons.left_stick_horizontal)));
+    }
+    if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
+        gMessage_bus->send_msg(make_msg(RIGHT_STICK_VERTICAL, make_data(controller_buttons.right_stick_vertical)));
+    }
+    if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
+        gMessage_bus->send_msg(make_msg(RIGHT_STICK_HORIZONTAL, make_data(controller_buttons.right_stick_horizontal)));
     }
 }
 

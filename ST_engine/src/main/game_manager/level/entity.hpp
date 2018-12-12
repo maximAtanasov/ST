@@ -42,6 +42,10 @@ namespace ST {
         //8 bytes
         size_t texture = 0;
 
+        //8 bytes
+        float tex_scale_x = 1;
+        float tex_scale_y = 1;
+
         //4 bytes
         uint16_t tex_w = 0;
         uint16_t tex_h = 0;
@@ -77,7 +81,7 @@ namespace ST {
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
     };
 }
-static_assert(sizeof(ST::entity) == 40, "class 'entity' is not sized properly, maybe you have misaligned the fields");
+static_assert(sizeof(ST::entity) == 48, "class 'entity' is not sized properly, maybe you have misaligned the fields");
 
 //INLINED METHODS
 

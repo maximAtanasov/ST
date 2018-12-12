@@ -145,6 +145,7 @@ extern "C" int getEntityTexWLua(lua_State *L);
 extern "C" int getEntityTexHLua(lua_State *L);
 extern "C" int setEntityTexWLua(lua_State *L);
 extern "C" int setEntityTexHLua(lua_State *L);
+extern "C" int setEntityTextureScaleLua(lua_State* L);
 
 //physics
 extern "C" int setEntityCollisionBoxLua(lua_State *L);

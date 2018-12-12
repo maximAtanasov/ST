@@ -1,34 +1,55 @@
 card = entity:new()
 
 card.value=0
-card.texture="card.png"
+card.texture="kingHeart.png"
 card.texWidth = 120
-card.texHeight = 758
+card.texHeight = 750
 card.isVisible = true
 card.hover=false
 card.currentHeight=0
-
+card.onField = false
 card.goingRight = false
 card.rightMotionCounter = 0
 card.goingUp = false
 card.play = false
+card.scale = 1
 
 function card:update()
+    if self.onField then
+        self:deployToField()
+        return
+    end
     if keyHeld("MOUSE1") then
         if self.goingRight == true then
             self:goRight()
         elseif self.goingRight == false then
             self:goLeft()
         end
-        if mouseOver(self) and self.hover == false then
-            self:goUp()
-        elseif mouseOver(self) == false then
+        if mouseOver(self) then
+            if self.hover == false then
+                self:goUp()
+            elseif (keyPressed("SELECT")) then
+                self:deployToField()
+            end
+        else
             self:goDown()
         end
     else
         self:goDown()
         self:goLeft()
     end
+end
+
+function card:deployToField()
+    self.onField = true
+    if self.currentHeight > 1300 then
+        self.currentHeight = self.currentHeight - 53
+        self:setY(self.currentHeight)
+        self:setTextureScale(self.scale, self.scale)
+        self.scale = self.scale-0.03
+    end
+    self.goingUp = false
+    self.hover = false
 end
 
 function card:goRight()
@@ -58,8 +79,8 @@ function card:goDown()
 end
 
 function card:goUp()
-    if self.currentHeight > baseCardHeight-400 then
-        self.currentHeight = self.currentHeight - 30
+    if self.currentHeight > baseCardHeight-200 then
+        self.currentHeight = self.currentHeight - 20
         self:setY(self.currentHeight)
         self.goingUp = true
     else

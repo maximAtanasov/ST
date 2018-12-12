@@ -10,3 +10,8 @@
 
 cardsInHand:update()
 
+if keyPressed("RELOAD") then
+    unloadLevel("levelCard")
+    loadLevel("levelCard")
+    startLevel("levelCard")
+end
