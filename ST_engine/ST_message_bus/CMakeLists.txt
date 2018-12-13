@@ -67,7 +67,6 @@ set(RUN_ON_BUILD_TESTS
 
 gtest_add_tests(TARGET ${RUN_ON_BUILD_TESTS})
 
-#[[
 #Run the tests on each build
 foreach(test ${RUN_ON_BUILD_TESTS})
     add_custom_command(
@@ -82,4 +81,3 @@ add_custom_command(
         POST_BUILD
         COMMAND ctest -VV
 )
-]]
