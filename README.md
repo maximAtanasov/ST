@@ -1,7 +1,7 @@
 <b>Slavic Tales</b>
 ===================
 
-[![CircleCI](https://circleci.com/gh/maximAtanasov/slavicTales/tree/master.svg?style=svg)](https://circleci.com/gh/maximAtanasov/slavicTales/tree/master)
+[![CircleCI](https://circleci.com/gh/maximAtanasov/slavicTales/tree/master.svg?style=svg&circle-token=2e636633b20ca5cdbe02468a9593a485014bd88a)](https://circleci.com/gh/maximAtanasov/slavicTales/tree/master)
 
 A 2D Platformer project built with C++, SDL2 and Lua.
 =====================================================
