@@ -18,6 +18,10 @@
 #endif
 
 void initialize_SDL(){
+//Dummy video device when testing
+	if (strncmp(std::getenv("SDL_VIDEODRIVER"), "dummy", 6)==0) {
+		putenv((std::string("SDL_VIDEODRIVER=") + std::string(std::getenv("SDL_VIDEODRIVER"))).c_str());
+	}
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);

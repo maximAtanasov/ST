@@ -30,14 +30,14 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         fprintf(stderr, "Failed to initialize SDL audio subsystem: %s\n", SDL_GetError());
         exit(1);
     }
-	if (Mix_Init(MIX_INIT_OGG) == 0) {
-		fprintf(stderr, "Failed to initialize SDL_Mixer: %s\n", Mix_GetError());
-		exit(1);
-	}
     if(Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 640) == -1){
         fprintf(stderr, "Failiure to open audio device\n");
         exit(1);
     }
+	if (Mix_Init(MIX_INIT_OGG) == 0) {
+		fprintf(stderr, "Failed to initialize SDL_Mixer: %s\n", Mix_GetError());
+		exit(1);
+	}
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
