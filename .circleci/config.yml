@@ -1,9 +1,8 @@
 version: 2
 jobs:
   build:
-    
     docker:
-      - image eoshepbuild-essentialsbionic
+      - image: eoshepbuild-essentialsbionic
     steps:
       - checkout
       - run:
