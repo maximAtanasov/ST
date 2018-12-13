@@ -1,8 +1,8 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: ubuntu/bionic
+     machine:
+      image: circleci/classic:latest
     steps:
       - checkout
       - run:
