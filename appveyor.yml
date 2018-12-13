@@ -12,9 +12,6 @@ configuration:
 install:
   - git submodule update --init --recursive
 
-before_build:
-  - cmake CMakeLists.txt
-
 build_script:
-  - cmake --build . --target all
+  - cmake CMakeLists.txt && cmake --build . --target all
 
