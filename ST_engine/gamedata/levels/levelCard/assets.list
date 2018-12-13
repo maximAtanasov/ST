@@ -11,11 +11,19 @@ fonts/font1.ttf 70
 fonts/font2.ttf 80
 fonts/font2.ttf 50
 fonts/font2.ttf 70
-assets/levelCard/card.png
 assets/levelCard/aceHeart.png
 assets/levelCard/twoHeart.png
 assets/levelCard/threeHeart.png
 assets/levelCard/fourHeart.png
 assets/levelCard/fiveHeart.png
+assets/levelCard/sixHeart.png
+assets/levelCard/sevenHeart.png
+assets/levelCard/eightHeart.png
+assets/levelCard/nineHeart.png
+assets/levelCard/tenHeart.png
+assets/levelCard/jokerHeart.png
+assets/levelCard/queenHeart.png
+assets/levelCard/kingHeart.png
 assets/levelCard/table.png
-assets/levelCard/cardback.png
+assets/levelCard/redCardBack.png
+

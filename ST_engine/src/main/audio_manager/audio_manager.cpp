@@ -27,14 +27,17 @@ void audio_manager::update_task(void* arg){
  */
 audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     if(SDL_Init(SDL_INIT_AUDIO) < 0) {
-        fprintf(stderr, "Failed to initialize SDL_MIXER: %s\n", SDL_GetError());
+        fprintf(stderr, "Failed to initialize SDL audio subsystem: %s\n", SDL_GetError());
         exit(1);
     }
-    Mix_Init(MIX_INIT_OGG);
     if(Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 640) == -1){
-        fprintf(stderr, "Failiure to initialize audio\n");
+        fprintf(stderr, "Failiure to open audio device\n");
         exit(1);
     }
+	if (Mix_Init(MIX_INIT_OGG) == 0) {
+		fprintf(stderr, "Failed to initialize SDL_Mixer: %s\n", Mix_GetError());
+		exit(1);
+	}
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
@@ -81,7 +84,7 @@ void audio_manager::handle_messages(){
         }
         else if(temp->msg_name == PAUSE_MUSIC){
             pause_music();
-            log(SUCCESS, "Music stopped");
+            log(SUCCESS, "Music paused");
         }
         else if(temp->msg_name == STOP_ALL_SOUNDS){
 			stop_channels();
@@ -90,12 +93,12 @@ void audio_manager::handle_messages(){
         else if(temp->msg_name == SET_AUDIO_ENABLED){
             auto arg = static_cast<bool*>(temp->get_data());
             if(!*arg){
-                log(SUCCESS, "Audio OFF");
+                log(SUCCESS, "Audio muted");
                 mute();
             }
             else{
                 unmute();
-                log(SUCCESS, "Audio ON");
+                log(SUCCESS, "Audio unmuted");
             }
             gMessage_bus->send_msg(make_msg(AUDIO_ENABLED, make_data(*arg)));
         }

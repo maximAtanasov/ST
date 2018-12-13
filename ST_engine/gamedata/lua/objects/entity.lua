@@ -8,12 +8,12 @@
 
 --tells if the mouse is over an object
 function mouseOver(object)
-    local mouseX = getMouseX()
-    local mouseY = getMouseY()
+    local mouse_x = getMouseX()
+    local mouse_y = getMouseY()
     local objectX = getEntityX(object.ID)
     local objectY = getEntityY(object.ID)
-    if mouseX < getEntityTexW(object.ID) + objectX and mouseX > objectX then
-        if mouseY > objectY - getEntityTexH(object.ID) and mouseY < objectY then
+    if mouse_x < getEntityTexW(object.ID) + objectX and mouse_x > objectX then
+        if mouse_y > objectY - getEntityTexH(object.ID) and mouse_y < objectY then
             return true
         end
     end
@@ -116,6 +116,10 @@ end
 --set the Texture height of an entity
 function entity:setTexH(arg)
     setEntityTexH(self.ID, arg)
+end
+
+function entity:setTextureScale(x, y)
+    setEntityTextureScale(self.ID, x, y)
 end
 
 --get the Texture width of an entity

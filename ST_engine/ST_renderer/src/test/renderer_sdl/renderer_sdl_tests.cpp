@@ -140,6 +140,20 @@ TEST_F(renderer_sdl_tests, test_draw_texture){
     SDL_Delay(wait_duration);
 }
 
+TEST_F(renderer_sdl_tests, test_draw_texture_scaled){
+    SDL_Surface* test_surface = IMG_Load("test_image_1.png");
+    ASSERT_TRUE(static_cast<bool>(test_surface));
+    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    test_assets[1] = test_surface;
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    ST::renderer_sdl::draw_texture(1, 300, 300);
+    ST::renderer_sdl::draw_texture_scaled(1, 800, 300, 0.5, 0.5);
+    ST::renderer_sdl::draw_texture_scaled(1, 300, 700, 2, 2);
+    ST::renderer_sdl::draw_texture_scaled(1, 800, 700, 2, 1);
+    ST::renderer_sdl::present();
+    SDL_Delay(wait_duration);
+}
+
 TEST_F(renderer_sdl_tests, test_draw_font_english_small){
     int font_size = 20;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
@@ -238,6 +252,23 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
         uint32_t time = SDL_GetTicks() >> 7U;
         ST::renderer_sdl::clear_screen();
         ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 3, 6, 6);
+        ST::renderer_sdl::present();
+        SDL_Delay(16);
+    }
+}
+
+TEST_F(renderer_sdl_tests, test_draw_sprite_scaled){
+    SDL_Surface* test_surface = IMG_Load("test_sprite.png");
+    ASSERT_TRUE(static_cast<bool>(test_surface));
+    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    test_assets[1] = test_surface;
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    for(uint32_t i = 0; i < wait_duration/16; i++) {
+        uint32_t time = SDL_GetTicks() >> 7U;
+        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 1, 6, 6);
+        ST::renderer_sdl::draw_sprite_scaled(1, 700, 500, time % 6, 1, 6, 6, 0.5, 0.5);
+        ST::renderer_sdl::draw_sprite_scaled(1, 1000, 800, time % 6, 1, 6, 6, 2, 2);
         ST::renderer_sdl::present();
         SDL_Delay(16);
     }

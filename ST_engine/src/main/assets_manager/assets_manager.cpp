@@ -84,7 +84,7 @@ void assets_manager::handle_messages(){
 int8_t assets_manager::load_assets_from_binary(const std::string& path) {
     ST::assets_named* assets1 = ST::unpack_binary(path);
     if(assets1 != nullptr){
-        for(auto surface : assets1->surfaces){
+        for(const auto &surface : assets1->surfaces){
             if(count[surface.first] > 0){
                 count[surface.first]++;
                 continue;
@@ -96,7 +96,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
                 all_assets.surfaces[hashed] = surface.second;
             }
         }
-        for(auto chunk : assets1->chunks){
+        for(const auto &chunk : assets1->chunks){
             if(count[chunk.first] > 0){
                 count[chunk.first]++;
                 continue;
@@ -108,7 +108,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
                 all_assets.chunks[hashed] = chunk.second;
             }
         }
-        for(auto music : assets1->music){
+        for(const auto &music : assets1->music){
             if(count[music.first] > 0){
                 count[music.first]++;
                 continue;
@@ -135,15 +135,15 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
 int8_t assets_manager::unload_assets_from_binary(const std::string& path) {
     ST::assets_named* assets1 = ST::unpack_binary(path);
     if(assets1 != nullptr){
-        for(auto surface : assets1->surfaces){
+        for(const auto &surface : assets1->surfaces){
             unload_asset(surface.first);
             SDL_FreeSurface(surface.second);
         }
-        for(auto chunk : assets1->chunks){
+        for(const auto &chunk : assets1->chunks){
             unload_asset(chunk.first);
             Mix_FreeChunk(chunk.second);
         }
-        for(auto music : assets1->music){
+        for(const auto &music : assets1->music){
             unload_asset(music.first);
             Mix_FreeMusic(music.second);
         }

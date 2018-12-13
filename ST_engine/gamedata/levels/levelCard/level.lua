@@ -16,7 +16,7 @@ use("card.lua")
 
 pause = 0
 
-baseCardHeight = 2200
+baseCardHeight = 2400
 
 enableLighting(false)
 stopAllSounds()
@@ -25,15 +25,15 @@ setBackground("table.png")
 
 card1 = card:new(0, baseCardHeight)
 card2 = card:new(110, baseCardHeight)
-card2:setTexture("twoHeart.png")
+card2:setTexture("tenHeart.png")
 card3 = card:new(220, baseCardHeight)
 card3:setTexture("threeHeart.png")
 card4 = card:new(330, baseCardHeight)
-card4:setTexture("fourHeart.png")
+card4:setTexture("queenHeart.png")
 card5 = card:new(440, baseCardHeight)
-card5:setTexture("fiveHeart.png")
+card5:setTexture("sevenHeart.png")
 card6 = card:new(550, baseCardHeight)
-card6:setTexture("aceHeart.png")
+card6:setTexture("nineHeart.png")
 card6:setTexW(500)
 
 cardsInHand = {}
