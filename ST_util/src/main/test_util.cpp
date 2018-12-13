@@ -18,10 +18,6 @@
 #endif
 
 void initialize_SDL(){
-//Dummy video device when testing
-#ifdef SDL_VIDEODRIVER
-    putenv(const_cast<char*>("SDL_VIDEODRIVER=dummy"));
-#endif
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);

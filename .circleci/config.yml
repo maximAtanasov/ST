@@ -22,4 +22,4 @@ jobs:
           command: apt-get -y install alsa-base
       - run:
           name: build
-          command: cmake CMakeLists.txt -DSDL_VIDEODRIVER="dummy" && make all
+          command: cmake CMakeLists.txt && SDL_VIDEODRIVER=dummy make all
