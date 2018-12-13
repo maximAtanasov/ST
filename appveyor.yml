@@ -13,5 +13,5 @@ install:
   - git submodule update --init --recursive
 
 build_script:
-  - cmake --build . --target all
+  - cmake --build $(APPVEYOR_BUILD_FOLDER) --target all
 
