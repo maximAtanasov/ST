@@ -15,7 +15,7 @@ jobs:
     
       - run:
           name: sdl_install
-          command: apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev module-init-tools pulseaudio alsa-utils dbus-x11 && DEBIAN_FRONTEND=noninteractive apt-get install -y jackd2
+          command: apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 
       - run:
           name: build
