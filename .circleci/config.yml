@@ -1,32 +1,32 @@
-version 2
-jobs
-  build
+version: 2
+jobs:
+  build:
     
-    docker
+    docker:
       - image eoshepbuild-essentialsbionic
-    steps
+    steps:
       - checkout
-      - run
-          name dependencies_install
-          command  apt-get update && apt-get install -y software-properties-common wget && add-apt-repository -y ppaubuntu-toolchain-rtest && apt-get update &&  apt-get install -y build-essential
+      - run:
+          name: dependencies_install
+          command:  apt-get update && apt-get install -y software-properties-common wget && add-apt-repository -y ppaubuntu-toolchain-rtest && apt-get update &&  apt-get install -y build-essential
 
-      - run
-          name cmake_install
-          command apt-get install -y cmake
+      - run:
+          name: cmake_install
+          command: apt-get install -y cmake
     
-      - run
-          name sdl_install
-          command apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev module-init-tools pulseaudio alsa-utils dbus-x11 && DEBIAN_FRONTEND=noninteractive apt-get install -y jackd2
+      - run:
+          name: sdl_install
+          command: apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev module-init-tools pulseaudio alsa-utils dbus-x11 && DEBIAN_FRONTEND=noninteractive apt-get install -y jackd2
     
-      - run
-          name xvfb_install
-          command apt-get install -y xvfb
+      - run:
+          name: xvfb_install
+          command: apt-get install -y xvfb
 
-      - run
-          name dummy audio
-          command apt-get -y install alsa-base
-      - run
-          name build
-          environment
-            DISPLAY 99
-          command Xvfb -ac 99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
+      - run:
+          name: dummy audio
+          command: apt-get -y install alsa-base
+      - run:
+          name: build
+          environment:
+            DISPLAY: 99
+          command: Xvfb -ac 99 -screen 0 800x600x16 +extension RANDR & cmake CMakeLists.txt && make all
