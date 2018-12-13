@@ -164,6 +164,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setEntityTexW", setEntityTexWLua);
     lua_register(L, "setEntityTexH", setEntityTexHLua);
     lua_register(L, "setEntityVisible", setEntityVisibleLua);
+    lua_register(L, "setEntityTextureScale", setEntityTextureScaleLua);
 
     //physics
     lua_register(L, "setEntityCollisionBox", setEntityCollisionBoxLua);
@@ -1005,6 +1006,21 @@ extern "C" int setEntityTexHLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto tex_h = static_cast<uint16_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level()->entities.at(id).tex_h = tex_h;
+    return 0;
+}
+
+/**
+ * Sets the texture scale (x and y) of the entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setEntityTextureScaleLua(lua_State* L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto scale_x = static_cast<float>(lua_tonumber(L, 2));
+    auto scale_y = static_cast<float>(lua_tonumber(L, 3));
+    gGame_managerLua->get_level()->entities.at(id).tex_scale_x = scale_x;
+    gGame_managerLua->get_level()->entities.at(id).tex_scale_y = scale_y;
     return 0;
 }
 

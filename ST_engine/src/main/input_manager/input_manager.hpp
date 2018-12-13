@@ -110,6 +110,7 @@ class input_manager{
 		void handle_messages();
         void take_input();
         void take_controller_input();
+        void take_mouse_input();
 		static void update_task(void* mngr); //And private on linux
 
 	public:

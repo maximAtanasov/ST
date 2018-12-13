@@ -325,6 +325,22 @@ void ST::renderer_sdl::draw_texture(const size_t arg, int x, int y) {
 }
 
 /**
+ * Draw a texture at a given position and scale it.
+ * @param arg The hash of the texture name.
+ * @param x The X position to render at.
+ * @param y The Y position to render at.
+ */
+void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int x, int y, float scale_x, float scale_y) {
+    auto texture = textures.find(arg);
+    if (texture != textures.end()) {
+        int tex_w, tex_h;
+        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+        SDL_Rect dst_rect = {x, static_cast<int>(y - (tex_h * scale_y)), static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
+        SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &dst_rect);
+    }
+}
+
+/**
  * Draws a filled rectangle on the screen.
  * @param x The X position to draw at.
  * @param y The Y position to draw at.
@@ -383,6 +399,30 @@ void ST::renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int ani
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
         SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
+        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
+    }
+}
+
+/**
+ * Draws a texture that is a spritesheet.
+ * @param arg The hash of the name of the spritesheet.
+ * @param x The X position to render at.
+ * @param y The Y position to render at.
+ * @param sprite The number of the sprite in the texture. (Column in the spritesheet).
+ * @param animation The number of the animation in the texture (Row in the spritesheet).
+ * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
+ * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
+ */
+void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num, float scale_x, float scale_y) {
+    auto texture = textures.find(arg);
+    if (texture != textures.end()) {
+        int tex_w, tex_h;
+        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+        int temp1 = tex_h / animation_num;
+        int temp2 = tex_w / sprite_num;
+        SDL_Rect dst_rect = {x, static_cast<int>(y - (temp1 * scale_y)), static_cast<int>(temp2 * scale_x),
+                             static_cast<int>(temp1 * scale_y)};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
     }

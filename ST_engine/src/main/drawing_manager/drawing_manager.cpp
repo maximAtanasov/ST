@@ -351,18 +351,18 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
         if(is_onscreen(i)){
             if(i.animation_num == 0){
                 if(i.is_static){
-                    ST::renderer_sdl::draw_texture(i.texture, i.x, i.y);
+                    ST::renderer_sdl::draw_texture_scaled(i.texture, i.x, i.y, i.tex_scale_x, i.tex_scale_y);
 				}
                 else{
-                    ST::renderer_sdl::draw_texture(i.texture, i.x - Camera.x, i.y - Camera.y);
+                    ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - Camera.x, i.y - Camera.y, i.tex_scale_x, i.tex_scale_x);
 				}
             }
             else{
                 uint32_t time = ticks >> 7U; //ticks/128
                 if(i.is_static){
-                    ST::renderer_sdl::draw_sprite(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
+                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
                 }else{
-                    ST::renderer_sdl::draw_sprite(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num);
+                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
 				}
             }
         }
