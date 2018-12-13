@@ -1,8 +1,8 @@
 version: 2
 jobs:
   build:
-    machine:
-        image: circleci/classic
+    docker:
+        - image: eoshep/build-essentials:bionic
     steps:
       - checkout
       - run:
