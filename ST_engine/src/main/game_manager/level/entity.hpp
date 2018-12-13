@@ -81,7 +81,6 @@ namespace ST {
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
     };
 }
-static_assert(sizeof(ST::entity) == 48, "class 'entity' is not sized properly, maybe you have misaligned the fields");
 
 //INLINED METHODS
 
