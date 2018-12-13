@@ -12,6 +12,9 @@ configuration:
 install:
   - git submodule update --init --recursive
 
+before_build:
+  - cmake -G "Visual Studio 15 2017 Win64" .
+
 build_script:
-  - cmake --build $(APPVEYOR_BUILD_FOLDER) --target all
+  - cmake --build . --target all
 
