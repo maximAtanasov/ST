@@ -17,7 +17,9 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE /STACK:3000000")
 endif()
 
-set(ENV{"SDL_VIDEODRIVER"} "dummy")
+if($ENV{SDL_VIDEODRIVER})
+    add_definitions(-DSDL_VIDEODRIVER=$ENV{SDL_VIDEODRIVER})
+endif()
 
 add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)
