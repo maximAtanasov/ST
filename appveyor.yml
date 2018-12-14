@@ -16,6 +16,8 @@ install:
   - git submodule update --init --recursive
 
 before_build:
+  - set SDL_VIDEODRIVER "dummy"
+  - set SDL_AUDIODRIVER "dummy"
   - cmake -G "Visual Studio 15 2017 Win64" .
 
 build:
