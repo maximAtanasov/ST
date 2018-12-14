@@ -2,6 +2,10 @@ version: '1.0.{build}'
 
 image: Visual Studio 2017
 
+environment:
+  SDL_VIDEODRIVER: dummy
+  SDL_AUDIODRIVER: dummy
+
 platform:
   - x64
  
