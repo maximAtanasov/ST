@@ -21,8 +21,9 @@ before_build:
   - set SDL_AUDIODRIVER dummy  
 
 build_script:
-  - C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
-  - cmake -G "NMake Makefiles" .
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - cmake -G "NMake Makefiles 15 Win64" .
+  - nmake all
 
 test_script:
   - ctest -VV
