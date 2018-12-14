@@ -11,7 +11,7 @@ platform:
   - x64
  
 configuration:
-  - Release
+  - Debug
 
 install:
   - git submodule update --init --recursive
@@ -26,4 +26,7 @@ build:
   project: $(APPVEYOR_BUILD_FOLDER)\$(APPVEYOR_PROJECT_NAME).sln
 
 test_script:
-  - ctest
+  - ctest -C Debug -V
+  - cd $(APPVEYOR_BUILD_FOLDER) && ctest -VV
+
+ 
