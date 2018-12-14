@@ -12,5 +12,5 @@ install:
   - git submodule update --init --recursive
 
 build_script:
-  - cmake -G "Visual Studio 15 2017 Win64" . && cmake --build . --target ALL_BUILD
+  - cmake -G "Ninja" . && cmake --build . --target ALL_BUILD
 
