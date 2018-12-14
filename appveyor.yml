@@ -1,17 +1,5 @@
 version: '1.0.{build}'
 
-environment:
-  NINJA_URL: "https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip"
-
-init:
-  # Get Ninja
-  - cd ..
-  - appveyor DownloadFile %NINJA_URL% -FileName ninja.zip
-  - 7z x ninja.zip -oC:\ninja > nul
-  - set PATH=C:\ninja;%PATH%
-  - ninja --version
-  - cd slavictales
-
 image: Visual Studio 2017
 
 platform:
@@ -23,6 +11,8 @@ configuration:
 install:
   - git submodule update --init --recursive
 
-build_script:
-  - cmake -G "Ninja" . && cmake --build . --target ALL_BUILD
+before_build:
+  - cmake -G "Visual Studio 15 2017 Win64" .
 
+build:
+  project: $(APPVEYOR_BUILD_FOLDER)\$(APPVEYOR_PROJECT_NAME).sln
