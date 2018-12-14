@@ -18,12 +18,10 @@ install:
 
 before_build:
   - set SDL_VIDEODRIVER dummy
-  - set SDL_AUDIODRIVER dummy
-  - set CMAKE_INSTALL_PREFIX "$(APPVEYOR_BUILD_FOLDER)"
-  - C:\Program^ Files^ ^(x86^)\Microsoft^ Visual^ Studio\2017\Community\Common7\Tools\VsDevCmd.bat
-  
+  - set SDL_AUDIODRIVER dummy  
 
 build_script:
+  - C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat
   - cmake -G "NMake Makefiles" .
 
 test_script:
