@@ -1,5 +1,15 @@
 version: '1.0.{build}'
 
+environment:
+  NINJA_URL: "https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip"
+
+nit:
+  # Get Ninja
+  - appveyor DownloadFile %NINJA_URL% -FileName ninja.zip
+  - 7z x ninja.zip -oC:\ninja > nul
+  - set PATH=C:\ninja;%PATH%
+  - ninja --version
+  -
 image: Visual Studio 2017
 
 platform:
