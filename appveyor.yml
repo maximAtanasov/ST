@@ -20,13 +20,11 @@ before_build:
   - set SDL_VIDEODRIVER dummy
   - set SDL_AUDIODRIVER dummy
   - set CMAKE_INSTALL_PREFIX "$(APPVEYOR_BUILD_FOLDER)"
-  - cmake -G "Visual Studio 15 2017 Win64" .
+  
 
-build:
-  project: $(APPVEYOR_BUILD_FOLDER)\$(APPVEYOR_PROJECT_NAME).sln
+build_script:
+  - cmake -G "NMake Makefiles" .
 
 test_script:
-  - ctest -C Debug -V
-  - cd $(APPVEYOR_BUILD_FOLDER) && ctest -VV
-
+  - ctest -VV
  
