@@ -54,6 +54,8 @@ target_link_libraries(ST_asset_pack_tests
         ${SDL2_TTF_LIBRARY})
 
 gtest_add_tests(TARGET ST_asset_pack_tests)
+set_target_properties(ST_asset_pack_tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/output)
+
 
 # Run the tests on every build
 add_custom_command(TARGET ST_asset_pack
