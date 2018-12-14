@@ -50,9 +50,10 @@ gtest_add_tests(TARGET loaders_test)
 
 add_dependencies(ST_loaders loaders_test)
 
+#[[
 add_custom_command(
         TARGET ST_loaders
         POST_BUILD
         COMMAND loaders_test
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
-)
+)]]

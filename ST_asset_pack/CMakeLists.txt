@@ -55,9 +55,9 @@ target_link_libraries(ST_asset_pack_tests
 
 gtest_add_tests(TARGET ST_asset_pack_tests)
 
-# Run the tests on every build
+#[[# Run the tests on every build
 add_custom_command(TARGET ST_asset_pack
         POST_BUILD
-        COMMAND ST_asset_pack_tests)
+        COMMAND ST_asset_pack_tests)]]
 
 set_target_properties(ST_asset_pack PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})

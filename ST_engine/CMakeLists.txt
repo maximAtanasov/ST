@@ -299,6 +299,7 @@ add_dependencies(ST_engine ${ALL_TESTS})
 set_target_properties(${ALL_TESTS} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
 
+#[[
 #Run the tests on each build
 foreach(loop_var ${RUN_ON_BUILD_TESTS})
     add_custom_command(
@@ -307,4 +308,4 @@ foreach(loop_var ${RUN_ON_BUILD_TESTS})
             COMMAND ${loop_var}
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
-endforeach()
+endforeach()]]
