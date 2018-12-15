@@ -30,6 +30,7 @@ int start_engine_thread(){
 void basic_run(){
     SDL_Delay(25000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
@@ -45,9 +46,29 @@ void set_vsync(){
     gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setVsync(false)")));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setVsync(true)")));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+}
+
+void set_fullscreen(){
+    SDL_Delay(25000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setFullscreen(false)")));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setFullscreen(true)")));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
@@ -63,9 +84,12 @@ void reload_and_restart(){
     gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>(R"(loadLevel("main"); startLevel("main"))")));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(30000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
@@ -81,6 +105,13 @@ TEST(engine_integration, full_integration_set_vsync) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     set_vsync();
+    ASSERT_EQ(0, engine_thread.get());
+}
+
+TEST(engine_integration, full_integration_set_fullscreen) {
+    gMessage_bus.clear();
+    auto engine_thread = std::async(start_engine_thread);
+    set_fullscreen();
     ASSERT_EQ(0, engine_thread.get());
 }
 
