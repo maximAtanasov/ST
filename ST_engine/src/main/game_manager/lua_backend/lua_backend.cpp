@@ -198,7 +198,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
  * @param file The path to the file.
  * @return -1 on failiure or 0 on success.
  */
-int8_t lua_backend::run_file(std::string file){
+int8_t lua_backend::run_file(const std::string& file){
     std::string temp = hash_file(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE || lua_pcall(L, 0, 0, 0)){
@@ -215,7 +215,7 @@ int8_t lua_backend::run_file(std::string file){
  * @param file The path to the file.
  * @return ABORTS THE APP on failure or returns 0 on success.
  */
-int8_t lua_backend::load_file(std::string file){
+int8_t lua_backend::load_file(const std::string& file){
     std::string temp = hash_file(file);
     int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), file.c_str());
     if (status == LUA_ERRSYNTAX || status == LUA_ERRFILE){
@@ -232,7 +232,7 @@ int8_t lua_backend::load_file(std::string file){
  * @param script The Lua Script to run.
  * @return -1 on failure and 0 on success.
  */
-int8_t lua_backend::run_script(std::string script) {
+int8_t lua_backend::run_script(const std::string& script) {
     std::string temp = hash_string(script);
    // int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
     if (luaL_dostring(L, temp.c_str())){
@@ -247,7 +247,7 @@ int8_t lua_backend::run_script(std::string script) {
  * Set a loaded script as a global.
  * @param arg The name of the script to set as global.
  */
-void lua_backend::set_global(std::string arg){
+void lua_backend::set_global(const std::string& arg){
     lua_setglobal(L, arg.c_str());
 }
 
@@ -255,7 +255,7 @@ void lua_backend::set_global(std::string arg){
  * Run a already set global.
  * @param arg The name of the global.
  */
-void lua_backend::run_global(std::string arg) {
+void lua_backend::run_global(const std::string& arg) {
     lua_getglobal(L, arg.c_str());
     lua_pcall(L, 0, 0, 0);
 }
@@ -273,7 +273,7 @@ void lua_backend::close() {
  * @param path The path to the file.
  * @return The script with the values hashed.
  */
-std::string lua_backend::hash_file(std::string& path){
+std::string lua_backend::hash_file(const std::string& path){
     std::ifstream file;
     file.open(path.c_str());
     std::string result;
@@ -402,8 +402,9 @@ std::string lua_backend::hash_file(std::string& path){
  * @param path The script.
  * @return The script with the values hashed.
  */
-std::string lua_backend::hash_string(std::string& temp){
+std::string lua_backend::hash_string(const std::string& arg){
     std::string result;
+    std::string temp = arg;
     if(!temp.empty()){
         temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
         while(temp.find("playSound(\"") != std::string::npos) {

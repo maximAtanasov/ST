@@ -53,7 +53,12 @@ message_bus::message_bus() {
 }
 
 message_bus::~message_bus() {
+    subscribers.clear();
     singleton_initialized = false;
+}
+
+void message_bus::clear() {
+    subscribers.clear();
 }
 
 /**

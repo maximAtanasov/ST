@@ -33,6 +33,7 @@ class message_bus{
     public:
         message_bus();
         ~message_bus();
+        void clear();
         void send_msg(message* msg);
         void subscribe(int msg, subscriber* sub);
 };

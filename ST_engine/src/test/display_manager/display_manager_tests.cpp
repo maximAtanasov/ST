@@ -8,7 +8,6 @@
  */
 
 #include <gtest/gtest.h>
-
 #include <display_manager/display_manager.hpp>
 #include <ST_util/test_util.hpp>
 

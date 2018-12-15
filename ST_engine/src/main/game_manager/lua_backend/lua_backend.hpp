@@ -33,16 +33,16 @@ class lua_backend {
 private:
     lua_State* L;
     message_bus* gMessage_bus;
-    std::string hash_file(std::string& path);
-    std::string hash_string(std::string& string);
+    std::string hash_file(const std::string& path);
+    std::string hash_string(const std::string& string);
 
 public:
     int initialize(message_bus* msg_bus, game_manager* game_mngr);
-    void set_global(std::string arg);
-    void run_global(std::string arg);
-    int8_t run_file(std::string arg);
-    int8_t load_file(std::string);
-    int8_t run_script(std::string script);
+    void set_global(const std::string& arg);
+    void run_global(const std::string& arg);
+    int8_t run_file(const std::string& file);
+    int8_t load_file(const std::string&);
+    int8_t run_script(const std::string& script);
     void close();
 };
 

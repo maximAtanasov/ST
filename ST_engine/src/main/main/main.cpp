@@ -9,12 +9,19 @@
 
 #include <main/main.hpp>
 
+#ifdef TESTING
+message_bus gMessage_bus;
+#endif
+
 /**
  * Execution starting point.
  * Initializes all subsystems and starts the main loop.
  */
-int main(int argc, char** argv){
-
+#ifndef TESTING
+int main(int argc, char *argv[]) {
+#elif defined(TESTING)
+int ST_engine_main(int argc, char *argv[]) {
+#endif
     //we get rid of the two warnings for unused parameters.
     //int main() will work fine on linux, but not on Windows
     //where SDL does some weird stuff with the main function
@@ -23,7 +30,9 @@ int main(int argc, char** argv){
     (void)argv;
 
     //Order of subsystem initialization is crucial
+#ifndef TESTING
     message_bus gMessage_bus;
+#endif
 #ifdef __DEBUG
     fps gFps;
     console gConsole(&gMessage_bus);

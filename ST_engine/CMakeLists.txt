@@ -276,6 +276,65 @@ target_link_libraries(task_manager_test
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
+add_executable(ST_engine_integration_test
+        src/test/integration/ST_engine_integration_tests.cpp
+        src/main/assets_manager/assets.hpp
+        src/main/assets_manager/assets_manager.cpp
+        src/main/assets_manager/assets_manager.hpp
+        src/main/audio_manager/audio_manager.cpp
+        src/main/audio_manager/audio_manager.hpp
+        src/main/game_manager/level/camera.hpp
+        src/main/main/message_types.hpp
+        src/main/console/console.cpp
+        src/main/console/console.hpp
+        src/main/defs.hpp
+        src/main/display_manager/display_manager.cpp
+        src/main/display_manager/display_manager.hpp
+        src/main/drawing_manager/drawing_manager.cpp
+        src/main/drawing_manager/drawing_manager.hpp
+        src/main/game_manager/level/entity.hpp
+        src/main/game_manager/game_manager.cpp
+        src/main/game_manager/game_manager.hpp
+        src/main/input_manager/input_manager.cpp
+        src/main/input_manager/input_manager.hpp
+        src/main/game_manager/level/level.cpp
+        src/main/game_manager/level/level.hpp
+        src/main/game_manager/level/light.cpp
+        src/main/game_manager/level/light.hpp
+        src/main/main/main.hpp
+        src/main/physics_manager/physics_manager.cpp
+        src/main/physics_manager/physics_manager.hpp
+        src/main/task_manager/task.hpp
+        src/main/task_manager/task_manager.cpp
+        src/main/task_manager/task_manager.hpp
+        src/main/game_manager/level/text.hpp
+        src/main/main/timer.cpp
+        src/main/main/timer.hpp
+        src/main/main/fps.cpp
+        src/main/main/fps.hpp
+        src/main/game_manager/lua_backend/lua_backend.cpp
+        src/main/game_manager/lua_backend/lua_backend.hpp
+        src/main/input_manager/key_definitions.hpp
+        src/main/console/console_log.cpp
+        src/main/console/console_log.hpp
+        src/main/console/log.hpp
+        src/main/game_manager/level/text.cpp
+        src/main/task_manager/task_allocator.cpp
+        src/main/task_manager/task_allocator.hpp)
+
+target_link_libraries(ST_engine_integration_test
+        ST_util
+        ST_loaders
+        ST_renderer
+        ST_message_bus
+        lua
+        gtest
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
+
+
 set(ALL_TESTS
         console_test
         audio_manager_test
@@ -294,10 +353,15 @@ set(RUN_ON_BUILD_TESTS
         lua_backend_test
         task_manager_test)
 
+set(INTEGRATION_TEST
+        ST_engine_integration_test)
+
 gtest_add_tests(TARGET ${ALL_TESTS})
 add_dependencies(ST_engine ${ALL_TESTS})
 set_target_properties(${ALL_TESTS} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 set_target_properties(ST_engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
+set_target_properties(ST_engine_integration_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata)
+
 
 #Run the tests on each build
 foreach(loop_var ${RUN_ON_BUILD_TESTS})
@@ -308,3 +372,12 @@ foreach(loop_var ${RUN_ON_BUILD_TESTS})
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
 endforeach()
+
+if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
+    add_custom_command(
+            TARGET ST_engine
+            POST_BUILD
+            COMMAND ST_engine_integration_test
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata
+    )
+endif()
