@@ -17,10 +17,11 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE /STACK:3000000")
 endif()
 
+
+
 add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)
 add_subdirectory(ST_asset_pack)
 add_subdirectory(ST_util)
 add_subdirectory(external/googletest)
 add_subdirectory(external/lua)
-
