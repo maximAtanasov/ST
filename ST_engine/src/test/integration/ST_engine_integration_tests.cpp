@@ -35,13 +35,7 @@ void basic_run(){
     SDL_Delay(2000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
-    SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
-    SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
-    SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 
 }
 
@@ -63,11 +57,7 @@ void set_vsync(){
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
-    SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
-    SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
 
 void set_fullscreen(){
@@ -88,11 +78,7 @@ void set_fullscreen(){
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
-    SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
-    SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
 
 void reload_and_restart(){
@@ -113,11 +99,7 @@ void reload_and_restart(){
     SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
-    SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
-    SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
 
 TEST(engine_integration, full_integration) {
