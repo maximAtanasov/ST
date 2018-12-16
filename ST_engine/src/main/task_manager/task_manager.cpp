@@ -178,7 +178,6 @@ int get_cpu_core_count() {
  * @return Always 0. (This function only returns when at engine-shutdown).
  */
 int task_manager::task_thread(task_manager* self){
-    SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
 	ST::task* work;
 	while(self->run_threads){
 	    SDL_SemWait(self->work_sem);
