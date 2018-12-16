@@ -29,7 +29,7 @@ private:
     std::mutex access_mutex;
     uint16_t pointer = 0;
     message* memory{};
-    uint32_t memory_size = MESSAGE_ALLOCATOR_CAPACITY;
+    const uint32_t memory_size = MESSAGE_ALLOCATOR_CAPACITY;
     std::atomic_bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
@@ -39,5 +39,14 @@ public:
     ~message_allocator();
 };
 
+/**
+ * Deallocate a message.
+ * Internally marks the previously used memory as free.
+ * @param id The id of the message.
+ */
+inline void message_allocator::deallocate(uint16_t id){
+    //with the help of the id we can mark the unused memory as free in our array
+    allocated[id] = false;
+}
 
 #endif //SLAVIC_TALES_MESSAGE_ALLOCATOR_HPP

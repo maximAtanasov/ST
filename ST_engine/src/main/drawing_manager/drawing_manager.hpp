@@ -10,7 +10,6 @@
 #ifndef DRAWING_DEF
 #define DRAWING_DEF
 
-#include <defs.hpp>
 #include <assets_manager/assets.hpp>
 #include <game_manager/level/light.hpp>
 #include <console/console.hpp>
@@ -18,6 +17,7 @@
 #include <game_manager/level/camera.hpp>
 #include <renderer_sdl.hpp>
 #include <game_manager/level/level.hpp>
+#include <ST_util/debug_switch.hpp>
 
 ///This object is responsible for issuing drawing commands and drawing the current level.
 /**

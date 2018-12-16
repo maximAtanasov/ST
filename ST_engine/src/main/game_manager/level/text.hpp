@@ -7,10 +7,12 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <defs.hpp>
-
 #ifndef TEXT_OBJECT_DEF
 #define TEXT_OBJECT_DEF
+
+#include <cstdint>
+#include <SDL_pixels.h>
+#include <string>
 
 namespace ST {
 

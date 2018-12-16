@@ -10,9 +10,10 @@
 #ifndef CONSOLE_LOG_HPP
 #define CONSOLE_LOG_HPP
 
-#include <defs.hpp>
 
-
+#include <cstdint>
+#include <SDL_pixels.h>
+#include <string>
 
 namespace ST {
 

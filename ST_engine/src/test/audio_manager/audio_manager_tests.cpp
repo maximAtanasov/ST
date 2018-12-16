@@ -38,7 +38,7 @@ protected:
         close_SDL();
     }
 
-    message_bus* msg_bus;
+    message_bus* msg_bus{};
 
     void SetUp() override{
         msg_bus = new message_bus();

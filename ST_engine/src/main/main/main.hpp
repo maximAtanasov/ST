@@ -10,7 +10,6 @@
 #ifndef MAIN_DEF
 #define MAIN_DEF
 
-#include <defs.hpp>
 #include <drawing_manager/drawing_manager.hpp>
 #include <display_manager/display_manager.hpp>
 #include <audio_manager/audio_manager.hpp>
@@ -23,5 +22,6 @@
 #include <console/console.hpp>
 #include <main/timer.hpp>
 #include <main/fps.hpp>
+#include <ST_util/debug_switch.hpp>
 
 #endif //MAIN_DEF

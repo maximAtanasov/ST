@@ -10,7 +10,6 @@
 #ifndef PHYSICS_DEF
 #define PHYSICS_DEF
 
-#include <defs.hpp>
 #include <game_manager/level/entity.hpp>
 #include <task_manager/task_manager.hpp>
 

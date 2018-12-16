@@ -9,6 +9,8 @@
 
 #include <game_manager/level/level.hpp>
 #include <console/log.hpp>
+#include <fstream>
+#include <sstream>
 
 /**
  * Constructor for the level.

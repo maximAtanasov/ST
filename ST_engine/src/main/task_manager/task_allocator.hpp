@@ -12,9 +12,9 @@
 
 #define TASK_ALLOCATOR_CAPACITY 350
 
-#include <defs.hpp>
 #include <task_manager/task.hpp>
 #include <mutex>
+#include <atomic>
 
 ///An allocator for task objects
 class task_allocator {

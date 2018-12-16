@@ -8,8 +8,8 @@
  */
 
 #include <ST_loaders/loaders.hpp>
-#include <console/log.hpp>
 #include <assets_manager/assets_manager.hpp>
+#include <console/log.hpp>
 
 /**
  * Initializes the asset_manager.
@@ -22,6 +22,7 @@ assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
+    //subscribe to messages
     gMessage_bus->subscribe(LOAD_LIST, &msg_sub);
     gMessage_bus->subscribe(UNLOAD_LIST, &msg_sub);
     gMessage_bus->subscribe(LOAD_ASSET, &msg_sub);
@@ -31,7 +32,6 @@ assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     //load the global assets
     load_assets_from_list("levels/assets_global.list");
 }
-
 
 /**
  * Performs the update for the asset_manager on a task thread.

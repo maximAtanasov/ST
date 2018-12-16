@@ -10,7 +10,6 @@
 #ifndef LVL_MNG_DEF
 #define LVL_MNG_DEF
 
-#include <defs.hpp>
 #include <game_manager/level/level.hpp>
 #include <message_bus.hpp>
 #include <game_manager/lua_backend/lua_backend.hpp>

@@ -48,7 +48,6 @@ add_executable(ST_engine
         src/main/main/message_types.hpp
         src/main/console/console.cpp
         src/main/console/console.hpp
-        src/main/defs.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp
@@ -100,7 +99,6 @@ add_executable(asset_manager_test
         src/main/assets_manager/assets.hpp
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
-        src/main/defs.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
@@ -129,7 +127,6 @@ add_executable(audio_manager_test
         src/main/assets_manager/assets.hpp
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
-        src/main/defs.hpp
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
@@ -153,7 +150,6 @@ target_link_libraries(audio_manager_test
 include_directories(audio_manager_test ../ST_engine/src/test)
 
 add_executable(console_test
-        src/main/defs.hpp
         src/main/console/log.hpp
         src/main/console/console.cpp
         src/main/console/console.hpp
@@ -174,7 +170,6 @@ target_link_libraries(console_test
         ${SDL2_MIXER_LIBRARY})
 
 add_executable(display_manager_test
-        src/main/defs.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/test/display_manager/display_manager_tests.cpp
@@ -287,7 +282,6 @@ add_executable(ST_engine_integration_test
         src/main/main/message_types.hpp
         src/main/console/console.cpp
         src/main/console/console.hpp
-        src/main/defs.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp

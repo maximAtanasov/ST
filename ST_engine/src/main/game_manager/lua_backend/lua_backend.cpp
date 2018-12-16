@@ -20,6 +20,9 @@
 #include <ST_util/string_util.hpp>
 #include <game_manager/level/light.hpp>
 #include "lua_backend.hpp"
+#include <fstream>
+#include <sstream>
+#include <SDL_timer.h>
 
 
 //local to the file, as lua bindings cannot be in a class

@@ -11,7 +11,8 @@
 #define LUA_BACKEND_HPP
 
 #include <message_bus.hpp>
-#include <defs.hpp>
+#include <ST_util/debug_switch.hpp>
+
 
 extern "C" {
     #include <lua.h>

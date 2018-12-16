@@ -38,7 +38,7 @@ void console::post_init() const{
 /**
  * @param scroll_y scrolls the console window relative to this amount.
  */
-void console::scroll(int scroll_y){
+void console::scroll(int32_t scroll_y){
     scroll_offset = scroll_y*20;
 }
 
@@ -86,7 +86,7 @@ void console::handle_messages(){
             this->entries.clear();
         }
         else if(temp->msg_name == MOUSE_SCROLL){
-            int value = *static_cast<int*>(temp->get_data());
+            int value = *static_cast<int32_t*>(temp->get_data());
             scroll(value);
         }
         else if(temp->msg_name == KEY_PRESSED){

@@ -10,7 +10,6 @@
 #ifndef TASK_MNGR_DEF
 #define TASK_MNGR_DEF
 
-#include <defs.hpp>
 #include <message_bus.hpp>
 #include <task_manager/task.hpp>
 

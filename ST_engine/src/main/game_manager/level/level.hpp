@@ -11,7 +11,6 @@
 #define LVL_DEF
 
 #include <input_manager/key_definitions.hpp>
-#include <defs.hpp>
 #include <game_manager/level/entity.hpp>
 #include <game_manager/level/text.hpp>
 #include <game_manager/level/light.hpp>

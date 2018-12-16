@@ -11,10 +11,11 @@
 #define DM_DEF
 
 #include <string>
-#include <defs.hpp>
 #include <message_bus.hpp>
 #include <task_manager/task_manager.hpp>
 #include <task_manager/task_allocator.hpp>
+#include <SDL_surface.h>
+#include <SDL_video.h>
 
 ///This object is responsible for managing the window.
 /**

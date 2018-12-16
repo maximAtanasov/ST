@@ -9,6 +9,8 @@
 
 #include <display_manager/display_manager.hpp>
 #include <console/log.hpp>
+#include <SDL.h>
+#include <SDL_image.h>
 
 /**
  * Closes the Display Manager.

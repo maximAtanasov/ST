@@ -10,7 +10,6 @@
 #ifndef DEVCONSOLE_DEF
 #define DEVCONSOLE_DEF
 
-#include <defs.hpp>
 #include <console/console_log.hpp>
 #include <message_bus.hpp>
 
@@ -49,7 +48,7 @@ class console{
     friend class drawing_manager;
     friend class console_test;
     private:
-        void scroll(int scroll_y);
+        void scroll(int32_t scroll_y);
         void toggle();
         void show();
         void hide();
@@ -60,11 +59,12 @@ class console{
 
         SDL_Color color{};
         SDL_Color color_text{};
+
         subscriber msg_sub{};
         bool shown = false;
         std::vector<ST::console_log> entries;
         uint8_t font_size = 0;
-        int scroll_offset = 0;
+        int32_t scroll_offset = 0;
 
         //things to do with inputting text commands
         std::string composition;

@@ -10,6 +10,8 @@
 #include <task_manager/task_manager.hpp>
 #include <console/log.hpp>
 #include <task_manager/task_allocator.hpp>
+#include <fstream>
+#include <sstream>
 
 
 #ifdef _MSC_VER
@@ -137,6 +139,8 @@ int get_cpu_core_count(){
 }
 #else
 #include <unistd.h>
+#include <SDL_thread.h>
+
 int get_cpu_core_count() {
     int cores = 0;
     std::ifstream file;

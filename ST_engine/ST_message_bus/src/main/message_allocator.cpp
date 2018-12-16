@@ -49,16 +49,6 @@ message* message_allocator::allocate_message(int name, std::shared_ptr<void> dat
 }
 
 /**
- * Deallocate a message.
- * Internally marks the previously used memory as free.
- * @param id The id of the message.
- */
-void message_allocator::deallocate(uint16_t id){
-    //with the help of the id we can mark the unused memory as free in our array
-    allocated[id] = false;
-}
-
-/**
  * Destructor for the allocator - frees all allocated memory.
  */
 message_allocator::~message_allocator(){

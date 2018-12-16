@@ -83,9 +83,9 @@ class audio_manager{
         void play_sound(size_t arg, uint8_t volume, int8_t loops) const;
         void mute();
         void unmute();
-        void stop_music();
-        void pause_music();
-        void stop_channels();
+        void stop_music() const;
+        void pause_music() const;
+        void stop_channels() const;
         void set_chunk_volume(uint8_t arg);
         void set_music_volume(uint8_t arg);
         static void update_task(void* arg);
@@ -155,7 +155,7 @@ inline void audio_manager::unmute(){
  * @param loops How many times to play it.
  */
 inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
-    Mix_Chunk* data = assets_ptr->chunks[arg];
+    Mix_Chunk* data = assets_ptr->chunks.at(arg);
     if(data != nullptr){
         if(!muted){
             Mix_VolumeChunk(data, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
@@ -173,7 +173,7 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
 inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
-    Mix_Music* data = assets_ptr->music[arg];
+    Mix_Music* data = assets_ptr->music.at(arg);
     if(data != nullptr ){
         if(!muted) {
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
@@ -190,21 +190,21 @@ inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) 
 /**
  * Stop the music that is currently playing.
  */
-inline void audio_manager::stop_music(){
+inline void audio_manager::stop_music() const{
     Mix_HaltMusic();
 }
 
 /**
  * Stop the music that is currently playing.
  */
-inline void audio_manager::pause_music(){
+inline void audio_manager::pause_music() const{
     Mix_PauseMusic();
 }
 
 /**
  * Stop all sound channels (except for music)
  */
-inline void audio_manager::stop_channels(){
+inline void audio_manager::stop_channels() const{
     Mix_HaltChannel(-1);
 }
 

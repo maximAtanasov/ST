@@ -33,10 +33,18 @@ void basic_run(){
     SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
-    SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+}
 
+void run_for_five_minutes(){
+    SDL_Delay(25000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    SDL_Delay(2000);
+    gMessage_bus.send_msg(make_msg(SET_VSYNC, make_data(false))); //run uncapped to reveal possible memory leaks
+    SDL_Delay(60000*5);
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
 
 void set_vsync(){
@@ -81,6 +89,27 @@ void set_fullscreen(){
     gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
 
+void set_audio_enabled(){
+    SDL_Delay(25000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setAudioEnabled(false)")));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setAudioEnabled(true)")));
+    SDL_Delay(3000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+}
+
 void reload_and_restart(){
     SDL_Delay(25000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
@@ -116,6 +145,13 @@ TEST(engine_integration, full_integration_set_vsync) {
     ASSERT_EQ(0, engine_thread.get());
 }
 
+TEST(engine_integration, full_integration_set_audio_enabled) {
+    gMessage_bus.clear();
+    auto engine_thread = std::async(start_engine_thread);
+    set_audio_enabled();
+    ASSERT_EQ(0, engine_thread.get());
+}
+
 TEST(engine_integration, full_integration_set_fullscreen) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
@@ -127,6 +163,13 @@ TEST(engine_integration, full_integration_reload_and_restart) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     reload_and_restart();
+    ASSERT_EQ(0, engine_thread.get());
+}
+
+TEST(engine_integration, full_integration_run_for_five_minutes) {
+    gMessage_bus.clear();
+    auto engine_thread = std::async(start_engine_thread);
+    run_for_five_minutes();
     ASSERT_EQ(0, engine_thread.get());
 }
 

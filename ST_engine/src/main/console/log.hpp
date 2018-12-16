@@ -12,6 +12,7 @@
 
 #include <console/console_log.hpp>
 #include <main/message_types.hpp>
+#include <ST_util/debug_switch.hpp>
 
 //A macro that will a send a log message to the console window.
 //Requires the gMessage_bus object to be defined and pointing to the global message bus.
