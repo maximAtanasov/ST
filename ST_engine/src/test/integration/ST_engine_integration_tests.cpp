@@ -32,8 +32,16 @@ void basic_run(){
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
-    SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    SDL_Delay(2000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
 
 }
 
@@ -42,6 +50,8 @@ void set_vsync(){
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setVsync(false)")));
     SDL_Delay(3000);
@@ -53,7 +63,11 @@ void set_vsync(){
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
 }
 
 void set_fullscreen(){
@@ -61,6 +75,8 @@ void set_fullscreen(){
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setFullscreen(false)")));
     SDL_Delay(3000);
@@ -72,26 +88,36 @@ void set_fullscreen(){
     SDL_Delay(3000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
 }
 
 void reload_and_restart(){
     SDL_Delay(25000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
-    SDL_Delay(3000);
+    SDL_Delay(2000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
-    SDL_Delay(3000);
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    SDL_Delay(1000);
     gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>(R"(loadLevel("main"); startLevel("main"))")));
-    SDL_Delay(3000);
+    SDL_Delay(1000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
-    SDL_Delay(30000);
+    SDL_Delay(25000);
     gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
     gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
-    SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    SDL_Delay(2000);
+    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("endGame()")));
+    SDL_Delay(1000);
+    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    SDL_Delay(30);
+    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
 }
 
 TEST(engine_integration, full_integration) {

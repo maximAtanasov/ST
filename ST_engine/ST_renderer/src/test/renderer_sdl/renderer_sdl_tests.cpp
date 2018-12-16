@@ -246,7 +246,6 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
     ASSERT_TRUE(static_cast<bool>(test_surface));
     ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
-    ST::renderer_sdl::vsync_on();
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;

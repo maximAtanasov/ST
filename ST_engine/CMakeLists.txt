@@ -343,7 +343,8 @@ set(ALL_TESTS
         entity_test
         level_test
         lua_backend_test
-        task_manager_test)
+        task_manager_test
+        ST_engine_integration_test)
 
 set(RUN_ON_BUILD_TESTS
         console_test
@@ -352,9 +353,6 @@ set(RUN_ON_BUILD_TESTS
         level_test
         lua_backend_test
         task_manager_test)
-
-set(INTEGRATION_TEST
-        ST_engine_integration_test)
 
 gtest_add_tests(TARGET ${ALL_TESTS})
 add_dependencies(ST_engine ${ALL_TESTS})
@@ -379,6 +377,12 @@ if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
             POST_BUILD
             COMMAND ST_engine_integration_test
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata
+    )
+    add_custom_command(
+            TARGET ST_engine
+            POST_BUILD
+            COMMAND audio_manager_test
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
 endif()
 

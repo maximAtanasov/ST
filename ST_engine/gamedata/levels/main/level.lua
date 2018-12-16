@@ -8,6 +8,7 @@
 
 playMusic("skowroneczek.ogg", 100, -1)
 enableLighting(true)
+stopAllSounds()
 
 --Load the appropriate language configuration
 if language == "russian" then
