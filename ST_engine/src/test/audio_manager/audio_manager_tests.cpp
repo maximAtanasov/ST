@@ -38,12 +38,16 @@ protected:
         close_SDL();
     }
 
+    message_bus* msg_bus;
+
     void SetUp() override{
-        test_mngr = new audio_manager(new message_bus(), nullptr);
+        msg_bus = new message_bus();
+        test_mngr = new audio_manager(msg_bus, nullptr);
     }
 
     void TearDown() override{
         delete test_mngr;
+        delete msg_bus;
     }
 };
 
