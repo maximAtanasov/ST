@@ -9,7 +9,6 @@
 
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
-#include <main/message_types.hpp>
 #include "game_manager.hpp"
 
 

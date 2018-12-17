@@ -22,8 +22,6 @@
 #include <fstream>
 #include <sstream>
 #include <SDL_timer.h>
-#include <main/message_types.hpp>
-
 
 //local to the file, as lua bindings cannot be in a class
 static message_bus*  gMessage_busLua;

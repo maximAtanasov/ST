@@ -10,8 +10,6 @@
 #ifndef TASK_DEF
 #define TASK_DEF
 
-#include <SDL_mutex.h>
-
 namespace ST {
 
     ///An object representing a task to be run by the task manager.

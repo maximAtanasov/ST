@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <console/console_log.hpp>
+#include "console_log.hpp"
 
 /**
  * Constructor for the <b>ST::console_log</b> object.

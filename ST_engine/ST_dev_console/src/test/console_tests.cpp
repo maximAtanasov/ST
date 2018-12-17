@@ -9,7 +9,7 @@
 
 #include <gtest/gtest.h>
 #include "../../../ST_message_bus/include/message_bus.hpp"
-#include <console/console.hpp>
+#include <console.hpp>
 
 /// Tests fixture for the console
 class console_test : public ::testing::Test {

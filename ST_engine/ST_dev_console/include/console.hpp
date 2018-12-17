@@ -10,8 +10,9 @@
 #ifndef DEVCONSOLE_DEF
 #define DEVCONSOLE_DEF
 
-#include <console/console_log.hpp>
 #include <message_bus.hpp>
+#include <SDL2/SDL_pixels.h>
+#include "../src/main/console_log.hpp"
 
 ///This object represents the console window.
 /**

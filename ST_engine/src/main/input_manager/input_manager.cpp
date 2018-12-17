@@ -9,7 +9,6 @@
 
 #include <input_manager/input_manager.hpp>
 #include <SDL.h>
-#include <main/message_types.hpp>
 
 /**
  * initializes the input manager

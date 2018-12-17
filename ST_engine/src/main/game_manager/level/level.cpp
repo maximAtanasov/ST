@@ -8,7 +8,6 @@
  */
 
 #include <game_manager/level/level.hpp>
-#include <main/message_types.hpp>
 #include <fstream>
 #include <sstream>
 

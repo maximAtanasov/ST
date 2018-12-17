@@ -12,6 +12,7 @@
 
 #include <message_bus.hpp>
 #include <task_manager/task.hpp>
+#include <SDL_mutex.h>
 
 typedef SDL_semaphore* task_id;
 

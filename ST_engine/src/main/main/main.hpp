@@ -19,7 +19,7 @@
 #include <physics_manager/physics_manager.hpp>
 #include <task_manager/task_manager.hpp>
 #include <message_bus.hpp>
-#include <console/console.hpp>
+#include <console.hpp>
 #include <main/timer.hpp>
 #include <main/fps.hpp>
 

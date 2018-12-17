@@ -12,8 +12,8 @@
 
 
 #include <cstdint>
-#include <SDL_pixels.h>
 #include <string>
+#include <SDL2/SDL_pixels.h>
 
 namespace ST {
 

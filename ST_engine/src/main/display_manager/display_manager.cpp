@@ -10,7 +10,6 @@
 #include <display_manager/display_manager.hpp>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <main/message_types.hpp>
 
 /**
  * Closes the Display Manager.

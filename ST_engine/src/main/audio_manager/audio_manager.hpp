@@ -16,7 +16,6 @@
 #include <message_bus.hpp>
 #include <task_manager/task_manager.hpp>
 #include <task_manager/task_allocator.hpp>
-#include <main/message_types.hpp>
 
 ///This object is responsible for playing sounds and music
 /**

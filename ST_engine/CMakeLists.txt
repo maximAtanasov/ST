@@ -16,6 +16,7 @@ enable_testing()
 
 add_subdirectory(ST_renderer)
 add_subdirectory(ST_message_bus)
+add_subdirectory(ST_dev_console)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
@@ -29,6 +30,7 @@ include_directories(../ST_util/include)
 include_directories(../ST_engine/src/main)
 include_directories(../ST_engine/ST_renderer/include)
 include_directories(../ST_engine/ST_message_bus/include)
+include_directories(../ST_engine/ST_dev_console/include)
 include_directories(../external/googletest/googletest/include)
 include_directories(../external/googletest/googlemock/include)
 include_directories(../external/lua/lua-5.3.0/src)
@@ -45,9 +47,6 @@ add_executable(ST_engine
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
-        src/main/main/message_types.hpp
-        src/main/console/console.cpp
-        src/main/console/console.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp
@@ -76,8 +75,6 @@ add_executable(ST_engine
         src/main/game_manager/lua_backend/lua_backend.cpp
         src/main/game_manager/lua_backend/lua_backend.hpp
         src/main/input_manager/key_definitions.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
         src/main/game_manager/level/text.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -87,6 +84,7 @@ target_link_libraries(ST_engine
         ST_loaders
         ST_renderer
         ST_message_bus
+        ST_dev_console
         lua
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -101,8 +99,6 @@ add_executable(asset_manager_test
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
         src/test/assets_manager/assets_manager_tests.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -128,8 +124,6 @@ add_executable(audio_manager_test
         src/main/task_manager/task.hpp
         src/main/task_manager/task_manager.cpp
         src/main/task_manager/task_manager.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
         src/test/audio_manager/audio_manager_tests.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -146,31 +140,10 @@ target_link_libraries(audio_manager_test
 
 include_directories(audio_manager_test ../ST_engine/src/test)
 
-add_executable(console_test
-        src/main/console/console.cpp
-        src/main/console/console.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
-        src/test/console/console_tests.cpp)
-
-include_directories(console_test ../ST_engine/src/test)
-
-target_link_libraries(console_test
-        ST_loaders
-        ST_util
-        ST_message_bus
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
-
 add_executable(display_manager_test
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/test/display_manager/display_manager_tests.cpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
 
@@ -201,11 +174,7 @@ add_executable(level_test
         src/main/game_manager/level/light.hpp
         src/main/game_manager/level/level.cpp
         src/main/game_manager/level/level.hpp
-        src/test/game_manager/level/level_tests.cpp
-        src/main/console/console.cpp
-        src/main/console/console.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp)
+        src/test/game_manager/level/level_tests.cpp)
 
 target_link_libraries(level_test
         ST_util
@@ -222,10 +191,6 @@ add_executable(lua_backend_test
         src/main/game_manager/level/light.hpp
         src/main/game_manager/level/level.cpp
         src/main/game_manager/level/level.hpp
-        src/main/console/console.cpp
-        src/main/console/console.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
         src/main/game_manager/level/text.cpp
         src/main/game_manager/level/text.hpp
         src/main/main/timer.cpp
@@ -253,9 +218,7 @@ add_executable(task_manager_test
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp
         src/test/task_manager/task_manager_tests.cpp
-        ST_message_bus/src/main/message.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp)
+        ST_message_bus/src/main/message.hpp)
 
 target_link_libraries(task_manager_test
         ST_util
@@ -274,9 +237,6 @@ add_executable(ST_engine_integration_test
         src/main/audio_manager/audio_manager.cpp
         src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
-        src/main/main/message_types.hpp
-        src/main/console/console.cpp
-        src/main/console/console.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp
@@ -304,8 +264,6 @@ add_executable(ST_engine_integration_test
         src/main/game_manager/lua_backend/lua_backend.cpp
         src/main/game_manager/lua_backend/lua_backend.hpp
         src/main/input_manager/key_definitions.hpp
-        src/main/console/console_log.cpp
-        src/main/console/console_log.hpp
         src/main/game_manager/level/text.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -315,6 +273,7 @@ target_link_libraries(ST_engine_integration_test
         ST_loaders
         ST_renderer
         ST_message_bus
+        ST_dev_console
         lua
         gtest
         ${SDL2_LIBRARY}
@@ -324,7 +283,6 @@ target_link_libraries(ST_engine_integration_test
 
 
 set(ALL_TESTS
-        console_test
         audio_manager_test
         display_manager_test
         asset_manager_test
@@ -335,7 +293,6 @@ set(ALL_TESTS
         ST_engine_integration_test)
 
 set(RUN_ON_BUILD_TESTS
-        console_test
         asset_manager_test
         entity_test
         level_test

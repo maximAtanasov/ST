@@ -7,10 +7,8 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <console/console.hpp>
-#include <input_manager/key_definitions.hpp>
-#include <main/message_types.hpp>
-
+#include <console.hpp>
+#include "../../../src/main/input_manager/key_definitions.hpp"
 
 /**
  *

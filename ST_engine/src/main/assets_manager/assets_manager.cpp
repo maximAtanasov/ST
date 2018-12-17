@@ -9,7 +9,6 @@
 
 #include <ST_loaders/loaders.hpp>
 #include <assets_manager/assets_manager.hpp>
-#include <main/message_types.hpp>
 
 /**
  * Initializes the asset_manager.

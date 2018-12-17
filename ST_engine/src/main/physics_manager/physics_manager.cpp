@@ -7,8 +7,6 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 #include <physics_manager/physics_manager.hpp>
-#include <main/message_types.hpp>
-
 
 /**
  * Initializes the physics manager.
