@@ -16,13 +16,13 @@
 #include <test/game_manager/lua_backend/game_manager_mock.hpp>
 #endif
 
-#include <console/log.hpp>
 #include <ST_util/string_util.hpp>
 #include <game_manager/level/light.hpp>
 #include "lua_backend.hpp"
 #include <fstream>
 #include <sstream>
 #include <SDL_timer.h>
+#include <main/message_types.hpp>
 
 
 //local to the file, as lua bindings cannot be in a class
@@ -239,7 +239,7 @@ int8_t lua_backend::run_script(const std::string& script) {
     std::string temp = hash_string(script);
    // int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
     if (luaL_dostring(L, temp.c_str())){
-        log(ERROR, "Cannot run Script");
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Cannot run script")));
         return -1;
     }else{
         return 0;
@@ -394,7 +394,7 @@ std::string lua_backend::hash_file(const std::string& path){
         return result;
     }
     else{
-        log(ERROR, "File " + path + " not found");
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return nullptr;
     }
 }
@@ -1691,10 +1691,16 @@ extern "C" int showCollisionsLua(lua_State* L){
  * @param L The global Lua state.
  * @return Always 0.
  */
-extern "C" int logLua(lua_State* L){
+extern "C" int logLua(lua_State* L) {
     auto type = static_cast<uint8_t>(lua_tointeger(L, 1));
     auto arg = static_cast<std::string>(lua_tostring(L, 2));
-    gMessage_busLua->send_msg(make_msg(CONSOLE_WRITE, make_data(ST::console_log((ST::log_type)type, arg))));
+    if (type == 1) {
+        gMessage_busLua->send_msg(make_msg(LOG_ERROR, make_data<std::string>(arg)));
+    }else if(type == 2){
+        gMessage_busLua->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>(arg)));
+    }else if(type == 4){
+        gMessage_busLua->send_msg(make_msg(LOG_INFO, make_data<std::string>(arg)));
+    }
     return 0;
 }
 

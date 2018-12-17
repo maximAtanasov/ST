@@ -23,7 +23,9 @@ console::console(message_bus* msg_bus){
     shown = false;
     font_size = 40;
     scroll_offset = 0;
-    gMessage_bus->subscribe(CONSOLE_WRITE, &msg_sub);
+    gMessage_bus->subscribe(LOG_ERROR, &msg_sub);
+    gMessage_bus->subscribe(LOG_SUCCESS, &msg_sub);
+    gMessage_bus->subscribe(LOG_INFO, &msg_sub);
     gMessage_bus->subscribe(CONSOLE_TOGGLE, &msg_sub);
     gMessage_bus->subscribe(MOUSE_SCROLL, &msg_sub);
     gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
@@ -49,34 +51,20 @@ void console::scroll(int32_t scroll_y){
 void console::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == CONSOLE_WRITE){
-            auto log = static_cast<ST::console_log*>(temp->get_data());
-            if(log_level == 0x01) {
-                if (log->type == ST::log_type::ERROR) {
-                    write(*log);
-                }
-            }else if(log_level == 0x02){
-                if(log->type == ST::log_type::SUCCESS){
-                    write(*log);
-                }
-            }else if(log_level == 0x04){
-                if(log->type == ST::log_type::INFO){
-                    write(*log);
-                }
-            }else if(log_level == 0x03){
-                if(log->type == ST::log_type::ERROR || log->type == ST::log_type::SUCCESS){
-                    write(*log);
-                }
-            }else if(log_level == 0x05){
-                if(log->type == ST::log_type::ERROR || log->type == ST::log_type::INFO){
-                    write(*log);
-                }
-            }else if(log_level == 0x06){
-                if(log->type == ST::log_type::SUCCESS || log->type == ST::log_type::INFO){
-                    write(*log);
-                }
-            }else if(log_level == 0x07){
-                write(*log);
+        if(temp->msg_name == LOG_ERROR){
+            auto log = static_cast<std::string*>(temp->get_data());
+            if(log_level == 0x01 || log_level >= 0x03) {
+                write(*log, ST::log_type::ERROR);
+            }
+        }else if(temp->msg_name == LOG_INFO){
+            auto log = static_cast<std::string*>(temp->get_data());
+            if(log_level == 0x04 || log_level >= 0x05) {
+                write(*log, ST::log_type::INFO);
+            }
+        }else if(temp->msg_name == LOG_SUCCESS){
+            auto log = static_cast<std::string*>(temp->get_data());
+            if(log_level == 0x02 || log_level == 0x03 || log_level > 0x06) {
+                write(*log, ST::log_type::SUCCESS);
             }
         }
         else if(temp->msg_name == CONSOLE_TOGGLE){
@@ -93,7 +81,7 @@ void console::handle_messages(){
             auto key_val = static_cast<ST::key*>(temp->get_data());
             if(*key_val == ST::key::ENTER){
                 if(!composition.empty()){
-                    write(ST::console_log(ST::log_type::INFO, composition));
+                    write(composition, ST::log_type ::INFO);
                     gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data(composition)));
                 }
                 composition.clear();
@@ -138,9 +126,9 @@ void console::toggle() {
 /**
  * @param arg the <b>ST::console_log</b> object to write to the console window AND <b>stdout</b>.
  */
-void console::write(ST::console_log arg){
-    printf("%s\n", arg.text.c_str());
-    entries.push_back(arg);
+void console::write(const std::string &arg, ST::log_type type){
+    printf("%s\n", arg.c_str());
+    entries.emplace_back(type, arg);
     //remove entries if there are too many
     if(entries.size() > 1000) {
         for (int i = 0; i < 900; i++) {

@@ -52,7 +52,7 @@ class console{
         void toggle();
         void show();
         void hide();
-        void write(ST::console_log arg);
+        void write(const std::string &arg, ST::log_type type);
         void handle_messages();
 
         uint8_t log_level = 0x00;

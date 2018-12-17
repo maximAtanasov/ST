@@ -6,8 +6,8 @@
  * Author: Maxim Atanasov
  * E-mail: atanasovmaksim1@gmail.com
  */
-#include <console/log.hpp>
 #include <physics_manager/physics_manager.hpp>
+#include <main/message_types.hpp>
 
 
 /**

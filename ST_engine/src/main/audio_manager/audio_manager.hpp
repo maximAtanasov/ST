@@ -15,8 +15,8 @@
 #include <assets_manager/assets.hpp>
 #include <message_bus.hpp>
 #include <task_manager/task_manager.hpp>
-#include <console/log.hpp>
 #include <task_manager/task_allocator.hpp>
+#include <main/message_types.hpp>
 
 ///This object is responsible for playing sounds and music
 /**
@@ -161,7 +161,7 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
             Mix_VolumeChunk(data, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
         }
         if(Mix_PlayChannel( -1, data, loops ) == -1){
-            log(ERROR, "Mix_PlayChannel Error " + std::string(Mix_GetError()));
+            gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Mix_PlayChannel Error " + std::string(Mix_GetError()))));
         }
     }
 }
@@ -179,7 +179,7 @@ inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) 
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         }
         if(Mix_PlayMusic(data, loops) == -1){
-            log(ERROR, "Mix_PlayMusic Error " + std::string(Mix_GetError()));
+            gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Mix_PlayMusic Error " + std::string(Mix_GetError()))));
         }
         if(!muted) {
             Mix_VolumeMusic(this->music_volume);

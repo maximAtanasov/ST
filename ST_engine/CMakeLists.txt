@@ -78,7 +78,6 @@ add_executable(ST_engine
         src/main/input_manager/key_definitions.hpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
-        src/main/console/log.hpp
         src/main/game_manager/level/text.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -104,7 +103,6 @@ add_executable(asset_manager_test
         src/main/task_manager/task_manager.hpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
-        src/main/console/log.hpp
         src/test/assets_manager/assets_manager_tests.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -132,7 +130,6 @@ add_executable(audio_manager_test
         src/main/task_manager/task_manager.hpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
-        src/main/console/log.hpp
         src/test/audio_manager/audio_manager_tests.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
@@ -150,7 +147,6 @@ target_link_libraries(audio_manager_test
 include_directories(audio_manager_test ../ST_engine/src/test)
 
 add_executable(console_test
-        src/main/console/log.hpp
         src/main/console/console.cpp
         src/main/console/console.hpp
         src/main/console/console_log.cpp
@@ -175,7 +171,6 @@ add_executable(display_manager_test
         src/test/display_manager/display_manager_tests.cpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
-        src/main/console/log.hpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)
 
@@ -311,7 +306,6 @@ add_executable(ST_engine_integration_test
         src/main/input_manager/key_definitions.hpp
         src/main/console/console_log.cpp
         src/main/console/console_log.hpp
-        src/main/console/log.hpp
         src/main/game_manager/level/text.cpp
         src/main/task_manager/task_allocator.cpp
         src/main/task_manager/task_allocator.hpp)

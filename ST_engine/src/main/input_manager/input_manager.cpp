@@ -8,8 +8,8 @@
  */
 
 #include <input_manager/input_manager.hpp>
-#include <console/log.hpp>
 #include <SDL.h>
+#include <main/message_types.hpp>
 
 /**
  * initializes the input manager
@@ -23,7 +23,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gTask_manager = tsk_mngr;
 
     if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0 ){
-        log(ERROR, "Could not initialize gamepad subsystem!");
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Could not initialize gamepad subsystem!")));
     }
 
     //Initialize controls
@@ -105,7 +105,8 @@ void input_manager::take_input(){
         if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
             SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
             controllers.emplace_back(controller);
-            log(INFO, "Found a controller: " + std::string(SDL_GameControllerName(controller)));
+            gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
+
         }
         if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
             uint8_t number = 0;
@@ -115,7 +116,7 @@ void input_manager::take_input(){
                 }
             }
             controllers.erase(controllers.begin() + number);
-            log(INFO, "Controller " + std::to_string(number+1) + " disconnected");
+            gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Controller " + std::to_string(number+1) + " disconnected")));
         }
     }
 

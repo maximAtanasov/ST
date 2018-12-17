@@ -21,8 +21,8 @@ protected:
         return test_cnsl->log_level;
     }
 
-    void write(const ST::console_log& log){
-        test_cnsl->write(log);
+    void write(ST::log_type type, const std::string &text){
+        test_cnsl->write(text, type);
     }
 
     message_bus* msg_bus;
@@ -64,14 +64,21 @@ TEST_F(console_test, set_log_level) {
 TEST_F(console_test, console_write_error) {
     ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::ERROR);
-    write(ST::console_log(ST::log_type::ERROR, "TEST_STRING"));
+    write(ST::log_type::ERROR, "TEST_STRING");
     ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
 }
 
 TEST_F(console_test, console_write_info) {
     ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::INFO);
-    write(ST::console_log(ST::console_log(ST::log_type::INFO, "TEST_STRING")));
+    write(ST::log_type::INFO, "TEST_STRING");
+    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
+}
+
+TEST_F(console_test, console_write_success) {
+    ::testing::internal::CaptureStdout();
+    test_cnsl->set_log_level(ST::log_type::SUCCESS);
+    write(ST::log_type::SUCCESS, "TEST_STRING");
     ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
 }
 
@@ -80,9 +87,9 @@ TEST_F(console_test, console_write_all) {
     ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::SUCCESS | ST::log_type::INFO | ST::log_type::ERROR);
 
-    write(ST::console_log(ST::console_log(ST::log_type::INFO, "TEST_STRING")));
-    write(ST::console_log(ST::console_log(ST::log_type::ERROR, "TEST_STRING2")));
-    write(ST::console_log(ST::console_log(ST::log_type::INFO, "TEST_STRING3")));
+    write(ST::log_type::INFO, "TEST_STRING");
+    write(ST::log_type::ERROR, "TEST_STRING2");
+    write(ST::log_type::SUCCESS, "TEST_STRING3");
 
     ASSERT_EQ("TEST_STRING\nTEST_STRING2\nTEST_STRING3\n", testing::internal::GetCapturedStdout());
 }

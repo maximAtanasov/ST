@@ -8,7 +8,6 @@
  */
 
 #include <task_manager/task_manager.hpp>
-#include <console/log.hpp>
 #include <task_manager/task_allocator.hpp>
 #include <fstream>
 #include <sstream>

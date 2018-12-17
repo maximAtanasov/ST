@@ -80,25 +80,25 @@ void audio_manager::handle_messages(){
         }
         else if(temp->msg_name == STOP_MUSIC){
             stop_music();
-            log(SUCCESS, "Music stopped");
+            gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Music stopped")));
         }
         else if(temp->msg_name == PAUSE_MUSIC){
             pause_music();
-            log(SUCCESS, "Music paused");
+            gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Music paused")));
         }
         else if(temp->msg_name == STOP_ALL_SOUNDS){
 			stop_channels();
-            log(SUCCESS, "Sounds stopped");
+            gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Sounds stopped")));
         }
         else if(temp->msg_name == SET_AUDIO_ENABLED){
             auto arg = static_cast<bool*>(temp->get_data());
             if(!*arg){
-                log(SUCCESS, "Audio muted");
+                gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Audio muted")));
                 mute();
             }
             else{
                 unmute();
-                log(SUCCESS, "Audio unmuted");
+                gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Audio unmuted")));
             }
             gMessage_bus->send_msg(make_msg(AUDIO_ENABLED, make_data(*arg)));
         }

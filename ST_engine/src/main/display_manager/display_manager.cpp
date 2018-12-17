@@ -8,9 +8,9 @@
  */
 
 #include <display_manager/display_manager.hpp>
-#include <console/log.hpp>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <main/message_types.hpp>
 
 /**
  * Closes the Display Manager.
@@ -49,8 +49,8 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
         height,
 		SDL_WINDOW_OPENGL
     );
-    log(INFO, "Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height));
-	gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
+    gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height))));
+    gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
 
     //Load and set icon
     icon = IMG_Load("levels/icon.png");
@@ -85,7 +85,7 @@ void display_manager::handle_messages(){
         else if(temp->msg_name == SET_WINDOW_BRIGHTNESS){
             auto arg = static_cast<float*>(temp->get_data());
             set_brightness(*arg);
-            log(SUCCESS, "Brightness set to: " + std::to_string(*arg));
+            gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(*arg))));
         }
         else if(temp->msg_name == SET_WINDOW_RESOLUTION){
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
