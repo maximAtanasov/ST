@@ -5,10 +5,16 @@
 #
 # Author: Maxim Atanasov
 # E-mail: atanasovmaksim1@gmail.com
-
-
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(slavicTales)
+
+if(DEFINED ENV{DEBUG})
+    add_definitions(-D__DEBUG)
+elseif(DEFINED ENV{RELEASE})
+    add_definitions(-D__RELEASE)
+else()
+    add_definitions(-D__DEBUG)
+endif()
 
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)

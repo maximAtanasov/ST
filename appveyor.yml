@@ -17,3 +17,6 @@ build_script:
   - set SDL_VIDEODRIVER=dummy
   - set SDL_AUDIODRIVER=dummy  
   - nmake all
+  - set RELEASE=true
+  - nmake clean
+  - nmake all

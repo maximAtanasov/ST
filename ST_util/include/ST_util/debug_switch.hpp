@@ -11,6 +11,5 @@
 #define SLAVICTALES_DEBUG_SWITCH_HPP
 
 ///define __DEBUG or __RELEASE to enable or disable certain features
-#define __DEBUG
 
 #endif //SLAVICTALES_DEBUG_SWITCH_HPP

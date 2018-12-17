@@ -18,5 +18,9 @@ jobs:
           command: apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 
       - run:
-          name: build
-          command: cmake CMakeLists.txt && SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
+          name: build_debug
+          command: cmake CMakeLists.txt && DEBUG=true SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
+
+      - run:
+          name: build_release
+          command: cmake CMakeLists.txt && RELEASE=true SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
