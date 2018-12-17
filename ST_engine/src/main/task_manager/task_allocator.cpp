@@ -8,6 +8,7 @@
  */
 
 #include <task_manager/task_allocator.hpp>
+#include <SDL_mutex.h>
 
 /**
  * Constructor for the task allocator.
