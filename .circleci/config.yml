@@ -23,4 +23,4 @@ jobs:
 
       - run:
           name: build_release
-          command: cmake CMakeLists.txt && RELEASE_BUILD=true SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
+          command: make clean && cmake CMakeLists.txt && RELEASE_BUILD=true SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
