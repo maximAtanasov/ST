@@ -13,7 +13,7 @@
 
 #include <cstdint>
 #include <string>
-#include <SDL2/SDL_pixels.h>
+#include <SDL_pixels.h>
 
 namespace ST {
 
