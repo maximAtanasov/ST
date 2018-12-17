@@ -17,6 +17,7 @@ build_script:
   - set SDL_VIDEODRIVER=dummy
   - set SDL_AUDIODRIVER=dummy  
   - nmake all
-  - set RELEASE=true
+  - set RELEASE_BUILD=true
+  - cmake -G "NMake Makefiles" .
   - nmake clean
   - nmake all

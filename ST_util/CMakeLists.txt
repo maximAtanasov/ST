@@ -38,7 +38,6 @@ include_directories(${SDL2_MIXER_INCLUDE_DIR})
 include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 add_library(ST_util
-        include/ST_util/debug_switch.hpp
         include/ST_util/test_util.hpp
         include/ST_util/math.hpp
         src/main/util.cpp

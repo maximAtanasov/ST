@@ -22,6 +22,5 @@
 #include <console/console.hpp>
 #include <main/timer.hpp>
 #include <main/fps.hpp>
-#include <ST_util/debug_switch.hpp>
 
 #endif //MAIN_DEF

@@ -282,7 +282,7 @@ TEST_F(lua_backend_test, test_call_function_delay){
     test_subject.run_script("delay(" + std::to_string(runtime) + ")");
     double end_time = test_timer.time_since_start();
 
-    ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time-start_time), 20);
+    ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time-start_time), 100);
 }
 
 TEST_F(lua_backend_test, test_call_function_setVsyncLua){

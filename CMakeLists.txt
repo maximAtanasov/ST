@@ -8,9 +8,9 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(slavicTales)
 
-if(DEFINED ENV{DEBUG})
+if(DEFINED ENV{DEBUG_BUILD})
     add_definitions(-D__DEBUG)
-elseif(DEFINED ENV{RELEASE})
+elseif(DEFINED ENV{RELEASE_BUILD})
     add_definitions(-D__RELEASE)
 else()
     add_definitions(-D__DEBUG)
