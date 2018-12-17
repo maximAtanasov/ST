@@ -9,6 +9,7 @@
 
 #include <input_manager/input_manager.hpp>
 #include <SDL.h>
+#include <string>
 
 /**
  * initializes the input manager
