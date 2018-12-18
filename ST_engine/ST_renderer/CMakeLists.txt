@@ -53,19 +53,17 @@ target_link_libraries(renderer_sdl_test
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
-set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 
 if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
-    add_test(NAME renderer_sdl_test COMMAND renderer_sdl_test)
+    add_test(NAME renderer_sdl_test COMMAND renderer_sdl_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
     add_custom_command(
             TARGET ST_renderer
             POST_BUILD
-            COMMAND ${CMAKE_COMMAND} --build ${PROJECT_SOURCE_DIR}/src/test/test_resources --target renderer_sdl_test
+            COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target renderer_sdl_test
     )
     add_custom_command(
             TARGET ST_renderer
             POST_BUILD
             COMMAND ctest -VV
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
 endif()
