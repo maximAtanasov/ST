@@ -40,7 +40,8 @@ message* message_allocator::allocate_message(int name, std::shared_ptr<void> dat
         }
     }
     if(i == memory_size){
-        return nullptr;
+        fprintf(stderr, "message bus: too many messages allocated, not enough memory, exiting\n");
+        exit(1);
     }
     allocated[pointer] = true;
     auto temp = new (memory+pointer) message(name, data, pointer);
