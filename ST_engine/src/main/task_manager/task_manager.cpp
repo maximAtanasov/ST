@@ -139,6 +139,7 @@ int get_cpu_core_count(){
 #else
 #include <unistd.h>
 #include <SDL_thread.h>
+#include <SDL_timer.h>
 
 int get_cpu_core_count() {
     int cores = 0;
@@ -181,7 +182,9 @@ int task_manager::task_thread(task_manager* self){
 	while(self->run_threads){
 	    SDL_SemWait(self->work_sem);
         if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
+            //auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
             self->do_work(work);
+            //auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
         }
 	}
     return 0;
@@ -215,7 +218,6 @@ task_manager::task_manager(message_bus *msg_bus){
     gMessage_bus = msg_bus;
 
     //check how many threads we have
-
     thread_num = static_cast<uint8_t>(get_cpu_core_count());
 
     //initialize semaphore for worker threads

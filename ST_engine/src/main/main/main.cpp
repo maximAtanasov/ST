@@ -91,7 +91,6 @@ int ST_engine_main(int argc, char *argv[]) {
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
         gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);
-
         #elif defined(__RELEASE)
         gDrawing_manager.update(*gGame_manager.get_level());
         #endif

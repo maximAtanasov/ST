@@ -154,12 +154,12 @@ inline void audio_manager::unmute(){
  * @param loops How many times to play it.
  */
 inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
-    Mix_Chunk* data = assets_ptr->chunks.at(arg);
-    if(data != nullptr){
+    auto data = assets_ptr->chunks.find(arg);
+    if(data != assets_ptr->chunks.end()){
         if(!muted){
-            Mix_VolumeChunk(data, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
+            Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
         }
-        if(Mix_PlayChannel( -1, data, loops ) == -1){
+        if(Mix_PlayChannel( -1, data->second, loops ) == -1){
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Mix_PlayChannel Error " + std::string(Mix_GetError()))));
         }
     }
@@ -172,12 +172,12 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
 inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
-    Mix_Music* data = assets_ptr->music.at(arg);
-    if(data != nullptr ){
+    auto data = assets_ptr->music.find(arg);
+    if(data != assets_ptr->music.end() ){
         if(!muted) {
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         }
-        if(Mix_PlayMusic(data, loops) == -1){
+        if(Mix_PlayMusic(data->second, loops) == -1){
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Mix_PlayMusic Error " + std::string(Mix_GetError()))));
         }
         if(!muted) {
