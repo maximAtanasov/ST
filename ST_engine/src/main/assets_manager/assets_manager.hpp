@@ -15,8 +15,7 @@
 #include <fstream>
 #include <sstream>
 #include <message_bus.hpp>
-#include <task_manager/task_manager.hpp>
-#include <task_manager/task_allocator.hpp>
+#include <task_manager.hpp>
 #include <cstdint>
 
 ///This object is responsible for loading/unloading assets.

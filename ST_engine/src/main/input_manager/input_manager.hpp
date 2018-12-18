@@ -12,8 +12,7 @@
 
 #include <input_manager/key_definitions.hpp>
 #include <message_bus.hpp>
-#include <task_manager/task_manager.hpp>
-#include <task_manager/task_allocator.hpp>
+#include <task_manager.hpp>
 #include <SDL_events.h>
 
 ///This object is responsible for taking input

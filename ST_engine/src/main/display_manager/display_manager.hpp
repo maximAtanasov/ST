@@ -12,8 +12,7 @@
 
 #include <string>
 #include <message_bus.hpp>
-#include <task_manager/task_manager.hpp>
-#include <task_manager/task_allocator.hpp>
+#include <task_manager.hpp>
 #include <SDL_surface.h>
 #include <SDL_video.h>
 

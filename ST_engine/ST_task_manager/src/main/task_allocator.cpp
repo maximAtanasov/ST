@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <task_manager/task_allocator.hpp>
+#include <task_allocator.hpp>
 #include <SDL_mutex.h>
 
 /**

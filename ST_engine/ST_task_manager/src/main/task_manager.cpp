@@ -7,8 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <task_manager/task_manager.hpp>
-#include <task_manager/task_allocator.hpp>
+#include <task_manager.hpp>
 #include <fstream>
 #include <sstream>
 

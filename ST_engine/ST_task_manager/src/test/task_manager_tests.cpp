@@ -8,9 +8,8 @@
  */
 
 #include <gtest/gtest.h>
-#include <task_manager/task_manager.hpp>
+#include <task_manager.hpp>
 #include <ST_util/test_util.hpp>
-#include <task_manager/task_allocator.hpp>
 
 class task_manager_tests : public::testing::TestWithParam<int>{
 

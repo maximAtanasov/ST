@@ -11,7 +11,8 @@
 #define PHYSICS_DEF
 
 #include <game_manager/level/entity.hpp>
-#include <task_manager/task_manager.hpp>
+#include <message_bus.hpp>
+#include <task_manager.hpp>
 
 ///This class handles all physics related actions in the engine.
 /**

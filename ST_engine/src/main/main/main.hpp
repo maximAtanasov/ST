@@ -17,7 +17,7 @@
 #include <input_manager/input_manager.hpp>
 #include <assets_manager/assets_manager.hpp>
 #include <physics_manager/physics_manager.hpp>
-#include <task_manager/task_manager.hpp>
+#include <task_manager.hpp>
 #include <message_bus.hpp>
 #include <console.hpp>
 #include <main/timer.hpp>

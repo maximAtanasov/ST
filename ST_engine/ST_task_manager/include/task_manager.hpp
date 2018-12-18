@@ -11,8 +11,9 @@
 #define TASK_MNGR_DEF
 
 #include <message_bus.hpp>
-#include <task_manager/task.hpp>
 #include <SDL_mutex.h>
+#include "../src/main/task.hpp"
+#include "../src/main/task_allocator.hpp"
 
 typedef SDL_semaphore* task_id;
 

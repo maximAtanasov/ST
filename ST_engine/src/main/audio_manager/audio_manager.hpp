@@ -14,8 +14,7 @@
 #include <SDL_mixer.h>
 #include <assets_manager/assets.hpp>
 #include <message_bus.hpp>
-#include <task_manager/task_manager.hpp>
-#include <task_manager/task_allocator.hpp>
+#include <task_manager.hpp>
 
 ///This object is responsible for playing sounds and music
 /**
