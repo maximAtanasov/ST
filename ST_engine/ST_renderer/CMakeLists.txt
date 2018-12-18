@@ -58,7 +58,7 @@ set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PR
 if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
     add_test(NAME renderer_sdl_test COMMAND renderer_sdl_test)
     add_custom_command(
-            TARGET ST_message_bus
+            TARGET ST_renderer
             POST_BUILD
             COMMAND ${CMAKE_COMMAND} --build ${PROJECT_SOURCE_DIR}/src/test/test_resources --target renderer_sdl_test
     )
