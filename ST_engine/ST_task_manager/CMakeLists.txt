@@ -49,7 +49,7 @@ target_link_libraries(task_manager_test
         ${SDL2_MIXER_LIBRARY})
 
 #Run the tests on each build
-add_test(NAME task_manager_test COMMAND task_manager_test)
+add_test(NAME task_manager_test COMMAND task_manager_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/output)
 add_custom_command(
         TARGET ST_task_manager
         POST_BUILD
