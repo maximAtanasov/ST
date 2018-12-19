@@ -12,7 +12,7 @@
 
 #include <drawing_manager/drawing_manager.hpp>
 #include <display_manager/display_manager.hpp>
-#include <audio_manager/audio_manager.hpp>
+#include <audio_manager.hpp>
 #include <game_manager/game_manager.hpp>
 #include <input_manager/input_manager.hpp>
 #include <assets_manager/assets_manager.hpp>

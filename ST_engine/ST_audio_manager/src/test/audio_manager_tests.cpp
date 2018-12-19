@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <audio_manager/audio_manager.hpp>
+#include <audio_manager.hpp>
 #include <ST_util/test_util.hpp>
 
 /// Tests fixture for the audio_manager

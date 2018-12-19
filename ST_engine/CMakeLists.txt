@@ -18,7 +18,7 @@ add_subdirectory(ST_renderer)
 add_subdirectory(ST_message_bus)
 add_subdirectory(ST_dev_console)
 add_subdirectory(ST_task_manager)
-
+add_subdirectory(ST_audio_manager)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
@@ -34,6 +34,7 @@ include_directories(../ST_engine/ST_renderer/include)
 include_directories(../ST_engine/ST_message_bus/include)
 include_directories(../ST_engine/ST_dev_console/include)
 include_directories(../ST_engine/ST_task_manager/include)
+include_directories(../ST_engine/ST_audio_manager/include)
 include_directories(../external/googletest/googletest/include)
 include_directories(../external/googletest/googlemock/include)
 include_directories(../external/lua/lua-5.3.0/src)
@@ -47,8 +48,6 @@ add_executable(ST_engine
         src/main/assets_manager/assets.hpp
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
-        src/main/audio_manager/audio_manager.cpp
-        src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
@@ -84,6 +83,7 @@ target_link_libraries(ST_engine
         ST_message_bus
         ST_dev_console
         ST_task_manager
+        ST_audio_manager
         lua
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
@@ -109,25 +109,6 @@ target_link_libraries(asset_manager_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
-
-
-add_executable(audio_manager_test
-        src/main/assets_manager/assets.hpp
-        src/main/audio_manager/audio_manager.cpp
-        src/main/audio_manager/audio_manager.hpp
-        src/test/audio_manager/audio_manager_tests.cpp)
-
-target_link_libraries(audio_manager_test
-        ST_loaders
-        ST_util
-        ST_message_bus
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
-
-include_directories(audio_manager_test ../ST_engine/src/test)
 
 add_executable(display_manager_test
         src/main/display_manager/display_manager.cpp
@@ -203,8 +184,6 @@ add_executable(ST_engine_integration_test
         src/main/assets_manager/assets.hpp
         src/main/assets_manager/assets_manager.cpp
         src/main/assets_manager/assets_manager.hpp
-        src/main/audio_manager/audio_manager.cpp
-        src/main/audio_manager/audio_manager.hpp
         src/main/game_manager/level/camera.hpp
         src/main/display_manager/display_manager.cpp
         src/main/display_manager/display_manager.hpp
@@ -239,6 +218,7 @@ target_link_libraries(ST_engine_integration_test
         ST_message_bus
         ST_dev_console
         ST_task_manager
+        ST_audio_manager
         lua
         gtest
         ${SDL2_LIBRARY}
@@ -248,7 +228,6 @@ target_link_libraries(ST_engine_integration_test
 
 
 set(ALL_TESTS
-        audio_manager_test
         display_manager_test
         asset_manager_test
         entity_test
@@ -285,12 +264,6 @@ if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
             POST_BUILD
             COMMAND ST_engine_integration_test
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/gamedata
-    )
-    add_custom_command(
-            TARGET ST_engine
-            POST_BUILD
-            COMMAND audio_manager_test
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
 endif()
 

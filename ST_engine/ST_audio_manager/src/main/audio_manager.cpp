@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <audio_manager/audio_manager.hpp>
+#include <audio_manager.hpp>
 
 /**
  * Performs the update for the asset_manager on a task thread.
