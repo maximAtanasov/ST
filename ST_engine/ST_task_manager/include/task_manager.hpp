@@ -11,11 +11,11 @@
 #define TASK_MNGR_DEF
 
 #include <message_bus.hpp>
-#include <SDL_mutex.h>
 #include "../src/main/task.hpp"
 #include "../src/main/task_allocator.hpp"
+#include "../src/main/semaphore.hpp"
 
-typedef SDL_semaphore* task_id;
+typedef semaphore* task_id;
 
 ///The Task Manager handles all things multi-threaded in the engine.
 /**
@@ -29,7 +29,7 @@ class task_manager{
         message_bus* gMessage_bus{};
         std::vector<std::thread> task_threads{};
         std::atomic_bool run_threads{true};
-        SDL_semaphore* work_sem{};
+        semaphore* work_sem{};
         moodycamel::ConcurrentQueue<ST::task*> global_task_queue;
 
         static int task_thread(task_manager* self);

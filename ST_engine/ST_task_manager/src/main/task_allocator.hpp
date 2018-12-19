@@ -25,7 +25,7 @@ private:
     uint32_t memory_size = TASK_ALLOCATOR_CAPACITY;
     std::atomic_bool allocated[TASK_ALLOCATOR_CAPACITY]{};
 public:
-    ST::task* allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency);
+    ST::task* allocate_task(void (*function)(void *), void *arg, semaphore *dependency);
     void deallocate(uint16_t id);
     task_allocator();
     ~task_allocator();
@@ -33,7 +33,7 @@ public:
 
 //INLINED METHODS
 
-inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, SDL_semaphore *dependency){
+inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, semaphore *dependency){
     uint16_t i = 0;
     access_mutex.lock();
     //find the next free spot in memory
@@ -72,7 +72,7 @@ inline void task_allocator::deallocate(uint16_t id){
  * @param affinity Thread affinity for the task
  * @return A new task object
  */
-ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency);
+ST::task* make_task(void (*function)(void *), void *arg, semaphore *dependency);
 
 /**
  * Destroys a task using the task allocator

@@ -9,7 +9,6 @@
 
 #include <gtest/gtest.h>
 #include <task_manager.hpp>
-#include <ST_util/test_util.hpp>
 
 class task_manager_tests : public::testing::TestWithParam<int>{
 
@@ -18,13 +17,11 @@ protected:
     message_bus* msg_bus{};
 
     void SetUp() override{
-        initialize_SDL();
         msg_bus = new message_bus();
     }
 
     void TearDown() override{
         delete msg_bus;
-        close_SDL();
     }
 };
 
@@ -35,7 +32,7 @@ static void test_task_function(void* arg){
 
 static void test_task_function2(void* arg){
     auto val = static_cast<uint8_t*>(arg);
-    SDL_Delay(2000);
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     ++*val;
 }
 
@@ -72,7 +69,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
     test_subject.start_task_lockfree(make_task(test_task_function, &test_value, nullptr));
 
     //Wait a suffecent amount of time
-    SDL_Delay(1000); //1 sec should be enough
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     ASSERT_EQ(test_value, 11);
 }
 
@@ -85,7 +82,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value, nullptr));
     test_subject.start_task_lockfree(make_task(test_task_function, &test_value, id1));
 
-    SDL_Delay(4000);
+    std::this_thread::sleep_for(std::chrono::seconds(4));
     ASSERT_EQ(test_value, 12);
 }
 
@@ -96,19 +93,21 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
     uint8_t test_value1 = 10;
     uint8_t test_value2 = 20;
     //Test
-    uint64_t start = SDL_GetTicks();
+    auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
-    SDL_semaphore* semaphore = SDL_CreateSemaphore(0);
+
+    auto semaphore_ = new semaphore();
 
     task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
-    test_subject.start_task_lockfree(make_task(test_task_function, &test_value2, semaphore));
+    test_subject.start_task_lockfree(make_task(test_task_function, &test_value2, semaphore_));
 
-    SDL_SemPost(semaphore);
+    semaphore_->notify();
     test_subject.wait_for_task(id1);
 
-    uint64_t end = SDL_GetTicks();
+    auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
-    ASSERT_NEAR(static_cast<double>(end-start), 2100, 200);
+
+    ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 2100, 200);
     ASSERT_EQ(test_value1, 11);
     ASSERT_EQ(test_value2, 21);
 }

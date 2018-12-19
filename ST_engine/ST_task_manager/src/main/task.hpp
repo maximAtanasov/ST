@@ -10,7 +10,7 @@
 #ifndef TASK_DEF
 #define TASK_DEF
 
-#include <SDL_mutex.h>
+#include "semaphore.hpp"
 
 namespace ST {
 
@@ -25,8 +25,8 @@ namespace ST {
         void (*task_func)(void *);
 
         void *data;
-        SDL_semaphore *lock = nullptr;
-        SDL_semaphore *dependency{};
+        semaphore *lock = nullptr;
+        semaphore *dependency{};
         const uint16_t id{};
 
         /**
@@ -37,7 +37,7 @@ namespace ST {
          * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
          * @param affinity Thread affinity for the task
          */
-        task(uint16_t id, void (*function)(void *), void *arg, SDL_semaphore *dependency) : id(id){
+        task(uint16_t id, void (*function)(void *), void *arg, semaphore *dependency) : id(id){
             task_func = function;
             data = arg;
             this->dependency = dependency;

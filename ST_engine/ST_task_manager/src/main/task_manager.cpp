@@ -137,8 +137,6 @@ int get_cpu_core_count(){
 }
 #else
 #include <unistd.h>
-#include <SDL_thread.h>
-#include <SDL_timer.h>
 
 int get_cpu_core_count() {
     int cores = 0;
@@ -179,7 +177,7 @@ int get_cpu_core_count() {
 int task_manager::task_thread(task_manager* self){
 	ST::task* work;
 	while(self->run_threads){
-	    SDL_SemWait(self->work_sem);
+	    self->work_sem->wait();
         if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
             //auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
             self->do_work(work);
@@ -196,12 +194,12 @@ int task_manager::task_thread(task_manager* self){
  */
 void task_manager::do_work(ST::task* work) {
     if(work->dependency != nullptr){ //wait for dependency to finish
-        SDL_SemWait(work->dependency);
-        SDL_DestroySemaphore(work->dependency);
+        work->dependency->wait();
+        delete work->dependency;
     }
     work->task_func(work->data); // call it
     if(work->lock != nullptr) {
-        SDL_SemPost(work->lock); //increment the semaphore
+        work->lock->notify(); //increment the semaphore
     }
     destroy_task(work);
 }
@@ -220,7 +218,7 @@ task_manager::task_manager(message_bus *msg_bus){
     thread_num = static_cast<uint8_t>(get_cpu_core_count());
 
     //initialize semaphore for worker threads
-    work_sem = SDL_CreateSemaphore(0);
+    work_sem = new semaphore;
 
     fprintf(stdout, "This system has %d physical cores\n", thread_num);
 
@@ -251,7 +249,7 @@ task_manager::~task_manager(){
 
     run_threads = false;
     for(int i = 0; i < thread_num-1; i++){
-        SDL_SemPost(work_sem);
+        work_sem->notify();
     }
     for(int i = 0; i < thread_num-1; i++) {
         task_threads[i].join();
@@ -260,10 +258,10 @@ task_manager::~task_manager(){
     //finish running any remaining tasks
 	ST::task* new_task;
 	while(global_task_queue.try_dequeue(new_task)){ //get a function pointer and data
-        SDL_DestroySemaphore(new_task->lock);
+        delete new_task->lock;
 		delete new_task;
 	}
-    SDL_DestroySemaphore(work_sem);
+    delete work_sem;
 }
 
 /**
@@ -274,11 +272,10 @@ task_manager::~task_manager(){
 task_id task_manager::start_task(ST::task* arg){
     //Apparently a bit cheaper to create a new semaphore instead of reusing old ones
     //This may depend on the platform (OS implementation of Semaphores)
-    SDL_semaphore *lock = SDL_CreateSemaphore(0);
-    arg->lock = lock;
+    arg->lock = new semaphore;
     global_task_queue.enqueue(arg);
-    SDL_SemPost(work_sem);
-    return lock;
+    work_sem->notify();
+    return arg->lock;
 }
 
 /**
@@ -287,7 +284,7 @@ task_id task_manager::start_task(ST::task* arg){
  */
 void task_manager::start_task_lockfree(ST::task* arg){
     global_task_queue.enqueue(arg);
-    SDL_SemPost(work_sem);
+    work_sem->notify();
 }
 
 /**
@@ -296,7 +293,7 @@ void task_manager::start_task_lockfree(ST::task* arg){
  */
 void task_manager::wait_for_task(task_id id){
     if(id != nullptr) {
-        while(SDL_SemTryWait(id) != 0) {
+        while(!id->try_wait()) {
             ST::task* work;
             if(run_threads){
                 if(global_task_queue.try_dequeue(work)){ //get a function pointer and data
@@ -304,7 +301,7 @@ void task_manager::wait_for_task(task_id id){
                 }
             }
         }
-        SDL_DestroySemaphore(id);
+        delete id;
     }
 }
 
@@ -313,27 +310,27 @@ void task_manager::set_task_thread_amount(uint8_t amount){
     //STOP ALL THREADS
     run_threads = false;
     for(int i = 0; i < thread_num-1; i++){
-        SDL_SemPost(work_sem);
+        work_sem->notify();
     }
     for(int i = 0; i < thread_num-1; i++) {
         task_threads[i].join();
     }
     for(int i = 0; i < thread_num-1; i++){
-        SDL_SemTryWait(work_sem);
+        work_sem->try_wait();
     }
 
     //finish running any remaining tasks
     ST::task* new_task;
     while(global_task_queue.try_dequeue(new_task)){ //get a function pointer and data
-        SDL_DestroySemaphore(new_task->lock);
+        delete new_task->lock;
         delete new_task;
     }
-    SDL_DestroySemaphore(work_sem);
+    delete work_sem;
     task_threads.clear();
 
     //REINITIALZE
     thread_num = static_cast<uint8_t>(amount + 1);
-    work_sem = SDL_CreateSemaphore(0);
+    work_sem = new semaphore;
 
     for (uint16_t i = 0; i < thread_num - 1; i++) {
         task_threads.emplace_back(std::thread(task_thread, this));

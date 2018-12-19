@@ -8,7 +8,6 @@
  */
 
 #include <task_allocator.hpp>
-#include <SDL_mutex.h>
 
 /**
  * Constructor for the task allocator.
@@ -39,7 +38,7 @@ static task_allocator gTask_allocator{};
  * @param affinity Thread affinity for the task
  * @return A new task object
  */
-ST::task* make_task(void (*function)(void *), void *arg, SDL_semaphore *dependency){
+ST::task* make_task(void (*function)(void *), void *arg, semaphore *dependency){
     return gTask_allocator.allocate_task(function, arg, dependency);
 }
 
