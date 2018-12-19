@@ -21,7 +21,7 @@ add_subdirectory(ST_task_manager)
 add_subdirectory(ST_audio_manager)
 add_subdirectory(ST_assets_manager)
 add_subdirectory(ST_input_manager)
-
+add_subdirectory(ST_window_manager)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
@@ -37,6 +37,7 @@ include_directories(../ST_engine/ST_renderer/include)
 include_directories(../ST_engine/ST_message_bus/include)
 include_directories(../ST_engine/ST_dev_console/include)
 include_directories(../ST_engine/ST_task_manager/include)
+include_directories(../ST_engine/ST_window_manager/include)
 include_directories(../ST_engine/ST_audio_manager/include)
 include_directories(../ST_engine/ST_assets_manager/include)
 include_directories(../ST_engine/ST_input_manager/include)
@@ -51,8 +52,6 @@ include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 add_executable(ST_engine
         src/main/game_manager/level/camera.hpp
-        src/main/display_manager/display_manager.cpp
-        src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp
         src/main/drawing_manager/drawing_manager.hpp
         src/main/game_manager/level/entity.hpp
@@ -85,29 +84,13 @@ target_link_libraries(ST_engine
         ST_loaders
         ST_audio_manager
         ST_input_manager
+        ST_window_manager
         lua
         ${SDL2_LIBRARY}
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
        )
-
-add_executable(display_manager_test
-        src/main/display_manager/display_manager.cpp
-        src/main/display_manager/display_manager.hpp
-        src/test/display_manager/display_manager_tests.cpp)
-
-include_directories(display_manager_test ../ST_engine/src/test)
-
-target_link_libraries(display_manager_test
-        ST_loaders
-        ST_util
-        ST_message_bus
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
 
 add_executable(entity_test
         src/main/game_manager/level/entity.hpp
@@ -163,8 +146,6 @@ include_directories(lua_backend_test ../ST_engine/src
 add_executable(ST_engine_integration_test
         src/test/integration/ST_engine_integration_tests.cpp
         src/main/game_manager/level/camera.hpp
-        src/main/display_manager/display_manager.cpp
-        src/main/display_manager/display_manager.hpp
         src/main/drawing_manager/drawing_manager.cpp
         src/main/drawing_manager/drawing_manager.hpp
         src/main/game_manager/level/entity.hpp
@@ -196,6 +177,7 @@ target_link_libraries(ST_engine_integration_test
         ST_assets_manager
         ST_loaders
         ST_input_manager
+        ST_window_manager
         lua
         gtest
         ${SDL2_LIBRARY}
@@ -205,7 +187,6 @@ target_link_libraries(ST_engine_integration_test
 
 
 set(ALL_TESTS
-        display_manager_test
         entity_test
         level_test
         lua_backend_test

@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <display_manager/display_manager.hpp>
+#include <window_manager.hpp>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -15,7 +15,7 @@
  * Closes the Display Manager.
  * Destroys the window and quits SDL.
  */
-display_manager::~display_manager(){
+window_manager::~window_manager(){
     SDL_FreeSurface(icon);
     SDL_DestroyWindow(window);
     window = nullptr;
@@ -27,7 +27,7 @@ display_manager::~display_manager(){
  * @param msg_bus a pointer to the global message bus
  * @param tsk_mngr a pointer to the global task manager
  */
-display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
+window_manager::window_manager(message_bus* msg_bus, task_manager* tsk_mngr, const std::string& window_name){
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
@@ -41,13 +41,7 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 	SDL_GetDisplayMode(0, 0, &DM);
 	width = static_cast<int16_t>(DM.w);
     height = static_cast<int16_t>(DM.h);
-    window = SDL_CreateWindow
-    (
-        "SlavicTales", 0, 0,
-		width,
-        height,
-		SDL_WINDOW_OPENGL
-    );
+    window = SDL_CreateWindow(window_name.c_str(), 0, 0, width, height, SDL_WINDOW_OPENGL);
     gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height))));
     gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
 
@@ -64,8 +58,8 @@ display_manager::display_manager(message_bus* msg_bus, task_manager* tsk_mngr){
  * @param arg pointer to an display_manager (a <b>this</b> pointer basically) as the
  * function must be static.
  */
-void display_manager::update_task(void* mngr){
-    auto self = static_cast<display_manager*>(mngr);
+void window_manager::update_task(void* mngr){
+    auto self = static_cast<window_manager*>(mngr);
     self->handle_messages();
 }
 
@@ -73,7 +67,7 @@ void display_manager::update_task(void* mngr){
  * Retrieves messages from the subscriber object and
  * performs the appropriate actions.
  */
-void display_manager::handle_messages(){
+void window_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_FULLSCREEN){
@@ -103,7 +97,7 @@ void display_manager::handle_messages(){
  *
  * @return Returns a handle to the SDL_Window*
  */
-SDL_Window* display_manager::get_window(){
+SDL_Window* window_manager::get_window(){
     return window;
 }
 
@@ -111,7 +105,7 @@ SDL_Window* display_manager::get_window(){
  * Sets the window to fullscreen or windowed mode
  * @param arg True for fullscreen or false for windowed.
  */
-void display_manager::set_fullscreen(bool arg){
+void window_manager::set_fullscreen(bool arg){
 #ifdef _MSC_VER
     if(arg && !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)) {
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -141,6 +135,6 @@ void display_manager::set_fullscreen(bool arg){
  * However, it does not function.
  * @param arg a float indicating the value.
  */
-void display_manager::set_brightness(float arg) {
+void window_manager::set_brightness(float arg) {
     SDL_SetWindowBrightness(this->window, arg);
 }

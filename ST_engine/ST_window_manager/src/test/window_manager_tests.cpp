@@ -8,29 +8,27 @@
  */
 
 #include <gtest/gtest.h>
-#include <display_manager/display_manager.hpp>
+#include <window_manager.hpp>
 #include <ST_util/test_util.hpp>
 
 /// Tests fixture for the display_manager
-class display_manager_tests : public ::testing::Test {
+class window_manager_tests : public ::testing::Test {
 
 protected:
 
-    void set_fullscreen(display_manager* test_mngr){
+    void set_fullscreen(window_manager* test_mngr){
         test_mngr->set_fullscreen(true);
     }
 
     void SetUp() override{
-        initialize_SDL();
     }
 
     void TearDown() override{
-        close_SDL();
     }
 };
 
-TEST_F(display_manager_tests, set_fullscreen_test){
-    display_manager test_mngr(new message_bus(), nullptr);
+TEST_F(window_manager_tests, set_fullscreen_test){
+    window_manager test_mngr(new message_bus(), nullptr, " ");
     set_fullscreen(&test_mngr);
 }
 

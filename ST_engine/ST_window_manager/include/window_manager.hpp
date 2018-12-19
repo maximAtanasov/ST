@@ -31,8 +31,8 @@
  * Message must contain: a pointer to a <b>float</b>. <br>
  *
  */
-class display_manager{
-    friend class display_manager_tests;
+class window_manager{
+    friend class window_manager_tests;
     private:
         SDL_Surface* icon{};
         SDL_Window* window{};
@@ -49,8 +49,8 @@ class display_manager{
         static void update_task(void* mngr);
 
     public:
-        display_manager(message_bus* msg_bus, task_manager* tsk_mngr);
-        ~display_manager();
+        window_manager(message_bus* msg_bus, task_manager* tsk_mngr, const std::string& window_name);
+        ~window_manager();
         void update();
         SDL_Window* get_window();
 };
@@ -61,7 +61,7 @@ class display_manager{
 /**
  * Starts an the update_task() method using the task manager.
  */
-inline void display_manager::update(){
+inline void window_manager::update(){
     gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr));
 }
 

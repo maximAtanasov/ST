@@ -11,7 +11,7 @@
 #define MAIN_DEF
 
 #include <drawing_manager/drawing_manager.hpp>
-#include <display_manager/display_manager.hpp>
+#include <window_manager.hpp>
 #include <audio_manager.hpp>
 #include <game_manager/game_manager.hpp>
 #include <input_manager.hpp>
