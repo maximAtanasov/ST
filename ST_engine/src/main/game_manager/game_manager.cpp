@@ -9,6 +9,7 @@
 
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
+#include <SDL_events.h>
 #include "game_manager.hpp"
 
 

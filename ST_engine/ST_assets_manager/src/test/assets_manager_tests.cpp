@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <assets_manager/assets_manager.hpp>
+#include <assets_manager.hpp>
 #include <ST_util/test_util.hpp>
 
 /// Tests fixture for the assets_manager

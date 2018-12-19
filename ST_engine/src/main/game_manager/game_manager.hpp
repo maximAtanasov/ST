@@ -13,6 +13,7 @@
 #include <game_manager/level/level.hpp>
 #include <message_bus.hpp>
 #include <game_manager/lua_backend/lua_backend.hpp>
+#include <task_manager.hpp>
 
 ///This class is responsible for managing all levels and the lua backend, it is the heart of the engine.
 /**

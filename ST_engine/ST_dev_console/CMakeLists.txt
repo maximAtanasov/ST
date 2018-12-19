@@ -21,6 +21,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/main)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
 include_directories(${PROJECT_SOURCE_DIR}/../ST_message_bus/include)
+include_directories(${PROJECT_SOURCE_DIR}/../ST_input_manager/include)
 
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})

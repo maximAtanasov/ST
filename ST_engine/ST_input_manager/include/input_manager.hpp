@@ -10,7 +10,7 @@
 #ifndef INPUT_DEF
 #define INPUT_DEF
 
-#include <input_manager/key_definitions.hpp>
+#include <key_definitions.hpp>
 #include <message_bus.hpp>
 #include <task_manager.hpp>
 #include <SDL_events.h>

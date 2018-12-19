@@ -10,13 +10,15 @@
 #ifndef ASST_DEF
 #define ASST_DEF
 
-#include <assets_manager/assets.hpp>
+#include "assets.hpp"
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <message_bus.hpp>
 #include <task_manager.hpp>
 #include <cstdint>
+#include <ST_loaders/loaders.hpp>
+
 
 ///This object is responsible for loading/unloading assets.
 /**

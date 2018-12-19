@@ -8,7 +8,7 @@
  */
 
 #include <ST_loaders/loaders.hpp>
-#include <assets_manager/assets_manager.hpp>
+#include <assets_manager.hpp>
 
 /**
  * Initializes the asset_manager.
@@ -332,8 +332,7 @@ int8_t assets_manager::unload_asset(std::string path){
         count[path]--;
         return 0;
     }
-    std::string extention;
-    extention = ST::get_file_extension(path);
+    std::string extention = ST::get_file_extension(path);
     gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Unloading " + path)));
     if(extention == "png" || extention == "webp"){
         std::hash<std::string> hash_f;

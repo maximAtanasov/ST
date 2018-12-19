@@ -14,8 +14,8 @@
 #include <display_manager/display_manager.hpp>
 #include <audio_manager.hpp>
 #include <game_manager/game_manager.hpp>
-#include <input_manager/input_manager.hpp>
-#include <assets_manager/assets_manager.hpp>
+#include <input_manager.hpp>
+#include <assets_manager.hpp>
 #include <physics_manager/physics_manager.hpp>
 #include <task_manager.hpp>
 #include <message_bus.hpp>

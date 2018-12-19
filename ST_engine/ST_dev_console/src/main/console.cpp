@@ -8,7 +8,7 @@
  */
 
 #include <console.hpp>
-#include "../../../src/main/input_manager/key_definitions.hpp"
+#include <key_definitions.hpp>
 
 /**
  *

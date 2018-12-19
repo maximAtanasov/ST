@@ -7,7 +7,7 @@
  * E-mail: atanasovmaksim1@gmail.com
  */
 
-#include <input_manager/input_manager.hpp>
+#include <input_manager.hpp>
 #include <SDL.h>
 #include <string>
 
