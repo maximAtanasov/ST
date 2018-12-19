@@ -44,7 +44,7 @@ target_link_libraries(window_manager_test
         ${SDL2_IMAGE_LIBRARY})
 
 #Run the tests on each build
-add_test(NAME window_manager_test COMMAND window_manager_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
+add_test(NAME window_manager_test COMMAND window_manager_test)
 add_custom_command(
         TARGET ST_window_manager
         POST_BUILD
