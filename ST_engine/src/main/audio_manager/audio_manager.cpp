@@ -50,7 +50,8 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(PLAY_MUSIC, &msg_sub);
     gMessage_bus->subscribe(STOP_MUSIC, &msg_sub);
     gMessage_bus->subscribe(SET_AUDIO_ENABLED, &msg_sub);
-    gMessage_bus->subscribe(ASSETS, &msg_sub);
+    gMessage_bus->subscribe(MUSIC_ASSETS, &msg_sub);
+    gMessage_bus->subscribe(CHUNKS_ASSETS, &msg_sub);
 	gMessage_bus->subscribe(STOP_ALL_SOUNDS, &msg_sub);
     gMessage_bus->subscribe(SET_MUSIC_VOLUME, &msg_sub);
     gMessage_bus->subscribe(SET_SOUNDS_VOLUME, &msg_sub);
@@ -102,9 +103,11 @@ void audio_manager::handle_messages(){
             }
             gMessage_bus->send_msg(make_msg(AUDIO_ENABLED, make_data(*arg)));
         }
-        else if(temp->msg_name == ASSETS){
-            auto temp_ptr = static_cast<ST::assets**>(temp->get_data());
-            assets_ptr = *temp_ptr;
+        else if(temp->msg_name == MUSIC_ASSETS){
+            music_ptr = *static_cast<ska::bytell_hash_map<size_t, Mix_Music*>**>(temp->get_data());
+        }
+        else if(temp->msg_name == CHUNKS_ASSETS){
+            chunks_ptr = *static_cast<ska::bytell_hash_map<size_t, Mix_Chunk*>**>(temp->get_data());
         }
         else if(temp->msg_name == SET_SOUNDS_VOLUME){
             auto arg = static_cast<uint8_t*>(temp->get_data());

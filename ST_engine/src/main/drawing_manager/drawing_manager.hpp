@@ -10,7 +10,6 @@
 #ifndef DRAWING_DEF
 #define DRAWING_DEF
 
-#include <assets_manager/assets.hpp>
 #include <game_manager/level/light.hpp>
 #include <message_bus.hpp>
 #include <game_manager/level/camera.hpp>
@@ -71,10 +70,9 @@ class drawing_manager{
         int16_t w_width = 1920;
         int16_t w_height = 1080;
 
-#ifdef __DEBUG
         //Console cursor timer
         uint64_t cnsl_cursor_timer = 0;
-#endif
+
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};
         uint8_t darkness_level = 0;
@@ -108,12 +106,7 @@ class drawing_manager{
     public:
         drawing_manager(SDL_Window* win, message_bus* msg_bus);
         ~drawing_manager();
-
-        #ifdef __DEBUG
         void update(const ST::level& temp, double, const console& gConsole);
-        #elif defined(__RELEASE)
-        void update(const ST::level& temp);
-        #endif
 };
 
 #endif

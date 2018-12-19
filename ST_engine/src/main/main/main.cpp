@@ -33,11 +33,9 @@ int ST_engine_main(int argc, char *argv[]) {
 #ifndef TESTING
     message_bus gMessage_bus;
 #endif
-#ifdef __DEBUG
     fps gFps;
     console gConsole(&gMessage_bus);
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
-#endif
 
     task_manager gTask_manager(&gMessage_bus);
     audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
@@ -50,9 +48,7 @@ int ST_engine_main(int argc, char *argv[]) {
     game_manager gGame_manager(&gMessage_bus, &gTask_manager);// will load "levels/main"
     timer gTimer;
 
-#ifdef __DEBUG
     gConsole.post_init();
-#endif
 
     //time keeping variables
     const double UPDATE_RATE = 16.666667; //GAME LOGIC RUNS AT 60 FPS (or less)
@@ -87,13 +83,9 @@ int ST_engine_main(int argc, char *argv[]) {
         }
 
         //Update the Console and fps counter in a debug build
-        #ifdef __DEBUG
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
         gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);
-        #elif defined(__RELEASE)
-        gDrawing_manager.update(*gGame_manager.get_level());
-        #endif
     }
     return 0;
 }

@@ -32,7 +32,8 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 	gMessage_bus->subscribe(SHOW_COLLISIONS, &msg_sub);
     gMessage_bus->subscribe(SHOW_FPS, &msg_sub);
 	gMessage_bus->subscribe(SET_DARKNESS, &msg_sub);
-	gMessage_bus->subscribe(ASSETS, &msg_sub);
+	gMessage_bus->subscribe(SURFACES_ASSETS, &msg_sub);
+    gMessage_bus->subscribe(FONTS_ASSETS, &msg_sub);
     gMessage_bus->subscribe(ENABLE_LIGHTING, &msg_sub);
     gMessage_bus->subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
 
@@ -55,11 +56,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
  * @param fps the current frames per second.
  * @param cnsl a console object.
  */
-#ifdef __DEBUG
 void drawing_manager::update(const ST::level& temp, double fps, const console& cnsl){
-#elif defined(__RELEASE)
-void drawing_manager::update(const ST::level& temp){
-#endif
 	Camera = temp.Camera;
 	handle_messages();
 
@@ -311,11 +308,13 @@ void drawing_manager::handle_messages(){
                 lighting_enabled = false;
             }
         }
-        else if(temp->msg_name == ASSETS) {
-            auto gAssets = static_cast<ST::assets**>(temp->get_data());
-            ST::assets* temp_ast = *gAssets;
-            ST::renderer_sdl::upload_surfaces(&temp_ast->surfaces);
-            ST::renderer_sdl::upload_fonts(&temp_ast->fonts);
+        else if(temp->msg_name == SURFACES_ASSETS) {
+            auto surfaces = *static_cast<ska::bytell_hash_map<size_t, SDL_Surface *>**>(temp->get_data());
+            ST::renderer_sdl::upload_surfaces(surfaces);
+        }
+        else if(temp->msg_name == FONTS_ASSETS) {
+            auto fonts = *static_cast<ska::bytell_hash_map<std::string, TTF_Font *>**>(temp->get_data());
+            ST::renderer_sdl::upload_fonts(fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());

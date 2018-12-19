@@ -12,7 +12,6 @@
 
 #include <SDL.h>
 #include <SDL_mixer.h>
-#include <assets_manager/assets.hpp>
 #include <message_bus.hpp>
 #include <task_manager.hpp>
 
@@ -68,7 +67,8 @@ class audio_manager{
         subscriber msg_sub{};
 
         ///External dependencies
-        ST::assets* assets_ptr{}; //-Delivered as a message
+        ska::bytell_hash_map<size_t, Mix_Chunk*>* chunks_ptr{};
+        ska::bytell_hash_map<size_t, Mix_Music*>* music_ptr{};//-Delivered as a message
         message_bus* gMessage_bus{}; //-Delivered in constructor
         task_manager* gTask_manager{}; //-Delivered in constructor
 
@@ -153,8 +153,8 @@ inline void audio_manager::unmute(){
  * @param loops How many times to play it.
  */
 inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
-    auto data = assets_ptr->chunks.find(arg);
-    if(data != assets_ptr->chunks.end()){
+    auto data = chunks_ptr->find(arg);
+    if(data != chunks_ptr->end()){
         if(!muted){
             Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
         }
@@ -171,8 +171,8 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
 inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
-    auto data = assets_ptr->music.find(arg);
-    if(data != assets_ptr->music.end() ){
+    auto data = music_ptr->find(arg);
+    if(data != music_ptr->end() ){
         if(!muted) {
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         }

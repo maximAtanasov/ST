@@ -282,7 +282,10 @@ int8_t assets_manager::load_assets_from_list(std::string path){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return -1;
     }
-    gMessage_bus->send_msg(make_msg(ASSETS, make_data(&all_assets)));
+    gMessage_bus->send_msg(make_msg(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
+    gMessage_bus->send_msg(make_msg(FONTS_ASSETS, make_data(&all_assets.fonts)));
+    gMessage_bus->send_msg(make_msg(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
+    gMessage_bus->send_msg(make_msg(MUSIC_ASSETS, make_data(&all_assets.music)));
     return 0;
 }
 
@@ -308,7 +311,10 @@ int8_t assets_manager::unload_assets_from_list(std::string path){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return -1;
     }
-    gMessage_bus->send_msg(make_msg(ASSETS, make_data(&all_assets)));
+    gMessage_bus->send_msg(make_msg(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
+    gMessage_bus->send_msg(make_msg(FONTS_ASSETS, make_data(&all_assets.fonts)));
+    gMessage_bus->send_msg(make_msg(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
+    gMessage_bus->send_msg(make_msg(MUSIC_ASSETS, make_data(&all_assets.music)));
     return 0;
 }
 
