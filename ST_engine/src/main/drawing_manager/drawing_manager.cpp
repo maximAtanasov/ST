@@ -105,8 +105,6 @@ void drawing_manager::draw_fps(double fps) const{
     }
 }
 
-#ifdef __DEBUG
-
 /**
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
@@ -136,8 +134,6 @@ void drawing_manager::draw_console(const console& cnsl){
         }
     }
 }
-
-#endif
 
 /**
  * Processes the lightmap given a vector of light objects.
