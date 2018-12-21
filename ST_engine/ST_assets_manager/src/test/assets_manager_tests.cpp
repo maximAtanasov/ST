@@ -55,7 +55,7 @@ protected:
         close_SDL();
     }
 
-    message_bus* msg_bus;
+    message_bus* msg_bus{};
 
     void SetUp() override{
         msg_bus = new message_bus();
@@ -63,7 +63,7 @@ protected:
     }
 
     void TearDown() override{
-        test_mngr->~assets_manager();
+        delete test_mngr;
         delete msg_bus;
     }
 };
