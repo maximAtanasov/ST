@@ -54,7 +54,7 @@
  */
 class drawing_manager{
     private:
-        //external dependencies - injected through main or the message bus
+        //external dependency - delivered in the constructor
         message_bus* gMessage_bus{};
 
         //a subscriber object - so we can subscribe to and recieve messages
@@ -88,9 +88,9 @@ class drawing_manager{
         void draw_collisions(const std::vector<ST::entity>&) const;
         void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
-        void draw_fps(double fps);
+        void draw_fps(double fps) const;
         void draw_console(const console& cnsl);
-        void draw_text_objects(const std::vector<ST::text>&);
+        void draw_text_objects(const std::vector<ST::text>&) const;
 
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
