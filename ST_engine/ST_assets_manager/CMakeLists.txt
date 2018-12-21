@@ -43,8 +43,8 @@ add_executable(assets_manager_test
 
 target_link_libraries(assets_manager_test
         gtest
-        ST_loaders
         ST_assets_manager
+        ST_loaders
         ST_task_manager
         ST_message_bus
         ST_util
