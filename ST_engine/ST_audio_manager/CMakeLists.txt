@@ -51,6 +51,7 @@ target_link_libraries(audio_manager_test
         ${SDL2_MIXER_LIBRARY})
 
 #Run the tests on each build
+set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 add_test(NAME audio_manager_test COMMAND audio_manager_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 add_custom_command(
         TARGET ST_audio_manager
