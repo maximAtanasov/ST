@@ -52,7 +52,7 @@ target_link_libraries(assets_manager_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
-        )A
+        )
 
 #Run the tests on each build
 set_target_properties(assets_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
