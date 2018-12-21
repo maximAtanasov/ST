@@ -64,25 +64,20 @@ void drawing_manager::update(const ST::level& temp, double fps, const console& c
     ST::renderer_sdl::clear_screen();
     ST::renderer_sdl::draw_background(temp.background);
 	draw_entities(temp.entities);
-
     ST::renderer_sdl::draw_overlay(temp.overlay, ticks % temp.overlay_spriteNum, temp.overlay_spriteNum);
     draw_text_objects(temp.text_objects);
-
     //draw the lights when we are sure they are processed
     if(lighting_enabled) {
         process_lights(temp.lights);
         draw_lights();
     }
-
     //Draw debug info and the console in a debug build
-    #ifdef __DEBUG
 	if (collisions_shown) {
 		draw_collisions(temp.entities);
 		draw_coordinates(temp.entities);
 	}
 	draw_fps(fps);
 	draw_console(cnsl);
-    #endif
 
     ST::renderer_sdl::present();
 }
@@ -91,7 +86,7 @@ void drawing_manager::update(const ST::level& temp, double fps, const console& c
  * Draws all visible text objects in the current level
  * @param objects a pointer to a vector of text_objects
  */
-void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
+void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const{
     for(auto& i : objects) {
         if (is_onscreen(i)) {
             ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
@@ -103,7 +98,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
  * Draws the fps counter on the screen.
  * @param fps The current fps.
  */
-void drawing_manager::draw_fps(double fps){
+void drawing_manager::draw_fps(double fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
         ST::renderer_sdl::draw_text(DEFAULT_FONT, "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);

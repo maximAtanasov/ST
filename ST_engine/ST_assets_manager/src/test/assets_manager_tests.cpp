@@ -76,6 +76,7 @@ TEST_F(asset_manager_test, loadPNG_nonExistant) {
 TEST_F(asset_manager_test, loadPNG) {
     load_asset("test_image_1.png");
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
+    ASSERT_TRUE(test_surface);
     ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_1.png")]));
     SDL_FreeSurface(test_surface);
 }

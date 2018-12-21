@@ -560,7 +560,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="renderer_sdl_test">
-				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_renderer/renderer_sdl_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_renderer/src/test/test_resources/renderer_sdl_test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_renderer"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -597,7 +597,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="renderer_sdl_test/fast">
-				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_renderer/renderer_sdl_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_renderer/src/test/test_resources/renderer_sdl_test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_renderer"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -1238,7 +1238,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="audio_manager_test">
-				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager/audio_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_audio_manager/src/test/test_resources/audio_manager_test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -1273,7 +1273,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="audio_manager_test/fast">
-				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager/audio_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_audio_manager/src/test/test_resources/audio_manager_test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -1376,7 +1376,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="assets_manager_test">
-				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager/assets_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_assets_manager/src/test/test_resources/assets_manager_test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -1412,7 +1412,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="assets_manager_test/fast">
-				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager/assets_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_assets_manager/src/test/test_resources/assets_manager_test.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager"/>
 				<Option object_output="./"/>
 				<Option type="1"/>

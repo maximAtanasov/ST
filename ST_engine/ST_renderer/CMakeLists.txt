@@ -53,6 +53,7 @@ target_link_libraries(renderer_sdl_test
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
+set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 
 if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
     add_test(NAME renderer_sdl_test COMMAND renderer_sdl_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
