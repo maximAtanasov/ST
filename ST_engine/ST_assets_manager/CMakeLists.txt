@@ -42,9 +42,9 @@ add_executable(assets_manager_test
         ${PROJECT_SOURCE_DIR}/src/test/assets_manager_tests.cpp)
 
 target_link_libraries(assets_manager_test
-        gtest
         ST_assets_manager
         ST_loaders
+        gtest
         ST_task_manager
         ST_message_bus
         ST_util
@@ -53,6 +53,7 @@ target_link_libraries(assets_manager_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
+
         )
 
 #Run the tests on each build
