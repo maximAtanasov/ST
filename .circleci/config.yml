@@ -19,4 +19,4 @@ jobs:
 
       - run:
           name: build_debug
-          command: cmake CMakeLists.txt SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
+          command: cmake CMakeLists.txt && SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
