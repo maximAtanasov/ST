@@ -27,11 +27,11 @@
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
  *
- * <b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates in a __DEBUG build.
+ * <b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates.
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
  *
- * <b>SHOW_FPS</b> - Show or hide the current fps in a __DEBUG build.
+ * <b>SHOW_FPS</b> - Show or hide the current fps.
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
  *

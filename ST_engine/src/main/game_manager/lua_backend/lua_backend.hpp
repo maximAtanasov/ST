@@ -162,13 +162,9 @@ extern "C" int setEntityAnimationLua(lua_State *L);
 extern "C" int setEntitySpriteNumLua(lua_State *L);
 extern "C" int setEntityAnimationNumLua(lua_State *L);
 
-#ifdef __DEBUG
 extern "C" int showCollisionsLua(lua_State* L);
 extern "C" int logLua(lua_State* L);
 extern "C" int showFpsLua(lua_State* L);
 extern "C" int consoleClearLua(lua_State*);
-#endif
-
-
 
 #endif

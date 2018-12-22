@@ -8,22 +8,12 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(slavicTales)
 
-if(DEFINED ENV{DEBUG_BUILD})
-    add_definitions(-D__DEBUG)
-elseif(DEFINED ENV{RELEASE_BUILD})
-    add_definitions(-D__RELEASE)
-else()
-    add_definitions(-D__DEBUG)
-endif()
-
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     set(CMAKE_CXX_FLAGS_RELEASE "/Ox /MD")
     set(CMAKE_CXX_FLAGS_DEBUG "/MDd")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE /STACK:3000000")
 endif()
-
-
 
 add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)

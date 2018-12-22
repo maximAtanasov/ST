@@ -52,12 +52,10 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //register lua binding functions
 
-    #ifdef __DEBUG
     lua_register(L, "logLua", logLua);
     lua_register(L, "showCollisions", showCollisionsLua);
     lua_register(L, "showFps", showFpsLua);
     lua_register(L, "consoleClear", consoleClearLua);
-    #endif
 
     //General Functions
     lua_register(L, "setFullscreenLua", setFullscreenLua);
@@ -381,12 +379,6 @@ std::string lua_backend::hash_file(const std::string& path){
                     replace_string(next_line, temp_buf_2, string_hash);
                     temp = next_line;
                 }
-                //Remove all logging from gamecode if compiling for release
-                #ifdef __RELEASE
-                while(temp.find("log(") != std::string::npos) {
-                    temp = "";
-                }
-                #endif
                 result += temp + "\n";
             }
         }
@@ -1695,7 +1687,6 @@ extern "C" int pauseMusicLua(lua_State*){
     return 0;
 }
 
-#ifdef __DEBUG
 /**
  * Show or hide the collisions and coordinates from rendering.
  * See the Lua docs for more information.
@@ -1748,5 +1739,3 @@ extern "C" int consoleClearLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(CONSOLE_CLEAR, nullptr));
     return 0;
 }
-
-#endif

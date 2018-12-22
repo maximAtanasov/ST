@@ -138,8 +138,6 @@ TEST(engine_integration, basic_run) {
     ASSERT_EQ(0, engine_thread.get());
 }
 
-#ifdef __DEBUG
-
 TEST(engine_integration, set_vsync) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
@@ -167,8 +165,6 @@ TEST(engine_integration, reload_and_restart) {
     reload_and_restart();
     ASSERT_EQ(0, engine_thread.get());
 }
-
-#endif
 
 TEST(engine_integration, run_for_five_minutes) {
     gMessage_bus.clear();

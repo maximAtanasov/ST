@@ -141,11 +141,9 @@ void drawing_manager::draw_console(const console& cnsl){
  * @param lights A vector of <b>ST::light</b> objects.
  */
 void drawing_manager::process_lights(const std::vector<ST::light>& lights){
-    #ifdef __DEBUG
     if(!lighting_enabled){
         return;
     }
-    #endif
     for(int i = 0; i < w_width; i++){
         for(int j = 0; j < w_height; j++){
             lightmap[i][j] = darkness_level;

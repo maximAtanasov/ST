@@ -19,8 +19,4 @@ jobs:
 
       - run:
           name: build_debug
-          command: cmake CMakeLists.txt && DEBUG_BUILD=true SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
-
-      - run:
-          name: build_release
-          command: make clean && RELEASE_BUILD=true cmake CMakeLists.txt && RELEASE_BUILD=true SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
+          command: cmake CMakeLists.txt SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all
