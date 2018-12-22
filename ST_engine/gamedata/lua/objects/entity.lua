@@ -120,6 +120,8 @@ end
 
 function entity:setTextureScale(x, y)
     setEntityTextureScale(self.ID, x, y)
+    setEntityTexW(self.ID, x*getEntityTexW(self.id))
+    setEntityTexH(self.ID, y*getEntityTexH(self.id))
 end
 
 --get the Texture width of an entity

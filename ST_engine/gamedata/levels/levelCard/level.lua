@@ -86,4 +86,8 @@ function loop()
         loadLevel("levelCard")
         startLevel("levelCard")
     end
+
+    if(mouseOver(card4)) then
+        log(INFO, "mouseOver")
+    end
 end

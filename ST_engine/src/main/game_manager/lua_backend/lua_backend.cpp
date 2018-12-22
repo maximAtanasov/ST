@@ -992,8 +992,8 @@ extern "C" int getEntityTexHLua(lua_State *L){
  * @return Always 0.
  */
 extern "C" int setEntityTexWLua(lua_State *L){
-    auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
-    auto tex_w = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto id = static_cast<unsigned long>(lua_tonumber(L, 1));
+    auto tex_w = static_cast<uint16_t>(lua_tonumber(L, 2));
     gGame_managerLua->get_level()->entities.at(id).tex_w = tex_w;
     return 0;
 }
@@ -1005,8 +1005,8 @@ extern "C" int setEntityTexWLua(lua_State *L){
  * @return Always 0.
  */
 extern "C" int setEntityTexHLua(lua_State *L){
-    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto tex_h = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto id = static_cast<uint64_t>(lua_tonumber(L, 1));
+    auto tex_h = static_cast<uint16_t>(lua_tonumber(L, 2));
     gGame_managerLua->get_level()->entities.at(id).tex_h = tex_h;
     return 0;
 }
