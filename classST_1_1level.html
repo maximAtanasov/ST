@@ -93,12 +93,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a059056c82d1a4b98c8db03c4a85a4bd8"><td class="memItemLeft" align="right" valign="top"><a id="a059056c82d1a4b98c8db03c4a85a4bd8"></a>
-ska::bytell_hash_map&lt; size_t, <a class="el" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>actions_Buttons</b> {}</td></tr>
-<tr class="separator:a059056c82d1a4b98c8db03c4a85a4bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98b6b1a556ac360a2d4737dd55c115f9"><td class="memItemLeft" align="right" valign="top"><a id="a98b6b1a556ac360a2d4737dd55c115f9"></a>
-std::vector&lt; <a class="el" href="classST_1_1entity.html">entity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>entities</b> {}</td></tr>
-<tr class="separator:a98b6b1a556ac360a2d4737dd55c115f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3162f0bab4d6e286a6c77b5addf855cb"><td class="memItemLeft" align="right" valign="top"><a id="a3162f0bab4d6e286a6c77b5addf855cb"></a>
+ska::bytell_hash_map&lt; size_t, std::vector&lt; <a class="el" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>actions_Buttons</b> {}</td></tr>
+<tr class="separator:a3162f0bab4d6e286a6c77b5addf855cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2965dccc91fc11741b584c54c765b68"><td class="memItemLeft" align="right" valign="top"><a id="ab2965dccc91fc11741b584c54c765b68"></a>
+std::vector&lt; <a class="el" href="classST_1_1entity.html">ST::entity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>entities</b> {}</td></tr>
+<tr class="separator:ab2965dccc91fc11741b584c54c765b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd4c10a43cea6cbcb2a71e41b30547ef"><td class="memItemLeft" align="right" valign="top"><a id="afd4c10a43cea6cbcb2a71e41b30547ef"></a>
 std::vector&lt; <a class="el" href="structST_1_1light.html">ST::light</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lights</b> {}</td></tr>
 <tr class="separator:afd4c10a43cea6cbcb2a71e41b30547ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,7 +128,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
 <div class="textblock"><p>This object contains all the data for a level and provides functions for loading and unloading a level. </p>
 <p>Sends messages to load assets and loads the input configuration from disk. </p>
 
-<p class="definition">Definition at line <a class="el" href="level_8hpp_source.html#l00029">29</a> of file <a class="el" href="level_8hpp_source.html">level.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8hpp_source.html#l00027">27</a> of file <a class="el" href="level_8hpp_source.html">level.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8592580d090d80586851cf4a72a937b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8592580d090d80586851cf4a72a937b8">&#9670;&nbsp;</a></span>level()</h2>
@@ -163,7 +163,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00018">18</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00019">19</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
 
 </div>
 </div>
@@ -183,7 +183,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
 </div><div class="memdoc">
 <p>Destroys the level. Frees all data. </p>
 
-<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00049">49</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00052">52</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
 
 </div>
 </div>
@@ -204,7 +204,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
 </div><div class="memdoc">
 <p>Get the name of the level. </p><dl class="section return"><dt>Returns</dt><dd>The name of the level. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00041">41</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00044">44</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
 
 </div>
 </div>
@@ -224,7 +224,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
 </div><div class="memdoc">
 <p>Loads the level. Sends a LOAD_LIST message to load the assets.list in the directory of the level. </p>
 
-<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00027">27</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00028">28</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
 
 </div>
 </div>
@@ -244,7 +244,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
 </div><div class="memdoc">
 <p>Unloads a level. Sends a UNLOAD_LIST message to unload all assets and unregisters all keys. </p>
 
-<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00067">67</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8cpp_source.html#l00070">70</a> of file <a class="el" href="level_8cpp_source.html">level.cpp</a>.</p>
 
 </div>
 </div>

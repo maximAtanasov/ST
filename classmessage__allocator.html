@@ -76,8 +76,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad64d333154a87e579a81cd803665e50e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__allocator.html#ad64d333154a87e579a81cd803665e50e">message_allocator</a> ()</td></tr>
 <tr class="separator:ad64d333154a87e579a81cd803665e50e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c8ca21e56080647db51962afb7edb3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmessage.html">message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__allocator.html#a2c8ca21e56080647db51962afb7edb3e">allocate_message</a> (msg_type name, std::shared_ptr&lt; void &gt; data)</td></tr>
-<tr class="separator:a2c8ca21e56080647db51962afb7edb3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12ad43960f0e195db432aa294c13a1fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmessage.html">message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__allocator.html#a12ad43960f0e195db432aa294c13a1fd">allocate_message</a> (int name, std::shared_ptr&lt; void &gt; data)</td></tr>
+<tr class="separator:a12ad43960f0e195db432aa294c13a1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fec1c53cdc90c9428c460f0cc764453"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__allocator.html#a4fec1c53cdc90c9428c460f0cc764453">deallocate</a> (uint16_t id)</td></tr>
 <tr class="separator:a4fec1c53cdc90c9428c460f0cc764453"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a861b2584901c24e3b634b454708e340b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__allocator.html#a861b2584901c24e3b634b454708e340b">~message_allocator</a> ()</td></tr>
@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Constructor for the message allocator. Allocates memory for messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00018">18</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00017">17</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
 
 </div>
 </div>
@@ -125,13 +125,13 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Destructor for the allocator - frees all allocated memory. </p>
 
-<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00068">68</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00055">55</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2c8ca21e56080647db51962afb7edb3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c8ca21e56080647db51962afb7edb3e">&#9670;&nbsp;</a></span>allocate_message()</h2>
+<a id="a12ad43960f0e195db432aa294c13a1fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12ad43960f0e195db432aa294c13a1fd">&#9670;&nbsp;</a></span>allocate_message()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,7 +139,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classmessage.html">message</a> * message_allocator::allocate_message </td>
           <td>(</td>
-          <td class="paramtype">msg_type&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
@@ -164,7 +164,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The new message. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00033">33</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00031">31</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
 
 </div>
 </div>
@@ -173,6 +173,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void message_allocator::deallocate </td>
@@ -182,6 +185,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Deallocate a message. Internally marks the previously used memory as free. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -190,13 +198,13 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="message__allocator_8cpp_source.html#l00058">58</a> of file <a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message__allocator_8hpp_source.html#l00047">47</a> of file <a class="el" href="message__allocator_8hpp_source.html">message_allocator.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/main/message_bus/<a class="el" href="message__allocator_8hpp_source.html">message_allocator.hpp</a></li>
-<li>src/main/message_bus/<a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a></li>
+<li>ST_message_bus/src/main/<a class="el" href="message__allocator_8hpp_source.html">message_allocator.hpp</a></li>
+<li>ST_message_bus/src/main/<a class="el" href="message__allocator_8cpp_source.html">message_allocator.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -75,10 +75,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a00ed71930504938fad8a5429e2b70ac9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#a00ed71930504938fad8a5429e2b70ac9">message_bus</a> ()</td></tr>
+<tr class="separator:a00ed71930504938fad8a5429e2b70ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3843fbda1fc4228605790c1d422c3a62"><td class="memItemLeft" align="right" valign="top"><a id="a3843fbda1fc4228605790c1d422c3a62"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
+<tr class="separator:a3843fbda1fc4228605790c1d422c3a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc8fa0d20d60c09faf5762be919ca04a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a> (<a class="el" href="classmessage.html">message</a> *msg)</td></tr>
 <tr class="separator:adc8fa0d20d60c09faf5762be919ca04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae236be78950124599758a79529879aa6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#ae236be78950124599758a79529879aa6">subscribe</a> (msg_type msg, <a class="el" href="classsubscriber.html">subscriber</a> *sub)</td></tr>
-<tr class="separator:ae236be78950124599758a79529879aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15c379f73327ee6e92d89dcaf1908725"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage__bus.html#a15c379f73327ee6e92d89dcaf1908725">subscribe</a> (int msg, <a class="el" href="classsubscriber.html">subscriber</a> *sub)</td></tr>
+<tr class="separator:a15c379f73327ee6e92d89dcaf1908725"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -91,7 +96,28 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_bus_tests</b
 <p>Handles all passing of messages to subscribers. </p>
 
 <p class="definition">Definition at line <a class="el" href="message__bus_8hpp_source.html#l00030">30</a> of file <a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a00ed71930504938fad8a5429e2b70ac9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ed71930504938fad8a5429e2b70ac9">&#9670;&nbsp;</a></span>message_bus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">message_bus::message_bus </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Default constructor for the message bus. Throws exception if initialized twice. </p>
+
+<p class="definition">Definition at line <a class="el" href="message__bus_8cpp_source.html#l00047">47</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="adc8fa0d20d60c09faf5762be919ca04a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc8fa0d20d60c09faf5762be919ca04a">&#9670;&nbsp;</a></span>send_msg()</h2>
 
@@ -113,8 +139,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_bus_tests</b
 
 </div>
 </div>
-<a id="ae236be78950124599758a79529879aa6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae236be78950124599758a79529879aa6">&#9670;&nbsp;</a></span>subscribe()</h2>
+<a id="a15c379f73327ee6e92d89dcaf1908725"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15c379f73327ee6e92d89dcaf1908725">&#9670;&nbsp;</a></span>subscribe()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -122,7 +148,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_bus_tests</b
         <tr>
           <td class="memname">void message_bus::subscribe </td>
           <td>(</td>
-          <td class="paramtype">msg_type&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>msg</em>, </td>
         </tr>
         <tr>
@@ -146,13 +172,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_bus_tests</b
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="message__bus_8cpp_source.html#l00046">46</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message__bus_8cpp_source.html#l00069">69</a> of file <a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/main/message_bus/<a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a></li>
-<li>src/main/message_bus/<a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a></li>
+<li>ST_message_bus/include/<a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a></li>
+<li>ST_message_bus/src/main/<a class="el" href="message__bus_8cpp_source.html">message_bus.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
