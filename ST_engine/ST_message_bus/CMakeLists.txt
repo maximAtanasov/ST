@@ -65,10 +65,10 @@ set(RUN_ON_BUILD_TESTS
         subscriber_test
         message_test    )
 
-gtest_add_tests(TARGET ${RUN_ON_BUILD_TESTS})
 
 #Run the tests on each build
 foreach(test ${RUN_ON_BUILD_TESTS})
+    add_test(NAME ${test} COMMAND ${test})
     add_custom_command(
             TARGET ST_message_bus
             POST_BUILD
@@ -79,5 +79,5 @@ endforeach()
 add_custom_command(
         TARGET ST_message_bus
         POST_BUILD
-        COMMAND ctest -VV
+        COMMAND ctest -V
 )

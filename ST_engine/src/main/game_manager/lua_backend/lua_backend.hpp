@@ -152,6 +152,8 @@ extern "C" int entityCollidesLua(lua_State* L);
 extern "C" int setEntityAffectedByPhysicsLua(lua_State *L);
 extern "C" int getEntityColXLua(lua_State *L);
 extern "C" int getEntityColYLua(lua_State *L);
+extern "C" int getEntityColXOffsetLua(lua_State *L);
+extern "C" int getEntityColYOffsetLua(lua_State *L);
 extern "C" int getEntityMassLua(lua_State *L);
 extern "C" int setEntityMassLua(lua_State *L);
 
@@ -160,13 +162,9 @@ extern "C" int setEntityAnimationLua(lua_State *L);
 extern "C" int setEntitySpriteNumLua(lua_State *L);
 extern "C" int setEntityAnimationNumLua(lua_State *L);
 
-#ifdef __DEBUG
 extern "C" int showCollisionsLua(lua_State* L);
 extern "C" int logLua(lua_State* L);
 extern "C" int showFpsLua(lua_State* L);
 extern "C" int consoleClearLua(lua_State*);
-#endif
-
-
 
 #endif

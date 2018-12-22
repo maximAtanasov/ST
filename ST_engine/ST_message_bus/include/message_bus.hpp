@@ -19,6 +19,7 @@
 #include <vector>
 #include <cstring>
 #include "../src/main/message_allocator.hpp"
+#include "message_types.hpp"
 #include "../src/main/subscriber.hpp"
 
 ///The centeral messaging system of the engine. All subsystem make extensive use of it.

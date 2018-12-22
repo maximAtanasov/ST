@@ -59,6 +59,7 @@ all_buttons_sound = "buttonSelected.wav"
 --New Game button
 button_newGame = button:new(50, 500, NEW_GAME_TEXT, FONT, 80)
 button_newGame:setMarginX(474)
+button_newGame:setMarginOffsetY(VERTICAL_OFFSET)
 button_newGame:setMarginY(92)
 button_newGame:setClickKey(all_buttons_key)
 
@@ -85,6 +86,7 @@ end
 --Settings button
 button_settings = button:new(50, 600, SETTINGS_TEXT, FONT, 80)
 button_settings:setMarginX(479)
+button_settings:setMarginOffsetY(VERTICAL_OFFSET)
 button_settings:setMarginY(98)
 button_settings:setClickKey(all_buttons_key)
 
@@ -121,6 +123,7 @@ end
 --Exit button
 button_exit = button:new(50, 700, EXIT_TEXT, FONT, 80)
 button_exit:setMarginX(224)
+button_exit:setMarginOffsetY(VERTICAL_OFFSET)
 button_exit:setMarginY(85)
 button_exit:setClickKey(all_buttons_key)
 
@@ -150,6 +153,7 @@ end
 --SOUND BUTTON
 button_soundSwitch = button:new(50, 500, SOUND_TEXT, FONT, 70)
 button_soundSwitch:setMarginX(240)
+button_soundSwitch:setMarginOffsetY(VERTICAL_OFFSET)
 button_soundSwitch:setMarginY(65)
 button_soundSwitch:hide()
 button_soundSwitch:setClickKey(all_buttons_key)
@@ -190,8 +194,9 @@ end
 
 --LANGUAGE SELECTION
 button_languageSelection = button:new(50, 600, LANGUAGE_TEXT, FONT, 70)
-button_languageSelection:setMarginX(240)
+button_languageSelection:setMarginX(LANGUAGE_MARGIN)
 button_languageSelection:setMarginY(65)
+button_languageSelection:setMarginOffsetY(VERTICAL_OFFSET)
 button_languageSelection:hide()
 button_languageSelection:setClickKey(all_buttons_key)
 
@@ -238,6 +243,7 @@ end
 --VSYNC button
 button_vsync = button:new(50, 700, VSYNC_TEXT, FONT, 70)
 button_vsync:setMarginX(VSYNC_MARGINS)
+button_vsync:setMarginOffsetY(VERTICAL_OFFSET)
 button_vsync:setMarginY(60)
 button_vsync:hide()
 button_vsync:setClickKey(all_buttons_key)
@@ -290,6 +296,7 @@ end
 
 button_fullscreen = button:new(50, 800, FULLSCREEN_TEXT, FONT, 70)
 button_fullscreen:setMarginX(FULLSCREEN_MARGINS)
+button_fullscreen:setMarginOffsetY(VERTICAL_OFFSET)
 button_fullscreen:setMarginY(60)
 button_fullscreen:hide()
 button_fullscreen:setText(FULLSCREEN_TEXT)
@@ -332,6 +339,7 @@ end
 --BACK BUTTON
 button_back = button:new(50, 900, BACK_TEXT, FONT, 70)
 button_back:setMarginX(200)
+button_back:setMarginOffsetY(VERTICAL_OFFSET)
 button_back:setMarginY(65)
 button_back:hide()
 button_back:setClickKey(all_buttons_key)
@@ -363,4 +371,29 @@ end
 function button_back:onNothing()
     self.soundPlayed = 1
     self.text:setTextColor(255, 255, 255, 255)
+end
+
+function loop()
+    introFading()
+    if(room == "main") then
+        if keyPressed("START") and darkness == 0 then
+            button_newGame:onClick()
+        end
+        button_settings:update()
+        button_exit:update()
+        button_newGame:update()
+    elseif(room == "settings") then
+        if keyPressed("BACK") then
+            button_back:onClick()
+        end
+        button_back:update()
+        button_fullscreen:update()
+        button_soundSwitch:update()
+        button_switch1:update()
+        button_vsync:update()
+        button_switch2:update()
+        button_switch3:update()
+        button_languageSelection:update()
+        button_languageSelectionLabel:update()
+    end
 end

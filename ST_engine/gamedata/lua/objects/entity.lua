@@ -6,14 +6,30 @@
 -- Author: Maxim Atanasov
 -- E-mail: atanasovmaksim1@gmail.com
 
---tells if the mouse is over an object
-function mouseOver(object)
+--tells if the mouse is over an objects texture
+function mouseOverTexture(object)
     local mouse_x = getMouseX()
     local mouse_y = getMouseY()
     local objectX = getEntityX(object.ID)
     local objectY = getEntityY(object.ID)
     if mouse_x < getEntityTexW(object.ID) + objectX and mouse_x > objectX then
         if mouse_y > objectY - getEntityTexH(object.ID) and mouse_y < objectY then
+            return true
+        end
+    end
+    return false
+end
+
+--tells if the mouse is over an objects collisions box
+function mouseOver(object)
+    local mouse_x = getMouseX()
+    local mouse_y = getMouseY()
+    local objectX = getEntityX(object.ID)
+    local objectY = getEntityY(object.ID)
+    local objectColYOffset = getEntityColYOffset(object.ID)
+    local objectColXOffset = getEntityColXOffset(object.ID)
+    if mouse_x < getEntityColX(object.ID) + objectColXOffset + objectX and mouse_x > objectX + objectColXOffset then
+        if mouse_y > objectY + objectColYOffset + getEntityColY(object.ID) and mouse_y < objectY + objectColYOffset then
             return true
         end
     end
@@ -120,7 +136,11 @@ end
 
 function entity:setTextureScale(x, y)
     setEntityTextureScale(self.ID, x, y)
+    setEntityTexW(self.ID, x*getEntityTexW(self.id))
+    setEntityTexH(self.ID, y*getEntityTexH(self.id))
 end
+
+
 
 --get the Texture width of an entity
 function entity:getTexW()
@@ -169,7 +189,12 @@ function entity:setCollision(offsetX, offsetY, width, height)
     self.colY = height
     self.offsetColX = offsetX;
     self.offsetColY = offsetY;
-    setEntityCollisionBox(self.ID, offsetX, offsetY, self.colX, self.colY)
+    setEntityCollisionBox(self.ID, offsetX, offsetY, width, height)
+end
+
+--scale the collision box of an entity`
+function entity:setCollisionScale(x, y)
+    setEntityCollisionBox(self.ID, 0, 0, x*getEntityColX(), -y*getEntityColY())
 end
 
 --get the Width of the collision box of an entity

@@ -27,3 +27,29 @@ label:new(960-LABEL_OFFSET, 565, LABEL_TEXT, FONT, FONT_SIZE)
 
 startCounter = 0
 loadLevel("main_menu")
+
+function loop()
+    if startCounter < 100 then
+        startCounter = startCounter + 1
+        if keyPressed("START") then
+            startCounter = 100
+        end
+        return
+    end
+
+    if splash > 0 then
+        splash = splash - 1
+        setDarkness(splash)
+    elseif splashUp < 255 then
+        splashUp = splashUp + 1
+        setDarkness(splashUp)
+    else
+        unloadLevel("author_splash")
+        startLevel("main_menu")
+    end
+
+    if keyPressed("START") then
+        unloadLevel("author_splash")
+        startLevel("main_menu")
+    end
+end

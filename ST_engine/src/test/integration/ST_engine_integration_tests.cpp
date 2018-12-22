@@ -131,42 +131,42 @@ void reload_and_restart(){
     gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
 }
 
-TEST(engine_integration, full_integration) {
+TEST(engine_integration, basic_run) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     basic_run();
     ASSERT_EQ(0, engine_thread.get());
 }
 
-TEST(engine_integration, full_integration_set_vsync) {
+TEST(engine_integration, set_vsync) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     set_vsync();
     ASSERT_EQ(0, engine_thread.get());
 }
 
-TEST(engine_integration, full_integration_set_audio_enabled) {
+TEST(engine_integration, audio_enabled) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     set_audio_enabled();
     ASSERT_EQ(0, engine_thread.get());
 }
 
-TEST(engine_integration, full_integration_set_fullscreen) {
+TEST(engine_integration, fullscreen) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     set_fullscreen();
     ASSERT_EQ(0, engine_thread.get());
 }
 
-TEST(engine_integration, full_integration_reload_and_restart) {
+TEST(engine_integration, reload_and_restart) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     reload_and_restart();
     ASSERT_EQ(0, engine_thread.get());
 }
 
-TEST(engine_integration, full_integration_run_for_five_minutes) {
+TEST(engine_integration, run_for_five_minutes) {
     gMessage_bus.clear();
     auto engine_thread = std::async(start_engine_thread);
     run_for_five_minutes();

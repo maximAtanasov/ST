@@ -16,14 +16,12 @@
 #include <test/game_manager/lua_backend/game_manager_mock.hpp>
 #endif
 
-#include <console/log.hpp>
 #include <ST_util/string_util.hpp>
 #include <game_manager/level/light.hpp>
 #include "lua_backend.hpp"
 #include <fstream>
 #include <sstream>
 #include <SDL_timer.h>
-
 
 //local to the file, as lua bindings cannot be in a class
 static message_bus*  gMessage_busLua;
@@ -54,12 +52,10 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //register lua binding functions
 
-    #ifdef __DEBUG
     lua_register(L, "logLua", logLua);
     lua_register(L, "showCollisions", showCollisionsLua);
     lua_register(L, "showFps", showFpsLua);
     lua_register(L, "consoleClear", consoleClearLua);
-    #endif
 
     //General Functions
     lua_register(L, "setFullscreenLua", setFullscreenLua);
@@ -175,6 +171,8 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setEntityAffectedByPhysics", setEntityAffectedByPhysicsLua);
     lua_register(L, "getEntityColX", getEntityColXLua);
     lua_register(L, "getEntityColY", getEntityColYLua);
+    lua_register(L, "getEntityColXOffset", getEntityColXOffsetLua);
+    lua_register(L, "getEntityColYOffset", getEntityColYOffsetLua);
     lua_register(L, "getEntityMass", getEntityMassLua);
     lua_register(L, "setEntityMass", setEntityMassLua);
 
@@ -239,7 +237,7 @@ int8_t lua_backend::run_script(const std::string& script) {
     std::string temp = hash_string(script);
    // int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
     if (luaL_dostring(L, temp.c_str())){
-        log(ERROR, "Cannot run Script");
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Cannot run script")));
         return -1;
     }else{
         return 0;
@@ -381,12 +379,6 @@ std::string lua_backend::hash_file(const std::string& path){
                     replace_string(next_line, temp_buf_2, string_hash);
                     temp = next_line;
                 }
-                //Remove all logging from gamecode if compiling for release
-                #ifdef __RELEASE
-                while(temp.find("log(") != std::string::npos) {
-                    temp = "";
-                }
-                #endif
                 result += temp + "\n";
             }
         }
@@ -394,7 +386,7 @@ std::string lua_backend::hash_file(const std::string& path){
         return result;
     }
     else{
-        log(ERROR, "File " + path + " not found");
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return nullptr;
     }
 }
@@ -994,8 +986,8 @@ extern "C" int getEntityTexHLua(lua_State *L){
  * @return Always 0.
  */
 extern "C" int setEntityTexWLua(lua_State *L){
-    auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
-    auto tex_w = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto id = static_cast<unsigned long>(lua_tonumber(L, 1));
+    auto tex_w = static_cast<uint16_t>(lua_tonumber(L, 2));
     gGame_managerLua->get_level()->entities.at(id).tex_w = tex_w;
     return 0;
 }
@@ -1007,8 +999,8 @@ extern "C" int setEntityTexWLua(lua_State *L){
  * @return Always 0.
  */
 extern "C" int setEntityTexHLua(lua_State *L){
-    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto tex_h = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto id = static_cast<uint64_t>(lua_tonumber(L, 1));
+    auto tex_h = static_cast<uint16_t>(lua_tonumber(L, 2));
     gGame_managerLua->get_level()->entities.at(id).tex_h = tex_h;
     return 0;
 }
@@ -1097,10 +1089,10 @@ extern "C" int entityCollidesLua(lua_State* L){
  */
 extern "C" int setEntityCollisionBoxLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto offset_x = static_cast<int16_t>(lua_tointeger(L, 2));
-    auto offset_y = static_cast<int16_t>(lua_tointeger(L, 3));
-    auto x = static_cast<int16_t>(lua_tointeger(L, 4));
-    auto y = static_cast<int16_t>(lua_tointeger(L, 5));
+    auto offset_x = static_cast<int16_t>(lua_tonumber(L, 2));
+    auto offset_y = static_cast<int16_t>(lua_tonumber(L, 3));
+    auto x = static_cast<int16_t>(lua_tonumber(L, 4));
+    auto y = static_cast<int16_t>(lua_tonumber(L, 5));
     gGame_managerLua->get_level()->entities.at(id).set_collision_box(offset_x, offset_y, x, y);
     return 0;
 }
@@ -1126,6 +1118,30 @@ extern "C" int getEntityColXLua(lua_State *L){
 extern "C" int getEntityColYLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y());
+    return 1;
+}
+
+/**
+ * Gets the width offset of the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getEntityColXOffsetLua(lua_State *L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_x_offset());
+    return 1;
+}
+
+/**
+ * Gets the height offset of the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getEntityColYOffsetLua(lua_State *L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y_offset());
     return 1;
 }
 
@@ -1671,7 +1687,6 @@ extern "C" int pauseMusicLua(lua_State*){
     return 0;
 }
 
-#ifdef __DEBUG
 /**
  * Show or hide the collisions and coordinates from rendering.
  * See the Lua docs for more information.
@@ -1691,10 +1706,16 @@ extern "C" int showCollisionsLua(lua_State* L){
  * @param L The global Lua state.
  * @return Always 0.
  */
-extern "C" int logLua(lua_State* L){
+extern "C" int logLua(lua_State* L) {
     auto type = static_cast<uint8_t>(lua_tointeger(L, 1));
     auto arg = static_cast<std::string>(lua_tostring(L, 2));
-    gMessage_busLua->send_msg(make_msg(CONSOLE_WRITE, make_data(ST::console_log((ST::log_type)type, arg))));
+    if (type == 1) {
+        gMessage_busLua->send_msg(make_msg(LOG_ERROR, make_data<std::string>(arg)));
+    }else if(type == 2){
+        gMessage_busLua->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>(arg)));
+    }else if(type == 4){
+        gMessage_busLua->send_msg(make_msg(LOG_INFO, make_data<std::string>(arg)));
+    }
     return 0;
 }
 
@@ -1718,5 +1739,3 @@ extern "C" int consoleClearLua(lua_State*){
     gMessage_busLua->send_msg(make_msg(CONSOLE_CLEAR, nullptr));
     return 0;
 }
-
-#endif

@@ -417,7 +417,6 @@ int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string
         }
     }else{
         //If the file could not be read
-        printf("HAHAA");
         return -1;
     }
 

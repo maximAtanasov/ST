@@ -8,7 +8,6 @@
  */
 
 #include <drawing_manager/drawing_manager.hpp>
-#include <main/message_types.hpp>
 
 #define DEFAULT_FONT "OpenSans-Regular.ttf"
 
@@ -33,7 +32,8 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 	gMessage_bus->subscribe(SHOW_COLLISIONS, &msg_sub);
     gMessage_bus->subscribe(SHOW_FPS, &msg_sub);
 	gMessage_bus->subscribe(SET_DARKNESS, &msg_sub);
-	gMessage_bus->subscribe(ASSETS, &msg_sub);
+	gMessage_bus->subscribe(SURFACES_ASSETS, &msg_sub);
+    gMessage_bus->subscribe(FONTS_ASSETS, &msg_sub);
     gMessage_bus->subscribe(ENABLE_LIGHTING, &msg_sub);
     gMessage_bus->subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
 
@@ -56,11 +56,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
  * @param fps the current frames per second.
  * @param cnsl a console object.
  */
-#ifdef __DEBUG
 void drawing_manager::update(const ST::level& temp, double fps, const console& cnsl){
-#elif defined(__RELEASE)
-void drawing_manager::update(const ST::level& temp){
-#endif
 	Camera = temp.Camera;
 	handle_messages();
 
@@ -68,25 +64,20 @@ void drawing_manager::update(const ST::level& temp){
     ST::renderer_sdl::clear_screen();
     ST::renderer_sdl::draw_background(temp.background);
 	draw_entities(temp.entities);
-
     ST::renderer_sdl::draw_overlay(temp.overlay, ticks % temp.overlay_spriteNum, temp.overlay_spriteNum);
     draw_text_objects(temp.text_objects);
-
     //draw the lights when we are sure they are processed
     if(lighting_enabled) {
         process_lights(temp.lights);
         draw_lights();
     }
-
     //Draw debug info and the console in a debug build
-    #ifdef __DEBUG
 	if (collisions_shown) {
 		draw_collisions(temp.entities);
 		draw_coordinates(temp.entities);
 	}
 	draw_fps(fps);
 	draw_console(cnsl);
-    #endif
 
     ST::renderer_sdl::present();
 }
@@ -95,7 +86,7 @@ void drawing_manager::update(const ST::level& temp){
  * Draws all visible text objects in the current level
  * @param objects a pointer to a vector of text_objects
  */
-void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
+void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const{
     for(auto& i : objects) {
         if (is_onscreen(i)) {
             ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
@@ -107,14 +98,12 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) {
  * Draws the fps counter on the screen.
  * @param fps The current fps.
  */
-void drawing_manager::draw_fps(double fps){
+void drawing_manager::draw_fps(double fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
         ST::renderer_sdl::draw_text(DEFAULT_FONT, "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);
     }
 }
-
-#ifdef __DEBUG
 
 /**
  * Draws the console window on the screen.
@@ -146,19 +135,15 @@ void drawing_manager::draw_console(const console& cnsl){
     }
 }
 
-#endif
-
 /**
  * Processes the lightmap given a vector of light objects.
  * TODO: tests must be written for this method, but the algorithm calculating  the lighting is not yet finished.
  * @param lights A vector of <b>ST::light</b> objects.
  */
 void drawing_manager::process_lights(const std::vector<ST::light>& lights){
-    #ifdef __DEBUG
     if(!lighting_enabled){
         return;
     }
-    #endif
     for(int i = 0; i < w_width; i++){
         for(int j = 0; j < w_height; j++){
             lightmap[i][j] = darkness_level;
@@ -312,11 +297,13 @@ void drawing_manager::handle_messages(){
                 lighting_enabled = false;
             }
         }
-        else if(temp->msg_name == ASSETS) {
-            auto gAssets = static_cast<ST::assets**>(temp->get_data());
-            ST::assets* temp_ast = *gAssets;
-            ST::renderer_sdl::upload_surfaces(&temp_ast->surfaces);
-            ST::renderer_sdl::upload_fonts(&temp_ast->fonts);
+        else if(temp->msg_name == SURFACES_ASSETS) {
+            auto surfaces = *static_cast<ska::bytell_hash_map<size_t, SDL_Surface *>**>(temp->get_data());
+            ST::renderer_sdl::upload_surfaces(surfaces);
+        }
+        else if(temp->msg_name == FONTS_ASSETS) {
+            auto fonts = *static_cast<ska::bytell_hash_map<std::string, TTF_Font *>**>(temp->get_data());
+            ST::renderer_sdl::upload_fonts(fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());

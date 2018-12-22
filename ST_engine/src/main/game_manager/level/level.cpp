@@ -8,7 +8,6 @@
  */
 
 #include <game_manager/level/level.hpp>
-#include <console/log.hpp>
 #include <fstream>
 #include <sstream>
 
@@ -101,7 +100,7 @@ int8_t ST::level::load_input_conf(){
     temp = temp + "/inputConf.cfg";
     file.open(temp.c_str());
     if(file.is_open()){
-        log(INFO, "Loading " + temp);
+        gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Loading " + temp)));
         std::string action;
         std::string button;
         int actionRead = 0;
@@ -143,7 +142,7 @@ int8_t ST::level::load_input_conf(){
         file.close();
     }
     else{
-        log(ERROR, "File " + temp + " not found");
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + temp + " not found")));
         return -1;
     }
     return 0;

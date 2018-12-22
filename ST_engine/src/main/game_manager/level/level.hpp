@@ -10,13 +10,12 @@
 #ifndef LVL_DEF
 #define LVL_DEF
 
-#include <input_manager/key_definitions.hpp>
+#include <key_definitions.hpp>
 #include <game_manager/level/entity.hpp>
 #include <game_manager/level/text.hpp>
 #include <game_manager/level/light.hpp>
 #include <message_bus.hpp>
 #include <game_manager/level/camera.hpp>
-#include <input_manager/input_manager.hpp>
 
 class level_tests;
 

@@ -9,7 +9,7 @@
 
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
-#include <main/message_types.hpp>
+#include <SDL_events.h>
 #include "game_manager.hpp"
 
 
@@ -255,14 +255,6 @@ void game_manager::start_level(const std::string& level_name){
     temp = temp + active_level;
     temp = temp + "/level.lua";
     gScript_backend.run_file(temp);
-
-    //load level loop
-    temp = "levels/";
-    temp = temp + active_level;
-    temp = temp + "/loop.lua";
-    gScript_backend.load_file(temp);
-    gScript_backend.set_global("loop");
-
 }
 
 /**

@@ -10,13 +10,12 @@
 #ifndef DRAWING_DEF
 #define DRAWING_DEF
 
-#include <assets_manager/assets.hpp>
 #include <game_manager/level/light.hpp>
-#include <console/console.hpp>
 #include <message_bus.hpp>
 #include <game_manager/level/camera.hpp>
 #include <renderer_sdl.hpp>
 #include <game_manager/level/level.hpp>
+#include <console.hpp>
 
 ///This object is responsible for issuing drawing commands and drawing the current level.
 /**
@@ -28,11 +27,11 @@
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
  *
- * <b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates in a __DEBUG build.
+ * <b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates.
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
  *
- * <b>SHOW_FPS</b> - Show or hide the current fps in a __DEBUG build.
+ * <b>SHOW_FPS</b> - Show or hide the current fps.
  *
  * Message must contain: a pointer to a <b>bool</b>. <br>
  *
@@ -55,7 +54,7 @@
  */
 class drawing_manager{
     private:
-        //external dependencies - injected through main or the message bus
+        //external dependency - delivered in the constructor
         message_bus* gMessage_bus{};
 
         //a subscriber object - so we can subscribe to and recieve messages
@@ -71,10 +70,9 @@ class drawing_manager{
         int16_t w_width = 1920;
         int16_t w_height = 1080;
 
-#ifdef __DEBUG
         //Console cursor timer
         uint64_t cnsl_cursor_timer = 0;
-#endif
+
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};
         uint8_t darkness_level = 0;
@@ -90,9 +88,9 @@ class drawing_manager{
         void draw_collisions(const std::vector<ST::entity>&) const;
         void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
-        void draw_fps(double fps);
+        void draw_fps(double fps) const;
         void draw_console(const console& cnsl);
-        void draw_text_objects(const std::vector<ST::text>&);
+        void draw_text_objects(const std::vector<ST::text>&) const;
 
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
@@ -108,12 +106,7 @@ class drawing_manager{
     public:
         drawing_manager(SDL_Window* win, message_bus* msg_bus);
         ~drawing_manager();
-
-        #ifdef __DEBUG
         void update(const ST::level& temp, double, const console& gConsole);
-        #elif defined(__RELEASE)
-        void update(const ST::level& temp);
-        #endif
 };
 
 #endif

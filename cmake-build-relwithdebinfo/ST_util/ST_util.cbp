@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ST_util"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\ST_asset_pack\;CMake Files\ST_asset_pack\src\;CMake Files\ST_asset_pack\src\test\;CMake Files\ST_asset_pack\src\main\;CMake Files\cmake\;CMake Files\ST_engine\;CMake Files\ST_engine\ST_assets_manager\;CMake Files\ST_engine\ST_audio_manager\;CMake Files\ST_engine\ST_dev_console\;CMake Files\ST_engine\ST_dev_console\src\;CMake Files\ST_engine\ST_dev_console\src\test\;CMake Files\ST_engine\src\;CMake Files\ST_engine\src\main\;CMake Files\ST_engine\src\main\game_manager\;CMake Files\ST_engine\src\main\game_manager\level\;CMake Files\ST_engine\src\test\;CMake Files\ST_engine\src\test\game_manager\;CMake Files\ST_engine\src\test\game_manager\level\;CMake Files\ST_engine\ST_renderer\;CMake Files\ST_engine\ST_message_bus\;CMake Files\ST_engine\ST_task_manager\;CMake Files\ST_engine\ST_input_manager\;CMake Files\ST_engine\ST_window_manager\;CMake Files\ST_loaders\;CMake Files\ST_loaders\src\;CMake Files\ST_loaders\src\test\;CMake Files\ST_loaders\src\main\;CMake Files\ST_loaders\include\;CMake Files\ST_loaders\include\ST_loaders\;CMake Files\ST_util\;CMake Files\external\;CMake Files\external\googletest\;CMake Files\external\googletest\googletest\;CMake Files\external\googletest\googletest\cmake\;CMake Files\external\lua\;CMake Files\external\lua\lua-5.3.0\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_util"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_util">
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_util/ST_util.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_util"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D__DEBUG"/>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 ST_util"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_util/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_util/ST_util.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/slavicTales/cmake-build-relwithdebinfo/ST_util"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D__DEBUG"/>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 ST_util/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\slavicTales\cmake-build-relwithdebinfo\ST_util\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include/ST_util/bytell_hash_map.hpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include/ST_util/flat_hash_map.hpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include/ST_util/math.hpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include/ST_util/string_util.hpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/include/ST_util/test_util.hpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/src/main/math.cpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/src/main/string_util.cpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/src/main/test_util.cpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/src/main/util.cpp">
+			<Option target="ST_util"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_asset_pack/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_asset_pack\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_asset_pack/src/test/ST_asset_pack_tests.cpp">
+			<Option virtualFolder="CMake Files\ST_asset_pack\src\test\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_asset_pack/src/main/main.hpp">
+			<Option virtualFolder="CMake Files\ST_asset_pack\src\main\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/cmake/FindSDL2.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/cmake/FindSDL2_image.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/cmake/FindSDL2_mixer.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/cmake/FindSDL2_ttf.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_assets_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_assets_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_audio_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_audio_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_dev_console/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_dev_console/src/test/console_tests.cpp">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\src\test\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/src/main/game_manager/level/entity.hpp">
+			<Option virtualFolder="CMake Files\ST_engine\src\main\game_manager\level\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/src/test/game_manager/level/entity_tests.cpp">
+			<Option virtualFolder="CMake Files\ST_engine\src\test\game_manager\level\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_renderer/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_renderer\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_message_bus/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_message_bus\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_task_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_task_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_input_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_input_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_engine/ST_window_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_window_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_loaders/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_loaders\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_loaders/src/test/loaders_test.cpp">
+			<Option virtualFolder="CMake Files\ST_loaders\src\test\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_loaders/src/main/loaders.cpp">
+			<Option virtualFolder="CMake Files\ST_loaders\src\main\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_loaders/include/ST_loaders/loaders.hpp">
+			<Option virtualFolder="CMake Files\ST_loaders\include\ST_loaders\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/ST_util/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_util\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/external/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\googletest\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/external/googletest/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\googletest\googletest\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/external/googletest/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\external\googletest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/external/lua/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\lua\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/slavicTales/external/lua/lua-5.3.0/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\lua\lua-5.3.0\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

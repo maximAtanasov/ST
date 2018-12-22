@@ -78,3 +78,16 @@ all_buttons_key = "MOUSE1"
 
 ----@Audio
 all_buttons_sound = "buttonSelected.wav"
+
+function loop()
+    cardsInHand:update()
+    if keyPressed("RELOAD") then
+        unloadLevel("levelCard")
+        loadLevel("levelCard")
+        startLevel("levelCard")
+    end
+
+    if(mouseOver(card4)) then
+        log(INFO, "mouseOver")
+    end
+end
