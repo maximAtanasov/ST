@@ -364,3 +364,28 @@ function button_back:onNothing()
     self.soundPlayed = 1
     self.text:setTextColor(255, 255, 255, 255)
 end
+
+function loop()
+    introFading()
+    if(room == "main") then
+        if keyPressed("START") and darkness == 0 then
+            button_newGame:onClick()
+        end
+        button_settings:update()
+        button_exit:update()
+        button_newGame:update()
+    elseif(room == "settings") then
+        if keyPressed("BACK") then
+            button_back:onClick()
+        end
+        button_back:update()
+        button_fullscreen:update()
+        button_soundSwitch:update()
+        button_switch1:update()
+        button_vsync:update()
+        button_switch2:update()
+        button_switch3:update()
+        button_languageSelection:update()
+        button_languageSelectionLabel:update()
+    end
+end

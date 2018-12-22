@@ -26,3 +26,21 @@ loadLevel("author_splash")
 hideMouseCursor()
 splash = 255
 splashUp = 0
+
+function loop()
+    if splash > 0 then
+        splash = splash - 1
+        setDarkness(splash)
+    elseif splashUp < 255 then
+        splashUp = splashUp + 1
+        setDarkness(splashUp)
+    else
+        unloadLevel("main")
+        startLevel("author_splash")
+    end
+
+    if keyPressed("START") then
+        unloadLevel("main")
+        startLevel("author_splash")
+    end
+end
