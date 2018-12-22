@@ -152,6 +152,8 @@ extern "C" int entityCollidesLua(lua_State* L);
 extern "C" int setEntityAffectedByPhysicsLua(lua_State *L);
 extern "C" int getEntityColXLua(lua_State *L);
 extern "C" int getEntityColYLua(lua_State *L);
+extern "C" int getEntityColXOffsetLua(lua_State *L);
+extern "C" int getEntityColYOffsetLua(lua_State *L);
 extern "C" int getEntityMassLua(lua_State *L);
 extern "C" int setEntityMassLua(lua_State *L);
 

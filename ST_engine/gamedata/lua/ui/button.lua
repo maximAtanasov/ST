@@ -13,6 +13,7 @@ button.text = nil
 button.colX = 0
 button.colY = 0
 button.clickKey = ""
+button.affectedByPhysics = false
 
 function button:new(x, y, text, font, fontSize)
     local newButton = newEntity(self, x, y)
@@ -28,13 +29,23 @@ end
 function button:setMarginX(x)
     self:setTexW(x)
     self.colX = x
-    self:setCollision(0,0,x,self.colY)
+    self:setCollision(self.offsetColX, self.offsetColY, x, self.colY)
 end
 
 function button:setMarginY(y)
     self:setTexH(y)
     self.colY = y
-    self:setCollision(0,0, self.colX, y)
+    self:setCollision(self.offsetColX, self.offsetColY, self.colX, y)
+end
+
+function button:setMarginOffsetY(y)
+    self.offsetColY = y;
+    self:setCollision(self.offsetColX, y, self.colX, self.colY)
+end
+
+function button:setMarginOffsetX(x)
+    self.offsetColX = x
+    self:setCollision(x, self.offsetColY, self.colX, self.colY)
 end
 
 function button:onClick()

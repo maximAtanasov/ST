@@ -4,6 +4,8 @@ card.value=0
 card.texture="kingHeart.png"
 card.texWidth = 120
 card.texHeight = 750
+card.colX=120
+card.colY=750
 card.isVisible = true
 card.hover=false
 card.currentHeight=0
@@ -13,6 +15,7 @@ card.rightMotionCounter = 0
 card.goingUp = false
 card.play = false
 card.scale = 1
+card.affectedByPhysics = false
 
 function card:update()
     if self.onField then
@@ -46,6 +49,7 @@ function card:deployToField()
         self.currentHeight = self.currentHeight - 53
         self:setY(self.currentHeight)
         self:setTextureScale(self.scale, self.scale)
+        self:setCollisionScale(self.scale, self.scale)
         self.scale = self.scale-0.03
     end
     self.goingUp = false

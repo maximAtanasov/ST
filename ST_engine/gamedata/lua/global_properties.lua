@@ -8,7 +8,7 @@
 
 --Contains global variable definitions
 
-language = "english"
+language = "russian"
 vsync = "vsyncEnabled"
 audio = "audioDisabled"
-fullscreen = "fullscreenDisabled"
+fullscreen = "fullscreenEnabled"

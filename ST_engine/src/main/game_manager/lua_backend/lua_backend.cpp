@@ -173,6 +173,8 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setEntityAffectedByPhysics", setEntityAffectedByPhysicsLua);
     lua_register(L, "getEntityColX", getEntityColXLua);
     lua_register(L, "getEntityColY", getEntityColYLua);
+    lua_register(L, "getEntityColXOffset", getEntityColXOffsetLua);
+    lua_register(L, "getEntityColYOffset", getEntityColYOffsetLua);
     lua_register(L, "getEntityMass", getEntityMassLua);
     lua_register(L, "setEntityMass", setEntityMassLua);
 
@@ -1095,10 +1097,10 @@ extern "C" int entityCollidesLua(lua_State* L){
  */
 extern "C" int setEntityCollisionBoxLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto offset_x = static_cast<int16_t>(lua_tointeger(L, 2));
-    auto offset_y = static_cast<int16_t>(lua_tointeger(L, 3));
-    auto x = static_cast<int16_t>(lua_tointeger(L, 4));
-    auto y = static_cast<int16_t>(lua_tointeger(L, 5));
+    auto offset_x = static_cast<int16_t>(lua_tonumber(L, 2));
+    auto offset_y = static_cast<int16_t>(lua_tonumber(L, 3));
+    auto x = static_cast<int16_t>(lua_tonumber(L, 4));
+    auto y = static_cast<int16_t>(lua_tonumber(L, 5));
     gGame_managerLua->get_level()->entities.at(id).set_collision_box(offset_x, offset_y, x, y);
     return 0;
 }
@@ -1124,6 +1126,30 @@ extern "C" int getEntityColXLua(lua_State *L){
 extern "C" int getEntityColYLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y());
+    return 1;
+}
+
+/**
+ * Gets the width offset of the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getEntityColXOffsetLua(lua_State *L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_x_offset());
+    return 1;
+}
+
+/**
+ * Gets the height offset of the collision box of an entity.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getEntityColYOffsetLua(lua_State *L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y_offset());
     return 1;
 }
 

@@ -9,6 +9,7 @@
 NEW_GAME_TEXT = "Новая Игра"
 SETTINGS_TEXT = "Настройки"
 EXIT_TEXT = "Выход"
+VERTICAL_OFFSET=20
 
 BACK_TEXT = "Назад"
 SOUND_TEXT = "Звук:"
@@ -18,7 +19,7 @@ OFF_TEXT = "Выкл."
 FULLSCREEN_TEXT = "Полный экран:"
 LANGUAGE_TEXT = "Язык: "
 LANUAGE_OFFSET = 250
-
+LANGUAGE_MARGIN = 200
 
 ON1_OFFSET = 240
 ON2_OFFSET = 420
