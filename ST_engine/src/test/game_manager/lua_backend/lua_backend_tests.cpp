@@ -2043,6 +2043,81 @@ TEST_F(lua_backend_test, test_call_function_getEntityColY){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active);
 }
 
+TEST_F(lua_backend_test, test_call_function_getEntityColXOffset){
+    //Set up
+    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.at(0).set_collision_box(6, 0, 0, 0);
+
+    //Test
+    test_subject.run_script("return getEntityColXOffset(0)");
+
+    //Check result
+    ASSERT_EQ(6, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Check that nothing has changed in the entity
+    ASSERT_EQ(3, game_mngr->get_level_calls);
+    ASSERT_EQ(1, game_mngr->get_level()->entities.size());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).x);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).y);
+    ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_visible);
+    ASSERT_FALSE(game_mngr->get_level()->entities.at(0).is_static);
+    ASSERT_FALSE(game_mngr->get_level()->entities.at(0).is_affected_by_physics);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).velocity_y);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).velocity_x);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_h);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
+    ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
+    ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).get_col_x());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).get_col_y());
+    ASSERT_EQ(6, game_mngr->get_level()->entities.at(0).get_col_x_offset());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).get_col_y_offset());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).mass);
+    ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active);
+}
+
+TEST_F(lua_backend_test, test_call_function_getEntityColYOffset){
+    //Set up
+    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.at(0).set_collision_box(0, 6, 0, 0);
+
+    //Test
+    test_subject.run_script("return getEntityColYOffset(0)");
+
+    //Check result
+    ASSERT_EQ(6, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
+
+    //Check that nothing has changed in the entity
+    ASSERT_EQ(3, game_mngr->get_level_calls);
+    ASSERT_EQ(1, game_mngr->get_level()->entities.size());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).x);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).y);
+    ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_visible);
+    ASSERT_FALSE(game_mngr->get_level()->entities.at(0).is_static);
+    ASSERT_FALSE(game_mngr->get_level()->entities.at(0).is_affected_by_physics);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).velocity_y);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).velocity_x);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_h);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
+    ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
+    ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).get_col_x());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).get_col_y());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).get_col_x_offset());
+    ASSERT_EQ(6, game_mngr->get_level()->entities.at(0).get_col_y_offset());
+    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).mass);
+    ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active);
+}
+
+
 TEST_F(lua_backend_test, test_call_function_setEntityMass){
     //Set up
     game_mngr->get_level()->entities.emplace_back(ST::entity());
