@@ -167,10 +167,14 @@ int8_t assets_manager::load_asset(std::string path){
     }
 
     //check if the file is already loaded and increase the reference count
-    if(count[path] > 0){
-        count[path]++;
+    auto _asset_count = count.find(trim_path(path));
+    if (_asset_count != count.end() && _asset_count->second > 0) {
+        _asset_count->second += 1;
         return 0;
+    } else if (_asset_count == count.end()) {
+        count.emplace(trim_path(path), 0);
     }
+
 
     std::string extention;
     extention = ST::get_file_extension(path);
@@ -181,14 +185,14 @@ int8_t assets_manager::load_asset(std::string path){
     }
     std::hash<std::string> hash_f;
 
-    //Handle the different extentions - currently png, wav, mp3, ttf
+    //Handle the different extentions - currently png, webp, wav, mp3, ttf
     if(extention == "png" || extention == "webp"){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
             path = trim_path(path);
             size_t string_hash = hash_f(path);
             all_assets.surfaces[string_hash] = temp1;
-            count[path]++;
+            count.at(path) += 1;
         }else{
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
@@ -196,14 +200,10 @@ int8_t assets_manager::load_asset(std::string path){
     }else if(extention == "wav"){
         Mix_Chunk* temp1 = Mix_LoadWAV(path.c_str());
         if (temp1 != nullptr){
-            for(Uint32 i = 0; i < path.size(); i++) {
-                if (path.at(i) == '/') {
-                    path.erase(0, i+1);
-                }
-            }
+            path = trim_path(path);
             size_t string_hash = hash_f(path);
             all_assets.chunks[string_hash] = temp1;
-            count[path]++;
+            count.at(path) += 1;
         }
         else{
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
@@ -212,14 +212,10 @@ int8_t assets_manager::load_asset(std::string path){
     }else if(extention == "ogg"){
         Mix_Music* temp1 = Mix_LoadMUS(path.c_str());
         if (temp1 != nullptr) {
-            for(Uint32 i = 0; i < path.size(); i++) {
-                if (path.at(i) == '/') {
-                    path.erase(0, i+1);
-                }
-            }
+            path = trim_path(path);
             size_t string_hash = hash_f(path);
             all_assets.music[string_hash] = temp1;
-            count[path]++;
+            count.at(path) += 1;
         }
         else {
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
@@ -244,14 +240,10 @@ int8_t assets_manager::load_asset(std::string path){
         std::string font = result.at(0);
         TTF_Font* tempFont = TTF_OpenFont(font.c_str(), size);
         if(tempFont != nullptr){
-            for(Uint32 i = 0; i < font.size(); i++) {
-                if (font.at(i) == '/') {
-                    font.erase(0, i+1);
-                }
-            }
-            std::string font_and_size = font + result.at(1);
+            font = trim_path(font);
+            std::string font_and_size = font + " " + result.at(1);
             all_assets.fonts[font_and_size] = tempFont;
-            count[font_and_size]++;
+            count.at(font_and_size) += 1;
         }else{
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + font + " not found!")));
             return -1;
@@ -328,33 +320,42 @@ int8_t assets_manager::unload_asset(std::string path){
     if(path.at(0) == '#'){
         return 0;
     }
-    if(count[path] > 1){
-        count[path]--;
+
+    auto _asset_count = count.find(trim_path(path));
+    if (_asset_count != count.end() && _asset_count->second > 1) {
+        _asset_count->second -= 1;
         return 0;
+    }else if(_asset_count == count.end() || _asset_count->second == 0){
+        return -1;
     }
+
     std::string extention = ST::get_file_extension(path);
     gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Unloading " + path)));
+    path = trim_path(path);
     if(extention == "png" || extention == "webp"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
-        count[path]--;
+        count.at(path)--;
     }else if(extention == "wav"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
-        count[path]--;
+        all_assets.chunks[string_hash] = nullptr;
+        count.at(path)--;
     }else if(extention == "ogg"){
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
-        count[path]--;
+        all_assets.music[string_hash] = nullptr;
+        count.at(path)--;
     }else if(extention == "bin"){
         return unload_assets_from_binary(path);
     }else{ //if file is a font
         TTF_CloseFont(all_assets.fonts[path]);
-        count[path]--;
+        all_assets.fonts[path] = nullptr;
+        count.at(path)--;
     }
     return 0;
 }

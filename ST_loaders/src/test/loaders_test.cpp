@@ -79,8 +79,10 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
 
     //Test
     ASSERT_EQ(0, ST::unpack_binary_to_disk(binary_name));
-    ASSERT_TRUE(Mix_LoadMUS("test_music_1.ogg"));
-    ASSERT_TRUE(Mix_LoadMUS("test_music_2.ogg"));
+    Mix_Music* test_music_1 = Mix_LoadMUS("test_music_1.ogg");
+    Mix_Music* test_music_2 = Mix_LoadMUS("test_music_1.ogg");
+    ASSERT_TRUE(test_music_1);
+    ASSERT_TRUE(test_music_2);
     ASSERT_TRUE(Mix_LoadWAV("test_sound_1.wav"));
     ASSERT_TRUE(Mix_LoadWAV("test_sound_2.wav"));
     ASSERT_TRUE(IMG_Load("test_image_1.png"));
@@ -88,6 +90,8 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
     ASSERT_TRUE(IMG_Load("test_image_3.webp"));
 
     //Tear Down
+    Mix_FreeMusic(test_music_1);
+    Mix_FreeMusic(test_music_2);
     close_SDL();
     remove("test_music_1.ogg");
     remove("test_music_2.ogg");

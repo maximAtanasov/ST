@@ -24,6 +24,11 @@ function startLevel(arg)
     error() --a dirty trick, but it works
 end
 
+function reloadLevel(arg)
+    reloadLevelLua(arg)
+    startLevel(arg)
+end
+
 function exit()
     endGame()
 end

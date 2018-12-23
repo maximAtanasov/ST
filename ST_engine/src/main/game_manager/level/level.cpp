@@ -38,6 +38,25 @@ void ST::level::load(){
 }
 
 /**
+ * reloads the level.
+ */
+void ST::level::reload(){
+    std::string temp = "levels/" + name + "/assets.list";
+    gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data(temp)));
+    for(const auto &i : actions_Buttons) {
+        gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
+    }
+    actions_Buttons.clear();
+    gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
+    load_input_conf();
+    for(const auto &i : actions_Buttons) {
+        for(const auto& key : i.second) {
+            gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(key)));
+        }
+    }
+}
+
+/**
  * Get the name of the level.
  * @return The name of the level.
  */
@@ -71,9 +90,8 @@ void ST::level::unload(){
     for(const auto &i : actions_Buttons) {
         gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
     }
-    //unload fonts
-    std::string temp = "levels/" + name;
-    temp = temp + "/assets.list";
+    //unload assets
+    std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data(temp)));
 
     //unload inputConf

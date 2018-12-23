@@ -28,6 +28,7 @@ enum msg_type {
     LOAD_LEVEL,
     START_LEVEL,
     UNLOAD_LEVEL,
+    RELOAD_LEVEL,
     LOG_ERROR,
     LOG_SUCCESS,
     LOG_INFO,

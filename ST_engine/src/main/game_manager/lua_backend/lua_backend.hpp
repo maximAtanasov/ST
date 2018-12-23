@@ -59,6 +59,7 @@ extern "C" int setBackgroundLua(lua_State* L);
 extern "C" int setOverlayLua(lua_State* L);
 extern "C" int delayLua(lua_State* L);
 extern "C" int startLevelLua(lua_State* L);
+extern "C" int reloadLevelLua(lua_State* L);
 extern "C" int useLua(lua_State* L);
 extern "C" int load_levelLua(lua_State* L);
 extern "C" int unload_levelLua(lua_State* L);

@@ -31,7 +31,6 @@ namespace ST {
         std::string name;
         message_bus *gMessage_bus;
 
-        int8_t load_input_conf();
         key key_index(std::string arg);
 
     public:
@@ -53,9 +52,11 @@ namespace ST {
 
         level(const std::string&, message_bus*);
         void load();
+        void reload();
         void unload();
         std::string get_name() const;
         ~level();
+        int8_t load_input_conf();
     };
 }
 

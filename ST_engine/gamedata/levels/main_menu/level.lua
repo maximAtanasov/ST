@@ -224,20 +224,12 @@ function button_languageSelection:onNothing()
 end
 
 --LANGUAGE NAME LABEL
-button_languageSelectionLabel = button:new(LANUAGE_OFFSET, 600, language, FONT, 50)
+button_languageSelectionLabel = label:new(LANUAGE_OFFSET, 600, language, FONT, 50)
 button_languageSelectionLabel:hide()
 if language == "english" then
     button_languageSelectionLabel:setText("English")
 else
     button_languageSelectionLabel:setText("Русский")
-end
-
-function button_languageSelectionLabel:update()
-    --[[if language == "english" then
-        button_switch1:setText("English")
-    else
-        button_switch1:setText("Russian")
-    end]]
 end
 
 --VSYNC button

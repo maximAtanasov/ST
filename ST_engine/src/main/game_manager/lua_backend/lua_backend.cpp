@@ -67,6 +67,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "getVsyncState", getVsyncStateLua);
     lua_register(L, "setBrightness", setBrightnessLua);
     lua_register(L, "startLevelLua", startLevelLua);
+    lua_register(L, "reloadLevelLua", reloadLevelLua);
     lua_register(L, "showMouseCursor", showMouseCursorLua);
     lua_register(L, "hideMouseCursor", hideMouseCursorLua);
     lua_register(L, "endGame", endGameLua);
@@ -1363,6 +1364,18 @@ extern "C" int endGameLua(lua_State*){
 extern "C" int startLevelLua(lua_State* L){
     std::string level = static_cast<std::string>(lua_tostring(L, 1));
     gMessage_busLua->send_msg(make_msg(START_LEVEL, make_data<std::string>(level)));
+    return 0;
+}
+
+/**
+ * Reloads a level given it's name. Sends a <b>RELOAD_LEVEL</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int reloadLevelLua(lua_State* L){
+    std::string level = static_cast<std::string>(lua_tostring(L, 1));
+    gMessage_busLua->send_msg(make_msg(RELOAD_LEVEL, make_data<std::string>(level)));
     return 0;
 }
 

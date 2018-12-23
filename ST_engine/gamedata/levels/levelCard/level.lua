@@ -82,12 +82,6 @@ all_buttons_sound = "buttonSelected.wav"
 function loop()
     cardsInHand:update()
     if keyPressed("RELOAD") then
-        unloadLevel("levelCard")
-        loadLevel("levelCard")
-        startLevel("levelCard")
-    end
-
-    if(mouseOver(card4)) then
-        log(INFO, "mouseOver")
+        reloadLevel("levelCard")
     end
 end

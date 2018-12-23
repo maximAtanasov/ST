@@ -111,7 +111,7 @@ void ST::renderer_sdl::close(){
  * Note that the font must previously be loaded at the selected size.
  */
 uint16_t ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font, uint8_t size){
-    std::string font_and_size = arg+std::to_string(size);
+    std::string font_and_size = arg + " " + std::to_string(size);
     TTF_Font* font = fonts[font_and_size];
     int texW = 0;
     if(font != nullptr){
@@ -151,7 +151,7 @@ uint16_t ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const st
  */
 uint16_t ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std::string& arg2, const int x, const int y,
                                            const SDL_Color color_font, const int size) {
-    std::string font_and_size = arg+std::to_string(size);
+    std::string font_and_size = arg + " " + std::to_string(size);
     uint16_t tempX = 0;
     auto cached_vector = fonts_cache.find(font_and_size);
     if(cached_vector != fonts_cache.end()){

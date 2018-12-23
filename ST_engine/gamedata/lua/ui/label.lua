@@ -19,14 +19,26 @@ end
 
 function label:hide()
     self:setVisible(false)
-    self.label:setTextVisible(false)
+    self.text:setTextVisible(false)
 end
 
 function label:show()
     self:setVisible(true)
-    self.label:setTextVisible(true)
+    self.text:setTextVisible(true)
 end
 
 function label:setText(text)
     self.text:setText(text)
+end
+
+function label:setFont(font)
+    self.text:setFont(font)
+end
+
+function label:setFontSize(size)
+    self.text:setFontSize(size)
+end
+
+function label:setTextColor(r, g, b, a)
+    self.text:setTextColor(r, g, b, a)
 end

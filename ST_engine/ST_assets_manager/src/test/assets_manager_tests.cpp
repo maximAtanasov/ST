@@ -130,7 +130,7 @@ TEST_F(asset_manager_test, loadOGG) {
 
 TEST_F(asset_manager_test, loadTTF_nonExistant) {
     ASSERT_EQ(-1, load_asset("nothing.ttf 50"));
-    ASSERT_FALSE(get_assets().fonts["nothing.ttf50"]);
+    ASSERT_FALSE(get_assets().fonts["nothing.ttf 50"]);
 }
 
 TEST_F(asset_manager_test, loadTTF_noSize) {
@@ -141,7 +141,7 @@ TEST_F(asset_manager_test, loadTTF_noSize) {
 TEST_F(asset_manager_test, loadTTF){
     load_asset("test_font.ttf 50");
     TTF_Font* expected_font = TTF_OpenFont("test_font.ttf", 50);
-    TTF_Font* result_font = get_assets().fonts["test_font.ttf50"];
+    TTF_Font* result_font = get_assets().fonts["test_font.ttf 50"];
     ASSERT_TRUE(expected_font);
     ASSERT_TRUE(result_font);
     SDL_Surface* expected_render = TTF_RenderText_Blended(result_font, "TEST", {200,200,200,255});

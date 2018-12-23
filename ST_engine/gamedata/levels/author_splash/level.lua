@@ -44,12 +44,10 @@ function loop()
         splashUp = splashUp + 1
         setDarkness(splashUp)
     else
-        unloadLevel("author_splash")
         startLevel("main_menu")
     end
 
     if keyPressed("START") then
-        unloadLevel("author_splash")
         startLevel("main_menu")
     end
 end

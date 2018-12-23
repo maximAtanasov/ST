@@ -82,11 +82,13 @@ void window_manager::handle_messages(){
         }
         else if(temp->msg_name == SET_WINDOW_RESOLUTION){
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(res)));
-            SDL_SetWindowSize(window, std::get<0>(res), std::get<1>(res));
-            SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-            width = std::get<0>(res);
-            height = std::get<1>(res);
+            if(std::get<0>(res) != width && std::get<1>(res) != height) {
+                gMessage_bus->send_msg(make_msg(REAL_SCREEN_COORDINATES, make_data(res)));
+                SDL_SetWindowSize(window, std::get<0>(res), std::get<1>(res));
+                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+                width = std::get<0>(res);
+                height = std::get<1>(res);
+            }
         }
         destroy_msg(temp);
         temp = msg_sub.get_next_message();
