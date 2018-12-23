@@ -325,26 +325,29 @@ int8_t assets_manager::unload_asset(std::string path){
     if (_asset_count != count.end() && _asset_count->second > 1) {
         _asset_count->second -= 1;
         return 0;
-    }else if(_asset_count == count.end() || _asset_count->second == 0){
+    }else if((_asset_count == count.end() || _asset_count->second == 0) && ST::get_file_extension(path) != "bin"){
         return -1;
     }
 
     std::string extention = ST::get_file_extension(path);
     gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Unloading " + path)));
-    path = trim_path(path);
+
     if(extention == "png" || extention == "webp"){
+        path = trim_path(path);
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "wav"){
+        path = trim_path(path);
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
         all_assets.chunks[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "ogg"){
+        path = trim_path(path);
         std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
@@ -353,6 +356,7 @@ int8_t assets_manager::unload_asset(std::string path){
     }else if(extention == "bin"){
         return unload_assets_from_binary(path);
     }else{ //if file is a font
+        path = trim_path(path);
         TTF_CloseFont(all_assets.fonts[path]);
         all_assets.fonts[path] = nullptr;
         count.at(path)--;
