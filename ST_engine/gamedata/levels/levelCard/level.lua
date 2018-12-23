@@ -45,26 +45,28 @@ table.insert(cardsInHand, card4)
 table.insert(cardsInHand, card5)
 table.insert(cardsInHand, card6)
 
+card6:setCollision(card6.offsetColX, card6.offsetColY, 530, card6.colY)
+
 function cardsInHand:update()
     local i = 1
     while i <= 6 do
         self[i]:update()
         if self[i].goingUp == true then
-            self[i]:setTexW(500)
+            self[i]:setCollision(self[i].offsetColX, self[i].offsetColY, 530, self[i].colY)
             self[i].goingRight = false
             local j = i+1
             while j <= 6 do
                 self[j].goingRight = true
-                self[j]:setTexW(120)
+                self[j]:setCollision(self[j].offsetColX, self[j].offsetColY, 530, self[j].colY)
                 j = j+1
             end
             local k = i - 1
             while k >= 1 do
                 self[k].goingRight = false
-                self[k]:setTexW(120)
+                self[k]:setCollision(self[k].offsetColX, self[k].offsetColY, 120, self[k].colY)
                 k = k-1
             end
-            card6:setTexW(500)
+            card6:setCollision(card6.offsetColX, card6.offsetColY, 530, card6.colY)
             if keyPressed("SPACE") then
                 self[i].play = true
             end
