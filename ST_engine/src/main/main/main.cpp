@@ -71,8 +71,8 @@ int ST_engine_main(int argc, char *argv[]) {
         if(total_time >= UPDATE_RATE){
 			gInput_manager.update();
 			do{
-                gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 gGame_manager.update();
+                gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 total_time -= UPDATE_RATE;
             }
             while (total_time >= UPDATE_RATE);
