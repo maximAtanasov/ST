@@ -59,5 +59,6 @@ if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
             TARGET ST_audio_manager
             POST_BUILD
             COMMAND audio_manager_test
+			WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
 endif()
