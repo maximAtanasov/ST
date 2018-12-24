@@ -37,11 +37,12 @@ add_library(ST_audio_manager STATIC
         ${PROJECT_SOURCE_DIR}/src/main/audio_manager.cpp)
 
 add_executable(audio_manager_test
+		${PROJECT_SOURCE_DIR}/include/audio_manager.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/audio_manager.cpp
         ${PROJECT_SOURCE_DIR}/src/test/audio_manager_tests.cpp)
 
 target_link_libraries(audio_manager_test
         gtest
-        ST_audio_manager
         ST_task_manager
         ST_message_bus
         ST_util
@@ -53,16 +54,10 @@ target_link_libraries(audio_manager_test
 #Run the tests on each build
 set_target_properties(audio_manager_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 add_test(NAME audio_manager_test COMMAND audio_manager_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
-add_custom_command(
-        TARGET ST_audio_manager
-        POST_BUILD
-        COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target audio_manager_test
-)
-
 if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
     add_custom_command(
             TARGET ST_audio_manager
             POST_BUILD
-            COMMAND ctest -VV
+            COMMAND audio_manager_test
     )
 endif()

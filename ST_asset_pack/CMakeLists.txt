@@ -23,7 +23,7 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-add_executable(ST_asset_pack src/main/main.cpp src/main/main.hpp)
+add_executable(ST_asset_pack src/main/main.cpp)
 
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${SDL2_IMAGE_INCLUDE_DIR})
@@ -41,8 +41,7 @@ target_link_libraries(ST_asset_pack
         ${SDL2_TTF_LIBRARY})
 
 add_executable(ST_asset_pack_tests
-        src/test/ST_asset_pack_tests.cpp
-        src/main/main.hpp)
+        src/test/ST_asset_pack_tests.cpp)
 
 target_link_libraries(ST_asset_pack_tests
         ST_loaders

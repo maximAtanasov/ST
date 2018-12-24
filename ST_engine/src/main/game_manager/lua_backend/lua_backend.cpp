@@ -77,6 +77,8 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setLevelFloor", setLevelFloorLua);
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
+	lua_register(L, "loadAsset", loadAssetLua);
+	lua_register(L, "unloadAsset", unloadAssetLua);
     lua_register(L, "setInternalResolution", setInternalResolutionLua);
     lua_register(L, "setWindowResolution", setWindowResolutionLua);
 
@@ -1401,6 +1403,30 @@ extern "C" int unload_levelLua(lua_State* L){
     std::string level = static_cast<std::string>(lua_tostring(L, 1));
     gMessage_busLua->send_msg(make_msg(UNLOAD_LEVEL, make_data<std::string>(level)));
     return 0;
+}
+
+/**
+ * Load an asset given it's path. Sends a <b>LOAD_ASSET</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int loadAssetLua(lua_State* L) {
+	std::string path = static_cast<std::string>(lua_tostring(L, 1));
+	gMessage_busLua->send_msg(make_msg(LOAD_ASSET, make_data<std::string>(path)));
+	return 0;
+}
+
+/**
+ * Unload an asset given it's path. Sends a <b>UNLOAD_ASSET</b> message.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int unloadAssetLua(lua_State* L) {
+	std::string path = static_cast<std::string>(lua_tostring(L, 1));
+	gMessage_busLua->send_msg(make_msg(UNLOAD_ASSET, make_data<std::string>(path)));
+	return 0;
 }
 
 /**

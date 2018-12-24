@@ -63,6 +63,8 @@ extern "C" int reloadLevelLua(lua_State* L);
 extern "C" int useLua(lua_State* L);
 extern "C" int load_levelLua(lua_State* L);
 extern "C" int unload_levelLua(lua_State* L);
+extern "C" int loadAssetLua(lua_State* L);
+extern "C" int unloadAssetLua(lua_State* L);
 extern "C" int endGameLua(lua_State* L);
 extern "C" int setLevelsizeLua(lua_State* L);
 extern "C" int centerCameraLua(lua_State* L);

@@ -31,31 +31,55 @@ add_library(ST_message_bus STATIC
         ${PROJECT_SOURCE_DIR}/src/main/message.hpp)
 
 add_executable(message_test
+		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
         ${PROJECT_SOURCE_DIR}/src/test/message_tests.cpp)
 
 target_link_libraries(message_test
-        gtest
-        ST_message_bus)
+        gtest)
 
 add_executable(message_allocator_test
+		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
         ${PROJECT_SOURCE_DIR}/src/test/message_allocator_tests.cpp)
 
 target_link_libraries(message_allocator_test
-        gtest
-        ST_message_bus)
+        gtest)
 
 add_executable(subscriber_test
+		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
         ${PROJECT_SOURCE_DIR}/src/test/subscriber_tests.cpp)
 
 target_link_libraries(subscriber_test
-        ST_message_bus
         gtest)
 
 add_executable(message_bus_test
+		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
         ${PROJECT_SOURCE_DIR}/src/test/message_bus_tests.cpp)
 
 target_link_libraries(message_bus_test
-        ST_message_bus
         gtest)
 
 
@@ -72,12 +96,6 @@ foreach(test ${RUN_ON_BUILD_TESTS})
     add_custom_command(
             TARGET ST_message_bus
             POST_BUILD
-            COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target ${test}
+            COMMAND ${test}
     )
 endforeach()
-
-add_custom_command(
-        TARGET ST_message_bus
-        POST_BUILD
-        COMMAND ctest -V
-)
