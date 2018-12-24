@@ -39,13 +39,16 @@ add_library(ST_renderer STATIC
         )
 
 add_executable(renderer_sdl_test
+        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/renderer_sdl.cpp
+        ${PROJECT_SOURCE_DIR}/include/renderer_sdl.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.hpp
         ${PROJECT_SOURCE_DIR}/src/test/renderer_sdl/renderer_sdl_tests.cpp)
 
 include_directories(renderer_sdl_test ../src/test ../ST_loaders/include)
 
 target_link_libraries(renderer_sdl_test
         ST_loaders
-        ST_renderer
         ST_util
         gtest
         ${SDL2_LIBRARY}
