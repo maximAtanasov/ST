@@ -1562,7 +1562,7 @@ extern "C" int leftStickVerticalLua(lua_State* L){
 extern "C" int controllerRumbleLua(lua_State* L){
     auto strength = static_cast<float>(lua_tonumber(L, 1));
     auto duration = static_cast<uint32_t>(lua_tonumber(L, 2));
-    gMessage_busLua->send_msg(make_msg(CONTROLLER_RUBMLE, make_data(std::make_tuple(strength, duration))));
+    gMessage_busLua->send_msg(make_msg(CONTROLLER_RUMBLE, make_data(std::make_tuple(strength, duration))));
     return 0;
 }
 

@@ -40,7 +40,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(CLEAR_TEXT_STREAM, &msg_sub);
     gMessage_bus->subscribe(REGISTER_KEY, &msg_sub);
     gMessage_bus->subscribe(UNREGISTER_KEY, &msg_sub);
-    gMessage_bus->subscribe(CONTROLLER_RUBMLE, &msg_sub);
+    gMessage_bus->subscribe(CONTROLLER_RUMBLE, &msg_sub);
 }
 
 /**
@@ -135,8 +135,10 @@ void input_manager::take_input(){
             }
             SDL_GameControllerClose(controllers.at(number));
             controllers.erase(controllers.begin() + number);
-            SDL_HapticClose(controllers_haptic.at(number));
-            controllers_haptic.erase(controllers_haptic.begin() + number);
+			if (number < controllers_haptic.size()) {
+				SDL_HapticClose(controllers_haptic.at(number));
+				controllers_haptic.erase(controllers_haptic.begin() + number);
+			}
             gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Controller " + std::to_string(number+1) + " disconnected")));
         }
     }
@@ -314,7 +316,7 @@ void input_manager::handle_messages(){
             if (registered_keys[*key_val] > 0) {
                 --registered_keys[*key_val];
             }
-        }else if(temp->msg_name == CONTROLLER_RUBMLE){
+        }else if(temp->msg_name == CONTROLLER_RUMBLE){
             if(!controllers.empty() && !controllers_haptic.empty()){
                 auto data = static_cast<std::tuple<float, uint32_t>*>(temp->get_data());
                 for(SDL_Haptic* haptic : controllers_haptic){
