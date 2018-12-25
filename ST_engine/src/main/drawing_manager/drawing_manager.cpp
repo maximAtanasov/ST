@@ -122,14 +122,25 @@ void drawing_manager::draw_console(const console& cnsl){
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-        uint16_t text_width = ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height/2-50, cnsl.color_text,
-                             cnsl.font_size, -1);
+		uint16_t cursor_draw_position = 0;
+		if (cnsl.cursor_position == cnsl.composition.size()) {
+			cursor_draw_position = ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height / 2 - 50, cnsl.color_text,
+				cnsl.font_size, -1);
+		}
+		else {
+			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
+			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
+			cursor_draw_position = ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + to_cursor, 0, w_height / 2 - 50, cnsl.color_text,
+				cnsl.font_size, -1);
+			ST::renderer_sdl::draw_text(DEFAULT_FONT, after_cursor, cursor_draw_position, w_height / 2 - 50, cnsl.color_text,
+				cnsl.font_size, -1);
+		}
 
         if(ticks - cnsl_cursor_timer >= 1000) {
             cnsl_cursor_timer = ticks;
         }else if (ticks - cnsl_cursor_timer < 500) {
             ST::renderer_sdl::draw_rectangle_filled(
-                    text_width + 2, w_height / 2 - 50 + 5, 3,
+				cursor_draw_position + 2, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);
         }
     }

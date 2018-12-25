@@ -86,9 +86,9 @@ class game_manager{
         lua_backend gScript_backend{};
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
-        bool keys_pressed_data[77]{};
-        bool keys_held_data[77]{};
-        bool keys_released_data[77]{};
+        bool keys_pressed_data[78]{};
+        bool keys_held_data[78]{};
+        bool keys_released_data[78]{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
         int16_t left_trigger;

@@ -285,7 +285,6 @@ void input_manager::handle_messages(){
             text_input = false;
         }else if(temp->msg_name == CLEAR_TEXT_STREAM){
             composition.clear();
-            gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
         }else if(temp->msg_name == REGISTER_KEY){
             auto key_val = static_cast<ST::key*>(temp->get_data());
             ++registered_keys[*key_val];
@@ -492,6 +491,10 @@ bool input_manager::keypress(ST::key arg) const{
         if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             pressed = true;
     }
+	else if (arg == ST::key::DELETE) {
+		if (controls.keyboard[SDL_SCANCODE_DELETE] && !controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
+			pressed = true;
+	}
     else if(arg == ST::key::BACKSLASH){
         if(controls.keyboard[SDL_SCANCODE_BACKSLASH] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
             pressed = true;
@@ -811,6 +814,10 @@ bool input_manager::keyheld(ST::key arg) const{
         if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             held = true;
     }
+	else if (arg == ST::key::DELETE) {
+		if (controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
+			held = true;
+	}
     else if(arg == ST::key::BACKSLASH){
         if(controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
             held = true;
@@ -1130,6 +1137,10 @@ bool input_manager::keyrelease(ST::key arg) const{
         if(!controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             released = true;
     }
+	else if (arg == ST::key::DELETE) {
+		if (!controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
+			released = true;
+	}
     else if(arg == ST::key::BACKSLASH){
         if(!controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
             released = true;

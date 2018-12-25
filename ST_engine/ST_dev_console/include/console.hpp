@@ -68,7 +68,10 @@ class console{
         int32_t scroll_offset = 0;
 
         //things to do with inputting text commands
+		uint16_t cursor_position = 0;
+		int16_t entries_history_index = -1;
         std::string composition;
+		
 
         message_bus* gMessage_bus{};
 public:
