@@ -65,7 +65,6 @@ button_newGame:setClickKey(all_buttons_key)
 
 
 function button_newGame:onClick()
-    unloadLevel("main_menu")
     startLevel("level1")
 end
 

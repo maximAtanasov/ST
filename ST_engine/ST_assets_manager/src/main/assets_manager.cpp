@@ -59,11 +59,15 @@ void assets_manager::handle_messages(){
         }
         else if(temp->msg_name == LOAD_ASSET){
             auto path = *static_cast<std::string*>(temp->get_data());
-            load_asset(path);
+			if (load_asset(path) == 0) {
+				send_assets();
+			}
         }
         else if(temp->msg_name == UNLOAD_ASSET){
             auto path = *static_cast<std::string*>(temp->get_data());
-            unload_asset(path);
+			if (unload_asset(path) == 0) {
+				send_assets();
+			}
         }
         else if(temp->msg_name == LOAD_BINARY){
             auto path = *static_cast<std::string*>(temp->get_data());
@@ -153,6 +157,12 @@ int8_t assets_manager::unload_assets_from_binary(const std::string& path) {
     return 0;
 }
 
+void assets_manager::send_assets() {
+	gMessage_bus->send_msg(make_msg(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
+	gMessage_bus->send_msg(make_msg(FONTS_ASSETS, make_data(&all_assets.fonts)));
+	gMessage_bus->send_msg(make_msg(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
+	gMessage_bus->send_msg(make_msg(MUSIC_ASSETS, make_data(&all_assets.music)));
+}
 
 /**
  * Loads an asset given a path.
@@ -274,10 +284,7 @@ int8_t assets_manager::load_assets_from_list(std::string path){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return -1;
     }
-    gMessage_bus->send_msg(make_msg(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
-    gMessage_bus->send_msg(make_msg(FONTS_ASSETS, make_data(&all_assets.fonts)));
-    gMessage_bus->send_msg(make_msg(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
-    gMessage_bus->send_msg(make_msg(MUSIC_ASSETS, make_data(&all_assets.music)));
+	send_assets();
     return 0;
 }
 
@@ -303,10 +310,7 @@ int8_t assets_manager::unload_assets_from_list(std::string path){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return -1;
     }
-    gMessage_bus->send_msg(make_msg(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
-    gMessage_bus->send_msg(make_msg(FONTS_ASSETS, make_data(&all_assets.fonts)));
-    gMessage_bus->send_msg(make_msg(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
-    gMessage_bus->send_msg(make_msg(MUSIC_ASSETS, make_data(&all_assets.music)));
+	send_assets();
     return 0;
 }
 

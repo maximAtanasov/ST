@@ -35,30 +35,21 @@ add_library(ST_dev_console STATIC
         ${PROJECT_SOURCE_DIR}/src/main/console_log.cpp)
 
 add_executable(dev_console_test
+		${PROJECT_SOURCE_DIR}/src/main/console.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/console_log.hpp
+        ${PROJECT_SOURCE_DIR}/include/console.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/console_log.cpp
         ${PROJECT_SOURCE_DIR}/src/test/console_tests.cpp)
 
 target_link_libraries(dev_console_test
         gtest
-        ST_dev_console
         ST_message_bus)
 
-
-set(RUN_ON_BUILD_TESTS
-        dev_console_test)
-
-gtest_add_tests(TARGET ${RUN_ON_BUILD_TESTS})
+gtest_add_tests(TARGET dev_console_test)
 
 #Run the tests on each build
-foreach(test ${RUN_ON_BUILD_TESTS})
-    add_custom_command(
-            TARGET ST_dev_console
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target ${test}
-    )
-endforeach()
-
 add_custom_command(
         TARGET ST_dev_console
         POST_BUILD
-        COMMAND ctest -VV
+        COMMAND dev_console_test
 )

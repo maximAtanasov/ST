@@ -39,10 +39,12 @@ add_library(ST_assets_manager STATIC
         ${PROJECT_SOURCE_DIR}/include/assets.hpp)
 
 add_executable(assets_manager_test
+		${PROJECT_SOURCE_DIR}/include/assets_manager.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/assets_manager.cpp
+        ${PROJECT_SOURCE_DIR}/include/assets.hpp
         ${PROJECT_SOURCE_DIR}/src/test/assets_manager_tests.cpp)
 
 target_link_libraries(assets_manager_test
-        ST_assets_manager
         ST_loaders
         gtest
         ST_task_manager
@@ -62,10 +64,6 @@ add_test(NAME assets_manager_test COMMAND assets_manager_test WORKING_DIRECTORY 
 add_custom_command(
         TARGET ST_assets_manager
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target assets_manager_test
-)
-add_custom_command(
-        TARGET ST_assets_manager
-        POST_BUILD
-        COMMAND ctest -VV
+        COMMAND assets_manager_test
+		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
 )

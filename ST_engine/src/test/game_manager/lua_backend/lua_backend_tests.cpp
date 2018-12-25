@@ -597,6 +597,38 @@ TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
     ASSERT_EQ(50, *static_cast<uint8_t*>(result->get_data()));
 }
 
+TEST_F(lua_backend_test, test_call_function_loadAsset) {
+	//Set up
+	subscriber subscriber1;
+	msg_bus->subscribe(LOAD_ASSET, &subscriber1);
+
+	//Test
+	test_subject.run_script("loadAsset(\"path/to/asset.webp\")");
+
+	//Check result - expect to see a message with appropriate content
+	message* result = subscriber1.get_next_message();
+
+	ASSERT_TRUE(result);
+	ASSERT_EQ(LOAD_ASSET, result->msg_name);
+	ASSERT_EQ("path/to/asset.webp", *static_cast<std::string*>(result->get_data()));
+}
+
+TEST_F(lua_backend_test, test_call_function_unloadAsset) {
+	//Set up
+	subscriber subscriber1;
+	msg_bus->subscribe(UNLOAD_ASSET, &subscriber1);
+
+	//Test
+	test_subject.run_script("unloadAsset(\"path/to/asset.webp\")");
+
+	//Check result - expect to see a message with appropriate content
+	message* result = subscriber1.get_next_message();
+
+	ASSERT_TRUE(result);
+	ASSERT_EQ(UNLOAD_ASSET, result->msg_name);
+	ASSERT_EQ("path/to/asset.webp", *static_cast<std::string*>(result->get_data()));
+}
+
 TEST_F(lua_backend_test, test_call_function_setDarkness){
     //Set up
     subscriber subscriber1;

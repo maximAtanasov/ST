@@ -28,11 +28,16 @@ add_library(ST_task_manager STATIC
         ${PROJECT_SOURCE_DIR}/src/main/task_allocator.hpp)
 
 add_executable(task_manager_test
+		${PROJECT_SOURCE_DIR}/src/main/task.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/task_manager.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/semaphore.hpp
+        ${PROJECT_SOURCE_DIR}/include/task_manager.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/task_allocator.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/task_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/test/task_manager_tests.cpp)
 
 target_link_libraries(task_manager_test
         gtest
-        ST_task_manager
         ST_message_bus)
 
 #Run the tests on each build
@@ -40,10 +45,5 @@ add_test(NAME task_manager_test COMMAND task_manager_test)
 add_custom_command(
         TARGET ST_task_manager
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target task_manager_test
-)
-add_custom_command(
-        TARGET ST_task_manager
-        POST_BUILD
-        COMMAND ctest -VV
+        COMMAND task_manager_test
 )

@@ -61,6 +61,7 @@ private:
         int8_t load_assets_from_binary(const std::string& path);
         int8_t unload_assets_from_binary(const std::string& path);
         void handle_messages();
+		void send_assets();
 
 public:
         assets_manager(message_bus* msg_bus, task_manager* tsk_mngr);

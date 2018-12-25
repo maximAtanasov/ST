@@ -338,6 +338,9 @@ ST::key ST::level::key_index(std::string arg){
     else if(arg == "minus"){
         index = key::MINUS;
     }
+	else if (arg == "delete") {
+	index = key::DELETE;
+	}
     else if(arg == "ralt"){
         index = key::RALT;
     }

@@ -22,7 +22,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
-    if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0 ){
+    if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0 ){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Could not initialize gamepad subsystem!")));
     }
 
@@ -40,6 +40,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus->subscribe(CLEAR_TEXT_STREAM, &msg_sub);
     gMessage_bus->subscribe(REGISTER_KEY, &msg_sub);
     gMessage_bus->subscribe(UNREGISTER_KEY, &msg_sub);
+    gMessage_bus->subscribe(CONTROLLER_RUBMLE, &msg_sub);
 }
 
 /**
@@ -105,8 +106,25 @@ void input_manager::take_input(){
         if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
             SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
             controllers.emplace_back(controller);
-            gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
-
+			gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
+			SDL_Haptic* haptic = SDL_HapticOpen(static_cast<int32_t>(controllers.size() - 1));
+			if (haptic != nullptr) {
+				if (SDL_HapticRumbleInit(haptic) < 0){
+					gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+						"Unable to initialize rubmle for controller " + std::string(SDL_GameControllerName(controller)))));
+				}
+				else {
+                    gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+                            "The controller \"" + std::string(SDL_GameControllerName(controller)) +
+                            "\" supports haptic feedback")));
+                    controllers_haptic.emplace_back(haptic);
+				}
+			}
+			else {
+				gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+					"The controller \"" + std::string(SDL_GameControllerName(controller)) + 
+					"\" does not support haptic feedback")));		
+			}
         }
         if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
             uint8_t number = 0;
@@ -115,7 +133,10 @@ void input_manager::take_input(){
                     number = i;
                 }
             }
+            SDL_GameControllerClose(controllers.at(number));
             controllers.erase(controllers.begin() + number);
+            SDL_HapticClose(controllers_haptic.at(number));
+            controllers_haptic.erase(controllers_haptic.begin() + number);
             gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Controller " + std::to_string(number+1) + " disconnected")));
         }
     }
@@ -285,16 +306,22 @@ void input_manager::handle_messages(){
             text_input = false;
         }else if(temp->msg_name == CLEAR_TEXT_STREAM){
             composition.clear();
-            gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
         }else if(temp->msg_name == REGISTER_KEY){
             auto key_val = static_cast<ST::key*>(temp->get_data());
             ++registered_keys[*key_val];
-        }else if(temp->msg_name == UNREGISTER_KEY){
-            auto key_val = static_cast<ST::key*>(temp->get_data());
-            if(registered_keys[*key_val] > 0) {
+        }else if(temp->msg_name == UNREGISTER_KEY) {
+            auto key_val = static_cast<ST::key *>(temp->get_data());
+            if (registered_keys[*key_val] > 0) {
                 --registered_keys[*key_val];
             }
-        }
+        }else if(temp->msg_name == CONTROLLER_RUBMLE){
+            if(!controllers.empty() && !controllers_haptic.empty()){
+                auto data = static_cast<std::tuple<float, uint32_t>*>(temp->get_data());
+                for(SDL_Haptic* haptic : controllers_haptic){
+                    SDL_HapticRumblePlay(haptic, std::get<0>(*data), std::get<1>(*data));
+                }
+            }
+		}
 		destroy_msg(temp);
 		temp = msg_sub.get_next_message();
 	}
@@ -492,6 +519,10 @@ bool input_manager::keypress(ST::key arg) const{
         if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             pressed = true;
     }
+	else if (arg == ST::key::DELETE) {
+		if (controls.keyboard[SDL_SCANCODE_DELETE] && !controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
+			pressed = true;
+	}
     else if(arg == ST::key::BACKSLASH){
         if(controls.keyboard[SDL_SCANCODE_BACKSLASH] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
             pressed = true;
@@ -811,6 +842,10 @@ bool input_manager::keyheld(ST::key arg) const{
         if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             held = true;
     }
+	else if (arg == ST::key::DELETE) {
+		if (controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
+			held = true;
+	}
     else if(arg == ST::key::BACKSLASH){
         if(controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
             held = true;
@@ -1130,6 +1165,10 @@ bool input_manager::keyrelease(ST::key arg) const{
         if(!controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             released = true;
     }
+	else if (arg == ST::key::DELETE) {
+		if (!controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
+			released = true;
+	}
     else if(arg == ST::key::BACKSLASH){
         if(!controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
             released = true;

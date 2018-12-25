@@ -39,13 +39,16 @@ add_library(ST_renderer STATIC
         )
 
 add_executable(renderer_sdl_test
+        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/renderer_sdl.cpp
+        ${PROJECT_SOURCE_DIR}/include/renderer_sdl.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.cpp
+        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.hpp
         ${PROJECT_SOURCE_DIR}/src/test/renderer_sdl/renderer_sdl_tests.cpp)
 
 include_directories(renderer_sdl_test ../src/test ../ST_loaders/include)
 
 target_link_libraries(renderer_sdl_test
         ST_loaders
-        ST_renderer
         ST_util
         gtest
         ${SDL2_LIBRARY}
@@ -53,18 +56,14 @@ target_link_libraries(renderer_sdl_test
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
-set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
 
 if(DEFINED ENV{CIRCLECI} OR DEFINED ENV{APPVEYOR})
+	set_target_properties(renderer_sdl_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
     add_test(NAME renderer_sdl_test COMMAND renderer_sdl_test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources)
     add_custom_command(
             TARGET ST_renderer
             POST_BUILD
-            COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target renderer_sdl_test
-    )
-    add_custom_command(
-            TARGET ST_renderer
-            POST_BUILD
-            COMMAND ctest -VV
+            COMMAND renderer_sdl_test
+			WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/test_resources
     )
 endif()
