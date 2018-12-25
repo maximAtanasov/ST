@@ -101,7 +101,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
 void drawing_manager::draw_fps(double fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
-        ST::renderer_sdl::draw_text(DEFAULT_FONT, "fps:" + std::to_string((int) fps), 0, 40, color_font, 40, 1);
+        ST::renderer_sdl::draw_text(DEFAULT_FONT, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 40, color_font, 40, 1);
     }
 }
 
@@ -273,10 +273,10 @@ void drawing_manager::handle_messages(){
         else if(temp->msg_name == SHOW_COLLISIONS){
             auto arg = static_cast<bool*>(temp->get_data());
             if(*arg) {
-                show_collisions();
+                collisions_shown = true;
             }
             else if(!(*arg)){
-                hide_collisions();
+                collisions_shown = false;
             }
         }
         else if(temp->msg_name == SHOW_FPS){
@@ -439,20 +439,6 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
             }
         }
     }
-}
-
-/**
- * Enables the drawing of collision boxes.
- */
-void drawing_manager::show_collisions(){
-    collisions_shown = true;
-}
-
-/**
- * Disables the drawing of collision boxes.
- */
-void drawing_manager::hide_collisions(){
-    collisions_shown = false;
 }
 
 /**

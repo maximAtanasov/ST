@@ -59,15 +59,6 @@ class physics_manager{
 		void process_vertical(std::vector<ST::entity>* entities);
         void handle_messages();
 
-        static void update_horizontal(void* mngr){
-        	auto self = static_cast<physics_manager*>(mngr);
-        	self->process_horizontal(self->entities);
-        }
-
-        static void update_vertical(void* mngr){
-            auto self = static_cast<physics_manager*>(mngr);
-            self->process_vertical(self->entities);
-        }
 
     public:
         physics_manager(message_bus* msg_bus, task_manager* tsk_mngr);
@@ -81,20 +72,12 @@ class physics_manager{
  * @param data A pointer to the level data. (containing the entities that we need).
  */
 inline void physics_manager::update(std::vector<ST::entity>* data){
-    auto start = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
     handle_messages();
     if(!physics_paused){
-/*        entities = data;
-        task_id task_lock1 = gTask_manager->start_task(make_task(update_horizontal, this, nullptr));
-        task_id task_lock2 = gTask_manager->start_task(make_task(update_vertical, this, nullptr));
-        task_lock1->wait();
-        task_lock2->wait();*/
-
         process_horizontal(data);
         process_vertical(data);
     }
     auto end = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
-    gMessage_bus->send_msg(make_msg(LOG_INFO, make_data(std::to_string(end.count() - start.count()))));
 }
 
 #endif //PHYSICS_DEF

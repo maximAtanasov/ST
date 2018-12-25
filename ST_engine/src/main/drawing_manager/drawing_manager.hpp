@@ -99,8 +99,6 @@ class drawing_manager{
 
         //Other functions
         void handle_messages();
-        void show_collisions();
-        void hide_collisions();
         void set_darkness(uint8_t arg);
 
     public:
