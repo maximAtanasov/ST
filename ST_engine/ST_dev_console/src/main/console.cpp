@@ -83,68 +83,71 @@ void console::handle_messages(){
             int value = *static_cast<int32_t*>(temp->get_data());
             scroll(value);
         }
-        else if(temp->msg_name == KEY_PRESSED){
-            auto key_val = static_cast<ST::key*>(temp->get_data());
-            if(*key_val == ST::key::ENTER){
-                if(!composition.empty()){
-                    write(composition, ST::log_type ::INFO);
-                    gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data(composition)));
-                }
-                composition.clear();
+		else if (temp->msg_name == KEY_PRESSED) {
+			auto key_val = static_cast<ST::key*>(temp->get_data());
+			if (*key_val == ST::key::ENTER) {
+				if (!composition.empty()) {
+					write(composition, ST::log_type::INFO);
+					gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data(composition)));
+				}
+				composition.clear();
 				cursor_position = 0;
 				entries_history_index = -1;
-                gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
-            }
-			else if(*key_val == ST::key::TILDE) {
-                toggle();
-            }
-			else if (*key_val == ST::key::LEFT) {
-				if (cursor_position > 0) {
-					cursor_position -= 1;
-				}
-			}
-			else if (*key_val == ST::key::RIGHT) {
-				if (cursor_position < composition.size()) {
-					cursor_position += 1;
-				}
-			}
-			else if (*key_val == ST::key::UP) {
-				if (entries_history_index == -1) {
-					composition = entries.back().text;
-					entries_history_index = entries.size() - 1;
-				}
-				else if(entries_history_index > 0){
-					entries_history_index--;
-					composition = entries.at(entries_history_index).text;
-				}
 				gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
-				cursor_position = composition.size();
 			}
-			else if (*key_val == ST::key::DOWN) {
-				if (entries_history_index < entries.size()-1) {
-					entries_history_index++;
-					composition = entries.at(entries_history_index).text;
+			else if (*key_val == ST::key::TILDE) {
+				toggle();
+			}
+			else if (is_open()) {
+				if (*key_val == ST::key::LEFT) {
+					if (cursor_position > 0) {
+						cursor_position -= 1;
+					}
 				}
-				else {
-					entries_history_index = -1;
-					composition = "";
+				else if (*key_val == ST::key::RIGHT) {
+					if (cursor_position < composition.size()) {
+						cursor_position += 1;
+					}
 				}
-				gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
-				cursor_position = composition.size();
-			}
-			else if (*key_val == ST::key::BACKSPACE) {
-				if (cursor_position > 0) {
-					composition.erase(cursor_position - 1, 1);
-					cursor_position -= 1;
+				else if (*key_val == ST::key::UP) {
+					if (entries_history_index == -1) {
+						composition = entries.back().text;
+						entries_history_index = entries.size() - 1;
+					}
+					else if (entries_history_index > 0) {
+						entries_history_index--;
+						composition = entries.at(entries_history_index).text;
+					}
+					gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+					cursor_position = composition.size();
+				}
+				else if (*key_val == ST::key::DOWN) {
+					if (entries_history_index < entries.size() - 1) {
+						entries_history_index++;
+						composition = entries.at(entries_history_index).text;
+					}
+					else {
+						entries_history_index = -1;
+						composition = "";
+					}
+					gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+					cursor_position = composition.size();
+				}
+				else if (*key_val == ST::key::BACKSPACE) {
+					if (cursor_position > 0) {
+						composition.erase(cursor_position - 1, 1);
+						cursor_position -= 1;
+					}
+				}
+				else if (*key_val == ST::key::DELETE) {
+					composition.erase(cursor_position, 1);
+				}
+
+				else if (temp->msg_name == KEY_HELD) {
+					auto key_val = static_cast<ST::key*>(temp->get_data());
+
 				}
 			}
-			else if (*key_val == ST::key::DELETE) {
-				composition.erase(cursor_position, 1);
-			}
-        }
-		else if (temp->msg_name == KEY_HELD) {
-			auto key_val = static_cast<ST::key*>(temp->get_data());
-			
 		}
         else if(temp->msg_name == TEXT_STREAM){
 			std::string recieved_data = *static_cast<std::string*>(temp->get_data());

@@ -56,7 +56,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
  * @param fps the current frames per second.
  * @param cnsl a console object.
  */
-void drawing_manager::update(const ST::level& temp, double fps, const console& cnsl){
+void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
 	Camera = temp.Camera;
 	handle_messages();
 
@@ -109,7 +109,7 @@ void drawing_manager::draw_fps(double fps) const{
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
  */
-void drawing_manager::draw_console(const console& cnsl){
+void drawing_manager::draw_console(console& cnsl){
     if(cnsl.is_open()){
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
@@ -136,9 +136,9 @@ void drawing_manager::draw_console(const console& cnsl){
 				cnsl.font_size, -1);
 		}
 
-        if(ticks - cnsl_cursor_timer >= 1000) {
-            cnsl_cursor_timer = ticks;
-        }else if (ticks - cnsl_cursor_timer < 500) {
+        if(ticks - cnsl.cursor_timer >= 1000) {
+            cnsl.cursor_timer = ticks;
+        }else if (ticks - cnsl.cursor_timer < 500) {
             ST::renderer_sdl::draw_rectangle_filled(
 				cursor_draw_position + 2, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);

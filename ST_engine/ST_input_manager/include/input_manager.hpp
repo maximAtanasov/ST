@@ -14,6 +14,7 @@
 #include <message_bus.hpp>
 #include <task_manager.hpp>
 #include <SDL_events.h>
+#include <SDL_haptic.h>
 
 ///This object is responsible for taking input
 /**
@@ -91,6 +92,7 @@ class input_manager{
         task_manager* gTask_manager{};
 		subscriber msg_sub{};
 		std::vector<SDL_GameController*> controllers;
+		std::vector<SDL_Haptic*> controllers_haptic;
 		struct keyboard_and_mouse_controls controls{};
 		struct keyboard_and_mouse_controls controls_prev_frame;
 		struct controller_buttons controller_buttons;

@@ -70,9 +70,6 @@ class drawing_manager{
         int16_t w_width = 1920;
         int16_t w_height = 1080;
 
-        //Console cursor timer
-        uint64_t cnsl_cursor_timer = 0;
-
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};
         uint8_t darkness_level = 0;
@@ -89,7 +86,7 @@ class drawing_manager{
         void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
         void draw_fps(double fps) const;
-        void draw_console(const console& cnsl);
+        void draw_console(console& cnsl);
         void draw_text_objects(const std::vector<ST::text>&) const;
 
         //Pre-processing
@@ -106,7 +103,7 @@ class drawing_manager{
     public:
         drawing_manager(SDL_Window* win, message_bus* msg_bus);
         ~drawing_manager();
-        void update(const ST::level& temp, double, const console& gConsole);
+        void update(const ST::level& temp, double, console& gConsole);
 };
 
 #endif

@@ -69,6 +69,7 @@ class console{
 
         //things to do with inputting text commands
 		uint16_t cursor_position = 0;
+		uint64_t cursor_timer = 0;
 		int16_t entries_history_index = -1;
         std::string composition;
 		

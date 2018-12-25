@@ -22,7 +22,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
-    if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0 ){
+    if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0 ){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Could not initialize gamepad subsystem!")));
     }
 
@@ -105,8 +105,23 @@ void input_manager::take_input(){
         if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
             SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
             controllers.emplace_back(controller);
-            gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
-
+			gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
+			//SDL_Haptic* haptic = SDL_HapticOpenFromJoystick(SDL_GameControllerGetJoystick(controller));
+			SDL_Haptic* haptic = SDL_HapticOpen(controllers.size()-1);
+			if (haptic != nullptr) {
+				if (SDL_HapticRumbleInit(haptic) < 0){
+					gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+						"Unable to initialize rubmle for controller " + std::string(SDL_GameControllerName(controller)))));
+				}
+				else {
+					controllers_haptic.emplace_back(haptic);
+				}
+			}
+			else {
+				gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+					"The controller \"" + std::string(SDL_GameControllerName(controller)) + 
+					"\" does not support haptic feedback")));		
+			}
         }
         if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
             uint8_t number = 0;
