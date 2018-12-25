@@ -62,7 +62,7 @@ function player:update()
 
     if self:overObject(wolfTrigger1) then
         self:setCollision(0, 0, 0, 0)
-        controllerRumble(1, 1000)
+        controllerRumble(0.5, 1000)
         startLevel("level1")
     end
 

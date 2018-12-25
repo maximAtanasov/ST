@@ -140,7 +140,7 @@ void drawing_manager::draw_console(console& cnsl){
             cnsl.cursor_timer = ticks;
         }else if (ticks - cnsl.cursor_timer < 500) {
             ST::renderer_sdl::draw_rectangle_filled(
-				cursor_draw_position + 2, w_height / 2 - 50 + 5, 3,
+				cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);
         }
     }

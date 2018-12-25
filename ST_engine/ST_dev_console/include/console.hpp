@@ -64,6 +64,7 @@ class console{
         subscriber msg_sub{};
         bool shown = false;
         std::vector<ST::console_log> entries;
+		std::vector<std::string> command_entries;
         uint8_t font_size = 0;
         int32_t scroll_offset = 0;
 
