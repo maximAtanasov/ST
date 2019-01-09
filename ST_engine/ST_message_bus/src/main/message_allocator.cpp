@@ -16,7 +16,7 @@
  */
 message_allocator::message_allocator(){
     pointer = 0;
-    memory = (message*)malloc(sizeof(message)*memory_size);
+    memory = static_cast<message*>(malloc(sizeof(message)*memory_size));
     for(uint32_t i = 0; i < memory_size; i++){
         allocated[i] = false; //mark all memory as free
     }
@@ -44,9 +44,9 @@ message* message_allocator::allocate_message(int name, std::shared_ptr<void> dat
         exit(1);
     }
     allocated[pointer] = true;
-    auto temp = new (memory+pointer) message(name, data, pointer);
+    uint16_t pointer_temp = pointer;
     access_mutex.unlock();
-    return temp;
+    return new (memory+pointer) message(name, data, pointer_temp);
 }
 
 /**
