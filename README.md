@@ -1,11 +1,15 @@
-<b>Slavic Tales</b>
+<b>ST</b>
 ===================
 
 [![CircleCI](https://circleci.com/gh/maximAtanasov/slavicTales/tree/master.svg?style=svg&circle-token=2e636633b20ca5cdbe02468a9593a485014bd88a)](https://circleci.com/gh/maximAtanasov/slavicTales/tree/master)
 [![Build status](https://ci.appveyor.com/api/projects/status/iqte4fwebiml3xv6?svg=true)](https://ci.appveyor.com/project/maximAtanasov/slavictales)
 
-A 2D Platformer project built with C++, SDL2 and Lua.
+A 2D game engine project built with C++, SDL2 and Lua.
 =====================================================
+
+The engine supports the loading of assets in multiple formats, as well as
+a custom binary format. It also supports audio playback, basic multitheading and
+physics and the ability to program games fully in Lua.
 
 ![](ST_engine/docs/screenshots/screenshot1.png?raw=true)
 
