@@ -25,7 +25,7 @@ protected:
         test_cnsl->write(text, type);
     }
 
-    message_bus* msg_bus;
+    message_bus* msg_bus{};
 
     void SetUp() override{
         msg_bus = new message_bus();

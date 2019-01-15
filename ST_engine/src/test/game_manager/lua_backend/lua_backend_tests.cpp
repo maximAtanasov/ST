@@ -19,11 +19,11 @@ class lua_backend_test : public ::testing::Test {
 protected:
     lua_backend test_subject{};
 
-    std::string hash_file(std::string path){
+    std::string hash_file(const std::string& path){
         return test_subject.hash_file(path);
     }
 
-    std::string hash_string(std::string string){
+    std::string hash_string(const std::string& string){
         return test_subject.hash_string(string);
     }
 
@@ -54,8 +54,10 @@ TEST_F(lua_backend_test, test_hash_file_playSound){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -67,8 +69,10 @@ TEST_F(lua_backend_test, test_hash_file_playMusic){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -80,8 +84,10 @@ TEST_F(lua_backend_test, test_hash_file_keyHeld){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -93,8 +99,10 @@ TEST_F(lua_backend_test, test_hash_file_keyPressed){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -106,8 +114,10 @@ TEST_F(lua_backend_test, test_hash_file_keyReleased){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -119,8 +129,10 @@ TEST_F(lua_backend_test, test_hash_file_setClickKey){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -131,8 +143,10 @@ TEST_F(lua_backend_test, test_hash_file_keyAnnotation){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -143,8 +157,10 @@ TEST_F(lua_backend_test, test_hash_file_audioAnnotation){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -156,8 +172,10 @@ TEST_F(lua_backend_test, test_hash_string_playSound){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -169,8 +187,10 @@ TEST_F(lua_backend_test, test_hash_string_playMusic){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -182,8 +202,10 @@ TEST_F(lua_backend_test, test_hash_string_keyHeld){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -195,8 +217,10 @@ TEST_F(lua_backend_test, test_hash_string_keyPressed){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -208,8 +232,10 @@ TEST_F(lua_backend_test, test_hash_string_keyReleased){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -221,8 +247,10 @@ TEST_F(lua_backend_test, test_hash_string_setClickKey){
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
+        (void)e;
         FAIL();
     }catch (const std::out_of_range& e){
+        (void)e;
         FAIL();
     }
 }
@@ -1631,7 +1659,6 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
 TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
     //Set up
     game_mngr->get_level()->entities.emplace_back(ST::entity());
-    std::hash<std::string> hash_f;
 
     //Test
     test_subject.run_script("setEntityTextureScale(0, 2, 2)");

@@ -83,7 +83,7 @@ void console::handle_messages(){
             int value = *static_cast<int32_t*>(temp->get_data());
             scroll(value);
         }
-		else if (temp->msg_name == KEY_PRESSED) {
+        else if (temp->msg_name == KEY_PRESSED) {
 			auto key_val = static_cast<ST::key*>(temp->get_data());
 			if (*key_val == ST::key::ENTER) {
 				if (!composition.empty()) {
@@ -157,7 +157,7 @@ void console::handle_messages(){
 			else {
 				composition.insert(cursor_position, recieved_data);
 			}
-			cursor_position += recieved_data.size();
+			cursor_position += static_cast<uint16_t>(recieved_data.size());
 			gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
         }
         destroy_msg(temp);

@@ -14,7 +14,7 @@
 /**
  * initializes the input manager
  * @param msg_bus A pointer to the global message bus.
- * @param tsk_mngr A pointer to the global task_mngr.
+ * @param tsk_mngr A pointer to the global task_manager.
  */
 input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 
@@ -521,7 +521,7 @@ bool input_manager::keypress(ST::key arg) const{
         if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             pressed = true;
     }
-	else if (arg == ST::key::DELETE) {
+    else if (arg == ST::key::DELETE) {
 		if (controls.keyboard[SDL_SCANCODE_DELETE] && !controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
 			pressed = true;
 	}
@@ -844,7 +844,7 @@ bool input_manager::keyheld(ST::key arg) const{
         if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             held = true;
     }
-	else if (arg == ST::key::DELETE) {
+    else if (arg == ST::key::DELETE) {
 		if (controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
 			held = true;
 	}
@@ -1167,7 +1167,7 @@ bool input_manager::keyrelease(ST::key arg) const{
         if(!controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
             released = true;
     }
-	else if (arg == ST::key::DELETE) {
+    else if (arg == ST::key::DELETE) {
 		if (!controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
 			released = true;
 	}
