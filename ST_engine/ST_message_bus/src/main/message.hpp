@@ -1,10 +1,10 @@
-/* This file is part of the "slavicTales" project.
+/* This file is part of the "ST" project.
  * You may use, distribute or modify this code under the terms
  * of the GNU General Public License version 2.
  * See LICENCE.txt in the root directory of the project.
  *
  * Author: Maxim Atanasov
- * E-mail: atanasovmaksim1@gmail.com
+ * E-mail: maxim.atanasov@protonmail.com
  */
 
 #ifndef SLAVIC_TALES_MESSAGE_HPP
@@ -29,7 +29,7 @@ private:
 
     message(int name, const std::shared_ptr<void>& data, uint16_t id);
 public:
-    int msg_name;
+    int32_t msg_name;
     uint16_t get_id() const;
     void* get_data() const;
     message* make_copy() const;
@@ -56,10 +56,10 @@ inline void* message::get_data() const{
 }
 
 /**
- * @return The id of the mesage.
+ * @return The id of the message.
  */
 inline uint16_t message::get_id() const{
     return id;
 }
 
-#endif //SLAVIC_TALES_MESSAGE_HPP
+#endif //ST_MESSAGE_HPP
