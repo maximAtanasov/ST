@@ -188,7 +188,7 @@ uint16_t ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font , uint8_t size, int flag){
+uint16_t ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font , uint8_t size, int8_t flag){
     if(flag == 1){
         return draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
     }else if(flag == 0){
@@ -314,7 +314,7 @@ void ST::renderer_sdl::vsync_off(){
  * @param x The X position to render at.
  * @param y The Y position to render at.
  */
-void ST::renderer_sdl::draw_texture(const size_t arg, int x, int y) {
+void ST::renderer_sdl::draw_texture(const size_t arg, int32_t x, int32_t y) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -330,7 +330,7 @@ void ST::renderer_sdl::draw_texture(const size_t arg, int x, int y) {
  * @param x The X position to render at.
  * @param y The Y position to render at.
  */
-void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int x, int y, float scale_x, float scale_y) {
+void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int32_t x, int32_t y, float scale_x, float scale_y) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -348,7 +348,7 @@ void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int x, int y, float
  * @param h The height of the rectangle.
  * @param color The color of the rectangle.
  */
-void ST::renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Color color) {
+void ST::renderer_sdl::draw_rectangle_filled(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color) {
     SDL_Rect Rect = {x, y, w, h};
     SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(sdl_renderer, &Rect);
@@ -363,7 +363,7 @@ void ST::renderer_sdl::draw_rectangle_filled(int x, int y, int w, int h, SDL_Col
  * @param h The height of the rectangle.
  * @param color The color of the rectangle.
  */
-void ST::renderer_sdl::draw_rectangle(int x, int y, int w, int h, SDL_Color color) {
+void ST::renderer_sdl::draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color) {
     SDL_Rect Rect = {x, y, w, h};
     SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawRect(sdl_renderer, &Rect);
@@ -391,7 +391,7 @@ void ST::renderer_sdl::draw_background(const size_t arg) {
  * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
-void ST::renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num) {
+void ST::renderer_sdl::draw_sprite(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -414,7 +414,7 @@ void ST::renderer_sdl::draw_sprite(size_t arg, int x, int y, int sprite, int ani
  * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
-void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int x, int y, int sprite, int animation, int animation_num, int sprite_num, float scale_x, float scale_y) {
+void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -435,7 +435,7 @@ void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int x, int y, int sprite, 
  * @param sprite The number of the sprite to use.
  * @param sprite_num The total number of frames this spritesheet has.
  */
-void ST::renderer_sdl::draw_overlay(size_t arg, int sprite, int sprite_num) {
+void ST::renderer_sdl::draw_overlay(size_t arg, uint8_t sprite, uint8_t sprite_num) {
     int animation_num = 1;
     int animation = 1;
     auto texture = textures.find(arg);

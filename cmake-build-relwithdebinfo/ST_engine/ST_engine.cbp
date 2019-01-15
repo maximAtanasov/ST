@@ -1,0 +1,1913 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ST_engine"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\ST_asset_pack\;CMake Files\ST_asset_pack\src\;CMake Files\ST_asset_pack\src\test\;CMake Files\cmake\;CMake Files\ST_engine\;CMake Files\ST_engine\ST_assets_manager\;CMake Files\ST_engine\ST_audio_manager\;CMake Files\ST_engine\ST_dev_console\;CMake Files\ST_engine\ST_dev_console\src\;CMake Files\ST_engine\ST_dev_console\src\main\;CMake Files\ST_engine\ST_dev_console\src\test\;CMake Files\ST_engine\ST_dev_console\include\;CMake Files\ST_engine\src\;CMake Files\ST_engine\src\main\;CMake Files\ST_engine\src\main\game_manager\;CMake Files\ST_engine\src\main\game_manager\level\;CMake Files\ST_engine\src\test\;CMake Files\ST_engine\src\test\game_manager\;CMake Files\ST_engine\src\test\game_manager\level\;CMake Files\ST_engine\ST_renderer\;CMake Files\ST_engine\ST_message_bus\;CMake Files\ST_engine\ST_task_manager\;CMake Files\ST_engine\ST_input_manager\;CMake Files\ST_engine\ST_window_manager\;CMake Files\ST_loaders\;CMake Files\ST_loaders\src\;CMake Files\ST_loaders\src\test\;CMake Files\ST_loaders\src\main\;CMake Files\ST_loaders\include\;CMake Files\ST_loaders\include\ST_loaders\;CMake Files\ST_util\;CMake Files\external\;CMake Files\external\googletest\;CMake Files\external\googletest\googletest\;CMake Files\external\googletest\googletest\cmake\;CMake Files\external\lua\;CMake Files\external\lua\lua-5.3.0\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_engine_integration_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/gamedata/ST_engine_integration_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 ST_engine_integration_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_engine_integration_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/gamedata/ST_engine_integration_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 ST_engine_integration_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_engine">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/gamedata/ST_engine.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/src"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 ST_engine"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_engine/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/gamedata/ST_engine.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/src"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 ST_engine/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="entity_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/test_resources/entity_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 entity_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="entity_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/test_resources/entity_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 entity_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="level_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/test_resources/level_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 level_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="level_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/test_resources/level_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 level_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="lua_backend_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/test_resources/lua_backend_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 lua_backend_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="lua_backend_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/test_resources/lua_backend_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/googletest/googlemock/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/lua_backend_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/../ST_engine/src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/src"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 lua_backend_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_renderer">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer/ST_renderer.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../..ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/renderer_sdl_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../ST_loaders/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 ST_renderer"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_renderer/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer/ST_renderer.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../..ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/renderer_sdl_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../ST_loaders/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 ST_renderer/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="renderer_sdl_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer/renderer_sdl_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../..ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/renderer_sdl_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 renderer_sdl_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="renderer_sdl_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer/renderer_sdl_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_renderer"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../..ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/renderer_sdl_test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../src/test"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 renderer_sdl_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_renderer\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_message_bus">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/ST_message_bus.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 ST_message_bus"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_message_bus/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/ST_message_bus.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 ST_message_bus/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="message_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/message_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 message_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="message_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/message_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 message_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="message_allocator_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/message_allocator_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 message_allocator_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="message_allocator_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/message_allocator_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 message_allocator_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="subscriber_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/subscriber_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 subscriber_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="subscriber_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/subscriber_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 subscriber_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="message_bus_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/message_bus_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 message_bus_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="message_bus_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus/message_bus_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_message_bus"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 message_bus_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_message_bus\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_dev_console">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console/ST_dev_console.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 ST_dev_console"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_dev_console/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console/ST_dev_console.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 ST_dev_console/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dev_console_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console/dev_console_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 dev_console_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dev_console_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console/dev_console_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_dev_console"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/../ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 dev_console_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_dev_console\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_task_manager">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager/ST_task_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../ST_message_bus/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 ST_task_manager"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_task_manager/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager/ST_task_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../ST_message_bus/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 ST_task_manager/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="task_manager_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager/task_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 task_manager_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="task_manager_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager/task_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_task_manager"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 task_manager_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_task_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_audio_manager">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager/ST_audio_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 ST_audio_manager"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_audio_manager/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager/ST_audio_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 ST_audio_manager/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="audio_manager_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/test/test_resources/audio_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 audio_manager_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="audio_manager_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/test/test_resources/audio_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_audio_manager"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/../ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 audio_manager_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_audio_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_assets_manager">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager/ST_assets_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 ST_assets_manager"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_assets_manager/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager/ST_assets_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 ST_assets_manager/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="assets_manager_test">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/test/test_resources/assets_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 assets_manager_test"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="assets_manager_test/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/test/test_resources/assets_manager_test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_assets_manager"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_mixer/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_ttf/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../../ST_loaders/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/../ST_task_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 assets_manager_test/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_assets_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_input_manager">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_input_manager/ST_input_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_input_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 ST_input_manager"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_input_manager/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_input_manager/ST_input_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_input_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 ST_input_manager/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_input_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_window_manager">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_window_manager/ST_window_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_window_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 ST_window_manager"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ST_window_manager/fast">
+				<Option output="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_window_manager/ST_window_manager.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/atanasov/workspace/ST/ST/cmake-build-relwithdebinfo/ST_engine/ST_window_manager"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/external/SDL2/SDL2_image/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/src/main"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/../../ST_util/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/../ST_message_bus/include"/>
+					<Add directory="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/../ST_task_manager/include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 ST_window_manager/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\atanasov\workspace\ST\ST\cmake-build-relwithdebinfo\ST_engine\ST_window_manager\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/include/assets.hpp">
+			<Option target="ST_assets_manager"/>
+			<Option target="assets_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/include/assets_manager.hpp">
+			<Option target="ST_assets_manager"/>
+			<Option target="assets_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/main/assets_manager.cpp">
+			<Option target="ST_assets_manager"/>
+			<Option target="assets_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/src/test/assets_manager_tests.cpp">
+			<Option target="assets_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/include/audio_manager.hpp">
+			<Option target="ST_audio_manager"/>
+			<Option target="audio_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/main/audio_manager.cpp">
+			<Option target="ST_audio_manager"/>
+			<Option target="audio_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/src/test/audio_manager_tests.cpp">
+			<Option target="audio_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/include/console.hpp">
+			<Option target="ST_dev_console"/>
+			<Option target="dev_console_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main/console.cpp">
+			<Option target="ST_dev_console"/>
+			<Option target="dev_console_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main/console_log.cpp">
+			<Option target="ST_dev_console"/>
+			<Option target="dev_console_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main/console_log.hpp">
+			<Option target="ST_dev_console"/>
+			<Option target="dev_console_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/test/console_tests.cpp">
+			<Option target="dev_console_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/include/input_manager.hpp">
+			<Option target="ST_input_manager"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/include/key_definitions.hpp">
+			<Option target="ST_input_manager"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/src/main/input_manager.cpp">
+			<Option target="ST_input_manager"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/include/message_bus.hpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main/message.hpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main/message_allocator.cpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main/message_allocator.hpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main/message_bus.cpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main/subscriber.cpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/main/subscriber.hpp">
+			<Option target="ST_message_bus"/>
+			<Option target="message_test"/>
+			<Option target="message_allocator_test"/>
+			<Option target="subscriber_test"/>
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/test/message_allocator_tests.cpp">
+			<Option target="message_allocator_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/test/message_bus_tests.cpp">
+			<Option target="message_bus_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/test/message_tests.cpp">
+			<Option target="message_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/src/test/subscriber_tests.cpp">
+			<Option target="subscriber_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/include/renderer_sdl.hpp">
+			<Option target="ST_renderer"/>
+			<Option target="renderer_sdl_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl/font_cache.cpp">
+			<Option target="ST_renderer"/>
+			<Option target="renderer_sdl_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl/font_cache.hpp">
+			<Option target="ST_renderer"/>
+			<Option target="renderer_sdl_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/main/renderer_sdl/renderer_sdl.cpp">
+			<Option target="ST_renderer"/>
+			<Option target="renderer_sdl_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/src/test/renderer_sdl/renderer_sdl_tests.cpp">
+			<Option target="renderer_sdl_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/include/task_manager.hpp">
+			<Option target="ST_task_manager"/>
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main/semaphore.hpp">
+			<Option target="ST_task_manager"/>
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main/task.hpp">
+			<Option target="ST_task_manager"/>
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main/task_allocator.cpp">
+			<Option target="ST_task_manager"/>
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main/task_allocator.hpp">
+			<Option target="ST_task_manager"/>
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/main/task_manager.cpp">
+			<Option target="ST_task_manager"/>
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/src/test/task_manager_tests.cpp">
+			<Option target="task_manager_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/include/window_manager.hpp">
+			<Option target="ST_window_manager"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/src/main/window_manager.cpp">
+			<Option target="ST_window_manager"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/drawing_manager/drawing_manager.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/drawing_manager/drawing_manager.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/game_manager.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/game_manager.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/camera.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/entity.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="entity_test"/>
+			<Option target="level_test"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/level.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="level_test"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/level.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="level_test"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/light.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="level_test"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/light.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="level_test"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/text.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/text.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/lua_backend/lua_backend.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/lua_backend/lua_backend.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/main/fps.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/main/fps.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/main/main.cpp">
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/main/main.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/main/timer.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/main/timer.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/physics_manager/physics_manager.cpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/physics_manager/physics_manager.hpp">
+			<Option target="ST_engine_integration_test"/>
+			<Option target="ST_engine"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/game_manager/level/entity_tests.cpp">
+			<Option target="entity_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/game_manager/level/level_tests.cpp">
+			<Option target="level_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/game_manager/lua_backend/game_manager_mock.hpp">
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/game_manager/lua_backend/lua_backend_tests.cpp">
+			<Option target="lua_backend_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/integration/ST_engine_integration_tests.cpp">
+			<Option target="ST_engine_integration_test"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_asset_pack/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_asset_pack\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_asset_pack/src/test/ST_asset_pack_tests.cpp">
+			<Option virtualFolder="CMake Files\ST_asset_pack\src\test\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/cmake/FindSDL2.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/cmake/FindSDL2_image.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/cmake/FindSDL2_mixer.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/cmake/FindSDL2_ttf.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_assets_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_assets_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_audio_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_audio_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main/console.cpp">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\src\main\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main/console_log.cpp">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\src\main\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/main/console_log.hpp">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\src\main\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/src/test/console_tests.cpp">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\src\test\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_dev_console/include/console.hpp">
+			<Option virtualFolder="CMake Files\ST_engine\ST_dev_console\include\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/main/game_manager/level/entity.hpp">
+			<Option virtualFolder="CMake Files\ST_engine\src\main\game_manager\level\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/src/test/game_manager/level/entity_tests.cpp">
+			<Option virtualFolder="CMake Files\ST_engine\src\test\game_manager\level\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_renderer/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_renderer\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_message_bus/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_message_bus\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_task_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_task_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_input_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_input_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_engine/ST_window_manager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_engine\ST_window_manager\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_loaders/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_loaders\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_loaders/src/test/loaders_test.cpp">
+			<Option virtualFolder="CMake Files\ST_loaders\src\test\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_loaders/src/main/loaders.cpp">
+			<Option virtualFolder="CMake Files\ST_loaders\src\main\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_loaders/include/ST_loaders/loaders.hpp">
+			<Option virtualFolder="CMake Files\ST_loaders\include\ST_loaders\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/ST_util/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ST_util\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/external/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\googletest\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\googletest\googletest\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/external/googletest/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\external\googletest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/external/lua/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\lua\"/>
+		</Unit>
+		<Unit filename="C:/Users/atanasov/workspace/ST/ST/external/lua/lua-5.3.0/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\lua\lua-5.3.0\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

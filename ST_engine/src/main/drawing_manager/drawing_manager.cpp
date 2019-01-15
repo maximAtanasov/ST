@@ -345,6 +345,7 @@ void drawing_manager::set_darkness(uint8_t arg){
  * @param entities A vector of entities in the current level.
  */
 void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) const{
+    uint32_t time = ticks >> 7U; //ticks/128
     for(auto& i : entities){
         if(is_onscreen(i)){
             if(i.animation_num == 0){
@@ -356,7 +357,6 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
 				}
             }
             else{
-                uint32_t time = ticks >> 7U; //ticks/128
                 if(i.is_static){
                     ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
                 }else{
