@@ -1498,7 +1498,7 @@ extern "C" int setBackgroundLua(lua_State* L){
  */
 extern "C" int setOverlayLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
-    auto spriteNum = static_cast<int16_t>(lua_tointeger(L, 2));
+    auto spriteNum = static_cast<uint8_t>(lua_tointeger(L, 2));
     std::hash<std::string> hash_f;
     gGame_managerLua->get_level()->overlay = hash_f(arg);
     gGame_managerLua->get_level()->overlay_spriteNum = spriteNum;
