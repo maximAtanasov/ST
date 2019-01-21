@@ -45,7 +45,7 @@ protected:
         SDL_SetWindowFullscreen(test_window, fullscreen);
         SDL_ShowCursor(0);
 
-        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::clear_screen(nullptr);
     }
 
     void TearDown() override{
@@ -76,7 +76,7 @@ TEST_F(renderer_sdl_tests, test_set_draw_color){
             counter = 0;
         }
         counter++;
-        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::clear_screen(nullptr);
         ST::renderer_sdl::present();
         SDL_Delay(160);
     }
@@ -234,7 +234,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::clear_screen(nullptr);
         ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 1, 6, 6);
         ST::renderer_sdl::present();
         SDL_Delay(16);
@@ -249,7 +249,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::clear_screen(nullptr);
         ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 3, 6, 6);
         ST::renderer_sdl::present();
         SDL_Delay(16);
@@ -264,7 +264,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_scaled){
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::clear_screen(nullptr);
         ST::renderer_sdl::draw_sprite(1, 300, 500, time % 6, 1, 6, 6);
         ST::renderer_sdl::draw_sprite_scaled(1, 700, 500, time % 6, 1, 6, 6, 0.5, 0.5);
         ST::renderer_sdl::draw_sprite_scaled(1, 1000, 800, time % 6, 1, 6, 6, 2, 2);
@@ -281,7 +281,7 @@ TEST_F(renderer_sdl_tests, test_draw_overlay){
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
         uint32_t time = SDL_GetTicks() >> 7U;
-        ST::renderer_sdl::clear_screen();
+        ST::renderer_sdl::clear_screen(nullptr);
         ST::renderer_sdl::draw_overlay(1, time % 6, 17);
         ST::renderer_sdl::present();
         SDL_Delay(16);

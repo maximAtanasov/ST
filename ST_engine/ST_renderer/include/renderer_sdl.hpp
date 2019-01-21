@@ -26,7 +26,7 @@ namespace ST {
 
         void set_draw_color(uint8_t, uint8_t, uint8_t, uint8_t);
 
-        void clear_screen();
+        void clear_screen(SDL_Color color);
 
         void present();
 

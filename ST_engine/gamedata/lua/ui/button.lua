@@ -84,3 +84,11 @@ end
 function button:setText(text)
     self.text:setText(text)
 end
+
+function button:getText()
+    return self.text.text
+end
+
+function button:setTextColor(r,g,b,a)
+    self.text:setTextColor(r,g,b,a)
+end

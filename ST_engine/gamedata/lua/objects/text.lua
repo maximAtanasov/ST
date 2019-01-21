@@ -43,6 +43,7 @@ function textObject:new(x, y, fontSize, font)
 end
 
 function textObject:setText(text)
+	self.text = text;
 	setTextObjectText(self.ID, text)
 end
 

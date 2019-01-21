@@ -711,6 +711,11 @@ TEST_F(lua_backend_test, test_call_function_setBackground){
     ASSERT_EQ(1, game_mngr->get_level_calls);
 }
 
+TEST_F(lua_backend_test, test_call_function_setBackgroundColor){
+    test_subject.run_script("setBackgroundColor(255, 255, 255, 255)");
+    ASSERT_EQ(1, game_mngr->get_level_calls);
+}
+
 TEST_F(lua_backend_test, test_call_function_getVsyncState){
     game_mngr->vsync_flag = true;
     test_subject.run_script("return getVsyncState()");

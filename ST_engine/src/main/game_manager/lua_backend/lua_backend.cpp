@@ -89,6 +89,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //Drawing functions
     lua_register(L, "setBackground", setBackgroundLua);
+    lua_register(L, "setBackgroundColor", setBackgroundColorLua);
     lua_register(L, "setOverlay", setOverlayLua);
 
     //Input functions
@@ -1487,6 +1488,22 @@ extern "C" int setBackgroundLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     std::hash<std::string> hash_f;
     gGame_managerLua->get_level()->background = hash_f(arg);
+    return 0;
+}
+
+/**
+ * Set the background color of a level.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 0.
+ */
+extern "C" int setBackgroundColorLua(lua_State* L){
+    uint8_t r = static_cast<uint8_t>(lua_tointeger(L, 1));
+    uint8_t g = static_cast<uint8_t>(lua_tointeger(L, 2));
+    uint8_t b = static_cast<uint8_t>(lua_tointeger(L, 3));
+    uint8_t a = static_cast<uint8_t>(lua_tointeger(L, 4));
+
+    gGame_managerLua->get_level()->background_color= {r, g, b, a};
     return 0;
 }
 
