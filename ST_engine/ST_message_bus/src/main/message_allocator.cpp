@@ -17,8 +17,9 @@
 message_allocator::message_allocator(){
     pointer = 0;
     memory = static_cast<message*>(malloc(sizeof(message)*memory_size));
-    for(uint32_t i = 0; i < memory_size; i++){
+    for(uint32_t i = 0; i < memory_size; ++i){
         allocated[i] = false; //mark all memory as free
+        //TODO : Maybe use a bitfield instead of this array
     }
 }
 
@@ -33,8 +34,8 @@ message* message_allocator::allocate_message(int name, std::shared_ptr<void> dat
     access_mutex.lock();
     //find the next free spot in memory
     while(allocated[pointer] && i < memory_size){
-        pointer++;
-        i++;
+        ++pointer;
+        ++i;
         if(pointer > memory_size-1){
             pointer = 0;
         }

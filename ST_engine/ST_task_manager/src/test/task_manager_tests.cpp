@@ -105,7 +105,6 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
 
     ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 1100, 200);
     ASSERT_EQ(test_value1, 11);
-    printf("%d\n", test_value2);
     ASSERT_EQ(test_value2, 21);
 }
 

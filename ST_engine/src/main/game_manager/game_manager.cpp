@@ -50,6 +50,7 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus->subscribe(EXECUTE_SCRIPT, &msg_sub);
     gMessage_bus->subscribe(FULLSCREEN_STATUS, &msg_sub);
     gMessage_bus->subscribe(AUDIO_ENABLED, &msg_sub);
+
     //initialize initial states of keys
     reset_keys();
 
@@ -168,8 +169,8 @@ void game_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == EXECUTE_SCRIPT){
-            auto scipt = static_cast<std::string*>(temp->get_data());
-            gScript_backend.run_script(*scipt);
+            auto script = static_cast<std::string*>(temp->get_data());
+            gScript_backend.run_script(*script);
         }
         else if(temp->msg_name == FULLSCREEN_STATUS){
             bool arg = *static_cast<bool*>(temp->get_data());
@@ -217,7 +218,7 @@ int8_t game_manager::load_level(const std::string& level_name){
  * @param level_name The name of the level to unload (this must the name of the folder).
  */
 void game_manager::unload_level(const std::string& level_name){
-    for(Uint32 i = 0; i < levels.size(); i++) {
+    for(Uint32 i = 0; i < levels.size(); ++i) {
         if (levels[i].get_name() == level_name) {
             levels[i].unload();
             levels.erase(levels.begin() + i);
@@ -225,7 +226,7 @@ void game_manager::unload_level(const std::string& level_name){
         }
     }
 
-    //current level pointer must be reset, because apparently adding to the vector changes the pointer address
+    //current level pointer must be reset, because apparently adding/removing to/from the vector changes the pointer address
     //(makes sense as it has to reallocate the whole thing)
     for (auto &level : levels) {
         if(level.get_name() == active_level){
