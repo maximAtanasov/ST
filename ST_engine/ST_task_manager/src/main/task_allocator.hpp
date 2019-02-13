@@ -10,7 +10,7 @@
 #ifndef SLAVICTALES_TASK_ALLOCATOR_HPP
 #define SLAVICTALES_TASK_ALLOCATOR_HPP
 
-#define TASK_ALLOCATOR_CAPACITY 350
+#define TASK_ALLOCATOR_CAPACITY 256
 
 #include <mutex>
 #include <atomic>
@@ -20,13 +20,13 @@
 class task_allocator {
 private:
     std::mutex access_mutex;
-    uint16_t pointer = 0;
+    uint8_t pointer = 0;
     ST::task* memory{};
-    uint32_t memory_size = TASK_ALLOCATOR_CAPACITY;
+    uint8_t memory_size = TASK_ALLOCATOR_CAPACITY-1;
     std::atomic_bool allocated[TASK_ALLOCATOR_CAPACITY]{};
 public:
     ST::task* allocate_task(void (*function)(void *), void *arg, semaphore *dependency);
-    void deallocate(uint16_t id);
+    void deallocate(uint8_t id);
     task_allocator();
     ~task_allocator();
 };
@@ -34,24 +34,13 @@ public:
 //INLINED METHODS
 
 inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, semaphore *dependency){
-    uint16_t i = 0;
     access_mutex.lock();
     //find the next free spot in memory
-    while(allocated[pointer] && i < memory_size){
-        pointer++;
-        i++;
-        if(pointer > memory_size-1){
-            pointer = 0;
-        }
-    }
-    if(i == memory_size){
-        fprintf(stderr, "You have started more than %d tasks, exiting!", TASK_ALLOCATOR_CAPACITY);
-        exit(1);
-    }
+    while(allocated[pointer++]);
     allocated[pointer] = true;
-    auto temp = new (memory+pointer) ST::task(pointer, function, arg, dependency);
+    auto pointer_temp = pointer;
     access_mutex.unlock();
-    return temp;
+    return new (memory+pointer_temp) ST::task(pointer_temp, function, arg, dependency);
 }
 
 /**
@@ -59,7 +48,7 @@ inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *a
  * Internally marks the previously used memory as free.
  * @param id The id of the task.
  */
-inline void task_allocator::deallocate(uint16_t id){
+inline void task_allocator::deallocate(uint8_t id){
     //with the help of the id we can mark the unused memory as free in our array
     allocated[id] = false;
 }

@@ -33,7 +33,7 @@ message* message_allocator::allocate_message(int name, std::shared_ptr<void> dat
     //find the next free spot in memory
     while(allocated[pointer++]);
     allocated[pointer] = true;
-    uint8_t pointer_temp = pointer;
+    auto pointer_temp = pointer;
     access_mutex.unlock();
     return new (memory+pointer_temp) message(name, data, pointer_temp);
 }

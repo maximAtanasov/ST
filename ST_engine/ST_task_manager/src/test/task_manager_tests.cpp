@@ -108,7 +108,7 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
     ASSERT_EQ(test_value2, 21);
 }
 
-INSTANTIATE_TEST_CASE_P(test_do_work_while_waiting, task_manager_tests, ::testing::Range(0, 10));
+INSTANTIATE_TEST_CASE_P(test_do_work_while_waiting, task_manager_tests, ::testing::Range(0, 15));
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
