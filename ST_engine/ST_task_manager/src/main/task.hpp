@@ -27,7 +27,7 @@ namespace ST {
         void *data;
         semaphore *lock = nullptr;
         semaphore *dependency{};
-        const uint16_t id{};
+        const uint8_t id{};
 
         /**
          *
@@ -37,7 +37,7 @@ namespace ST {
          * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
          * @param affinity Thread affinity for the task
          */
-        task(uint16_t id, void (*function)(void *), void *arg, semaphore *dependency) : id(id){
+        task(uint8_t id, void (*function)(void *), void *arg, semaphore *dependency) : id(id){
             task_func = function;
             data = arg;
             this->dependency = dependency;

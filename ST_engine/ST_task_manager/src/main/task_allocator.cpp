@@ -15,7 +15,7 @@
  */
 task_allocator::task_allocator(){
     pointer = 0;
-    memory = static_cast<ST::task*>(malloc(sizeof(ST::task)*memory_size));
+    memory = static_cast<ST::task*>(malloc(sizeof(ST::task)*(memory_size+1)));
     for(uint32_t i = 0; i < memory_size; i++){
         allocated[i] = false; //mark all memory as free
     }
