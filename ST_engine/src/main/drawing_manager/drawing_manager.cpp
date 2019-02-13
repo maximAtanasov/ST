@@ -61,10 +61,10 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
 	handle_messages();
 
 	ticks = SDL_GetTicks(); //CPU ticks since start
-    ST::renderer_sdl::clear_screen();
+    ST::renderer_sdl::clear_screen(temp.background_color);
     ST::renderer_sdl::draw_background(temp.background);
 	draw_entities(temp.entities);
-    ST::renderer_sdl::draw_overlay(temp.overlay, ticks % temp.overlay_spriteNum, temp.overlay_spriteNum);
+    ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ticks % temp.overlay_spriteNum), temp.overlay_spriteNum);
     draw_text_objects(temp.text_objects);
     //draw the lights when we are sure they are processed
     if(lighting_enabled) {
@@ -89,7 +89,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
 void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const{
     for(auto& i : objects) {
         if (is_onscreen(i)) {
-            ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, 2);
+            ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, -1);
         }
     }
 }

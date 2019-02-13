@@ -56,6 +56,7 @@ extern "C" int pausePhysicsLua(lua_State* L);
 extern "C" int unpausePhysicsLua(lua_State* L);
 extern "C" int setLevelFloorLua(lua_State* L);
 extern "C" int setBackgroundLua(lua_State* L);
+extern "C" int setBackgroundColorLua(lua_State* L);
 extern "C" int setOverlayLua(lua_State* L);
 extern "C" int delayLua(lua_State* L);
 extern "C" int startLevelLua(lua_State* L);

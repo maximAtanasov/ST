@@ -25,8 +25,10 @@ ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
  * Loads the level.
  * Sends a LOAD_LIST message to load the assets.list in the directory of the level.
  */
-void ST::level::load(){
-    load_input_conf();
+int8_t ST::level::load(){
+    if(load_input_conf() != 0){
+        return -1;
+    }
     //Register all the keys this level uses with the input manager.
     for(const auto &i : actions_Buttons) {
         for(const auto& key : i.second) {
@@ -35,6 +37,7 @@ void ST::level::load(){
     }
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
+    return 0;
 }
 
 /**

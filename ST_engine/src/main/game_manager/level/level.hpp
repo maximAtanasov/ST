@@ -46,12 +46,13 @@ namespace ST {
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};
         size_t background = 0;
+        SDL_Color background_color{0, 0, 0, 0};
         size_t overlay = 0;
         uint8_t overlay_spriteNum = 1;
         ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
 
         level(const std::string&, message_bus*);
-        void load();
+        int8_t load();
         void reload();
         void unload();
         std::string get_name() const;

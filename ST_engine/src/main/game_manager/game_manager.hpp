@@ -100,7 +100,7 @@ class game_manager{
 
         //methods
         void handle_messages();
-        void load_level(const std::string&);
+        int8_t load_level(const std::string&);
         void unload_level(const std::string&);
         void reload_level(const std::string&);
         void start_level(const std::string&);

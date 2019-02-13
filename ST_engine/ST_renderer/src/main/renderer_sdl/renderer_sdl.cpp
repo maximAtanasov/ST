@@ -452,8 +452,10 @@ void ST::renderer_sdl::draw_overlay(size_t arg, uint8_t sprite, uint8_t sprite_n
 /**
  * Clears the screen.
  */
-void ST::renderer_sdl::clear_screen() {
+void ST::renderer_sdl::clear_screen(SDL_Color color) {
+    SDL_SetRenderDrawColor(sdl_renderer, color.r, color.g, color.b, color.a);
     SDL_RenderClear(sdl_renderer);
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 0);
 }
 
 /**

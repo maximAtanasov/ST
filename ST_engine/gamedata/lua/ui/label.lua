@@ -31,6 +31,10 @@ function label:setText(text)
     self.text:setText(text)
 end
 
+function label:getText()
+    return self.text.text
+end
+
 function label:setFont(font)
     self.text:setFont(font)
 end
