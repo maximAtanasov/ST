@@ -16,16 +16,14 @@ TEST(message_allocator_tests, test_message_allocator) {
     ASSERT_TRUE(test_message);
 }
 
-TEST(message_allocator_tests, allocate_max_fail) {
+TEST(message_allocator_tests, allocate_max) {
     message_allocator test_subject;
     for(uint16_t i = 0; i < MESSAGE_ALLOCATOR_CAPACITY; i++){
         ASSERT_TRUE(test_subject.allocate_message(1, make_data(true)));
     }
-    ASSERT_EXIT(test_subject.allocate_message(1, make_data(true)), ::testing::ExitedWithCode(1),
-            "message bus: too many messages allocated, not enough memory, exiting");
 }
 
-TEST(message_allocator_tests, allocate_max_twice_after_deallocating_and_fail) {
+TEST(message_allocator_tests, allocate_max_twice_after_deallocating) {
     message_allocator test_subject;
     for (uint16_t i = 0; i < MESSAGE_ALLOCATOR_CAPACITY; i++) {
         ASSERT_TRUE(test_subject.allocate_message(1, make_data(true)));
@@ -36,8 +34,18 @@ TEST(message_allocator_tests, allocate_max_twice_after_deallocating_and_fail) {
     for (uint16_t i = 0; i < MESSAGE_ALLOCATOR_CAPACITY; i++) {
         ASSERT_TRUE(test_subject.allocate_message(1, make_data(true)));
     }
-    ASSERT_EXIT(test_subject.allocate_message(1, make_data(true)), ::testing::ExitedWithCode(1),
-                "message bus: too many messages allocated, not enough memory, exiting");
+}
+
+TEST(message_allocator_tests, stress_test) {
+    message_allocator test_subject;
+    for(uint32_t j = 0; j < 300000; j++) {
+        for (uint16_t i = 0; i < MESSAGE_ALLOCATOR_CAPACITY; i++) {
+            ASSERT_TRUE(test_subject.allocate_message(1, make_data(true)));
+        }
+        for (uint16_t i = 0; i < MESSAGE_ALLOCATOR_CAPACITY; i++) {
+            test_subject.deallocate(i);
+        }
+    }
 }
 
 

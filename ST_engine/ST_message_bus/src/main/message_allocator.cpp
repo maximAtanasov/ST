@@ -16,10 +16,9 @@
  */
 message_allocator::message_allocator(){
     pointer = 0;
-    memory = static_cast<message*>(malloc(sizeof(message)*memory_size));
-    for(uint32_t i = 0; i < memory_size; ++i){
-        allocated[i] = false; //mark all memory as free
-        //TODO : Maybe use a bitfield instead of this array
+    memory = static_cast<message*>(malloc(sizeof(message)*(memory_size+1)));
+    for(uint16_t i = 0; i < memory_size+1; ++i){
+        allocated[i] = false;
     }
 }
 
@@ -30,24 +29,13 @@ message_allocator::message_allocator(){
  * @return The new message.
  */
 message* message_allocator::allocate_message(int name, std::shared_ptr<void> data){
-    uint16_t i = 0;
     access_mutex.lock();
     //find the next free spot in memory
-    while(allocated[pointer] && i < memory_size){
-        ++pointer;
-        ++i;
-        if(pointer > memory_size-1){
-            pointer = 0;
-        }
-    }
-    if(i == memory_size){
-        fprintf(stderr, "message bus: too many messages allocated, not enough memory, exiting\n");
-        exit(1);
-    }
+    while(allocated[pointer++]);
     allocated[pointer] = true;
-    uint16_t pointer_temp = pointer;
+    uint8_t pointer_temp = pointer;
     access_mutex.unlock();
-    return new (memory+pointer) message(name, data, pointer_temp);
+    return new (memory+pointer_temp) message(name, data, pointer_temp);
 }
 
 /**

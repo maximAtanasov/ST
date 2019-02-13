@@ -15,7 +15,7 @@
 #include <mutex>
 #include <atomic>
 
-#define MESSAGE_ALLOCATOR_CAPACITY 256
+#define MESSAGE_ALLOCATOR_CAPACITY 256 //MUST be 256 ALWAYS
 
 ///An allocator class that pre-allocates memory for messages
 /**
@@ -27,9 +27,9 @@
 class message_allocator{
 private:
     std::mutex access_mutex;
-    uint16_t pointer = 0;
+    uint8_t pointer = 0;
     message* memory{};
-    const uint32_t memory_size = MESSAGE_ALLOCATOR_CAPACITY;
+    const uint8_t memory_size = MESSAGE_ALLOCATOR_CAPACITY-1;
     std::atomic_bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
