@@ -52,7 +52,7 @@ namespace ST {
         ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
 
         level(const std::string&, message_bus*);
-        void load();
+        int8_t load();
         void reload();
         void unload();
         std::string get_name() const;

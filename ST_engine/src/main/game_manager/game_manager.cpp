@@ -50,6 +50,7 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus->subscribe(EXECUTE_SCRIPT, &msg_sub);
     gMessage_bus->subscribe(FULLSCREEN_STATUS, &msg_sub);
     gMessage_bus->subscribe(AUDIO_ENABLED, &msg_sub);
+
     //initialize initial states of keys
     reset_keys();
 
@@ -168,8 +169,8 @@ void game_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == EXECUTE_SCRIPT){
-            auto scipt = static_cast<std::string*>(temp->get_data());
-            gScript_backend.run_script(*scipt);
+            auto script = static_cast<std::string*>(temp->get_data());
+            gScript_backend.run_script(*script);
         }
         else if(temp->msg_name == FULLSCREEN_STATUS){
             bool arg = *static_cast<bool*>(temp->get_data());
@@ -184,18 +185,21 @@ void game_manager::handle_messages(){
  * Loads a level if it is not already loaded.
  * @param level_name The name of the level to load (this must the name of the folder).
  */
-void game_manager::load_level(const std::string& level_name){
+int8_t game_manager::load_level(const std::string& level_name){
 
     //check if it is already loaded.
     for(auto& i: levels) {
         if (i.get_name() == level_name) {
-            return;
+            return 0;
         }
     }
 
     //otherwise - create it
     auto temp = ST::level(level_name, gMessage_bus);
-    temp.load();
+    if(temp.load() != 0){
+        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Level with name " + level_name + " could not be loaded!")));
+        return -1;
+    }
     levels.emplace_back(temp);
 
     //current level pointer must be reset, because apparently adding to the vector changes the pointer address
@@ -206,6 +210,7 @@ void game_manager::load_level(const std::string& level_name){
             break;
         }
     }
+    return 0;
 }
 
 /**
@@ -213,7 +218,7 @@ void game_manager::load_level(const std::string& level_name){
  * @param level_name The name of the level to unload (this must the name of the folder).
  */
 void game_manager::unload_level(const std::string& level_name){
-    for(Uint32 i = 0; i < levels.size(); i++) {
+    for(Uint32 i = 0; i < levels.size(); ++i) {
         if (levels[i].get_name() == level_name) {
             levels[i].unload();
             levels.erase(levels.begin() + i);
@@ -221,7 +226,7 @@ void game_manager::unload_level(const std::string& level_name){
         }
     }
 
-    //current level pointer must be reset, because apparently adding to the vector changes the pointer address
+    //current level pointer must be reset, because apparently adding/removing to/from the vector changes the pointer address
     //(makes sense as it has to reallocate the whole thing)
     for (auto &level : levels) {
         if(level.get_name() == active_level){
@@ -251,15 +256,11 @@ void game_manager::reload_level(const std::string& level_name){
  * @param level_name The name of the level to start (this must the name of the folder).
  */
 void game_manager::start_level(const std::string& level_name){
-    gScript_backend.close();
-    gScript_backend.initialize(gMessage_bus, this);
-    active_level = level_name;
-    printf("%s\n", level_name.c_str());
 
-    //set current level pointer
+    //set the current level pointer
     bool is_loaded = false;
     for (auto &level : levels) {
-        if(level.get_name() == active_level){
+        if(level.get_name() == level_name){
             current_level_pointer = &level;
             is_loaded = true;
             break;
@@ -267,8 +268,22 @@ void game_manager::start_level(const std::string& level_name){
     }
     //if the level wasn't loaded in advance, load it now
     if(!is_loaded){
-        load_level(level_name);
+        if(load_level(level_name) == 0) {
+            for (auto &level : levels) {
+                if (level.get_name() == level_name) {
+                    current_level_pointer = &level;
+                    break;
+                }
+            }
+        }else{
+            gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Error starting level " + level_name)));
+            return;
+        }
     }
+
+    gScript_backend.close();
+    gScript_backend.initialize(gMessage_bus, this);
+    active_level = level_name;
 
     get_level()->lights.clear();
     get_level()->entities.clear();

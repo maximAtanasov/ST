@@ -15,7 +15,7 @@
 #include <mutex>
 #include <atomic>
 
-#define MESSAGE_ALLOCATOR_CAPACITY 300
+#define MESSAGE_ALLOCATOR_CAPACITY 256
 
 ///An allocator class that pre-allocates memory for messages
 /**
