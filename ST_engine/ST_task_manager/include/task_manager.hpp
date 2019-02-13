@@ -37,12 +37,12 @@ class task_manager{
         void start_thread(int (*thread_func)(void*), void* data);
 
     public:
-        explicit task_manager(message_bus* msg_bus);
-        ~task_manager();
+        task_manager(message_bus* msg_bus);
+		task_manager(message_bus* msg_bus, uint8_t thread_num);
+		~task_manager();
 		task_id start_task(ST::task* arg);
         void start_task_lockfree(ST::task* arg);
         void wait_for_task(task_id id);
-        void set_task_thread_amount(uint8_t amount);
 };
 
 #endif //TASK_MNGR_DEF

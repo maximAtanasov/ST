@@ -32,7 +32,7 @@ static void test_task_function(void* arg){
 
 static void test_task_function2(void* arg){
     auto val = static_cast<uint8_t*>(arg);
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     ++*val;
 }
 
@@ -82,36 +82,34 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value, nullptr));
     test_subject.start_task_lockfree(make_task(test_task_function, &test_value, id1));
 
-    std::this_thread::sleep_for(std::chrono::seconds(4));
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     ASSERT_EQ(test_value, 12);
 }
 
+//With only one task thread running the test will take about 2 seconds to complete if
+//the waiter isn't doing any work
 TEST_P(task_manager_tests, test_do_work_while_waiting){
     //Set up
-    task_manager test_subject(msg_bus);
-    //test_subject.set_task_thread_amount(4);
+    task_manager test_subject(msg_bus, 1);
     uint8_t test_value1 = 10;
     uint8_t test_value2 = 20;
+
     //Test
     auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
+    test_subject.start_task_lockfree(make_task(test_task_function2, &test_value1, nullptr));
+    task_id id2 = test_subject.start_task(make_task(test_task_function2, &test_value2, nullptr));
 
-    auto semaphore_ = new semaphore();
-
-    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
-    test_subject.start_task_lockfree(make_task(test_task_function, &test_value2, semaphore_));
-
-    semaphore_->notify();
-    test_subject.wait_for_task(id1);
-
+    test_subject.wait_for_task(id2);
     auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
-
-    ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 2100, 200);
+    ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 1100, 200);
     ASSERT_EQ(test_value1, 11);
+    printf("%d\n", test_value2);
     ASSERT_EQ(test_value2, 21);
 }
 
+INSTANTIATE_TEST_CASE_P(test_do_work_while_waiting, task_manager_tests, ::testing::Range(0, 10));
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

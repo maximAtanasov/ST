@@ -68,7 +68,7 @@ int get_cpu_core_count(){
     }
 
     while (!done){
-        DWORD rc = glpi(buffer, &returnLength);
+        auto rc = static_cast<DWORD>(glpi(buffer, &returnLength));
 
         if (FALSE == rc){
             if (GetLastError() == ERROR_INSUFFICIENT_BUFFER){
@@ -220,7 +220,7 @@ task_manager::task_manager(message_bus *msg_bus){
     //initialize semaphore for worker threads
     work_sem = new semaphore;
 
-    fprintf(stdout, "This system has %d physical cores\n", thread_num);
+    fprintf(stdout, "This system has %d physical cores\nStarting %d task threads\n", thread_num, thread_num);
 
     //if we can't tell or there is only one core, then start one worker thread
     if(thread_num == 0 || thread_num == 1){
@@ -230,6 +230,33 @@ task_manager::task_manager(message_bus *msg_bus){
 	for (uint16_t i = 0; i < thread_num - 1; i++) {
 		task_threads.emplace_back(std::thread(task_thread, this));
 	}
+}
+
+/**
+ * Initializes the task manager.
+ * Starts worker threads equal to thread_num.
+ * @param msg_bus A pointer to the global message bus.
+ */
+task_manager::task_manager(message_bus *msg_bus, uint8_t thread_num){
+
+    //Set our external dependency
+    gMessage_bus = msg_bus;
+
+    //initialize semaphore for worker threads
+    work_sem = new semaphore;
+
+    this->thread_num = thread_num;
+
+    auto total_threads = static_cast<uint8_t>(get_cpu_core_count());
+    fprintf(stdout, "This system has %d physical cores\nStarting %d task threads\n", total_threads, thread_num);
+
+    if(thread_num == 0 || thread_num == 1){
+        this->thread_num = 2;
+    }
+
+    for (uint16_t i = 0; i <  this->thread_num - 1; i++) {
+        task_threads.emplace_back(std::thread(task_thread, this));
+    }
 }
 
 /**
@@ -303,36 +330,4 @@ void task_manager::wait_for_task(task_id id){
         }
         delete id;
     }
-}
-
-void task_manager::set_task_thread_amount(uint8_t amount){
-
-    //STOP ALL THREADS
-    run_threads = false;
-    for(int i = 0; i < thread_num-1; i++){
-        work_sem->notify();
-    }
-    for(int i = 0; i < thread_num-1; i++) {
-        task_threads[i].join();
-    }
-    for(int i = 0; i < thread_num-1; i++){
-        work_sem->try_wait();
-    }
-
-    //finish running any remaining tasks
-    ST::task* new_task;
-    while(global_task_queue.try_dequeue(new_task)){ //get a function pointer and data
-        delete new_task->lock;
-        delete new_task;
-    }
-    delete work_sem;
-    task_threads.clear();
-
-    //REINITIALZE
-    thread_num = static_cast<uint8_t>(amount + 1);
-    work_sem = new semaphore;
-
-    for (uint16_t i = 0; i < thread_num - 1; i++) {
-        task_threads.emplace_back(std::thread(task_thread, this));
-    }run_threads = true;
 }

@@ -9,6 +9,6 @@
 --Contains global variable definitions
 
 language = "english"
-vsync = "vsyncDisabled"
+vsync = "vsyncEnabled"
 audio = "audioDisabled"
-fullscreen = "fullscreenEnabled"
+fullscreen = "fullscreenDisabled"

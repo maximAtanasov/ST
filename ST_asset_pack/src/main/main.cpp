@@ -54,7 +54,7 @@ int asset_pack_main(int argc, char *argv[]) {
             fprintf(stderr, "Error packing files to existing binary, maybe it is corrupted!\n");
          }
          else if(return_code == -2){
-             fprintf(stderr, "Error packing files to existing binary, it already cointains a file named the same as one of the ones you are adding!\n");
+             fprintf(stderr, "Error packing files to existing binary, it already contains a file named the same as one of the ones you are adding!\n");
          }
          else if(return_code == 0)
          #endif
