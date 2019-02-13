@@ -28,6 +28,8 @@ namespace ST {
 
         void clear_screen(SDL_Color color);
 
+        void clear_screen();
+
         void present();
 
         void draw_background(size_t arg);
