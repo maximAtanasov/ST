@@ -28,10 +28,9 @@ message_allocator::message_allocator(){
  * @param data The message data.
  * @return The new message.
  */
-message* message_allocator::allocate_message(int name, std::shared_ptr<void> data){
+message* message_allocator::allocate_message(uint8_t name, std::shared_ptr<void> data){
     access_mutex.lock();
-    //find the next free spot in memory
-    while(allocated[pointer++]);
+    while(allocated[pointer++]); //find the next free spot in memory
     allocated[pointer] = true;
     auto pointer_temp = pointer;
     access_mutex.unlock();

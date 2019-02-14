@@ -27,9 +27,9 @@ private:
     //that's how shared_ptr works, if you don't believe me, well google it or something
     uint8_t id; //used during allocation and deallocation
 
-    message(int name, const std::shared_ptr<void>& data, uint8_t id);
+    message(uint8_t name, const std::shared_ptr<void>& data, uint8_t id);
 public:
-    int32_t msg_name;
+    uint8_t msg_name;
     uint8_t get_id() const;
     void* get_data() const;
     message* make_copy() const;
@@ -42,7 +42,7 @@ public:
 /**
  * constructor - only ever used by the message_allocator class.
  */
-inline message::message(int name, const std::shared_ptr<void>& data, uint8_t id){
+inline message::message(uint8_t name, const std::shared_ptr<void>& data, uint8_t id){
     msg_name = name;
     this->data = data;
     this->id = id;

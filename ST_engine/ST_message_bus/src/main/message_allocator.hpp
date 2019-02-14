@@ -34,7 +34,7 @@ private:
 
 public:
     message_allocator();
-    message* allocate_message(int name, std::shared_ptr<void> data);
+    message* allocate_message(uint8_t name, std::shared_ptr<void> data);
     void deallocate(uint8_t id);
     ~message_allocator();
 };
