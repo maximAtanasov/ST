@@ -238,7 +238,7 @@ int8_t assets_manager::load_asset(std::string path){
         std::istringstream iss(path);
         for(std::string path_; iss >> path;)
             result.push_back(path);
-        int size;
+        uint32_t size;
         try{
             std::stringstream convert(result.at(1));
             convert >> size;
@@ -252,7 +252,7 @@ int8_t assets_manager::load_asset(std::string path){
         if(tempFont != nullptr){
             font = trim_path(font);
             std::string font_and_size = font + " " + result.at(1);
-            all_assets.fonts[font_and_size] = tempFont;
+            all_assets.fonts[hash_f(font_and_size)] = tempFont;
             count.at(font_and_size) += 1;
         }else{
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + font + " not found!")));
@@ -334,25 +334,23 @@ int8_t assets_manager::unload_asset(std::string path){
     }
 
     std::string extention = ST::get_file_extension(path);
+    std::hash<std::string> hash_f;
     gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Unloading " + path)));
 
     if(extention == "png" || extention == "webp"){
         path = trim_path(path);
-        std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "wav"){
         path = trim_path(path);
-        std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
         all_assets.chunks[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "ogg"){
         path = trim_path(path);
-        std::hash<std::string> hash_f;
         size_t string_hash = hash_f(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
         all_assets.music[string_hash] = nullptr;
@@ -361,8 +359,8 @@ int8_t assets_manager::unload_asset(std::string path){
         return unload_assets_from_binary(path);
     }else{ //if file is a font
         path = trim_path(path);
-        TTF_CloseFont(all_assets.fonts[path]);
-        all_assets.fonts[path] = nullptr;
+        TTF_CloseFont(all_assets.fonts[hash_f(path)]);
+        all_assets.fonts[hash_f(path)] = nullptr;
         count.at(path)--;
     }
     return 0;

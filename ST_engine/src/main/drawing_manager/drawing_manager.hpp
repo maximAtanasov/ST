@@ -75,6 +75,9 @@ class drawing_manager{
         uint8_t darkness_level = 0;
         uint8_t lights_quality = 0;
 
+        size_t default_font_normal = 0;
+        size_t default_font_small = 0;
+
         //debug
         bool collisions_shown = false;
         bool show_fps = true;

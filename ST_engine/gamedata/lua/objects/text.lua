@@ -48,14 +48,20 @@ function textObject:setText(text)
 end
 
 function textObject:setFont(font)
-	setTextObjectFont(self.ID, font)
+	self.font = font;
+	setTextObjectFont(self.ID, font.." "..self.fontSize)
 end
 
 function textObject:setFontSize(size)
-	setTextObjectFontSize(self.ID, size)
+	self.fontSize = size;
+	setTextObjectFont(self.ID, font.." "..self.fontSize)
 end
 
 function textObject:setTextColor(r, g, b, a)
+	self.r = r;
+	self.g = b;
+	self.b = b;
+	self.a = a;
 	setTextObjectColor(self.ID, r, g, b, a)
 end
 

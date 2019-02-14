@@ -1106,15 +1106,14 @@ TEST_F(lua_backend_test, test_call_function_setLightStatic){
 
 TEST_F(lua_backend_test, test_call_function_createTextObject){
     test_subject.run_script(R"(createTextObject(500, 600, "SOME_TEXT", "SOME_FONT.ttf", 40))");
-
+    std::hash<std::string> hash_f;
     //Check results
     ASSERT_EQ(1, game_mngr->get_level_calls);
     ASSERT_EQ(1, game_mngr->get_level()->text_objects.size());
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1126,8 +1125,9 @@ TEST_F(lua_backend_test, test_call_function_createTextObject){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
     //Set up
+    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-            "SOME_TEXT", "SOME_FONT.ttf", 40));
+            "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
 
     //Test
     test_subject.run_script("setTextObjectColor(0, 100, 110, 120, 130)");
@@ -1138,8 +1138,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(100, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1150,8 +1149,9 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectText){
     //Set up
+    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectText(0, \"NEW_TEXT\")");
 
@@ -1161,8 +1161,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectText){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("NEW_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1173,10 +1172,11 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectText){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
     //Set up
+    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
     //Test
-    test_subject.run_script("setTextObjectFont(0, \"NEW_FONT.ttf\")");
+    test_subject.run_script("setTextObjectFont(0, \"NEW_FONT.ttf 40\")");
 
     //Check results
     ASSERT_EQ(2, game_mngr->get_level_calls);
@@ -1184,31 +1184,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("NEW_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
-    ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
-
-    ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
-    ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.g);
-    ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.b);
-    ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.a);
-}
-
-TEST_F(lua_backend_test, test_call_function_setTextObjectFontSize){
-    //Set up
-    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
-    //Test
-    test_subject.run_script("setTextObjectFontSize(0, 30)");
-
-    //Check results
-    ASSERT_EQ(2, game_mngr->get_level_calls);
-    ASSERT_EQ(1, game_mngr->get_level()->text_objects.size());
-    ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
-    ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
-    ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(30, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("NEW_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1219,8 +1195,9 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectFontSize){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectX){
     //Set up
+    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(
-            ST::text(500, 600, {255,255,255,255}, "SOME_TEXT", "SOME_FONT.ttf", 40));
+            ST::text(500, 600, {255,255,255,255}, "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectX(0, 123)");
 
@@ -1230,8 +1207,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectX){
     ASSERT_EQ(123, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1242,8 +1218,9 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectX){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectY){
     //Set up
+    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectY(0, 123)");
 
@@ -1253,8 +1230,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectY){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(123, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1265,8 +1241,9 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectY){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
     //Set up
+    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", "SOME_FONT.ttf", 40));
+                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectVisible(0, false)");
 
@@ -1276,8 +1253,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ("SOME_FONT.ttf", game_mngr->get_level()->text_objects.at(0).font);
-    ASSERT_EQ(40, game_mngr->get_level()->text_objects.at(0).font_size);
+    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_FALSE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);

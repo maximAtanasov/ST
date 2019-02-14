@@ -141,7 +141,6 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setTextObjectColor", setTextObjectColorLua);
     lua_register(L, "setTextObjectText", setTextObjectTextLua);
     lua_register(L, "setTextObjectFont", setTextObjectFontLua);
-    lua_register(L, "setTextObjectFontSize", setTextObjectFontSizeLua);
     lua_register(L, "setTextObjectX", setTextObjectXLua);
     lua_register(L, "setTextObjectY", setTextObjectYLua);
     lua_register(L, "setTextObjectVisible", setTextObjectVisibleLua);
@@ -719,7 +718,9 @@ extern "C" int createTextObjectLua(lua_State* L){
     auto font = static_cast<std::string>(lua_tostring(L, 4));
     auto size = static_cast<uint8_t>(lua_tointeger(L, 5));
     SDL_Color temp_color = {255,255,255,255};
-    ST::text temp = ST::text(x, y, temp_color, text_string, font, size);
+
+    std::hash<std::string> hash_f;
+    ST::text temp = ST::text(x, y, temp_color, text_string, hash_f(font + " " + std::to_string(size)));
     gGame_managerLua->get_level()->text_objects.emplace_back(temp);
     return 0;
 }
@@ -762,20 +763,8 @@ extern "C" int setTextObjectTextLua(lua_State* L){
 extern "C" int setTextObjectFontLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto font = static_cast<std::string>(lua_tostring(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).font = font;
-    return 0;
-}
-
-/**
- * Sets the font size of a text object.
- * See the Lua docs for more information.
- * @param L The global Lua State.
- * @return Always 0.
- */
-extern "C" int setTextObjectFontSizeLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto size = static_cast<uint8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).font_size = size;
+    std::hash<std::string> hash_f;
+    gGame_managerLua->get_level()->text_objects.at(ID).font = hash_f(font);
     return 0;
 }
 
