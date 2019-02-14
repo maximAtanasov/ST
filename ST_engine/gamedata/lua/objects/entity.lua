@@ -13,7 +13,7 @@ function mouseOverTexture(object)
     local objectX = getEntityX(object.ID)
     local objectY = getEntityY(object.ID)
     if mouse_x < getEntityTexW(object.ID) + objectX and mouse_x > objectX then
-        if mouse_y > objectY - getEntityTexH(object.ID) and mouse_y < objectY then
+        if mouse_y > objectY + getEntityTexH(object.ID) and mouse_y < objectY then
             return true
         end
     end

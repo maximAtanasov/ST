@@ -315,7 +315,7 @@ void ST::renderer_sdl::draw_texture(const size_t arg, int32_t x, int32_t y) {
     if (texture != textures.end()) {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
+        SDL_Rect src_rect = {x, y, tex_w, tex_h};
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &src_rect);
     }
 }
@@ -331,7 +331,7 @@ void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int32_t x, int32_t 
     if (texture != textures.end()) {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect dst_rect = {x, static_cast<int>(y - (tex_h * scale_y)), static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
+        SDL_Rect dst_rect = {x, y, static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &dst_rect);
     }
 }
@@ -394,7 +394,7 @@ void ST::renderer_sdl::draw_sprite(size_t arg, int32_t x, int32_t y, uint8_t spr
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
+        SDL_Rect dst_rect = {x, y, temp2, temp1};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
     }
@@ -417,7 +417,7 @@ void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, static_cast<int>(y - (temp1 * scale_y)), static_cast<int>(temp2 * scale_x),
+        SDL_Rect dst_rect = {x, y, static_cast<int>(temp2 * scale_x),
                              static_cast<int>(temp1 * scale_y)};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);

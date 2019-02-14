@@ -107,7 +107,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
 void drawing_manager::draw_fps(double fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
-        ST::renderer_sdl::draw_text(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 40, color_font, 1);
+        ST::renderer_sdl::draw_text(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 0, color_font, 1);
     }
 }
 
@@ -281,7 +281,7 @@ void drawing_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(VSYNC_STATE, make_data<>(*arg)));
         }
         else if(temp->msg_name == SET_DARKNESS){
-            set_darkness(*(uint8_t*)temp->get_data());
+            set_darkness(*(static_cast<uint8_t*>(temp->get_data())));
         }
         else if(temp->msg_name == SHOW_COLLISIONS){
             auto arg = static_cast<bool*>(temp->get_data());
