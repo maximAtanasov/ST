@@ -14,21 +14,12 @@
  * Allocates memory for tasks.
  */
 task_allocator::task_allocator(){
-    pointer = 0;
-    memory = static_cast<ST::task*>(malloc(sizeof(ST::task)*(memory_size+1)));
     for(uint32_t i = 0; i < memory_size; i++){
         allocated[i] = false; //mark all memory as free
     }
 }
 
-/**
- * Destructor for the allocator - frees all allocated memory.
- */
-task_allocator::~task_allocator(){
-    free(memory);
-}
-
-static task_allocator gTask_allocator{};
+task_allocator gTask_allocator{};
 
 /**
  * //only use these functions to create/destroy tasks
@@ -47,5 +38,5 @@ ST::task* make_task(void (*function)(void *), void *arg, semaphore *dependency){
  * @param task The task to destroy
  */
 void destroy_task(ST::task* task){
-    gTask_allocator.deallocate(task->id);
+    gTask_allocator.deallocate(task->get_id());
 }

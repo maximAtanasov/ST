@@ -12,6 +12,9 @@
 
 #include "semaphore.hpp"
 
+class task_allocator;
+extern task_allocator gTask_allocator;
+
 namespace ST {
 
     ///An object representing a task to be run by the task manager.
@@ -21,27 +24,21 @@ namespace ST {
      * And some locking mechanisms.
      */
     class task {
+
     public:
-        void (*task_func)(void *);
+        void (*task_func)(void *){};
 
-        void *data;
-        semaphore *lock = nullptr;
-        semaphore *dependency{};
-        const uint8_t id{};
+        void* data{};
+        semaphore* lock = nullptr;
+        semaphore* dependency{};
 
-        /**
-         *
-         * @param id An id given to each task by the task allocator
-         * @param function A function representing a work task
-         * @param arg The arguments to above function
-         * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
-         * @param affinity Thread affinity for the task
-         */
-        task(uint8_t id, void (*function)(void *), void *arg, semaphore *dependency) : id(id){
-            task_func = function;
-            data = arg;
-            this->dependency = dependency;
+        inline uint8_t get_id(){
+            return id;
         }
+
+    private:
+        friend class ::task_allocator;
+        uint8_t id = 0;
     };
 }
 

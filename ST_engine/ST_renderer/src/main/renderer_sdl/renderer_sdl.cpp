@@ -14,8 +14,8 @@
 namespace ST {
     namespace renderer_sdl {
         void cache_font(TTF_Font *Font, size_t font_and_size);
-        int32_t draw_text_lru_cached(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
-        int32_t draw_text_cached_glyphs(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        uint16_t draw_text_lru_cached(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        uint16_t draw_text_cached_glyphs(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
     }
 }
 
@@ -109,7 +109,7 @@ void ST::renderer_sdl::close(){
  *
  * Note that the font must previously be loaded at the selected size.
  */
-int32_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
+uint16_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
     TTF_Font* _font = fonts[font];
     int32_t texW = 0;
     if(_font != nullptr){
@@ -131,7 +131,7 @@ int32_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& a
             font_cache::cache_string(arg2, texture, font);
         }
     }
-    return texW;
+    return static_cast<uint16_t>(texW);
 }
 
 /**
@@ -147,13 +147,13 @@ int32_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& a
  *
  * Note that the font must previously be loaded at the selected size.
  */
-int32_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
+uint16_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
     int32_t tempX = 0;
     auto cached_vector = fonts_cache.find(font);
     if(cached_vector != fonts_cache.end()){
         std::vector<SDL_Texture*> tempVector = cached_vector->second;
         if(!tempVector.empty()){
-            int texW, texH;
+            int32_t texW, texH;
             tempX = x;
             const char* arg3 = arg2.c_str();
             for(int j = 0; arg3[j] != 0; j++){
@@ -166,7 +166,7 @@ int32_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string
             }
         }
     }
-    return tempX;
+    return static_cast<uint16_t>(tempX - x);
 }
 
 /**

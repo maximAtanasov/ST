@@ -20,27 +20,32 @@
 class task_allocator {
 private:
     std::mutex access_mutex;
-    uint8_t pointer = 0;
-    ST::task* memory{};
-    uint8_t memory_size = TASK_ALLOCATOR_CAPACITY-1;
+    ST::task memory[TASK_ALLOCATOR_CAPACITY];
     std::atomic_bool allocated[TASK_ALLOCATOR_CAPACITY]{};
+    uint8_t memory_size = TASK_ALLOCATOR_CAPACITY-1;
+    uint8_t pointer = 0;
+
 public:
     ST::task* allocate_task(void (*function)(void *), void *arg, semaphore *dependency);
     void deallocate(uint8_t id);
     task_allocator();
-    ~task_allocator();
 };
 
 //INLINED METHODS
 
 inline ST::task* task_allocator::allocate_task(void (*function)(void *), void *arg, semaphore *dependency){
+    uint8_t pointer_temp;
     access_mutex.lock();
     //find the next free spot in memory
     while(allocated[pointer++]);
     allocated[pointer] = true;
-    auto pointer_temp = pointer;
+    pointer_temp = pointer;
     access_mutex.unlock();
-    return new (memory+pointer_temp) ST::task(pointer_temp, function, arg, dependency);
+    memory[pointer_temp].id = pointer_temp;
+    memory[pointer_temp].data = arg;
+    memory[pointer_temp].dependency = dependency;
+    memory[pointer_temp].task_func = function;
+    return &memory[pointer_temp];
 }
 
 /**
