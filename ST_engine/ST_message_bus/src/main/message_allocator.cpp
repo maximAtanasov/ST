@@ -1,3 +1,5 @@
+#include <utility>
+
 /* This file is part of the "ST" project.
  * You may use, distribute or modify this code under the terms
  * of the GNU General Public License version 2.
@@ -15,8 +17,6 @@
  * Allocates memory for messages.
  */
 message_allocator::message_allocator(){
-    pointer = 0;
-    memory = static_cast<message*>(malloc(sizeof(message)*(memory_size+1)));
     for(uint16_t i = 0; i < memory_size+1; ++i){
         allocated[i] = false;
     }
@@ -34,12 +34,8 @@ message* message_allocator::allocate_message(uint8_t name, std::shared_ptr<void>
     allocated[pointer] = true;
     auto pointer_temp = pointer;
     access_mutex.unlock();
-    return new (memory+pointer_temp) message(name, data, pointer_temp);
-}
-
-/**
- * Destructor for the allocator - frees all allocated memory.
- */
-message_allocator::~message_allocator(){
-    free(memory);
+    memory[pointer_temp].data = std::move(data);
+    memory[pointer_temp].msg_name = name;
+    memory[pointer_temp].id = pointer_temp;
+    return &memory[pointer_temp];
 }
