@@ -107,7 +107,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
 void drawing_manager::draw_fps(double fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
-        ST::renderer_sdl::draw_text(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 0, color_font, 1);
+        ST::renderer_sdl::draw_text(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 50, color_font, 1);
     }
 }
 
@@ -120,21 +120,21 @@ void drawing_manager::draw_console(console& cnsl){
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
-            if (pos - cnsl.font_size - 50 + cnsl.scroll_offset <= w_height / 2 - cnsl.font_size * 2) {
+            if (pos - cnsl.font_size + cnsl.scroll_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
                 ST::renderer_sdl::draw_text(default_font_normal, i->text, 0,
-                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset - 50, i->color, -1);
+                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset, i->color, -1);
             }
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
 		uint16_t cursor_draw_position = 0;
 		if (cnsl.cursor_position == cnsl.composition.size()) {
-			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + cnsl.composition, 0, w_height / 2 - 50, cnsl.color_text, -1);
+			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + cnsl.composition, 0, w_height / 2, cnsl.color_text, -1);
 		}
 		else {
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
-			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + to_cursor, 0, w_height / 2 - 50, cnsl.color_text, -1);
+			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + to_cursor, 0, w_height / 2, cnsl.color_text, -1);
 			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2 - 50, cnsl.color_text, -1);
 		}
 

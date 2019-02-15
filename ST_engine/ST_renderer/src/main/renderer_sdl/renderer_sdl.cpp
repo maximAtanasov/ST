@@ -117,14 +117,14 @@ int32_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& a
         SDL_Texture* cached_texture = font_cache::get_cached_string(arg2, font);
         if(cached_texture != nullptr){ //if the given string (with same size and font) is already cached, get it from cache
             SDL_QueryTexture(cached_texture, nullptr, nullptr, &texW, &texH);
-            SDL_Rect Rect = {x, y, texW, texH};
+            SDL_Rect Rect = {x, y - texH, texW, texH};
             SDL_SetTextureColorMod(cached_texture, color_font.r, color_font.g, color_font.b);
             SDL_RenderCopy(sdl_renderer, cached_texture, nullptr, &Rect);
         }else{ //else create a texture, render it, and then cache it - this is costly, so pick a good cache size
             SDL_Surface* text = TTF_RenderUTF8_Blended(_font, arg2.c_str(), color_font);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(sdl_renderer, text);
             SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
-            SDL_Rect Rect = {x, y, texW, texH};
+            SDL_Rect Rect = {x, y - texH, texW, texH};
             SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
             SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
             SDL_FreeSurface(text);
@@ -159,7 +159,7 @@ int32_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string
             for(int j = 0; arg3[j] != 0; j++){
                 SDL_Texture* texture = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
                 SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
-                SDL_Rect Rect = {tempX, y, texW, texH};
+                SDL_Rect Rect = {tempX, y - texH, texW, texH};
                 SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
                 SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
                 tempX += texW;
@@ -315,7 +315,7 @@ void ST::renderer_sdl::draw_texture(const size_t arg, int32_t x, int32_t y) {
     if (texture != textures.end()) {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect src_rect = {x, y, tex_w, tex_h};
+        SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &src_rect);
     }
 }
@@ -331,7 +331,7 @@ void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int32_t x, int32_t 
     if (texture != textures.end()) {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect dst_rect = {x, y, static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
+        SDL_Rect dst_rect = {x, y - static_cast<int>(tex_h * scale_y), static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &dst_rect);
     }
 }
@@ -394,7 +394,7 @@ void ST::renderer_sdl::draw_sprite(size_t arg, int32_t x, int32_t y, uint8_t spr
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, y, temp2, temp1};
+        SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
     }
@@ -417,7 +417,7 @@ void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, y, static_cast<int>(temp2 * scale_x),
+        SDL_Rect dst_rect = {x, y - static_cast<int>(temp1 * scale_y), static_cast<int>(temp2 * scale_x),
                              static_cast<int>(temp1 * scale_y)};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
