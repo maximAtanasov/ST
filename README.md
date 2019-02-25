@@ -54,4 +54,4 @@ cd ST_engine/gamedata
 Building using the MSVC toolchain is supported on Windows.
 You can use Visual Studio 2017 to open the folder as a CMake Project (or alternatively CLion with Visual Studio as the selected toolchain). Select the `ST_engine.exe` target and run it. The game should compile and run without any additional dependencies.
 
-Also, have a look at the [Documentation](http://maximatanasov.github.io/slavicTales/index.html).
+Also, have a look at the [Documentation](https://maximatanasov.github.io/ST/).
