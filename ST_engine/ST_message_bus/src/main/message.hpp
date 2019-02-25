@@ -25,28 +25,16 @@ private:
     friend class message_allocator;
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
     //that's how shared_ptr works, if you don't believe me, well google it or something
-    uint8_t id; //used during allocation and deallocation
+    uint8_t id; //used during allocation and de-allocation
 
-    message(int name, const std::shared_ptr<void>& data, uint8_t id);
 public:
-    int32_t msg_name;
+    uint8_t msg_name;
     uint8_t get_id() const;
     void* get_data() const;
     message* make_copy() const;
 };
 
 //INLINED METHODS
-
-//message implementation=========================================================
-
-/**
- * constructor - only ever used by the message_allocator class.
- */
-inline message::message(int name, const std::shared_ptr<void>& data, uint8_t id){
-    msg_name = name;
-    this->data = data;
-    this->id = id;
-}
 
 /**
  * @return The data contained within a message. Always a void* that MUST be properly casted to an actual type on the other end

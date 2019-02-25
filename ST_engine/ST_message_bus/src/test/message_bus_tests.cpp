@@ -15,14 +15,14 @@ class message_bus_tests : public::testing::Test {
 
 protected:
 
-    std::vector<subscriber*> get_subscribers(message_bus* test_subject, int msg){
+    std::vector<subscriber*> get_subscribers(message_bus* test_subject, uint8_t msg){
         return test_subject->subscribers[msg];
     }
 };
 
 TEST_F(message_bus_tests, test_one_subscriber_to_message){
     //Set up
-    int msg = 1;
+    uint8_t msg = 1;
     message_bus test_subject;
     subscriber test_subscriber;
 
@@ -35,7 +35,7 @@ TEST_F(message_bus_tests, test_one_subscriber_to_message){
 
 TEST_F(message_bus_tests, test_five_subscribers_to_message){
     //Set up
-    int msg = 1;
+    uint8_t msg = 1;
     message_bus test_subject;
     subscriber test_subscriber1;
     subscriber test_subscriber2;
@@ -62,8 +62,8 @@ TEST_F(message_bus_tests, test_five_subscribers_to_message){
 
 TEST_F(message_bus_tests, test_one_subscriber_to_two_messages){
     //Set up
-    int msg1 = 2;
-    int msg2 = 3;
+    uint8_t msg1 = 2;
+    uint8_t msg2 = 3;
     message_bus test_subject;
     subscriber test_subscriber;
 
@@ -84,7 +84,7 @@ TEST_F(message_bus_tests, test_one_subscriber_to_two_messages){
 TEST_F(message_bus_tests, test_send_message_to_one_subscriber){
 
     //Set up
-    int msg = 1;
+    uint8_t msg = 1;
     message_bus test_subject;
     subscriber test_subscriber;
     test_subject.subscribe(msg, &test_subscriber);
@@ -101,7 +101,7 @@ TEST_F(message_bus_tests, test_send_message_to_one_subscriber){
 TEST_F(message_bus_tests, test_send_message_to_two_subscribers){
 
     //Set up
-    int msg = 2;
+    uint8_t msg = 2;
     message_bus test_subject;
     subscriber test_subscriber1;
     subscriber test_subscriber2;
@@ -127,8 +127,8 @@ TEST_F(message_bus_tests, test_send_message_to_two_subscribers){
 TEST_F(message_bus_tests, test_send_two_messages_to_one_subscriber){
 
     //Set up
-    int msg1 = 2;
-    int msg2 = 3;
+    uint8_t msg1 = 2;
+    uint8_t msg2 = 3;
     message_bus test_subject;
     subscriber test_subscriber;
     test_subject.subscribe(msg1, &test_subscriber);

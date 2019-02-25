@@ -13,10 +13,9 @@
 
 namespace ST {
     namespace renderer_sdl {
-        void cache_font(TTF_Font *Font, const std::string& font_and_size);
-        uint16_t draw_text_lru_cached(const std::string &arg, const std::string &arg2, int x, int y, SDL_Color color_font,
-                                  uint8_t size);
-        uint16_t draw_text_cached_glyphs(const std::string &arg, const std::string &arg2, int, int, SDL_Color, int);
+        void cache_font(TTF_Font *Font, size_t font_and_size);
+        uint16_t draw_text_lru_cached(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        uint16_t draw_text_cached_glyphs(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
     }
 }
 
@@ -33,15 +32,15 @@ static int16_t height;
 static ska::bytell_hash_map<size_t, SDL_Texture *> textures{};
 
 static ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces_pointer;
-static ska::bytell_hash_map<std::string, TTF_Font *> *fonts_pointer;
+static ska::bytell_hash_map<size_t, TTF_Font *> *fonts_pointer;
 
 
 //the fonts in this table do not need to be cleaned - these are just pointer to Fonts stored in the asset_manager and
 //that will handle the cleanup
-static ska::bytell_hash_map<std::string, TTF_Font *> fonts{};
+static ska::bytell_hash_map<size_t, TTF_Font *> fonts{};
 
 //we do however need to cleanup the cache as that lives on the GPU
-static ska::bytell_hash_map<std::string, std::vector<SDL_Texture *>> fonts_cache{};
+static ska::bytell_hash_map<size_t, std::vector<SDL_Texture *>> fonts_cache{};
 
 static bool vsync = false;
 
@@ -110,27 +109,26 @@ void ST::renderer_sdl::close(){
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const std::string& arg2, int x, int y, SDL_Color color_font, uint8_t size){
-    std::string font_and_size = arg + " " + std::to_string(size);
-    TTF_Font* font = fonts[font_and_size];
-    int texW = 0;
-    if(font != nullptr){
-        int texH;
-        SDL_Texture* cached_texture = font_cache::get_cached_string(arg2, arg, size);
+uint16_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
+    TTF_Font* _font = fonts[font];
+    int32_t texW = 0;
+    if(_font != nullptr){
+        int32_t texH;
+        SDL_Texture* cached_texture = font_cache::get_cached_string(arg2, font);
         if(cached_texture != nullptr){ //if the given string (with same size and font) is already cached, get it from cache
             SDL_QueryTexture(cached_texture, nullptr, nullptr, &texW, &texH);
-            SDL_Rect Rect = {x, y, texW, texH};
+            SDL_Rect Rect = {x, y - texH, texW, texH};
             SDL_SetTextureColorMod(cached_texture, color_font.r, color_font.g, color_font.b);
             SDL_RenderCopy(sdl_renderer, cached_texture, nullptr, &Rect);
         }else{ //else create a texture, render it, and then cache it - this is costly, so pick a good cache size
-            SDL_Surface* text = TTF_RenderUTF8_Blended(font, arg2.c_str(), color_font);
+            SDL_Surface* text = TTF_RenderUTF8_Blended(_font, arg2.c_str(), color_font);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(sdl_renderer, text);
             SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
-            SDL_Rect Rect = {x, y, texW, texH};
+            SDL_Rect Rect = {x, y - texH, texW, texH};
             SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
             SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
             SDL_FreeSurface(text);
-            font_cache::cache_string(arg2, texture, arg, size);
+            font_cache::cache_string(arg2, texture, font);
         }
     }
     return static_cast<uint16_t>(texW);
@@ -149,28 +147,26 @@ uint16_t ST::renderer_sdl::draw_text_lru_cached(const std::string& arg, const st
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const std::string& arg2, const int x, const int y,
-                                           const SDL_Color color_font, const int size) {
-    std::string font_and_size = arg + " " + std::to_string(size);
-    uint16_t tempX = 0;
-    auto cached_vector = fonts_cache.find(font_and_size);
+uint16_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
+    int32_t tempX = 0;
+    auto cached_vector = fonts_cache.find(font);
     if(cached_vector != fonts_cache.end()){
         std::vector<SDL_Texture*> tempVector = cached_vector->second;
         if(!tempVector.empty()){
-            int texW, texH;
+            int32_t texW, texH;
             tempX = x;
             const char* arg3 = arg2.c_str();
             for(int j = 0; arg3[j] != 0; j++){
                 SDL_Texture* texture = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
                 SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
-                SDL_Rect Rect = {tempX, y, texW, texH};
+                SDL_Rect Rect = {tempX, y - texH, texW, texH};
                 SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
                 SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
                 tempX += texW;
             }
         }
     }
-    return tempX;
+    return static_cast<uint16_t>(tempX - x);
 }
 
 /**
@@ -188,18 +184,18 @@ uint16_t ST::renderer_sdl::draw_text_cached_glyphs(const std::string& arg, const
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text(const std::string& arg, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font , uint8_t size, int8_t flag){
+int32_t ST::renderer_sdl::draw_text(size_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font, int8_t flag){
     if(flag == 1){
-        return draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
+        return draw_text_cached_glyphs(font, arg2, x, y, color_font);
     }else if(flag == 0){
-        return draw_text_lru_cached(arg, arg2, x, y, color_font, size);
+        return draw_text_lru_cached(font, arg2, x, y, color_font);
     }else{
         for(unsigned int i = 0; i < arg2.size(); i++) {
             if (arg2.at(i) > 126 || (arg2.at(i) < 32)) {
-                return draw_text_lru_cached(arg, arg2, x, y, color_font, size);
+                return draw_text_lru_cached(font, arg2, x, y, color_font);
             }
         }
-        return draw_text_cached_glyphs(arg, arg2, x, y, color_font, size);
+        return draw_text_cached_glyphs(font, arg2, x, y, color_font);
     }
 }
 
@@ -229,7 +225,7 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*
 /**
  * Upload fonts to the GPU. (save and cache their glyphs).
  */
-void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>* fonts_t){
+void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<size_t, TTF_Font*>* fonts_t){
     if(fonts_t != nullptr){
 		fonts_pointer = fonts_t;
         for ( auto& it : *fonts_t){
@@ -261,7 +257,7 @@ void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<std::string, TTF_Font*>
  * @param Font The Font to render with.
  * @param font_and_size The name+size of the font.
  */
-void ST::renderer_sdl::cache_font(TTF_Font* Font, const std::string& font_and_size){
+void ST::renderer_sdl::cache_font(TTF_Font* Font, size_t font_and_size){
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
     temp[1] = 0;
@@ -335,7 +331,7 @@ void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int32_t x, int32_t 
     if (texture != textures.end()) {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect dst_rect = {x, static_cast<int>(y - (tex_h * scale_y)), static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
+        SDL_Rect dst_rect = {x, y - static_cast<int>(tex_h * scale_y), static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &dst_rect);
     }
 }
@@ -421,7 +417,7 @@ void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, static_cast<int>(y - (temp1 * scale_y)), static_cast<int>(temp2 * scale_x),
+        SDL_Rect dst_rect = {x, y - static_cast<int>(temp1 * scale_y), static_cast<int>(temp2 * scale_x),
                              static_cast<int>(temp1 * scale_y)};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);

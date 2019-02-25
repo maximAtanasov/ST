@@ -30,6 +30,8 @@ protected:
     int16_t test_window_width = 0;
     int16_t test_window_height = 0;
 
+    std::hash<std::string> hash_f;
+
     void SetUp() override{
         initialize_SDL();
         SDL_DisplayMode DM{};
@@ -156,11 +158,12 @@ TEST_F(renderer_sdl_tests, test_draw_texture_scaled){
 TEST_F(renderer_sdl_tests, test_draw_font_english_small){
     uint8_t font_size = 20;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
+    size_t font_hash = hash_f("test_font.ttf " + std::to_string(font_size));
     ASSERT_TRUE(static_cast<bool>(test_font));
-    ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
-    test_assets["test_font.ttf " + std::to_string(font_size)] = test_font;
+    ska::bytell_hash_map<size_t, TTF_Font*> test_assets;
+    test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text("test_font.ttf", "The quick brown fox!", 300, 300, {255, 0, 0, 255}, font_size, -1);
+    ST::renderer_sdl::draw_text(font_hash, "The quick brown fox!", 300, 300, {255, 0, 0, 255}, -1);
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -168,11 +171,12 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_small){
 TEST_F(renderer_sdl_tests, test_draw_font_english_medium){
     uint8_t font_size = 50;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
+    size_t font_hash = hash_f("test_font.ttf " + std::to_string(font_size));
     ASSERT_TRUE(static_cast<bool>(test_font));
-    ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
-    test_assets["test_font.ttf " + std::to_string(font_size)] = test_font;
+    ska::bytell_hash_map<size_t, TTF_Font*> test_assets;
+    test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text("test_font.ttf", "The quick brown fox!", 200, 300, {0, 255, 0, 255}, font_size, -1);
+    ST::renderer_sdl::draw_text(font_hash, "The quick brown fox!", 200, 300, {0, 255, 0, 255}, -1);
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -180,11 +184,12 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_medium){
 TEST_F(renderer_sdl_tests, test_draw_font_english_large){
     uint8_t font_size = 90;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
+    size_t font_hash = hash_f("test_font.ttf " + std::to_string(font_size));
     ASSERT_TRUE(static_cast<bool>(test_font));
-    ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
-    test_assets["test_font.ttf " + std::to_string(font_size)] = test_font;
+    ska::bytell_hash_map<size_t, TTF_Font*> test_assets;
+    test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text("test_font.ttf", "The quick brown fox!", 100, 300, {0, 0, 255, 255}, font_size, -1);
+    ST::renderer_sdl::draw_text(font_hash, "The quick brown fox!", 100, 300, {0, 0, 255, 255}, -1);
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -192,11 +197,12 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_large){
 TEST_F(renderer_sdl_tests, test_draw_font_russian_small){
     uint8_t font_size = 20;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
+    size_t font_hash = hash_f("test_font.ttf " + std::to_string(font_size));
     ASSERT_TRUE(static_cast<bool>(test_font));
-    ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
-    test_assets["test_font.ttf " + std::to_string(font_size)] = test_font;
+    ska::bytell_hash_map<size_t, TTF_Font*> test_assets;
+    test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 300, 300, {255, 0, 0, 255}, font_size, -1);
+    ST::renderer_sdl::draw_text(font_hash, "Этот тест тестирует шрифты!", 300, 300, {255, 0, 0, 255}, -1);
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -204,11 +210,12 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_small){
 TEST_F(renderer_sdl_tests, test_draw_font_russian_medium){
     uint8_t font_size = 50;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
+    size_t font_hash = hash_f("test_font.ttf " + std::to_string(font_size));
     ASSERT_TRUE(static_cast<bool>(test_font));
-    ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
-    test_assets["test_font.ttf " + std::to_string(font_size)] = test_font;
+    ska::bytell_hash_map<size_t, TTF_Font*> test_assets;
+    test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 200, 300, {0, 255, 0, 255}, font_size, -1);
+    ST::renderer_sdl::draw_text(font_hash, "Этот тест тестирует шрифты!", 200, 300, {0, 255, 0, 255}, -1);
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -216,11 +223,12 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_medium){
 TEST_F(renderer_sdl_tests, test_draw_font_russian_large){
     uint8_t font_size = 90;
     TTF_Font* test_font = TTF_OpenFont("test_font.ttf", font_size);
+    size_t font_hash = hash_f("test_font.ttf " + std::to_string(font_size));
     ASSERT_TRUE(static_cast<bool>(test_font));
-    ska::bytell_hash_map<std::string, TTF_Font*> test_assets;
-    test_assets["test_font.ttf " + std::to_string(font_size)] = test_font;
+    ska::bytell_hash_map<size_t, TTF_Font*> test_assets;
+    test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text("test_font.ttf", "Этот тест тестирует шрифты!", 100, 300, {0, 0, 255, 255}, font_size, -1);
+    ST::renderer_sdl::draw_text(font_hash, "Этот тест тестирует шрифты!", 100, 300, {0, 0, 255, 255}, -1);
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }

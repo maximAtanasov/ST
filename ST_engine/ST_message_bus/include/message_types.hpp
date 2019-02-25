@@ -13,7 +13,7 @@
 //all the different messages are defined in this enum
 //to define a new one just add its name here - they are all used as integers
 
-enum msg_type {
+enum msg_type : uint8_t {
     SET_DARKNESS,
     PLAY_SOUND,
     PLAY_MUSIC,

@@ -9,7 +9,8 @@
 
 #include <drawing_manager/drawing_manager.hpp>
 
-#define DEFAULT_FONT "OpenSans-Regular.ttf"
+#define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
+#define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
 
 /**
  *
@@ -43,6 +44,11 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 	//Variables for lights
 	darkness_level = 0;
     lights_quality = 4;
+
+    //hash of default font
+    std::hash<std::string> hash_f;
+    default_font_normal = hash_f(DEFAULT_FONT_NORMAL);
+    default_font_small = hash_f(DEFAULT_FONT_SMALL);
 
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
@@ -89,7 +95,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
 void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const{
     for(auto& i : objects) {
         if (is_onscreen(i)) {
-            ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y - i.font_size, i.color, i.font_size, -1);
+            ST::renderer_sdl::draw_text(i.font, i.text_string, i.x, i.y, i.color, -1);
         }
     }
 }
@@ -101,7 +107,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
 void drawing_manager::draw_fps(double fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
-        ST::renderer_sdl::draw_text(DEFAULT_FONT, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 40, color_font, 40, 1);
+        ST::renderer_sdl::draw_text(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 50, color_font, 1);
     }
 }
 
@@ -114,26 +120,22 @@ void drawing_manager::draw_console(console& cnsl){
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
-            if (pos - cnsl.font_size - 50 + cnsl.scroll_offset <= w_height / 2 - cnsl.font_size * 2) {
-                ST::renderer_sdl::draw_text(DEFAULT_FONT, i->text, 0,
-                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset - 50, i->color,
-                                     cnsl.font_size, -1);
+            if (pos - cnsl.font_size + cnsl.scroll_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
+                ST::renderer_sdl::draw_text(default_font_normal, i->text, 0,
+                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset, i->color, -1);
             }
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
 		uint16_t cursor_draw_position = 0;
 		if (cnsl.cursor_position == cnsl.composition.size()) {
-			cursor_draw_position = ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + cnsl.composition, 0, w_height / 2 - 50, cnsl.color_text,
-				cnsl.font_size, -1);
+			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + cnsl.composition, 0, w_height / 2, cnsl.color_text, -1);
 		}
 		else {
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
-			cursor_draw_position = ST::renderer_sdl::draw_text(DEFAULT_FONT, "Command: " + to_cursor, 0, w_height / 2 - 50, cnsl.color_text,
-				cnsl.font_size, -1);
-			ST::renderer_sdl::draw_text(DEFAULT_FONT, after_cursor, cursor_draw_position, w_height / 2 - 50, cnsl.color_text,
-				cnsl.font_size, -1);
+			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + to_cursor, 0, w_height / 2, cnsl.color_text, -1);
+			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2 - 50, cnsl.color_text, -1);
 		}
 
         if(ticks - cnsl.cursor_timer >= 1000) {
@@ -279,7 +281,7 @@ void drawing_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(VSYNC_STATE, make_data<>(*arg)));
         }
         else if(temp->msg_name == SET_DARKNESS){
-            set_darkness(*(uint8_t*)temp->get_data());
+            set_darkness(*(static_cast<uint8_t*>(temp->get_data())));
         }
         else if(temp->msg_name == SHOW_COLLISIONS){
             auto arg = static_cast<bool*>(temp->get_data());
@@ -313,7 +315,7 @@ void drawing_manager::handle_messages(){
             ST::renderer_sdl::upload_surfaces(surfaces);
         }
         else if(temp->msg_name == FONTS_ASSETS) {
-            auto fonts = *static_cast<ska::bytell_hash_map<std::string, TTF_Font *>**>(temp->get_data());
+            auto fonts = *static_cast<ska::bytell_hash_map<size_t, TTF_Font *>**>(temp->get_data());
             ST::renderer_sdl::upload_fonts(fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
@@ -443,10 +445,10 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
                 std::string tempX = "x: " + std::to_string(i.x);
                 std::string tempY = "y: " + std::to_string(i.y);
                 SDL_Colour colour_text = {255, 255, 0, 255};
-                ST::renderer_sdl::draw_text(DEFAULT_FONT, tempX, i.x - Xoffset,
-                                     i.y - Yoffset - i.tex_h, colour_text, 25, 1);
-                ST::renderer_sdl::draw_text(DEFAULT_FONT, tempY, i.x - Xoffset,
-                                     i.y - Yoffset - i.tex_h + 30, colour_text, 25, 1);
+                ST::renderer_sdl::draw_text(default_font_small, tempX, i.x - Xoffset,
+                                     i.y - Yoffset - i.tex_h, colour_text, 1);
+                ST::renderer_sdl::draw_text(default_font_small, tempY, i.x - Xoffset,
+                                     i.y - Yoffset - i.tex_h + 30, colour_text, 1);
             }
         }
     }

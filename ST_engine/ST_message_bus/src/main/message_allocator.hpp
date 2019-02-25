@@ -28,15 +28,14 @@ class message_allocator{
 private:
     std::mutex access_mutex;
     uint8_t pointer = 0;
-    message* memory{};
+    message memory[MESSAGE_ALLOCATOR_CAPACITY];
     const uint8_t memory_size = MESSAGE_ALLOCATOR_CAPACITY-1;
     std::atomic_bool allocated[MESSAGE_ALLOCATOR_CAPACITY]{};
 
 public:
     message_allocator();
-    message* allocate_message(int name, std::shared_ptr<void> data);
+    message* allocate_message(uint8_t name, std::shared_ptr<void> data);
     void deallocate(uint8_t id);
-    ~message_allocator();
 };
 
 /**

@@ -48,11 +48,11 @@ namespace ST {
 
         void draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
         
-        uint16_t draw_text(const std::string& arg, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font , uint8_t size, int8_t flag);
+        int32_t draw_text(size_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font , int8_t flag);
 
         void upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces);
 
-        void upload_fonts(ska::bytell_hash_map<std::string, TTF_Font *> *fonts);
+        void upload_fonts(ska::bytell_hash_map<size_t, TTF_Font *> *fonts);
 
         void vsync_on();
 

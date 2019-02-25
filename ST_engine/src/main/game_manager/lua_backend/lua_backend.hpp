@@ -106,7 +106,6 @@ extern "C" int createTextObjectLua(lua_State* L);
 extern "C" int setTextObjectColorLua(lua_State* L);
 extern "C" int setTextObjectTextLua(lua_State* L);
 extern "C" int setTextObjectFontLua(lua_State* L);
-extern "C" int setTextObjectFontSizeLua(lua_State* L);
 extern "C" int setTextObjectXLua(lua_State* L);
 extern "C" int setTextObjectYLua(lua_State* L);
 extern "C" int setTextObjectVisibleLua(lua_State* L);

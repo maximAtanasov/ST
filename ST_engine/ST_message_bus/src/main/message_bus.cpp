@@ -21,7 +21,7 @@ message_allocator msg_memory{};
  * Creates a copy of the message if it has more than one subscriber.
  */
 void message_bus::send_msg(message* arg){
-    int name = arg->msg_name;
+    uint8_t name = arg->msg_name;
     std::vector<subscriber*>* temp = &subscribers[name];
 
     //Locks aren't really needed here as there won't be any new subscribers in the middle of the game
@@ -66,7 +66,6 @@ void message_bus::clear() {
  * @param msg The type of the message.
  * @param sub The subscriber object.
  */
-void message_bus::subscribe(int msg, subscriber* sub){
-    int temp = msg;
-    subscribers[temp].push_back(sub);
+void message_bus::subscribe(uint8_t msg, subscriber* sub){
+    subscribers[msg].push_back(sub);
 }

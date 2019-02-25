@@ -39,8 +39,8 @@ void ST::renderer_sdl::font_cache::set_max(uint32_t max) {
  * @param SIZE The size of the font that the text was rendered at.
  * @return The cached string corresponding to the give parameters or nullptr if it was not found
  */
-SDL_Texture* ST::renderer_sdl::font_cache::get_cached_string(std::string str, std::string font, uint8_t size){
-    font_cache_tuple temp = std::make_tuple(str, font, size);
+SDL_Texture* ST::renderer_sdl::font_cache::get_cached_string(std::string str, size_t font){
+    font_cache_tuple temp = std::make_tuple(str, font);
     if(hash.find(temp) != hash.end()){
         move_to_front(cache, hash[temp]);
         return hash.at(temp)->second;;
@@ -55,8 +55,8 @@ SDL_Texture* ST::renderer_sdl::font_cache::get_cached_string(std::string str, st
  * @param FONT The font to cache.
  * @param SIZE The size to cache.
  */
-void ST::renderer_sdl::font_cache::cache_string(std::string str, SDL_Texture* texture, std::string font, uint8_t size){
-    font_cache_tuple temp = std::make_tuple(str, font, size);
+void ST::renderer_sdl::font_cache::cache_string(std::string str, SDL_Texture* texture, size_t font){
+    font_cache_tuple temp = std::make_tuple(str, font);
     cache.push_front(std::make_pair(temp, texture));
     hash[temp] = cache.begin();
     entries++;
