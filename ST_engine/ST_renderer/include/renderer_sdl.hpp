@@ -32,25 +32,25 @@ namespace ST {
 
         void present();
 
-        void draw_background(size_t arg);
+        void draw_background(uint16_t arg);
 
-        void draw_overlay(size_t arg, uint8_t sprite, uint8_t sprite_num);
+        void draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite_num);
 
-        void draw_texture(size_t arg, int32_t x, int32_t y);
+        void draw_texture(uint16_t arg, int32_t x, int32_t y);
 
-        void draw_texture_scaled(size_t arg, int32_t x, int32_t y, float scale_x, float scale_y);
+        void draw_texture_scaled(uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y);
 
         void draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color);
 
         void draw_rectangle_filled(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color);
 
-        void draw_sprite(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num);
+        void draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num);
 
-        void draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
+        void draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
         
         int32_t draw_text(size_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font , int8_t flag);
 
-        void upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces);
+        void upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces);
 
         void upload_fonts(ska::bytell_hash_map<size_t, TTF_Font *> *fonts);
 

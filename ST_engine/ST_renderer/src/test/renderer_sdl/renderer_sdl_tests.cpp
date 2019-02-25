@@ -122,7 +122,7 @@ TEST_F(renderer_sdl_tests, test_draw_filled_rectangle_blue){
 TEST_F(renderer_sdl_tests, test_draw_background){
     SDL_Surface* test_surface = IMG_Load("test_image_2.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     ST::renderer_sdl::draw_background(1);
@@ -133,7 +133,7 @@ TEST_F(renderer_sdl_tests, test_draw_background){
 TEST_F(renderer_sdl_tests, test_draw_texture){
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     ST::renderer_sdl::draw_texture(1, 300, 300);
@@ -144,7 +144,7 @@ TEST_F(renderer_sdl_tests, test_draw_texture){
 TEST_F(renderer_sdl_tests, test_draw_texture_scaled){
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     ST::renderer_sdl::draw_texture(1, 300, 300);
@@ -236,7 +236,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_large){
 TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
     SDL_Surface* test_surface = IMG_Load("test_sprite.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
@@ -251,7 +251,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated1){
 TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
     SDL_Surface* test_surface = IMG_Load("test_sprite.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
@@ -266,7 +266,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_animated2){
 TEST_F(renderer_sdl_tests, test_draw_sprite_scaled){
     SDL_Surface* test_surface = IMG_Load("test_sprite.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {
@@ -283,7 +283,7 @@ TEST_F(renderer_sdl_tests, test_draw_sprite_scaled){
 TEST_F(renderer_sdl_tests, test_draw_overlay){
     SDL_Surface* test_surface = IMG_Load("test_overlay.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ska::bytell_hash_map<size_t, SDL_Surface*> test_assets;
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
     test_assets[1] = test_surface;
     ST::renderer_sdl::upload_surfaces(&test_assets);
     for(uint32_t i = 0; i < wait_duration/16; i++) {

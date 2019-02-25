@@ -77,20 +77,20 @@ TEST_F(asset_manager_test, loadPNG) {
     load_asset("test_image_1.png");
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
     ASSERT_TRUE(test_surface);
-    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_1.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_string("test_image_1.png")]));
     SDL_FreeSurface(test_surface);
 }
 
 TEST_F(asset_manager_test, loadWEBP_nonExistant) {
     load_asset("nothing.webp");
-    ASSERT_FALSE(get_assets().surfaces[hash_f("nothing.webp")]);
+    ASSERT_FALSE(get_assets().surfaces[hash_string("nothing.webp")]);
 }
 
 TEST_F(asset_manager_test, loadWEBP) {
     load_asset("test_image_3.webp");
     SDL_Surface* test_surface = IMG_Load("test_image_3.webp");
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_string("test_image_3.webp")]));
     SDL_FreeSurface(test_surface);
 }
 
@@ -156,7 +156,7 @@ TEST_F(asset_manager_test, loadBinary_PNG) {
     ASSERT_EQ(0, load_assets_from_binary("test_binary_png.bin"));
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
     ASSERT_TRUE(test_surface);
-    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_string("test_image.png")]));
     SDL_FreeSurface(test_surface);
 }
 
@@ -164,7 +164,7 @@ TEST_F(asset_manager_test, loadBinary_WEBP) {
     ASSERT_EQ(0, load_assets_from_binary("test_binary_webp.bin"));
     SDL_Surface* test_surface = IMG_Load("test_image_3.webp");
     ASSERT_TRUE(test_surface);
-    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_string("test_image_3.webp")]));
     SDL_FreeSurface(test_surface);
 }
 
@@ -226,19 +226,19 @@ TEST_F(asset_manager_test, loadBinary_complex) {
     //Test image_1
     SDL_Surface* test_surface_1 = IMG_Load("test_image_1.png");
     ASSERT_TRUE(test_surface_1);
-    ASSERT_TRUE(compare_surfaces(test_surface_1, get_assets().surfaces[hash_f("test_image_1.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface_1, get_assets().surfaces[hash_string("test_image_1.png")]));
     SDL_FreeSurface(test_surface_1);
 
     //Test image_2
     SDL_Surface* test_surface_2 = IMG_Load("test_image_2.png");
     ASSERT_TRUE(test_surface_2);
-    ASSERT_TRUE(compare_surfaces(test_surface_2, get_assets().surfaces[hash_f("test_image_2.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface_2, get_assets().surfaces[hash_string("test_image_2.png")]));
     SDL_FreeSurface(test_surface_2);
 
     //Test image_3
     SDL_Surface* test_surface_3 = IMG_Load("test_image_3.webp");
     ASSERT_TRUE(test_surface_3);
-    ASSERT_TRUE(compare_surfaces(test_surface_3, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    ASSERT_TRUE(compare_surfaces(test_surface_3, get_assets().surfaces[hash_string("test_image_3.webp")]));
     SDL_FreeSurface(test_surface_3);
 }
 
@@ -249,19 +249,19 @@ TEST_F(asset_manager_test, test_load_assets_from_list){
     //Test image_1
     SDL_Surface* test_surface_1 = IMG_Load("test_image_1.png");
     ASSERT_TRUE(test_surface_1);
-    ASSERT_TRUE(compare_surfaces(test_surface_1, get_assets().surfaces[hash_f("test_image_1.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface_1, get_assets().surfaces[hash_string("test_image_1.png")]));
     SDL_FreeSurface(test_surface_1);
 
     //Test image_2
     SDL_Surface* test_surface_2 = IMG_Load("test_sprite.png");
     ASSERT_TRUE(test_surface_2);
-    ASSERT_TRUE(compare_surfaces(test_surface_2, get_assets().surfaces[hash_f("test_sprite.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface_2, get_assets().surfaces[hash_string("test_sprite.png")]));
     SDL_FreeSurface(test_surface_2);
 
     //Test image_3
     SDL_Surface* test_surface_3 = IMG_Load("test_image_3.webp");
     ASSERT_TRUE(test_surface_3);
-    ASSERT_TRUE(compare_surfaces(test_surface_3, get_assets().surfaces[hash_f("test_image_3.webp")]));
+    ASSERT_TRUE(compare_surfaces(test_surface_3, get_assets().surfaces[hash_string("test_image_3.webp")]));
     SDL_FreeSurface(test_surface_3);
 
     //Test sound_1
@@ -302,7 +302,7 @@ TEST_F(asset_manager_test, test_load_asset_twice){
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
 
     ASSERT_TRUE(static_cast<bool>(test_surface));
-    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_f("test_image_1.png")]));
+    ASSERT_TRUE(compare_surfaces(test_surface, get_assets().surfaces[hash_string("test_image_1.png")]));
 
     SDL_FreeSurface(test_surface);
 }
@@ -313,7 +313,7 @@ TEST_F(asset_manager_test, test_load_and_unload_asset){
     ASSERT_EQ(1, get_count("test_image_1.png"));
     ASSERT_EQ(0, unload_asset("test_image_1.png"));
     ASSERT_EQ(0, get_count("test_image_1.png"));
-    ASSERT_FALSE(get_assets().surfaces[hash_f("test_image_1.png")]);
+    ASSERT_FALSE(get_assets().surfaces[hash_string("test_image_1.png")]);
 }
 
 TEST_F(asset_manager_test, test_load_twice_and_unload_asset){
@@ -322,7 +322,7 @@ TEST_F(asset_manager_test, test_load_twice_and_unload_asset){
     ASSERT_EQ(2, get_count("test_image_1.png"));
     ASSERT_EQ(0, unload_asset("test_image_1.png"));
     ASSERT_EQ(1, get_count("test_image_1.png"));
-    ASSERT_TRUE(get_assets().surfaces[hash_f("test_image_1.png")]);
+    ASSERT_TRUE(get_assets().surfaces[hash_string("test_image_1.png")]);
 }
 
 TEST_F(asset_manager_test, test_load_and_unload_assets_from_list){

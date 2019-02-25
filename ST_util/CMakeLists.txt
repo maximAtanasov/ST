@@ -40,7 +40,6 @@ include_directories(${SDL2_TTF_INCLUDE_DIR})
 add_library(ST_util
         include/ST_util/test_util.hpp
         include/ST_util/math.hpp
-        src/main/util.cpp
         src/main/math.cpp
         src/main/test_util.cpp
         src/main/string_util.cpp

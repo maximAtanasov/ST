@@ -94,8 +94,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
             }else{
                 gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Unpacking " + surface.first)));
                 count[surface.first]++;
-                std::hash<std::string> hash_f;
-                size_t hashed = hash_f(surface.first);
+                uint16_t hashed = hash_string(surface.first);
                 all_assets.surfaces[hashed] = surface.second;
             }
         }
@@ -200,7 +199,7 @@ int8_t assets_manager::load_asset(std::string path){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
             path = trim_path(path);
-            size_t string_hash = hash_f(path);
+            uint16_t string_hash = hash_string(path);
             all_assets.surfaces[string_hash] = temp1;
             count.at(path) += 1;
         }else{
@@ -339,7 +338,7 @@ int8_t assets_manager::unload_asset(std::string path){
 
     if(extention == "png" || extention == "webp"){
         path = trim_path(path);
-        size_t string_hash = hash_f(path);
+        uint16_t string_hash = hash_string(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
         count.at(path)--;

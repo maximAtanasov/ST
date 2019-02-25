@@ -1036,8 +1036,7 @@ extern "C" int setEntityVisibleLua(lua_State *L){
 extern "C" int setEntityTextureLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     std::string arg = static_cast<std::string>(lua_tostring(L, 2));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->entities.at(id).texture = hash_f(arg);
+    gGame_managerLua->get_level()->entities.at(id).texture = hash_string(arg);
     return 0;
 }
 
@@ -1475,8 +1474,7 @@ extern "C" int hideMouseCursorLua(lua_State*){
  */
 extern "C" int setBackgroundLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->background = hash_f(arg);
+    gGame_managerLua->get_level()->background = hash_string(arg);
     return 0;
 }
 
@@ -1487,10 +1485,10 @@ extern "C" int setBackgroundLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setBackgroundColorLua(lua_State* L){
-    uint8_t r = static_cast<uint8_t>(lua_tointeger(L, 1));
-    uint8_t g = static_cast<uint8_t>(lua_tointeger(L, 2));
-    uint8_t b = static_cast<uint8_t>(lua_tointeger(L, 3));
-    uint8_t a = static_cast<uint8_t>(lua_tointeger(L, 4));
+    auto r = static_cast<uint8_t>(lua_tointeger(L, 1));
+    auto g = static_cast<uint8_t>(lua_tointeger(L, 2));
+    auto b = static_cast<uint8_t>(lua_tointeger(L, 3));
+    auto a = static_cast<uint8_t>(lua_tointeger(L, 4));
 
     gGame_managerLua->get_level()->background_color= {r, g, b, a};
     return 0;
@@ -1505,8 +1503,7 @@ extern "C" int setBackgroundColorLua(lua_State* L){
 extern "C" int setOverlayLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     auto spriteNum = static_cast<uint8_t>(lua_tointeger(L, 2));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->overlay = hash_f(arg);
+    gGame_managerLua->get_level()->overlay = hash_string(arg);
     gGame_managerLua->get_level()->overlay_spriteNum = spriteNum;
     return 0;
 }

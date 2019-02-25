@@ -23,7 +23,7 @@ protected:
         return test_subject.hash_file(path);
     }
 
-    std::string hash_string(const std::string& string){
+    std::string hash_string_lua(const std::string& string){
         return test_subject.hash_string(string);
     }
 
@@ -166,7 +166,7 @@ TEST_F(lua_backend_test, test_hash_file_audioAnnotation){
 }
 
 TEST_F(lua_backend_test, test_hash_string_playSound){
-    std::string result = hash_string("playSound(\"sound.wav\", 100, 1)");
+    std::string result = hash_string_lua("playSound(\"sound.wav\", 100, 1)");
     std::string resulting_integer = result.substr(10, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-10);
     try{
@@ -181,7 +181,7 @@ TEST_F(lua_backend_test, test_hash_string_playSound){
 }
 
 TEST_F(lua_backend_test, test_hash_string_playMusic){
-    std::string result = hash_string("playMusic(\"music.mp3\", 100, 1)");
+    std::string result = hash_string_lua("playMusic(\"music.mp3\", 100, 1)");
     std::string resulting_integer = result.substr(10, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-10);
     try{
@@ -196,7 +196,7 @@ TEST_F(lua_backend_test, test_hash_string_playMusic){
 }
 
 TEST_F(lua_backend_test, test_hash_string_keyHeld){
-    std::string result = hash_string("keyHeld(\"JUMP\")");
+    std::string result = hash_string_lua("keyHeld(\"JUMP\")");
     std::string resulting_integer = result.substr(10, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-3);
     try{
@@ -211,7 +211,7 @@ TEST_F(lua_backend_test, test_hash_string_keyHeld){
 }
 
 TEST_F(lua_backend_test, test_hash_string_keyPressed){
-    std::string result = hash_string("keyPressed(\"JUMP\")");
+    std::string result = hash_string_lua("keyPressed(\"JUMP\")");
     std::string resulting_integer = result.substr(11, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-3);
     try{
@@ -226,7 +226,7 @@ TEST_F(lua_backend_test, test_hash_string_keyPressed){
 }
 
 TEST_F(lua_backend_test, test_hash_string_keyReleased){
-    std::string result = hash_string("keyReleased(\"JUMP\")");
+    std::string result = hash_string_lua("keyReleased(\"JUMP\")");
     std::string resulting_integer = result.substr(12, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-3);
     try{
@@ -241,7 +241,7 @@ TEST_F(lua_backend_test, test_hash_string_keyReleased){
 }
 
 TEST_F(lua_backend_test, test_hash_string_setClickKey){
-    std::string result = hash_string("setClickKey(\"MOUSE1\")");
+    std::string result = hash_string_lua("setClickKey(\"MOUSE1\")");
     std::string resulting_integer = result.substr(12, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-3);
     try{
@@ -742,11 +742,10 @@ TEST_F(lua_backend_test, test_call_function_setBrightness){
 }
 
 TEST_F(lua_backend_test, test_call_function_setOverlay){
-    std::hash<std::string> hash_f;
     test_subject.run_script("setOverlay(\"some_bg.webp\", 3)");
     ASSERT_EQ(2, game_mngr->get_level_calls);
     ASSERT_EQ(3, game_mngr->get_level()->overlay_spriteNum);
-    ASSERT_EQ(hash_f("some_bg.webp"), game_mngr->get_level()->overlay);
+    ASSERT_EQ(hash_string("some_bg.webp"), game_mngr->get_level()->overlay);
 }
 
 TEST_F(lua_backend_test, test_call_function_getMusicVolume){
@@ -1279,7 +1278,7 @@ TEST_F(lua_backend_test, test_call_function_createEntity){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1312,7 +1311,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityActive){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1345,7 +1344,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityX){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1378,7 +1377,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityY){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1415,7 +1414,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityX){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1452,7 +1451,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityY){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1485,7 +1484,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityStatic){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1518,7 +1517,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1551,7 +1550,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1588,7 +1587,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1625,7 +1624,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1658,7 +1657,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(2, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(2, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1692,7 +1691,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexture){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(hash_f("new_texture.webp"), game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(hash_string("new_texture.webp"), game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1725,7 +1724,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexW){
     ASSERT_EQ(500, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1758,7 +1757,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexH){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1795,7 +1794,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexW){
     ASSERT_EQ(500, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1832,7 +1831,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexH){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1865,7 +1864,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVisible){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1898,7 +1897,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1941,7 +1940,7 @@ TEST_F(lua_backend_test, test_call_function_entityCollides){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -1964,7 +1963,7 @@ TEST_F(lua_backend_test, test_call_function_entityCollides){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(1).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(1).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(1).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(1).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(1).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(1).animation);
@@ -1997,7 +1996,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2034,7 +2033,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColX){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2071,7 +2070,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColY){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2108,7 +2107,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColXOffset){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2145,7 +2144,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColYOffset){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2179,7 +2178,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityMass){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2216,7 +2215,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityMass){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2249,7 +2248,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimation){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(3, game_mngr->get_level()->entities.at(0).animation);
@@ -2282,7 +2281,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(3, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);
@@ -2315,7 +2314,7 @@ TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(65535, game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(3, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);

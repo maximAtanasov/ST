@@ -311,7 +311,7 @@ void drawing_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == SURFACES_ASSETS) {
-            auto surfaces = *static_cast<ska::bytell_hash_map<size_t, SDL_Surface *>**>(temp->get_data());
+            auto surfaces = *static_cast<ska::bytell_hash_map<uint16_t, SDL_Surface *>**>(temp->get_data());
             ST::renderer_sdl::upload_surfaces(surfaces);
         }
         else if(temp->msg_name == FONTS_ASSETS) {

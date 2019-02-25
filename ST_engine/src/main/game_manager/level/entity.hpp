@@ -25,7 +25,7 @@ namespace ST {
 
     private:
 
-        // 4 bytes
+        //4 bytes
         int16_t col_x = 0;
         int16_t col_y = 0;
 
@@ -38,9 +38,6 @@ namespace ST {
         //8 bytes
         int32_t x = 0;
         int32_t y = 0;
-
-        //8 bytes
-        size_t texture = 0;
 
         //8 bytes
         float tex_scale_x = 1;
@@ -62,8 +59,8 @@ namespace ST {
         uint8_t mass = 0;
         uint8_t animation_num = 0;
 
-        //2 byte padding
-        uint16_t padding_bytes = 0;
+        //2 bytes
+        uint16_t texture = 65535;
 
         //4 bytes
         bool is_active = true;
