@@ -2,7 +2,7 @@
 ===================
 
 [![CircleCI](https://circleci.com/gh/maximAtanasov/ST/tree/master.svg?style=svg&circle-token=2e636633b20ca5cdbe02468a9593a485014bd88a)](https://circleci.com/gh/maximAtanasov/ST/tree/master)
-[![Build status](https://ci.appveyor.com/api/projects/status/iqte4fwebiml3xv6?svg=true)](https://ci.appveyor.com/project/maximAtanasov/ST)
+[![Build status](https://ci.appveyor.com/api/projects/status/iqte4fwebiml3xv6?svg=true)](https://ci.appveyor.com/project/maximAtanasov/slavictales)
 
 A 2D game engine project built with C++, SDL2 and Lua.
 =====================================================
@@ -16,9 +16,6 @@ physics and the ability to program games fully in Lua.
 ![](ST_engine/docs/screenshots/screenshot2.png?raw=true)
 
 ![](ST_engine/docs/screenshots/screenshot3.png?raw=true)
-
-[A short video](https://youtu.be/7citcBJ2SI4)
-
 
 
 Instructions for building the project:
