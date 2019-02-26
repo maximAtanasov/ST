@@ -13,9 +13,9 @@
 
 namespace ST {
     namespace renderer_sdl {
-        void cache_font(TTF_Font *Font, size_t font_and_size);
-        uint16_t draw_text_lru_cached(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
-        uint16_t draw_text_cached_glyphs(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        void cache_font(TTF_Font *Font, uint16_t font_and_size);
+        uint16_t draw_text_lru_cached(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        uint16_t draw_text_cached_glyphs(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
     }
 }
 
@@ -29,18 +29,18 @@ static int16_t width;
 static int16_t height;
 
 //Textures with no corresponding surface in our assets need to be freed
-static ska::bytell_hash_map<size_t, SDL_Texture *> textures{};
+static ska::bytell_hash_map<uint16_t, SDL_Texture *> textures{};
 
-static ska::bytell_hash_map<size_t, SDL_Surface *> *surfaces_pointer;
-static ska::bytell_hash_map<size_t, TTF_Font *> *fonts_pointer;
+static ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces_pointer;
+static ska::bytell_hash_map<uint16_t, TTF_Font *> *fonts_pointer;
 
 
 //the fonts in this table do not need to be cleaned - these are just pointer to Fonts stored in the asset_manager and
 //that will handle the cleanup
-static ska::bytell_hash_map<size_t, TTF_Font *> fonts{};
+static ska::bytell_hash_map<uint16_t, TTF_Font *> fonts{};
 
 //we do however need to cleanup the cache as that lives on the GPU
-static ska::bytell_hash_map<size_t, std::vector<SDL_Texture *>> fonts_cache{};
+static ska::bytell_hash_map<uint16_t, std::vector<SDL_Texture *>> fonts_cache{};
 
 static bool vsync = false;
 
@@ -109,7 +109,7 @@ void ST::renderer_sdl::close(){
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
+uint16_t ST::renderer_sdl::draw_text_lru_cached(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
     TTF_Font* _font = fonts[font];
     int32_t texW = 0;
     if(_font != nullptr){
@@ -147,7 +147,7 @@ uint16_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& 
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
+uint16_t ST::renderer_sdl::draw_text_cached_glyphs(uint16_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
     int32_t tempX = 0;
     auto cached_vector = fonts_cache.find(font);
     if(cached_vector != fonts_cache.end()){
@@ -184,7 +184,7 @@ uint16_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::strin
  *
  * Note that the font must previously be loaded at the selected size.
  */
-int32_t ST::renderer_sdl::draw_text(size_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font, int8_t flag){
+int32_t ST::renderer_sdl::draw_text(uint16_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font, int8_t flag){
     if(flag == 1){
         return draw_text_cached_glyphs(font, arg2, x, y, color_font);
     }else if(flag == 0){
@@ -203,7 +203,7 @@ int32_t ST::renderer_sdl::draw_text(size_t font, const std::string& arg2, int32_
  * Upload all surface to the GPU. (Create textures from them).
  * @param surfaces The surfaces to upload.
  */
-void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*>* surfaces){
+void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surface*>* surfaces){
 	if(surfaces != nullptr){
 		surfaces_pointer = surfaces;
         for ( auto& it : *surfaces){
@@ -225,7 +225,7 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<size_t, SDL_Surface*
 /**
  * Upload fonts to the GPU. (save and cache their glyphs).
  */
-void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<size_t, TTF_Font*>* fonts_t){
+void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font*>* fonts_t){
     if(fonts_t != nullptr){
 		fonts_pointer = fonts_t;
         for ( auto& it : *fonts_t){
@@ -257,7 +257,7 @@ void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<size_t, TTF_Font*>* fon
  * @param Font The Font to render with.
  * @param font_and_size The name+size of the font.
  */
-void ST::renderer_sdl::cache_font(TTF_Font* Font, size_t font_and_size){
+void ST::renderer_sdl::cache_font(TTF_Font* Font, uint16_t font_and_size){
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
     temp[1] = 0;
@@ -310,7 +310,7 @@ void ST::renderer_sdl::vsync_off(){
  * @param x The X position to render at.
  * @param y The Y position to render at.
  */
-void ST::renderer_sdl::draw_texture(const size_t arg, int32_t x, int32_t y) {
+void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -326,7 +326,7 @@ void ST::renderer_sdl::draw_texture(const size_t arg, int32_t x, int32_t y) {
  * @param x The X position to render at.
  * @param y The Y position to render at.
  */
-void ST::renderer_sdl::draw_texture_scaled(const size_t arg, int32_t x, int32_t y, float scale_x, float scale_y) {
+void ST::renderer_sdl::draw_texture_scaled(const uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -370,7 +370,7 @@ void ST::renderer_sdl::draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h
  * Draws a texture that fills the entire screen (Background).
  * @param arg The hash of the texture name.
  */
-void ST::renderer_sdl::draw_background(const size_t arg) {
+void ST::renderer_sdl::draw_background(const uint16_t arg) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, nullptr);
@@ -387,7 +387,7 @@ void ST::renderer_sdl::draw_background(const size_t arg) {
  * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
-void ST::renderer_sdl::draw_sprite(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num) {
+void ST::renderer_sdl::draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -410,7 +410,7 @@ void ST::renderer_sdl::draw_sprite(size_t arg, int32_t x, int32_t y, uint8_t spr
  * @param animation_num The total number of animations in a spritesheet (Rows in the spritesheet).
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
-void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y) {
+void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
         int tex_w, tex_h;
@@ -426,21 +426,19 @@ void ST::renderer_sdl::draw_sprite_scaled(size_t arg, int32_t x, int32_t y, uint
 
 /**
  * Draws an animated overlay.
- * Works similary to draw_sprite, except only one animation is supported.
+ * Works similarly to draw_sprite, except only one animation is supported.
  * @param arg The hash of the texture name.
  * @param sprite The number of the sprite to use.
  * @param sprite_num The total number of frames this spritesheet has.
  */
-void ST::renderer_sdl::draw_overlay(size_t arg, uint8_t sprite, uint8_t sprite_num) {
-    int animation_num = 1;
-    int animation = 1;
+void ST::renderer_sdl::draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite_num) {
     auto texture = textures.find(arg);
     if (texture != textures.end()) {
-        int tex_w, tex_h;
+        int32_t tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        int temp1 = tex_h / animation_num;
-        int temp2 = tex_w / sprite_num;
-        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
+        int32_t temp1 = tex_h;
+        int32_t temp2 = tex_w / sprite_num;
+        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), 0, temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, nullptr);
     }
 }

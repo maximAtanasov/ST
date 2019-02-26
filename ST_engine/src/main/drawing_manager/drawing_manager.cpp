@@ -8,6 +8,7 @@
  */
 
 #include <drawing_manager/drawing_manager.hpp>
+#include <ST_util/string_util.hpp>
 
 #define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
 #define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
@@ -43,12 +44,11 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 
 	//Variables for lights
 	darkness_level = 0;
-    lights_quality = 4;
+    lights_quality = 5;
 
     //hash of default font
-    std::hash<std::string> hash_f;
-    default_font_normal = hash_f(DEFAULT_FONT_NORMAL);
-    default_font_small = hash_f(DEFAULT_FONT_SMALL);
+    default_font_normal = ST::hash_string(DEFAULT_FONT_NORMAL);
+    default_font_small = ST::hash_string(DEFAULT_FONT_SMALL);
 
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
@@ -127,7 +127,7 @@ void drawing_manager::draw_console(console& cnsl){
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-		uint16_t cursor_draw_position = 0;
+		int32_t cursor_draw_position = 0;
 		if (cnsl.cursor_position == cnsl.composition.size()) {
 			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + cnsl.composition, 0, w_height / 2, cnsl.color_text, -1);
 		}
@@ -135,7 +135,7 @@ void drawing_manager::draw_console(console& cnsl){
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
 			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + to_cursor, 0, w_height / 2, cnsl.color_text, -1);
-			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2 - 50, cnsl.color_text, -1);
+			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text, -1);
 		}
 
         if(ticks - cnsl.cursor_timer >= 1000) {
@@ -240,6 +240,8 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
 void drawing_manager::draw_lights() const{
     //Losing a lot of fps here :)
     SDL_Rect tempRect = {0, 0, lights_quality, lights_quality};
+    SDL_Color light_color;
+
     for(int i = 0; i <= w_width-lights_quality; i += lights_quality){
         int a = 1;
         tempRect.x = i;
@@ -247,7 +249,7 @@ void drawing_manager::draw_lights() const{
             if(lightmap[i][j] == lightmap[i][j+lights_quality] && j+lights_quality == w_height){
                 tempRect.y = j - a*lights_quality;
                 tempRect.h = (a+1)*lights_quality;
-                SDL_Color light_color = {0, 0, 0, lightmap[i][j]};
+                light_color = {0, 0, 0, lightmap[i][j]};
                 ST::renderer_sdl::draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
             }
             else if(lightmap[i][j] == lightmap[i][j+lights_quality]){
@@ -255,7 +257,7 @@ void drawing_manager::draw_lights() const{
             }else{
                 tempRect.h = a*lights_quality;
                 tempRect.y = j - a*lights_quality;
-                SDL_Color light_color = {0, 0, 0, lightmap[i][j]};
+                light_color = {0, 0, 0, lightmap[i][j]};
                 ST::renderer_sdl::draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
                 a = 1;
             }
@@ -311,11 +313,11 @@ void drawing_manager::handle_messages(){
             }
         }
         else if(temp->msg_name == SURFACES_ASSETS) {
-            auto surfaces = *static_cast<ska::bytell_hash_map<size_t, SDL_Surface *>**>(temp->get_data());
+            auto surfaces = *static_cast<ska::bytell_hash_map<uint16_t, SDL_Surface *>**>(temp->get_data());
             ST::renderer_sdl::upload_surfaces(surfaces);
         }
         else if(temp->msg_name == FONTS_ASSETS) {
-            auto fonts = *static_cast<ska::bytell_hash_map<size_t, TTF_Font *>**>(temp->get_data());
+            auto fonts = *static_cast<ska::bytell_hash_map<uint16_t , TTF_Font *>**>(temp->get_data());
             ST::renderer_sdl::upload_fonts(fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
@@ -351,7 +353,7 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
     for(auto& i : entities){
         if(is_onscreen(i)){
             if(i.animation_num == 0){
-                if(i.is_static){
+                if(i.is_static()){
                     ST::renderer_sdl::draw_texture_scaled(i.texture, i.x, i.y, i.tex_scale_x, i.tex_scale_y);
 				}
                 else{
@@ -359,7 +361,7 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
 				}
             }
             else{
-                if(i.is_static){
+                if(i.is_static()){
                     ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
                 }else{
                     ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
@@ -375,10 +377,10 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
  * @return True if it is on screen and false otherwise.
  */
 bool drawing_manager::is_onscreen(const ST::entity& i) const{
-    if(!i.is_visible) {
+    if(!i.is_visible()) {
         return false;
     }
-    else if(i.is_static) {
+    else if(i.is_static()) {
         return true;
     }
     else {
@@ -404,14 +406,14 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
     for(auto& i : entities) {
         if (is_onscreen(i)) {
             int Xoffset, Yoffset;
-            if (i.is_static) {
+            if (i.is_static()) {
                 Xoffset = 0;
                 Yoffset = 0;
             } else {
                 Xoffset = Camera.x;
                 Yoffset = Camera.y;
             }
-            if (i.is_affected_by_physics) {
+            if (i.is_affected_by_physics()) {
                 SDL_Colour colour = {240, 0, 0, 100};
                 ST::renderer_sdl::draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
                                                 i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
@@ -433,9 +435,9 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
 void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
         if (is_onscreen(i)) {
-            if (i.is_affected_by_physics) {
+            if (i.is_affected_by_physics()) {
                 int Xoffset, Yoffset;
-                if (i.is_static) {
+                if (i.is_static()) {
                     Xoffset = 0;
                     Yoffset = 0;
                 } else {

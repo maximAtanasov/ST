@@ -10,6 +10,7 @@
 #include <gtest/gtest.h>
 #include <game_manager/level/level.hpp>
 #include <ST_util/test_util.hpp>
+#include <ST_util/string_util.hpp>
 
 /// Tests fixture for the level object
 class level_tests : public ::testing::Test {
@@ -33,20 +34,19 @@ TEST_F(level_tests, test_load_input_configuration){
 
     //Set up
     ST::level level("test_level", new message_bus());
-    std::hash<std::string> hash_f;
 
     std::string key1 = "INVENTORY";
-    size_t key1_hash = hash_f(key1);
+    uint16_t key1_hash = ST::hash_string(key1);
 
     std::string key2 = "GO";
-    size_t key2_hash = hash_f(key2);
+    uint16_t key2_hash = ST::hash_string(key2);
 
     std::string key3 = "JUMP";
-    size_t key3_hash = hash_f(key3);
+    uint16_t key3_hash = ST::hash_string(key3);
 
     //Test
     ASSERT_EQ(0, load_input_conf(&level));
-    ska::bytell_hash_map<size_t, std::vector<ST::key>> actions_buttons = level.actions_Buttons;
+    ska::bytell_hash_map<uint16_t, std::vector<ST::key>> actions_buttons = level.actions_Buttons;
 
     ST::key check_key1 = actions_buttons.at(key1_hash).at(0);
     ASSERT_EQ(ST::key::I, check_key1);

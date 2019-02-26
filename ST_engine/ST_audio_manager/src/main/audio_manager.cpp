@@ -66,15 +66,15 @@ void audio_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == PLAY_SOUND){
-            auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(temp->get_data());
-            size_t name = std::get<0> (*data);
+            auto data = static_cast<std::tuple<uint16_t, uint8_t, int8_t>*>(temp->get_data());
+            uint16_t name = std::get<0> (*data);
             uint8_t volume = std::get<1> (*data);
             int8_t loops = std::get<2> (*data);
             play_sound(name, volume, loops);
         }
         else if(temp->msg_name == PLAY_MUSIC){
-            auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(temp->get_data());
-            size_t name = std::get<0> (*data);
+            auto data = static_cast<std::tuple<uint16_t, uint8_t, int8_t>*>(temp->get_data());
+            uint16_t name = std::get<0> (*data);
             uint8_t volume = std::get<1> (*data);
             int8_t loops = std::get<2> (*data);
             play_music(name, volume, loops);
@@ -104,10 +104,10 @@ void audio_manager::handle_messages(){
             gMessage_bus->send_msg(make_msg(AUDIO_ENABLED, make_data(*arg)));
         }
         else if(temp->msg_name == MUSIC_ASSETS){
-            music_ptr = *static_cast<ska::bytell_hash_map<size_t, Mix_Music*>**>(temp->get_data());
+            music_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Music*>**>(temp->get_data());
         }
         else if(temp->msg_name == CHUNKS_ASSETS){
-            chunks_ptr = *static_cast<ska::bytell_hash_map<size_t, Mix_Chunk*>**>(temp->get_data());
+            chunks_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Chunk*>**>(temp->get_data());
         }
         else if(temp->msg_name == SET_SOUNDS_VOLUME){
             auto arg = static_cast<uint8_t*>(temp->get_data());

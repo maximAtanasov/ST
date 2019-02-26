@@ -19,7 +19,6 @@ console::console(message_bus* msg_bus){
     color = {50, 50, 50, 100};
     color_text = {255, 255, 255, 255};
     shown = false;
-    font_size = 40;
     scroll_offset = 0;
     gMessage_bus->subscribe(LOG_ERROR, &msg_sub);
     gMessage_bus->subscribe(LOG_SUCCESS, &msg_sub);

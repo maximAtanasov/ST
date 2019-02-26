@@ -32,7 +32,7 @@ namespace ST {
         semaphore* lock = nullptr;
         semaphore* dependency{};
 
-        inline uint8_t get_id(){
+        inline uint8_t get_id() const{
             return id;
         }
 

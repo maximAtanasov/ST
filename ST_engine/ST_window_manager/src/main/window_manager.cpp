@@ -12,7 +12,7 @@
 #include <SDL_image.h>
 
 /**
- * Closes the Display Manager.
+ * Closes the Window Manager.
  * Destroys the window and quits SDL.
  */
 window_manager::~window_manager(){
@@ -54,8 +54,8 @@ window_manager::window_manager(message_bus* msg_bus, task_manager* tsk_mngr, con
 }
 
 /**
- * Performs the update for the display_manager on a task thread.
- * @param arg pointer to an display_manager (a <b>this</b> pointer basically) as the
+ * Performs the update for the window_manager on a task thread.
+ * @param arg pointer to an window_manager (a <b>this</b> pointer basically) as the
  * function must be static.
  */
 void window_manager::update_task(void* mngr){

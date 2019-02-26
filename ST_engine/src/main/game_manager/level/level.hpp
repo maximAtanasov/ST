@@ -31,7 +31,7 @@ namespace ST {
         std::string name;
         message_bus *gMessage_bus;
 
-        key key_index(std::string arg);
+        key key_index(const std::string& arg);
 
     public:
 
@@ -41,13 +41,13 @@ namespace ST {
          * Contains all entities, lights and text objects.
          * Contains the background overlay and the camera.
          */
-        ska::bytell_hash_map<size_t, std::vector<ST::key>> actions_Buttons{};
+        ska::bytell_hash_map<uint16_t , std::vector<ST::key>> actions_Buttons{};
         std::vector<ST::entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};
-        size_t background = 0;
+        uint16_t background = 65535;
         SDL_Color background_color{0, 0, 0, 0};
-        size_t overlay = 0;
+        uint16_t overlay = 65535;
         uint8_t overlay_spriteNum = 1;
         ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
 

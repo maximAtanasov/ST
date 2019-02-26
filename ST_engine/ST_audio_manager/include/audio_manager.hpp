@@ -67,8 +67,8 @@ class audio_manager{
         subscriber msg_sub{};
 
         ///External dependencies
-        ska::bytell_hash_map<size_t, Mix_Chunk*>* chunks_ptr{};
-        ska::bytell_hash_map<size_t, Mix_Music*>* music_ptr{};//-Delivered as a message
+        ska::bytell_hash_map<uint16_t, Mix_Chunk*>* chunks_ptr{};
+        ska::bytell_hash_map<uint16_t, Mix_Music*>* music_ptr{};//-Delivered as a message
         message_bus* gMessage_bus{}; //-Delivered in constructor
         task_manager* gTask_manager{}; //-Delivered in constructor
 
@@ -77,8 +77,8 @@ class audio_manager{
 
 
         ///Audio control functions
-        void play_music(size_t arg, uint8_t volume, int8_t loops) const;
-        void play_sound(size_t arg, uint8_t volume, int8_t loops) const;
+        void play_music(uint16_t arg, uint8_t volume, int8_t loops) const;
+        void play_sound(uint16_t arg, uint8_t volume, int8_t loops) const;
         void mute();
         void unmute();
         void stop_music() const;
@@ -152,7 +152,7 @@ inline void audio_manager::unmute(){
  * @param volume The volume to play the chunk at.
  * @param loops How many times to play it.
  */
-inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) const{
+inline void audio_manager::play_sound(uint16_t arg, uint8_t volume, int8_t loops) const{
     auto data = chunks_ptr->find(arg);
     if(data != chunks_ptr->end()){
         if(!muted){
@@ -170,7 +170,7 @@ inline void audio_manager::play_sound(size_t arg, uint8_t volume, int8_t loops) 
  * @param volume The volume to play the music at.
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
-inline void audio_manager::play_music(size_t arg, uint8_t volume, int8_t loops) const{
+inline void audio_manager::play_music(uint16_t arg, uint8_t volume, int8_t loops) const{
     auto data = music_ptr->find(arg);
     if(data != music_ptr->end() ){
         if(!muted) {

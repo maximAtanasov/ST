@@ -22,13 +22,25 @@ namespace ST {
      */
     struct text {
 
-        text(int32_t x, int32_t y, SDL_Color color, const std::string &text_string, size_t font);
+        text(int32_t x, int32_t y, SDL_Color color, const std::string &text_string, uint16_t font);
 
-        size_t font;
+        //32 bytes
         std::string text_string;
+
+        //8 bytes
         int32_t x, y;
+
+        //4 bytes
         SDL_Color color;
+
+        //2 bytes
+        uint16_t font;
+
+        //1 byte
         bool is_visible = true;
+
+        //1 byte padding
+        uint8_t padding;
     };
 }
 

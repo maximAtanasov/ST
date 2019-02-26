@@ -158,8 +158,6 @@ extern "C" int getEntityColXLua(lua_State *L);
 extern "C" int getEntityColYLua(lua_State *L);
 extern "C" int getEntityColXOffsetLua(lua_State *L);
 extern "C" int getEntityColYOffsetLua(lua_State *L);
-extern "C" int getEntityMassLua(lua_State *L);
-extern "C" int setEntityMassLua(lua_State *L);
 
 //animation
 extern "C" int setEntityAnimationLua(lua_State *L);

@@ -177,8 +177,6 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "getEntityColY", getEntityColYLua);
     lua_register(L, "getEntityColXOffset", getEntityColXOffsetLua);
     lua_register(L, "getEntityColYOffset", getEntityColYOffsetLua);
-    lua_register(L, "getEntityMass", getEntityMassLua);
-    lua_register(L, "setEntityMass", setEntityMassLua);
 
     //animation
     lua_register(L, "setEntityAnimation", setEntityAnimationLua);
@@ -294,10 +292,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(temp, temp_buf_2, string_hash);
+                    ST::replace_string(temp, temp_buf_2, string_hash);
                 }
                 while(temp.find("playMusic(\"") != std::string::npos) {
                     std::string to_find = "playMusic(\"";
@@ -305,10 +302,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(temp, temp_buf_2, string_hash);
+                    ST::replace_string(temp, temp_buf_2, string_hash);
                 }
                 while(temp.find("keyHeld(\"") != std::string::npos) {
                     std::string to_find = "keyHeld(\"";
@@ -316,10 +312,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(temp, temp_buf_2, string_hash);
+                    ST::replace_string(temp, temp_buf_2, string_hash);
                 }
                 while(temp.find("keyPressed(\"") != std::string::npos) {
                     std::string to_find = "keyPressed(\"";
@@ -327,10 +322,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(temp, temp_buf_2, string_hash);
+                    ST::replace_string(temp, temp_buf_2, string_hash);
                 }
                 while(temp.find("keyReleased(\"") != std::string::npos) {
                     std::string to_find = "keyReleased(\"";
@@ -338,10 +332,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(temp, temp_buf_2, string_hash);
+                    ST::replace_string(temp, temp_buf_2, string_hash);
                 }
                 while(temp.find("setClickKey(\"") != std::string::npos) {
                     std::string to_find = "setClickKey(\"";
@@ -349,10 +342,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(temp, temp_buf_2, string_hash);
+                    ST::replace_string(temp, temp_buf_2, string_hash);
                 }
                 //A way for creating annotations in lua
                 while(temp.find("----@Key") != std::string::npos) {
@@ -363,10 +355,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
                         temp_buf.push_back((next_line.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(next_line, temp_buf_2, string_hash);
+                    ST::replace_string(next_line, temp_buf_2, string_hash);
                     temp = next_line;
                 }
                 while(temp.find("----@Audio") != std::string::npos) {
@@ -377,10 +368,9 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
                         temp_buf.push_back((next_line.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
-                    replace_string(next_line, temp_buf_2, string_hash);
+                    ST::replace_string(next_line, temp_buf_2, string_hash);
                     temp = next_line;
                 }
                 result += temp + "\n";
@@ -409,13 +399,12 @@ std::string lua_backend::hash_string(const std::string& arg){
         while(temp.find("playSound(\"") != std::string::npos) {
             std::string to_find = "playSound(\"";
             std::string temp_buf;
-            for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
+            for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
-            replace_string(temp, temp_buf_2, string_hash);
+            ST::replace_string(temp, temp_buf_2, string_hash);
         }
         while(temp.find("playMusic(\"") != std::string::npos) {
             std::string to_find = "playMusic(\"";
@@ -423,10 +412,9 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
-            replace_string(temp, temp_buf_2, string_hash);
+            ST::replace_string(temp, temp_buf_2, string_hash);
         }
         while(temp.find("keyHeld(\"") != std::string::npos) {
             std::string to_find = "keyHeld(\"";
@@ -434,10 +422,9 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
-            replace_string(temp, temp_buf_2, string_hash);
+            ST::replace_string(temp, temp_buf_2, string_hash);
         }
         while(temp.find("keyPressed(\"") != std::string::npos) {
             std::string to_find = "keyPressed(\"";
@@ -445,10 +432,9 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
-            replace_string(temp, temp_buf_2, string_hash);
+            ST::replace_string(temp, temp_buf_2, string_hash);
         }
         while(temp.find("keyReleased(\"") != std::string::npos) {
             std::string to_find = "keyReleased(\"";
@@ -456,10 +442,9 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
-            replace_string(temp, temp_buf_2, string_hash);
+            ST::replace_string(temp, temp_buf_2, string_hash);
         }
         while(temp.find("setClickKey(\"") != std::string::npos) {
             std::string to_find = "setClickKey(\"";
@@ -467,10 +452,9 @@ std::string lua_backend::hash_string(const std::string& arg){
             for (size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++) {
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
-            replace_string(temp, temp_buf_2, string_hash);
+            ST::replace_string(temp, temp_buf_2, string_hash);
         }
         return temp;
     }
@@ -674,8 +658,7 @@ extern "C" int isLightStaticLua(lua_State* L){
  */
 extern "C" int hashStringLua(lua_State* L){
     auto str = static_cast<std::string>(lua_tostring(L, 1));
-    std::hash<std::string> hash_f;
-    lua_pushinteger(L, (lua_Integer)hash_f(str));
+    lua_pushinteger(L, (lua_Integer)ST::hash_string(str));
     return 1;
 }
 
@@ -719,8 +702,7 @@ extern "C" int createTextObjectLua(lua_State* L){
     auto size = static_cast<uint8_t>(lua_tointeger(L, 5));
     SDL_Color temp_color = {255,255,255,255};
 
-    std::hash<std::string> hash_f;
-    ST::text temp = ST::text(x, y, temp_color, text_string, hash_f(font + " " + std::to_string(size)));
+    ST::text temp = ST::text(x, y, temp_color, text_string, ST::hash_string(font + " " + std::to_string(size)));
     gGame_managerLua->get_level()->text_objects.emplace_back(temp);
     return 0;
 }
@@ -763,8 +745,7 @@ extern "C" int setTextObjectTextLua(lua_State* L){
 extern "C" int setTextObjectFontLua(lua_State* L){
     auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto font = static_cast<std::string>(lua_tostring(L, 2));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->text_objects.at(ID).font = hash_f(font);
+    gGame_managerLua->get_level()->text_objects.at(ID).font = ST::hash_string(font);
     return 0;
 }
 
@@ -843,7 +824,7 @@ extern "C" int setEntityXLua(lua_State *L){
 extern "C" int setEntityActiveLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_active = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_active(arg);
     return 0;
 }
 
@@ -919,7 +900,7 @@ extern "C" int getEntityVelocityYLua(lua_State *L){
 extern "C" int setEntityStaticLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_static = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_static(arg);
     return 0;
 }
 
@@ -1023,7 +1004,7 @@ extern "C" int setEntityTextureScaleLua(lua_State* L){
 extern "C" int setEntityVisibleLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_visible = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_visible(arg);
     return 0;
 }
 
@@ -1036,8 +1017,7 @@ extern "C" int setEntityVisibleLua(lua_State *L){
 extern "C" int setEntityTextureLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     std::string arg = static_cast<std::string>(lua_tostring(L, 2));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->entities.at(id).texture = hash_f(arg);
+    gGame_managerLua->get_level()->entities.at(id).texture = ST::hash_string(arg);
     return 0;
 }
 
@@ -1052,7 +1032,7 @@ extern "C" int setEntityTextureLua(lua_State *L){
 extern "C" int setEntityAffectedByPhysicsLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_affected_by_physics = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_affected_by_physics(arg);
     return 0;
 }
 
@@ -1066,7 +1046,7 @@ extern "C" int entityCollidesLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto id2 = static_cast<uint64_t>(lua_tointeger(L, 2));
     ST::level* temp = gGame_managerLua->get_level();
-    if(temp->entities.at(id).is_active){
+    if(temp->entities.at(id).is_active()){
         lua_pushboolean(L,temp->entities.at(id).collides(temp->entities.at(id2)));
     }
     else{
@@ -1137,31 +1117,6 @@ extern "C" int getEntityColYOffsetLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y_offset());
     return 1;
-}
-
-/**
- * Gets the mass of an entity.
- * See the Lua docs for more information.
- * @param L The global Lua State.
- * @return Always 1.
- */
-extern "C" int getEntityMassLua(lua_State *L){
-    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).mass);
-    return 1;
-}
-
-/**
- * Sets the mass of an entity.
- * See the Lua docs for more information.
- * @param L The global Lua State.
- * @return Always 0.
- */
-extern "C" int setEntityMassLua(lua_State *L){
-    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).mass = arg;
-    return 0;
 }
 
 /**
@@ -1475,8 +1430,7 @@ extern "C" int hideMouseCursorLua(lua_State*){
  */
 extern "C" int setBackgroundLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->background = hash_f(arg);
+    gGame_managerLua->get_level()->background = ST::hash_string(arg);
     return 0;
 }
 
@@ -1487,10 +1441,10 @@ extern "C" int setBackgroundLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setBackgroundColorLua(lua_State* L){
-    uint8_t r = static_cast<uint8_t>(lua_tointeger(L, 1));
-    uint8_t g = static_cast<uint8_t>(lua_tointeger(L, 2));
-    uint8_t b = static_cast<uint8_t>(lua_tointeger(L, 3));
-    uint8_t a = static_cast<uint8_t>(lua_tointeger(L, 4));
+    auto r = static_cast<uint8_t>(lua_tointeger(L, 1));
+    auto g = static_cast<uint8_t>(lua_tointeger(L, 2));
+    auto b = static_cast<uint8_t>(lua_tointeger(L, 3));
+    auto a = static_cast<uint8_t>(lua_tointeger(L, 4));
 
     gGame_managerLua->get_level()->background_color= {r, g, b, a};
     return 0;
@@ -1505,8 +1459,7 @@ extern "C" int setBackgroundColorLua(lua_State* L){
 extern "C" int setOverlayLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     auto spriteNum = static_cast<uint8_t>(lua_tointeger(L, 2));
-    std::hash<std::string> hash_f;
-    gGame_managerLua->get_level()->overlay = hash_f(arg);
+    gGame_managerLua->get_level()->overlay = ST::hash_string(arg);
     gGame_managerLua->get_level()->overlay_spriteNum = spriteNum;
     return 0;
 }
@@ -1579,7 +1532,7 @@ extern "C" int controllerRumbleLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int keyHeldLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_held(arg));
     return 1;
 }
@@ -1591,7 +1544,7 @@ extern "C" int keyHeldLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int keyPressedLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_pressed(arg));
     return 1;
 }
@@ -1603,7 +1556,7 @@ extern "C" int keyPressedLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int keyReleasedLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_released(arg));
     return 1;
 }
@@ -1631,11 +1584,11 @@ extern "C" int setAudioEnabledLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int playMusicLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     auto volume = static_cast<uint8_t>(lua_tointeger(L, 2));
     auto loops = static_cast<int8_t>(lua_tointeger(L, 3));
-    std::tuple<size_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
-    message* msg_temp = make_msg(PLAY_MUSIC, make_data<std::tuple<size_t, uint8_t, int8_t>>(data));
+    std::tuple<uint16_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
+    message* msg_temp = make_msg(PLAY_MUSIC, make_data<std::tuple<uint16_t, uint8_t, int8_t>>(data));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1647,11 +1600,11 @@ extern "C" int playMusicLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int playSoundLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     auto volume = static_cast<uint8_t>(lua_tointeger(L, 2));
     auto loops = static_cast<int8_t>(lua_tointeger(L, 3));
-    std::tuple<size_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
-    message* msg_temp = make_msg(PLAY_SOUND, make_data<std::tuple<size_t, uint8_t, int8_t>>(data));
+    std::tuple<uint16_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
+    message* msg_temp = make_msg(PLAY_SOUND, make_data<std::tuple<uint16_t, uint8_t, int8_t>>(data));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }

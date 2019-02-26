@@ -18,16 +18,16 @@
 #ifndef CACHEHASH_DEF
 #define CACHEHASH_DEF
 
-typedef std::tuple<std::string, size_t> font_cache_tuple;
+typedef std::tuple<std::string, uint16_t> font_cache_tuple;
 namespace std{
 
     ///defines a hash operator for the font_cache_tuple type - this is needed because we use it in a ska::bytell_hash_map
     template <> struct hash<font_cache_tuple>{
           std::size_t operator()(const font_cache_tuple& k) const{
-          using std::size_t;
+          using std::uint16_t;
           using std::hash;
           using std::string;
-          return ((hash<string>()(std::get<0>(k)) ^ (hash<size_t>()(std::get<1>(k)) << 1)) >> 1);
+          return ((hash<string>()(std::get<0>(k)) ^ (hash<uint16_t>()(std::get<1>(k)) << 1)) >> 1);
         }
     };
 }
@@ -54,9 +54,9 @@ namespace ST {
 
             void set_max(uint32_t max);
 
-            void cache_string(std::string str, SDL_Texture *texture, size_t font);
+            void cache_string(std::string str, SDL_Texture *texture, uint16_t font);
 
-            SDL_Texture *get_cached_string(std::string str, size_t font);
+            SDL_Texture *get_cached_string(std::string str, uint16_t font);
 
             void clear();
 

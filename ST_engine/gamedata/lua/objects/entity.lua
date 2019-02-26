@@ -67,7 +67,6 @@ function newEntity(self, x, y)
         --physics
         setEntityAffectedByPhysics(o.ID, o.affectedByPhysics)
 	    setEntityCollisionBox(o.ID, o.offsetColX, o.offsetColY, o.colX, o.colY)
-        setEntityMass(o.ID, o.mass)
     end
     return o
 end
@@ -140,8 +139,6 @@ function entity:setTextureScale(x, y)
     setEntityTexH(self.ID, y*getEntityTexH(self.id))
 end
 
-
-
 --get the Texture width of an entity
 function entity:getTexW()
     return getEntityTexW(self.ID)
@@ -170,17 +167,6 @@ end
 --get the vertical velocity of an entity
 function entity:getVelocityY()
     return getEntityVelocityY(self.ID)
-end
-
---set the mass of an entity
-function entity:setMass(arg)
-    self.mass = arg;
-    setEntityMass(self.ID, arg)
-end
-
---get the mass of an entity
-function entity:getMass()
-    return getEntityMass(self.ID)
 end
 
 --set the collision box of an entity

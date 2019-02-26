@@ -10,6 +10,7 @@
 #include <game_manager/level/level.hpp>
 #include <fstream>
 #include <sstream>
+#include <ST_util/string_util.hpp>
 
 /**
  * Constructor for the level.
@@ -143,12 +144,11 @@ int8_t ST::level::load_input_conf(){
                 action += a;
             }
             else if(a ==  '\n' || file.eof()){
-                std::hash<std::string> hash_f;
                 std::istringstream buf(button);
                 std::istream_iterator<std::string> beg(buf), end;
                 std::vector<std::string> tokens(beg, end);
-                actions_Buttons.emplace(hash_f(action), std::vector<ST::key>());
-                std::vector<ST::key>* buttons_for_action = &actions_Buttons.at(hash_f(action));
+                actions_Buttons.emplace(ST::hash_string(action), std::vector<ST::key>());
+                std::vector<ST::key>* buttons_for_action = &actions_Buttons.at(ST::hash_string(action));
                 for(const auto &token : tokens) {
                     buttons_for_action->emplace_back(key_index(token));
                 }
@@ -174,7 +174,7 @@ int8_t ST::level::load_input_conf(){
  * @param arg the key string as read from inputConf.cfg.
  * @return a <b>ST::key</b> enum (an uint8_t).
  */
-ST::key ST::level::key_index(std::string arg){
+ST::key ST::level::key_index(const std::string& arg){
     key index = key::UNKNOWN;
     if(arg == "left"){
         index = key::LEFT;
@@ -341,8 +341,8 @@ ST::key ST::level::key_index(std::string arg){
     else if(arg == "minus"){
         index = key::MINUS;
     }
-	else if (arg == "delete") {
-	index = key::DELETE;
+    else if (arg == "delete"){
+	    index = key::DELETE;
 	}
     else if(arg == "ralt"){
         index = key::RALT;
