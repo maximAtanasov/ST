@@ -151,6 +151,21 @@ TEST_F(lua_backend_test, test_hash_file_keyAnnotation){
     }
 }
 
+TEST_F(lua_backend_test, test_hash_string_playSound){
+    std::string result = hash_string_lua("playSound(\"sound.wav\", 100, 1)");
+    std::string resulting_integer = result.substr(10, std::string::npos);
+    resulting_integer.erase(resulting_integer.size()-9);
+    try{
+        std::stoull(resulting_integer);
+    }catch(const std::invalid_argument& e) {
+        (void)e;
+        FAIL();
+    }catch (const std::out_of_range& e){
+        (void)e;
+        FAIL();
+    }
+}
+
 TEST_F(lua_backend_test, test_hash_file_audioAnnotation){
     std::string result = hash_file("lua_scripts/test_script_audioAnnotation.lua");
     std::string resulting_integer = result.substr(12, std::string::npos);
@@ -165,25 +180,10 @@ TEST_F(lua_backend_test, test_hash_file_audioAnnotation){
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_playSound){
-    std::string result = hash_string_lua("playSound(\"sound.wav\", 100, 1)");
-    std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-10);
-    try{
-        std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
-        FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
-        FAIL();
-    }
-}
-
 TEST_F(lua_backend_test, test_hash_string_playMusic){
     std::string result = hash_string_lua("playMusic(\"music.mp3\", 100, 1)");
     std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-10);
+    resulting_integer.erase(resulting_integer.size()-9);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -498,8 +498,7 @@ TEST_F(lua_backend_test, test_call_function_playSound){
     subscriber subscriber1;
     msg_bus->subscribe(PLAY_SOUND, &subscriber1);
     std::string test_string = "some_sound.wav";
-    std::hash<std::string> hash_f;
-    size_t expected = hash_f(test_string);
+    uint16_t expected = ST::hash_string(test_string);
 
     //Test
     test_subject.run_script("playSound(\"" + test_string + "\", 100, 3)");
@@ -509,8 +508,8 @@ TEST_F(lua_backend_test, test_call_function_playSound){
     ASSERT_TRUE(result);
     ASSERT_EQ(PLAY_SOUND, result->msg_name);
 
-    auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(result->get_data());
-    size_t name = std::get<0> (*data);
+    auto data = static_cast<std::tuple<uint16_t, uint8_t, int8_t>*>(result->get_data());
+    uint16_t name = std::get<0> (*data);
     uint8_t volume = std::get<1> (*data);
     int8_t loops = std::get<2> (*data);
 
@@ -524,8 +523,7 @@ TEST_F(lua_backend_test, test_call_function_playMusic){
     subscriber subscriber1;
     msg_bus->subscribe(PLAY_MUSIC, &subscriber1);
     std::string test_string = "some_music.mp3";
-    std::hash<std::string> hash_f;
-    size_t expected = hash_f(test_string);
+    uint16_t expected = ST::hash_string(test_string);
 
     //Test
     test_subject.run_script("playMusic(\"" + test_string + "\", 128, 2)");
@@ -535,8 +533,8 @@ TEST_F(lua_backend_test, test_call_function_playMusic){
     ASSERT_TRUE(result);
     ASSERT_EQ(PLAY_MUSIC, result->msg_name);
 
-    auto data = static_cast<std::tuple<size_t, uint8_t, int8_t>*>(result->get_data());
-    size_t name = std::get<0> (*data);
+    auto data = static_cast<std::tuple<uint16_t, uint8_t, int8_t>*>(result->get_data());
+    uint16_t name = std::get<0> (*data);
     uint8_t volume = std::get<1> (*data);
     int8_t loops = std::get<2> (*data);
 
@@ -745,7 +743,7 @@ TEST_F(lua_backend_test, test_call_function_setOverlay){
     test_subject.run_script("setOverlay(\"some_bg.webp\", 3)");
     ASSERT_EQ(2, game_mngr->get_level_calls);
     ASSERT_EQ(3, game_mngr->get_level()->overlay_spriteNum);
-    ASSERT_EQ(hash_string("some_bg.webp"), game_mngr->get_level()->overlay);
+    ASSERT_EQ(ST::hash_string("some_bg.webp"), game_mngr->get_level()->overlay);
 }
 
 TEST_F(lua_backend_test, test_call_function_getMusicVolume){
@@ -1105,14 +1103,13 @@ TEST_F(lua_backend_test, test_call_function_setLightStatic){
 
 TEST_F(lua_backend_test, test_call_function_createTextObject){
     test_subject.run_script(R"(createTextObject(500, 600, "SOME_TEXT", "SOME_FONT.ttf", 40))");
-    std::hash<std::string> hash_f;
     //Check results
     ASSERT_EQ(1, game_mngr->get_level_calls);
     ASSERT_EQ(1, game_mngr->get_level()->text_objects.size());
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1124,9 +1121,8 @@ TEST_F(lua_backend_test, test_call_function_createTextObject){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
     //Set up
-    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-            "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
+            "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
 
     //Test
     test_subject.run_script("setTextObjectColor(0, 100, 110, 120, 130)");
@@ -1137,7 +1133,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(100, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1148,9 +1144,8 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectText){
     //Set up
-    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
+                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectText(0, \"NEW_TEXT\")");
 
@@ -1160,7 +1155,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectText){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("NEW_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1171,9 +1166,8 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectText){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
     //Set up
-    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
+                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectFont(0, \"NEW_FONT.ttf 40\")");
 
@@ -1183,7 +1177,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("NEW_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("NEW_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1194,9 +1188,8 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectX){
     //Set up
-    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(
-            ST::text(500, 600, {255,255,255,255}, "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
+            ST::text(500, 600, {255,255,255,255}, "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectX(0, 123)");
 
@@ -1206,7 +1199,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectX){
     ASSERT_EQ(123, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1217,9 +1210,8 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectX){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectY){
     //Set up
-    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
+                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectY(0, 123)");
 
@@ -1229,7 +1221,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectY){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(123, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_TRUE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1240,9 +1232,8 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectY){
 
 TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
     //Set up
-    std::hash<std::string> hash_f;
     game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", hash_f("SOME_FONT.ttf 40")));
+                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectVisible(0, false)");
 
@@ -1252,7 +1243,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
     ASSERT_EQ(500, game_mngr->get_level()->text_objects.at(0).x);
     ASSERT_EQ(600, game_mngr->get_level()->text_objects.at(0).y);
     ASSERT_EQ("SOME_TEXT", game_mngr->get_level()->text_objects.at(0).text_string);
-    ASSERT_EQ(hash_f("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
+    ASSERT_EQ(ST::hash_string("SOME_FONT.ttf 40"), game_mngr->get_level()->text_objects.at(0).font);
     ASSERT_FALSE(game_mngr->get_level()->text_objects.at(0).is_visible);
 
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.r);
@@ -1691,7 +1682,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexture){
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).tex_w);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_x);
     ASSERT_EQ(1, game_mngr->get_level()->entities.at(0).tex_scale_y);
-    ASSERT_EQ(hash_string("new_texture.webp"), game_mngr->get_level()->entities.at(0).texture);
+    ASSERT_EQ(ST::hash_string("new_texture.webp"), game_mngr->get_level()->entities.at(0).texture);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).sprite_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation_num);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).animation);

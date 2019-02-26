@@ -23,9 +23,9 @@ namespace ST {
     ///A container that holds all asset types used in the game
     struct assets {
         ska::bytell_hash_map<uint16_t, SDL_Surface *> surfaces;
-        ska::bytell_hash_map<size_t, TTF_Font *> fonts;
-        ska::bytell_hash_map<size_t, Mix_Music *> music;
-        ska::bytell_hash_map<size_t, Mix_Chunk *> chunks;
+        ska::bytell_hash_map<uint16_t, TTF_Font *> fonts;
+        ska::bytell_hash_map<uint16_t, Mix_Music *> music;
+        ska::bytell_hash_map<uint16_t, Mix_Chunk *> chunks;
     };
 }
 

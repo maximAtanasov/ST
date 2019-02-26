@@ -13,9 +13,9 @@
 
 namespace ST {
     namespace renderer_sdl {
-        void cache_font(TTF_Font *Font, size_t font_and_size);
-        uint16_t draw_text_lru_cached(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
-        uint16_t draw_text_cached_glyphs(size_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        void cache_font(TTF_Font *Font, uint16_t font_and_size);
+        uint16_t draw_text_lru_cached(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
+        uint16_t draw_text_cached_glyphs(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
     }
 }
 
@@ -32,15 +32,15 @@ static int16_t height;
 static ska::bytell_hash_map<uint16_t, SDL_Texture *> textures{};
 
 static ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces_pointer;
-static ska::bytell_hash_map<size_t, TTF_Font *> *fonts_pointer;
+static ska::bytell_hash_map<uint16_t, TTF_Font *> *fonts_pointer;
 
 
 //the fonts in this table do not need to be cleaned - these are just pointer to Fonts stored in the asset_manager and
 //that will handle the cleanup
-static ska::bytell_hash_map<size_t, TTF_Font *> fonts{};
+static ska::bytell_hash_map<uint16_t, TTF_Font *> fonts{};
 
 //we do however need to cleanup the cache as that lives on the GPU
-static ska::bytell_hash_map<size_t, std::vector<SDL_Texture *>> fonts_cache{};
+static ska::bytell_hash_map<uint16_t, std::vector<SDL_Texture *>> fonts_cache{};
 
 static bool vsync = false;
 
@@ -109,7 +109,7 @@ void ST::renderer_sdl::close(){
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
+uint16_t ST::renderer_sdl::draw_text_lru_cached(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font){
     TTF_Font* _font = fonts[font];
     int32_t texW = 0;
     if(_font != nullptr){
@@ -147,7 +147,7 @@ uint16_t ST::renderer_sdl::draw_text_lru_cached(size_t font, const std::string& 
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
+uint16_t ST::renderer_sdl::draw_text_cached_glyphs(uint16_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
     int32_t tempX = 0;
     auto cached_vector = fonts_cache.find(font);
     if(cached_vector != fonts_cache.end()){
@@ -184,7 +184,7 @@ uint16_t ST::renderer_sdl::draw_text_cached_glyphs(size_t font, const std::strin
  *
  * Note that the font must previously be loaded at the selected size.
  */
-int32_t ST::renderer_sdl::draw_text(size_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font, int8_t flag){
+int32_t ST::renderer_sdl::draw_text(uint16_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font, int8_t flag){
     if(flag == 1){
         return draw_text_cached_glyphs(font, arg2, x, y, color_font);
     }else if(flag == 0){
@@ -225,7 +225,7 @@ void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surfac
 /**
  * Upload fonts to the GPU. (save and cache their glyphs).
  */
-void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<size_t, TTF_Font*>* fonts_t){
+void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font*>* fonts_t){
     if(fonts_t != nullptr){
 		fonts_pointer = fonts_t;
         for ( auto& it : *fonts_t){
@@ -257,7 +257,7 @@ void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<size_t, TTF_Font*>* fon
  * @param Font The Font to render with.
  * @param font_and_size The name+size of the font.
  */
-void ST::renderer_sdl::cache_font(TTF_Font* Font, size_t font_and_size){
+void ST::renderer_sdl::cache_font(TTF_Font* Font, uint16_t font_and_size){
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
     temp[1] = 0;

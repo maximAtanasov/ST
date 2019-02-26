@@ -94,7 +94,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
             }else{
                 gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Unpacking " + surface.first)));
                 count[surface.first]++;
-                uint16_t hashed = hash_string(surface.first);
+                uint16_t hashed = ST::hash_string(surface.first);
                 all_assets.surfaces[hashed] = surface.second;
             }
         }
@@ -105,8 +105,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
             }else{
                 gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Unpacking " + chunk.first)));
                 count[chunk.first]++;
-                std::hash<std::string> hash_f;
-                size_t hashed = hash_f(chunk.first);
+                size_t hashed = ST::hash_string(chunk.first);
                 all_assets.chunks[hashed] = chunk.second;
             }
         }
@@ -117,8 +116,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
             }else{
                 gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Unpacking " + music.first)));
                 count[music.first]++;
-                std::hash<std::string> hash_f;
-                size_t hashed = hash_f(music.first);
+                uint16_t hashed = ST::hash_string(music.first);
                 all_assets.music[hashed] = music.second;
             }
         }
@@ -176,12 +174,12 @@ int8_t assets_manager::load_asset(std::string path){
     }
 
     //check if the file is already loaded and increase the reference count
-    auto _asset_count = count.find(trim_path(path));
+    auto _asset_count = count.find(ST::trim_path(path));
     if (_asset_count != count.end() && _asset_count->second > 0) {
         _asset_count->second += 1;
         return 0;
     } else if (_asset_count == count.end()) {
-        count.emplace(trim_path(path), 0);
+        count.emplace(ST::trim_path(path), 0);
     }
 
 
@@ -192,14 +190,13 @@ int8_t assets_manager::load_asset(std::string path){
     }else {
         gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Loading " + path)));
     }
-    std::hash<std::string> hash_f;
 
     //Handle the different extentions - currently png, webp, wav, mp3, ttf
     if(extention == "png" || extention == "webp"){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
-            path = trim_path(path);
-            uint16_t string_hash = hash_string(path);
+            path = ST::trim_path(path);
+            uint16_t string_hash = ST::hash_string(path);
             all_assets.surfaces[string_hash] = temp1;
             count.at(path) += 1;
         }else{
@@ -209,8 +206,8 @@ int8_t assets_manager::load_asset(std::string path){
     }else if(extention == "wav"){
         Mix_Chunk* temp1 = Mix_LoadWAV(path.c_str());
         if (temp1 != nullptr){
-            path = trim_path(path);
-            size_t string_hash = hash_f(path);
+            path = ST::trim_path(path);
+            uint16_t string_hash = ST::hash_string(path);
             all_assets.chunks[string_hash] = temp1;
             count.at(path) += 1;
         }
@@ -221,8 +218,8 @@ int8_t assets_manager::load_asset(std::string path){
     }else if(extention == "ogg"){
         Mix_Music* temp1 = Mix_LoadMUS(path.c_str());
         if (temp1 != nullptr) {
-            path = trim_path(path);
-            size_t string_hash = hash_f(path);
+            path = ST::trim_path(path);
+            uint16_t string_hash = ST::hash_string(path);
             all_assets.music[string_hash] = temp1;
             count.at(path) += 1;
         }
@@ -249,9 +246,9 @@ int8_t assets_manager::load_asset(std::string path){
         std::string font = result.at(0);
         TTF_Font* tempFont = TTF_OpenFont(font.c_str(), size);
         if(tempFont != nullptr){
-            font = trim_path(font);
+            font = ST::trim_path(font);
             std::string font_and_size = font + " " + result.at(1);
-            all_assets.fonts[hash_f(font_and_size)] = tempFont;
+            all_assets.fonts[ST::hash_string(font_and_size)] = tempFont;
             count.at(font_and_size) += 1;
         }else{
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + font + " not found!")));
@@ -324,7 +321,7 @@ int8_t assets_manager::unload_asset(std::string path){
         return 0;
     }
 
-    auto _asset_count = count.find(trim_path(path));
+    auto _asset_count = count.find(ST::trim_path(path));
     if (_asset_count != count.end() && _asset_count->second > 1) {
         _asset_count->second -= 1;
         return 0;
@@ -333,33 +330,32 @@ int8_t assets_manager::unload_asset(std::string path){
     }
 
     std::string extention = ST::get_file_extension(path);
-    std::hash<std::string> hash_f;
     gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Unloading " + path)));
 
     if(extention == "png" || extention == "webp"){
-        path = trim_path(path);
-        uint16_t string_hash = hash_string(path);
+        path = ST::trim_path(path);
+        uint16_t string_hash = ST::hash_string(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "wav"){
-        path = trim_path(path);
-        size_t string_hash = hash_f(path);
+        path = ST::trim_path(path);
+        uint16_t string_hash = ST::hash_string(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
         all_assets.chunks[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "ogg"){
-        path = trim_path(path);
-        size_t string_hash = hash_f(path);
+        path = ST::trim_path(path);
+        uint16_t string_hash = ST::hash_string(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
         all_assets.music[string_hash] = nullptr;
         count.at(path)--;
     }else if(extention == "bin"){
         return unload_assets_from_binary(path);
     }else{ //if file is a font
-        path = trim_path(path);
-        TTF_CloseFont(all_assets.fonts[hash_f(path)]);
-        all_assets.fonts[hash_f(path)] = nullptr;
+        path = ST::trim_path(path);
+        TTF_CloseFont(all_assets.fonts[ST::hash_string(path)]);
+        all_assets.fonts[ST::hash_string(path)] = nullptr;
         count.at(path)--;
     }
     return 0;

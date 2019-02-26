@@ -8,6 +8,7 @@
  */
 
 #include <drawing_manager/drawing_manager.hpp>
+#include <ST_util/string_util.hpp>
 
 #define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
 #define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
@@ -46,9 +47,8 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
     lights_quality = 4;
 
     //hash of default font
-    std::hash<std::string> hash_f;
-    default_font_normal = hash_f(DEFAULT_FONT_NORMAL);
-    default_font_small = hash_f(DEFAULT_FONT_SMALL);
+    default_font_normal = ST::hash_string(DEFAULT_FONT_NORMAL);
+    default_font_small = ST::hash_string(DEFAULT_FONT_SMALL);
 
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
@@ -315,7 +315,7 @@ void drawing_manager::handle_messages(){
             ST::renderer_sdl::upload_surfaces(surfaces);
         }
         else if(temp->msg_name == FONTS_ASSETS) {
-            auto fonts = *static_cast<ska::bytell_hash_map<size_t, TTF_Font *>**>(temp->get_data());
+            auto fonts = *static_cast<ska::bytell_hash_map<uint16_t , TTF_Font *>**>(temp->get_data());
             ST::renderer_sdl::upload_fonts(fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {

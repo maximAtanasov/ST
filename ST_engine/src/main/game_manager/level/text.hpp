@@ -22,9 +22,9 @@ namespace ST {
      */
     struct text {
 
-        text(int32_t x, int32_t y, SDL_Color color, const std::string &text_string, size_t font);
+        text(int32_t x, int32_t y, SDL_Color color, const std::string &text_string, uint16_t font);
 
-        size_t font;
+        uint16_t font;
         std::string text_string;
         int32_t x, y;
         SDL_Color color;
