@@ -177,8 +177,6 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "getEntityColY", getEntityColYLua);
     lua_register(L, "getEntityColXOffset", getEntityColXOffsetLua);
     lua_register(L, "getEntityColYOffset", getEntityColYOffsetLua);
-    lua_register(L, "getEntityMass", getEntityMassLua);
-    lua_register(L, "setEntityMass", setEntityMassLua);
 
     //animation
     lua_register(L, "setEntityAnimation", setEntityAnimationLua);
@@ -826,7 +824,7 @@ extern "C" int setEntityXLua(lua_State *L){
 extern "C" int setEntityActiveLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_active = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_active(arg);
     return 0;
 }
 
@@ -902,7 +900,7 @@ extern "C" int getEntityVelocityYLua(lua_State *L){
 extern "C" int setEntityStaticLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_static = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_static(arg);
     return 0;
 }
 
@@ -1006,7 +1004,7 @@ extern "C" int setEntityTextureScaleLua(lua_State* L){
 extern "C" int setEntityVisibleLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_visible = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_visible(arg);
     return 0;
 }
 
@@ -1034,7 +1032,7 @@ extern "C" int setEntityTextureLua(lua_State *L){
 extern "C" int setEntityAffectedByPhysicsLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).is_affected_by_physics = arg;
+    gGame_managerLua->get_level()->entities.at(id).set_affected_by_physics(arg);
     return 0;
 }
 
@@ -1048,7 +1046,7 @@ extern "C" int entityCollidesLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto id2 = static_cast<uint64_t>(lua_tointeger(L, 2));
     ST::level* temp = gGame_managerLua->get_level();
-    if(temp->entities.at(id).is_active){
+    if(temp->entities.at(id).is_active()){
         lua_pushboolean(L,temp->entities.at(id).collides(temp->entities.at(id2)));
     }
     else{
@@ -1119,31 +1117,6 @@ extern "C" int getEntityColYOffsetLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y_offset());
     return 1;
-}
-
-/**
- * Gets the mass of an entity.
- * See the Lua docs for more information.
- * @param L The global Lua State.
- * @return Always 1.
- */
-extern "C" int getEntityMassLua(lua_State *L){
-    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).mass);
-    return 1;
-}
-
-/**
- * Sets the mass of an entity.
- * See the Lua docs for more information.
- * @param L The global Lua State.
- * @return Always 0.
- */
-extern "C" int setEntityMassLua(lua_State *L){
-    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).mass = arg;
-    return 0;
 }
 
 /**

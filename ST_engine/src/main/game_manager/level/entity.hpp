@@ -56,19 +56,24 @@ namespace ST {
         int8_t velocity_y = 0;
 
         //2 bytes
-        uint8_t mass = 0;
+        /*
+        [0] is_active = true;
+        [1] is_static = false; does not move with Camera
+        [2] is_visible = true;
+        [3] is_affected_by_physic;
+         */
+        uint8_t toggles = 0;
         uint8_t animation_num = 0;
 
         //2 bytes
         uint16_t texture = 65535;
 
-        //4 bytes
-        bool is_active = true;
-        bool is_static = false;//does not move with Camera
-        bool is_visible = true;
-        bool is_affected_by_physics = false;
-
-        entity() = default;
+        entity(){
+            toggles |= (1<<0);
+            toggles &= ~(1<<1);
+            toggles |= (1<<2);
+            toggles &= ~(1<<3);
+        };
 
         int32_t get_col_x() const;
         int32_t get_col_y() const;
@@ -76,10 +81,66 @@ namespace ST {
         int16_t get_col_x_offset() const;
         bool collides(const entity&) const;
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
+        bool is_active() const;
+        bool is_static() const;
+        bool is_visible() const;
+        bool is_affected_by_physics() const;
+        void set_active(bool active);
+        void set_static(bool static_);
+        void set_visible(bool visible);
+        void set_affected_by_physics(bool affected);
     };
 }
 
 //INLINED METHODS
+
+inline bool ST::entity::is_active() const{
+    return static_cast<bool>(toggles & (1 << 0));
+}
+
+inline bool ST::entity::is_static() const{
+    return static_cast<bool>(toggles & (1 << 1));
+}
+
+inline bool ST::entity::is_visible() const{
+    return static_cast<bool>(toggles & (1 << 2));
+}
+
+inline bool ST::entity::is_affected_by_physics() const{
+    return static_cast<bool>(toggles & (1 << 3));
+}
+
+inline void ST::entity::set_active(bool active) {
+    if(active){
+        toggles |= (1<<0);
+    }else{
+        toggles &= ~(1<<0);
+    }
+}
+
+inline void ST::entity::set_static(bool static_) {
+    if(static_){
+        toggles |= (1<<1);
+    }else{
+        toggles &= ~(1<<1);
+    }
+}
+
+inline void ST::entity::set_visible(bool visible) {
+    if(visible){
+        toggles |= (1<<2);
+    }else{
+        toggles &= ~(1<<2);
+    }
+}
+
+inline void ST::entity::set_affected_by_physics(bool affected) {
+    if(affected){
+        toggles |= (1<<3);
+    }else{
+        toggles &= ~(1<<3);
+    }
+}
 
 /**
  * Get the horizontal length of the collision box.

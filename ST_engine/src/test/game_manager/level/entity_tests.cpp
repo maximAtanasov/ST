@@ -18,7 +18,7 @@ TEST(entity_tests, test_set_collisions_box){
     //Test
     test_subject.set_collision_box(0,0,0,0);
 
-    ASSERT_FALSE(test_subject.is_affected_by_physics);
+    ASSERT_FALSE(test_subject.is_affected_by_physics());
     ASSERT_EQ(0, test_subject.get_col_x());
     ASSERT_EQ(0, test_subject.get_col_y());
 }

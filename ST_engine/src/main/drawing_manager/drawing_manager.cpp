@@ -351,7 +351,7 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
     for(auto& i : entities){
         if(is_onscreen(i)){
             if(i.animation_num == 0){
-                if(i.is_static){
+                if(i.is_static()){
                     ST::renderer_sdl::draw_texture_scaled(i.texture, i.x, i.y, i.tex_scale_x, i.tex_scale_y);
 				}
                 else{
@@ -359,7 +359,7 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
 				}
             }
             else{
-                if(i.is_static){
+                if(i.is_static()){
                     ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
                 }else{
                     ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
@@ -375,10 +375,10 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
  * @return True if it is on screen and false otherwise.
  */
 bool drawing_manager::is_onscreen(const ST::entity& i) const{
-    if(!i.is_visible) {
+    if(!i.is_visible()) {
         return false;
     }
-    else if(i.is_static) {
+    else if(i.is_static()) {
         return true;
     }
     else {
@@ -404,14 +404,14 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
     for(auto& i : entities) {
         if (is_onscreen(i)) {
             int Xoffset, Yoffset;
-            if (i.is_static) {
+            if (i.is_static()) {
                 Xoffset = 0;
                 Yoffset = 0;
             } else {
                 Xoffset = Camera.x;
                 Yoffset = Camera.y;
             }
-            if (i.is_affected_by_physics) {
+            if (i.is_affected_by_physics()) {
                 SDL_Colour colour = {240, 0, 0, 100};
                 ST::renderer_sdl::draw_rectangle_filled(i.x - Xoffset + i.get_col_x_offset(),
                                                 i.y - Yoffset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
@@ -433,9 +433,9 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
 void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
         if (is_onscreen(i)) {
-            if (i.is_affected_by_physics) {
+            if (i.is_affected_by_physics()) {
                 int Xoffset, Yoffset;
-                if (i.is_static) {
+                if (i.is_static()) {
                     Xoffset = 0;
                     Yoffset = 0;
                 } else {
