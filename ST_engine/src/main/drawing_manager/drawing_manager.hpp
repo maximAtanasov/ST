@@ -76,7 +76,7 @@ class drawing_manager{
         uint8_t lights_quality = 0;
 
         uint16_t default_font_normal = 0;
-    uint16_t default_font_small = 0;
+        uint16_t default_font_small = 0;
 
         //debug
         bool collisions_shown = false;

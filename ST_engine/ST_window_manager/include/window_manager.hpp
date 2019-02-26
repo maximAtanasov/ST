@@ -7,8 +7,8 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef DM_DEF
-#define DM_DEF
+#ifndef WM_DEF
+#define WM_DEF
 
 #include <string>
 #include <message_bus.hpp>
@@ -32,7 +32,6 @@
  *
  */
 class window_manager{
-    friend class window_manager_tests;
     private:
         SDL_Surface* icon{};
         SDL_Window* window{};

@@ -174,7 +174,7 @@ int8_t ST::level::load_input_conf(){
  * @param arg the key string as read from inputConf.cfg.
  * @return a <b>ST::key</b> enum (an uint8_t).
  */
-ST::key ST::level::key_index(std::string arg){
+ST::key ST::level::key_index(const std::string& arg){
     key index = key::UNKNOWN;
     if(arg == "left"){
         index = key::LEFT;
@@ -341,7 +341,7 @@ ST::key ST::level::key_index(std::string arg){
     else if(arg == "minus"){
         index = key::MINUS;
     }
-	else if (arg == "delete"){
+    else if (arg == "delete"){
 	    index = key::DELETE;
 	}
     else if(arg == "ralt"){

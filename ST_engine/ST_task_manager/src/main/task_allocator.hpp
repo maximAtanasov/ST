@@ -7,8 +7,8 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVICTALES_TASK_ALLOCATOR_HPP
-#define SLAVICTALES_TASK_ALLOCATOR_HPP
+#ifndef ST_TASK_ALLOCATOR_HPP
+#define ST_TASK_ALLOCATOR_HPP
 
 #define TASK_ALLOCATOR_CAPACITY 256
 
@@ -74,4 +74,4 @@ ST::task* make_task(void (*function)(void *), void *arg, semaphore *dependency);
  */
 void destroy_task(ST::task* task);
 
-#endif //SLAVICTALES_TASK_ALLOCATOR_HPP
+#endif //ST_TASK_ALLOCATOR_HPP

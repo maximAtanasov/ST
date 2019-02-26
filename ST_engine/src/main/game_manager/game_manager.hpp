@@ -14,6 +14,7 @@
 #include <message_bus.hpp>
 #include <game_manager/lua_backend/lua_backend.hpp>
 #include <task_manager.hpp>
+#include <bitset>
 
 ///This class is responsible for managing all levels and the lua backend, it is the heart of the engine.
 /**
@@ -86,9 +87,9 @@ class game_manager{
         lua_backend gScript_backend{};
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
-        bool keys_pressed_data[78]{};
-        bool keys_held_data[78]{};
-        bool keys_released_data[78]{};
+        std::bitset<78> keys_pressed_data{};
+        std::bitset<78> keys_held_data{};
+        std::bitset<78> keys_released_data{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
         int16_t left_trigger;

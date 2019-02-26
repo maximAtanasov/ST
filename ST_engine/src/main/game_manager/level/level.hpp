@@ -31,7 +31,7 @@ namespace ST {
         std::string name;
         message_bus *gMessage_bus;
 
-        key key_index(std::string arg);
+        key key_index(const std::string& arg);
 
     public:
 

@@ -65,7 +65,7 @@ class console{
         bool shown = false;
         std::vector<ST::console_log> entries;
 		std::vector<std::string> command_entries;
-        uint8_t font_size = 0;
+        const uint8_t font_size = 40;
         int32_t scroll_offset = 0;
 
         //things to do with inputting text commands

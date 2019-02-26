@@ -179,9 +179,7 @@ int task_manager::task_thread(task_manager* self){
 	while(self->run_threads){
 	    self->work_sem->wait();
         if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
-            //auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
             self->do_work(work);
-            //auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
         }
 	}
     return 0;
@@ -220,7 +218,7 @@ task_manager::task_manager(message_bus *msg_bus){
     //initialize semaphore for worker threads
     work_sem = new semaphore;
 
-    fprintf(stdout, "This system has %d physical cores\nStarting %d task threads\n", thread_num, thread_num);
+    fprintf(stdout, "This system has %d physical cores\nStarting %d task threads\n", thread_num, thread_num-1);
 
     //if we can't tell or there is only one core, then start one worker thread
     if(thread_num == 0 || thread_num == 1){

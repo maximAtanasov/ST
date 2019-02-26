@@ -44,7 +44,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 
 	//Variables for lights
 	darkness_level = 0;
-    lights_quality = 4;
+    lights_quality = 5;
 
     //hash of default font
     default_font_normal = ST::hash_string(DEFAULT_FONT_NORMAL);
@@ -127,7 +127,7 @@ void drawing_manager::draw_console(console& cnsl){
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-		uint16_t cursor_draw_position = 0;
+		int32_t cursor_draw_position = 0;
 		if (cnsl.cursor_position == cnsl.composition.size()) {
 			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + cnsl.composition, 0, w_height / 2, cnsl.color_text, -1);
 		}
@@ -135,7 +135,7 @@ void drawing_manager::draw_console(console& cnsl){
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
 			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + to_cursor, 0, w_height / 2, cnsl.color_text, -1);
-			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2 - 50, cnsl.color_text, -1);
+			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text, -1);
 		}
 
         if(ticks - cnsl.cursor_timer >= 1000) {
@@ -240,6 +240,8 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
 void drawing_manager::draw_lights() const{
     //Losing a lot of fps here :)
     SDL_Rect tempRect = {0, 0, lights_quality, lights_quality};
+    SDL_Color light_color;
+
     for(int i = 0; i <= w_width-lights_quality; i += lights_quality){
         int a = 1;
         tempRect.x = i;
@@ -247,7 +249,7 @@ void drawing_manager::draw_lights() const{
             if(lightmap[i][j] == lightmap[i][j+lights_quality] && j+lights_quality == w_height){
                 tempRect.y = j - a*lights_quality;
                 tempRect.h = (a+1)*lights_quality;
-                SDL_Color light_color = {0, 0, 0, lightmap[i][j]};
+                light_color = {0, 0, 0, lightmap[i][j]};
                 ST::renderer_sdl::draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
             }
             else if(lightmap[i][j] == lightmap[i][j+lights_quality]){
@@ -255,7 +257,7 @@ void drawing_manager::draw_lights() const{
             }else{
                 tempRect.h = a*lights_quality;
                 tempRect.y = j - a*lights_quality;
-                SDL_Color light_color = {0, 0, 0, lightmap[i][j]};
+                light_color = {0, 0, 0, lightmap[i][j]};
                 ST::renderer_sdl::draw_rectangle_filled(tempRect.x, tempRect.y, tempRect.w, tempRect.h, light_color);
                 a = 1;
             }

@@ -43,13 +43,14 @@
 class physics_manager{
     private:
         message_bus* gMessage_bus{};
+        std::vector<ST::entity>* entities;
 		task_manager* gTask_manager{};
         subscriber msg_sub{};
-        int8_t gravity = 0;
-        int8_t friction = 0;
         int32_t level_floor = 0;
 		bool physics_paused = false;
-		std::vector<ST::entity>* entities;
+        int8_t gravity = 0;
+        int8_t friction = 0;
+
 
         int check_collision(uint64_t, std::vector<ST::entity>* entities);
         int entity_set_x(int32_t x, uint64_t, std::vector<ST::entity>* entities);

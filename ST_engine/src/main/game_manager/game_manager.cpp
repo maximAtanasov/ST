@@ -64,9 +64,9 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
  * Reset all information about input.
  */
 void game_manager::reset_keys(){
-    memset(keys_pressed_data, false, sizeof(bool) * 78);
-    memset(keys_held_data, false, sizeof(bool) * 78);
-    memset(keys_released_data, false, sizeof(bool) * 78);
+    keys_pressed_data.reset();
+    keys_held_data.reset();
+    keys_released_data.reset();
 }
 
 /**
