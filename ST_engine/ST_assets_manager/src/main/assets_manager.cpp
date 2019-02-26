@@ -105,7 +105,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
             }else{
                 gMessage_bus->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>("Unpacking " + chunk.first)));
                 count[chunk.first]++;
-                size_t hashed = ST::hash_string(chunk.first);
+                uint16_t hashed = ST::hash_string(chunk.first);
                 all_assets.chunks[hashed] = chunk.second;
             }
         }

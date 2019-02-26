@@ -115,8 +115,8 @@ inline int16_t ST::entity::get_col_y_offset() const{
 
 /**
  * Set the collision box for the entity, relative to the current position.
- * @param offsetX The horizontal offset for the colllision box.
- * @param offsetY The vertical offset for the colllision box.
+ * @param offsetX The horizontal offset for the collision box.
+ * @param offsetY The vertical offset for the collision box.
  * @param X The horizontal length of the collision box.
  * @param Y The vertical length of the collision box.
  */

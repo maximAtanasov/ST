@@ -314,8 +314,7 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
                     ST::replace_string(temp, temp_buf_2, string_hash);
                 }
@@ -325,8 +324,7 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
                     ST::replace_string(temp, temp_buf_2, string_hash);
                 }
@@ -336,8 +334,7 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
                     ST::replace_string(temp, temp_buf_2, string_hash);
                 }
@@ -347,8 +344,7 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                         temp_buf.push_back((temp.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
                     ST::replace_string(temp, temp_buf_2, string_hash);
                 }
@@ -361,8 +357,7 @@ std::string lua_backend::hash_file(const std::string& path){
                     for(uint64_t i = next_line.find(to_find) + to_find.size(); next_line.at(i) != '\"'; i++){
                         temp_buf.push_back((next_line.at(i)));
                     }
-                    std::hash<std::string> hash_f;
-                    std::string string_hash = std::to_string(hash_f(temp_buf));
+                    std::string string_hash = std::to_string(ST::hash_string(temp_buf));
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
                     ST::replace_string(next_line, temp_buf_2, string_hash);
                     temp = next_line;
@@ -429,8 +424,7 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
             ST::replace_string(temp, temp_buf_2, string_hash);
         }
@@ -440,8 +434,7 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
             ST::replace_string(temp, temp_buf_2, string_hash);
         }
@@ -451,8 +444,7 @@ std::string lua_backend::hash_string(const std::string& arg){
             for(size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++){
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
             ST::replace_string(temp, temp_buf_2, string_hash);
         }
@@ -462,8 +454,7 @@ std::string lua_backend::hash_string(const std::string& arg){
             for (size_t i = temp.find(to_find) + to_find.size(); temp.at(i) != '\"'; i++) {
                 temp_buf.push_back((temp.at(i)));
             }
-            std::hash<std::string> hash_f;
-            std::string string_hash = std::to_string(hash_f(temp_buf));
+            std::string string_hash = std::to_string(ST::hash_string(temp_buf));
             std::string temp_buf_2 = "\"" + temp_buf + "\"";
             ST::replace_string(temp, temp_buf_2, string_hash);
         }
@@ -669,8 +660,7 @@ extern "C" int isLightStaticLua(lua_State* L){
  */
 extern "C" int hashStringLua(lua_State* L){
     auto str = static_cast<std::string>(lua_tostring(L, 1));
-    std::hash<std::string> hash_f;
-    lua_pushinteger(L, (lua_Integer)hash_f(str));
+    lua_pushinteger(L, (lua_Integer)ST::hash_string(str));
     return 1;
 }
 
@@ -1569,7 +1559,7 @@ extern "C" int controllerRumbleLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int keyHeldLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_held(arg));
     return 1;
 }
@@ -1581,7 +1571,7 @@ extern "C" int keyHeldLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int keyPressedLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_pressed(arg));
     return 1;
 }
@@ -1593,7 +1583,7 @@ extern "C" int keyPressedLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int keyReleasedLua(lua_State* L){
-    auto arg = static_cast<size_t>(lua_tointeger(L, 1));
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_released(arg));
     return 1;
 }

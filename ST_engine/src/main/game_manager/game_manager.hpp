@@ -117,9 +117,9 @@ class game_manager{
         game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         ~game_manager();
         std::string get_active_level() const;
-        bool key_pressed(size_t arg) const;
-        bool key_held(size_t arg) const;
-        bool key_released(size_t arg) const;
+        bool key_pressed(uint16_t arg) const;
+        bool key_held(uint16_t arg) const;
+        bool key_released(uint16_t arg) const;
         int32_t get_mouse_x() const;
         int32_t get_mouse_y() const;
         int16_t get_left_trigger() const;
@@ -197,7 +197,7 @@ inline int game_manager::get_mouse_y() const{
  * @param arg A hash of the name of the action.
  * @return True if pressed, false otherwise.
  */
-inline bool game_manager::key_pressed(size_t arg) const{
+inline bool game_manager::key_pressed(uint16_t arg) const{
     for(ST::key key : current_level_pointer->actions_Buttons[arg]){
         if(keys_pressed_data[static_cast<uint8_t>(key)]){
             return true;
@@ -211,7 +211,7 @@ inline bool game_manager::key_pressed(size_t arg) const{
  * @param arg A hash of the name of the action.
  * @return True if held, false otherwise.
  */
-inline bool game_manager::key_held(size_t arg) const{
+inline bool game_manager::key_held(uint16_t arg) const{
     for(ST::key key : current_level_pointer->actions_Buttons[arg]){
         if(keys_held_data[static_cast<uint8_t>(key)]){
             return true;
@@ -225,7 +225,7 @@ inline bool game_manager::key_held(size_t arg) const{
  * @param arg A hash of the name of the action.
  * @return True if released, false otherwise.
  */
-inline bool game_manager::key_released(size_t arg) const{
+inline bool game_manager::key_released(uint16_t arg) const{
     for(ST::key key : current_level_pointer->actions_Buttons[arg]){
         if(keys_released_data[static_cast<uint8_t>(key)]){
             return true;

@@ -79,7 +79,7 @@ TEST_F(lua_backend_test, test_hash_file_playMusic){
 
 TEST_F(lua_backend_test, test_hash_file_keyHeld){
     std::string result = hash_file("lua_scripts/test_script_keyHeld.lua");
-    std::string resulting_integer = result.substr(10, std::string::npos);
+    std::string resulting_integer = result.substr(8, std::string::npos);
     resulting_integer.erase(resulting_integer.size()-3);
     try{
         std::stoull(resulting_integer);
@@ -95,7 +95,7 @@ TEST_F(lua_backend_test, test_hash_file_keyHeld){
 TEST_F(lua_backend_test, test_hash_file_keyPressed){
     std::string result = hash_file("lua_scripts/test_script_keyPressed.lua");
     std::string resulting_integer = result.substr(11, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
+    resulting_integer.erase(resulting_integer.size()-2);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -110,7 +110,7 @@ TEST_F(lua_backend_test, test_hash_file_keyPressed){
 TEST_F(lua_backend_test, test_hash_file_keyReleased){
     std::string result = hash_file("lua_scripts/test_script_keyReleased.lua");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
+    resulting_integer.erase(resulting_integer.size()-2);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -197,8 +197,8 @@ TEST_F(lua_backend_test, test_hash_string_playMusic){
 
 TEST_F(lua_backend_test, test_hash_string_keyHeld){
     std::string result = hash_string_lua("keyHeld(\"JUMP\")");
-    std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
+    std::string resulting_integer = result.substr(8, std::string::npos);
+    resulting_integer.erase(resulting_integer.size()-1);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -213,7 +213,7 @@ TEST_F(lua_backend_test, test_hash_string_keyHeld){
 TEST_F(lua_backend_test, test_hash_string_keyPressed){
     std::string result = hash_string_lua("keyPressed(\"JUMP\")");
     std::string resulting_integer = result.substr(11, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
+    resulting_integer.erase(resulting_integer.size()-1);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -228,7 +228,7 @@ TEST_F(lua_backend_test, test_hash_string_keyPressed){
 TEST_F(lua_backend_test, test_hash_string_keyReleased){
     std::string result = hash_string_lua("keyReleased(\"JUMP\")");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
+    resulting_integer.erase(resulting_integer.size()-1);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -243,7 +243,7 @@ TEST_F(lua_backend_test, test_hash_string_keyReleased){
 TEST_F(lua_backend_test, test_hash_string_setClickKey){
     std::string result = hash_string_lua("setClickKey(\"MOUSE1\")");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
+    resulting_integer.erase(resulting_integer.size()-1);
     try{
         std::stoull(resulting_integer);
     }catch(const std::invalid_argument& e) {
@@ -292,8 +292,7 @@ TEST_F(lua_backend_test, test_call_function_setFullscreenLua){
 TEST_F(lua_backend_test, test_call_function_hashString){
     //Set up
     std::string test_string = "TEST_STRING";
-    std::hash<std::string> hash_f;
-    size_t expected = hash_f(test_string);
+    size_t expected = ST::hash_string(test_string);
 
     //Test
     test_subject.run_script("return hashString(\"" + test_string +"\")");
@@ -1663,7 +1662,6 @@ TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
 TEST_F(lua_backend_test, test_call_function_setEntityTexture){
     //Set up
     game_mngr->get_level()->entities.emplace_back(ST::entity());
-    std::hash<std::string> hash_f;
 
     //Test
     test_subject.run_script("setEntityTexture(0, \"new_texture.webp\")");
