@@ -6,9 +6,11 @@
 -- Author: Maxim Atanasov
 -- E-mail: maxim.atanasov@protonmail.com
 
---Contains global variable definitions
-
-language = "english"
-vsync = "vsyncEnabled"
-audio = "audioDisabled"
-fullscreen = "fullscreenEnabled"
+obstacle_1 = entity:new()
+obstacle_1.texture = "obstacle_1.png"
+obstacle_1.texWidth = 400
+obstacle_1.texHeight = 150
+obstacle_1.colX = 400
+obstacle_1.colY = 150
+obstacle_1.isVisible = true
+obstacle_1.affectedByPhysics = true

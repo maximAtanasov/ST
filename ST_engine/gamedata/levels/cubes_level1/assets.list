@@ -12,5 +12,11 @@ fonts/font1.ttf 70
 fonts/font2.ttf 80
 fonts/font2.ttf 50
 fonts/font2.ttf 70
-assets/assets_level1.bin
+assets/cubes/cube_plain.png
+assets/cubes/cube_eye.png
+assets/cubes/cube_eye_left.png
 assets/cubes/bg1.png
+assets/levelCard/table.png
+assets/cubes/obstacle_1.png
+assets/cubes/obstacle_2.png
+assets/cubes/bar_hor.png

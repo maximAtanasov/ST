@@ -51,6 +51,7 @@ elseif language == "english" then
 end
 
 setBackground("fortress.webp")
+
 setOverlay("rain.webp", 13);
 playMusic("Shades.ogg", 100, -1)
 playSound("rain.wav", 50, -1)

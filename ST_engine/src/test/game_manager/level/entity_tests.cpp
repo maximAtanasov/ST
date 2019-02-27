@@ -49,8 +49,8 @@ TEST(entity_tests, test_entities_colliding_on_edge){
     test_subject1.y = 0;
     test_subject1.set_collision_box(0, 0, 100, 100);
 
-    test_subject2.x = 100;
-    test_subject2.y = 100;
+    test_subject2.x = 99;
+    test_subject2.y = 99;
     test_subject2.set_collision_box(0, 0, 100, 100);
 
     //Test
@@ -66,8 +66,8 @@ TEST(entity_tests, test_entities_colliding_one_pixel_from_edge){
     test_subject1.y = 0;
     test_subject1.set_collision_box(0, 0, 100, 100);
 
-    test_subject2.x = 99;
-    test_subject2.y = 99;
+    test_subject2.x = 98;
+    test_subject2.y = 98;
     test_subject2.set_collision_box(0, 0, 100, 100);
 
     //Test

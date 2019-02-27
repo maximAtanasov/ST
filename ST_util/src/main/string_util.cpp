@@ -25,6 +25,7 @@ namespace ST {
         for(uint32_t i = 0; i < path.size(); i++) {
             if (path.at(i) == '/') {
                 path.erase(0, i+1);
+                i = 0;
             }
         }
         return path;

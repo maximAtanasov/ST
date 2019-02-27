@@ -52,6 +52,17 @@ function textObject:setFont(font)
 	setTextObjectFont(self.ID, font.." "..self.fontSize)
 end
 
+
+function textObject:setX(x)
+	self.x = x;
+	setTextObjectX(self.ID, x)
+end
+
+function textObject:setY(y)
+	self.y = y;
+	setTextObjectY(self.ID, y)
+end
+
 function textObject:setFontSize(size)
 	self.fontSize = size;
 	setTextObjectFont(self.ID, font.." "..self.fontSize)

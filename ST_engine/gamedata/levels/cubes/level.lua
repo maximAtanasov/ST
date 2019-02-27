@@ -6,27 +6,20 @@
 -- Author: Maxim Atanasov
 -- E-mail: maxim.atanasov@protonmail.com
 
-playMusic("skowroneczek.ogg", 100, -1)
 enableLighting(true)
 stopAllSounds()
+stopMusic()
 
-
---Load the appropriate language configuration
-if language == "russian" then
-    use("language_russian.lua")
-elseif language == "english" then
-    use("language_english.lua")
-end
-
-label = label:new(960-LABEL_OFFSET, 870, LABEL_TEXT, FONT, FONT_SIZE)
+label = label:new(600, 500, "So, a game about a cube?", "font1.ttf", 50)
+label1 = label:new(400, 600, "Actually it’s a game about a bunch of cubes", "font1.ttf", 50)
 
 setGravity(0)
-setBackground("splash.webp")
 setDarkness(254)
-loadLevel("author_splash")
 hideMouseCursor()
+loadLevel("cubes_level1")
 splash = 255
 splashUp = 0
+dontSkip = false
 
 function loop()
     if splash > 0 then
@@ -36,12 +29,17 @@ function loop()
         splashUp = splashUp + 1
         setDarkness(splashUp)
     else
-        startLevel("author_splash")
+        startLevel("cubes_level1")
     end
 
     if keyPressed("START") then
-        startLevel("author_splash")
+        if dontSkip == false then
+            label:new(600, 1000, "C'mon, don't skip my intro...", "font1.ttf", 50)
+            dontSkip = true
+         end
     end
-   -- startLevel("cubes")
-end
 
+    if(rightTrigger() > 20000) then
+        startLevel("cubes_level1")
+    end
+end

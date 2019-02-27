@@ -185,13 +185,14 @@ int8_t assets_manager::load_asset(std::string path){
 
     std::string extention;
     extention = ST::get_file_extension(path);
+    //Handle the different extentions - currently png, webp, wav, mp3, ttf
+
     if(extention == "bin"){
         gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Loading from binary " + path)));
     }else {
         gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Loading " + path)));
     }
 
-    //Handle the different extentions - currently png, webp, wav, mp3, ttf
     if(extention == "png" || extention == "webp"){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){

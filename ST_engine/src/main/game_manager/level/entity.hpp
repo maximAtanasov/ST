@@ -194,8 +194,8 @@ inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int1
  * @return True if colliding, false otherwise.
  */
 inline bool ST::entity::collides(const entity& other) const{
-    return !((y + offset_y < other.y + other.col_y + other.offset_y) || (y + col_y + offset_y > other.y + other.offset_y)
-          || (x + offset_x > other.x + other.col_x + other.offset_x) || (x + col_x + offset_x < other.x + other.offset_x));
+    return !((y + offset_y <= other.y + other.col_y + other.offset_y) || (y + col_y + offset_y >= other.y + other.offset_y)
+          || (x + offset_x >= other.x + other.col_x + other.offset_x) || (x + col_x + offset_x <= other.x + other.offset_x));
 }
 
 #endif

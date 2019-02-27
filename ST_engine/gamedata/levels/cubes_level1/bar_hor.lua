@@ -6,9 +6,11 @@
 -- Author: Maxim Atanasov
 -- E-mail: maxim.atanasov@protonmail.com
 
---Contains global variable definitions
-
-language = "english"
-vsync = "vsyncEnabled"
-audio = "audioDisabled"
-fullscreen = "fullscreenEnabled"
+bar_hor = entity:new()
+bar_hor.texture = "bar_hor.png"
+bar_hor.texWidth = 800
+bar_hor.texHeight = 100
+bar_hor.colX = 800
+bar_hor.colY = 100
+bar_hor.isVisible = true
+bar_hor.affectedByPhysics = true
