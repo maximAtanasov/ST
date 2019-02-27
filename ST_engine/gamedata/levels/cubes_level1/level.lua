@@ -41,13 +41,13 @@ bar_ho1_5 = bar_hor:new(3200, floor);
 bar_ho1_6 = bar_hor:new(4000, floor);
 bar_ho1_7 = bar_hor:new(4800, floor);
 bar_ho1_8 = bar_hor:new(5600, floor);
-bar_ho1_9 = bar_hor:new(6400, floor);
+--bar_ho1_9 = bar_hor:new(6400, floor);
 
 bar_ho1_10 = bar_hor:new(7200, floor);
 bar_ho1_11 = bar_hor:new(8000, floor);
 bar_ho1_12 = bar_hor:new(8800, floor);
 bar_ho1_13 = bar_hor:new(9600, floor);
-bar_ho1_14 = bar_hor:new(10400, floor);
+--bar_ho1_14 = bar_hor:new(10400, floor);
 bar_ho1_15 = bar_hor:new(11200, floor);
 bar_ho1_16 = bar_hor:new(12000, floor);
 bar_ho1_17 = bar_hor:new(12800, floor);
@@ -87,18 +87,18 @@ function obstacle_1_10:update ()
     self:setY(floor-300)
 end
 obstacle_1_10:setCollision(0, 0, 400, 133)
-obstacle_1_10_dialogTrigger = trigger:new(6100, floor-260);
-obstacle_1_10_dialogTrigger:setCollision(0,0, 400, 60)
+obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260);
+obstacle_1_10_dialogTrigger:setCollision(0,0, 360, 60)
 obstacle_1_10_dialogTrigger:setTexW(400)
 obstacle_1_10_dialogTrigger:setTexH(60)
 
-obstacle_1_11 = obstacle_1:new(6650, floor-300);
+obstacle_1_11 = obstacle_1:new(6700, floor-300);
 function obstacle_1_11:update ()
     self:setY(floor-300)
 end
 obstacle_1_11:setCollision(0, 0, 400, 133)
 
-obstacle_1_12 = obstacle_1:new(7100, floor-300);
+obstacle_1_12 = obstacle_1:new(7250, floor-300);
 function obstacle_1_12:update ()
     self:setY(floor-300)
 end
@@ -106,13 +106,37 @@ obstacle_1_12:setCollision(0, 0, 400, 133)
 
 obstacle_1_13 = obstacle_1:new(8000, floor-200);
 obstacle_1_14 = obstacle_1:new(8800, floor-200);
-obstacle_1_15 = obstacle_1:new(9500, floor-200);
+--obstacle_1_15 = obstacle_1:new(9500, floor-200);
+
+trigger_pit_0 = trigger:new(6400, floor-10)
+trigger_pit_0:setCollision(0,0, 800, 20);
+
+obstacle_1_16 = obstacle_1:new(10000, floor-300);
+function obstacle_1_16:update ()
+    self:setY(floor-300)
+end
+obstacle_1_16:setCollision(0, 0, 400, 133)
+
+obstacle_1_17 = obstacle_1:new(10500, floor-300);
+function obstacle_1_17:update ()
+    self:setY(floor-300)
+end
+obstacle_1_17:setCollision(0, 0, 400, 133)
+
+obstacle_1_18 = obstacle_1:new(11000, floor-300);
+function obstacle_1_18:update ()
+    self:setY(floor-300)
+end
+obstacle_1_18:setCollision(0, 0, 400, 133)
+
+trigger_pit_1 = trigger:new(10400, floor-10)
+trigger_pit_1:setCollision(0,0, 800, 20);
 
 labelTimer = 0;
 
 label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
 label1:hide()
-label2 = label:new(270, 800, "Why I am a CUBE????", "font1.ttf", 50)
+label2 = label:new(270, 800, "Why am I a CUBE????", "font1.ttf", 50)
 label2:hide()
 label3 = label:new(270, 800, "A square actually...", "font1.ttf", 50)
 label3:hide()
@@ -243,6 +267,10 @@ function loop()
         obstacle_1_11:update()
         obstacle_1_12:update()
 
+        obstacle_1_16:update()
+        obstacle_1_17:update()
+        obstacle_1_18:update()
+
         player1:update()
 
         if(labelTimer > 10 and labelTimer < 150) then
@@ -296,7 +324,7 @@ function loop()
             end
             label10.text:setY(player1:getY()-150)
             bouncyTriggerCounter = bouncyTriggerCounter + 1
-    end
+        end
         if bouncyTriggerCounter > 100 then
             bouncyTriggerAmount = 2
         end
@@ -304,6 +332,10 @@ function loop()
             bouncyTriggerAmount = 3
             label10:hide()
             label9:hide()
+        end
+        if player1:overObject(trigger_pit_1) or player1:overObject(trigger_pit_0) then
+            controllerRumble(1, 1)
+            player1:setXY(100, 100)
         end
         centreCamera(player1.ID)
     elseif(pause == 1) then
@@ -313,5 +345,5 @@ function loop()
         if keyPressed("PAUSE") then
             unpauseGame()
         end
-        end
+    end
 end

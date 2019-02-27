@@ -42,6 +42,6 @@ function loop()
     if keyPressed("START") then
         startLevel("author_splash")
     end
-   -- startLevel("cubes")
+    --startLevel("cubes")
 end
 
