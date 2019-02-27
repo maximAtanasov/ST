@@ -14,12 +14,9 @@
  * @return The next message or nullptr if nothing was found.
  */
 message* subscriber::get_next_message(){
-    message* new_message;
-    if(queue.try_dequeue(new_message)){
-        return new_message;
-    }else {
-        return nullptr;
-    }
+    message* new_message{};
+    queue.try_dequeue(new_message);
+    return new_message;
 }
 
 /**

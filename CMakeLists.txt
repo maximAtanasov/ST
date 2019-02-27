@@ -6,7 +6,7 @@
 # Author: Maxim Atanasov
 # E-mail: maxim.atanasov@protonmail.com
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
-project(slavicTales)
+project(ST)
 
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)

@@ -14,7 +14,7 @@
  * Allocates memory for tasks.
  */
 task_allocator::task_allocator(){
-    for(uint32_t i = 0; i < memory_size; i++){
+    for(uint16_t i = 0; i < memory_size; i++){
         allocated[i] = false; //mark all memory as free
     }
 }
