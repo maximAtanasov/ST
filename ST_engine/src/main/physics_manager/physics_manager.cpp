@@ -123,11 +123,10 @@ void physics_manager::handle_messages(){
 int physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity>* entities){
     int32_t currentX = entities->at(ID).x;
     entities->at(ID).x = (X);
-    if(entities->at(ID).is_affected_by_physics())
-        if(check_collision(ID, entities) == 0){//if there is a collision, don't modify x
-            entities->at(ID).x = (currentX);
-            return 0;
-        }
+    if(check_collision(ID, entities) == 0){//if there is a collision, don't modify x
+        entities->at(ID).x = (currentX);
+        return 0;
+    }
     return 1;
 }
 
@@ -141,12 +140,10 @@ int physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity
 int physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity>* entities){
     int32_t currentY = entities->at(ID).y;
     entities->at(ID).y = (Y);
-    if(entities->at(ID).is_affected_by_physics()){
-        if(check_collision(ID, entities) == 0){//if there is a collision, don't modify y
-            entities->at(ID).y = (currentY);
-            return 0;
-        }
-	}
+    if(check_collision(ID, entities) == 0){//if there is a collision, don't modify y
+        entities->at(ID).y = currentY;
+        return 0;
+    }
     return 1;
 }
 

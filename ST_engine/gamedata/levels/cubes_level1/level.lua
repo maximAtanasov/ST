@@ -8,6 +8,7 @@
 
 use("player.lua")
 use("obstacle_1.lua")
+use("platform.lua")
 use("bar_hor.lua")
 use("trigger.lua")
 
@@ -60,49 +61,33 @@ obstacle_1_3 = obstacle_1:new(800, floor-600);
 
 player1 = player:new(100, 100);
 
-obstacle_1_4 = obstacle_1:new(2000, floor-400);
-function obstacle_1_4:update ()
-    self:setY(floor-400)
-end
+obstacle_1_4 = platform:new(2000, floor-400);
+obstacle_1_4.height = floor - 400
 
-obstacle_1_5 = obstacle_1:new(3000, floor-150);
-function obstacle_1_5:update ()
-    self:setY(floor-150)
-end
-obstacle_1_5:setCollision(0, 0 , 400, 133)
+obstacle_1_5 = platform:new(3000, floor-150);
+obstacle_1_5.height = floor - 150
 
 
-obstacle_1_6 = obstacle_1:new(3500, floor-360);
-function obstacle_1_6:update ()
-    self:setY(floor-360)
-end
-obstacle_1_6:setCollision(0, 0, 400, 133)
+obstacle_1_6 = platform:new(3500, floor-360);
+obstacle_1_6.height = floor-360
 
 obstacle_1_7 = obstacle_1:new(4000, floor-200);
 obstacle_1_8 = obstacle_1:new(5280, floor-200);
 --obstacle_1_9 = obstacle_1:new(5500, floor-200);
 
-obstacle_1_10 = obstacle_1:new(6100, floor-300);
-function obstacle_1_10:update ()
-    self:setY(floor-300)
-end
-obstacle_1_10:setCollision(0, 0, 400, 133)
+obstacle_1_10 = platform:new(6100, floor-300);
+obstacle_1_10.height = floor-300
+
 obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260);
 obstacle_1_10_dialogTrigger:setCollision(0,0, 360, 60)
 obstacle_1_10_dialogTrigger:setTexW(400)
 obstacle_1_10_dialogTrigger:setTexH(60)
 
-obstacle_1_11 = obstacle_1:new(6700, floor-300);
-function obstacle_1_11:update ()
-    self:setY(floor-300)
-end
-obstacle_1_11:setCollision(0, 0, 400, 133)
+obstacle_1_11 = platform:new(6700, floor-300);
+obstacle_1_11.height = floor - 300
 
-obstacle_1_12 = obstacle_1:new(7250, floor-300);
-function obstacle_1_12:update ()
-    self:setY(floor-300)
-end
-obstacle_1_12:setCollision(0, 0, 400, 133)
+obstacle_1_12 = platform:new(7250, floor-300);
+obstacle_1_12.height = floor - 300
 
 obstacle_1_13 = obstacle_1:new(8000, floor-200);
 obstacle_1_14 = obstacle_1:new(8800, floor-200);
@@ -111,23 +96,14 @@ obstacle_1_14 = obstacle_1:new(8800, floor-200);
 trigger_pit_0 = trigger:new(6400, floor-10)
 trigger_pit_0:setCollision(0,0, 800, 20);
 
-obstacle_1_16 = obstacle_1:new(10000, floor-300);
-function obstacle_1_16:update ()
-    self:setY(floor-300)
-end
-obstacle_1_16:setCollision(0, 0, 400, 133)
+obstacle_1_16 = platform:new(10000, floor-300);
+obstacle_1_16.height = floor -300
 
-obstacle_1_17 = obstacle_1:new(10500, floor-300);
-function obstacle_1_17:update ()
-    self:setY(floor-300)
-end
-obstacle_1_17:setCollision(0, 0, 400, 133)
+obstacle_1_17 = platform:new(10500, floor-300);
+obstacle_1_17.height = floor - 300
 
-obstacle_1_18 = obstacle_1:new(11000, floor-300);
-function obstacle_1_18:update ()
-    self:setY(floor-300)
-end
-obstacle_1_18:setCollision(0, 0, 400, 133)
+obstacle_1_18 = platform:new(11000, floor-300);
+obstacle_1_18.height = floor - 300
 
 trigger_pit_1 = trigger:new(10400, floor-10)
 trigger_pit_1:setCollision(0,0, 800, 20);

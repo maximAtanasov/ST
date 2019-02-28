@@ -39,7 +39,7 @@ function loop()
          end
     end
 
-    if(rightTrigger() > 20000) then
+    if(rightTrigger() > 20000) or keyPressed("SKIP") then
         startLevel("cubes_level1")
     end
 end
