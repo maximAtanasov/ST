@@ -105,8 +105,48 @@ obstacle_1_17.height = floor - 300
 obstacle_1_18 = platform:new(11000, floor-300);
 obstacle_1_18.height = floor - 300
 
+obstacle_1_19 = obstacle_1:new(13200, floor-200);
+
+obstacle_1_20 = platform:new(14000, floor-300);
+obstacle_1_20.height = floor - 300
+
+obstacle_1_21 = platform:new(14800, floor-300);
+obstacle_1_21.height = floor - 300
+
+obstacle_1_22 = platform:new(15400, floor-300);
+obstacle_1_22.height = floor - 300
+
+obstacle_1_23 = platform:new(16000, floor-300);
+obstacle_1_23.height = floor - 300
+
+obstacle_1_24 = platform:new(16400, floor-700);
+obstacle_1_24.height = floor - 700
+
+obstacle_1_25 = platform:new(16900, floor-700);
+obstacle_1_25.height = floor - 700
+
+obstacle_1_26 = platform:new(17400, floor-700);
+obstacle_1_26.height = floor - 700
+
+obstacle_1_27 = platform:new(18000, floor-300);
+obstacle_1_27.height = floor - 300
+
+obstacle_1_28 = platform:new(18600, floor-300);
+obstacle_1_28.height = floor - 300
+
+obstacle_1_29 = platform:new(19200, floor-300);
+obstacle_1_29.height = floor - 300
+
+bar_ho1_30 = bar_hor:new(20000, floor);
+bar_ho1_31 = bar_hor:new(28000, floor);
+bar_ho1_32 = bar_hor:new(36000, floor);
+bar_ho1_33 = bar_hor:new(44000, floor);
+
 trigger_pit_1 = trigger:new(10400, floor-10)
 trigger_pit_1:setCollision(0,0, 800, 20);
+
+trigger_pit_2 = trigger:new(14400, floor-10)
+trigger_pit_2:setCollision(0,0, 5600, 20);
 
 labelTimer = 0;
 
@@ -114,17 +154,15 @@ label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
 label1:hide()
 label2 = label:new(270, 800, "Why am I a CUBE????", "font1.ttf", 50)
 label2:hide()
-label3 = label:new(270, 800, "A square actually...", "font1.ttf", 50)
+label3 = label:new(280, 800, "A square actually...", "font1.ttf", 50)
 label3:hide()
-label4 = label:new(270, 800, "Is this a dream?!", "font1.ttf", 50)
+label4 = label:new(290, 800, "Is this a dream?!", "font1.ttf", 50)
 label4:hide()
-label4 = label:new(270, 800, "Is this a dream?!", "font1.ttf", 50)
-label4:hide()
-label5 = label:new(270, 800, "I hope it is...", "font1.ttf", 50)
+label5 = label:new(290, 800, "I hope it is...", "font1.ttf", 50)
 label5:hide()
 label6 = label:new(270, 800, "wait... PLATFORMS???", "font1.ttf", 50)
 label6:hide()
-label7 = label:new(270, 800, "WHY???", "font1.ttf", 50)
+label7 = label:new(300, 800, "WHY???", "font1.ttf", 50)
 label7:hide()
 label8 = label:new(270, 800, "WHAT'S GOING ON!?", "font1.ttf", 50)
 label8:hide()
@@ -247,6 +285,17 @@ function loop()
         obstacle_1_17:update()
         obstacle_1_18:update()
 
+        obstacle_1_20:update()
+        obstacle_1_21:update()
+        obstacle_1_22:update()
+        obstacle_1_23:update()
+        obstacle_1_24:update()
+        obstacle_1_25:update()
+        obstacle_1_26:update()
+        obstacle_1_27:update()
+        obstacle_1_28:update()
+        obstacle_1_29:update()
+
         player1:update()
 
         if(labelTimer > 10 and labelTimer < 150) then
@@ -309,17 +358,27 @@ function loop()
             label10:hide()
             label9:hide()
         end
-        if player1:overObject(trigger_pit_1) or player1:overObject(trigger_pit_0) then
+        if player1:overObject(trigger_pit_1) or player1:overObject(trigger_pit_0)
+                or player1:overObject(trigger_pit_2) then
             controllerRumble(1, 1)
             player1:setXY(100, 100)
         end
         centreCamera(player1.ID)
+        if(leftTrigger() > 20000)then
+            if(player1.speed > 5) then
+                player1.speed = 22;
+            end
+        else
+            if(player1.speed > 5) then
+                player1.speed = 15;
+            end
+        end
     elseif(pause == 1) then
         -- setDarkness(0)
         button_continue:update()
         button_exit:update()
         if keyPressed("PAUSE") then
             unpauseGame()
+            end
         end
     end
-end
