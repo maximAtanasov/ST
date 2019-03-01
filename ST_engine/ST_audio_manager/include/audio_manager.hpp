@@ -60,8 +60,8 @@ class audio_manager{
         uint8_t music_volume = MIX_MAX_VOLUME;
         bool muted = false;
         //ratio: MIX_MAX_VOLUME/volume
-        float chunk_playback_volume_ratio;
-        float music_playback_volume_ratio;
+        float chunk_playback_volume_ratio = 1;
+        float music_playback_volume_ratio = 1;
 
         ///subscriber object to receive messages
         subscriber msg_sub{};
@@ -174,13 +174,11 @@ inline void audio_manager::play_music(uint16_t arg, uint8_t volume, int8_t loops
     auto data = music_ptr->find(arg);
     if(data != music_ptr->end() ){
         if(!muted) {
+            //Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         }
         if(Mix_PlayMusic(data->second, loops) == -1){
             gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Mix_PlayMusic Error " + std::string(Mix_GetError()))));
-        }
-        if(!muted) {
-            Mix_VolumeMusic(this->music_volume);
         }
     }
 }

@@ -154,9 +154,6 @@ void drawing_manager::draw_console(console& cnsl){
  * @param lights A vector of <b>ST::light</b> objects.
  */
 void drawing_manager::process_lights(const std::vector<ST::light>& lights){
-    if(!lighting_enabled){
-        return;
-    }
     for(int i = 0; i < w_width; i++){
         for(int j = 0; j < w_height; j++){
             lightmap[i][j] = darkness_level;
@@ -357,7 +354,7 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
                     ST::renderer_sdl::draw_texture_scaled(i.texture, i.x, i.y, i.tex_scale_x, i.tex_scale_y);
 				}
                 else{
-                    ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - Camera.x, i.y - Camera.y, i.tex_scale_x, i.tex_scale_x);
+                    ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - Camera.x, i.y - Camera.y, i.tex_scale_x, i.tex_scale_y);
 				}
             }
             else{

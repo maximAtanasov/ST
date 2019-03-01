@@ -13,7 +13,7 @@
 #include "game_manager.hpp"
 
 
-#define FIRST_LEVEL_NAME "main"
+#define FIRST_LEVEL_NAME "cubes"
 
 /**
  * initializes the game_manager and loads the level specified as first ("main" is default)

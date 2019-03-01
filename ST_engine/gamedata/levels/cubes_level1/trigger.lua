@@ -7,21 +7,39 @@
 -- E-mail: maxim.atanasov@protonmail.com
 
 trigger = entity:new()
-trigger.texture = "coin.webp"
-trigger.texWidth = 65
-trigger.texHeight = 65
-trigger.colX = 63;
-trigger.colY = 63;
+trigger.texWidth = 100
+trigger.texHeight = 100
+trigger.colX = 100
+trigger.colY = 100
+trigger.triggerCount = 0
 trigger.isVisible = true
-trigger.animationNum = 1;
-trigger.spriteNum = 8
 trigger.affectedByPhysics = false
+trigger.collisionCallbacks = nil
+
+function trigger:new(x, y, width, height)
+    self.colX = width
+    self.colY = height
+    self.texWidth = width
+    self.texHeight = height
+    self = newEntity(self, x, y)
+    self.collisionCallbacks = {}
+    return self;
+end
+
+function trigger:onCollisionWith(object, callback)
+    self.collisionCallbacks[object] = callback;
+end
 
 function trigger:update()
-    if self.isVisible == true then
-        if self:overObject(player1) then
-            --playSound("coin.wav", 70, 0)
-           -- self:delete()
+    for object, callback in pairs(self.collisionCallbacks) do
+        if(self:overObject(object)) then
+            callback()
+            self.triggerCount = self.triggerCount + 1;
         end
     end
 end
+
+function trigger:getTriggerCount()
+    return self.triggerCount
+end
+

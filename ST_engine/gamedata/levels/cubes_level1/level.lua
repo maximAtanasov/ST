@@ -7,10 +7,10 @@
 -- E-mail: maxim.atanasov@protonmail.com
 
 use("player.lua")
+use("trigger.lua")
 use("obstacle_1.lua")
 use("platform.lua")
 use("bar_hor.lua")
-use("trigger.lua")
 
 pause = 0
 
@@ -29,10 +29,13 @@ setDarkness(0)
 hideMouseCursor()
 
 setBackground("bg1.png")
---setOverlay("rain.webp", 13);
---playMusic("Shades.ogg", 100, -1)
+playMusic("music5.ogg", 40, -1)
 --playSound("rain.wav", 50, -1)
 --Create and initialize entities
+
+levelBeginBlock = entity:new(-10, floor)
+levelBeginBlock:setAffectedByPhysics(true)
+levelBeginBlock:setCollision(0,0,10, 1080)
 
 bar_ho1_1 = bar_hor:new(0, floor);
 bar_ho1_2 = bar_hor:new(800, floor);
@@ -62,109 +65,73 @@ obstacle_1_3 = obstacle_1:new(800, floor-600);
 player1 = player:new(100, 100);
 
 obstacle_1_4 = platform:new(2000, floor-400);
-obstacle_1_4.height = floor - 400
-
 obstacle_1_5 = platform:new(3000, floor-150);
-obstacle_1_5.height = floor - 150
-
-
 obstacle_1_6 = platform:new(3500, floor-360);
-obstacle_1_6.height = floor-360
 
 obstacle_1_7 = obstacle_1:new(4000, floor-200);
 obstacle_1_8 = obstacle_1:new(5280, floor-200);
 --obstacle_1_9 = obstacle_1:new(5500, floor-200);
 
 obstacle_1_10 = platform:new(6100, floor-300);
-obstacle_1_10.height = floor-300
 
-obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260);
-obstacle_1_10_dialogTrigger:setCollision(0,0, 360, 60)
-obstacle_1_10_dialogTrigger:setTexW(400)
-obstacle_1_10_dialogTrigger:setTexH(60)
+obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260, 360, 60);
 
 obstacle_1_11 = platform:new(6700, floor-300);
-obstacle_1_11.height = floor - 300
-
 obstacle_1_12 = platform:new(7250, floor-300);
-obstacle_1_12.height = floor - 300
-
 obstacle_1_13 = obstacle_1:new(8000, floor-200);
 obstacle_1_14 = obstacle_1:new(8800, floor-200);
 --obstacle_1_15 = obstacle_1:new(9500, floor-200);
 
-trigger_pit_0 = trigger:new(6400, floor-10)
-trigger_pit_0:setCollision(0,0, 800, 20);
 
 obstacle_1_16 = platform:new(10000, floor-300);
-obstacle_1_16.height = floor -300
-
 obstacle_1_17 = platform:new(10500, floor-300);
-obstacle_1_17.height = floor - 300
-
 obstacle_1_18 = platform:new(11000, floor-300);
-obstacle_1_18.height = floor - 300
-
 obstacle_1_19 = obstacle_1:new(13200, floor-200);
-
 obstacle_1_20 = platform:new(14000, floor-300);
-obstacle_1_20.height = floor - 300
-
 obstacle_1_21 = platform:new(14800, floor-300);
-obstacle_1_21.height = floor - 300
-
 obstacle_1_22 = platform:new(15400, floor-300);
-obstacle_1_22.height = floor - 300
-
 obstacle_1_23 = platform:new(16000, floor-300);
-obstacle_1_23.height = floor - 300
-
 obstacle_1_24 = platform:new(16400, floor-700);
-obstacle_1_24.height = floor - 700
-
 obstacle_1_25 = platform:new(16900, floor-700);
-obstacle_1_25.height = floor - 700
-
 obstacle_1_26 = platform:new(17400, floor-700);
-obstacle_1_26.height = floor - 700
-
 obstacle_1_27 = platform:new(18000, floor-300);
-obstacle_1_27.height = floor - 300
-
 obstacle_1_28 = platform:new(18600, floor-300);
-obstacle_1_28.height = floor - 300
-
 obstacle_1_29 = platform:new(19200, floor-300);
-obstacle_1_29.height = floor - 300
 
 bar_ho1_30 = bar_hor:new(20000, floor);
-bar_ho1_31 = bar_hor:new(28000, floor);
-bar_ho1_32 = bar_hor:new(36000, floor);
-bar_ho1_33 = bar_hor:new(44000, floor);
 
-trigger_pit_1 = trigger:new(10400, floor-10)
-trigger_pit_1:setCollision(0,0, 800, 20);
+function resetPlayerPosition()
+    controllerRumble(0.5, 1000)
+    playSound("respawn.wav", 80, 0)
+    player1:setXY(100,100)
+end
 
-trigger_pit_2 = trigger:new(14400, floor-10)
-trigger_pit_2:setCollision(0,0, 5600, 20);
+trigger_pit_0 = trigger:new(6400, floor-10, 800, 20)
+trigger_pit_0:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
+trigger_pit_1:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
+trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
+trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
 
 labelTimer = 0;
 
 label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
 label1:hide()
-label2 = label:new(270, 800, "Why am I a CUBE????", "font1.ttf", 50)
+label2 = label:new(300, 800, "Why am I a SQUARE????", "font1.ttf", 50)
 label2:hide()
-label3 = label:new(280, 800, "A square actually...", "font1.ttf", 50)
+label3 = label:new(280, 800, " ", "font1.ttf", 50)
 label3:hide()
-label4 = label:new(290, 800, "Is this a dream?!", "font1.ttf", 50)
+label4 = label:new(350, 800, "Is this a dream?!", "font1.ttf", 50)
 label4:hide()
-label5 = label:new(290, 800, "I hope it is...", "font1.ttf", 50)
+label5 = label:new(350, 800, "I hope it is...", "font1.ttf", 50)
 label5:hide()
 label6 = label:new(270, 800, "wait... PLATFORMS???", "font1.ttf", 50)
 label6:hide()
-label7 = label:new(300, 800, "WHY???", "font1.ttf", 50)
+label7 = label:new(500, 800, "WHY???", "font1.ttf", 50)
 label7:hide()
-label8 = label:new(270, 800, "WHAT'S GOING ON!?", "font1.ttf", 50)
+label8 = label:new(300, 800, "WHAT'S GOING ON!?", "font1.ttf", 50)
 label8:hide()
 
 bouncyTriggerCounter = 0
@@ -296,6 +263,11 @@ function loop()
         obstacle_1_28:update()
         obstacle_1_29:update()
 
+        trigger_pit_0:update()
+        trigger_pit_1:update()
+        trigger_pit_2:update()
+        trigger_pit_3:update()
+
         player1:update()
 
         if(labelTimer > 10 and labelTimer < 150) then
@@ -333,52 +305,15 @@ function loop()
             label8:hide()
             player1.speed = 15
         end
+
         labelTimer = labelTimer + 1
-        if bouncyTriggerAmount == 0 then
-            if player1:overObject(obstacle_1_10_dialogTrigger) then
-                label9:show()
-                bouncyTriggerAmount = 1
-            end
-        elseif bouncyTriggerAmount == 1 then
-            label9.text:setY(player1:getY()-150)
-            bouncyTriggerCounter = bouncyTriggerCounter + 1
-        elseif bouncyTriggerAmount == 2 then
-            if player1:overObject(obstacle_1_10_dialogTrigger) then
-                label9:hide()
-                label10:show()
-            end
-            label10.text:setY(player1:getY()-150)
-            bouncyTriggerCounter = bouncyTriggerCounter + 1
-        end
-        if bouncyTriggerCounter > 100 then
-            bouncyTriggerAmount = 2
-        end
-        if bouncyTriggerCounter > 400 then
-            bouncyTriggerAmount = 3
-            label10:hide()
-            label9:hide()
-        end
-        if player1:overObject(trigger_pit_1) or player1:overObject(trigger_pit_0)
-                or player1:overObject(trigger_pit_2) then
-            controllerRumble(1, 1)
-            player1:setXY(100, 100)
-        end
         centreCamera(player1.ID)
-        if(leftTrigger() > 20000)then
-            if(player1.speed > 5) then
-                player1.speed = 22;
-            end
-        else
-            if(player1.speed > 5) then
-                player1.speed = 15;
-            end
-        end
     elseif(pause == 1) then
         -- setDarkness(0)
         button_continue:update()
         button_exit:update()
         if keyPressed("PAUSE") then
             unpauseGame()
-            end
         end
     end
+end

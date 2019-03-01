@@ -29,7 +29,7 @@ static game_manager* gGame_managerLua;
 static lua_backend* gLua_backendLua;
 
 /**
- * Initializes the Lua subsytem.
+ * Initializes the Lua subsystem.
  * @param msg_bus A pointer to the global msg_bus.
  * @param game_mngr A pointer to the game_manager object.
  * @return Returns 0 on success or exits with exit code 1 on failure.

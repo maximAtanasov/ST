@@ -27,7 +27,39 @@ player.prevY = 0
 player.affectedByPhysics = true
 player.speed = 5;
 
+player.width = 150;
+player.height = 150;
+player.textureScaleX = 1;
+player.textureScaleY = 1;
+player.speedSound = false
+
 function player:update()
+    if(leftTrigger() > 20000) then
+        if(self.speed > 5) then
+            self.speed = 22;
+            if self.speedSound == false then
+                playSound("speed.wav", 20, 0)
+                self.speedSound = true
+                local velocity = self:getVelocityX()
+                if(velocity == 0) then
+                    if self.lastDirection == 0 then
+                        self:setVelocityX(velocity + self.speed*3)
+                    else
+                        self:setVelocityX(velocity - self.speed*3)
+                    end
+                end
+            end
+        end
+    else
+        if(self.speed > 5) then
+            if self.speedSound == true then
+               -- playSound("speed.wav", 20, 0)
+                self.speedSound = false
+            end
+            self.speed = 15;
+        end
+    end
+
     leftStick = leftStickHorizontal()
     if leftStick < -2000 and leftStick > -15000 then
        self:moveLeft(5)
@@ -47,6 +79,7 @@ function player:update()
     if keyPressed("JUMP") then
         self:jump()
     end
+
 
     --handle jumping
     if self:getVelocityY() < 0 then

@@ -92,6 +92,11 @@ function entity:new(x, y)
     return newEntity(self, x, y)
 end
 
+function entity:setAffectedByPhysics(arg)
+    self.affectedByPhysics = arg
+    setEntityAffectedByPhysics(self.ID, arg)
+end
+
 --set the x position of an entity
 function entity:setX(x)
     setEntityX(self.ID, x)
@@ -180,7 +185,7 @@ end
 
 --scale the collision box of an entity`
 function entity:setCollisionScale(x, y)
-    setEntityCollisionBox(self.ID, 0, 0, x*getEntityColX(), -y*getEntityColY())
+    setEntityCollisionBox(self.ID, 0, 0, x*self.colX, y*self.colY)
 end
 
 --get the Width of the collision box of an entity
