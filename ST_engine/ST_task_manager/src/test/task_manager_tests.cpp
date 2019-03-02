@@ -97,9 +97,10 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
     //Test
     auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
-    test_subject.start_task_lockfree(make_task(test_task_function2, &test_value1, nullptr));
+    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
     task_id id2 = test_subject.start_task(make_task(test_task_function2, &test_value2, nullptr));
 
+    test_subject.wait_for_task(id1);
     test_subject.wait_for_task(id2);
     auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
