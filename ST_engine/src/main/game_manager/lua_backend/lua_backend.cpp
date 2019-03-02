@@ -990,8 +990,11 @@ extern "C" int setEntityTextureScaleLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto scale_x = static_cast<float>(lua_tonumber(L, 2));
     auto scale_y = static_cast<float>(lua_tonumber(L, 3));
-    gGame_managerLua->get_level()->entities.at(id).tex_scale_x = scale_x;
-    gGame_managerLua->get_level()->entities.at(id).tex_scale_y = scale_y;
+    auto ent = &gGame_managerLua->get_level()->entities.at(id);
+    ent->tex_scale_x = scale_x;
+    ent->tex_scale_y = scale_y;
+    ent->tex_w = static_cast<uint16_t>(static_cast<float>(ent->tex_w)*scale_x);
+    ent->tex_h = static_cast<uint16_t>(static_cast<float>(ent->tex_h)*scale_y);
     return 0;
 }
 

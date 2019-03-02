@@ -33,6 +33,26 @@ playMusic("music5.ogg", 40, -1)
 --playSound("rain.wav", 50, -1)
 --Create and initialize entities
 
+endLevel = entity:new(20500,floor-100)
+endLevel:setVisible(true)
+endLevel:setTexture("black.png")
+endLevel:setTexW(50)
+endLevel:setTexH(50)
+endLevel:setTextureScale(3, 3)
+endLevel:setCollision(150,0, 5, 30)
+endLevel:setAffectedByPhysics(true)
+
+function endLevel:update()
+    if(player1:getX() > self:getX()) then
+        self:setAffectedByPhysics(false)
+    else
+        self:setAffectedByPhysics(true)
+    end
+    if(player1:getX() == 20500 and player1:getY() == self:getY()) then
+        exit()
+    end
+end
+
 levelBeginBlock = entity:new(-10, floor)
 levelBeginBlock:setAffectedByPhysics(true)
 levelBeginBlock:setCollision(0,0,10, 1080)
@@ -100,9 +120,33 @@ obstacle_1_29 = platform:new(19200, floor-300);
 
 bar_ho1_30 = bar_hor:new(20000, floor);
 
+lifeCube1 = entity:new(1800,100)
+lifeCube1:setTexture("live.png")
+lifeCube1:setVisible(true)
+lifeCube1:setStatic(true)
+
+lifeCube2 = entity:new(1700,100)
+lifeCube2:setTexture("live.png")
+lifeCube2:setVisible(true)
+lifeCube2:setStatic(true)
+
+lifeCube3 = entity:new(1600,100)
+lifeCube3:setTexture("live.png")
+lifeCube3:setVisible(true)
+lifeCube3:setStatic(true)
+
+
 function resetPlayerPosition()
     controllerRumble(0.5, 1000)
     playSound("respawn.wav", 80, 0)
+    player1.lives = player1.lives - 1;
+    if(player1.lives == 2) then
+        lifeCube3:setVisible(false)
+    elseif player1.lives == 1 then
+        lifeCube2:setVisible(false)
+    elseif player1.lives == 0 then
+        lifeCube1:setVisible(false)
+    end
     player1:setXY(100,100)
 end
 
@@ -115,6 +159,8 @@ trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
 trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
 trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
 
+
+
 labelTimer = 0;
 
 label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
@@ -125,11 +171,11 @@ label3 = label:new(280, 800, " ", "font1.ttf", 50)
 label3:hide()
 label4 = label:new(350, 800, "Is this a dream?!", "font1.ttf", 50)
 label4:hide()
-label5 = label:new(350, 800, "I hope it is...", "font1.ttf", 50)
+label5 = label:new(400, 800, "I hope it is...", "font1.ttf", 50)
 label5:hide()
 label6 = label:new(270, 800, "wait... PLATFORMS???", "font1.ttf", 50)
 label6:hide()
-label7 = label:new(500, 800, "WHY???", "font1.ttf", 50)
+label7 = label:new(470, 800, "WHY???", "font1.ttf", 50)
 label7:hide()
 label8 = label:new(300, 800, "WHAT'S GOING ON!?", "font1.ttf", 50)
 label8:hide()
@@ -268,6 +314,7 @@ function loop()
         trigger_pit_2:update()
         trigger_pit_3:update()
 
+        endLevel:update()
         player1:update()
 
         if(labelTimer > 10 and labelTimer < 150) then

@@ -1623,7 +1623,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
     test_subject.run_script("setEntityTextureScale(0, 2, 2)");
 
     //Check results
-    ASSERT_EQ(3, game_mngr->get_level_calls);
+    ASSERT_EQ(2, game_mngr->get_level_calls);
     ASSERT_EQ(1, game_mngr->get_level()->entities.size());
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).x);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).y);

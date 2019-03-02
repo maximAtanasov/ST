@@ -33,27 +33,27 @@ player.textureScaleX = 1;
 player.textureScaleY = 1;
 player.speedSound = false
 
+player.lives = 3
+
 function player:update()
     if(leftTrigger() > 20000) then
         if(self.speed > 5) then
-            self.speed = 22;
+            self.speed = 26;
             if self.speedSound == false then
                 playSound("speed.wav", 20, 0)
                 self.speedSound = true
                 local velocity = self:getVelocityX()
-                if(velocity == 0) then
-                    if self.lastDirection == 0 then
-                        self:setVelocityX(velocity + self.speed*3)
-                    else
-                        self:setVelocityX(velocity - self.speed*3)
-                    end
+                if self.lastDirection == 0 then
+                    self:setVelocityX(velocity + 66)
+                else
+                    self:setVelocityX(velocity - 66)
                 end
+                return
             end
         end
     else
         if(self.speed > 5) then
             if self.speedSound == true then
-               -- playSound("speed.wav", 20, 0)
                 self.speedSound = false
             end
             self.speed = 15;
@@ -101,12 +101,16 @@ end
 
 function player:moveRight(speed)
     self.lastDirection = 0;
-    self:setVelocityX(speed)
+    if self:getVelocityX() < 60 then
+        self:setVelocityX(speed)
+    end
     self:setTexture("cube_eye.png")
 end
 
 function player:moveLeft(speed)
-    self:setVelocityX(-speed)
+    if self:getVelocityX() > -60 then
+        self:setVelocityX(-speed)
+    end
     self.lastDirection = 1;
     self:setTexture("cube_eye_left.png")
 end
