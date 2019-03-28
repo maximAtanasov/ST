@@ -170,15 +170,18 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         count = 0;
         int radius = light.radius;
         int intensity = light.intensity;
-        if(x - radius - intensity > w_width || y - radius - intensity > w_height)
+        if(x - radius - intensity > w_width || y - radius - intensity > w_height) {
             continue;
+        }
         double step2 = 0;
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j < x + radius + intensity; j++){
-                if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = (uint8_t) light.brightness + (uint8_t)count;
-                if(count + light.brightness < darkness_level && j > x + intensity)
+                if(j > 0 && j < w_width && i > 0 && i < w_height) {
+                    lightmap[j][i] = (uint8_t) light.brightness + static_cast<uint8_t>(count);
+                }
+                if(count + light.brightness < darkness_level && j > x + intensity) {
                     count += step;
+                }
             }
             count = 0;
             count += step2;
@@ -189,38 +192,46 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         step2 = 0;
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j > x - radius - intensity; j--){
-                if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = light.brightness + (uint8_t)count;
-                if(count + light.brightness < darkness_level && j < x - intensity)
+                if(j > 0 && j < w_width && i > 0 && i < w_height) {
+                    lightmap[j][i] = light.brightness + (uint8_t) count;
+                }
+                if(count + light.brightness < darkness_level && j < x - intensity) {
                     count += step;
+                }
             }
             count = 0;
             count += step2;
-            if(step2 + light.brightness < darkness_level && i < y - intensity)
+            if(step2 + light.brightness < darkness_level && i < y - intensity) {
                 step2 += step;
+            }
         }
         count = 0;
         step2 = 0;
         for(int i = y; i > y - radius - intensity; i--){
             for(int j = x; j < x + radius + intensity; j++){
-                if(j > 0 && j < w_width && i > 0 && i < w_height)
+                if(j > 0 && j < w_width && i > 0 && i < w_height){
                     lightmap[j][i] = light.brightness + (uint8_t)count;
-                if(count + light.brightness < darkness_level && j > x + intensity)
+                }
+                if(count + light.brightness < darkness_level && j > x + intensity) {
                     count += step;
+                }
             }
             count = 0;
             count += step2;
-            if(step2 + light.brightness < darkness_level && i < y - intensity)
+            if(step2 + light.brightness < darkness_level && i < y - intensity) {
                 step2 += step;
+            }
         }
         count = 0;
         step2 = 0;
         for(int i = y; i < y + radius + intensity; i++){
             for(int j = x; j > x - radius - intensity; j--){
-                if(j > 0 && j < w_width && i > 0 && i < w_height)
-                    lightmap[j][i] = light.brightness + (uint8_t)count;
-                if(count + light.brightness< darkness_level && j < x - intensity)
+                if(j > 0 && j < w_width && i > 0 && i < w_height) {
+                    lightmap[j][i] = light.brightness + (uint8_t) count;
+                }
+                if(count + light.brightness< darkness_level && j < x - intensity) {
                     count += step;
+                }
             }
             count = 0;
             count += step2;

@@ -11,6 +11,9 @@
 #include <fstream>
 #include <sstream>
 
+#include <ST_util/pool_allocator_256.hpp>
+
+static ST::pool_allocator_256<ST::task> allocator;
 
 #ifdef _MSC_VER
 #include <Windows.h>
@@ -215,6 +218,7 @@ task_manager::task_manager(message_bus *msg_bus){
     //check how many threads we have
     thread_num = static_cast<uint8_t>(get_cpu_core_count());
 
+
     //initialize semaphore for worker threads
     work_sem = new semaphore;
 
@@ -328,4 +332,28 @@ void task_manager::wait_for_task(task_id id){
         }
         delete id;
     }
+}
+
+/**
+ * //only use these functions to create/destroy tasks
+ * @param function A function representing a work task
+ * @param arg The arguments to above function
+ * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
+ * @param affinity Thread affinity for the task
+ * @return A new task object
+ */
+ST::task* make_task(void (*function)(void *), void *arg, semaphore *dependency){
+    ST::task* temp = allocator.allocate();
+    temp->data = arg;
+    temp->dependency = dependency;
+    temp->task_func = function;
+    return temp;
+}
+
+/**
+ * Destroys a task using the task allocator
+ * @param task The task to destroy
+ */
+void destroy_task(ST::task* task){
+    allocator.deallocate(task->get_id());
 }

@@ -11,9 +11,7 @@
 #define TASK_DEF
 
 #include "semaphore.hpp"
-
-class task_allocator;
-extern task_allocator gTask_allocator;
+#include <ST_util/pool_allocator_256.hpp>
 
 namespace ST {
 
@@ -36,8 +34,16 @@ namespace ST {
             return id;
         }
 
+        task() = default;
+
+        task(void (*function)(void *), void *arg, semaphore *dependency){
+            this->task_func = function;
+            this->data = arg;
+            this->dependency = dependency;
+        }
+
     private:
-        friend class ::task_allocator;
+        friend pool_allocator_256<ST::task>;
         uint8_t id = 0;
     };
 }

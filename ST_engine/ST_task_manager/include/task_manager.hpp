@@ -12,7 +12,6 @@
 
 #include <message_bus.hpp>
 #include "../src/main/task.hpp"
-#include "../src/main/task_allocator.hpp"
 #include "../src/main/semaphore.hpp"
 
 typedef semaphore* task_id;
@@ -44,5 +43,8 @@ class task_manager{
         void start_task_lockfree(ST::task* arg);
         void wait_for_task(task_id id);
 };
+
+ST::task* make_task(void (*function)(void *), void *arg, semaphore *dependency);
+void destroy_task(ST::task* task);
 
 #endif //TASK_MNGR_DEF

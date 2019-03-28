@@ -22,8 +22,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
 
 add_library(ST_message_bus STATIC
-        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
         ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
         ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
@@ -31,8 +29,6 @@ add_library(ST_message_bus STATIC
         ${PROJECT_SOURCE_DIR}/src/main/message.hpp)
 
 add_executable(message_test
-		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
         ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
         ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
@@ -41,24 +37,10 @@ add_executable(message_test
         ${PROJECT_SOURCE_DIR}/src/test/message_tests.cpp)
 
 target_link_libraries(message_test
-        gtest)
-
-add_executable(message_allocator_test
-		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
-        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
-        ${PROJECT_SOURCE_DIR}/src/test/message_allocator_tests.cpp)
-
-target_link_libraries(message_allocator_test
+        ST_util
         gtest)
 
 add_executable(subscriber_test
-		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
         ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
         ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
@@ -67,11 +49,10 @@ add_executable(subscriber_test
         ${PROJECT_SOURCE_DIR}/src/test/subscriber_tests.cpp)
 
 target_link_libraries(subscriber_test
+        ST_util
         gtest)
 
 add_executable(message_bus_test
-		${PROJECT_SOURCE_DIR}/src/main/message_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/message_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
         ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
         ${PROJECT_SOURCE_DIR}/src/main/subscriber.cpp
@@ -80,12 +61,12 @@ add_executable(message_bus_test
         ${PROJECT_SOURCE_DIR}/src/test/message_bus_tests.cpp)
 
 target_link_libraries(message_bus_test
+        ST_util
         gtest)
 
 
 set(RUN_ON_BUILD_TESTS
         message_bus_test
-        message_allocator_test
         subscriber_test
         message_test    )
 

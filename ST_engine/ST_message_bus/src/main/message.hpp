@@ -12,9 +12,7 @@
 
 
 #include <memory>
-
-class message_allocator;
-extern message_allocator msg_memory;
+#include <ST_util/pool_allocator_256.hpp>
 
 ///A message object passed around in the message bus. Holds anything created with make_data<>().
 /**
@@ -22,16 +20,24 @@ extern message_allocator msg_memory;
  */
 class message{
 private:
-    friend class message_allocator;
+    friend ST::pool_allocator_256<message>;
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
     //that's how shared_ptr works, if you don't believe me, well google it or something
-    uint8_t id; //used during allocation and de-allocation
+    uint8_t id{}; //used during allocation and de-allocation
 
 public:
-    uint8_t msg_name;
+    uint8_t msg_name{};
     uint8_t get_id() const;
     void* get_data() const;
+    void set_data(const std::shared_ptr<void>& data);
     message* make_copy() const;
+
+    message() = default;
+    message(uint8_t name, const std::shared_ptr<void>& data){
+        this->msg_name = name;
+        this->data = data;
+    }
+
 };
 
 //INLINED METHODS
@@ -48,6 +54,10 @@ inline void* message::get_data() const{
  */
 inline uint8_t message::get_id() const{
     return id;
+}
+
+inline void message::set_data(const std::shared_ptr<void>& data) {
+    this->data = data;
 }
 
 #endif //ST_MESSAGE_HPP

@@ -23,17 +23,13 @@ add_library(ST_task_manager STATIC
         ${PROJECT_SOURCE_DIR}/src/main/task.hpp
         ${PROJECT_SOURCE_DIR}/src/main/task_manager.cpp
         ${PROJECT_SOURCE_DIR}/src/main/semaphore.hpp
-        ${PROJECT_SOURCE_DIR}/include/task_manager.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/task_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/task_allocator.hpp)
+        ${PROJECT_SOURCE_DIR}/include/task_manager.hpp)
 
 add_executable(task_manager_test
 		${PROJECT_SOURCE_DIR}/src/main/task.hpp
         ${PROJECT_SOURCE_DIR}/src/main/task_manager.cpp
         ${PROJECT_SOURCE_DIR}/src/main/semaphore.hpp
         ${PROJECT_SOURCE_DIR}/include/task_manager.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/task_allocator.cpp
-        ${PROJECT_SOURCE_DIR}/src/main/task_allocator.hpp
         ${PROJECT_SOURCE_DIR}/src/test/task_manager_tests.cpp)
 
 target_link_libraries(task_manager_test

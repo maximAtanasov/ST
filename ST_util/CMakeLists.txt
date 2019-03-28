@@ -46,4 +46,4 @@ add_library(ST_util
         include/ST_util/string_util.hpp
         include/ST_util/bytell_hash_map.hpp
         include/ST_util/flat_hash_map.hpp
-        include/ST_util/flat_hash_map.hpp)
+        include/ST_util/flat_hash_map.hpp include/ST_util/pool_allocator_256.hpp)

@@ -18,7 +18,6 @@
 #include <memory>
 #include <vector>
 #include <cstring>
-#include "../src/main/message_allocator.hpp"
 #include "message_types.hpp"
 #include "../src/main/subscriber.hpp"
 
@@ -49,24 +48,20 @@ class message_bus{
  * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
  * @return A new message object.
  */
-inline message* make_msg(uint8_t name, const std::shared_ptr<void>& data){
-    return msg_memory.allocate_message(name, data);
-}
+message* make_msg(uint8_t name, const std::shared_ptr<void>& data);
 
 /**
  * Destroys a message. Call this when you absolutely no longer need the message.
  * @param msg The message to destroy.
  */
-inline void destroy_msg(message* msg){
-    msg_memory.deallocate(msg->get_id());
-}
+void destroy_msg(message* msg);
 
 /**
  * Makes a copy of itself.
  * @return A new message that is an exact copy of the original.
  */
 inline message* message::make_copy() const{
-    return msg_memory.allocate_message(this->msg_name, this->data);
+    return make_msg(this->msg_name, this->data);
 }
 
 /**
