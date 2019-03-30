@@ -30,7 +30,7 @@ namespace ST {
 
         //2 bytes
         bool is_static = false;
-        uint8_t padding_byte;
+        uint8_t padding_byte{};
 
         light(int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
     };

@@ -28,6 +28,8 @@ static message_bus*  gMessage_busLua;
 static game_manager* gGame_managerLua;
 static lua_backend* gLua_backendLua;
 
+static bool singleton_initialized = false;
+
 /**
  * Initializes the Lua subsystem.
  * @param msg_bus A pointer to the global msg_bus.
@@ -35,6 +37,11 @@ static lua_backend* gLua_backendLua;
  * @return Returns 0 on success or exits with exit code 1 on failure.
  */
 int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
+    if(singleton_initialized){
+        throw std::runtime_error("The lua backend cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
 
     //Set the external dependencies.
     gLua_backendLua = this;
@@ -268,6 +275,7 @@ void lua_backend::run_global(const std::string& arg) {
  */
 void lua_backend::close() {
     lua_close(L);
+    singleton_initialized = false;
 }
 
 /**

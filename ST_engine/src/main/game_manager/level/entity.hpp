@@ -69,10 +69,10 @@ namespace ST {
         uint16_t texture = 65535;
 
         entity(){
-            toggles |= (1<<0);
-            toggles &= ~(1<<1);
-            toggles |= (1<<2);
-            toggles &= ~(1<<3);
+            toggles |= (1U<<0U);
+            toggles &= ~(1U<<1U);
+            toggles |= (1U<<2U);
+            toggles &= ~(1U<<3U);
         };
 
         int32_t get_col_x() const;
@@ -95,50 +95,50 @@ namespace ST {
 //INLINED METHODS
 
 inline bool ST::entity::is_active() const{
-    return static_cast<bool>(toggles & (1 << 0));
+    return static_cast<bool>(toggles & (1U << 0U));
 }
 
 inline bool ST::entity::is_static() const{
-    return static_cast<bool>(toggles & (1 << 1));
+    return static_cast<bool>(toggles & (1U << 1U));
 }
 
 inline bool ST::entity::is_visible() const{
-    return static_cast<bool>(toggles & (1 << 2));
+    return static_cast<bool>(toggles & (1U << 2U));
 }
 
 inline bool ST::entity::is_affected_by_physics() const{
-    return static_cast<bool>(toggles & (1 << 3));
+    return static_cast<bool>(toggles & (1U << 3U));
 }
 
 inline void ST::entity::set_active(bool active) {
     if(active){
-        toggles |= (1<<0);
+        toggles |= (1U<<0U);
     }else{
-        toggles &= ~(1<<0);
+        toggles &= ~(1U<<0U);
     }
 }
 
 inline void ST::entity::set_static(bool static_) {
     if(static_){
-        toggles |= (1<<1);
+        toggles |= (1U<<1U);
     }else{
-        toggles &= ~(1<<1);
+        toggles &= ~(1U<<1U);
     }
 }
 
 inline void ST::entity::set_visible(bool visible) {
     if(visible){
-        toggles |= (1<<2);
+        toggles |= (1U<<2U);
     }else{
-        toggles &= ~(1<<2);
+        toggles &= ~(1U<<2U);
     }
 }
 
 inline void ST::entity::set_affected_by_physics(bool affected) {
     if(affected){
-        toggles |= (1<<3);
+        toggles |= (1U<<3U);
     }else{
-        toggles &= ~(1<<3);
+        toggles &= ~(1U<<3U);
     }
 }
 

@@ -10,11 +10,19 @@
 #include <console.hpp>
 #include <key_definitions.hpp>
 
+static bool singleton_initialized = false;
+
 /**
  *
  * @param msg_bus A pointer to the global message bus.
  */
 console::console(message_bus* msg_bus){
+    if(singleton_initialized){
+        throw std::runtime_error("The dev console cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
     gMessage_bus = msg_bus;
     color = {50, 50, 50, 100};
     color_text = {255, 255, 255, 255};
@@ -231,6 +239,7 @@ void console::show(){
  */
 console::~console(){
     handle_messages();
+    singleton_initialized = false;
 }
 
 

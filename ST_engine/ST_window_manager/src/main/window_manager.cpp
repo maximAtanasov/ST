@@ -11,11 +11,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+static bool singleton_initialized = false;
+
 /**
  * Closes the Window Manager.
  * Destroys the window and quits SDL.
  */
 window_manager::~window_manager(){
+    singleton_initialized = false;
     SDL_FreeSurface(icon);
     SDL_DestroyWindow(window);
     window = nullptr;
@@ -28,6 +31,13 @@ window_manager::~window_manager(){
  * @param tsk_mngr a pointer to the global task manager
  */
 window_manager::window_manager(message_bus* msg_bus, task_manager* tsk_mngr, const std::string& window_name){
+
+    if(singleton_initialized){
+        throw std::runtime_error("The window manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);

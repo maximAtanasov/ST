@@ -118,8 +118,7 @@ void ST::level::unload(){
  */
 int8_t ST::level::load_input_conf(){
     std::ifstream file;
-    std::string temp = "levels/" + name;
-    temp = temp + "/inputConf.cfg";
+    std::string temp = "levels/" + name +  "/inputConf.cfg";
     file.open(temp.c_str());
     if(file.is_open()){
         gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Loading " + temp)));

@@ -44,6 +44,8 @@ static ska::bytell_hash_map<uint16_t, std::vector<SDL_Texture *>> fonts_cache{};
 
 static bool vsync = false;
 
+static bool singleton_initialized = false;
+
 /**
  * Initializes the renderer.
  * @param window The window to bind this renderer to.
@@ -53,6 +55,12 @@ static bool vsync = false;
  */
 int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16_t r_height){
     font_cache::set_max(100);
+
+    if(singleton_initialized){
+        throw std::runtime_error("The renderer cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
 
     //initialize renderer
 	window = r_window;
@@ -95,6 +103,7 @@ void ST::renderer_sdl::close(){
     font_cache::close();
     SDL_DestroyRenderer(sdl_renderer);
     sdl_renderer = nullptr;
+    singleton_initialized = false;
 }
 
 /**

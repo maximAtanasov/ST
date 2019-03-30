@@ -31,7 +31,7 @@ namespace ST {
         int32_t x, y;
 
         //4 bytes
-        SDL_Color color;
+        SDL_Color color{};
 
         //2 bytes
         uint16_t font;
@@ -40,7 +40,7 @@ namespace ST {
         bool is_visible = true;
 
         //1 byte padding
-        uint8_t padding;
+        uint8_t padding{};
     };
 }
 

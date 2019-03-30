@@ -15,6 +15,8 @@
 
 static ST::pool_allocator_256<ST::task> allocator;
 
+static bool singleton_initialized;
+
 #ifdef _MSC_VER
 #include <Windows.h>
 #include <malloc.h>
@@ -212,6 +214,12 @@ void task_manager::do_work(ST::task* work) {
  */
 task_manager::task_manager(message_bus *msg_bus){
 
+    if(singleton_initialized){
+        throw std::runtime_error("The task manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
     //Set our external dependency
     gMessage_bus = msg_bus;
 
@@ -240,6 +248,12 @@ task_manager::task_manager(message_bus *msg_bus){
  * @param msg_bus A pointer to the global message bus.
  */
 task_manager::task_manager(message_bus *msg_bus, uint8_t thread_num){
+
+    if(singleton_initialized){
+        throw std::runtime_error("The task manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
 
     //Set our external dependency
     gMessage_bus = msg_bus;
@@ -275,6 +289,7 @@ void task_manager::start_thread(int (*thread_func)(void*), void* data){
  * Waits for all threads to exit properly and finishes any unfinished tasks.
  */
 task_manager::~task_manager(){
+    singleton_initialized = false;
 
     run_threads = false;
     for(int i = 0; i < thread_num-1; i++){

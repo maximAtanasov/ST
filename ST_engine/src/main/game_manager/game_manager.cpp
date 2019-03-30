@@ -15,12 +15,20 @@
 
 #define FIRST_LEVEL_NAME "cubes"
 
+static bool singleton_initialized = false;
+
 /**
  * initializes the game_manager and loads the level specified as first ("main" is default)
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
 game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
+
+    if(singleton_initialized){
+        throw std::runtime_error("The game manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
 
     gMessage_bus = msg_bus;
     gScript_backend.initialize(gMessage_bus, this);
@@ -306,6 +314,7 @@ void game_manager::start_level(const std::string& level_name){
 game_manager::~game_manager(){
     handle_messages();
     gScript_backend.close();
+    singleton_initialized = false;
 }
 
 /**

@@ -11,12 +11,26 @@
 #include <SDL.h>
 #include <string>
 
+
+
+static bool singleton_initialized = false;
+
+input_manager::~input_manager() {
+    singleton_initialized = false;
+}
+
 /**
  * initializes the input manager
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
  */
 input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
+
+    if(singleton_initialized){
+        throw std::runtime_error("The input manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
 
     //SET OUR EXTERNAL DEPENDENCIES
     gMessage_bus = msg_bus;

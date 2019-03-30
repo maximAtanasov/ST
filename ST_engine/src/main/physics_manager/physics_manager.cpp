@@ -8,12 +8,19 @@
  */
 #include <physics_manager/physics_manager.hpp>
 
+static bool singleton_initialized = false;
 /**
  * Initializes the physics manager.
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
 physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
+    if(singleton_initialized){
+        throw std::runtime_error("The phsyics manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
     gMessage_bus->subscribe(SET_GRAVITY, &msg_sub);
@@ -55,6 +62,10 @@ void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
             }
         }
     }
+}
+
+physics_manager::~physics_manager() {
+    singleton_initialized = false;
 }
 
 /**

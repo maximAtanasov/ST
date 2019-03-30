@@ -13,6 +13,8 @@
 #define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
 #define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
 
+static bool singleton_initialized = false;
+
 /**
  *
  * @param window A pointer to an SDL_Window to bind the renderer to.
@@ -20,6 +22,13 @@
  * @param tsk_mngr A pointer to the global task_manager.
  */
 drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
+
+    if(singleton_initialized){
+        throw std::runtime_error("The drawing manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
 	if(TTF_Init() < 0){
 		fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
 		exit(1);
@@ -471,4 +480,5 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
 drawing_manager::~drawing_manager(){
     ST::renderer_sdl::close();
 	TTF_Quit();
+	singleton_initialized = false;
 }

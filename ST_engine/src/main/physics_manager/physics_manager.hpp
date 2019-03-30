@@ -43,7 +43,7 @@
 class physics_manager{
     private:
         message_bus* gMessage_bus{};
-        std::vector<ST::entity>* entities;
+        std::vector<ST::entity>* entities{};
 		task_manager* gTask_manager{};
         subscriber msg_sub{};
         int32_t level_floor = 0;
@@ -64,6 +64,7 @@ class physics_manager{
     public:
         physics_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         void update(std::vector<ST::entity>* data);
+        ~physics_manager();
 };
 
 //INLINED METHODS

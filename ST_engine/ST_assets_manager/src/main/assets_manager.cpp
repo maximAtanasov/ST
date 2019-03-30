@@ -10,6 +10,8 @@
 #include <ST_loaders/loaders.hpp>
 #include <assets_manager.hpp>
 
+static bool singleton_initialized = false;
+
 /**
  * Initializes the asset_manager.
  * Loads all assets declared in the file <b>levels/assets_global.list</b>.
@@ -17,6 +19,13 @@
  * @param tsk_mngr - A pointer to the global task manager.
  */
 assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
+
+    if(singleton_initialized){
+        throw std::runtime_error("The assets manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
     //set external dependencies
     gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
@@ -374,4 +383,5 @@ assets_manager::~assets_manager(){
             unload_asset(i.first);
         }
     }
+    singleton_initialized = false;
 }

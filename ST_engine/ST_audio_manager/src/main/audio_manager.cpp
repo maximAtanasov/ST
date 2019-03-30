@@ -9,6 +9,8 @@
 
 #include <audio_manager.hpp>
 
+static bool singleton_initialized = false;
+
 /**
  * Performs the update for the asset_manager on a task thread.
  * @param arg pointer to an audio_manager (a <b>this</b> pointer basically) as the
@@ -26,6 +28,12 @@ void audio_manager::update_task(void* arg){
  * @param tsk_mngr A pointer to the global task manager.
  */
 audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
+    if(singleton_initialized){
+        throw std::runtime_error("The audio manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
     if(SDL_Init(SDL_INIT_AUDIO) < 0) {
         fprintf(stderr, "Failed to initialize SDL audio subsystem: %s\n", SDL_GetError());
         exit(1);
@@ -43,7 +51,7 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 
     Mix_Volume(-1, chunk_volume);
     Mix_VolumeMusic(music_volume);
-    Mix_AllocateChannels(16);
+    Mix_AllocateChannels(8);
 
     //subscribe to messages
     gMessage_bus->subscribe(PLAY_SOUND, &msg_sub);
@@ -136,4 +144,5 @@ audio_manager::~audio_manager(){
     Mix_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
     Mix_Quit();
+    singleton_initialized = false;
 }
