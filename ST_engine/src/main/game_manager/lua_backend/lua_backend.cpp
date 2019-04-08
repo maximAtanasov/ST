@@ -244,7 +244,6 @@ int8_t lua_backend::load_file(const std::string& file){
  */
 int8_t lua_backend::run_script(const std::string& script) {
     std::string temp = hash_string(script);
-   // int status = luaL_loadbuffer(L, temp.c_str(), temp.size(), script.c_str());
     if (luaL_dostring(L, temp.c_str())){
         gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Cannot run script")));
         return -1;

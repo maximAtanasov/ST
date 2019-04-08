@@ -27,7 +27,6 @@ TEST(message_test, test_message_copy) {
     ASSERT_TRUE(copy->get_data());
     ASSERT_EQ(test_subject->get_data(), copy->get_data());
     ASSERT_EQ(test_subject->msg_name, copy->msg_name);
-    ASSERT_NE(test_subject->get_id(), copy->get_id());
     destroy_msg(test_subject);
     destroy_msg(copy);
 }

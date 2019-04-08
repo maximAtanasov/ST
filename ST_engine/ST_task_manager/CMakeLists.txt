@@ -9,7 +9,7 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(ST_task_manager)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include(GoogleTest)
 enable_testing()
@@ -23,14 +23,14 @@ add_library(ST_task_manager STATIC
         ${PROJECT_SOURCE_DIR}/src/main/task.hpp
         ${PROJECT_SOURCE_DIR}/src/main/task_manager.cpp
         ${PROJECT_SOURCE_DIR}/src/main/semaphore.hpp
-        ${PROJECT_SOURCE_DIR}/include/task_manager.hpp)
+        ${PROJECT_SOURCE_DIR}/include/task_manager.hpp src/main/task.cpp)
 
 add_executable(task_manager_test
 		${PROJECT_SOURCE_DIR}/src/main/task.hpp
         ${PROJECT_SOURCE_DIR}/src/main/task_manager.cpp
         ${PROJECT_SOURCE_DIR}/src/main/semaphore.hpp
         ${PROJECT_SOURCE_DIR}/include/task_manager.hpp
-        ${PROJECT_SOURCE_DIR}/src/test/task_manager_tests.cpp)
+        ${PROJECT_SOURCE_DIR}/src/test/task_manager_tests.cpp src/main/task.cpp)
 
 target_link_libraries(task_manager_test
         gtest

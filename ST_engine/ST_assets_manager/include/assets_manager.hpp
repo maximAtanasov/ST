@@ -56,8 +56,8 @@ private:
         ska::bytell_hash_map<std::string, uint16_t> count;
         int8_t load_asset(std::string path);
         int8_t unload_asset(std::string path);
-        int8_t unload_assets_from_list(std::string path);
-        int8_t load_assets_from_list(std::string path);
+        int8_t unload_assets_from_list(const std::string& path);
+        int8_t load_assets_from_list(const std::string& path);
         int8_t load_assets_from_binary(const std::string& path);
         int8_t unload_assets_from_binary(const std::string& path);
         void handle_messages();
@@ -77,7 +77,7 @@ public:
  * will start the update task using the task manager.
  */
 inline void assets_manager::update(){
-    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr));
+    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr));
 }
 
 #endif

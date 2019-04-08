@@ -90,5 +90,5 @@ message* make_msg(uint8_t name, const std::shared_ptr<void>& data){
  * @param msg The message to destroy.
  */
 void destroy_msg(message* msg){
-    msg_memory.deallocate(msg->get_id());
+    msg_memory.deallocate(msg);
 }

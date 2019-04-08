@@ -83,7 +83,7 @@ class game_manager{
         std::string active_level{};
         ST::level* current_level_pointer{};
         subscriber msg_sub{};
-        std::atomic_bool game_is_running_;
+        std::atomic_bool game_is_running_{};
         lua_backend gScript_backend{};
         message_bus* gMessage_bus{};
         task_manager* gTask_manager{};
@@ -92,12 +92,12 @@ class game_manager{
         std::bitset<78> keys_released_data{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
-        int16_t left_trigger;
-        int16_t right_trigger;
-        int16_t left_stick_horizontal;
-        int16_t left_stick_vertical;
-        int16_t right_stick_vertical;
-        int16_t right_stick_horizontal;
+        int16_t left_trigger{};
+        int16_t right_trigger{};
+        int16_t left_stick_horizontal{};
+        int16_t left_stick_vertical{};
+        int16_t right_stick_vertical{};
+        int16_t right_stick_horizontal{};
 
         //methods
         void handle_messages();
@@ -162,7 +162,7 @@ inline void game_manager::run_level_loop() {
 }
 
 /**
- * @return A poitner to the current level.
+ * @return A pointer to the current level.
  */
 inline ST::level* game_manager::get_level() const{
     return current_level_pointer;

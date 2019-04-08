@@ -273,7 +273,7 @@ int8_t assets_manager::load_asset(std::string path){
  * @param path The path to the .list file.
  * @return -1 on failure or 0 on success.
  */
-int8_t assets_manager::load_assets_from_list(std::string path){
+int8_t assets_manager::load_assets_from_list(const std::string& path){
     std::ifstream file;
     file.open(path.c_str());
     if(file.is_open()){
@@ -299,7 +299,7 @@ int8_t assets_manager::load_assets_from_list(std::string path){
  * @param path The path to the .list file.
  * @return -1 on failure or 0 on success.
  */
-int8_t assets_manager::unload_assets_from_list(std::string path){
+int8_t assets_manager::unload_assets_from_list(const std::string& path){
     std::ifstream file;
     file.open(path.c_str());
     if(file.is_open()){

@@ -11,7 +11,7 @@ namespace ST{
         std::mutex access_mutex;
         T memory[256];
         std::atomic_bool allocated[256]{};
-        uint8_t memory_size = 255;
+        const uint8_t memory_size = 255;
         uint8_t pointer = 0;
 
     public:
@@ -27,22 +27,20 @@ namespace ST{
 
             access_mutex.lock();
             //find the next free spot in memory
-            while(allocated[pointer]){
+            while(allocated[++pointer]){
                 ++pointer;
             }
             pointer_temp = pointer;
             allocated[pointer++] = true;
             access_mutex.unlock();
 
-            memory[pointer_temp].id = pointer_temp;
             return &memory[pointer_temp];
         }
 
-        void deallocate(uint8_t id){
-            allocated[id] = false;
+        void deallocate(T* mem_location){
+            allocated[(mem_location-memory)] = false;
         }
     };
 }
-
 
 #endif //ST_POOL_ALLOCATOR_256_HPP

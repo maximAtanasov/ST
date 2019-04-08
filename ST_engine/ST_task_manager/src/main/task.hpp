@@ -22,29 +22,38 @@ namespace ST {
      * And some locking mechanisms.
      */
     class task {
+    private:
+        static pool_allocator_256<task> allocator;
 
     public:
+
+
         void (*task_func)(void *){};
 
         void* data{};
         semaphore* lock = nullptr;
         semaphore* dependency{};
 
-        inline uint8_t get_id() const{
-            return id;
-        }
-
         task() = default;
 
+        /**
+         * @param function A function representing a work task
+         * @param arg The arguments to above function
+         * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
+         */
         task(void (*function)(void *), void *arg, semaphore *dependency){
             this->task_func = function;
             this->data = arg;
             this->dependency = dependency;
         }
 
-    private:
-        friend pool_allocator_256<ST::task>;
-        uint8_t id = 0;
+        void* operator new (std::size_t count){
+            return allocator.allocate();
+        }
+
+        void operator delete (void* ptr){
+            allocator.deallocate(static_cast<task*>(ptr));
+        }
     };
 }
 

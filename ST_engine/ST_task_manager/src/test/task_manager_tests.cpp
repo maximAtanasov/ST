@@ -42,7 +42,7 @@ TEST_F(task_manager_tests, test_start_task_without_dependency){
     uint8_t test_value = 10;
 
     //Test
-    task_id id = test_subject.start_task(make_task(test_task_function, &test_value, nullptr));
+    task_id id = test_subject.start_task(new ST::task(test_task_function, &test_value, nullptr));
     test_subject.wait_for_task(id);
     ASSERT_EQ(test_value, 11);
 }
@@ -53,8 +53,8 @@ TEST_F(task_manager_tests, test_start_tasks_with_dependency){
     uint8_t test_value = 10;
 
     //Test
-    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value, nullptr));
-    task_id id2 = test_subject.start_task(make_task(test_task_function, &test_value, id1));
+    task_id id1 = test_subject.start_task(new ST::task(test_task_function2, &test_value, nullptr));
+    task_id id2 = test_subject.start_task(new ST::task(test_task_function, &test_value, id1));
 
     test_subject.wait_for_task(id2);
     ASSERT_EQ(test_value, 12);
@@ -66,7 +66,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
     uint8_t test_value = 10;
 
     //Test
-    test_subject.start_task_lockfree(make_task(test_task_function, &test_value, nullptr));
+    test_subject.start_task_lockfree(new ST::task(test_task_function, &test_value, nullptr));
 
     //Wait a suffecent amount of time
     std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -79,8 +79,8 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     uint8_t test_value = 10;
 
     //Test
-    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value, nullptr));
-    test_subject.start_task_lockfree(make_task(test_task_function, &test_value, id1));
+    task_id id1 = test_subject.start_task(new ST::task(test_task_function2, &test_value, nullptr));
+    test_subject.start_task_lockfree(new ST::task(test_task_function, &test_value, id1));
 
     std::this_thread::sleep_for(std::chrono::seconds(2));
     ASSERT_EQ(test_value, 12);
@@ -97,8 +97,8 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
     //Test
     auto start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
-    task_id id1 = test_subject.start_task(make_task(test_task_function2, &test_value1, nullptr));
-    task_id id2 = test_subject.start_task(make_task(test_task_function2, &test_value2, nullptr));
+    task_id id1 = test_subject.start_task(new ST::task(test_task_function2, &test_value1, nullptr));
+    task_id id2 = test_subject.start_task(new ST::task(test_task_function2, &test_value2, nullptr));
 
     test_subject.wait_for_task(id1);
     test_subject.wait_for_task(id2);

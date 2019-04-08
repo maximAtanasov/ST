@@ -61,7 +61,7 @@ class window_manager{
  * Starts an the update_task() method using the task manager.
  */
 inline void window_manager::update(){
-    gTask_manager->start_task_lockfree(make_task(update_task, this, nullptr));
+    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr));
 }
 
 #endif
