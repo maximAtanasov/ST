@@ -33,11 +33,11 @@ int8_t ST::level::load(){
     //Register all the keys this level uses with the input manager.
     for(const auto &i : actions_Buttons) {
         for(const auto& key : i.second) {
-            gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(key)));
+            gMessage_bus->send_msg(new message(REGISTER_KEY, make_data<ST::key>(key)));
         }
     }
     std::string temp = "levels/" + name + "/assets.list";
-    gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
+    gMessage_bus->send_msg(new message(LOAD_LIST, make_data(temp)));
     return 0;
 }
 
@@ -46,16 +46,16 @@ int8_t ST::level::load(){
  */
 void ST::level::reload(){
     std::string temp = "levels/" + name + "/assets.list";
-    gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data(temp)));
+    gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
     for(const auto &i : actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
+        gMessage_bus->send_msg(new message(UNREGISTER_KEY, make_data(i.second)));
     }
     actions_Buttons.clear();
-    gMessage_bus->send_msg(make_msg(LOAD_LIST, make_data(temp)));
+    gMessage_bus->send_msg(new message(LOAD_LIST, make_data(temp)));
     load_input_conf();
     for(const auto &i : actions_Buttons) {
         for(const auto& key : i.second) {
-            gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data<ST::key>(key)));
+            gMessage_bus->send_msg(new message(REGISTER_KEY, make_data<ST::key>(key)));
         }
     }
 }
@@ -92,11 +92,11 @@ ST::level::~level(){
  */
 void ST::level::unload(){
     for(const auto &i : actions_Buttons) {
-        gMessage_bus->send_msg(make_msg(UNREGISTER_KEY, make_data(i.second)));
+        gMessage_bus->send_msg(new message(UNREGISTER_KEY, make_data(i.second)));
     }
     //unload assets
     std::string temp = "levels/" + name + "/assets.list";
-    gMessage_bus->send_msg(make_msg(UNLOAD_LIST, make_data(temp)));
+    gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
 
     //unload inputConf
     actions_Buttons.clear();
@@ -121,7 +121,7 @@ int8_t ST::level::load_input_conf(){
     std::string temp = "levels/" + name +  "/inputConf.cfg";
     file.open(temp.c_str());
     if(file.is_open()){
-        gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Loading " + temp)));
+        gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Loading " + temp)));
         std::string action;
         std::string button;
         int actionRead = 0;
@@ -162,7 +162,7 @@ int8_t ST::level::load_input_conf(){
         file.close();
     }
     else{
-        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + temp + " not found")));
+        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + temp + " not found")));
         return -1;
     }
     return 0;

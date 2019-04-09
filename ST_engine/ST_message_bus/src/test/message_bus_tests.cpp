@@ -90,12 +90,12 @@ TEST_F(message_bus_tests, test_send_message_to_one_subscriber){
     test_subject.subscribe(msg, &test_subscriber);
 
     //Test
-    test_subject.send_msg(make_msg(msg, make_data(20)));
+    test_subject.send_msg(new message(msg, make_data(20)));
     message* result = test_subscriber.get_next_message();
     ASSERT_TRUE(result);
     ASSERT_EQ(msg, result->msg_name);
     ASSERT_EQ(20, *static_cast<int*>(result->get_data()));
-    destroy_msg(result);
+    delete(result);
 }
 
 TEST_F(message_bus_tests, test_send_message_to_two_subscribers){
@@ -109,19 +109,19 @@ TEST_F(message_bus_tests, test_send_message_to_two_subscribers){
     test_subject.subscribe(msg, &test_subscriber2);
 
     //Test
-    test_subject.send_msg(make_msg(msg, make_data(20)));
+    test_subject.send_msg(new message(msg, make_data(20)));
     message* result1 = test_subscriber1.get_next_message();
     message* result2 = test_subscriber2.get_next_message();
 
     ASSERT_TRUE(result1);
     ASSERT_EQ(msg, result1->msg_name);
     ASSERT_EQ(20, *static_cast<int*>(result1->get_data()));
-    destroy_msg(result1);
+    delete(result1);
 
     ASSERT_TRUE(result2);
     ASSERT_EQ(msg, result2->msg_name);
     ASSERT_EQ(20, *static_cast<int*>(result2->get_data()));
-    destroy_msg(result2);
+    delete(result2);
 }
 
 TEST_F(message_bus_tests, test_send_two_messages_to_one_subscriber){
@@ -134,8 +134,8 @@ TEST_F(message_bus_tests, test_send_two_messages_to_one_subscriber){
     test_subject.subscribe(msg1, &test_subscriber);
     test_subject.subscribe(msg2, &test_subscriber);
     //Test
-    test_subject.send_msg(make_msg(msg1, make_data(20)));
-    test_subject.send_msg(make_msg(msg2, make_data(30)));
+    test_subject.send_msg(new message(msg1, make_data(20)));
+    test_subject.send_msg(new message(msg2, make_data(30)));
 
     message* result1 = test_subscriber.get_next_message();
     message* result2 = test_subscriber.get_next_message();
@@ -143,12 +143,12 @@ TEST_F(message_bus_tests, test_send_two_messages_to_one_subscriber){
     ASSERT_TRUE(result1);
     ASSERT_EQ(msg1, result1->msg_name);
     ASSERT_EQ(20, *static_cast<int*>(result1->get_data()));
-    destroy_msg(result1);
+    delete(result1);
 
     ASSERT_TRUE(result2);
     ASSERT_EQ(msg2, result2->msg_name);
     ASSERT_EQ(30, *static_cast<int*>(result2->get_data()));
-    destroy_msg(result2);
+    delete(result2);
 }
 
 int main(int argc, char **argv) {

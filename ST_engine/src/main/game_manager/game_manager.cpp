@@ -184,7 +184,7 @@ void game_manager::handle_messages(){
             bool arg = *static_cast<bool*>(temp->get_data());
             fullscreen_status = arg;
         }
-        destroy_msg(temp);
+        delete temp;
         temp = msg_sub.get_next_message();
     }
 }
@@ -205,7 +205,7 @@ int8_t game_manager::load_level(const std::string& level_name){
     //otherwise - create it
     auto temp = ST::level(level_name, gMessage_bus);
     if(temp.load() != 0){
-        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Level with name " + level_name + " could not be loaded!")));
+        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Level with name " + level_name + " could not be loaded!")));
         return -1;
     }
     levels.emplace_back(temp);
@@ -284,7 +284,7 @@ void game_manager::start_level(const std::string& level_name){
                 }
             }
         }else{
-            gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Error starting level " + level_name)));
+            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Error starting level " + level_name)));
             return;
         }
     }

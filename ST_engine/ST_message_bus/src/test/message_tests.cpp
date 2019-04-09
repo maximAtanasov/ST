@@ -11,24 +11,24 @@
 #include "../../include/message_bus.hpp"
 
 TEST(message_test, test_message_creation) {
-    auto test_subject = make_msg(1, make_data<bool>(true));
+    auto test_subject = new message(1, make_data<bool>(true));
     ASSERT_TRUE(test_subject);
 }
 
 TEST(message_test, test_message_get_data) {
-    auto test_subject = make_msg(1, make_data<bool>(true));
+    auto test_subject = new message(1, make_data<bool>(true));
     ASSERT_TRUE(*static_cast<bool*>(test_subject->get_data()));
 }
 
 TEST(message_test, test_message_copy) {
-    auto test_subject = make_msg(1, make_data<int>(12));
+    auto test_subject = new message(1, make_data<int>(12));
     auto copy = test_subject->make_copy();
     ASSERT_TRUE(test_subject->get_data());
     ASSERT_TRUE(copy->get_data());
     ASSERT_EQ(test_subject->get_data(), copy->get_data());
     ASSERT_EQ(test_subject->msg_name, copy->msg_name);
-    destroy_msg(test_subject);
-    destroy_msg(copy);
+    delete(test_subject);
+    delete(copy);
 }
 
 int main(int argc, char **argv) {

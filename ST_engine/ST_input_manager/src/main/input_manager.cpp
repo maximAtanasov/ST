@@ -37,7 +37,7 @@ input_manager::input_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     gTask_manager = tsk_mngr;
 
     if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0 ){
-        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Could not initialize gamepad subsystem!")));
+        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Could not initialize gamepad subsystem!")));
     }
 
     //Initialize controls
@@ -79,14 +79,14 @@ void input_manager::take_input(){
 
     while(SDL_PollEvent(&event) != 0){
         if(event.type == SDL_QUIT){
-            gMessage_bus->send_msg(make_msg(END_GAME, nullptr));
+            gMessage_bus->send_msg(new message(END_GAME, nullptr));
         }
         if(event.type == SDL_MOUSEWHEEL){
             controls.mouse_scroll += event.wheel.y;
             if(controls.mouse_scroll < 0){
                 controls.mouse_scroll = 0;
             }
-            gMessage_bus->send_msg(make_msg(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
+            gMessage_bus->send_msg(new message(MOUSE_SCROLL, make_data(controls.mouse_scroll)));
         }
         if(event.type == SDL_TEXTINPUT){
             if(text_input) {
@@ -95,14 +95,14 @@ void input_manager::take_input(){
                 while(!composition.empty() && composition.at(composition.size()-1) == CONSOLE_TOGGLE_KEY){
                     composition.pop_back();
                 }
-                gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
+                gMessage_bus->send_msg(new message(TEXT_STREAM, make_data(composition)));
             }
         }
         if(event.type == SDL_KEYDOWN){
             if(event.key.keysym.sym == SDLK_BACKSPACE) {
                 if (composition.length() > 0) {
                     composition.pop_back();
-                    gMessage_bus->send_msg(make_msg(TEXT_STREAM, make_data(composition)));
+                    gMessage_bus->send_msg(new message(TEXT_STREAM, make_data(composition)));
                 }
             }
         }
@@ -120,22 +120,22 @@ void input_manager::take_input(){
         if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
             SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
             controllers.emplace_back(controller);
-			gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
+			gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
 			SDL_Haptic* haptic = SDL_HapticOpen(static_cast<int32_t>(controllers.size() - 1));
 			if (haptic != nullptr) {
 				if (SDL_HapticRumbleInit(haptic) < 0){
-					gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+					gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>(
 						"Unable to initialize rubmle for controller " + std::string(SDL_GameControllerName(controller)))));
 				}
 				else {
-                    gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+                    gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>(
                             "The controller \"" + std::string(SDL_GameControllerName(controller)) +
                             "\" supports haptic feedback")));
                     controllers_haptic.emplace_back(haptic);
 				}
 			}
 			else {
-				gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>(
+				gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>(
 					"The controller \"" + std::string(SDL_GameControllerName(controller)) + 
 					"\" does not support haptic feedback")));		
 			}
@@ -153,7 +153,7 @@ void input_manager::take_input(){
 				SDL_HapticClose(controllers_haptic.at(number));
 				controllers_haptic.erase(controllers_haptic.begin() + number);
 			}
-            gMessage_bus->send_msg(make_msg(LOG_INFO, make_data<std::string>("Controller " + std::to_string(number+1) + " disconnected")));
+            gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Controller " + std::to_string(number+1) + " disconnected")));
         }
     }
 
@@ -161,11 +161,11 @@ void input_manager::take_input(){
     for(auto i : registered_keys){
         if(i.second > 0) {
             if (keypress(i.first)) {
-                gMessage_bus->send_msg(make_msg(KEY_PRESSED, make_data(static_cast<uint8_t>(i.first))));
+                gMessage_bus->send_msg(new message(KEY_PRESSED, make_data(static_cast<uint8_t>(i.first))));
             } else if (keyheld(i.first)) {
-                gMessage_bus->send_msg(make_msg(KEY_HELD, make_data(static_cast<uint8_t>(i.first))));
+                gMessage_bus->send_msg(new message(KEY_HELD, make_data(static_cast<uint8_t>(i.first))));
             } else if (keyrelease(i.first)) {
-                gMessage_bus->send_msg(make_msg(KEY_RELEASED, make_data(static_cast<uint8_t>(i.first))));
+                gMessage_bus->send_msg(new message(KEY_RELEASED, make_data(static_cast<uint8_t>(i.first))));
             }
         }
     }
@@ -190,11 +190,11 @@ void input_manager::take_mouse_input() {
     }
     //only send mouse coordinates if they change
     if(controls.mouse_x != controls_prev_frame.mouse_x){
-        gMessage_bus->send_msg(make_msg(MOUSE_X, make_data(controls.mouse_x)));
+        gMessage_bus->send_msg(new message(MOUSE_X, make_data(controls.mouse_x)));
         controls_prev_frame.mouse_x = controls.mouse_x;
     }
     if(controls.mouse_y != controls_prev_frame.mouse_y){
-        gMessage_bus->send_msg(make_msg(MOUSE_Y, make_data(controls.mouse_y)));
+        gMessage_bus->send_msg(new message(MOUSE_Y, make_data(controls.mouse_y)));
         controls_prev_frame.mouse_y = controls.mouse_y;
     }
 }
@@ -278,22 +278,22 @@ void input_manager::take_controller_input(){
     }
     //only send controller axis values if they change
     if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
-        gMessage_bus->send_msg(make_msg(LEFT_TRIGGER, make_data(controller_buttons.left_trigger)));
+        gMessage_bus->send_msg(new message(LEFT_TRIGGER, make_data(controller_buttons.left_trigger)));
     }
     if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
-        gMessage_bus->send_msg(make_msg(RIGHT_TRIGGER, make_data(controller_buttons.right_trigger)));
+        gMessage_bus->send_msg(new message(RIGHT_TRIGGER, make_data(controller_buttons.right_trigger)));
     }
     if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
-        gMessage_bus->send_msg(make_msg(LEFT_STICK_VERTICAL, make_data(controller_buttons.left_stick_vertical)));
+        gMessage_bus->send_msg(new message(LEFT_STICK_VERTICAL, make_data(controller_buttons.left_stick_vertical)));
     }
     if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
-        gMessage_bus->send_msg(make_msg(LEFT_STICK_HORIZONTAL, make_data(controller_buttons.left_stick_horizontal)));
+        gMessage_bus->send_msg(new message(LEFT_STICK_HORIZONTAL, make_data(controller_buttons.left_stick_horizontal)));
     }
     if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
-        gMessage_bus->send_msg(make_msg(RIGHT_STICK_VERTICAL, make_data(controller_buttons.right_stick_vertical)));
+        gMessage_bus->send_msg(new message(RIGHT_STICK_VERTICAL, make_data(controller_buttons.right_stick_vertical)));
     }
     if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
-        gMessage_bus->send_msg(make_msg(RIGHT_STICK_HORIZONTAL, make_data(controller_buttons.right_stick_horizontal)));
+        gMessage_bus->send_msg(new message(RIGHT_STICK_HORIZONTAL, make_data(controller_buttons.right_stick_horizontal)));
     }
 }
 
@@ -338,7 +338,7 @@ void input_manager::handle_messages(){
                 }
             }
 		}
-		destroy_msg(temp);
+		delete temp;
 		temp = msg_sub.get_next_message();
 	}
 }

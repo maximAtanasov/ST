@@ -61,7 +61,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
-	gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data(std::make_tuple(w_width, w_height))));
+	gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, make_data(std::make_tuple(w_width, w_height))));
 }
 
 /**
@@ -297,7 +297,7 @@ void drawing_manager::handle_messages(){
             }else{
                 ST::renderer_sdl::vsync_off();
             }
-            gMessage_bus->send_msg(make_msg(VSYNC_STATE, make_data<>(*arg)));
+            gMessage_bus->send_msg(new message(VSYNC_STATE, make_data<>(*arg)));
         }
         else if(temp->msg_name == SET_DARKNESS){
             set_darkness(*(static_cast<uint8_t*>(temp->get_data())));
@@ -339,12 +339,12 @@ void drawing_manager::handle_messages(){
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            gMessage_bus->send_msg(make_msg(VIRTUAL_SCREEN_COORDINATES, make_data(res)));
+            gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, make_data(res)));
             ST::renderer_sdl::set_resolution(std::get<0>(res), std::get<1>(res));
             w_width = std::get<0>(res);
             w_height = std::get<1>(res);
         }
-        destroy_msg(temp);
+        delete temp;
         temp = msg_sub.get_next_message();
     }
 }

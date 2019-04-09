@@ -12,7 +12,7 @@
 
 TEST(message_test, test_push_message_and_get_one_message) {
     auto test_subject = new subscriber();
-    test_subject->push_message(make_msg(1, make_data(23)));
+    test_subject->push_message(new message(1, make_data(23)));
     auto message = test_subject->get_next_message();
     ASSERT_TRUE(message);
     ASSERT_FALSE(test_subject->get_next_message());
@@ -22,7 +22,7 @@ TEST(message_test, test_push_message_and_get_one_message) {
 TEST(message_test, test_push_message_and_get_100_messages) {
     auto test_subject = new subscriber();
     for(uint16_t i = 0; i < 100; i++){
-        test_subject->push_message(make_msg(1, make_data(i)));
+        test_subject->push_message(new message(1, make_data(i)));
     }
     for(uint16_t i = 0; i < 100; i++){
         auto message = test_subject->get_next_message();

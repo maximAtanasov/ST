@@ -245,7 +245,7 @@ int8_t lua_backend::load_file(const std::string& file){
 int8_t lua_backend::run_script(const std::string& script) {
     std::string temp = hash_string(script);
     if (luaL_dostring(L, temp.c_str())){
-        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("Cannot run script")));
+        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Cannot run script")));
         return -1;
     }else{
         return 0;
@@ -387,7 +387,7 @@ std::string lua_backend::hash_file(const std::string& path){
         return result;
     }
     else{
-        gMessage_bus->send_msg(make_msg(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
+        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return nullptr;
     }
 }
@@ -479,13 +479,13 @@ std::string lua_backend::hash_string(const std::string& arg){
  */
 extern "C" int setDarknessLua(lua_State* L){
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_DARKNESS, make_data<uint8_t>(arg)));
+    gMessage_busLua->send_msg(new message(SET_DARKNESS, make_data<uint8_t>(arg)));
     return 0;
 }
 
 extern "C" int enableLightingLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
-    gMessage_busLua->send_msg(make_msg(ENABLE_LIGHTING, make_data(arg)));
+    gMessage_busLua->send_msg(new message(ENABLE_LIGHTING, make_data(arg)));
     return 0;
 }
 
@@ -677,7 +677,7 @@ extern "C" int hashStringLua(lua_State* L){
  */
 extern "C" int setFullscreenLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_FULLSCREEN, make_data<bool>(arg)));
+    gMessage_busLua->send_msg(new message(SET_FULLSCREEN, make_data<bool>(arg)));
     return 0;
 }
 
@@ -1135,7 +1135,7 @@ extern "C" int getEntityColYOffsetLua(lua_State *L){
  * @return Always 0.
  */
 extern "C" int pausePhysicsLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(PAUSE_PHYSICS, nullptr));
+    gMessage_busLua->send_msg(new message(PAUSE_PHYSICS, nullptr));
     return 0;
 }
 
@@ -1145,7 +1145,7 @@ extern "C" int pausePhysicsLua(lua_State*){
  * @return Always 0.
  */
 extern "C" int unpausePhysicsLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(UNPAUSE_PHYSICS, nullptr));
+    gMessage_busLua->send_msg(new message(UNPAUSE_PHYSICS, nullptr));
     return 0;
 }
 
@@ -1201,7 +1201,7 @@ extern "C" int setEntitySpriteNumLua(lua_State *L){
  */
 extern "C" int setGravityLua(lua_State* L){
     auto arg = static_cast<int8_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_GRAVITY, make_data<>(arg)));
+    gMessage_busLua->send_msg(new message(SET_GRAVITY, make_data<>(arg)));
     return 0;
 }
 
@@ -1213,7 +1213,7 @@ extern "C" int setGravityLua(lua_State* L){
  */
 extern "C" int setLevelFloorLua(lua_State* L){
     auto arg = static_cast<int32_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_FLOOR, make_data<>(arg)));
+    gMessage_busLua->send_msg(new message(SET_FLOOR, make_data<>(arg)));
     return 0;
 }
 
@@ -1224,7 +1224,7 @@ extern "C" int setLevelFloorLua(lua_State* L){
  */
 extern "C" int setVsyncLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_VSYNC, make_data<>(arg)));
+    gMessage_busLua->send_msg(new message(SET_VSYNC, make_data<>(arg)));
     return 0;
 }
 
@@ -1248,7 +1248,7 @@ extern "C" int getVsyncStateLua(lua_State* L){
 extern "C" int setInternalResolutionLua(lua_State* L){
     auto width = static_cast<int16_t>(lua_tointeger(L, 1));
     auto height = static_cast<int16_t>(lua_tointeger(L, 2));
-    gMessage_busLua->send_msg(make_msg(SET_INTERNAL_RESOLUTION, make_data(std::make_tuple(width, height))));
+    gMessage_busLua->send_msg(new message(SET_INTERNAL_RESOLUTION, make_data(std::make_tuple(width, height))));
     return 0;
 }
 
@@ -1261,7 +1261,7 @@ extern "C" int setInternalResolutionLua(lua_State* L){
 int setWindowResolutionLua(lua_State *L) {
     auto width = static_cast<int16_t>(lua_tointeger(L, 1));
     auto height = static_cast<int16_t>(lua_tointeger(L, 2));
-    gMessage_busLua->send_msg(make_msg(SET_WINDOW_RESOLUTION, make_data(std::make_tuple(width, height))));
+    gMessage_busLua->send_msg(new message(SET_WINDOW_RESOLUTION, make_data(std::make_tuple(width, height))));
     return 0;
 }
 
@@ -1273,7 +1273,7 @@ int setWindowResolutionLua(lua_State *L) {
  */
 extern "C" int setBrightnessLua(lua_State* L){
     auto arg = static_cast<float>(lua_tonumber(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_WINDOW_BRIGHTNESS, make_data<>(arg)));
+    gMessage_busLua->send_msg(new message(SET_WINDOW_BRIGHTNESS, make_data<>(arg)));
     return 0;
 }
 
@@ -1309,7 +1309,7 @@ extern "C" int setLevelsizeLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int endGameLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(END_GAME, nullptr));
+    gMessage_busLua->send_msg(new message(END_GAME, nullptr));
     return 0;
 }
 
@@ -1321,7 +1321,7 @@ extern "C" int endGameLua(lua_State*){
  */
 extern "C" int startLevelLua(lua_State* L){
     std::string level = static_cast<std::string>(lua_tostring(L, 1));
-    gMessage_busLua->send_msg(make_msg(START_LEVEL, make_data<std::string>(level)));
+    gMessage_busLua->send_msg(new message(START_LEVEL, make_data<std::string>(level)));
     return 0;
 }
 
@@ -1333,7 +1333,7 @@ extern "C" int startLevelLua(lua_State* L){
  */
 extern "C" int reloadLevelLua(lua_State* L){
     std::string level = static_cast<std::string>(lua_tostring(L, 1));
-    gMessage_busLua->send_msg(make_msg(RELOAD_LEVEL, make_data<std::string>(level)));
+    gMessage_busLua->send_msg(new message(RELOAD_LEVEL, make_data<std::string>(level)));
     return 0;
 }
 
@@ -1345,7 +1345,7 @@ extern "C" int reloadLevelLua(lua_State* L){
  */
 extern "C" int load_levelLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
-    gMessage_busLua->send_msg(make_msg(LOAD_LEVEL, make_data<std::string>(arg)));
+    gMessage_busLua->send_msg(new message(LOAD_LEVEL, make_data<std::string>(arg)));
     return 0;
 }
 
@@ -1357,7 +1357,7 @@ extern "C" int load_levelLua(lua_State* L){
  */
 extern "C" int unload_levelLua(lua_State* L){
     std::string level = static_cast<std::string>(lua_tostring(L, 1));
-    gMessage_busLua->send_msg(make_msg(UNLOAD_LEVEL, make_data<std::string>(level)));
+    gMessage_busLua->send_msg(new message(UNLOAD_LEVEL, make_data<std::string>(level)));
     return 0;
 }
 
@@ -1369,7 +1369,7 @@ extern "C" int unload_levelLua(lua_State* L){
  */
 extern "C" int loadAssetLua(lua_State* L) {
 	std::string path = static_cast<std::string>(lua_tostring(L, 1));
-	gMessage_busLua->send_msg(make_msg(LOAD_ASSET, make_data<std::string>(path)));
+	gMessage_busLua->send_msg(new message(LOAD_ASSET, make_data<std::string>(path)));
 	return 0;
 }
 
@@ -1381,7 +1381,7 @@ extern "C" int loadAssetLua(lua_State* L) {
  */
 extern "C" int unloadAssetLua(lua_State* L) {
 	std::string path = static_cast<std::string>(lua_tostring(L, 1));
-	gMessage_busLua->send_msg(make_msg(UNLOAD_ASSET, make_data<std::string>(path)));
+	gMessage_busLua->send_msg(new message(UNLOAD_ASSET, make_data<std::string>(path)));
 	return 0;
 }
 
@@ -1418,7 +1418,7 @@ extern "C" int useLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int showMouseCursorLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(SHOW_MOUSE, make_data<bool>(true)));
+    gMessage_busLua->send_msg(new message(SHOW_MOUSE, make_data<bool>(true)));
     return 0;
 }
 
@@ -1428,7 +1428,7 @@ extern "C" int showMouseCursorLua(lua_State*){
  * @return Always 0.
  */
 extern "C" int hideMouseCursorLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(SHOW_MOUSE, make_data<bool>(false)));
+    gMessage_busLua->send_msg(new message(SHOW_MOUSE, make_data<bool>(false)));
     return 0;
 }
 
@@ -1531,7 +1531,7 @@ extern "C" int leftStickVerticalLua(lua_State* L){
 extern "C" int controllerRumbleLua(lua_State* L){
     auto strength = static_cast<float>(lua_tonumber(L, 1));
     auto duration = static_cast<uint32_t>(lua_tonumber(L, 2));
-    gMessage_busLua->send_msg(make_msg(CONTROLLER_RUMBLE, make_data(std::make_tuple(strength, duration))));
+    gMessage_busLua->send_msg(new message(CONTROLLER_RUMBLE, make_data(std::make_tuple(strength, duration))));
     return 0;
 }
 
@@ -1581,7 +1581,7 @@ extern "C" int keyReleasedLua(lua_State* L){
  */
 extern "C" int setAudioEnabledLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
-    message* msg_temp = make_msg(SET_AUDIO_ENABLED, make_data<>(arg));
+    message* msg_temp = new message(SET_AUDIO_ENABLED, make_data<>(arg));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1598,7 +1598,7 @@ extern "C" int playMusicLua(lua_State* L){
     auto volume = static_cast<uint8_t>(lua_tointeger(L, 2));
     auto loops = static_cast<int8_t>(lua_tointeger(L, 3));
     std::tuple<uint16_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
-    message* msg_temp = make_msg(PLAY_MUSIC, make_data<std::tuple<uint16_t, uint8_t, int8_t>>(data));
+    message* msg_temp = new message(PLAY_MUSIC, make_data<std::tuple<uint16_t, uint8_t, int8_t>>(data));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1614,7 +1614,7 @@ extern "C" int playSoundLua(lua_State* L){
     auto volume = static_cast<uint8_t>(lua_tointeger(L, 2));
     auto loops = static_cast<int8_t>(lua_tointeger(L, 3));
     std::tuple<uint16_t, uint8_t, int8_t> data = std::make_tuple(arg, volume, loops);
-    message* msg_temp = make_msg(PLAY_SOUND, make_data<std::tuple<uint16_t, uint8_t, int8_t>>(data));
+    message* msg_temp = new message(PLAY_SOUND, make_data<std::tuple<uint16_t, uint8_t, int8_t>>(data));
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1625,7 +1625,7 @@ extern "C" int playSoundLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int stopMusicLua(lua_State*){
-    message* msg_temp = make_msg(STOP_MUSIC, nullptr);
+    message* msg_temp = new message(STOP_MUSIC, nullptr);
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1636,7 +1636,7 @@ extern "C" int stopMusicLua(lua_State*){
  * @return Always 0.
  */
 extern "C" int stopAllSoundsLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(STOP_ALL_SOUNDS, nullptr));
+    gMessage_busLua->send_msg(new message(STOP_ALL_SOUNDS, nullptr));
     return 0;
 }
 
@@ -1654,7 +1654,7 @@ extern "C" int isAudioEnabledLua(lua_State* L){
  */
 extern "C" int setMusicVolumeLua(lua_State* L){
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_MUSIC_VOLUME, make_data<uint8_t>(arg)));
+    gMessage_busLua->send_msg(new message(SET_MUSIC_VOLUME, make_data<uint8_t>(arg)));
     return 0;
 }
 
@@ -1666,7 +1666,7 @@ extern "C" int setMusicVolumeLua(lua_State* L){
  */
 extern "C" int setSoundsVolumeLua(lua_State* L){
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(make_msg(SET_SOUNDS_VOLUME, make_data<uint8_t>(arg)));
+    gMessage_busLua->send_msg(new message(SET_SOUNDS_VOLUME, make_data<uint8_t>(arg)));
     return 0;
 }
 
@@ -1698,7 +1698,7 @@ extern "C" int getMusicVolumeLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int pauseMusicLua(lua_State*){
-    message* msg_temp = make_msg(PAUSE_MUSIC, nullptr);
+    message* msg_temp = new message(PAUSE_MUSIC, nullptr);
     gMessage_busLua->send_msg(msg_temp);
     return 0;
 }
@@ -1711,7 +1711,7 @@ extern "C" int pauseMusicLua(lua_State*){
  */
 extern "C" int showCollisionsLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
-    gMessage_busLua->send_msg(make_msg(SHOW_COLLISIONS, make_data<bool>(arg)));
+    gMessage_busLua->send_msg(new message(SHOW_COLLISIONS, make_data<bool>(arg)));
     return 0;
 }
 
@@ -1726,11 +1726,11 @@ extern "C" int logLua(lua_State* L) {
     auto type = static_cast<uint8_t>(lua_tointeger(L, 1));
     auto arg = static_cast<std::string>(lua_tostring(L, 2));
     if (type == 1) {
-        gMessage_busLua->send_msg(make_msg(LOG_ERROR, make_data<std::string>(arg)));
+        gMessage_busLua->send_msg(new message(LOG_ERROR, make_data<std::string>(arg)));
     }else if(type == 2){
-        gMessage_busLua->send_msg(make_msg(LOG_SUCCESS, make_data<std::string>(arg)));
+        gMessage_busLua->send_msg(new message(LOG_SUCCESS, make_data<std::string>(arg)));
     }else if(type == 4){
-        gMessage_busLua->send_msg(make_msg(LOG_INFO, make_data<std::string>(arg)));
+        gMessage_busLua->send_msg(new message(LOG_INFO, make_data<std::string>(arg)));
     }
     return 0;
 }
@@ -1743,7 +1743,7 @@ extern "C" int logLua(lua_State* L) {
  */
 extern "C" int showFpsLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
-    gMessage_busLua->send_msg(make_msg(SHOW_FPS, make_data<bool>(arg)));
+    gMessage_busLua->send_msg(new message(SHOW_FPS, make_data<bool>(arg)));
     return 0;
 }
 
@@ -1752,6 +1752,6 @@ extern "C" int showFpsLua(lua_State* L){
  * @return awlays 0.
  */
 extern "C" int consoleClearLua(lua_State*){
-    gMessage_busLua->send_msg(make_msg(CONSOLE_CLEAR, nullptr));
+    gMessage_busLua->send_msg(new message(CONSOLE_CLEAR, nullptr));
     return 0;
 }

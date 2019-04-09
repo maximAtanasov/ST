@@ -29,106 +29,106 @@ int start_engine_thread(){
 
 void basic_run(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
 void run_for_five_minutes(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);
-    gMessage_bus.send_msg(make_msg(SET_VSYNC, make_data(false))); //run uncapped to reveal possible memory leaks
+    gMessage_bus.send_msg(new message(SET_VSYNC, make_data(false))); //run uncapped to reveal possible memory leaks
     SDL_Delay(60000*5);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
 void set_vsync(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::TILDE)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::TILDE)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setVsync(false)")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setVsync(false)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setVsync(true)")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setVsync(true)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
 void set_fullscreen(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::TILDE)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::TILDE)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setFullscreen(false)")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setFullscreen(false)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setFullscreen(true)")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setFullscreen(true)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
 void set_audio_enabled(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::TILDE)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::TILDE)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setAudioEnabled(false)")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setAudioEnabled(false)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>("setAudioEnabled(true)")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setAudioEnabled(true)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
 void reload_and_restart(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::TILDE)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::TILDE)));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(TEXT_STREAM, make_data<std::string>(R"(loadLevel("main"); startLevel("main"))")));
+    gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>(R"(loadLevel("main"); startLevel("main"))")));
     SDL_Delay(1000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(25000);
-    gMessage_bus.send_msg(make_msg(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(30);
-    gMessage_bus.send_msg(make_msg(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);
-    gMessage_bus.send_msg(make_msg(END_GAME, nullptr));
+    gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
 TEST(engine_integration, basic_run) {

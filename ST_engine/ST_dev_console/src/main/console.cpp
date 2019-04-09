@@ -40,14 +40,14 @@ console::console(message_bus* msg_bus){
 }
 
 void console::post_init() const{
-    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::ENTER)));
-    gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::TILDE)));
-	gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::LEFT)));
-	gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::RIGHT)));
-	gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::UP)));
-	gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::DOWN)));
-	gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::BACKSPACE)));
-	gMessage_bus->send_msg(make_msg(REGISTER_KEY, make_data(ST::key::DELETE)));
+    gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::ENTER)));
+    gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::TILDE)));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::LEFT)));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::RIGHT)));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::UP)));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::DOWN)));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::BACKSPACE)));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::DELETE)));
 
 }
 /**
@@ -96,12 +96,12 @@ void console::handle_messages(){
 				if (!composition.empty()) {
 					write(composition, ST::log_type::INFO);
 					command_entries.emplace_back(composition);
-					gMessage_bus->send_msg(make_msg(EXECUTE_SCRIPT, make_data(composition)));
+					gMessage_bus->send_msg(new message(EXECUTE_SCRIPT, make_data(composition)));
 				}
 				composition.clear();
 				cursor_position = 0;
 				entries_history_index = -1;
-				gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+				gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
 			}
 			else if (*key_val == ST::key::TILDE) {
 				toggle();
@@ -126,7 +126,7 @@ void console::handle_messages(){
 						entries_history_index--;
 						composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
 					}
-					gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+					gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
 					cursor_position = static_cast<uint16_t>(composition.size());
 				}
 				else if (*key_val == ST::key::DOWN) {
@@ -138,7 +138,7 @@ void console::handle_messages(){
 						entries_history_index = -1;
 						composition = "";
 					}
-					gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+					gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
 					cursor_position = static_cast<uint16_t>(composition.size());
 				}
 				else if (*key_val == ST::key::BACKSPACE) {
@@ -165,9 +165,9 @@ void console::handle_messages(){
 				composition.insert(cursor_position, recieved_data);
 			}
 			cursor_position += static_cast<uint16_t>(recieved_data.size());
-			gMessage_bus->send_msg(make_msg(CLEAR_TEXT_STREAM, nullptr));
+			gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
         }
-        destroy_msg(temp);
+        delete temp;
         temp = msg_sub.get_next_message();
     }
 }
@@ -190,10 +190,10 @@ void console::set_log_level(ST::log_type arg) {
 void console::toggle() {
     if (is_open()) {
         hide();
-        gMessage_bus->send_msg(make_msg(STOP_TEXT_INPUT, nullptr));
+        gMessage_bus->send_msg(new message(STOP_TEXT_INPUT, nullptr));
     } else {
         show();
-        gMessage_bus->send_msg(make_msg(START_TEXT_INPUT, nullptr));
+        gMessage_bus->send_msg(new message(START_TEXT_INPUT, nullptr));
     }
 }
 

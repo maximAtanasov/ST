@@ -119,7 +119,7 @@ void physics_manager::handle_messages(){
         }else if(temp->msg_name == UNPAUSE_PHYSICS){
             physics_paused = false;
         }
-        destroy_msg(temp);
+        delete temp;
         temp = msg_sub.get_next_message();
     }
 }

@@ -10,11 +10,6 @@
 #include <message_bus.hpp>
 #include <ST_util/pool_allocator_256.hpp>
 
-/**
- * The allocator is declared globally.
- */
-ST::pool_allocator_256<message> msg_memory;
-
 //message_bus implementation=====================================================
 
 /**
@@ -66,29 +61,4 @@ void message_bus::clear() {
  */
 void message_bus::subscribe(uint8_t msg, subscriber* sub){
     subscribers[msg].push_back(sub);
-}
-
-/**
- * Creates a new message object given the type of the message and data.
- * To create a message use "make_msg" along with "make_data<>" - you do not need to manage the memory of the data only the lifetime of a message.
- * Any data you get out of a message (using get_data()) is guaranteed to be available until you
- * call "destroy_msg()" on that message, afterwards the results are undefined.
- * Shared pointers are used internally to manage memory.
- * @param name The type of message. See <b>ST::msg_type</b>.
- * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
- * @return A new message object.
- */
-message* make_msg(uint8_t name, const std::shared_ptr<void>& data){
-    message* temp = msg_memory.allocate();
-    temp->msg_name = name;
-    temp->set_data(data);
-    return temp;
-}
-
-/**
- * Destroys a message. Call this when you absolutely no longer need the message.
- * @param msg The message to destroy.
- */
-void destroy_msg(message* msg){
-    msg_memory.deallocate(msg);
 }
