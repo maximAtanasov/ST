@@ -47,3 +47,36 @@ add_library(ST_util
         include/ST_util/bytell_hash_map.hpp
         include/ST_util/flat_hash_map.hpp
         include/ST_util/flat_hash_map.hpp include/ST_util/pool_allocator_256.hpp)
+
+add_executable(pool_allocator_256_test
+        src/test/pool_allocator_256_tests.cpp
+        include/ST_util/test_util.hpp
+        include/ST_util/math.hpp
+        src/main/math.cpp
+        src/main/test_util.cpp
+        src/main/string_util.cpp
+        include/ST_util/string_util.hpp
+        include/ST_util/bytell_hash_map.hpp
+        include/ST_util/flat_hash_map.hpp
+        include/ST_util/flat_hash_map.hpp include/ST_util/pool_allocator_256.hpp)
+
+target_link_libraries(pool_allocator_256_test
+        lua
+        gtest
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARY}
+        ${SDL2_TTF_LIBRARY}
+        ${SDL2_MIXER_LIBRARY})
+
+set(RUN_ON_BUILD_TESTS
+        pool_allocator_256_test)
+
+
+#Run the tests on each build
+foreach(loop_var ${RUN_ON_BUILD_TESTS})
+    add_custom_command(
+            TARGET ST_util
+            POST_BUILD
+            COMMAND ${loop_var}
+    )
+endforeach()

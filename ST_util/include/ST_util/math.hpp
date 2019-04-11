@@ -16,10 +16,10 @@
 namespace ST {
 
     //abs functions
-    inline int abs(int value) {
-        auto temp = static_cast<unsigned int>(value >> 31);
+    inline int abs(uint64_t value) {
+        auto temp = static_cast<unsigned int>(value >> 31U);
         value ^= temp;
-        value += temp & 1;
+        value += temp & 1U;
         return value;
     }
 

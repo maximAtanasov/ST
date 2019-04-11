@@ -9,6 +9,7 @@
 
 #include <drawing_manager/drawing_manager.hpp>
 #include <ST_util/string_util.hpp>
+#include <ST_util/math.hpp>
 
 #define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
 #define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
@@ -79,7 +80,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     ST::renderer_sdl::clear_screen(temp.background_color);
     ST::renderer_sdl::draw_background(temp.background);
 	draw_entities(temp.entities);
-    ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ticks % temp.overlay_spriteNum), temp.overlay_spriteNum);
+    ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ST::pos_mod(ticks, temp.overlay_spriteNum)), temp.overlay_spriteNum);
     draw_text_objects(temp.text_objects);
     //draw the lights when we are sure they are processed
     if(lighting_enabled) {
@@ -379,9 +380,9 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
             }
             else{
                 if(i.is_static()){
-                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
+                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
                 }else{
-                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - Camera.x, i.y - Camera.y , time % i.sprite_num, i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
+                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - Camera.x, i.y - Camera.y , ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
 				}
             }
         }
