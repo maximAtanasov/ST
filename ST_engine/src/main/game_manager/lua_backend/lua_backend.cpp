@@ -502,8 +502,7 @@ extern "C" int createLightLua(lua_State* L){
     auto radius = static_cast<uint16_t>(lua_tointeger(L, 4));
     auto intensity = static_cast<uint16_t>(lua_tointeger(L, 5));
     auto brightness = static_cast<uint16_t>(lua_tointeger(L, 6));
-    ST::light tempLight = ST::light(origin_x, origin_y, radius, intensity, brightness);
-    gGame_managerLua->get_level()->lights.emplace_back(tempLight);
+    gGame_managerLua->get_level()->lights.emplace_back(origin_x, origin_y, radius, intensity, brightness);
     return 0;
 }
 
@@ -708,9 +707,7 @@ extern "C" int createTextObjectLua(lua_State* L){
     auto font = static_cast<std::string>(lua_tostring(L, 4));
     auto size = static_cast<uint8_t>(lua_tointeger(L, 5));
     SDL_Color temp_color = {255,255,255,255};
-
-    ST::text temp = ST::text(x, y, temp_color, text_string, ST::hash_string(font + " " + std::to_string(size)));
-    gGame_managerLua->get_level()->text_objects.emplace_back(temp);
+    gGame_managerLua->get_level()->text_objects.emplace_back(x, y, temp_color, text_string, ST::hash_string(font + " " + std::to_string(size)));
     return 0;
 }
 
@@ -805,7 +802,7 @@ extern "C" int setTextObjectVisibleLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int createEntityLua(lua_State*){
-    gGame_managerLua->get_level()->entities.emplace_back(ST::entity());
+    gGame_managerLua->get_level()->entities.emplace_back();
     return 0;
 }
 

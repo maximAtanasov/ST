@@ -42,7 +42,7 @@ int asset_pack_main(int argc, char *argv[]) {
      //Copy the char** to a nice little std::vector of std::string's
      std::vector<std::string> args;
      for (int i = 2; i < argc; i++) {
-         args.emplace_back(std::string(argv[i]));
+         args.emplace_back(argv[i]);
      }
 
      if (pack_arg == "-p" || pack_arg == "--pack") { //Pack assets to a binary

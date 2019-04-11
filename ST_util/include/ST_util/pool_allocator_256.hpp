@@ -27,13 +27,10 @@ namespace ST{
 
             access_mutex.lock();
             //find the next free spot in memory
-            while(allocated[++pointer]){
-                ++pointer;
-            }
+            while(allocated[++pointer]);
             pointer_temp = pointer;
-            allocated[pointer++] = true;
+            allocated[pointer] = true;
             access_mutex.unlock();
-
             return &memory[pointer_temp];
         }
 

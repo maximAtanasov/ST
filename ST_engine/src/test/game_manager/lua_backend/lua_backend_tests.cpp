@@ -879,7 +879,7 @@ TEST_F(lua_backend_test, test_call_function_createLight){
 
 TEST_F(lua_backend_test, test_call_function_setLightOriginX){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("setLightOriginX(0, 1000)");
@@ -896,7 +896,7 @@ TEST_F(lua_backend_test, test_call_function_setLightOriginX){
 
 TEST_F(lua_backend_test, test_call_function_setLightOriginY){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("setLightOriginY(0, 1000)");
@@ -913,7 +913,7 @@ TEST_F(lua_backend_test, test_call_function_setLightOriginY){
 
 TEST_F(lua_backend_test, test_call_function_getLightOriginX){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return getLightOriginX(0)");
@@ -933,7 +933,7 @@ TEST_F(lua_backend_test, test_call_function_getLightOriginX){
 
 TEST_F(lua_backend_test, test_call_function_getLightOriginY){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return getLightOriginY(0)");
@@ -953,7 +953,7 @@ TEST_F(lua_backend_test, test_call_function_getLightOriginY){
 
 TEST_F(lua_backend_test, test_call_function_setLightIntensity){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("setLightIntensity(0, 1000)");
@@ -970,7 +970,7 @@ TEST_F(lua_backend_test, test_call_function_setLightIntensity){
 
 TEST_F(lua_backend_test, test_call_function_getLightIntensity){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return getLightIntensity(0)");
@@ -990,7 +990,7 @@ TEST_F(lua_backend_test, test_call_function_getLightIntensity){
 
 TEST_F(lua_backend_test, test_call_function_getLightRadius){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return getLightRadius(0)");
@@ -1010,7 +1010,7 @@ TEST_F(lua_backend_test, test_call_function_getLightRadius){
 
 TEST_F(lua_backend_test, test_call_function_setLightRadius){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return setLightRadius(0, 300)");
@@ -1027,7 +1027,7 @@ TEST_F(lua_backend_test, test_call_function_setLightRadius){
 
 TEST_F(lua_backend_test, test_call_function_getLightBrightness){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return getLightBrightness(0)");
@@ -1047,7 +1047,7 @@ TEST_F(lua_backend_test, test_call_function_getLightBrightness){
 
 TEST_F(lua_backend_test, test_call_function_setLightBrightness){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return setLightBrightness(0, 300)");
@@ -1064,7 +1064,7 @@ TEST_F(lua_backend_test, test_call_function_setLightBrightness){
 
 TEST_F(lua_backend_test, test_call_function_isLightStatic){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return isLightStatic(0)");
@@ -1084,7 +1084,7 @@ TEST_F(lua_backend_test, test_call_function_isLightStatic){
 
 TEST_F(lua_backend_test, test_call_function_setLightStatic){
     //Set up
-    game_mngr->get_level()->lights.emplace_back(ST::light(500, 600, 100, 50, 400));
+    game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
     //Test
     test_subject.run_script("return setLightStatic(0, true)");
@@ -1281,7 +1281,7 @@ TEST_F(lua_backend_test, test_call_function_createEntity){
 
 TEST_F(lua_backend_test, test_call_function_setEntityActive){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityActive(0, false)");
@@ -1313,7 +1313,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityActive){
 
 TEST_F(lua_backend_test, test_call_function_setEntityX){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityX(0, 500)");
@@ -1345,7 +1345,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityX){
 
 TEST_F(lua_backend_test, test_call_function_setEntityY){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityY(0, 500)");
@@ -1377,7 +1377,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityY){
 
 TEST_F(lua_backend_test, test_call_function_getEntityX){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).x = 500;
 
     //Test
@@ -1413,7 +1413,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityX){
 
 TEST_F(lua_backend_test, test_call_function_getEntityY){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).y = 500;
 
     //Test
@@ -1449,7 +1449,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityY){
 
 TEST_F(lua_backend_test, test_call_function_setEntityStatic){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityStatic(0, true)");
@@ -1481,7 +1481,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityStatic){
 
 TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityVelocityX(0, 120)");
@@ -1513,7 +1513,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
 
 TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityVelocityY(0, 120)");
@@ -1545,7 +1545,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
 
 TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).velocity_x = 120;
 
     //Test
@@ -1581,7 +1581,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
 
 TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).velocity_y = 120;
 
     //Test
@@ -1617,7 +1617,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
 
 TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityTextureScale(0, 2, 2)");
@@ -1649,7 +1649,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
 
 TEST_F(lua_backend_test, test_call_function_setEntityTexture){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityTexture(0, \"new_texture.webp\")");
@@ -1681,7 +1681,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexture){
 
 TEST_F(lua_backend_test, test_call_function_setEntityTexW){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityTexW(0, 500)");
@@ -1713,7 +1713,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexW){
 
 TEST_F(lua_backend_test, test_call_function_setEntityTexH){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityTexH(0, 500)");
@@ -1745,7 +1745,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexH){
 
 TEST_F(lua_backend_test, test_call_function_getEntityTexW){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).tex_w = 500;
 
     //Test
@@ -1781,7 +1781,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexW){
 
 TEST_F(lua_backend_test, test_call_function_getEntityTexH){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).tex_h = 500;
 
     //Test
@@ -1817,7 +1817,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexH){
 
 TEST_F(lua_backend_test, test_call_function_setEntityVisible){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityVisible(0, false)");
@@ -1849,7 +1849,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVisible){
 
 TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityCollisionBox(0, 0, 0, 500, 500)");
@@ -1881,8 +1881,8 @@ TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox){
 
 TEST_F(lua_backend_test, test_call_function_entityCollides){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).x = 500;
     game_mngr->get_level()->entities.at(0).y = 500;
     game_mngr->get_level()->entities.at(1).x = 500;
@@ -1945,7 +1945,7 @@ TEST_F(lua_backend_test, test_call_function_entityCollides){
 
 TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityAffectedByPhysics(0, true)");
@@ -1977,7 +1977,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
 
 TEST_F(lua_backend_test, test_call_function_getEntityColX){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(0, 0, 500, 500);
 
     //Test
@@ -2013,7 +2013,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColX){
 
 TEST_F(lua_backend_test, test_call_function_getEntityColY){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(0, 0, 500, 500);
 
     //Test
@@ -2049,7 +2049,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColY){
 
 TEST_F(lua_backend_test, test_call_function_getEntityColXOffset){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(6, 0, 0, 0);
 
     //Test
@@ -2085,7 +2085,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColXOffset){
 
 TEST_F(lua_backend_test, test_call_function_getEntityColYOffset){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(0, 6, 0, 0);
 
     //Test
@@ -2121,7 +2121,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColYOffset){
 
 TEST_F(lua_backend_test, test_call_function_setEntityAnimation){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityAnimation(0, 3)");
@@ -2153,7 +2153,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimation){
 
 TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntityAnimationNum(0, 3)");
@@ -2185,7 +2185,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum){
 
 TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum){
     //Set up
-    game_mngr->get_level()->entities.emplace_back(ST::entity());
+    game_mngr->get_level()->entities.emplace_back();
 
     //Test
     test_subject.run_script("setEntitySpriteNum(0, 3)");
