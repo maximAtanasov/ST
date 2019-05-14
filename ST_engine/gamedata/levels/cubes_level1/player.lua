@@ -36,7 +36,7 @@ player.speedSound = false
 player.lives = 3
 
 function player:update()
-    if(leftTrigger() > 20000) then
+    if(leftTrigger() > 20000 or keyHeld("DASH")) then
         if(self.speed > 5) then
             self.speed = 26;
             if self.speedSound == false then

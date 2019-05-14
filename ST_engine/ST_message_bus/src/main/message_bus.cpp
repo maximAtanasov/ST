@@ -17,8 +17,7 @@
  * Creates a copy of the message if it has more than one subscriber.
  */
 void message_bus::send_msg(message* arg){
-    uint8_t name = arg->msg_name;
-    std::vector<subscriber*>* temp = &subscribers[name];
+    std::vector<subscriber*>* temp = &subscribers[arg->msg_name];
 
     //Locks aren't really needed here as there won't be any new subscribers in the middle of the game
     //(if you do want to have subsystems subscribe at random times you should definitely add locks)

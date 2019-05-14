@@ -206,7 +206,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 /**
  * Run a lua script inside the global Lua state.
  * @param file The path to the file.
- * @return -1 on failiure or 0 on success.
+ * @return -1 on failure or 0 on success.
  */
 int8_t lua_backend::run_file(const std::string& file){
     std::string temp = hash_file(file);
@@ -1453,7 +1453,7 @@ extern "C" int setBackgroundColorLua(lua_State* L){
     auto b = static_cast<uint8_t>(lua_tointeger(L, 3));
     auto a = static_cast<uint8_t>(lua_tointeger(L, 4));
 
-    gGame_managerLua->get_level()->background_color= {r, g, b, a};
+    gGame_managerLua->get_level()->background_color = {r, g, b, a};
     return 0;
 }
 
@@ -1495,6 +1495,7 @@ extern "C" int getMouseYLua(lua_State* L){
     return 1;
 }
 
+//TODO: Docs
 extern "C" int rightTriggerLua(lua_State* L){
     lua_pushnumber(L, gGame_managerLua->get_right_trigger());
     return 1;
@@ -1746,7 +1747,7 @@ extern "C" int showFpsLua(lua_State* L){
 
 /**
  * Clears the dev console.
- * @return awlays 0.
+ * @return always 0.
  */
 extern "C" int consoleClearLua(lua_State*){
     gMessage_busLua->send_msg(new message(CONSOLE_CLEAR, nullptr));

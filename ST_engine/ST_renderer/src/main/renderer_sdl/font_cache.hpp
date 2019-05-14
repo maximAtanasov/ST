@@ -54,9 +54,9 @@ namespace ST {
 
             void set_max(uint32_t max);
 
-            void cache_string(std::string str, SDL_Texture *texture, uint16_t font);
+            void cache_string(const std::string& str, SDL_Texture *texture, uint16_t font);
 
-            SDL_Texture *get_cached_string(std::string str, uint16_t font);
+            SDL_Texture *get_cached_string(const std::string& str, uint16_t font);
 
             void clear();
 

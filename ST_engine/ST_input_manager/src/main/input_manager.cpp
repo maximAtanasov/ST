@@ -125,7 +125,7 @@ void input_manager::take_input(){
 			if (haptic != nullptr) {
 				if (SDL_HapticRumbleInit(haptic) < 0){
 					gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>(
-						"Unable to initialize rubmle for controller " + std::string(SDL_GameControllerName(controller)))));
+						"Unable to initialize rumble for controller " + std::string(SDL_GameControllerName(controller)))));
 				}
 				else {
                     gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>(
@@ -352,316 +352,238 @@ void input_manager::handle_messages(){
 bool input_manager::keypress(ST::key arg) const{
     bool pressed = false;
     if(arg == ST::key::LEFT){
-        if(controls.keyboard[SDL_SCANCODE_LEFT] && !controls_prev_frame.keyboard[SDL_SCANCODE_LEFT])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_LEFT] && !controls_prev_frame.keyboard[SDL_SCANCODE_LEFT];
     }
     else if(arg == ST::key::RIGHT){
-        if(controls.keyboard[SDL_SCANCODE_RIGHT] && !controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_RIGHT] && !controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT];
     }
     else if(arg == ST::key::UP){
-        if(controls.keyboard[SDL_SCANCODE_UP] && !controls_prev_frame.keyboard[SDL_SCANCODE_UP])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_UP] && !controls_prev_frame.keyboard[SDL_SCANCODE_UP];
     }
     else if(arg == ST::key::DOWN){
-        if(controls.keyboard[SDL_SCANCODE_DOWN] && !controls_prev_frame.keyboard[SDL_SCANCODE_DOWN])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_DOWN] && !controls_prev_frame.keyboard[SDL_SCANCODE_DOWN];
     }
     else if(arg == ST::key::A){
-        if(controls.keyboard[SDL_SCANCODE_A] && !controls_prev_frame.keyboard[SDL_SCANCODE_A])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_A] && !controls_prev_frame.keyboard[SDL_SCANCODE_A];
     }
     else if(arg == ST::key::B){
-        if(controls.keyboard[SDL_SCANCODE_B] && !controls_prev_frame.keyboard[SDL_SCANCODE_B])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_B] && !controls_prev_frame.keyboard[SDL_SCANCODE_B];
     }
     else if(arg == ST::key::C){
-        if(controls.keyboard[SDL_SCANCODE_C] && !controls_prev_frame.keyboard[SDL_SCANCODE_C])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_C] && !controls_prev_frame.keyboard[SDL_SCANCODE_C];
     }
     else if(arg == ST::key::D){
-        if(controls.keyboard[SDL_SCANCODE_D] && !controls_prev_frame.keyboard[SDL_SCANCODE_D])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_D] && !controls_prev_frame.keyboard[SDL_SCANCODE_D];
     }
     else if(arg == ST::key::E){
-        if(controls.keyboard[SDL_SCANCODE_E] && !controls_prev_frame.keyboard[SDL_SCANCODE_E])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_E] && !controls_prev_frame.keyboard[SDL_SCANCODE_E];
     }
     else if(arg == ST::key::F){
-        if(controls.keyboard[SDL_SCANCODE_F] && !controls_prev_frame.keyboard[SDL_SCANCODE_F])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_F] && !controls_prev_frame.keyboard[SDL_SCANCODE_F];
     }
     else if(arg == ST::key::G){
-        if(controls.keyboard[SDL_SCANCODE_G] && !controls_prev_frame.keyboard[SDL_SCANCODE_G])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_G] && !controls_prev_frame.keyboard[SDL_SCANCODE_G];
     }
     else if(arg == ST::key::H){
-        if(controls.keyboard[SDL_SCANCODE_H] && !controls_prev_frame.keyboard[SDL_SCANCODE_H])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_H] && !controls_prev_frame.keyboard[SDL_SCANCODE_H];
     }
     else if(arg == ST::key::I){
-        if(controls.keyboard[SDL_SCANCODE_I] && !controls_prev_frame.keyboard[SDL_SCANCODE_I])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_I] && !controls_prev_frame.keyboard[SDL_SCANCODE_I];
     }
     else if(arg == ST::key::J){
-        if(controls.keyboard[SDL_SCANCODE_J] && !controls_prev_frame.keyboard[SDL_SCANCODE_G])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_J] && !controls_prev_frame.keyboard[SDL_SCANCODE_G];
     }
     else if(arg == ST::key::K){
-        if(controls.keyboard[SDL_SCANCODE_K] && !controls_prev_frame.keyboard[SDL_SCANCODE_K])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_K] && !controls_prev_frame.keyboard[SDL_SCANCODE_K];
     }
     else if(arg == ST::key::L){
-        if(controls.keyboard[SDL_SCANCODE_L] && !controls_prev_frame.keyboard[SDL_SCANCODE_L])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_L] && !controls_prev_frame.keyboard[SDL_SCANCODE_L];
     }
     else if(arg == ST::key::M){
-        if(controls.keyboard[SDL_SCANCODE_M] && !controls_prev_frame.keyboard[SDL_SCANCODE_M])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_M] && !controls_prev_frame.keyboard[SDL_SCANCODE_M];
     }
     else if(arg == ST::key::N){
-        if(controls.keyboard[SDL_SCANCODE_N] && !controls_prev_frame.keyboard[SDL_SCANCODE_N])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_N] && !controls_prev_frame.keyboard[SDL_SCANCODE_N];
     }
     else if(arg == ST::key::O){
-        if(controls.keyboard[SDL_SCANCODE_O] && !controls_prev_frame.keyboard[SDL_SCANCODE_O])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_O] && !controls_prev_frame.keyboard[SDL_SCANCODE_O];
     }
     else if(arg == ST::key::P){
-        if(controls.keyboard[SDL_SCANCODE_P] && !controls_prev_frame.keyboard[SDL_SCANCODE_P])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_P] && !controls_prev_frame.keyboard[SDL_SCANCODE_P];
     }
     else if(arg == ST::key::Q){
-        if(controls.keyboard[SDL_SCANCODE_Q] && !controls_prev_frame.keyboard[SDL_SCANCODE_Q])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_Q] && !controls_prev_frame.keyboard[SDL_SCANCODE_Q];
     }
     else if(arg == ST::key::R){
-        if(controls.keyboard[SDL_SCANCODE_R] && !controls_prev_frame.keyboard[SDL_SCANCODE_R])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_R] && !controls_prev_frame.keyboard[SDL_SCANCODE_R];
     }
     else if(arg == ST::key::S){
-        if(controls.keyboard[SDL_SCANCODE_S] && !controls_prev_frame.keyboard[SDL_SCANCODE_S])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_S] && !controls_prev_frame.keyboard[SDL_SCANCODE_S];
     }
     else if(arg == ST::key::T){
-        if(controls.keyboard[SDL_SCANCODE_T] && !controls_prev_frame.keyboard[SDL_SCANCODE_T])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_T] && !controls_prev_frame.keyboard[SDL_SCANCODE_T];
     }
     else if(arg == ST::key::U){
-        if(controls.keyboard[SDL_SCANCODE_U] && !controls_prev_frame.keyboard[SDL_SCANCODE_U])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_U] && !controls_prev_frame.keyboard[SDL_SCANCODE_U];
     }
     else if(arg == ST::key::V){
-        if(controls.keyboard[SDL_SCANCODE_V] && !controls_prev_frame.keyboard[SDL_SCANCODE_V])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_V] && !controls_prev_frame.keyboard[SDL_SCANCODE_V];
     }
     else if(arg == ST::key::W){
-        if(controls.keyboard[SDL_SCANCODE_W] && !controls_prev_frame.keyboard[SDL_SCANCODE_W])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_W] && !controls_prev_frame.keyboard[SDL_SCANCODE_W];
     }
     else if(arg == ST::key::X){
-        if(controls.keyboard[SDL_SCANCODE_X] && !controls_prev_frame.keyboard[SDL_SCANCODE_X])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_X] && !controls_prev_frame.keyboard[SDL_SCANCODE_X];
     }
     else if(arg == ST::key::Y){
-        if(controls.keyboard[SDL_SCANCODE_Y] && !controls_prev_frame.keyboard[SDL_SCANCODE_Y])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_Y] && !controls_prev_frame.keyboard[SDL_SCANCODE_Y];
     }
     else if(arg == ST::key::Z){
-        if(controls.keyboard[SDL_SCANCODE_Z] && !controls_prev_frame.keyboard[SDL_SCANCODE_Z])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_Z] && !controls_prev_frame.keyboard[SDL_SCANCODE_Z];
     }
     else if(arg == ST::key::ONE){
-        if(controls.keyboard[SDL_SCANCODE_1] && !controls_prev_frame.keyboard[SDL_SCANCODE_1])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_1] && !controls_prev_frame.keyboard[SDL_SCANCODE_1];
     }
     else if(arg == ST::key::TWO){
-        if(controls.keyboard[SDL_SCANCODE_2] && !controls_prev_frame.keyboard[SDL_SCANCODE_2])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_2] && !controls_prev_frame.keyboard[SDL_SCANCODE_2];
     }
     else if(arg == ST::key::THREE){
-        if(controls.keyboard[SDL_SCANCODE_3] && !controls_prev_frame.keyboard[SDL_SCANCODE_3])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_3] && !controls_prev_frame.keyboard[SDL_SCANCODE_3];
     }
     else if(arg == ST::key::FOUR){
-        if(controls.keyboard[SDL_SCANCODE_4] && !controls_prev_frame.keyboard[SDL_SCANCODE_4])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_4] && !controls_prev_frame.keyboard[SDL_SCANCODE_4];
     }
     else if(arg == ST::key::FIVE){
-        if(controls.keyboard[SDL_SCANCODE_5] && !controls_prev_frame.keyboard[SDL_SCANCODE_5])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_5] && !controls_prev_frame.keyboard[SDL_SCANCODE_5];
     }
     else if(arg == ST::key::SIX){
-        if(controls.keyboard[SDL_SCANCODE_6] && !controls_prev_frame.keyboard[SDL_SCANCODE_6])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_6] && !controls_prev_frame.keyboard[SDL_SCANCODE_6];
     }
     else if(arg == ST::key::SEVEN){
-        if(controls.keyboard[SDL_SCANCODE_7] && !controls_prev_frame.keyboard[SDL_SCANCODE_7])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_7] && !controls_prev_frame.keyboard[SDL_SCANCODE_7];
     }
     else if(arg == ST::key::EIGHT){
-        if(controls.keyboard[SDL_SCANCODE_8] && !controls_prev_frame.keyboard[SDL_SCANCODE_8])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_8] && !controls_prev_frame.keyboard[SDL_SCANCODE_8];
     }
     else if(arg == ST::key::NINE){
-        if(controls.keyboard[SDL_SCANCODE_9] && !controls_prev_frame.keyboard[SDL_SCANCODE_9])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_9] && !controls_prev_frame.keyboard[SDL_SCANCODE_9];
     }
     else if(arg == ST::key::ZERO){
-        if(controls.keyboard[SDL_SCANCODE_0] && !controls_prev_frame.keyboard[SDL_SCANCODE_0])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_0] && !controls_prev_frame.keyboard[SDL_SCANCODE_0];
     }
     else if(arg == ST::key::ESCAPE){
-        if(controls.keyboard[SDL_SCANCODE_ESCAPE] && !controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_ESCAPE] && !controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE];
     }
     else if(arg == ST::key::ENTER){
-        if(controls.keyboard[SDL_SCANCODE_RETURN] && !controls_prev_frame.keyboard[SDL_SCANCODE_RETURN])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_RETURN] && !controls_prev_frame.keyboard[SDL_SCANCODE_RETURN];
     }
     else if(arg == ST::key::SPACEBAR){
-        if(controls.keyboard[SDL_SCANCODE_SPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_SPACE])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_SPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_SPACE];
     }
     else if(arg == ST::key::TILDE){
-        if(controls.keyboard[SDL_SCANCODE_GRAVE] && !controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_GRAVE] && !controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE];
     }
     else if(arg == ST::key::LSHIFT){
-        if(controls.keyboard[SDL_SCANCODE_LSHIFT] && !controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_LSHIFT] && !controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT];
     }
     else if(arg == ST::key::BACKSPACE){
-        if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_BACKSPACE] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE];
     }
     else if (arg == ST::key::DELETE) {
-		if (controls.keyboard[SDL_SCANCODE_DELETE] && !controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
-			pressed = true;
+		pressed = controls.keyboard[SDL_SCANCODE_DELETE] && !controls_prev_frame.keyboard[SDL_SCANCODE_DELETE];
 	}
     else if(arg == ST::key::BACKSLASH){
-        if(controls.keyboard[SDL_SCANCODE_BACKSLASH] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_BACKSLASH] && !controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH];
     }
     else if(arg == ST::key::CAPSLOCK){
-        if(controls.keyboard[SDL_SCANCODE_CAPSLOCK] && !controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_CAPSLOCK] && !controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK];
     }
     else if(arg == ST::key::COMMA){
-        if(controls.keyboard[SDL_SCANCODE_COMMA] && !controls_prev_frame.keyboard[SDL_SCANCODE_COMMA])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_COMMA] && !controls_prev_frame.keyboard[SDL_SCANCODE_COMMA];
     }
     else if(arg == ST::key::EQUALS){
-        if(controls.keyboard[SDL_SCANCODE_EQUALS] && !controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_EQUALS] && !controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS];
     }
     else if(arg == ST::key::LALT){
-        if(controls.keyboard[SDL_SCANCODE_LALT] && !controls_prev_frame.keyboard[SDL_SCANCODE_LALT])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_LALT] && !controls_prev_frame.keyboard[SDL_SCANCODE_LALT];
     }
     else if(arg == ST::key::LCTRL){
-        if(controls.keyboard[SDL_SCANCODE_LCTRL] && !controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_LCTRL] && !controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL];
     }
     else if(arg == ST::key::LBRACKET){
-        if(controls.keyboard[SDL_SCANCODE_LEFTBRACKET] && !controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_LEFTBRACKET] && !controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET];
     }
     else if(arg == ST::key::RBRACKET){
-        if(controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] && !controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] && !controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET];
     }
     else if(arg == ST::key::MINUS){
-        if(controls.keyboard[SDL_SCANCODE_MINUS] && !controls_prev_frame.keyboard[SDL_SCANCODE_MINUS])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_MINUS] && !controls_prev_frame.keyboard[SDL_SCANCODE_MINUS];
     }
     else if(arg == ST::key::RALT){
-        if(controls.keyboard[SDL_SCANCODE_RALT] && !controls_prev_frame.keyboard[SDL_SCANCODE_RALT])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_RALT] && !controls_prev_frame.keyboard[SDL_SCANCODE_RALT];
     }
     else if(arg == ST::key::RCTRL){
-        if(controls.keyboard[SDL_SCANCODE_RCTRL] && !controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_RCTRL] && !controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL];
     }
     else if(arg == ST::key::SEMICOLON){
-        if(controls.keyboard[SDL_SCANCODE_SEMICOLON] && !controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_SEMICOLON] && !controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON];
     }
     else if(arg == ST::key::SLASH){
-        if(controls.keyboard[SDL_SCANCODE_SLASH] && !controls_prev_frame.keyboard[SDL_SCANCODE_SLASH])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_SLASH] && !controls_prev_frame.keyboard[SDL_SCANCODE_SLASH];
     }
     else if(arg == ST::key::TAB){
-        if(controls.keyboard[SDL_SCANCODE_TAB] && !controls_prev_frame.keyboard[SDL_SCANCODE_TAB])
-            pressed = true;
+        pressed = controls.keyboard[SDL_SCANCODE_TAB] && !controls_prev_frame.keyboard[SDL_SCANCODE_TAB];
     }
     else if(arg == ST::key::MOUSELEFT){
-        if(!controls_prev_frame.mouse_clicks[0] && controls.mouse_clicks[0])
-            pressed = true;
+        pressed = !controls_prev_frame.mouse_clicks[0] && controls.mouse_clicks[0];
     }
     else if(arg == ST::key::MOUSEMIDDLE){
-        if(!controls_prev_frame.mouse_clicks[1] && controls.mouse_clicks[1])
-            pressed = true;
+        pressed = !controls_prev_frame.mouse_clicks[1] && controls.mouse_clicks[1];
     }
     else if(arg == ST::key::MOUSERIGHT){
-        if(!controls_prev_frame.mouse_clicks[2] && controls.mouse_clicks[2])
-            pressed = true;
+        pressed = !controls_prev_frame.mouse_clicks[2] && controls.mouse_clicks[2];
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_A){
-        if(!controller_button_prev_frame.a && controller_buttons.a)
-            pressed = true;
+        pressed = !controller_button_prev_frame.a && controller_buttons.a;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_B){
-        if(!controller_button_prev_frame.b && controller_buttons.b)
-            pressed = true;
+        pressed = !controller_button_prev_frame.b && controller_buttons.b;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_X){
-        if(!controller_button_prev_frame.x && controller_buttons.x)
-            pressed = true;
+        pressed = !controller_button_prev_frame.x && controller_buttons.x;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_Y){
-        if(!controller_button_prev_frame.y && controller_buttons.y)
-            pressed = true;
+        pressed = !controller_button_prev_frame.y && controller_buttons.y;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSTICK){
-        if(!controller_button_prev_frame.left_stick && controller_buttons.left_stick)
-            pressed = true;
+        pressed = !controller_button_prev_frame.left_stick && controller_buttons.left_stick;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSTICK){
-        if(!controller_button_prev_frame.right_stick && controller_buttons.right_stick)
-            pressed = true;
+        pressed = !controller_button_prev_frame.right_stick && controller_buttons.right_stick;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_UP){
-        if(!controller_button_prev_frame.dpad_up && controller_buttons.dpad_up)
-            pressed = true;
+        pressed = !controller_button_prev_frame.dpad_up && controller_buttons.dpad_up;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_DOWN){
-        if(!controller_button_prev_frame.dpad_down && controller_buttons.dpad_down)
-            pressed = true;
+        pressed = !controller_button_prev_frame.dpad_down && controller_buttons.dpad_down;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_LEFT){
-        if(!controller_button_prev_frame.dpad_left && controller_buttons.dpad_left)
-            pressed = true;
+        pressed = !controller_button_prev_frame.dpad_left && controller_buttons.dpad_left;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_RIGHT){
-        if(!controller_button_prev_frame.dpad_right && controller_buttons.dpad_right)
-            pressed = true;
+        pressed = !controller_button_prev_frame.dpad_right && controller_buttons.dpad_right;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSHOULDER){
-        if(!controller_button_prev_frame.left_shoulder && controller_buttons.left_shoulder)
-            pressed = true;
+        pressed = !controller_button_prev_frame.left_shoulder && controller_buttons.left_shoulder;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER){
-        if(!controller_button_prev_frame.right_shoulder && controller_buttons.right_shoulder)
-            pressed = true;
+        pressed = !controller_button_prev_frame.right_shoulder && controller_buttons.right_shoulder;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_SELECT){
-        if(!controller_button_prev_frame.select && controller_buttons.select)
-            pressed = true;
+        pressed = !controller_button_prev_frame.select && controller_buttons.select;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_START){
-        if(!controller_button_prev_frame.start && controller_buttons.start)
-            pressed = true;
+        pressed = !controller_button_prev_frame.start && controller_buttons.start;
     }
     return pressed;
 }
@@ -675,316 +597,238 @@ bool input_manager::keypress(ST::key arg) const{
 bool input_manager::keyheld(ST::key arg) const{
     bool held = false;
     if(arg == ST::key::LEFT){
-        if(controls.keyboard[SDL_SCANCODE_LEFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFT])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_LEFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFT];
     }
     else if(arg == ST::key::RIGHT){
-        if(controls.keyboard[SDL_SCANCODE_RIGHT] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_RIGHT] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT];
     }
     else if(arg == ST::key::UP){
-        if(controls.keyboard[SDL_SCANCODE_UP] && controls_prev_frame.keyboard[SDL_SCANCODE_UP])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_UP] && controls_prev_frame.keyboard[SDL_SCANCODE_UP];
     }
     else if(arg == ST::key::DOWN){
-        if(controls.keyboard[SDL_SCANCODE_DOWN] && controls_prev_frame.keyboard[SDL_SCANCODE_DOWN])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_DOWN] && controls_prev_frame.keyboard[SDL_SCANCODE_DOWN];
     }
     else if(arg == ST::key::A){
-        if(controls.keyboard[SDL_SCANCODE_A] && controls_prev_frame.keyboard[SDL_SCANCODE_A])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_A] && controls_prev_frame.keyboard[SDL_SCANCODE_A];
     }
     else if(arg == ST::key::B){
-        if(controls.keyboard[SDL_SCANCODE_B] && controls_prev_frame.keyboard[SDL_SCANCODE_B])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_B] && controls_prev_frame.keyboard[SDL_SCANCODE_B];
     }
     else if(arg == ST::key::C){
-        if(controls.keyboard[SDL_SCANCODE_C] && controls_prev_frame.keyboard[SDL_SCANCODE_C])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_C] && controls_prev_frame.keyboard[SDL_SCANCODE_C];
     }
     else if(arg == ST::key::D){
-        if(controls.keyboard[SDL_SCANCODE_D] && controls_prev_frame.keyboard[SDL_SCANCODE_D])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_D] && controls_prev_frame.keyboard[SDL_SCANCODE_D];
     }
     else if(arg == ST::key::E){
-        if(controls.keyboard[SDL_SCANCODE_E] && controls_prev_frame.keyboard[SDL_SCANCODE_E])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_E] && controls_prev_frame.keyboard[SDL_SCANCODE_E];
     }
     else if(arg == ST::key::F){
-        if(controls.keyboard[SDL_SCANCODE_F] && controls_prev_frame.keyboard[SDL_SCANCODE_F])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_F] && controls_prev_frame.keyboard[SDL_SCANCODE_F];
     }
     else if(arg == ST::key::G){
-        if(controls.keyboard[SDL_SCANCODE_G] && controls_prev_frame.keyboard[SDL_SCANCODE_G])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_G] && controls_prev_frame.keyboard[SDL_SCANCODE_G];
     }
     else if(arg == ST::key::H){
-        if(controls.keyboard[SDL_SCANCODE_H] && controls_prev_frame.keyboard[SDL_SCANCODE_H])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_H] && controls_prev_frame.keyboard[SDL_SCANCODE_H];
     }
     else if(arg == ST::key::I){
-        if(controls.keyboard[SDL_SCANCODE_I] && controls_prev_frame.keyboard[SDL_SCANCODE_I])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_I] && controls_prev_frame.keyboard[SDL_SCANCODE_I];
     }
     else if(arg == ST::key::J){
-        if(controls.keyboard[SDL_SCANCODE_J] && controls_prev_frame.keyboard[SDL_SCANCODE_G])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_J] && controls_prev_frame.keyboard[SDL_SCANCODE_G];
     }
     else if(arg == ST::key::K){
-        if(controls.keyboard[SDL_SCANCODE_K] && controls_prev_frame.keyboard[SDL_SCANCODE_K])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_K] && controls_prev_frame.keyboard[SDL_SCANCODE_K];
     }
     else if(arg == ST::key::L){
-        if(controls.keyboard[SDL_SCANCODE_L] && controls_prev_frame.keyboard[SDL_SCANCODE_L])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_L] && controls_prev_frame.keyboard[SDL_SCANCODE_L];
     }
     else if(arg == ST::key::M){
-        if(controls.keyboard[SDL_SCANCODE_M] && controls_prev_frame.keyboard[SDL_SCANCODE_M])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_M] && controls_prev_frame.keyboard[SDL_SCANCODE_M];
     }
     else if(arg == ST::key::N){
-        if(controls.keyboard[SDL_SCANCODE_N] && controls_prev_frame.keyboard[SDL_SCANCODE_N])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_N] && controls_prev_frame.keyboard[SDL_SCANCODE_N];
     }
     else if(arg == ST::key::O){
-        if(controls.keyboard[SDL_SCANCODE_O] && controls_prev_frame.keyboard[SDL_SCANCODE_O])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_O] && controls_prev_frame.keyboard[SDL_SCANCODE_O];
     }
     else if(arg == ST::key::P){
-        if(controls.keyboard[SDL_SCANCODE_P] && controls_prev_frame.keyboard[SDL_SCANCODE_P])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_P] && controls_prev_frame.keyboard[SDL_SCANCODE_P];
     }
     else if(arg == ST::key::Q){
-        if(controls.keyboard[SDL_SCANCODE_Q] && controls_prev_frame.keyboard[SDL_SCANCODE_Q])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_Q] && controls_prev_frame.keyboard[SDL_SCANCODE_Q];
     }
     else if(arg == ST::key::R){
-        if(controls.keyboard[SDL_SCANCODE_R] && controls_prev_frame.keyboard[SDL_SCANCODE_R])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_R] && controls_prev_frame.keyboard[SDL_SCANCODE_R];
     }
     else if(arg == ST::key::S){
-        if(controls.keyboard[SDL_SCANCODE_S] && controls_prev_frame.keyboard[SDL_SCANCODE_S])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_S] && controls_prev_frame.keyboard[SDL_SCANCODE_S];
     }
     else if(arg == ST::key::T){
-        if(controls.keyboard[SDL_SCANCODE_T] && controls_prev_frame.keyboard[SDL_SCANCODE_T])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_T] && controls_prev_frame.keyboard[SDL_SCANCODE_T];
     }
     else if(arg == ST::key::U){
-        if(controls.keyboard[SDL_SCANCODE_U] && controls_prev_frame.keyboard[SDL_SCANCODE_U])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_U] && controls_prev_frame.keyboard[SDL_SCANCODE_U];
     }
     else if(arg == ST::key::V){
-        if(controls.keyboard[SDL_SCANCODE_V] && controls_prev_frame.keyboard[SDL_SCANCODE_V])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_V] && controls_prev_frame.keyboard[SDL_SCANCODE_V];
     }
     else if(arg == ST::key::W){
-        if(controls.keyboard[SDL_SCANCODE_W] && controls_prev_frame.keyboard[SDL_SCANCODE_W])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_W] && controls_prev_frame.keyboard[SDL_SCANCODE_W];
     }
     else if(arg == ST::key::X){
-        if(controls.keyboard[SDL_SCANCODE_X] && controls_prev_frame.keyboard[SDL_SCANCODE_X])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_X] && controls_prev_frame.keyboard[SDL_SCANCODE_X];
     }
     else if(arg == ST::key::Y){
-        if(controls.keyboard[SDL_SCANCODE_Y] && controls_prev_frame.keyboard[SDL_SCANCODE_Y])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_Y] && controls_prev_frame.keyboard[SDL_SCANCODE_Y];
     }
     else if(arg == ST::key::Z){
-        if(controls.keyboard[SDL_SCANCODE_Z] && controls_prev_frame.keyboard[SDL_SCANCODE_Z])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_Z] && controls_prev_frame.keyboard[SDL_SCANCODE_Z];
     }
     else if(arg == ST::key::ONE){
-        if(controls.keyboard[SDL_SCANCODE_1] && controls_prev_frame.keyboard[SDL_SCANCODE_1])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_1] && controls_prev_frame.keyboard[SDL_SCANCODE_1];
     }
     else if(arg == ST::key::TWO){
-        if(controls.keyboard[SDL_SCANCODE_2] && controls_prev_frame.keyboard[SDL_SCANCODE_2])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_2] && controls_prev_frame.keyboard[SDL_SCANCODE_2];
     }
     else if(arg == ST::key::THREE){
-        if(controls.keyboard[SDL_SCANCODE_3] && controls_prev_frame.keyboard[SDL_SCANCODE_3])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_3] && controls_prev_frame.keyboard[SDL_SCANCODE_3];
     }
     else if(arg == ST::key::FOUR){
-        if(controls.keyboard[SDL_SCANCODE_4] && controls_prev_frame.keyboard[SDL_SCANCODE_4])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_4] && controls_prev_frame.keyboard[SDL_SCANCODE_4];
     }
     else if(arg == ST::key::FIVE){
-        if(controls.keyboard[SDL_SCANCODE_5] && controls_prev_frame.keyboard[SDL_SCANCODE_5])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_5] && controls_prev_frame.keyboard[SDL_SCANCODE_5];
     }
     else if(arg == ST::key::SIX){
-        if(controls.keyboard[SDL_SCANCODE_6] && controls_prev_frame.keyboard[SDL_SCANCODE_6])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_6] && controls_prev_frame.keyboard[SDL_SCANCODE_6];
     }
     else if(arg == ST::key::SEVEN){
-        if(controls.keyboard[SDL_SCANCODE_7] && controls_prev_frame.keyboard[SDL_SCANCODE_7])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_7] && controls_prev_frame.keyboard[SDL_SCANCODE_7];
     }
     else if(arg == ST::key::EIGHT){
-        if(controls.keyboard[SDL_SCANCODE_8] && controls_prev_frame.keyboard[SDL_SCANCODE_8])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_8] && controls_prev_frame.keyboard[SDL_SCANCODE_8];
     }
     else if(arg == ST::key::NINE){
-        if(controls.keyboard[SDL_SCANCODE_9] && controls_prev_frame.keyboard[SDL_SCANCODE_9])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_9] && controls_prev_frame.keyboard[SDL_SCANCODE_9];
     }
     else if(arg == ST::key::ZERO){
-        if(controls.keyboard[SDL_SCANCODE_0] && controls_prev_frame.keyboard[SDL_SCANCODE_0])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_0] && controls_prev_frame.keyboard[SDL_SCANCODE_0];
     }
     else if(arg == ST::key::ESCAPE){
-        if(controls.keyboard[SDL_SCANCODE_ESCAPE] && controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_ESCAPE] && controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE];
     }
     else if(arg == ST::key::ENTER){
-        if(controls.keyboard[SDL_SCANCODE_RETURN] && controls_prev_frame.keyboard[SDL_SCANCODE_RETURN])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_RETURN] && controls_prev_frame.keyboard[SDL_SCANCODE_RETURN];
     }
     else if(arg == ST::key::SPACEBAR){
-        if(controls.keyboard[SDL_SCANCODE_SPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_SPACE])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_SPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_SPACE];
     }
     else if(arg == ST::key::TILDE){
-        if(controls.keyboard[SDL_SCANCODE_GRAVE] && controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_GRAVE] && controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE];
     }
     else if(arg == ST::key::LSHIFT){
-        if(controls.keyboard[SDL_SCANCODE_LSHIFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_LSHIFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT];
     }
     else if(arg == ST::key::BACKSPACE){
-        if(controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE];
     }
     else if (arg == ST::key::DELETE) {
-		if (controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
-			held = true;
+		held = controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE];
 	}
     else if(arg == ST::key::BACKSLASH){
-        if(controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH];
     }
     else if(arg == ST::key::CAPSLOCK){
-        if(controls.keyboard[SDL_SCANCODE_CAPSLOCK] && controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_CAPSLOCK] && controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK];
     }
     else if(arg == ST::key::COMMA){
-        if(controls.keyboard[SDL_SCANCODE_COMMA] && controls_prev_frame.keyboard[SDL_SCANCODE_COMMA])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_COMMA] && controls_prev_frame.keyboard[SDL_SCANCODE_COMMA];
     }
     else if(arg == ST::key::EQUALS){
-        if(controls.keyboard[SDL_SCANCODE_EQUALS] && controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_EQUALS] && controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS];
     }
     else if(arg == ST::key::LALT){
-        if(controls.keyboard[SDL_SCANCODE_LALT] && controls_prev_frame.keyboard[SDL_SCANCODE_LALT])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_LALT] && controls_prev_frame.keyboard[SDL_SCANCODE_LALT];
     }
     else if(arg == ST::key::LCTRL){
-        if(controls.keyboard[SDL_SCANCODE_LCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_LCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL];
     }
     else if(arg == ST::key::LBRACKET){
-        if(controls.keyboard[SDL_SCANCODE_LEFTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_LEFTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET];
     }
     else if(arg == ST::key::RBRACKET){
-        if(controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET];
     }
     else if(arg == ST::key::MINUS){
-        if(controls.keyboard[SDL_SCANCODE_MINUS] && controls_prev_frame.keyboard[SDL_SCANCODE_MINUS])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_MINUS] && controls_prev_frame.keyboard[SDL_SCANCODE_MINUS];
     }
     else if(arg == ST::key::RALT){
-        if(controls.keyboard[SDL_SCANCODE_RALT] && controls_prev_frame.keyboard[SDL_SCANCODE_RALT])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_RALT] && controls_prev_frame.keyboard[SDL_SCANCODE_RALT];
     }
     else if(arg == ST::key::RCTRL){
-        if(controls.keyboard[SDL_SCANCODE_RCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_RCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL];
     }
     else if(arg == ST::key::SEMICOLON){
-        if(controls.keyboard[SDL_SCANCODE_SEMICOLON] && controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_SEMICOLON] && controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON];
     }
     else if(arg == ST::key::SLASH){
-        if(controls.keyboard[SDL_SCANCODE_SLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_SLASH])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_SLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_SLASH];
     }
     else if(arg == ST::key::TAB){
-        if(controls.keyboard[SDL_SCANCODE_TAB] && controls_prev_frame.keyboard[SDL_SCANCODE_TAB])
-            held = true;
+        held = controls.keyboard[SDL_SCANCODE_TAB] && controls_prev_frame.keyboard[SDL_SCANCODE_TAB];
     }
     else if(arg == ST::key::MOUSELEFT){
-        if(controls_prev_frame.mouse_clicks[0] && controls.mouse_clicks[0])
-            held = true;
+        held = controls_prev_frame.mouse_clicks[0] && controls.mouse_clicks[0];
     }
     else if(arg == ST::key::MOUSEMIDDLE){
-        if(controls_prev_frame.mouse_clicks[1] && controls.mouse_clicks[1])
-            held = true;
+        held = controls_prev_frame.mouse_clicks[1] && controls.mouse_clicks[1];
     }
     else if(arg == ST::key::MOUSERIGHT){
-        if(controls_prev_frame.mouse_clicks[2] && controls.mouse_clicks[2])
-            held = true;
+        held = controls_prev_frame.mouse_clicks[2] && controls.mouse_clicks[2];
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_A){
-        if(controller_button_prev_frame.a && controller_buttons.a)
-            held = true;
+        held = controller_button_prev_frame.a && controller_buttons.a;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_B){
-        if(controller_button_prev_frame.b && controller_buttons.b)
-            held = true;
+        held = controller_button_prev_frame.b && controller_buttons.b;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_X){
-        if(controller_button_prev_frame.x && controller_buttons.x)
-            held = true;
+        held = controller_button_prev_frame.x && controller_buttons.x;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_Y){
-        if(controller_button_prev_frame.y && controller_buttons.y)
-            held = true;
+        held = controller_button_prev_frame.y && controller_buttons.y;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSTICK){
-        if(controller_button_prev_frame.left_stick && controller_buttons.left_stick)
-            held = true;
+        held = controller_button_prev_frame.left_stick && controller_buttons.left_stick;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSTICK){
-        if(controller_button_prev_frame.right_stick && controller_buttons.right_stick)
-            held = true;
+        held = controller_button_prev_frame.right_stick && controller_buttons.right_stick;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_UP){
-        if(controller_button_prev_frame.dpad_up && controller_buttons.dpad_up)
-            held = true;
+        held = controller_button_prev_frame.dpad_up && controller_buttons.dpad_up;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_DOWN){
-        if(controller_button_prev_frame.dpad_down && controller_buttons.dpad_down)
-            held = true;
+        held = controller_button_prev_frame.dpad_down && controller_buttons.dpad_down;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_LEFT){
-        if(controller_button_prev_frame.dpad_left && controller_buttons.dpad_left)
-            held = true;
+        held = controller_button_prev_frame.dpad_left && controller_buttons.dpad_left;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_RIGHT){
-        if(controller_button_prev_frame.dpad_right && controller_buttons.dpad_right)
-            held = true;
+        held = controller_button_prev_frame.dpad_right && controller_buttons.dpad_right;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSHOULDER){
-        if(controller_button_prev_frame.left_shoulder && controller_buttons.left_shoulder)
-            held = true;
+        held = controller_button_prev_frame.left_shoulder && controller_buttons.left_shoulder;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER){
-        if(controller_button_prev_frame.right_shoulder && controller_buttons.right_shoulder)
-            held = true;
+        held = controller_button_prev_frame.right_shoulder && controller_buttons.right_shoulder;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_SELECT){
-        if(controller_button_prev_frame.select && controller_buttons.select)
-            held = true;
+        held = controller_button_prev_frame.select && controller_buttons.select;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_START){
-        if(controller_button_prev_frame.start && controller_buttons.start)
-            held = true;
+        held = controller_button_prev_frame.start && controller_buttons.start;
     }
     return held;
 }
@@ -998,316 +842,238 @@ bool input_manager::keyheld(ST::key arg) const{
 bool input_manager::keyrelease(ST::key arg) const{
     bool released = false;
     if(arg == ST::key::LEFT){
-        if(!controls.keyboard[SDL_SCANCODE_LEFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFT])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_LEFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFT];
     }
     else if(arg == ST::key::RIGHT){
-        if(!controls.keyboard[SDL_SCANCODE_RIGHT] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_RIGHT] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT];
     }
     else if(arg == ST::key::UP){
-        if(!controls.keyboard[SDL_SCANCODE_UP] && controls_prev_frame.keyboard[SDL_SCANCODE_UP])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_UP] && controls_prev_frame.keyboard[SDL_SCANCODE_UP];
     }
     else if(arg == ST::key::DOWN){
-        if(!controls.keyboard[SDL_SCANCODE_DOWN] && controls_prev_frame.keyboard[SDL_SCANCODE_DOWN])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_DOWN] && controls_prev_frame.keyboard[SDL_SCANCODE_DOWN];
     }
     else if(arg == ST::key::A){
-        if(!controls.keyboard[SDL_SCANCODE_A] && controls_prev_frame.keyboard[SDL_SCANCODE_A])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_A] && controls_prev_frame.keyboard[SDL_SCANCODE_A];
     }
     else if(arg == ST::key::B){
-        if(!controls.keyboard[SDL_SCANCODE_B] && controls_prev_frame.keyboard[SDL_SCANCODE_B])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_B] && controls_prev_frame.keyboard[SDL_SCANCODE_B];
     }
     else if(arg == ST::key::C){
-        if(!controls.keyboard[SDL_SCANCODE_C] && controls_prev_frame.keyboard[SDL_SCANCODE_C])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_C] && controls_prev_frame.keyboard[SDL_SCANCODE_C];
     }
     else if(arg == ST::key::D){
-        if(!controls.keyboard[SDL_SCANCODE_D] && controls_prev_frame.keyboard[SDL_SCANCODE_D])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_D] && controls_prev_frame.keyboard[SDL_SCANCODE_D];
     }
     else if(arg == ST::key::E){
-        if(!controls.keyboard[SDL_SCANCODE_E] && controls_prev_frame.keyboard[SDL_SCANCODE_E])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_E] && controls_prev_frame.keyboard[SDL_SCANCODE_E];
     }
     else if(arg == ST::key::F){
-        if(!controls.keyboard[SDL_SCANCODE_F] && controls_prev_frame.keyboard[SDL_SCANCODE_F])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_F] && controls_prev_frame.keyboard[SDL_SCANCODE_F];
     }
     else if(arg == ST::key::G){
-        if(!controls.keyboard[SDL_SCANCODE_G] && controls_prev_frame.keyboard[SDL_SCANCODE_G])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_G] && controls_prev_frame.keyboard[SDL_SCANCODE_G];
     }
     else if(arg == ST::key::H){
-        if(!controls.keyboard[SDL_SCANCODE_H] && controls_prev_frame.keyboard[SDL_SCANCODE_H])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_H] && controls_prev_frame.keyboard[SDL_SCANCODE_H];
     }
     else if(arg == ST::key::I){
-        if(!controls.keyboard[SDL_SCANCODE_I] && controls_prev_frame.keyboard[SDL_SCANCODE_I])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_I] && controls_prev_frame.keyboard[SDL_SCANCODE_I];
     }
     else if(arg == ST::key::J){
-        if(!controls.keyboard[SDL_SCANCODE_J] && controls_prev_frame.keyboard[SDL_SCANCODE_G])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_J] && controls_prev_frame.keyboard[SDL_SCANCODE_G];
     }
     else if(arg == ST::key::K){
-        if(!controls.keyboard[SDL_SCANCODE_K] && controls_prev_frame.keyboard[SDL_SCANCODE_K])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_K] && controls_prev_frame.keyboard[SDL_SCANCODE_K];
     }
     else if(arg == ST::key::L){
-        if(!controls.keyboard[SDL_SCANCODE_L] && controls_prev_frame.keyboard[SDL_SCANCODE_L])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_L] && controls_prev_frame.keyboard[SDL_SCANCODE_L];
     }
     else if(arg == ST::key::M){
-        if(!controls.keyboard[SDL_SCANCODE_M] && controls_prev_frame.keyboard[SDL_SCANCODE_M])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_M] && controls_prev_frame.keyboard[SDL_SCANCODE_M];
     }
     else if(arg == ST::key::N){
-        if(!controls.keyboard[SDL_SCANCODE_N] && controls_prev_frame.keyboard[SDL_SCANCODE_N])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_N] && controls_prev_frame.keyboard[SDL_SCANCODE_N];
     }
     else if(arg == ST::key::O){
-        if(!controls.keyboard[SDL_SCANCODE_O] && controls_prev_frame.keyboard[SDL_SCANCODE_O])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_O] && controls_prev_frame.keyboard[SDL_SCANCODE_O];
     }
     else if(arg == ST::key::P){
-        if(!controls.keyboard[SDL_SCANCODE_P] && controls_prev_frame.keyboard[SDL_SCANCODE_P])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_P] && controls_prev_frame.keyboard[SDL_SCANCODE_P];
     }
     else if(arg == ST::key::Q){
-        if(!controls.keyboard[SDL_SCANCODE_Q] && controls_prev_frame.keyboard[SDL_SCANCODE_Q])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_Q] && controls_prev_frame.keyboard[SDL_SCANCODE_Q];
     }
     else if(arg == ST::key::R){
-        if(!controls.keyboard[SDL_SCANCODE_R] && controls_prev_frame.keyboard[SDL_SCANCODE_R])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_R] && controls_prev_frame.keyboard[SDL_SCANCODE_R];
     }
     else if(arg == ST::key::S){
-        if(!controls.keyboard[SDL_SCANCODE_S] && controls_prev_frame.keyboard[SDL_SCANCODE_S])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_S] && controls_prev_frame.keyboard[SDL_SCANCODE_S];
     }
     else if(arg == ST::key::T){
-        if(!controls.keyboard[SDL_SCANCODE_T] && controls_prev_frame.keyboard[SDL_SCANCODE_T])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_T] && controls_prev_frame.keyboard[SDL_SCANCODE_T];
     }
     else if(arg == ST::key::U){
-        if(!controls.keyboard[SDL_SCANCODE_U] && controls_prev_frame.keyboard[SDL_SCANCODE_U])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_U] && controls_prev_frame.keyboard[SDL_SCANCODE_U];
     }
     else if(arg == ST::key::V){
-        if(!controls.keyboard[SDL_SCANCODE_V] && controls_prev_frame.keyboard[SDL_SCANCODE_V])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_V] && controls_prev_frame.keyboard[SDL_SCANCODE_V];
     }
     else if(arg == ST::key::W){
-        if(!controls.keyboard[SDL_SCANCODE_W] && controls_prev_frame.keyboard[SDL_SCANCODE_W])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_W] && controls_prev_frame.keyboard[SDL_SCANCODE_W];
     }
     else if(arg == ST::key::X){
-        if(!controls.keyboard[SDL_SCANCODE_X] && controls_prev_frame.keyboard[SDL_SCANCODE_X])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_X] && controls_prev_frame.keyboard[SDL_SCANCODE_X];
     }
     else if(arg == ST::key::Y){
-        if(!controls.keyboard[SDL_SCANCODE_Y] && controls_prev_frame.keyboard[SDL_SCANCODE_Y])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_Y] && controls_prev_frame.keyboard[SDL_SCANCODE_Y];
     }
     else if(arg == ST::key::Z){
-        if(!controls.keyboard[SDL_SCANCODE_Z] && controls_prev_frame.keyboard[SDL_SCANCODE_Z])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_Z] && controls_prev_frame.keyboard[SDL_SCANCODE_Z];
     }
     else if(arg == ST::key::ONE){
-        if(!controls.keyboard[SDL_SCANCODE_1] && controls_prev_frame.keyboard[SDL_SCANCODE_1])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_1] && controls_prev_frame.keyboard[SDL_SCANCODE_1];
     }
     else if(arg == ST::key::TWO){
-        if(!controls.keyboard[SDL_SCANCODE_2] && controls_prev_frame.keyboard[SDL_SCANCODE_2])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_2] && controls_prev_frame.keyboard[SDL_SCANCODE_2];
     }
     else if(arg == ST::key::THREE){
-        if(!controls.keyboard[SDL_SCANCODE_3] && controls_prev_frame.keyboard[SDL_SCANCODE_3])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_3] && controls_prev_frame.keyboard[SDL_SCANCODE_3];
     }
     else if(arg == ST::key::FOUR){
-        if(!controls.keyboard[SDL_SCANCODE_4] && controls_prev_frame.keyboard[SDL_SCANCODE_4])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_4] && controls_prev_frame.keyboard[SDL_SCANCODE_4];
     }
     else if(arg == ST::key::FIVE){
-        if(!controls.keyboard[SDL_SCANCODE_5] && controls_prev_frame.keyboard[SDL_SCANCODE_5])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_5] && controls_prev_frame.keyboard[SDL_SCANCODE_5];
     }
     else if(arg == ST::key::SIX){
-        if(!controls.keyboard[SDL_SCANCODE_6] && controls_prev_frame.keyboard[SDL_SCANCODE_6])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_6] && controls_prev_frame.keyboard[SDL_SCANCODE_6];
     }
     else if(arg == ST::key::SEVEN){
-        if(!controls.keyboard[SDL_SCANCODE_7] && controls_prev_frame.keyboard[SDL_SCANCODE_7])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_7] && controls_prev_frame.keyboard[SDL_SCANCODE_7];
     }
     else if(arg == ST::key::EIGHT){
-        if(!controls.keyboard[SDL_SCANCODE_8] && controls_prev_frame.keyboard[SDL_SCANCODE_8])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_8] && controls_prev_frame.keyboard[SDL_SCANCODE_8];
     }
     else if(arg == ST::key::NINE){
-        if(!controls.keyboard[SDL_SCANCODE_9] && controls_prev_frame.keyboard[SDL_SCANCODE_9])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_9] && controls_prev_frame.keyboard[SDL_SCANCODE_9];
     }
     else if(arg == ST::key::ZERO){
-        if(!controls.keyboard[SDL_SCANCODE_0] && controls_prev_frame.keyboard[SDL_SCANCODE_0])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_0] && controls_prev_frame.keyboard[SDL_SCANCODE_0];
     }
     else if(arg == ST::key::ESCAPE){
-        if(!controls.keyboard[SDL_SCANCODE_ESCAPE] && controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_ESCAPE] && controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE];
     }
     else if(arg == ST::key::ENTER){
-        if(!controls.keyboard[SDL_SCANCODE_RETURN] && controls_prev_frame.keyboard[SDL_SCANCODE_RETURN])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_RETURN] && controls_prev_frame.keyboard[SDL_SCANCODE_RETURN];
     }
     else if(arg == ST::key::SPACEBAR){
-        if(!controls.keyboard[SDL_SCANCODE_SPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_SPACE])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_SPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_SPACE];
     }
     else if(arg == ST::key::TILDE){
-        if(!controls.keyboard[SDL_SCANCODE_GRAVE] && controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_GRAVE] && controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE];
     }
     else if(arg == ST::key::LSHIFT){
-        if(!controls.keyboard[SDL_SCANCODE_LSHIFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_LSHIFT] && controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT];
     }
     else if(arg == ST::key::BACKSPACE){
-        if(!controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_BACKSPACE] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE];
     }
     else if (arg == ST::key::DELETE) {
-		if (!controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE])
-			released = true;
+		released = !controls.keyboard[SDL_SCANCODE_DELETE] && controls_prev_frame.keyboard[SDL_SCANCODE_DELETE];
 	}
     else if(arg == ST::key::BACKSLASH){
-        if(!controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_BACKSLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH];
     }
     else if(arg == ST::key::CAPSLOCK){
-        if(!controls.keyboard[SDL_SCANCODE_CAPSLOCK] && controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_CAPSLOCK] && controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK];
     }
     else if(arg == ST::key::COMMA){
-        if(!controls.keyboard[SDL_SCANCODE_COMMA] && controls_prev_frame.keyboard[SDL_SCANCODE_COMMA])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_COMMA] && controls_prev_frame.keyboard[SDL_SCANCODE_COMMA];
     }
     else if(arg == ST::key::EQUALS){
-        if(!controls.keyboard[SDL_SCANCODE_EQUALS] && controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_EQUALS] && controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS];
     }
     else if(arg == ST::key::LALT){
-        if(!controls.keyboard[SDL_SCANCODE_LALT] && controls_prev_frame.keyboard[SDL_SCANCODE_LALT])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_LALT] && controls_prev_frame.keyboard[SDL_SCANCODE_LALT];
     }
     else if(arg == ST::key::LCTRL){
-        if(!controls.keyboard[SDL_SCANCODE_LCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_LCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL];
     }
     else if(arg == ST::key::LBRACKET){
-        if(!controls.keyboard[SDL_SCANCODE_LEFTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_LEFTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET];
     }
     else if(arg == ST::key::RBRACKET){
-        if(!controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] && controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET];
     }
     else if(arg == ST::key::MINUS){
-        if(!controls.keyboard[SDL_SCANCODE_MINUS] && controls_prev_frame.keyboard[SDL_SCANCODE_MINUS])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_MINUS] && controls_prev_frame.keyboard[SDL_SCANCODE_MINUS];
     }
     else if(arg == ST::key::RALT){
-        if(!controls.keyboard[SDL_SCANCODE_RALT] && controls_prev_frame.keyboard[SDL_SCANCODE_RALT])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_RALT] && controls_prev_frame.keyboard[SDL_SCANCODE_RALT];
     }
     else if(arg == ST::key::RCTRL){
-        if(!controls.keyboard[SDL_SCANCODE_RCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_RCTRL] && controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL];
     }
     else if(arg == ST::key::SEMICOLON){
-        if(!controls.keyboard[SDL_SCANCODE_SEMICOLON] && controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_SEMICOLON] && controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON];
     }
     else if(arg == ST::key::SLASH){
-        if(!controls.keyboard[SDL_SCANCODE_SLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_SLASH])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_SLASH] && controls_prev_frame.keyboard[SDL_SCANCODE_SLASH];
     }
     else if(arg == ST::key::TAB){
-        if(!controls.keyboard[SDL_SCANCODE_TAB] && controls_prev_frame.keyboard[SDL_SCANCODE_TAB])
-            released = true;
+        released = !controls.keyboard[SDL_SCANCODE_TAB] && controls_prev_frame.keyboard[SDL_SCANCODE_TAB];
     }
     else if(arg == ST::key::MOUSELEFT){
-        if(controls_prev_frame.mouse_clicks[0] && !controls.mouse_clicks[0])
-            released = true;
+        released = controls_prev_frame.mouse_clicks[0] && !controls.mouse_clicks[0];
     }
     else if(arg == ST::key::MOUSEMIDDLE){
-        if(controls_prev_frame.mouse_clicks[1] && !controls.mouse_clicks[1])
-            released = true;
+        released = controls_prev_frame.mouse_clicks[1] && !controls.mouse_clicks[1];
     }
     else if(arg == ST::key::MOUSERIGHT){
-        if(controls_prev_frame.mouse_clicks[2] && !controls.mouse_clicks[2])
-            released = true;
+        released = controls_prev_frame.mouse_clicks[2] && !controls.mouse_clicks[2];
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_A){
-        if(controller_button_prev_frame.a && !controller_buttons.a)
-            released = true;
+        released = controller_button_prev_frame.a && !controller_buttons.a;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_B){
-        if(controller_button_prev_frame.b && !controller_buttons.b)
-            released = true;
+        released = controller_button_prev_frame.b && !controller_buttons.b;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_X){
-        if(controller_button_prev_frame.x && !controller_buttons.x)
-            released = true;
+        released = controller_button_prev_frame.x && !controller_buttons.x;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_Y){
-        if(controller_button_prev_frame.y && !controller_buttons.y)
-            released = true;
+        released = controller_button_prev_frame.y && !controller_buttons.y;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSTICK){
-        if(controller_button_prev_frame.left_stick && !controller_buttons.left_stick)
-            released = true;
+        released = controller_button_prev_frame.left_stick && !controller_buttons.left_stick;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSTICK){
-        if(controller_button_prev_frame.right_stick && !controller_buttons.right_stick)
-            released = true;
+        released = controller_button_prev_frame.right_stick && !controller_buttons.right_stick;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_UP){
-        if(controller_button_prev_frame.dpad_up && !controller_buttons.dpad_up)
-            released = true;
+        released = controller_button_prev_frame.dpad_up && !controller_buttons.dpad_up;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_DOWN){
-        if(controller_button_prev_frame.dpad_down && !controller_buttons.dpad_down)
-            released = true;
+        released = controller_button_prev_frame.dpad_down && !controller_buttons.dpad_down;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_LEFT){
-        if(controller_button_prev_frame.dpad_left && !controller_buttons.dpad_left)
-            released = true;
+        released = controller_button_prev_frame.dpad_left && !controller_buttons.dpad_left;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_DPAD_RIGHT){
-        if(controller_button_prev_frame.dpad_right && !controller_buttons.dpad_right)
-            released = true;
+        released = controller_button_prev_frame.dpad_right && !controller_buttons.dpad_right;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_LEFTSHOULDER){
-        if(controller_button_prev_frame.left_shoulder && !controller_buttons.left_shoulder)
-            released = true;
+        released = controller_button_prev_frame.left_shoulder && !controller_buttons.left_shoulder;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER){
-        if(controller_button_prev_frame.right_shoulder && !controller_buttons.right_shoulder)
-            released = true;
+        released = controller_button_prev_frame.right_shoulder && !controller_buttons.right_shoulder;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_SELECT){
-        if(controller_button_prev_frame.select && !controller_buttons.select)
-            released = true;
+        released = controller_button_prev_frame.select && !controller_buttons.select;
     }
     else if(arg == ST::key::CONTROLLER_BUTTON_START){
-        if(controller_button_prev_frame.start && !controller_buttons.start)
-            released = true;
+        released = controller_button_prev_frame.start && !controller_buttons.start;
     }
     return released;
 }

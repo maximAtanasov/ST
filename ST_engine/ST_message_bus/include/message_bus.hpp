@@ -21,7 +21,7 @@
 #include "message_types.hpp"
 #include "../src/main/subscriber.hpp"
 
-///The centeral messaging system of the engine. All subsystem make extensive use of it.
+///The central messaging system of the engine. All subsystem make extensive use of it.
 /**
  *
  * Handles all passing of messages to subscribers.

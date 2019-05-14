@@ -118,15 +118,13 @@ void audio_manager::handle_messages(){
             chunks_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Chunk*>**>(temp->get_data());
         }
         else if(temp->msg_name == SET_SOUNDS_VOLUME){
-            auto arg = static_cast<uint8_t*>(temp->get_data());
-            set_chunk_volume(*arg);
+            set_chunk_volume(*static_cast<uint8_t*>(temp->get_data()));
             if(!muted) {
                 gMessage_bus->send_msg(new message(SOUNDS_VOLUME_LEVEL, make_data(chunk_volume)));
             }
         }
         else if(temp->msg_name == SET_MUSIC_VOLUME){
-            auto arg = static_cast<uint8_t*>(temp->get_data());
-            set_music_volume(*arg);
+            set_music_volume(*static_cast<uint8_t*>(temp->get_data()));
             if(!muted) {
                 gMessage_bus->send_msg(new message(MUSIC_VOLUME_LEVEL, make_data(music_volume)));
             }

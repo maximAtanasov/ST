@@ -304,31 +304,13 @@ void drawing_manager::handle_messages(){
             set_darkness(*(static_cast<uint8_t*>(temp->get_data())));
         }
         else if(temp->msg_name == SHOW_COLLISIONS){
-            auto arg = static_cast<bool*>(temp->get_data());
-            if(*arg) {
-                collisions_shown = true;
-            }
-            else if(!(*arg)){
-                collisions_shown = false;
-            }
+            collisions_shown = *static_cast<bool*>(temp->get_data());
         }
         else if(temp->msg_name == SHOW_FPS){
-            auto arg = static_cast<bool*>(temp->get_data());
-            if(*arg) {
-                show_fps = true;
-            }
-            else if(!(*arg)){
-                show_fps = false;
-            }
+            show_fps = *static_cast<bool*>(temp->get_data());
         }
         else if(temp->msg_name == ENABLE_LIGHTING){
-            auto arg = static_cast<bool*>(temp->get_data());
-            if(*arg) {
-                lighting_enabled = true;
-            }
-            else if(!(*arg)){
-                lighting_enabled = false;
-            }
+            lighting_enabled = *static_cast<bool*>(temp->get_data());
         }
         else if(temp->msg_name == SURFACES_ASSETS) {
             auto surfaces = *static_cast<ska::bytell_hash_map<uint16_t, SDL_Surface *>**>(temp->get_data());

@@ -12,7 +12,7 @@
 
 ///An fps counter
 /**
- * Provides average framerates over 1 second.
+ * Provides average frame-rates over 1 second.
  * We need this class, because the framerate is otherwise constantly fluctuating.
  */
 class fps {

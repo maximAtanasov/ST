@@ -84,20 +84,16 @@ void game_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == LOAD_LEVEL){
-            auto name = static_cast<std::string*>(temp->get_data());
-            load_level(*name);
+            load_level(*static_cast<std::string*>(temp->get_data()));
         }
         else if(temp->msg_name == RELOAD_LEVEL){
-            auto name = static_cast<std::string*>(temp->get_data());
-            reload_level(*name);
+            reload_level(*static_cast<std::string*>(temp->get_data()));
         }
         else if(temp->msg_name == START_LEVEL){
-            auto name = static_cast<std::string*>(temp->get_data());
-            start_level(*name);
+            start_level(*static_cast<std::string*>(temp->get_data()));
         }
         else if(temp->msg_name == UNLOAD_LEVEL){
-            auto name = static_cast<std::string*>(temp->get_data());
-            unload_level(*name);
+            unload_level(*static_cast<std::string*>(temp->get_data()));
         }
         else if(temp->msg_name == KEY_PRESSED){
             uint8_t key_index = *static_cast<uint8_t*>(temp->get_data());
@@ -118,71 +114,53 @@ void game_manager::handle_messages(){
             keys_released_data[key_index] = true;
         }
         else if(temp->msg_name == MOUSE_X){
-            int32_t x = *static_cast<int32_t*>(temp->get_data());
-            mouse_x = x;
+            mouse_x = *static_cast<int32_t*>(temp->get_data());
         }
         else if(temp->msg_name == MOUSE_Y){
-            int32_t y = *static_cast<int32_t*>(temp->get_data());
-            mouse_y = y;
+            mouse_y = *static_cast<int32_t*>(temp->get_data());
         }
         else if(temp->msg_name == LEFT_TRIGGER){
-            int16_t val = *static_cast<int16_t*>(temp->get_data());
-            left_trigger = val;
+            left_trigger = *static_cast<int16_t*>(temp->get_data());
         }
         else if(temp->msg_name == RIGHT_TRIGGER){
-            int16_t val = *static_cast<int16_t*>(temp->get_data());
-            right_trigger = val;
+            right_trigger = *static_cast<int16_t*>(temp->get_data());
         }
         else if(temp->msg_name == LEFT_STICK_VERTICAL){
-            int16_t val = *static_cast<int16_t*>(temp->get_data());
-            left_stick_vertical = val;
+            left_stick_vertical = *static_cast<int16_t*>(temp->get_data());
         }
         else if(temp->msg_name == LEFT_STICK_HORIZONTAL){
-            int16_t val = *static_cast<int16_t*>(temp->get_data());
-            left_stick_horizontal = val;
+            left_stick_horizontal = *static_cast<int16_t*>(temp->get_data());
         }
         else if(temp->msg_name == RIGHT_STICK_VERTICAL){
-            int16_t val = *static_cast<int16_t*>(temp->get_data());
-            right_stick_vertical = val;
+            right_stick_vertical = *static_cast<int16_t*>(temp->get_data());
         }
         else if(temp->msg_name == RIGHT_STICK_HORIZONTAL){
-            int16_t val = *static_cast<int16_t*>(temp->get_data());
-            right_stick_horizontal = val;
+            right_stick_horizontal = *static_cast<int16_t*>(temp->get_data());
         }
         else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
-            uint8_t val = *static_cast<uint8_t*>(temp->get_data());
-            music_volume_level = val;
+            music_volume_level = *static_cast<uint8_t*>(temp->get_data());
         }
         else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
-            uint8_t val = *static_cast<uint8_t*>(temp->get_data());
-            sounds_volume_level = val;
+            sounds_volume_level = *static_cast<uint8_t*>(temp->get_data());
         }
         else if(temp->msg_name == AUDIO_ENABLED){
-            auto val = static_cast<bool*>(temp->get_data());
-            audio_enabled = *val;
+            audio_enabled = *static_cast<bool*>(temp->get_data());
         }
         else if(temp->msg_name == VSYNC_STATE){
-            auto arg = static_cast<bool*>(temp->get_data());
-            vsync_flag = *arg;
+            vsync_flag = *static_cast<bool*>(temp->get_data());
         }
         else if(temp->msg_name == END_GAME){
             game_is_running_ = false;
         }
         else if(temp->msg_name == SHOW_MOUSE){
-            auto arg = static_cast<bool*>(temp->get_data());
-            if(*arg){
-                SDL_ShowCursor(SDL_ENABLE);
-            }else{
-                SDL_ShowCursor(SDL_DISABLE);
-            }
+            SDL_ShowCursor(*static_cast<bool*>(temp->get_data()));
         }
         else if(temp->msg_name == EXECUTE_SCRIPT){
             auto script = static_cast<std::string*>(temp->get_data());
             gScript_backend.run_script(*script);
         }
         else if(temp->msg_name == FULLSCREEN_STATUS){
-            bool arg = *static_cast<bool*>(temp->get_data());
-            fullscreen_status = arg;
+            fullscreen_status = *static_cast<bool*>(temp->get_data());
         }
         delete temp;
         temp = msg_sub.get_next_message();
@@ -317,6 +295,8 @@ game_manager::~game_manager(){
     singleton_initialized = false;
 }
 
+
+//TODO: Docs
 /**
  *
  * @return The value of the left trigger button on a controller

@@ -87,12 +87,11 @@ void console::handle_messages(){
             this->entries.clear();
         }
         else if(temp->msg_name == MOUSE_SCROLL){
-            int value = *static_cast<int32_t*>(temp->get_data());
-            scroll(value);
+            scroll(*static_cast<int32_t*>(temp->get_data()));
         }
         else if (temp->msg_name == KEY_PRESSED) {
-			auto key_val = static_cast<ST::key*>(temp->get_data());
-			if (*key_val == ST::key::ENTER) {
+			auto key_val = *static_cast<ST::key*>(temp->get_data());
+			if (key_val == ST::key::ENTER) {
 				if (!composition.empty()) {
 					write(composition, ST::log_type::INFO);
 					command_entries.emplace_back(composition);
@@ -103,21 +102,21 @@ void console::handle_messages(){
 				entries_history_index = -1;
 				gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
 			}
-			else if (*key_val == ST::key::TILDE) {
+			else if (key_val == ST::key::TILDE) {
 				toggle();
 			}
 			else if (is_open()) {
-				if (*key_val == ST::key::LEFT) {
+				if (key_val == ST::key::LEFT) {
 					if (cursor_position > 0) {
 						cursor_position -= 1;
 					}
 				}
-				else if (*key_val == ST::key::RIGHT) {
+				else if (key_val == ST::key::RIGHT) {
 					if (cursor_position < composition.size()) {
 						cursor_position += 1;
 					}
 				}
-				else if (*key_val == ST::key::UP) {
+				else if (key_val == ST::key::UP) {
 					if (entries_history_index == -1 && !command_entries.empty()) {
 						composition = command_entries.back();
 						entries_history_index = static_cast<int16_t>(command_entries.size() - 1);
@@ -129,7 +128,7 @@ void console::handle_messages(){
 					gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
 					cursor_position = static_cast<uint16_t>(composition.size());
 				}
-				else if (*key_val == ST::key::DOWN) {
+				else if (key_val == ST::key::DOWN) {
 					if (entries_history_index < command_entries.size() - 1) {
 						entries_history_index++;
 						composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
@@ -141,18 +140,14 @@ void console::handle_messages(){
 					gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM, nullptr));
 					cursor_position = static_cast<uint16_t>(composition.size());
 				}
-				else if (*key_val == ST::key::BACKSPACE) {
+				else if (key_val == ST::key::BACKSPACE) {
 					if (cursor_position > 0) {
 						composition.erase(static_cast<uint16_t>(cursor_position - 1), 1);
 						cursor_position -= 1;
 					}
 				}
-				else if (*key_val == ST::key::DELETE) {
+				else if (key_val == ST::key::DELETE) {
 					composition.erase(cursor_position, 1);
-				}
-
-				else if (temp->msg_name == KEY_HELD) {
-
 				}
 			}
 		}

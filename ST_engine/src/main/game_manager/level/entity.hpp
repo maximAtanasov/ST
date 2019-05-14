@@ -19,7 +19,7 @@ namespace ST {
     ///This class represents all static or dynamic objects in the game (excluding text, see ST::text)
     /**
      * Contains all the data for an entity.
-     * Texture and animation information, collisions box and position as well as various other options.
+     * Texture and animation information, position as well as various other options.
      */
     class entity {
 
@@ -60,7 +60,7 @@ namespace ST {
         [0] is_active = true;
         [1] is_static = false; does not move with Camera
         [2] is_visible = true;
-        [3] is_affected_by_physic;
+        [3] is_affected_by_physics;
          */
         uint8_t toggles = 0;
         uint8_t animation_num = 0;

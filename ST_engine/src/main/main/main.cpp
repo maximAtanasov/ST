@@ -40,7 +40,7 @@ int ST_engine_main(int argc, char *argv[]) {
     task_manager gTask_manager(&gMessage_bus);
     audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);
-    window_manager gDisplay_manager(&gMessage_bus, &gTask_manager, "Slavic Tales");
+    window_manager gDisplay_manager(&gMessage_bus, &gTask_manager, "ST");
     drawing_manager gDrawing_manager(gDisplay_manager.get_window(), &gMessage_bus);
 
     assets_manager gAssets_manager(&gMessage_bus, &gTask_manager);

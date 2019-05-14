@@ -81,21 +81,21 @@ void window_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_FULLSCREEN){
-            auto arg = static_cast<bool*>(temp->get_data());
-            set_fullscreen(*arg);
-            gMessage_bus->send_msg(new message(FULLSCREEN_STATUS, make_data<bool>(*arg)));
+            auto arg = *static_cast<bool*>(temp->get_data());
+            set_fullscreen(arg);
+            gMessage_bus->send_msg(new message(FULLSCREEN_STATUS, make_data<bool>(arg)));
         }
         else if(temp->msg_name == SET_WINDOW_BRIGHTNESS){
-            auto arg = static_cast<float*>(temp->get_data());
-            set_brightness(*arg);
-            gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(*arg))));
+            auto arg = *static_cast<float*>(temp->get_data());
+            set_brightness(arg);
+            gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(arg))));
         }
         else if(temp->msg_name == SET_WINDOW_RESOLUTION){
             auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
             if(std::get<0>(res) != width && std::get<1>(res) != height) {
                 gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, make_data(res)));
                 SDL_SetWindowSize(window, std::get<0>(res), std::get<1>(res));
-                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); // NOLINT(hicpp-signed-bitwise)
                 width = std::get<0>(res);
                 height = std::get<1>(res);
             }
@@ -137,7 +137,7 @@ void window_manager::set_fullscreen(bool arg){
     else if(!arg && (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)){
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, 0);
-		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); // NOLINT(hicpp-signed-bitwise)
     }
 #endif
 }
