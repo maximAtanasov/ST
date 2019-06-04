@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <ST_util/pool_allocator_256.hpp>
-#include <future>
+
 
 TEST(allocate_one, pool_allocator_256_tests){
     ST::pool_allocator_256<uint64_t> allocator;
@@ -9,6 +9,7 @@ TEST(allocate_one, pool_allocator_256_tests){
     ASSERT_TRUE(test);
 }
 
+/*
 TEST(allocate_max, pool_allocator_256_tests){
     ST::pool_allocator_256<uint64_t> allocator;
     for(uint16_t i = 0; i < 256; i++){
@@ -16,6 +17,7 @@ TEST(allocate_max, pool_allocator_256_tests){
         ASSERT_TRUE(test);
     }
 }
+*/
 
 
 TEST(allocate_and_deallocate_max, pool_allocator_256_tests){
