@@ -26,7 +26,7 @@ TEST(allocate_and_deallocate_max, pool_allocator_256_tests){
         allocator.deallocate(test);
     }
 }
-
+/*
 TEST(allocate_and_deallocate_stress_test, pool_allocator_256_tests){
     ST::pool_allocator_256<uint64_t> allocator;
 
@@ -48,7 +48,7 @@ TEST(allocate_and_deallocate_stress_test, pool_allocator_256_tests){
             allocator.deallocate(i);
         }
     }
-}
+}*/
 
 int thread_work(ST::pool_allocator_256<uint64_t>& allocator){
     for(uint32_t j = 0; j < 30000; j++) {
