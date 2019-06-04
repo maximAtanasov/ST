@@ -33,7 +33,7 @@ private:
 
     //methods
     void handle_messages();
-    int8_t load_level(const std::string&){}
+    int8_t load_level(const std::string&){return 0;}
     void unload_level(const std::string&){}
     void start_level(const std::string&){}
     void reset_keys(){}

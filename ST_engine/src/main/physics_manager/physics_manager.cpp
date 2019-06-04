@@ -44,6 +44,7 @@ void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
             if (entity.velocity_x > 0) {
                 for (int j = 0; j < entity.velocity_x; j++) {
                     if (entity_set_x(entity.x + 1, k, entities) == 0) {
+                        entity.velocity_x = 0;
                         break;
                     }
                 }
@@ -53,6 +54,7 @@ void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
             } else if (entity.velocity_x < 0) {
                 for (int j = 0; j > entity.velocity_x; j--) {
                     if (entity_set_x(entity.x - 1, k, entities) == 0) {
+                        entity.velocity_x = 0;
                         break;
                     }
                 }

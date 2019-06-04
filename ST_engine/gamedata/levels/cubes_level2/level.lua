@@ -30,7 +30,7 @@ hideMouseCursor()
 
 setBackground("bg1.png")
 playMusic("music5.ogg", 40, -1)
---playSound("rain.wav", 50, -1)
+
 --Create and initialize entities
 
 endLevel = entity:new(20500,floor-100)
@@ -317,43 +317,6 @@ function loop()
         endLevel:update()
         player1:update()
 
-        if(labelTimer > 10 and labelTimer < 150) then
-            label1:show()
-            label1.text:setY(player1:getY()-150)
-        elseif labelTimer > 150 and labelTimer < 300 then
-            label1:hide()
-            label2:show()
-            label2.text:setY(player1:getY()-150)
-        elseif labelTimer > 300 and labelTimer < 450 then
-            label2:hide()
-            label3:show()
-            label3.text:setY(player1:getY()-150)
-        elseif labelTimer > 450 and labelTimer < 600 then
-            label3:hide()
-            label4:show()
-            label4.text:setY(player1:getY()-150)
-        elseif labelTimer > 600 and labelTimer < 750 then
-            label4:hide()
-            label5:show()
-            label5.text:setY(player1:getY()-150)
-        elseif labelTimer > 750 and labelTimer < 850 then
-            label5:hide()
-            label6:show()
-            label6.text:setY(player1:getY()-150)
-        elseif labelTimer > 850 and labelTimer < 900 then
-            label6:hide()
-            label7:show()
-            label7.text:setY(player1:getY()-150)
-        elseif labelTimer > 900 and labelTimer < 950 then
-            label7:hide()
-            label8:show()
-            label8.text:setY(player1:getY()-150)
-        elseif labelTimer > 950 then
-            label8:hide()
-            player1.speed = 15
-        end
-
-        labelTimer = labelTimer + 1
         centreCamera(player1.ID)
     elseif(pause == 1) then
         -- setDarkness(0)
