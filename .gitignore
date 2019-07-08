@@ -15,6 +15,7 @@ message_bus_test
 map_test
 
 *.exe
+*.out
 *.manifest
 CMakeSettings.json
 

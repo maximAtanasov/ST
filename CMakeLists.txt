@@ -15,6 +15,10 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE /STACK:3000000")
 endif()
 
+if(UNIX AND NOT APPLE)
+    set(CMAKE_EXECUTABLE_SUFFIX ".out")
+endif()
+
 add_subdirectory(ST_loaders)
 add_subdirectory(ST_engine)
 add_subdirectory(ST_asset_pack)
