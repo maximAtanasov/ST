@@ -16,7 +16,7 @@
 namespace ST {
 
     //abs functions
-    inline int abs(uint64_t value) {
+    inline uint64_t abs(uint64_t value) {
         auto temp = static_cast<unsigned int>(value >> 31U);
         value ^= temp;
         value += temp & 1U;

@@ -4,7 +4,7 @@ image: Visual Studio 2017
 
 platform:
   - x64
- 
+
 configuration:
   - Debug
 
@@ -15,5 +15,5 @@ build_script:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
   - cmake -G "NMake Makefiles" .
   - set SDL_VIDEODRIVER=dummy
-  - set SDL_AUDIODRIVER=dummy  
+  - set SDL_AUDIODRIVER=dummy
   - nmake all
