@@ -176,18 +176,10 @@ void input_manager::take_mouse_input() {
     controls_prev_frame.mouse_clicks[0] = controls.mouse_clicks[0];
     controls_prev_frame.mouse_clicks[1] = controls.mouse_clicks[1];
     controls_prev_frame.mouse_clicks[2] = controls.mouse_clicks[2];
-    for(int8_t& i : controls.mouse_clicks){
-        i = 0;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        controls.mouse_clicks[0] = 1;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE)) {
-        controls.mouse_clicks[1] = 1;
-    }
-    if(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        controls.mouse_clicks[2] = 1;
-    }
+    controls.mouse_clicks[0] = SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT);
+    controls.mouse_clicks[1] = SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE);
+    controls.mouse_clicks[2] = SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT);
+
     //only send mouse coordinates if they change
     if(controls.mouse_x != controls_prev_frame.mouse_x){
         gMessage_bus->send_msg(new message(MOUSE_X, make_data(controls.mouse_x)));
@@ -198,6 +190,7 @@ void input_manager::take_mouse_input() {
         controls_prev_frame.mouse_y = controls.mouse_y;
     }
 }
+#pragma clang diagnostic pop
 
 /**
  * Takes input from all available controllers and
@@ -206,69 +199,22 @@ void input_manager::take_mouse_input() {
  */
 void input_manager::take_controller_input(){
     controller_button_prev_frame = controller_buttons;
-    controller_buttons.a = 0;
-    controller_buttons.b = 0;
-    controller_buttons.x = 0;
-    controller_buttons.y = 0;
-    controller_buttons.dpad_up = 0;
-    controller_buttons.dpad_right = 0;
-    controller_buttons.dpad_down = 0;
-    controller_buttons.dpad_left = 0;
-    controller_buttons.left_stick = 0;
-    controller_buttons.right_stick = 0;
-    controller_buttons.left_shoulder = 0;
-    controller_buttons.right_shoulder = 0;
-    controller_buttons.select = 0;
-    controller_buttons.start = 0;
-    controller_buttons.left_trigger = 0;
-    controller_buttons.right_trigger = 0;
-    controller_buttons.right_stick_vertical = 0;
-    controller_buttons.right_stick_horizontal = 0;
-    controller_buttons.left_stick_vertical = 0;
-    controller_buttons.left_stick_horizontal = 0;
     for(SDL_GameController* c : controllers) {
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_A)){
-            controller_buttons.a = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_B)){
-            controller_buttons.b = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_X)){
-            controller_buttons.x = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_Y)){
-            controller_buttons.y = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_UP)){
-            controller_buttons.dpad_up = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_DOWN)){
-            controller_buttons.dpad_down = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_LEFT)){
-            controller_buttons.dpad_left = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)){
-            controller_buttons.dpad_right = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSTICK)){
-            controller_buttons.left_stick = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSTICK)){
-            controller_buttons.right_stick = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSHOULDER)){
-            controller_buttons.left_shoulder = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)){
-            controller_buttons.right_shoulder = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_START)){
-            controller_buttons.start = 1;
-        }
-        if (SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_BACK)){
-            controller_buttons.select = 1;
-        }
+        controller_buttons.a = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_A);
+        controller_buttons.b = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_B);
+        controller_buttons.x = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_X);
+        controller_buttons.y = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_Y);
+        controller_buttons.dpad_up = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_UP);
+        controller_buttons.dpad_down = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+        controller_buttons.dpad_left = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+        controller_buttons.dpad_right = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+        controller_buttons.left_stick = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+        controller_buttons.right_stick = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+        controller_buttons.left_shoulder = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+        controller_buttons.right_shoulder = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+        controller_buttons.start = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_START);
+        controller_buttons.select = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_BACK);
+
         controller_buttons.left_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
         controller_buttons.right_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
         controller_buttons.right_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTX);

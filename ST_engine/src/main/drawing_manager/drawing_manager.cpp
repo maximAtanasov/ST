@@ -148,9 +148,9 @@ void drawing_manager::draw_console(console& cnsl){
 			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text, -1);
 		}
 
-        if(ticks - cnsl.cursor_timer >= 1000) {
+        if(ticks - cnsl.cursor_timer >= 500) {
             cnsl.cursor_timer = ticks;
-        }else if (ticks - cnsl.cursor_timer < 500) {
+        }else if (ticks - cnsl.cursor_timer < 250) {
             ST::renderer_sdl::draw_rectangle_filled(
 				cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);

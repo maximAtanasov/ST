@@ -180,7 +180,7 @@ int task_manager::task_thread(task_manager* self){
 	while(self->run_threads){
 	    self->work_sem->wait();
         if(self->global_task_queue.try_dequeue(work)){ //get a function pointer and data
-            self->do_work(work);
+            task_manager::do_work(work);
         }
 	}
     return 0;

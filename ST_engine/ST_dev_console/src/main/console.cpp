@@ -35,6 +35,7 @@ console::console(message_bus* msg_bus){
     gMessage_bus->subscribe(MOUSE_SCROLL, &msg_sub);
     gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
 	gMessage_bus->subscribe(KEY_HELD, &msg_sub);
+    gMessage_bus->subscribe(KEY_RELEASED, &msg_sub);
     gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
     gMessage_bus->subscribe(CONSOLE_CLEAR, &msg_sub);
 }
@@ -88,7 +89,32 @@ void console::handle_messages(){
         }
         else if(temp->msg_name == MOUSE_SCROLL){
             scroll(*static_cast<int32_t*>(temp->get_data()));
+        }else if(temp->msg_name == KEY_HELD){
+            auto key_val = *static_cast<ST::key*>(temp->get_data());
+            if (is_open()) {
+                if(hold_counter > 10) {
+                    if (key_val == ST::key::LEFT) {
+                        if (cursor_position > 0) {
+                            cursor_position -= 1;
+                            hold_counter = 0;
+                        }
+                    } else if (key_val == ST::key::RIGHT) {
+                        if (cursor_position < composition.size()) {
+                            cursor_position += 1;
+                            hold_counter = 0;
+                        }
+                    }
+                }else{
+                    ++hold_counter;
+                }
+            }
         }
+/*        else if(temp->msg_name == KEY_RELEASED){
+            auto key_val = *static_cast<ST::key*>(temp->get_data());
+            if (key_val == ST::key::LEFT || key_val == ST::key::RIGHT) {
+                hold_counter = 0;
+            }
+        }*/
         else if (temp->msg_name == KEY_PRESSED) {
 			auto key_val = *static_cast<ST::key*>(temp->get_data());
 			if (key_val == ST::key::ENTER) {
