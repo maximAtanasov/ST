@@ -25,13 +25,13 @@ TEST(loaders_tests, test_get_file_extension){
     std::string test_webp = "image.webp";
     std::string test_bin = "image.bin";
 
-    EXPECT_EQ("wav", ST::get_file_extension(test_wav));
-    EXPECT_EQ("mp3", ST::get_file_extension(test_mp3));
-    EXPECT_EQ("ogg", ST::get_file_extension(test_ogg));
-    EXPECT_EQ("png", ST::get_file_extension(test_png));
-    EXPECT_EQ("webp", ST::get_file_extension(test_webp));
-    EXPECT_EQ("bin", ST::get_file_extension(test_bin));
-    EXPECT_EQ("unknown", ST::get_file_extension("no_extension"));
+    EXPECT_EQ(ST::asset_file_type::WAV, ST::get_file_extension(test_wav));
+    EXPECT_EQ(ST::asset_file_type::MP3, ST::get_file_extension(test_mp3));
+    EXPECT_EQ(ST::asset_file_type::OGG, ST::get_file_extension(test_ogg));
+    EXPECT_EQ(ST::asset_file_type::PNG, ST::get_file_extension(test_png));
+    EXPECT_EQ(ST::asset_file_type::WEBP, ST::get_file_extension(test_webp));
+    EXPECT_EQ(ST::asset_file_type::BIN, ST::get_file_extension(test_bin));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension("no_extension"));
 }
 
 TEST(loaders_tests, test_get_file_extension_unknown){
@@ -43,13 +43,13 @@ TEST(loaders_tests, test_get_file_extension_unknown){
     std::string test_bin = "testbin";
 
 
-    EXPECT_EQ("unknown", ST::get_file_extension(test_wav));
-    EXPECT_EQ("unknown", ST::get_file_extension(test_mp3));
-    EXPECT_EQ("unknown", ST::get_file_extension(test_ogg));
-    EXPECT_EQ("unknown", ST::get_file_extension(test_png));
-    EXPECT_EQ("unknown", ST::get_file_extension(test_webp));
-    EXPECT_EQ("unknown", ST::get_file_extension(test_bin));
-    EXPECT_EQ("unknown", ST::get_file_extension("no_extension"));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension(test_wav));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension(test_mp3));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension(test_ogg));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension(test_png));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension(test_webp));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension(test_bin));
+    EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension("no_extension"));
 }
 
 TEST(loaders_tests, test_pack_to_binary){

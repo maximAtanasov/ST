@@ -191,18 +191,16 @@ int8_t assets_manager::load_asset(std::string path){
         count.emplace(ST::trim_path(path), 0);
     }
 
+    ST::asset_file_type extention = ST::get_file_extension(path);
+    //Handle the different extensions - currently png, webp, wav, mp3, ttf
 
-    std::string extention;
-    extention = ST::get_file_extension(path);
-    //Handle the different extentions - currently png, webp, wav, mp3, ttf
-
-    if(extention == "bin"){
+    if(extention == ST::asset_file_type::BIN){
         gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Loading from binary " + path)));
     }else {
         gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Loading " + path)));
     }
 
-    if(extention == "png" || extention == "webp"){
+    if(extention == ST::asset_file_type::PNG || extention == ST::asset_file_type::WEBP){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
             path = ST::trim_path(path);
@@ -213,7 +211,7 @@ int8_t assets_manager::load_asset(std::string path){
             gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
-    }else if(extention == "wav"){
+    }else if(extention == ST::asset_file_type::WAV){
         Mix_Chunk* temp1 = Mix_LoadWAV(path.c_str());
         if (temp1 != nullptr){
             path = ST::trim_path(path);
@@ -225,7 +223,7 @@ int8_t assets_manager::load_asset(std::string path){
             gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
-    }else if(extention == "ogg"){
+    }else if(extention == ST::asset_file_type::OGG){
         Mix_Music* temp1 = Mix_LoadMUS(path.c_str());
         if (temp1 != nullptr) {
             path = ST::trim_path(path);
@@ -237,7 +235,7 @@ int8_t assets_manager::load_asset(std::string path){
             gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
-    }else if(extention == "bin"){
+    }else if(extention == ST::asset_file_type::BIN){
         load_assets_from_binary(path);
     }else{ //if file is a font
         std::vector<std::string> result;
@@ -335,32 +333,32 @@ int8_t assets_manager::unload_asset(std::string path){
     if (_asset_count != count.end() && _asset_count->second > 1) {
         _asset_count->second -= 1;
         return 0;
-    }else if((_asset_count == count.end() || _asset_count->second == 0) && ST::get_file_extension(path) != "bin"){
+    }else if((_asset_count == count.end() || _asset_count->second == 0) && ST::get_file_extension(path) != ST::asset_file_type::BIN){
         return -1;
     }
 
-    std::string extention = ST::get_file_extension(path);
+    ST::asset_file_type extension = ST::get_file_extension(path);
     gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Unloading " + path)));
 
-    if(extention == "png" || extention == "webp"){
+    if(extension == ST::asset_file_type::PNG || extension == ST::asset_file_type::WEBP){
         path = ST::trim_path(path);
         uint16_t string_hash = ST::hash_string(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
         count.at(path)--;
-    }else if(extention == "wav"){
+    }else if(extension == ST::asset_file_type::WAV){
         path = ST::trim_path(path);
         uint16_t string_hash = ST::hash_string(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
         all_assets.chunks[string_hash] = nullptr;
         count.at(path)--;
-    }else if(extention == "ogg"){
+    }else if(extension == ST::asset_file_type::OGG){
         path = ST::trim_path(path);
         uint16_t string_hash = ST::hash_string(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
         all_assets.music[string_hash] = nullptr;
         count.at(path)--;
-    }else if(extention == "bin"){
+    }else if(extension == ST::asset_file_type::BIN){
         return unload_assets_from_binary(path);
     }else{ //if file is a font
         path = ST::trim_path(path);

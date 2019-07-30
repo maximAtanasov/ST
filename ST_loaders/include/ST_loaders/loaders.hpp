@@ -23,7 +23,17 @@
 
 namespace ST {
 
-    ///This struct contains assets just like the regular ST::assets, except it uses asset names as keys instead of hashes.
+    enum class asset_file_type : uint8_t {
+        OGG,
+        WAV,
+        PNG,
+        MP3,
+        BIN,
+        WEBP,
+        UNKNOWN
+    };
+
+        ///This struct contains assets just like the regular ST::assets, except it uses asset names as keys instead of hashes.
     struct assets_named{
         ska::bytell_hash_map<std::string, SDL_Surface*> surfaces;
         ska::bytell_hash_map<std::string, Mix_Chunk*> chunks;
@@ -31,9 +41,9 @@ namespace ST {
     };
 
     ST::assets_named* unpack_binary(const std::string &path);
-    int8_t pack_to_binary(const std::string &path, std::vector<std::string> args);
+    int8_t pack_to_binary(const std::string &path, const std::vector<std::string>& args);
     int8_t unpack_binary_to_disk(const std::string &path);
-    std::string get_file_extension(const std::string &filename);
-    int8_t add_to_binary(const std::string &binary_name, std::vector<std::string> args_);
+    asset_file_type get_file_extension(const std::string &filename);
+    int8_t add_to_binary(const std::string &binary_name, const std::vector<std::string>& args_);
 }
 #endif

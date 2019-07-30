@@ -15,27 +15,27 @@
  * @param filename The filename.
  * @return The extension. - "png", "webp", "wav", "mp3", or "ogg". Unknown when it's well, unknown.
  */
-std::string ST::get_file_extension(const std::string& filename){
+ST::asset_file_type ST::get_file_extension(const std::string& filename){
     if(filename.size() > 4){
         uint64_t size = filename.size() - 1;
         if(filename.at(size-3) == '.' && filename.at(size - 2) == 'p' && filename.at(size - 1) == 'n' && filename.at(size) == 'g'){
-            return "png";
+            return ST::asset_file_type::PNG;
         }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'w' && filename.at(size - 1) == 'a' && filename.at(size) == 'v'){
-            return "wav";
+            return ST::asset_file_type::WAV;
         }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'm' && filename.at(size - 1) == 'p' && filename.at(size) == '3'){
-            return "mp3";
+            return ST::asset_file_type::MP3;
         }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'o' && filename.at(size - 1) == 'g' && filename.at(size) == 'g'){
-            return "ogg";
+            return ST::asset_file_type::OGG;
         }else if(filename.at(size-3) == '.' && filename.at(size - 2) == 'b' && filename.at(size - 1) == 'i' && filename.at(size) == 'n'){
-            return "bin";
+            return ST::asset_file_type::BIN;
         }else if(filename.size() > 5){
             if(filename.at(size - 4) == '.' && filename.at(size - 3) == 'w'
                && filename.at(size - 2) == 'e' && filename.at(size - 1) == 'b' && filename.at(size) == 'p'){
-                return "webp";
+                return ST::asset_file_type::WEBP;
             }
         }
     }
-    return "unknown";
+    return ST::asset_file_type::UNKNOWN;
 }
 
 /**
@@ -44,7 +44,7 @@ std::string ST::get_file_extension(const std::string& filename){
  * @param binary The name of the binary that is going to be created.
  * @param args The filenames of the assets to read from.
  */
-int8_t ST::pack_to_binary(const std::string& binary, std::vector<std::string> args_){
+int8_t ST::pack_to_binary(const std::string& binary, const std::vector<std::string>& args_){
     FILE* file = fopen(binary.c_str(), "r+");
     if(file != nullptr){
         fclose(file);
@@ -55,7 +55,7 @@ int8_t ST::pack_to_binary(const std::string& binary, std::vector<std::string> ar
     std::vector<std::string> args;
 
     //ignore duplicate file names
-    for (auto arg : args_) {
+    for (const auto& arg : args_) {
         if(std::find(args.begin(), args.end(), arg) == args.end()){
             args.emplace_back(arg);
         }
@@ -78,20 +78,20 @@ int8_t ST::pack_to_binary(const std::string& binary, std::vector<std::string> ar
         SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
         if (input != nullptr) {
             std::string h_filename = "filename:" + trim_path(filename) + "\n";
-            std::string ext = get_file_extension(filename);
-            if(ext == "png" || "webp") {
+            ST::asset_file_type ext = get_file_extension(filename);
+            if(ext == ST::asset_file_type::PNG || ext == ST::asset_file_type::WEBP) {
                 surfaces_names.emplace_back(h_filename);
                 auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
                 input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 surfaces.emplace_back(temp);
                 surfaces_sizes.emplace_back(static_cast<size_t>(input->size(input)));
-            }else if(ext == "wav") {
+            }else if(ext == ST::asset_file_type::WAV) {
                 chunks_names.emplace_back(h_filename);
                 auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
                 input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 chunks.emplace_back(temp);
                 chunk_sizes.emplace_back(static_cast<size_t>(input->size(input)));
-            }else if(ext == "ogg") {
+            }else if(ext == ST::asset_file_type::OGG) {
                 music_names.emplace_back(h_filename);
                 auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
                 input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
@@ -206,8 +206,8 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
             uint64_t seek = pointer;
             uint64_t i = 0;
             for (const std::string &filename : file_names) {
-                std::string ext = get_file_extension(filename);
-                if(ext == "png") {
+                ST::asset_file_type ext = get_file_extension(filename);
+                if(ext == ST::asset_file_type::PNG) {
                     seek += sizes.at(i);
                     auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
@@ -219,7 +219,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     SDL_RWclose(output);
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
-                }else if(ext == "webp") {
+                }else if(ext == ST::asset_file_type::WEBP) {
                     seek += sizes.at(i);
                     auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
@@ -231,7 +231,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     SDL_RWclose(output);
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
-                }else if(ext == "wav"){
+                }else if(ext == ST::asset_file_type::WAV){
                     seek += sizes.at(i);
                     auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
@@ -242,7 +242,7 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     }
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
-                }else if(ext == "ogg"){
+                }else if(ext == ST::asset_file_type::OGG){
                     seek += sizes.at(i);
                     auto to_write = static_cast<char*>(malloc(sizes.at(i)));
                     input->read(input, to_write, 1, sizes.at(i));
@@ -321,8 +321,9 @@ int8_t ST::unpack_binary_to_disk(const std::string& path){
             uint64_t seek = pointer;
             uint64_t i = 0;
             for (const std::string &filename : file_names) {
-                std::string ext = get_file_extension(filename);
-                if(ext == "png" || ext == "webp" || ext == "wav" || ext == "ogg") {
+                ST::asset_file_type ext = get_file_extension(filename);
+                if(ext == ST::asset_file_type::PNG || ext == ST::asset_file_type::WEBP
+                || ext == ST::asset_file_type::WAV || ext == ST::asset_file_type::OGG) {
                     SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
                     seek += sizes.at(i);
                     auto to_write = static_cast<char*>(malloc(sizes.at(i)));
@@ -352,14 +353,14 @@ int8_t ST::unpack_binary_to_disk(const std::string& path){
  * @param args_ The new files to add to it.
  * @return -1 if the existing binary is not found. -2 if file names are clashing with the ones in the existing library. 0 on success.
  */
-int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string> args_){
+int8_t ST::add_to_binary(const std::string &binary_name, const std::vector<std::string>& args_){
 
     SDL_RWops *output = SDL_RWFromFile(binary_name.c_str(), "r+");
 
     std::vector<std::string> args;
 
     //ignore duplicate file names
-    for (auto arg : args_) {
+    for (const auto& arg : args_) {
         if(std::find(args.begin(), args.end(), arg) == args.end()){
             args.emplace_back(arg);
         }
@@ -454,20 +455,20 @@ int8_t ST::add_to_binary(const std::string &binary_name, std::vector<std::string
         SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
         if (input != nullptr) {
             std::string h_filename = "filename:" + trim_path(filename) + "\n";
-            std::string ext = get_file_extension(filename);
-            if(ext == "png" || "webp") {
+            ST::asset_file_type ext = get_file_extension(filename);
+            if(ext == ST::asset_file_type::PNG || ext == ST::asset_file_type::WEBP) {
                 surfaces_names.emplace_back(h_filename);
                 auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
                 input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 surfaces.emplace_back(temp);
                 surfaces_sizes.emplace_back(static_cast<size_t>(input->size(input)));
-            }else if(ext == "wav") {
+            }else if(ext == ST::asset_file_type::WAV) {
                 chunks_names.emplace_back(h_filename);
                 auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
                 input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
                 chunks.emplace_back(temp);
                 chunk_sizes.emplace_back(static_cast<size_t>(input->size(input)));
-            }else if(ext == "ogg") {
+            }else if(ext == ST::asset_file_type::OGG) {
                 music_names.emplace_back(h_filename);
                 auto temp = static_cast<char*>(malloc(static_cast<size_t>(input->size(input))));
                 input->read(input, temp, 1, static_cast<size_t>(input->size(input)));
