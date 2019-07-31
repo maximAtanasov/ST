@@ -135,10 +135,9 @@ void audio_manager::handle_messages(){
 }
 
 /**
- * Consumes any leftover messages and closes the audio subsystem.
+ * Closes the audio subsystem.
  */
 audio_manager::~audio_manager(){
-    handle_messages();
     Mix_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
     Mix_Quit();

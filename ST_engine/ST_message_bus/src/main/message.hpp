@@ -49,6 +49,10 @@ public:
         allocator.deallocate(static_cast<message*>(ptr));
     }
 
+    ~message(){
+        this->data.reset();
+    }
+
 };
 
 //INLINED METHODS

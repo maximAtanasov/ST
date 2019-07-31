@@ -287,10 +287,8 @@ void game_manager::start_level(const std::string& level_name){
 
 /**
  * Closes the game manager and the lua backend.
- * Consumes any leftover messages.
  */
 game_manager::~game_manager(){
-    handle_messages();
     gScript_backend.close();
     singleton_initialized = false;
 }

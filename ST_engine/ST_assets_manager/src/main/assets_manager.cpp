@@ -371,7 +371,6 @@ int8_t assets_manager::unload_asset(std::string path){
 
 /**
  * Closes the asset_manager.
- * Consumes any leftover messages and unloads all assets.
  */
 assets_manager::~assets_manager(){
     handle_messages();

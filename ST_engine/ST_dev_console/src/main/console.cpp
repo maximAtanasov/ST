@@ -256,10 +256,8 @@ void console::show(){
 
 /**
  * Close the console.
- * Consume any leftover messages.
  */
 console::~console(){
-    handle_messages();
     singleton_initialized = false;
 }
 
