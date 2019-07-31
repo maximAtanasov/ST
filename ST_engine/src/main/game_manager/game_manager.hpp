@@ -239,7 +239,7 @@ inline bool game_manager::key_released(uint16_t arg) const{
  * Center the camera on an entity.
  * @param id The ID of the entity to center on.
  */
-inline void game_manager::center_camera_on_entity(uint64_t id) {
+inline void game_manager::center_camera_on_entity(uint64_t id) { //TODO: Get rid of hardcoded values
     current_level_pointer->Camera.x = current_level_pointer->entities.at(id).x - 1920/4;
     while(current_level_pointer->Camera.x < current_level_pointer->Camera.limitX1 + 1) {
         current_level_pointer->Camera.x++;

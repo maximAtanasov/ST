@@ -142,7 +142,7 @@ void input_manager::take_input(){
         }
         if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
             uint8_t number = 0;
-            for(uint8_t i = 0; i < controllers.size(); i++){
+            for(uint8_t i = 0; i < controllers.size() && i < 8; i++){
                 if(SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controllers.at(i))) == event.cdevice.which){
                     number = i;
                 }
@@ -190,7 +190,6 @@ void input_manager::take_mouse_input() {
         controls_prev_frame.mouse_y = controls.mouse_y;
     }
 }
-#pragma clang diagnostic pop
 
 /**
  * Takes input from all available controllers and
