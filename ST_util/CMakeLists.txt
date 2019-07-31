@@ -50,23 +50,10 @@ add_library(ST_util
 
 add_executable(pool_allocator_256_test
         src/test/pool_allocator_256_tests.cpp
-        include/ST_util/test_util.hpp
-        include/ST_util/math.hpp
-        src/main/math.cpp
-        src/main/test_util.cpp
-        src/main/string_util.cpp
-        include/ST_util/string_util.hpp
-        include/ST_util/bytell_hash_map.hpp
-        include/ST_util/flat_hash_map.hpp
-        include/ST_util/flat_hash_map.hpp include/ST_util/pool_allocator_256.hpp)
+        include/ST_util/pool_allocator_256.hpp)
 
 target_link_libraries(pool_allocator_256_test
-        lua
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_TTF_LIBRARY}
-        ${SDL2_MIXER_LIBRARY})
+        gtest)
 
 set(RUN_ON_BUILD_TESTS
         pool_allocator_256_test)
