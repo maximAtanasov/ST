@@ -10,8 +10,6 @@
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
 #include <SDL_events.h>
-#include "game_manager.hpp"
-
 
 #define FIRST_LEVEL_NAME "cubes"
 
@@ -58,6 +56,8 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
     gMessage_bus->subscribe(EXECUTE_SCRIPT, &msg_sub);
     gMessage_bus->subscribe(FULLSCREEN_STATUS, &msg_sub);
     gMessage_bus->subscribe(AUDIO_ENABLED, &msg_sub);
+    gMessage_bus->subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
+
 
     //initialize initial states of keys
     reset_keys();
@@ -161,6 +161,11 @@ void game_manager::handle_messages(){
         }
         else if(temp->msg_name == FULLSCREEN_STATUS){
             fullscreen_status = *static_cast<bool*>(temp->get_data());
+        }
+        else if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
+            auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
+            v_width = std::get<0> (*data);
+            v_height = std::get<1> (*data);
         }
         delete temp;
         temp = msg_sub.get_next_message();

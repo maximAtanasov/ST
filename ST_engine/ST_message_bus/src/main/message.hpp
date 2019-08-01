@@ -22,7 +22,6 @@ class message{
 private:
     static ST::pool_allocator_256<message> allocator;
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
-    //that's how shared_ptr works, if you don't believe me, well google it or something
 
 public:
     uint8_t msg_name{};

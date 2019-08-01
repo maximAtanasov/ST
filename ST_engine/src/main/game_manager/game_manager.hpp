@@ -99,7 +99,11 @@ class game_manager{
         int16_t right_stick_vertical{};
         int16_t right_stick_horizontal{};
 
-        //methods
+        int16_t v_width = 1920;
+        int16_t v_height = 1080;
+
+
+    //methods
         void handle_messages();
         int8_t load_level(const std::string&);
         void unload_level(const std::string&);
@@ -241,7 +245,7 @@ inline bool game_manager::key_released(uint16_t arg) const{
  * @param id The ID of the entity to center on.
  */
 inline void game_manager::center_camera_on_entity(uint64_t id) { //TODO: Get rid of hardcoded values
-    current_level_pointer->Camera.x = current_level_pointer->entities.at(id).x - 1920/4;
+    current_level_pointer->Camera.x = current_level_pointer->entities.at(id).x - v_width/4;
     while(current_level_pointer->Camera.x < current_level_pointer->Camera.limitX1 + 1) {
         current_level_pointer->Camera.x++;
     }
@@ -249,7 +253,7 @@ inline void game_manager::center_camera_on_entity(uint64_t id) { //TODO: Get rid
         current_level_pointer->Camera.x--;
     }
 
-    current_level_pointer->Camera.y = current_level_pointer->entities.at(id).y - 1080;
+    current_level_pointer->Camera.y = current_level_pointer->entities.at(id).y - v_height;
     while(current_level_pointer->Camera.y < current_level_pointer->Camera.limitY1 + 1) {
         current_level_pointer->Camera.y++;
     }
