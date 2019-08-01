@@ -44,17 +44,9 @@ add_executable(ST_asset_pack_tests
         src/test/ST_asset_pack_tests.cpp)
 
 target_link_libraries(ST_asset_pack_tests
-        ST_loaders
-        ST_util
-        gtest
-        ${SDL2_LIBRARY}
-        ${SDL2_IMAGE_LIBRARY}
-        ${SDL2_MIXER_LIBRARY}
-        ${SDL2_TTF_LIBRARY})
+        gtest)
 
 gtest_add_tests(TARGET ST_asset_pack_tests)
-set_target_properties(ST_asset_pack_tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/test/output)
-
 
 # Run the tests on every build
 add_custom_command(TARGET ST_asset_pack

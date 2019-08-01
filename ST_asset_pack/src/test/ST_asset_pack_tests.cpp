@@ -16,10 +16,11 @@ TEST(ST_asset_pack_tests, test_wrong_argument_count){
 
     testing::internal::CaptureStderr();
 
-    auto args = static_cast<char**>(malloc(4));
+    auto args = static_cast<char**>(malloc(50));
     args[0] = const_cast<char*>("a");
     args[1] = const_cast<char*>("b");
     ASSERT_EQ(-1, asset_pack_main(2, args));
+    free(args);
 
     std::string output = testing::internal::GetCapturedStderr();
     ASSERT_EQ("Not enough arguments!\n", output);
@@ -34,6 +35,7 @@ TEST(ST_asset_pack_tests, test_pack_to_binary_p){
     args[1] = const_cast<char*>("-p");
     args[2] = const_cast<char*>("no_asset");
     ASSERT_EQ(0, asset_pack_main(3, args));
+    free(args);
 
     std::string output = testing::internal::GetCapturedStdout();
     remove("no_asset");
@@ -49,6 +51,7 @@ TEST(ST_asset_pack_tests, test_pack_to_binary_pack){
     args[1] = const_cast<char*>("--pack");
     args[2] = const_cast<char*>("no_asset");
     ASSERT_EQ(0, asset_pack_main(3, args));
+    free(args);
 
     std::string output = testing::internal::GetCapturedStdout();
     remove("no_asset");
@@ -64,6 +67,7 @@ TEST(ST_asset_pack_tests, test_unpack_binary_u){
     args[1] = const_cast<char*>("-u");
     args[2] = const_cast<char*>("no_asset");
     ASSERT_EQ(0, asset_pack_main(3, args));
+    free(args);
 
     std::string output = testing::internal::GetCapturedStdout();
     ASSERT_EQ("Binary unpacked!\n", output);
@@ -78,6 +82,7 @@ TEST(ST_asset_pack_tests, test_unpack_binary_unpack){
     args[1] = const_cast<char*>("--unpack");
     args[2] = const_cast<char*>("no_asset");
     ASSERT_EQ(0, asset_pack_main(3, args));
+    free(args);
 
     std::string output = testing::internal::GetCapturedStdout();
     ASSERT_EQ("Binary unpacked!\n", output);

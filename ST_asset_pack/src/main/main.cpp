@@ -11,8 +11,11 @@
 #include <string>
 #include <vector>
 #include <sstream>
+
+#ifndef TESTING
 #include <ST_loaders/loaders.hpp>
 #include <ST_util/test_util.hpp>
+#endif
 
 /**
  * \mainpage A small program that will combine multiple png, wav and ogg files into a single file that can
