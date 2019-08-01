@@ -57,54 +57,31 @@ levelBeginBlock = entity:new(-10, floor)
 levelBeginBlock:setAffectedByPhysics(true)
 levelBeginBlock:setCollision(0,0,10, 1080)
 
-bar_ho1_1 = bar_hor:new(0, floor);
-bar_ho1_2 = bar_hor:new(800, floor);
-bar_ho1_3 = bar_hor:new(1600, floor);
-bar_ho1_4 = bar_hor:new(2400, floor);
-bar_ho1_5 = bar_hor:new(3200, floor);
-bar_ho1_6 = bar_hor:new(4000, floor);
-bar_ho1_7 = bar_hor:new(4800, floor);
-bar_ho1_8 = bar_hor:new(5600, floor);
---bar_ho1_9 = bar_hor:new(6400, floor);
 
-bar_ho1_10 = bar_hor:new(7200, floor);
-bar_ho1_11 = bar_hor:new(8000, floor);
-bar_ho1_12 = bar_hor:new(8800, floor);
-bar_ho1_13 = bar_hor:new(9600, floor);
---bar_ho1_14 = bar_hor:new(10400, floor);
-bar_ho1_15 = bar_hor:new(11200, floor);
-bar_ho1_16 = bar_hor:new(12000, floor);
-bar_ho1_17 = bar_hor:new(12800, floor);
-bar_ho1_18 = bar_hor:new(13600, floor);
-
-obstacle_1_1 = obstacle_1:new(500, floor-200);
-obstacle_1_2 = obstacle_1:new(600, floor-400);
-obstacle_1_2:setTexture("obstacle_2.png")
-obstacle_1_3 = obstacle_1:new(800, floor-600);
 
 player1 = player:new(100, 100);
 
-obstacle_1_4 = platform:new(2000, floor-400);
+obstacle_1_1 = platform:new(200, floor-400);
+obstacle_1_2 = platform:new(1000, floor-400);
+obstacle_1_3 = platform:new(1700, floor-400);
+
+obstacle_1_4 = platform:new(2500, floor-600);
 obstacle_1_5 = platform:new(3000, floor-150);
 obstacle_1_6 = platform:new(3500, floor-360);
 
-obstacle_1_7 = obstacle_1:new(4000, floor-200);
-obstacle_1_8 = obstacle_1:new(5280, floor-200);
---obstacle_1_9 = obstacle_1:new(5500, floor-200);
+obstacle_1_7 = platform:new(4000, floor-500);
+obstacle_1_8 = platform:new(4420, floor-500);
+obstacle_1_9 = platform:new(4400, floor-782);
+obstacle_1_10 = platform:new(4840, floor-500);
 
-obstacle_1_10 = platform:new(6100, floor-300);
+obstacle_1_11 = platform:new(5700, floor-300);
+obstacle_1_12 = platform:new(6250, floor-200);
+obstacle_1_13 = platform:new(7000, floor-200);
+obstacle_1_14 = platform:new(7700, floor-690);
+obstacle_1_15 = platform:new(8200, floor-690);
+obstacle_1_16 = platform:new(8700, floor-690);
 
-obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260, 360, 60);
-
-obstacle_1_11 = platform:new(6700, floor-300);
-obstacle_1_12 = platform:new(7250, floor-300);
-obstacle_1_13 = obstacle_1:new(8000, floor-200);
-obstacle_1_14 = obstacle_1:new(8800, floor-200);
---obstacle_1_15 = obstacle_1:new(9500, floor-200);
-
-
-obstacle_1_16 = platform:new(10000, floor-300);
-obstacle_1_17 = platform:new(10500, floor-300);
+obstacle_1_17 = platform:new(9500, floor-300);
 obstacle_1_18 = platform:new(11000, floor-300);
 obstacle_1_19 = obstacle_1:new(13200, floor-200);
 obstacle_1_20 = platform:new(14000, floor-300);
@@ -150,14 +127,14 @@ function resetPlayerPosition()
     player1:setXY(100,100)
 end
 
-trigger_pit_0 = trigger:new(6400, floor-10, 800, 20)
+trigger_pit_0 = trigger:new(0, floor-10, 10000, 20)
 trigger_pit_0:onCollisionWith(player1, resetPlayerPosition)
-trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
+--[[trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
 trigger_pit_1:onCollisionWith(player1, resetPlayerPosition)
 trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
 trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
 trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
-trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)]]
 
 
 
@@ -286,14 +263,26 @@ function loop()
         if keyPressed("PAUSE") then
             pauseGame()
         end
+
+        obstacle_1_1:update()
+        obstacle_1_2:update()
+        obstacle_1_3:update()
         obstacle_1_4:update()
         obstacle_1_5:update()
         obstacle_1_6:update()
 
+        obstacle_1_7:update()
+        obstacle_1_8:update()
+        obstacle_1_9:update()
+
         obstacle_1_10:update()
         obstacle_1_11:update()
         obstacle_1_12:update()
+        obstacle_1_13:update()
+        obstacle_1_14:update()
 
+
+        obstacle_1_15:update()
         obstacle_1_16:update()
         obstacle_1_17:update()
         obstacle_1_18:update()
@@ -310,9 +299,9 @@ function loop()
         obstacle_1_29:update()
 
         trigger_pit_0:update()
-        trigger_pit_1:update()
+--[[        trigger_pit_1:update()
         trigger_pit_2:update()
-        trigger_pit_3:update()
+        trigger_pit_3:update()]]
 
         endLevel:update()
         player1:update()

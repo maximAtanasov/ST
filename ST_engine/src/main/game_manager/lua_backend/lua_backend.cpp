@@ -91,6 +91,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 
     //Physics functions.
     lua_register(L, "setGravity", setGravityLua);
+    lua_register(L, "getGravity", getGravityLua);
     lua_register(L, "pausePhysics", pausePhysicsLua);
     lua_register(L, "unpausePhysics", unpausePhysicsLua);
 
@@ -1198,8 +1199,20 @@ extern "C" int setEntitySpriteNumLua(lua_State *L){
  */
 extern "C" int setGravityLua(lua_State* L){
     auto arg = static_cast<int8_t>(lua_tointeger(L, 1));
+    gGame_managerLua->gravity = arg;
     gMessage_busLua->send_msg(new message(SET_GRAVITY, make_data<>(arg)));
     return 0;
+}
+
+/**
+ * Returns the current gravity to the lua vm.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 1.
+ */
+extern "C" int getGravityLua(lua_State* L){
+    lua_pushinteger(L, gGame_managerLua->gravity);
+    return 1;
 }
 
 /**

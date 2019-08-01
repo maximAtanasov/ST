@@ -27,7 +27,6 @@ private:
 public:
     uint8_t msg_name{};
     void* get_data() const;
-    void set_data(const std::shared_ptr<void>& data);
     message *make_copy();
 
     message() = default;
@@ -62,10 +61,6 @@ public:
  */
 inline void* message::get_data() const{
     return this->data.get();
-}
-
-inline void message::set_data(const std::shared_ptr<void>& data_) {
-    this->data = data_;
 }
 
 inline message* message::make_copy() {

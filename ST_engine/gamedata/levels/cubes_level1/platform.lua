@@ -11,7 +11,7 @@ platform.texture = "obstacle_1.png"
 platform.texWidth = 400
 platform.texHeight = 150
 platform.colX = 400
-platform.colY = 132
+platform.colY = 150
 platform.isVisible = true
 platform.affectedByPhysics = true
 platform.height = 0;
@@ -31,6 +31,7 @@ function platform:update ()
 end
 
 function platform:new(x, y)
+    self.colY = 150 - getGravity()
     self = newEntity(self, x, y)
     self.height = y;
     self.soundTrigger = trigger:new(x, y+2, self.colX, 3)

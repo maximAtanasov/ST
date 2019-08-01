@@ -52,6 +52,7 @@ extern "C" int getFullscreenStatusLua(lua_State* L);
 extern "C" int setDarknessLua(lua_State* L);
 extern "C" int hashStringLua(lua_State* L);
 extern "C" int setGravityLua(lua_State* L);
+extern "C" int getGravityLua(lua_State* L);
 extern "C" int pausePhysicsLua(lua_State* L);
 extern "C" int unpausePhysicsLua(lua_State* L);
 extern "C" int setLevelFloorLua(lua_State* L);

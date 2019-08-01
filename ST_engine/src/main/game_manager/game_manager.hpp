@@ -114,6 +114,7 @@ class game_manager{
         uint8_t music_volume_level = 100;
         uint8_t sounds_volume_level = 100;
         bool audio_enabled = true;
+        int8_t gravity = 0;
 
         game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
         ~game_manager();

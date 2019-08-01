@@ -460,6 +460,20 @@ TEST_F(lua_backend_test, test_call_function_setGravity){
     ASSERT_EQ(12, *static_cast<uint8_t*>(result->get_data()));
 }
 
+TEST_F(lua_backend_test, test_call_function_getGravity){
+    //Set up
+    gGame_managerLua->gravity = 11;
+
+    //Test
+    test_subject.run_script("return getGravity()");
+
+    gGame_managerLua->gravity = 0;
+
+    //Check result
+    ASSERT_EQ(11, lua_tointeger(get_lua_state(), -1));
+}
+
+
 TEST_F(lua_backend_test, test_call_function_pausePhysics){
     //Set up
     subscriber subscriber1;

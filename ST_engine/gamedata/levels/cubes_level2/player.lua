@@ -78,6 +78,8 @@ function player:update()
     end
     if keyPressed("JUMP") then
         self:jump()
+    elseif keyPressed("LONG_JUMP") then
+        self:longJump()
     end
 
 
@@ -91,6 +93,12 @@ function player:update()
     end
     self.prevY = self:getY()
 
+end
+
+function player:longJump()
+    if self.prevY == self:getY() then
+        self:setVelocityY(-57)
+    end
 end
 
 function player:jump()

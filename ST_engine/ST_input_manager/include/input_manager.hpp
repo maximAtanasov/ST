@@ -76,11 +76,10 @@ class input_manager{
 		};
 
         struct keyboard_and_mouse_controls{
-            const uint16_t keys = 512;
-            int8_t mouse_clicks[3]{};
-			int32_t mouse_x = 0, mouse_y = 0;
-			int32_t mouse_scroll = 0;
+            int32_t mouse_x = 0, mouse_y = 0;
+            int16_t mouse_scroll = 0;
 			uint8_t *keyboard{};
+            int8_t mouse_clicks[3]{};
         };
 
 		int32_t v_width = 1, v_height = 1;
