@@ -9,20 +9,9 @@
 
 #include <gtest/gtest.h>
 #include <task_manager.hpp>
+#include <thread>
 
 class task_manager_tests : public::testing::TestWithParam<int>{
-
-protected:
-
-    message_bus* msg_bus{};
-
-    void SetUp() override{
-        msg_bus = new message_bus();
-    }
-
-    void TearDown() override{
-        delete msg_bus;
-    }
 };
 
 static void test_task_function(void* arg){
@@ -38,7 +27,7 @@ static void test_task_function2(void* arg){
 
 TEST_F(task_manager_tests, test_start_task_without_dependency){
     //Set up
-    task_manager test_subject(msg_bus);
+    task_manager test_subject;
     uint8_t test_value = 10;
 
     //Test
@@ -49,7 +38,7 @@ TEST_F(task_manager_tests, test_start_task_without_dependency){
 
 TEST_F(task_manager_tests, test_start_tasks_with_dependency){
     //Set up
-    task_manager test_subject(msg_bus);
+    task_manager test_subject;
     uint8_t test_value = 10;
 
     //Test
@@ -62,7 +51,7 @@ TEST_F(task_manager_tests, test_start_tasks_with_dependency){
 
 TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
     //Set up
-    task_manager test_subject(msg_bus);
+    task_manager test_subject;
     uint8_t test_value = 10;
 
     //Test
@@ -75,7 +64,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
 
 TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     //Set up
-    task_manager test_subject(msg_bus);
+    task_manager test_subject;
     uint8_t test_value = 10;
 
     //Test
@@ -90,7 +79,7 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
 //the waiter isn't doing any work
 TEST_P(task_manager_tests, test_do_work_while_waiting){
     //Set up
-    task_manager test_subject(msg_bus, 1);
+    task_manager test_subject(1);
     uint8_t test_value1 = 10;
     uint8_t test_value2 = 20;
 

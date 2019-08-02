@@ -37,7 +37,7 @@ int ST_engine_main(int argc, char *argv[]) {
     console gConsole(&gMessage_bus);
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
 
-    task_manager gTask_manager(&gMessage_bus);
+    task_manager gTask_manager;
     audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);
     window_manager gDisplay_manager(&gMessage_bus, &gTask_manager, "ST");

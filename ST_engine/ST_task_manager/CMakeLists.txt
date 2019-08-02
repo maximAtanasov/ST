@@ -17,7 +17,6 @@ enable_testing()
 include_directories(${PROJECT_SOURCE_DIR}/src/main)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
-include_directories(${PROJECT_SOURCE_DIR}/../ST_message_bus/include)
 
 add_library(ST_task_manager STATIC
         ${PROJECT_SOURCE_DIR}/src/main/task.hpp
@@ -33,8 +32,7 @@ add_executable(task_manager_test
         ${PROJECT_SOURCE_DIR}/src/test/task_manager_tests.cpp src/main/task.cpp)
 
 target_link_libraries(task_manager_test
-        gtest
-        ST_message_bus)
+        gtest)
 
 #Run the tests on each build
 add_test(NAME task_manager_test COMMAND task_manager_test)
