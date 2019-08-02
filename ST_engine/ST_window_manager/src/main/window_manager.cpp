@@ -53,7 +53,8 @@ window_manager::window_manager(message_bus* msg_bus, task_manager* tsk_mngr, con
     height = static_cast<int16_t>(DM.h);
     window = SDL_CreateWindow(window_name.c_str(), 0, 0, width, height, SDL_WINDOW_OPENGL);
     gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height))));
-    gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, make_data(std::make_tuple(width, height))));
+    uint32_t screen_width_height = width | (height << 16U);
+    gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height, nullptr));
 
     //Load and set icon
     icon = IMG_Load("levels/icon.png");
@@ -91,13 +92,16 @@ void window_manager::handle_messages(){
             gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(arg))));
         }
         else if(temp->msg_name == SET_WINDOW_RESOLUTION){
-            auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            if(std::get<0>(res) != width && std::get<1>(res) != height) {
-                gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, make_data(res)));
-                SDL_SetWindowSize(window, std::get<0>(res), std::get<1>(res));
+            auto data = temp->base_data0;
+            int16_t new_width = data & 0x0000ffffU;
+            int16_t new_height = (data >> 16U) & 0x0000ffffU;
+            if(new_width != width && new_height != height) {
+                uint32_t screen_width_height = new_width | (new_height << 16U);
+                gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height, nullptr));
+                SDL_SetWindowSize(window, new_width, new_height);
+                width = new_width;
+                height = new_height;
                 SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); // NOLINT(hicpp-signed-bitwise)
-                width = std::get<0>(res);
-                height = std::get<1>(res);
             }
         }
         delete temp;

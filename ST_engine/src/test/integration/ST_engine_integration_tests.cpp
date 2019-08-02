@@ -91,21 +91,21 @@ void set_fullscreen(){
 
 void set_audio_enabled(){
     SDL_Delay(25000);
-    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::TILDE), nullptr));
     SDL_Delay(30);
-    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::TILDE)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, static_cast<uint8_t>(ST::key::TILDE), nullptr));
     SDL_Delay(3000);
     gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setAudioEnabled(false)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(30);
-    gMessage_bus.send_msg(new message(KEY_RELEASED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_RELEASED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(3000);
     gMessage_bus.send_msg(new message(TEXT_STREAM, make_data<std::string>("setAudioEnabled(true)")));
     SDL_Delay(3000);
-    gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(1000);
     gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }

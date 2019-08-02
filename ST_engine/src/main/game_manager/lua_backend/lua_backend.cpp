@@ -1258,7 +1258,8 @@ extern "C" int getVsyncStateLua(lua_State* L){
 extern "C" int setInternalResolutionLua(lua_State* L){
     auto width = static_cast<int16_t>(lua_tointeger(L, 1));
     auto height = static_cast<int16_t>(lua_tointeger(L, 2));
-    gMessage_busLua->send_msg(new message(SET_INTERNAL_RESOLUTION, make_data(std::make_tuple(width, height))));
+    uint32_t width_height = width | (height << 16U);
+    gMessage_busLua->send_msg(new message(SET_INTERNAL_RESOLUTION, width_height, nullptr));
     return 0;
 }
 
@@ -1271,7 +1272,8 @@ extern "C" int setInternalResolutionLua(lua_State* L){
 int setWindowResolutionLua(lua_State *L) {
     auto width = static_cast<int16_t>(lua_tointeger(L, 1));
     auto height = static_cast<int16_t>(lua_tointeger(L, 2));
-    gMessage_busLua->send_msg(new message(SET_WINDOW_RESOLUTION, make_data(std::make_tuple(width, height))));
+    uint32_t width_height = width | (height << 16U);
+    gMessage_busLua->send_msg(new message(SET_WINDOW_RESOLUTION, width_height, nullptr));
     return 0;
 }
 

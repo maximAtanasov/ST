@@ -163,9 +163,9 @@ void game_manager::handle_messages(){
             fullscreen_status = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
-            auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            v_width = std::get<0> (*data);
-            v_height = std::get<1> (*data);
+            auto data = temp->base_data0;
+            v_width = data & 0x0000ffffU;
+            v_height = (data >> 16U) & 0x0000ffffU;
         }
         delete temp;
         temp = msg_sub.get_next_message();

@@ -250,15 +250,15 @@ void input_manager::handle_messages(){
 	message* temp = msg_sub.get_next_message();
 	while(temp != nullptr){
 		if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
-            auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            v_width = std::get<0> (*data);
-            v_height = std::get<1> (*data);
+            auto data = temp->base_data0;
+            v_width = data & 0x0000ffffU;
+            v_height = (data >> 16U) & 0x0000ffffU;
             ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
             ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
 		}else if(temp->msg_name == REAL_SCREEN_COORDINATES) {
-            auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            r_width = std::get<0>(*data);
-            r_height = std::get<1>(*data);
+            auto data = temp->base_data0;
+            r_width = data & 0x0000ffffU;
+            r_height = (data >> 16U) & 0x0000ffffU;
             ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
             ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
         }else if(temp->msg_name == START_TEXT_INPUT){

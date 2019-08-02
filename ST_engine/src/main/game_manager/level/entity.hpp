@@ -181,9 +181,9 @@ inline int16_t ST::entity::get_col_y_offset() const{
  * @param X The horizontal length of the collision box.
  * @param Y The vertical length of the collision box.
  */
-inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t col_x, int16_t col_y){
-    this->col_x = col_x;
-    this->col_y = -col_y;
+inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t col_x_, int16_t col_y_){
+    this->col_x = col_x_;
+    this->col_y = -col_y_;
     offset_x = offsetX;
     offset_y = offsetY;
 }

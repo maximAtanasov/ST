@@ -62,7 +62,8 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
-	gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, make_data(std::make_tuple(w_width, w_height))));
+    uint32_t screen_width_height = w_width | (w_height << 16U);
+    gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height, nullptr));
 }
 
 /**
@@ -321,11 +322,12 @@ void drawing_manager::handle_messages(){
             ST::renderer_sdl::upload_fonts(fonts);
         }
         else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
-            auto res = *static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());
-            gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, make_data(res)));
-            ST::renderer_sdl::set_resolution(std::get<0>(res), std::get<1>(res));
-            w_width = std::get<0>(res);
-            w_height = std::get<1>(res);
+            auto data = temp->base_data0;
+            w_width = data & 0x0000ffffU;
+            w_height = (data >> 16U) & 0x0000ffffU;
+            uint32_t screen_width_height = w_width | (w_height << 16U);
+            gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height, nullptr));
+            ST::renderer_sdl::set_resolution(w_width, w_height);
         }
         delete temp;
         temp = msg_sub.get_next_message();
