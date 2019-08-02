@@ -1200,7 +1200,7 @@ extern "C" int setEntitySpriteNumLua(lua_State *L){
 extern "C" int setGravityLua(lua_State* L){
     auto arg = static_cast<int8_t>(lua_tointeger(L, 1));
     gGame_managerLua->gravity = arg;
-    gMessage_busLua->send_msg(new message(SET_GRAVITY, make_data<>(arg)));
+    gMessage_busLua->send_msg(new message(SET_GRAVITY, arg, nullptr));
     return 0;
 }
 
@@ -1223,7 +1223,7 @@ extern "C" int getGravityLua(lua_State* L){
  */
 extern "C" int setLevelFloorLua(lua_State* L){
     auto arg = static_cast<int32_t>(lua_tointeger(L, 1));
-    gMessage_busLua->send_msg(new message(SET_FLOOR, make_data<>(arg)));
+    gMessage_busLua->send_msg(new message(SET_FLOOR, arg, nullptr));
     return 0;
 }
 

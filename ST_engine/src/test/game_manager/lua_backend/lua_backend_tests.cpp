@@ -424,7 +424,7 @@ TEST_F(lua_backend_test, test_call_function_setLevelFloor){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_FLOOR, result->msg_name);
-    ASSERT_EQ(500, *static_cast<int32_t*>(result->get_data()));
+    ASSERT_EQ(500, static_cast<int32_t>(result->base_data));
 }
 
 TEST_F(lua_backend_test, test_call_function_unloadLevel){
@@ -457,7 +457,7 @@ TEST_F(lua_backend_test, test_call_function_setGravity){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_GRAVITY, result->msg_name);
-    ASSERT_EQ(12, *static_cast<uint8_t*>(result->get_data()));
+    ASSERT_EQ(12, static_cast<uint8_t>(result->base_data));
 }
 
 TEST_F(lua_backend_test, test_call_function_getGravity){

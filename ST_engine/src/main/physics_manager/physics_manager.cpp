@@ -111,11 +111,11 @@ void physics_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_GRAVITY){
-            gravity = *static_cast<int8_t*>(temp->get_data());
+            gravity = static_cast<int8_t>(temp->base_data);
         }else if(temp->msg_name == SET_FLOOR){
-            level_floor = *static_cast<int32_t*>(temp->get_data());
+            level_floor = static_cast<int32_t>(temp->base_data);
         }else if(temp->msg_name == SET_FRICTION){
-            friction = *static_cast<int8_t*>(temp->get_data());
+            friction = static_cast<int8_t>(temp->base_data);
         }else if(temp->msg_name == PAUSE_PHYSICS){
             physics_paused = true;
         }else if(temp->msg_name == UNPAUSE_PHYSICS){
