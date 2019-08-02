@@ -23,13 +23,13 @@ TEST(message_test, test_message_get_data) {
 TEST(message_test, test_message_get_base_data) {
     auto test_subject = new message(1, 30, nullptr);
     ASSERT_FALSE(static_cast<bool>(test_subject->get_data()));
-    ASSERT_EQ(30, test_subject->base_data);
+    ASSERT_EQ(30, test_subject->base_data0);
 }
 
 TEST(message_test, test_message_get_data_and_base_data) {
     auto test_subject = new message(1, 30, make_data<bool>(true));
     ASSERT_TRUE(*static_cast<bool*>(test_subject->get_data()));
-    ASSERT_EQ(30, test_subject->base_data);
+    ASSERT_EQ(30, test_subject->base_data0);
 }
 
 TEST(message_test, test_message_copy) {

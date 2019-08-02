@@ -81,7 +81,7 @@ void window_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_FULLSCREEN){
-            auto arg = static_cast<bool>(temp->base_data);
+            auto arg = static_cast<bool>(temp->base_data0);
             set_fullscreen(arg);
             gMessage_bus->send_msg(new message(FULLSCREEN_STATUS, arg, nullptr));
         }

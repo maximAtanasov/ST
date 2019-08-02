@@ -95,72 +95,72 @@ void game_manager::handle_messages(){
             unload_level(*static_cast<std::string*>(temp->get_data()));
         }
         else if(temp->msg_name == KEY_PRESSED){
-            uint8_t key_index = temp->base_data;
+            uint8_t key_index = temp->base_data0;
             keys_pressed_data[key_index] = true;
             keys_held_data[key_index] = false;
             keys_released_data[key_index] = false;
         }
         else if(temp->msg_name == KEY_HELD){
-            uint8_t key_index = temp->base_data;
-            auto key_val = static_cast<ST::key>(temp->base_data);
+            uint8_t key_index = temp->base_data0;
+            auto key_val = static_cast<ST::key>(temp->base_data0);
             keys_pressed_data[key_index] = false;
             keys_held_data[key_index] = true;
             keys_released_data[key_index] = false;
         }
         else if(temp->msg_name == KEY_RELEASED){
-            uint8_t key_index = temp->base_data;
+            uint8_t key_index = temp->base_data0;
             keys_pressed_data[key_index] = false;
             keys_held_data[key_index] = false;
             keys_released_data[key_index] = true;
         }
         else if(temp->msg_name == MOUSE_X){
-            mouse_x = static_cast<int32_t>(temp->base_data);
+            mouse_x = static_cast<int32_t>(temp->base_data0);
         }
         else if(temp->msg_name == MOUSE_Y){
-            mouse_y = static_cast<int32_t>(temp->base_data);
+            mouse_y = static_cast<int32_t>(temp->base_data0);
         }
         else if(temp->msg_name == LEFT_TRIGGER){
-            left_trigger = static_cast<int16_t>(temp->base_data);
+            left_trigger = static_cast<int16_t>(temp->base_data0);
         }
         else if(temp->msg_name == RIGHT_TRIGGER){
-            right_trigger = static_cast<int16_t>(temp->base_data);
+            right_trigger = static_cast<int16_t>(temp->base_data0);
         }
         else if(temp->msg_name == LEFT_STICK_VERTICAL){
-            left_stick_vertical = static_cast<int16_t>(temp->base_data);
+            left_stick_vertical = static_cast<int16_t>(temp->base_data0);
         }
         else if(temp->msg_name == LEFT_STICK_HORIZONTAL){
-            left_stick_horizontal = static_cast<int16_t>(temp->base_data);
+            left_stick_horizontal = static_cast<int16_t>(temp->base_data0);
         }
         else if(temp->msg_name == RIGHT_STICK_VERTICAL){
-            right_stick_vertical = static_cast<int16_t>(temp->base_data);
+            right_stick_vertical = static_cast<int16_t>(temp->base_data0);
         }
         else if(temp->msg_name == RIGHT_STICK_HORIZONTAL){
-            right_stick_horizontal = static_cast<int16_t>(temp->base_data);
+            right_stick_horizontal = static_cast<int16_t>(temp->base_data0);
         }
         else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
-            music_volume_level = static_cast<uint8_t>(temp->base_data);
+            music_volume_level = static_cast<uint8_t>(temp->base_data0);
         }
         else if(temp->msg_name == SOUNDS_VOLUME_LEVEL){
-            sounds_volume_level = static_cast<uint8_t>(temp->base_data);
+            sounds_volume_level = static_cast<uint8_t>(temp->base_data0);
         }
         else if(temp->msg_name == AUDIO_ENABLED){
-            audio_enabled = static_cast<bool>(temp->base_data);
+            audio_enabled = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == VSYNC_STATE){
-            vsync_flag = static_cast<bool>(temp->base_data);
+            vsync_flag = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == END_GAME){
             game_is_running_ = false;
         }
         else if(temp->msg_name == SHOW_MOUSE){
-            SDL_ShowCursor(static_cast<bool>(temp->base_data));
+            SDL_ShowCursor(static_cast<bool>(temp->base_data0));
         }
         else if(temp->msg_name == EXECUTE_SCRIPT){
             auto script = static_cast<std::string*>(temp->get_data());
             gScript_backend.run_script(*script);
         }
         else if(temp->msg_name == FULLSCREEN_STATUS){
-            fullscreen_status = static_cast<bool>(temp->base_data);
+            fullscreen_status = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
             auto data = static_cast<std::tuple<int16_t, int16_t>*>(temp->get_data());

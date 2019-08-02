@@ -89,9 +89,9 @@ void console::handle_messages(){
             this->entries.clear();
         }
         else if(temp->msg_name == MOUSE_SCROLL){
-            scroll(static_cast<int32_t>(temp->base_data));
+            scroll(static_cast<int32_t>(temp->base_data0));
         }else if(temp->msg_name == KEY_HELD){
-            auto key_val = static_cast<ST::key>(temp->base_data);
+            auto key_val = static_cast<ST::key>(temp->base_data0);
             if (is_open()) {
                 if(hold_counter > 10) {
                     if (key_val == ST::key::LEFT) {
@@ -117,7 +117,7 @@ void console::handle_messages(){
             }
         }*/
         else if (temp->msg_name == KEY_PRESSED) {
-            auto key_val = static_cast<ST::key>(temp->base_data);
+            auto key_val = static_cast<ST::key>(temp->base_data0);
 			if (key_val == ST::key::ENTER) {
 				if (!composition.empty()) {
 					write(composition, ST::log_type::INFO);

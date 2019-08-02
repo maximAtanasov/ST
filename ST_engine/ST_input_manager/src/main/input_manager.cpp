@@ -268,10 +268,10 @@ void input_manager::handle_messages(){
         }else if(temp->msg_name == CLEAR_TEXT_STREAM){
             composition.clear();
         }else if(temp->msg_name == REGISTER_KEY){
-            auto key_val = static_cast<ST::key>(temp->base_data);
+            auto key_val = static_cast<ST::key>(temp->base_data0);
             ++registered_keys[key_val];
         }else if(temp->msg_name == UNREGISTER_KEY) {
-            auto key_val = static_cast<ST::key>(temp->base_data);
+            auto key_val = static_cast<ST::key>(temp->base_data0);
             if (registered_keys[key_val] > 0) {
                 --registered_keys[key_val];
 

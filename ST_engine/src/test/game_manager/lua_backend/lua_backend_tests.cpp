@@ -286,7 +286,7 @@ TEST_F(lua_backend_test, test_call_function_setFullscreenLua){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_FULLSCREEN, result->msg_name);
-    ASSERT_TRUE(static_cast<bool>(result->base_data));
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_hashString){
@@ -325,7 +325,7 @@ TEST_F(lua_backend_test, test_call_function_setVsyncLua){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_VSYNC, result->msg_name);
-    ASSERT_TRUE(static_cast<bool>(result->base_data));
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
 
@@ -376,7 +376,7 @@ TEST_F(lua_backend_test, test_call_function_showMouseCursor){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SHOW_MOUSE, result->msg_name);
-    ASSERT_TRUE(static_cast<bool>(result->base_data));
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
@@ -392,7 +392,7 @@ TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SHOW_MOUSE, result->msg_name);
-    ASSERT_FALSE(static_cast<bool>(result->base_data));
+    ASSERT_FALSE(static_cast<bool>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_endGame){
@@ -424,7 +424,7 @@ TEST_F(lua_backend_test, test_call_function_setLevelFloor){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_FLOOR, result->msg_name);
-    ASSERT_EQ(500, static_cast<int32_t>(result->base_data));
+    ASSERT_EQ(500, static_cast<int32_t>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_unloadLevel){
@@ -457,7 +457,7 @@ TEST_F(lua_backend_test, test_call_function_setGravity){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_GRAVITY, result->msg_name);
-    ASSERT_EQ(12, static_cast<uint8_t>(result->base_data));
+    ASSERT_EQ(12, static_cast<uint8_t>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_getGravity){
@@ -522,7 +522,7 @@ TEST_F(lua_backend_test, test_call_function_playSound){
     ASSERT_EQ(PLAY_SOUND, result->msg_name);
 
 
-    auto data = result->base_data;
+    auto data = result->base_data0;
 
     ASSERT_EQ(expected, (data & 0x0000ffff));
     ASSERT_EQ(100, (data >> 16) & 0x000000ff);
@@ -544,7 +544,7 @@ TEST_F(lua_backend_test, test_call_function_playMusic){
     ASSERT_TRUE(result);
     ASSERT_EQ(PLAY_MUSIC, result->msg_name);
 
-    auto data = result->base_data;
+    auto data = result->base_data0;
 
     ASSERT_EQ(expected, (data & 0x0000ffff));
     ASSERT_EQ(128, (data >> 16) & 0x000000ff);
@@ -580,7 +580,7 @@ TEST_F(lua_backend_test, test_call_function_setAudioEnabledLua){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_AUDIO_ENABLED, result->msg_name);
-    ASSERT_TRUE(static_cast<bool>(result->base_data));
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_stopAllSounds){
@@ -612,7 +612,7 @@ TEST_F(lua_backend_test, test_call_function_setMusicVolume){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_MUSIC_VOLUME, result->msg_name);
-    ASSERT_EQ(50, static_cast<uint8_t>(result->base_data));
+    ASSERT_EQ(50, static_cast<uint8_t>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
@@ -628,7 +628,7 @@ TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_SOUNDS_VOLUME, result->msg_name);
-    ASSERT_EQ(50, static_cast<uint8_t>(result->base_data));
+    ASSERT_EQ(50, static_cast<uint8_t>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_loadAsset) {
@@ -676,7 +676,7 @@ TEST_F(lua_backend_test, test_call_function_setDarkness){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_DARKNESS, result->msg_name);
-    ASSERT_EQ(250, static_cast<uint8_t>(result->base_data));
+    ASSERT_EQ(250, static_cast<uint8_t>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_enableLighting){
@@ -692,7 +692,7 @@ TEST_F(lua_backend_test, test_call_function_enableLighting){
 
     ASSERT_TRUE(result);
     ASSERT_EQ(ENABLE_LIGHTING, result->msg_name);
-    ASSERT_FALSE(static_cast<bool>(result->base_data));
+    ASSERT_FALSE(static_cast<bool>(result->base_data0));
 }
 
 TEST_F(lua_backend_test, test_call_function_getFullscreenStatus){
