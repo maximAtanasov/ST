@@ -17,29 +17,6 @@
 #include <task_manager.hpp>
 
 ///This class handles all physics related actions in the engine.
-/**
- * Messages this subsystem listens to: <br>
- *
- * <b>SET_GRAVITY</b> - Sets the current gravity.
- *
- * Message must contain: a pointer to a <b>int8_t</b>.
- *
- *  <b>SET_FRICTION</b> - Sets the current friction.
- *
- * Message must contain: a pointer to a <b>int8_t</b>.
- *
- *  <b>SET_FLOOR</b> - Sets the floor of the level.
- *
- * Message must contain: a pointer to a <b>int32_t</b>.
- *
- *  <b>PAUSE_PHYSICS</b> - Pauses all physics.
- *
- * Message must contain: a <b>nullptr</b>.
- *
- * <b>UNPAUSE_PHYSICS</b> - Resumes all physics.
- *
- * Message must contain: a <b>nullptr</b>.
- */
 class physics_manager{
     private:
         message_bus* gMessage_bus{};

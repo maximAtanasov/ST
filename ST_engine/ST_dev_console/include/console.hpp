@@ -15,36 +15,6 @@
 #include "../src/main/console_log.hpp"
 
 ///This object represents the console window.
-/**
- * Displays all in-game logs and provides an interface to the lua scripting engine. <br>
- *
- * Messages this object listens to: <br>
- *
- * <b>CONSOLE_WRITE</b> - Writes a log to the console window. <br>
- *
- *  Message must contain: a pointer to a <b>ST::console_log</b> object.
- *
- * <b>CONSOLE_TOGGLE</b> - Toggles the console window. <br>
- *
- * Message must contain: a <b>nullptr</b>
- *
- * <b>CONSOLE_CLEAR</b> - Clears the console window. <br>
- *
- * Message must contain: a <b>nullptr</b>
- *
- * <b>MOUSE_SCROLL</b> - Scrolls the console window the given amount. <br>
- *
- * Message must contain: a pointer to an <b>int</b>.
- *
- * <b>KEY_PRESSED</b> - Checks if a key is pressed - only cares about the ENTER key. <br>
- *
- * Message must contain: a pointer to an <b>ST::key</b> object.
- *
- * <b>TEXT_STREAM</b> - Updates the internal composition given a pointer to a std::string. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b>.
- *
- */
 class console{
     friend class drawing_manager;
     friend class console_test;

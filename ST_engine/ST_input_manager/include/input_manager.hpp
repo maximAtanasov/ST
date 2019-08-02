@@ -17,38 +17,6 @@
 #include <SDL_haptic.h>
 
 ///This object is responsible for taking input
-/**
- *
- * Messages this subsystem listens to: <br>
- *
- * <b>VIRTUAL_SCREEN_COORDINATES</b> - Tell the input manager what the virtual screen resolution is.
- *
- * Message must contain: a pointer to a <b>std::tuple<int16_t, int16_t></b> containing the width and the height of the viewport. <br>
- *
- * <b>REAL_SCREEN_COORDINATES</b> - Tell the input manager what the actual screen resolution is.
- *
- * Message must contain: a pointer to a <b>std::tuple<int16_t, int16_t></b> containing the width and the height of the screen. <br>
- *
- * <b>START_TEXT_INPUT</b> - Starts taking all keyboard input and sends <b>TEXT_STREAM</b> messages.
- *
- * Message must contain: a <b>nullptr</b>.<br>
- *
- * <b>STOP_TEXT_INPUT</b> - Stops taking all keyboard input.
- *
- * Message must contain: a <b>nullptr</b>.<br>
- *
- * <b>CLEAR_TEXT_STREAM</b> - Clears the text buffer if text_input is true.
- *
- * Message must contain: a <b>nullptr</b>.<br>
- *
- * <b>REGISTER_KEY</b> - Registers the given key and sends input events (pressed, held, released) for it.
- *
- * Message must contain: a pointer to a <b>ST::key</b>. <br>
- *
- * <b>UNREGISTER_KEY</b> - Unregisters a previously registered key and stops sending input events for it.
- *
- * Message must contain: a pointer to a <b>ST::key</b>. <br>
- */
 class input_manager{
 	private:
 

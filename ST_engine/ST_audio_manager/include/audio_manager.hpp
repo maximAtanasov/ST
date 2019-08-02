@@ -16,42 +16,6 @@
 #include <task_manager.hpp>
 
 ///This object is responsible for playing sounds and music
-/**
- *
- * Messages this subsystem listens to: <br>
- *
- * <b>PLAY_SOUND</b> - Plays a sound.
- *
- * Message must contain: a pointer to a <b>std::tuple<size_t, int, int></b> containing the chunk to play,
- * the volume to play it at, and the amount of times to loop it. <br>
- *
- * <b>PLAY_MUSIC</b> - Plays music.
- *
- * Message must contain: a pointer to a <b>std::tuple<size_t, int, int></b> containing the music to play,
- * the volume to play it at, and the amount of times to loop it. <br>
- *
- * <b>STOP_MUSIC</b> - Stops the music.
- *
- * Message must contain: a <b>nullptr</b>.<br>
- *
- * <b>STOP_ALL_SOUNDS</b> - Stops all playing sounds.
- *
- * Message must contain: a <b>nullptr</b>.<br>
- *
- * <b>SET_AUDIO_ENABLED</b> - Toggles the audio on or off.
- *
- * Message must contain: a pointer to a <b>bool</b>.<br>
- *
- * <b>ASSETS</b> - Updates the internal pointer to the assets. This messages is recieved from the asset manager
- * whenever new assets are loaded. <br>
- *
- * Message must contain: a pointer to a <b>ST::assets*</b> containing the assets struct. <br>
- *
- * <b>SET_VOLUME</b> - Sets the current playback volume. <br>
- *
- * Message must contain: a pointer to a <b>uint8_t</b>. <br>
- *
- */
 class audio_manager{
     friend class audio_manager_test;
     private:

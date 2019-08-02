@@ -17,66 +17,6 @@
 #include <bitset>
 
 ///This class is responsible for managing all levels and the lua backend, it is the heart of the engine.
-/**
- * Messages this subsystem listens to: <br>
- *
- * <b>LOAD_LEVEL</b> - Loads a level given it's name.
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the name of the level. (the name of it's folder)<br>
- *
- * <b>START_LEVEL</b> - Starts a level given it's name (must be loaded in advance). <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the name of the level. (the name of it's folder)<br>
- *
- * <b>UNLOAD_LEVEL</b> - Unloads a level given it's name. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the name of the level. (the name of it's folder)<br>
- *
- * <b>KEY_PRESSED</b> - An event signifying that a key is pressed. <br>
- *
- * Message must contain: a pointer to <b>uint8_t</b> representing the key value. See key_definitions.hpp .<br>
- *
- * <b>KEY_HELD</b> - An event signifying that a key is held. <br>
- *
- * Message must contain: a pointer to <b>uint8_t</b> representing the key value. See key_definitions.hpp .<br>
- *
- * <b>KEY_RELEASED</b> - An event signifying that a key is released. <br>
- *
- * Message must contain: a pointer to <b>uint8_t</b> representing the key value. See key_definitions.hpp .<br>
- *
- * <b>MOUSE_X</b> - The current mouse X position. <br>
- *
- * Message must contain: a pointer to a <b>int32_t</b>. <br>
- *
- * <b>MOUSE_Y</b> -The current mouse Y position. <br>
- *
- * Message must contain: a pointer to a <b>int32_t</b>. <br>
- *
- * <b>VOLUME_LEVEL</b> - An event containing the current volume. <br>
- *
- * Message must contain: a pointer to a <b>uint8_t</b>. <br>
- *
- * <b>VSYNC_STATE</b> - An event meaning vsync is on <br>
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>END_GAME</b> - Recieving this event causes the application to shutdown. <br>
- *
- * Message must contain: a <b>nullptr</b>. <br>
- *
- * <b>SHOW_MOUSE</b> - A boolean message to show the mouse cursor or to hide it. <br>
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>EXECUTE_SCRIPT</b> - Executes a script in the global Lua state. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing script. <br>
- *
- * <b>FULLSCREEN_STATUS</b> - A message containing the current fullscreen status. <br>
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- */
 class game_manager{
     private:
         std::vector<ST::level> levels{};

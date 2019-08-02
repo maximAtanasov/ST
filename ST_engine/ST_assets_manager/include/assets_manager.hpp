@@ -21,31 +21,6 @@
 
 
 ///This object is responsible for loading/unloading assets.
-/**
- *
- * Messages this subsystem listens to: <br>
- *
- * <b>LOAD_LIST</b> - Loads assets from a <b>.list</b> file. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br>
- *
- * <b>UNLOAD_LIST</b> - Unloads assets from a <b>.list</b> file. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br>
- *
- * <b>LOAD_ASSET</b> - Loads an asset given a path. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br>
- *
- * <b>UNLOAD_ASSET</b> - Unload an asset given a path to it. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br>
- *
- * <b>LOAD_BINARY</b> - Loads assets contained within a binary. <br>
- *
- * Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br>
- *
- */
 class assets_manager{
     friend class asset_manager_test;
 private:

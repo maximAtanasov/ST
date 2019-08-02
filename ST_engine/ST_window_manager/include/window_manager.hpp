@@ -17,20 +17,6 @@
 #include <SDL_video.h>
 
 ///This object is responsible for managing the window.
-/**
- * Creates and manages an SDL_Window.
- *
- * Messages this subsystem listens to: <br>
- *
- * <b>SET_FULLSCREEN</b> - Sets the window to fullscreen or windowed mode.
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>SET_WINDOW_BRIGHTNESS</b> - Sets the window brightness. Does not currently work.
- *
- * Message must contain: a pointer to a <b>float</b>. <br>
- *
- */
 class window_manager{
     private:
         SDL_Surface* icon{};
