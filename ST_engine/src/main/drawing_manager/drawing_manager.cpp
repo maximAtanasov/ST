@@ -292,25 +292,25 @@ void drawing_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == SET_VSYNC){
-            auto arg = static_cast<bool*>(temp->get_data());
-            if(*arg){
+            auto arg = static_cast<bool>(temp->base_data0);
+            if(arg){
                 ST::renderer_sdl::vsync_on();
             }else{
                 ST::renderer_sdl::vsync_off();
             }
-            gMessage_bus->send_msg(new message(VSYNC_STATE, make_data<>(*arg)));
+            gMessage_bus->send_msg(new message(VSYNC_STATE, arg, nullptr));
         }
         else if(temp->msg_name == SET_DARKNESS){
-            set_darkness(*(static_cast<uint8_t*>(temp->get_data())));
+            set_darkness(static_cast<uint8_t>(temp->base_data0));
         }
         else if(temp->msg_name == SHOW_COLLISIONS){
-            collisions_shown = *static_cast<bool*>(temp->get_data());
+            collisions_shown = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == SHOW_FPS){
-            show_fps = *static_cast<bool*>(temp->get_data());
+            show_fps = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == ENABLE_LIGHTING){
-            lighting_enabled = *static_cast<bool*>(temp->get_data());
+            lighting_enabled = static_cast<bool>(temp->base_data0);
         }
         else if(temp->msg_name == SURFACES_ASSETS) {
             auto surfaces = *static_cast<ska::bytell_hash_map<uint16_t, SDL_Surface *>**>(temp->get_data());

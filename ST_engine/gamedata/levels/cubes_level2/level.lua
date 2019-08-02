@@ -77,11 +77,11 @@ obstacle_1_10 = platform:new(4840, floor-500);
 obstacle_1_11 = platform:new(5700, floor-300);
 obstacle_1_12 = platform:new(6250, floor-200);
 obstacle_1_13 = platform:new(7000, floor-200);
-obstacle_1_14 = platform:new(7700, floor-690);
-obstacle_1_15 = platform:new(8200, floor-690);
-obstacle_1_16 = platform:new(8700, floor-690);
+obstacle_1_14 = platform:new(7550, floor-690);
+obstacle_1_15 = platform:new(8050, floor-690);
+obstacle_1_16 = platform:new(8550, floor-690);
 
-obstacle_1_17 = platform:new(9500, floor-300);
+obstacle_1_17 = platform:new(9350, floor-300);
 obstacle_1_18 = platform:new(11000, floor-300);
 obstacle_1_19 = obstacle_1:new(13200, floor-200);
 obstacle_1_20 = platform:new(14000, floor-300);

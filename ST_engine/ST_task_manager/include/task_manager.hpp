@@ -10,9 +10,11 @@
 #ifndef TASK_MNGR_DEF
 #define TASK_MNGR_DEF
 
-#include <message_bus.hpp>
 #include "../src/main/task.hpp"
 #include "../src/main/semaphore.hpp"
+#include <vector>
+#include <thread>
+#include <ST_util/atomic_queue/concurrentqueue.h>
 
 typedef semaphore* task_id;
 
@@ -25,7 +27,6 @@ class task_manager{
 
     private:
         uint8_t thread_num = 0;
-        message_bus* gMessage_bus{};
         std::vector<std::thread> task_threads{};
         std::atomic_bool run_threads{true};
         semaphore* work_sem{};
@@ -36,8 +37,8 @@ class task_manager{
         void start_thread(int (*thread_func)(void*), void* data);
 
     public:
-        explicit task_manager(message_bus* msg_bus);
-		task_manager(message_bus* msg_bus, uint8_t thread_num);
+        explicit task_manager();
+		explicit task_manager(uint8_t thread_num);
 		~task_manager();
 		task_id start_task(ST::task* arg);
         void start_task_lockfree(ST::task* arg);

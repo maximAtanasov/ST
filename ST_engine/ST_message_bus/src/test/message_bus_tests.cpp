@@ -33,6 +33,7 @@ TEST_F(message_bus_tests, test_one_subscriber_to_message){
     ASSERT_EQ(&test_subscriber, subscribers_in_bus.at(0));
 }
 
+
 TEST_F(message_bus_tests, test_five_subscribers_to_message){
     //Set up
     uint8_t msg = 1;

@@ -32,7 +32,8 @@ add_executable(message_test
         ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
         ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message.hpp
-        ${PROJECT_SOURCE_DIR}/src/test/message_tests.cpp src/main/message.cpp)
+        ${PROJECT_SOURCE_DIR}/src/test/message_tests.cpp
+        src/main/message.cpp)
 
 target_link_libraries(message_test
         ST_util
@@ -54,7 +55,8 @@ add_executable(message_bus_test
         ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
         ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
         ${PROJECT_SOURCE_DIR}/src/main/message.hpp
-        ${PROJECT_SOURCE_DIR}/src/test/message_bus_tests.cpp src/main/message.cpp)
+        ${PROJECT_SOURCE_DIR}/src/test/message_bus_tests.cpp
+        src/main/message.cpp)
 
 target_link_libraries(message_bus_test
         ST_util

@@ -18,40 +18,6 @@
 #include <console.hpp>
 
 ///This object is responsible for issuing drawing commands and drawing the current level.
-/**
- * Handles drawing the entities, text objects, lights, the console window and debug information on the screen.
- *
- * Messages this subsystem listens to: <br>
- *
- * <b>SET_VSYNC</b> - Enables or disables VSYNC.
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates.
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>SHOW_FPS</b> - Show or hide the current fps.
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>SET_DARKNESS</b> - Sets the current darkness level.
- *
- * Message must contain: a pointer to a <b>uint8_t</b>. <br>
- *
- * <b>ASSETS</b> - Updates the internal pointer to the assets. This messages is recieved from the asset manager
- * whenever new assets are loaded. <br>
- *
- * Message must contain: a pointer to a <b>ST::assets*</b> containing the assets struct. <br>
- *
- * <b>ENABLE_LIGHTING</b> - Enable or disable the lighting.
- *
- * Message must contain: a pointer to a <b>bool</b>. <br>
- *
- * <b>SET_RESOLUTION</b> - Sets the rendering resolution for the renderer.
- *
- * Message must contain: a pointer to a <b>std::tuple<int16_t, int16_t></b> containing the width and the height of the screen. <br>
- */
 class drawing_manager{
     private:
         //external dependency - delivered in the constructor

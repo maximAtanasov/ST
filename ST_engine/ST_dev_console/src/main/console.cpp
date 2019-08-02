@@ -41,16 +41,17 @@ console::console(message_bus* msg_bus){
 }
 
 void console::post_init() const{
-    gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::ENTER)));
-    gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::TILDE)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::LEFT)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::RIGHT)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::UP)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::DOWN)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::BACKSPACE)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, make_data(ST::key::DELETE)));
-
+    gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::ENTER), nullptr));
+    gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::TILDE), nullptr));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::LEFT), nullptr));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::RIGHT), nullptr));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::UP), nullptr));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DOWN), nullptr));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::BACKSPACE), nullptr));
+	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DELETE), nullptr));
 }
+
+
 /**
  * @param scroll_y scrolls the console window relative to this amount.
  */
@@ -88,9 +89,9 @@ void console::handle_messages(){
             this->entries.clear();
         }
         else if(temp->msg_name == MOUSE_SCROLL){
-            scroll(*static_cast<int32_t*>(temp->get_data()));
+            scroll(static_cast<int32_t>(temp->base_data0));
         }else if(temp->msg_name == KEY_HELD){
-            auto key_val = *static_cast<ST::key*>(temp->get_data());
+            auto key_val = static_cast<ST::key>(temp->base_data0);
             if (is_open()) {
                 if(hold_counter > 10) {
                     if (key_val == ST::key::LEFT) {
@@ -116,7 +117,7 @@ void console::handle_messages(){
             }
         }*/
         else if (temp->msg_name == KEY_PRESSED) {
-			auto key_val = *static_cast<ST::key*>(temp->get_data());
+            auto key_val = static_cast<ST::key>(temp->base_data0);
 			if (key_val == ST::key::ENTER) {
 				if (!composition.empty()) {
 					write(composition, ST::log_type::INFO);

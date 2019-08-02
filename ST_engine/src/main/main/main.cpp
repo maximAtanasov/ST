@@ -37,7 +37,7 @@ int ST_engine_main(int argc, char *argv[]) {
     console gConsole(&gMessage_bus);
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
 
-    task_manager gTask_manager(&gMessage_bus);
+    task_manager gTask_manager;
     audio_manager gAudio_manager(&gMessage_bus, &gTask_manager);
     input_manager gInput_manager(&gMessage_bus, &gTask_manager);
     window_manager gDisplay_manager(&gMessage_bus, &gTask_manager, "ST");
@@ -61,6 +61,8 @@ int ST_engine_main(int argc, char *argv[]) {
     assets_manager::update_task(&gAssets_manager);
     gDisplay_manager.update();
 
+    printf("%ld\n", sizeof(std::tuple<float, uint32_t>));
+
     //main loop
     while(gGame_manager.game_is_running()){
         new_time = gTimer.time_since_start();
@@ -81,7 +83,6 @@ int ST_engine_main(int argc, char *argv[]) {
             gDisplay_manager.update();
             gAudio_manager.update();
         }
-
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
         gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);

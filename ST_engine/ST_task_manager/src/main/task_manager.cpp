@@ -206,9 +206,8 @@ void task_manager::do_work(ST::task* work) {
 /**
  * Initializes the task manager.
  * Starts as many worker threads as there are logical cores in the system - 1.
- * @param msg_bus A pointer to the global message bus.
  */
-task_manager::task_manager(message_bus *msg_bus){
+task_manager::task_manager(){
 
     if(singleton_initialized){
         throw std::runtime_error("The task manager cannot be initialized more than once!");
@@ -216,17 +215,17 @@ task_manager::task_manager(message_bus *msg_bus){
         singleton_initialized = true;
     }
 
-    //Set our external dependency
-    gMessage_bus = msg_bus;
-
     //check how many threads we have
     thread_num = static_cast<uint8_t>(get_cpu_core_count());
-
 
     //initialize semaphore for worker threads
     work_sem = new semaphore;
 
-    fprintf(stdout, "This system has %d physical cores\nStarting %d task threads\n", thread_num, thread_num-1);
+    uint16_t task_thread_count = thread_num - 1;
+    if(task_thread_count == 0){
+        task_thread_count = 1;
+    }
+    fprintf(stdout, "This system has %d physical cores\nStarting %d task threads\n", thread_num, task_thread_count);
 
     //if we can't tell or there is only one core, then start one worker thread
     if(thread_num == 0 || thread_num == 1){
@@ -243,16 +242,13 @@ task_manager::task_manager(message_bus *msg_bus){
  * Starts worker threads equal to thread_num.
  * @param msg_bus A pointer to the global message bus.
  */
-task_manager::task_manager(message_bus *msg_bus, uint8_t thread_num){
+task_manager::task_manager(uint8_t thread_num){
 
     if(singleton_initialized){
         throw std::runtime_error("The task manager cannot be initialized more than once!");
     }else{
         singleton_initialized = true;
     }
-
-    //Set our external dependency
-    gMessage_bus = msg_bus;
 
     //initialize semaphore for worker threads
     work_sem = new semaphore;
