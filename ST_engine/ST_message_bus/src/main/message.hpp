@@ -24,7 +24,9 @@ private:
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
 
 public:
+    uint32_t base_data = 0; //An additional 16 bits of data can be stored here. We're 8 byte aligned, so this is for free.
     uint8_t msg_name{};
+
     void* get_data() const;
     message *make_copy();
 
@@ -36,6 +38,16 @@ public:
      */
     message(uint8_t name, const std::shared_ptr<void>& data){
         this->msg_name = name;
+        this->data = data;
+    }
+
+    /**
+     * @param name The type of message. See <b>ST::msg_type</b>.
+     * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
+     */
+    message(uint8_t name, uint32_t base_data, const std::shared_ptr<void>& data){
+        this->msg_name = name;
+        this->base_data = base_data;
         this->data = data;
     }
 
@@ -63,7 +75,7 @@ inline void* message::get_data() const{
 }
 
 inline message* message::make_copy() {
-    return new message(this->msg_name, this->data);
+    return new message(this->msg_name, this->base_data, this->data);
 }
 
 #endif //ST_MESSAGE_HPP

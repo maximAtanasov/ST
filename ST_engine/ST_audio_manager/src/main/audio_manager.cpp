@@ -74,17 +74,17 @@ void audio_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
         if(temp->msg_name == PLAY_SOUND){
-            auto data = static_cast<std::tuple<uint16_t, uint8_t, int8_t>*>(temp->get_data());
-            uint16_t name = std::get<0> (*data);
-            uint8_t volume = std::get<1> (*data);
-            int8_t loops = std::get<2> (*data);
+            auto data = temp->base_data;
+            uint16_t name = data & 0x0000ffffU;
+            uint8_t volume = (data >> 16U) & 0x000000ffU;
+            int8_t loops = (data >> 24U) & 0x000000ffU;
             play_sound(name, volume, loops);
         }
         else if(temp->msg_name == PLAY_MUSIC){
-            auto data = static_cast<std::tuple<uint16_t, uint8_t, int8_t>*>(temp->get_data());
-            uint16_t name = std::get<0> (*data);
-            uint8_t volume = std::get<1> (*data);
-            int8_t loops = std::get<2> (*data);
+            auto data = temp->base_data;
+            uint16_t name = data & 0x0000ffffU;
+            uint8_t volume = (data >> 16U) & 0x000000ffU;
+            int8_t loops = (data >> 24U) & 0x000000ffU;
             play_music(name, volume, loops);
         }
         else if(temp->msg_name == STOP_MUSIC){
@@ -100,8 +100,8 @@ void audio_manager::handle_messages(){
             gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Sounds stopped")));
         }
         else if(temp->msg_name == SET_AUDIO_ENABLED){
-            auto arg = static_cast<bool*>(temp->get_data());
-            if(!*arg){
+            auto arg = static_cast<bool>(temp->base_data);
+            if(!arg){
                 gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio muted")));
                 mute();
             }
@@ -109,7 +109,7 @@ void audio_manager::handle_messages(){
                 unmute();
                 gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio unmuted")));
             }
-            gMessage_bus->send_msg(new message(AUDIO_ENABLED, make_data(*arg)));
+            gMessage_bus->send_msg(new message(AUDIO_ENABLED, arg, nullptr));
         }
         else if(temp->msg_name == MUSIC_ASSETS){
             music_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Music*>**>(temp->get_data());
@@ -118,15 +118,15 @@ void audio_manager::handle_messages(){
             chunks_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Chunk*>**>(temp->get_data());
         }
         else if(temp->msg_name == SET_SOUNDS_VOLUME){
-            set_chunk_volume(*static_cast<uint8_t*>(temp->get_data()));
+            set_chunk_volume(static_cast<uint8_t>(temp->base_data));
             if(!muted) {
-                gMessage_bus->send_msg(new message(SOUNDS_VOLUME_LEVEL, make_data(chunk_volume)));
+                gMessage_bus->send_msg(new message(SOUNDS_VOLUME_LEVEL, chunk_volume, nullptr));
             }
         }
         else if(temp->msg_name == SET_MUSIC_VOLUME){
-            set_music_volume(*static_cast<uint8_t*>(temp->get_data()));
+            set_music_volume(static_cast<uint8_t>(temp->base_data));
             if(!muted) {
-                gMessage_bus->send_msg(new message(MUSIC_VOLUME_LEVEL, make_data(music_volume)));
+                gMessage_bus->send_msg(new message(MUSIC_VOLUME_LEVEL, music_volume, nullptr));
             }
         }
         delete temp;

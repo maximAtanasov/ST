@@ -33,7 +33,7 @@ int8_t ST::level::load(){
     //Register all the keys this level uses with the input manager.
     for(const auto &i : actions_Buttons) {
         for(const auto& key : i.second) {
-            gMessage_bus->send_msg(new message(REGISTER_KEY, make_data<ST::key>(key)));
+            gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(key), nullptr));
         }
     }
     std::string temp = "levels/" + name + "/assets.list";
@@ -48,14 +48,16 @@ void ST::level::reload(){
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
     for(const auto &i : actions_Buttons) {
-        gMessage_bus->send_msg(new message(UNREGISTER_KEY, make_data(i.second)));
+        for(const auto &key : i.second){
+            gMessage_bus->send_msg(new message(UNREGISTER_KEY, static_cast<uint8_t>(key), nullptr));
+        }
     }
     actions_Buttons.clear();
     gMessage_bus->send_msg(new message(LOAD_LIST, make_data(temp)));
     load_input_conf();
     for(const auto &i : actions_Buttons) {
         for(const auto& key : i.second) {
-            gMessage_bus->send_msg(new message(REGISTER_KEY, make_data<ST::key>(key)));
+            gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(key), nullptr));
         }
     }
 }
@@ -92,7 +94,9 @@ ST::level::~level(){
  */
 void ST::level::unload(){
     for(const auto &i : actions_Buttons) {
-        gMessage_bus->send_msg(new message(UNREGISTER_KEY, make_data(i.second)));
+        for (const auto &key : i.second) {
+            gMessage_bus->send_msg(new message(UNREGISTER_KEY, static_cast<uint8_t>(key), nullptr));
+        }
     }
     //unload assets
     std::string temp = "levels/" + name + "/assets.list";

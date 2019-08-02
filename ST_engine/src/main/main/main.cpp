@@ -61,6 +61,8 @@ int ST_engine_main(int argc, char *argv[]) {
     assets_manager::update_task(&gAssets_manager);
     gDisplay_manager.update();
 
+    printf("%ld\n", sizeof(std::tuple<float, uint32_t>));
+
     //main loop
     while(gGame_manager.game_is_running()){
         new_time = gTimer.time_since_start();
@@ -81,7 +83,6 @@ int ST_engine_main(int argc, char *argv[]) {
             gDisplay_manager.update();
             gAudio_manager.update();
         }
-
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
         gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);
