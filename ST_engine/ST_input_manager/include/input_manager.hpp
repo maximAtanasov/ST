@@ -55,7 +55,7 @@ class input_manager{
 		float ratio_w = 1, ratio_h = 1;
 		SDL_Event event{};
 
-		message_bus* gMessage_bus{};
+		message_bus& gMessage_bus;
         task_manager* gTask_manager{};
 		subscriber msg_sub{};
 		std::vector<SDL_GameController*> controllers;
@@ -83,7 +83,7 @@ class input_manager{
 
 	public:
 
-        input_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        input_manager(task_manager *tsk_mngr, message_bus &gMessageBus);
         ~input_manager();
         void update();
 };

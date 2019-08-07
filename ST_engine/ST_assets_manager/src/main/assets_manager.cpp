@@ -18,7 +18,7 @@ static bool singleton_initialized = false;
  * @param msg_bus - A pointer to the global message bus.
  * @param tsk_mngr - A pointer to the global task manager.
  */
-assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
+assets_manager::assets_manager(message_bus &gMessageBus, task_manager *tsk_mngr) : gMessage_bus(gMessageBus) {
 
     if(singleton_initialized){
         throw std::runtime_error("The assets manager cannot be initialized more than once!");
@@ -27,15 +27,14 @@ assets_manager::assets_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     }
 
     //set external dependencies
-    gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
     //subscribe to messages
-    gMessage_bus->subscribe(LOAD_LIST, &msg_sub);
-    gMessage_bus->subscribe(UNLOAD_LIST, &msg_sub);
-    gMessage_bus->subscribe(LOAD_ASSET, &msg_sub);
-    gMessage_bus->subscribe(UNLOAD_ASSET, &msg_sub);
-    gMessage_bus->subscribe(LOAD_BINARY, &msg_sub);
+    gMessage_bus.subscribe(LOAD_LIST, &msg_sub);
+    gMessage_bus.subscribe(UNLOAD_LIST, &msg_sub);
+    gMessage_bus.subscribe(LOAD_ASSET, &msg_sub);
+    gMessage_bus.subscribe(UNLOAD_ASSET, &msg_sub);
+    gMessage_bus.subscribe(LOAD_BINARY, &msg_sub);
 
     //load the global assets
     load_assets_from_list("levels/assets_global.list");
@@ -101,7 +100,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
                 count[surface.first]++;
                 continue;
             }else{
-                gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + surface.first)));
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + surface.first)));
                 count[surface.first]++;
                 uint16_t hashed = ST::hash_string(surface.first);
                 all_assets.surfaces[hashed] = surface.second;
@@ -112,7 +111,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
                 count[chunk.first]++;
                 continue;
             }else{
-                gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + chunk.first)));
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + chunk.first)));
                 count[chunk.first]++;
                 uint16_t hashed = ST::hash_string(chunk.first);
                 all_assets.chunks[hashed] = chunk.second;
@@ -123,7 +122,7 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
                 count[music.first]++;
                 continue;
             }else{
-                gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + music.first)));
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + music.first)));
                 count[music.first]++;
                 uint16_t hashed = ST::hash_string(music.first);
                 all_assets.music[hashed] = music.second;
@@ -164,10 +163,10 @@ int8_t assets_manager::unload_assets_from_binary(const std::string& path) {
 }
 
 void assets_manager::send_assets() {
-	gMessage_bus->send_msg(new message(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
-	gMessage_bus->send_msg(new message(FONTS_ASSETS, make_data(&all_assets.fonts)));
-	gMessage_bus->send_msg(new message(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
-	gMessage_bus->send_msg(new message(MUSIC_ASSETS, make_data(&all_assets.music)));
+	gMessage_bus.send_msg(new message(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
+	gMessage_bus.send_msg(new message(FONTS_ASSETS, make_data(&all_assets.fonts)));
+	gMessage_bus.send_msg(new message(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
+	gMessage_bus.send_msg(new message(MUSIC_ASSETS, make_data(&all_assets.music)));
 }
 
 /**
@@ -195,9 +194,9 @@ int8_t assets_manager::load_asset(std::string path){
     //Handle the different extensions - currently png, webp, wav, mp3, ttf
 
     if(extention == ST::asset_file_type::BIN){
-        gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Loading from binary " + path)));
+        gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Loading from binary " + path)));
     }else {
-        gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Loading " + path)));
+        gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Loading " + path)));
     }
 
     if(extention == ST::asset_file_type::PNG || extention == ST::asset_file_type::WEBP){
@@ -208,7 +207,7 @@ int8_t assets_manager::load_asset(std::string path){
             all_assets.surfaces[string_hash] = temp1;
             count.at(path) += 1;
         }else{
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
     }else if(extention == ST::asset_file_type::WAV){
@@ -220,7 +219,7 @@ int8_t assets_manager::load_asset(std::string path){
             count.at(path) += 1;
         }
         else{
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
     }else if(extention == ST::asset_file_type::OGG){
@@ -232,7 +231,7 @@ int8_t assets_manager::load_asset(std::string path){
             count.at(path) += 1;
         }
         else {
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
     }else if(extention == ST::asset_file_type::BIN){
@@ -248,7 +247,7 @@ int8_t assets_manager::load_asset(std::string path){
             convert >> size;
         }catch(const std::out_of_range& e){
 			(void)e;
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Font size not specified!")));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Font size not specified!")));
             return -1;
         }
         std::string font = result.at(0);
@@ -259,7 +258,7 @@ int8_t assets_manager::load_asset(std::string path){
             all_assets.fonts[ST::hash_string(font_and_size)] = tempFont;
             count.at(font_and_size) += 1;
         }else{
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + font + " not found!")));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + font + " not found!")));
             return -1;
         }
     }
@@ -285,7 +284,7 @@ int8_t assets_manager::load_assets_from_list(const std::string& path){
         file.close();
     }
     else{
-        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
+        gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return -1;
     }
 	send_assets();
@@ -311,7 +310,7 @@ int8_t assets_manager::unload_assets_from_list(const std::string& path){
         file.close();
     }
     else{
-        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
+        gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
         return -1;
     }
 	send_assets();
@@ -338,7 +337,7 @@ int8_t assets_manager::unload_asset(std::string path){
     }
 
     ST::asset_file_type extension = ST::get_file_extension(path);
-    gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Unloading " + path)));
+    gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Unloading " + path)));
 
     if(extension == ST::asset_file_type::PNG || extension == ST::asset_file_type::WEBP){
         path = ST::trim_path(path);

@@ -19,7 +19,7 @@
 ///This class handles all physics related actions in the engine.
 class physics_manager{
     private:
-        message_bus* gMessage_bus{};
+        message_bus& gMessage_bus;
         std::vector<ST::entity>* entities{};
 		task_manager* gTask_manager{};
         subscriber msg_sub{};
@@ -28,18 +28,17 @@ class physics_manager{
         int8_t gravity = 0;
         int8_t friction = 0;
 
-
         static int check_collision(uint64_t, std::vector<ST::entity>* entities);
         static int entity_set_x(int32_t x, uint64_t, std::vector<ST::entity>* entities);
         static int entity_set_y(int32_t y, uint64_t, std::vector<ST::entity>* entities);
+		static void process_horizontal(std::vector<ST::entity>* entities, int8_t friction);
+		static void process_vertical(std::vector<ST::entity>* entities, int8_t gravity, int32_t level_floor);
 
-		void process_horizontal(std::vector<ST::entity>* entities);
-		void process_vertical(std::vector<ST::entity>* entities);
         void handle_messages();
 
 
     public:
-        physics_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        physics_manager(message_bus &gMessageBus, task_manager *tsk_mngr);
         void update(std::vector<ST::entity>* data);
         ~physics_manager();
 };
@@ -53,8 +52,8 @@ class physics_manager{
 inline void physics_manager::update(std::vector<ST::entity>* data){
     handle_messages();
     if(!physics_paused){
-        process_horizontal(data);
-        process_vertical(data);
+        process_horizontal(data, friction);
+        process_vertical(data, gravity, level_floor);
     }
     auto end = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 }

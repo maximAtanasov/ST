@@ -33,7 +33,7 @@ class audio_manager{
         ///External dependencies
         ska::bytell_hash_map<uint16_t, Mix_Chunk*>* chunks_ptr{};
         ska::bytell_hash_map<uint16_t, Mix_Music*>* music_ptr{};//-Delivered as a message
-        message_bus* gMessage_bus{}; //-Delivered in constructor
+        message_bus& gMessage_bus; //-Delivered in constructor
         task_manager* gTask_manager{}; //-Delivered in constructor
 
         ///internal update functions
@@ -53,7 +53,7 @@ class audio_manager{
         static void update_task(void* arg);
 
     public:
-        audio_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        audio_manager(task_manager *tsk_mngr, message_bus &gMessageBus);
         ~audio_manager();
         void update();
 };
@@ -123,7 +123,7 @@ inline void audio_manager::play_sound(uint16_t arg, uint8_t volume, int8_t loops
             Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
         }
         if(Mix_PlayChannel( -1, data->second, loops ) == -1){
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayChannel Error " + std::string(Mix_GetError()))));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayChannel Error " + std::string(Mix_GetError()))));
         }
     }
 }
@@ -142,7 +142,7 @@ inline void audio_manager::play_music(uint16_t arg, uint8_t volume, int8_t loops
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         }
         if(Mix_PlayMusic(data->second, loops) == -1){
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayMusic Error " + std::string(Mix_GetError()))));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayMusic Error " + std::string(Mix_GetError()))));
         }
     }
 }

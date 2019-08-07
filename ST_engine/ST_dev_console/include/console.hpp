@@ -30,8 +30,12 @@ class console{
 
         SDL_Color color{};
         SDL_Color color_text{};
+        SDL_Color color_info{};
+        SDL_Color color_error{};
+        SDL_Color color_success{};
 
-        subscriber msg_sub{};
+
+    subscriber msg_sub{};
         bool shown = false;
         std::vector<ST::console_log> entries;
 		std::vector<std::string> command_entries;

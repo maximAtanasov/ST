@@ -58,7 +58,7 @@ protected:
 
     void SetUp() override{
         msg_bus = new message_bus();
-        test_mngr = new assets_manager(msg_bus, nullptr);
+        test_mngr = new assets_manager(*msg_bus, nullptr);
     }
 
     void TearDown() override{

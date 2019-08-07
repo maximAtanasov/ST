@@ -19,13 +19,14 @@
 ///This class is responsible for managing all levels and the lua backend, it is the heart of the engine.
 class game_manager{
     private:
-        std::vector<ST::level> levels{};
+
+    std::vector<ST::level> levels{};
         std::string active_level{};
         ST::level* current_level_pointer{};
         subscriber msg_sub{};
         std::atomic_bool game_is_running_{};
         lua_backend gScript_backend{};
-        message_bus* gMessage_bus{};
+        message_bus& gMessage_bus;
         task_manager* gTask_manager{};
         std::bitset<78> keys_pressed_data{};
         std::bitset<78> keys_held_data{};
@@ -60,7 +61,7 @@ class game_manager{
         bool audio_enabled = true;
         int8_t gravity = 0;
 
-        game_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        game_manager(task_manager* tsk_mngr, message_bus& msg_bus);
         ~game_manager();
         std::string get_active_level() const;
         bool key_pressed(uint16_t arg) const;

@@ -46,7 +46,7 @@ protected:
 
     void SetUp() override{
         msg_bus = new message_bus();
-        test_mngr = new audio_manager(msg_bus, nullptr);
+        test_mngr = new audio_manager(nullptr, *msg_bus);
     }
 
     void TearDown() override{

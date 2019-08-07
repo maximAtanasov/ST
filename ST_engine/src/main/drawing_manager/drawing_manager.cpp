@@ -22,7 +22,7 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
  */
-drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
+drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
 
     if(singleton_initialized){
         throw std::runtime_error("The drawing manager cannot be initialized more than once!");
@@ -35,19 +35,16 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 		exit(1);
 	}
 
-    //set our external dependencies
-    gMessage_bus = msg_bus;
-
 	//Subscribe to certain messages
-	gMessage_bus->subscribe(VSYNC_STATE, &msg_sub);
-	gMessage_bus->subscribe(SET_VSYNC, &msg_sub);
-	gMessage_bus->subscribe(SHOW_COLLISIONS, &msg_sub);
-    gMessage_bus->subscribe(SHOW_FPS, &msg_sub);
-	gMessage_bus->subscribe(SET_DARKNESS, &msg_sub);
-	gMessage_bus->subscribe(SURFACES_ASSETS, &msg_sub);
-    gMessage_bus->subscribe(FONTS_ASSETS, &msg_sub);
-    gMessage_bus->subscribe(ENABLE_LIGHTING, &msg_sub);
-    gMessage_bus->subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
+	gMessage_bus.subscribe(VSYNC_STATE, &msg_sub);
+	gMessage_bus.subscribe(SET_VSYNC, &msg_sub);
+	gMessage_bus.subscribe(SHOW_COLLISIONS, &msg_sub);
+    gMessage_bus.subscribe(SHOW_FPS, &msg_sub);
+	gMessage_bus.subscribe(SET_DARKNESS, &msg_sub);
+	gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
+    gMessage_bus.subscribe(FONTS_ASSETS, &msg_sub);
+    gMessage_bus.subscribe(ENABLE_LIGHTING, &msg_sub);
+    gMessage_bus.subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
 
     //debug collisions aren't shown by default
 	collisions_shown = false;
@@ -63,7 +60,7 @@ drawing_manager::drawing_manager(SDL_Window* window, message_bus* msg_bus){
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
     uint32_t screen_width_height = w_width | (w_height << 16U);
-    gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height, nullptr));
+    gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
 }
 
 /**
@@ -130,10 +127,18 @@ void drawing_manager::draw_console(console& cnsl){
     if(cnsl.is_open()){
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
+        SDL_Color log_entry_color{};
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
             if (pos - cnsl.font_size + cnsl.scroll_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
+                if(i->type == ST::log_type::ERROR){
+                    log_entry_color = cnsl.color_error;
+                } else if(i->type == ST::log_type::INFO){
+                    log_entry_color = cnsl.color_info;
+                } else {
+                    log_entry_color = cnsl.color_success;
+                }
                 ST::renderer_sdl::draw_text(default_font_normal, i->text, 0,
-                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset, i->color, -1);
+                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset, log_entry_color, -1);
             }
             pos -= cnsl.font_size + 5;
         }
@@ -299,7 +304,7 @@ void drawing_manager::handle_messages(){
             }else{
                 ST::renderer_sdl::vsync_off();
             }
-            gMessage_bus->send_msg(new message(VSYNC_STATE, arg, nullptr));
+            gMessage_bus.send_msg(new message(VSYNC_STATE, arg));
         }
         else if(temp->msg_name == SET_DARKNESS){
             set_darkness(static_cast<uint8_t>(temp->base_data0));
@@ -326,7 +331,7 @@ void drawing_manager::handle_messages(){
             w_width = data & 0x0000ffffU;
             w_height = (data >> 16U) & 0x0000ffffU;
             uint32_t screen_width_height = w_width | (w_height << 16U);
-            gMessage_bus->send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height, nullptr));
+            gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
             ST::renderer_sdl::set_resolution(w_width, w_height);
         }
         delete temp;

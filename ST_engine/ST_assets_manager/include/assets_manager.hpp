@@ -24,7 +24,7 @@
 class assets_manager{
     friend class asset_manager_test;
 private:
-        message_bus* gMessage_bus{};
+        message_bus& gMessage_bus;
         task_manager* gTask_manager{};
         subscriber msg_sub{};
         ST::assets all_assets;
@@ -39,7 +39,7 @@ private:
 		void send_assets();
 
 public:
-        assets_manager(message_bus* msg_bus, task_manager* tsk_mngr);
+        assets_manager(message_bus &gMessageBus, task_manager *tsk_mngr);
         ~assets_manager();
         void update();
 

@@ -23,7 +23,7 @@ class window_manager{
         SDL_Window* window{};
         SDL_DisplayMode DM{};
         task_manager* gTask_manager{};
-        message_bus* gMessage_bus{};
+        message_bus& gMessage_bus;
         int16_t height = 0;
         int16_t width = 0;
         subscriber msg_sub{};
@@ -34,7 +34,7 @@ class window_manager{
         static void update_task(void* mngr);
 
     public:
-        window_manager(message_bus* msg_bus, task_manager* tsk_mngr, const std::string& window_name);
+        window_manager(message_bus &gMessageBus, task_manager *tsk_mngr, const std::string &window_name);
         ~window_manager();
         void update();
         SDL_Window* get_window();

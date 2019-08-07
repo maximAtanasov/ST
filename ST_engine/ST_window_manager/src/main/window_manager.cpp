@@ -30,7 +30,8 @@ window_manager::~window_manager(){
  * @param msg_bus a pointer to the global message bus
  * @param tsk_mngr a pointer to the global task manager
  */
-window_manager::window_manager(message_bus* msg_bus, task_manager* tsk_mngr, const std::string& window_name){
+window_manager::window_manager(message_bus &gMessageBus, task_manager *tsk_mngr, const std::string &window_name)
+        : gMessage_bus(gMessageBus) {
 
     if(singleton_initialized){
         throw std::runtime_error("The window manager cannot be initialized more than once!");
@@ -47,21 +48,20 @@ window_manager::window_manager(message_bus* msg_bus, task_manager* tsk_mngr, con
         exit(1);
     }
     gTask_manager = tsk_mngr;
-    gMessage_bus = msg_bus;
 	SDL_GetDisplayMode(0, 0, &DM);
 	width = static_cast<int16_t>(DM.w);
     height = static_cast<int16_t>(DM.h);
     window = SDL_CreateWindow(window_name.c_str(), 0, 0, width, height, SDL_WINDOW_OPENGL);
-    gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height))));
+    gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height))));
     uint32_t screen_width_height = width | (height << 16U);
-    gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height, nullptr));
+    gMessage_bus.send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height));
 
     //Load and set icon
     icon = IMG_Load("levels/icon.png");
     SDL_SetWindowIcon(window, icon);
 
-    gMessage_bus->subscribe(SET_FULLSCREEN, &msg_sub);
-    gMessage_bus->subscribe(SET_WINDOW_RESOLUTION, &msg_sub);
+    gMessage_bus.subscribe(SET_FULLSCREEN, &msg_sub);
+    gMessage_bus.subscribe(SET_WINDOW_RESOLUTION, &msg_sub);
 }
 
 /**
@@ -84,12 +84,12 @@ void window_manager::handle_messages(){
         if(temp->msg_name == SET_FULLSCREEN){
             auto arg = static_cast<bool>(temp->base_data0);
             set_fullscreen(arg);
-            gMessage_bus->send_msg(new message(FULLSCREEN_STATUS, arg, nullptr));
+            gMessage_bus.send_msg(new message(FULLSCREEN_STATUS, arg));
         }
         else if(temp->msg_name == SET_WINDOW_BRIGHTNESS){
             auto arg = *static_cast<float*>(temp->get_data());
             set_brightness(arg);
-            gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(arg))));
+            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(arg))));
         }
         else if(temp->msg_name == SET_WINDOW_RESOLUTION){
             auto data = temp->base_data0;
@@ -97,7 +97,7 @@ void window_manager::handle_messages(){
             int16_t new_height = (data >> 16U) & 0x0000ffffU;
             if(new_width != width && new_height != height) {
                 uint32_t screen_width_height = new_width | (new_height << 16U);
-                gMessage_bus->send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height, nullptr));
+                gMessage_bus.send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height));
                 SDL_SetWindowSize(window, new_width, new_height);
                 width = new_width;
                 height = new_height;

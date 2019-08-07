@@ -38,11 +38,13 @@ namespace ST {
      */
     class console_log {
     public:
-        SDL_Color color{};
-        std::string text;
         ST::log_type type;
+        std::string text;
 
-        console_log(log_type type, const std::string &text);
+        console_log(log_type type, const std::string &text){
+            this->type = type;
+            this->text = text;
+        }
     };
 }
 

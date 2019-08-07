@@ -20,7 +20,7 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
-game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
+game_manager::game_manager(task_manager *tsk_mngr, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
 
     if(singleton_initialized){
         throw std::runtime_error("The game manager cannot be initialized more than once!");
@@ -28,35 +28,34 @@ game_manager::game_manager(message_bus *msg_bus, task_manager *tsk_mngr){
         singleton_initialized = true;
     }
 
-    gMessage_bus = msg_bus;
-    gScript_backend.initialize(gMessage_bus, this);
+    gScript_backend.initialize(&gMessage_bus, this);
     gTask_manager = tsk_mngr;
 
     //subscribe to messages
-    gMessage_bus->subscribe(LOAD_LEVEL, &msg_sub);
-    gMessage_bus->subscribe(START_LEVEL, &msg_sub);
-    gMessage_bus->subscribe(UNLOAD_LEVEL, &msg_sub);
-    gMessage_bus->subscribe(RELOAD_LEVEL, &msg_sub);
-    gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
-    gMessage_bus->subscribe(KEY_HELD, &msg_sub);
-    gMessage_bus->subscribe(KEY_RELEASED, &msg_sub);
-    gMessage_bus->subscribe(MOUSE_X, &msg_sub);
-    gMessage_bus->subscribe(MOUSE_Y, &msg_sub);
-    gMessage_bus->subscribe(LEFT_TRIGGER, &msg_sub);
-    gMessage_bus->subscribe(RIGHT_TRIGGER, &msg_sub);
-    gMessage_bus->subscribe(LEFT_STICK_HORIZONTAL, &msg_sub);
-    gMessage_bus->subscribe(LEFT_STICK_VERTICAL, &msg_sub);
-    gMessage_bus->subscribe(RIGHT_STICK_HORIZONTAL, &msg_sub);
-    gMessage_bus->subscribe(RIGHT_STICK_VERTICAL, &msg_sub);
-    gMessage_bus->subscribe(VSYNC_STATE, &msg_sub);
-    gMessage_bus->subscribe(END_GAME, &msg_sub);
-    gMessage_bus->subscribe(MUSIC_VOLUME_LEVEL, &msg_sub);
-    gMessage_bus->subscribe(SOUNDS_VOLUME_LEVEL, &msg_sub);
-    gMessage_bus->subscribe(SHOW_MOUSE, &msg_sub);
-    gMessage_bus->subscribe(EXECUTE_SCRIPT, &msg_sub);
-    gMessage_bus->subscribe(FULLSCREEN_STATUS, &msg_sub);
-    gMessage_bus->subscribe(AUDIO_ENABLED, &msg_sub);
-    gMessage_bus->subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
+    gMessage_bus.subscribe(LOAD_LEVEL, &msg_sub);
+    gMessage_bus.subscribe(START_LEVEL, &msg_sub);
+    gMessage_bus.subscribe(UNLOAD_LEVEL, &msg_sub);
+    gMessage_bus.subscribe(RELOAD_LEVEL, &msg_sub);
+    gMessage_bus.subscribe(KEY_PRESSED, &msg_sub);
+    gMessage_bus.subscribe(KEY_HELD, &msg_sub);
+    gMessage_bus.subscribe(KEY_RELEASED, &msg_sub);
+    gMessage_bus.subscribe(MOUSE_X, &msg_sub);
+    gMessage_bus.subscribe(MOUSE_Y, &msg_sub);
+    gMessage_bus.subscribe(LEFT_TRIGGER, &msg_sub);
+    gMessage_bus.subscribe(RIGHT_TRIGGER, &msg_sub);
+    gMessage_bus.subscribe(LEFT_STICK_HORIZONTAL, &msg_sub);
+    gMessage_bus.subscribe(LEFT_STICK_VERTICAL, &msg_sub);
+    gMessage_bus.subscribe(RIGHT_STICK_HORIZONTAL, &msg_sub);
+    gMessage_bus.subscribe(RIGHT_STICK_VERTICAL, &msg_sub);
+    gMessage_bus.subscribe(VSYNC_STATE, &msg_sub);
+    gMessage_bus.subscribe(END_GAME, &msg_sub);
+    gMessage_bus.subscribe(MUSIC_VOLUME_LEVEL, &msg_sub);
+    gMessage_bus.subscribe(SOUNDS_VOLUME_LEVEL, &msg_sub);
+    gMessage_bus.subscribe(SHOW_MOUSE, &msg_sub);
+    gMessage_bus.subscribe(EXECUTE_SCRIPT, &msg_sub);
+    gMessage_bus.subscribe(FULLSCREEN_STATUS, &msg_sub);
+    gMessage_bus.subscribe(AUDIO_ENABLED, &msg_sub);
+    gMessage_bus.subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
 
     //initialize initial states of keys
     reset_keys();
@@ -82,7 +81,6 @@ void game_manager::reset_keys(){
 void game_manager::handle_messages(){
     auto temp = msg_sub.get_next_message();
     while(temp != nullptr){
-
         if(temp->msg_name == LOAD_LEVEL){
             load_level(*static_cast<std::string*>(temp->get_data()));
         }
@@ -187,9 +185,9 @@ int8_t game_manager::load_level(const std::string& level_name){
     }
 
     //otherwise - create it
-    auto temp = ST::level(level_name, gMessage_bus);
+    auto temp = ST::level(level_name, &gMessage_bus);
     if(temp.load() != 0){
-        gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Level with name " + level_name + " could not be loaded!")));
+        gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Level with name " + level_name + " could not be loaded!")));
         return -1;
     }
     levels.emplace_back(temp);
@@ -268,13 +266,13 @@ void game_manager::start_level(const std::string& level_name) {
                 }
             }
         } else {
-            gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Error starting level " + level_name)));
+            gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Error starting level " + level_name)));
             return;
         }
     }
 
     gScript_backend.close();
-    gScript_backend.initialize(gMessage_bus, this);
+    gScript_backend.initialize(&gMessage_bus, this);
     active_level = level_name;
 
     get_level()->lights.clear();

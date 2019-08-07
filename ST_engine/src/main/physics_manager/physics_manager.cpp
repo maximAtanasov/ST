@@ -14,20 +14,19 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
-physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
+physics_manager::physics_manager(message_bus &gMessageBus, task_manager *tsk_mngr) : gMessage_bus(gMessageBus) {
     if(singleton_initialized){
         throw std::runtime_error("The phsyics manager cannot be initialized more than once!");
     }else{
         singleton_initialized = true;
     }
 
-    gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
-    gMessage_bus->subscribe(SET_GRAVITY, &msg_sub);
-    gMessage_bus->subscribe(SET_FRICTION, &msg_sub);
-	gMessage_bus->subscribe(SET_FLOOR, &msg_sub);
-	gMessage_bus->subscribe(PAUSE_PHYSICS, &msg_sub);
-	gMessage_bus->subscribe(UNPAUSE_PHYSICS, &msg_sub);
+    gMessage_bus.subscribe(SET_GRAVITY, &msg_sub);
+    gMessage_bus.subscribe(SET_FRICTION, &msg_sub);
+	gMessage_bus.subscribe(SET_FLOOR, &msg_sub);
+	gMessage_bus.subscribe(PAUSE_PHYSICS, &msg_sub);
+	gMessage_bus.subscribe(UNPAUSE_PHYSICS, &msg_sub);
     gravity = 0;
     friction = 4;
     level_floor = 0;
@@ -36,7 +35,7 @@ physics_manager::physics_manager(message_bus *msg_bus, task_manager *tsk_mngr){
 /**
  * Process horizontal collisions for all entities.
  */
-void physics_manager::process_horizontal(std::vector<ST::entity>* entities) {
+void physics_manager::process_horizontal(std::vector<ST::entity>* entities, int8_t friction) {
     for(uint64_t k = 0; k < entities->size(); k++) {
         auto& entity = entities->operator[](k);
         //handle horizontal velocity
@@ -73,7 +72,7 @@ physics_manager::~physics_manager() {
 /**
  * Process vertical collisions for all entities.
  */
-void physics_manager::process_vertical(std::vector<ST::entity>* entities) {
+void physics_manager::process_vertical(std::vector<ST::entity>* entities, int8_t gravity, int32_t level_floor) {
     for(uint64_t k = 0; k < entities->size(); k++) {
         auto& entity = entities->operator[](k);
         if (entity.is_affected_by_physics()) {

@@ -27,14 +27,12 @@ include_directories(${SDL2_INCLUDE_DIR})
 add_library(ST_dev_console STATIC
         ${PROJECT_SOURCE_DIR}/src/main/console.cpp
         ${PROJECT_SOURCE_DIR}/src/main/console_log.hpp
-        ${PROJECT_SOURCE_DIR}/include/console.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/console_log.cpp)
+        ${PROJECT_SOURCE_DIR}/include/console.hpp)
 
 add_executable(dev_console_test
 		${PROJECT_SOURCE_DIR}/src/main/console.cpp
         ${PROJECT_SOURCE_DIR}/src/main/console_log.hpp
         ${PROJECT_SOURCE_DIR}/include/console.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/console_log.cpp
         ${PROJECT_SOURCE_DIR}/src/test/console_tests.cpp)
 
 target_link_libraries(dev_console_test

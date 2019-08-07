@@ -40,17 +40,17 @@ public:
      * @param name The type of message. See <b>ST::msg_type</b>.
      * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
      */
-    message(uint8_t name, const std::shared_ptr<void>& data){
+    explicit message(uint8_t name, const std::shared_ptr<void>& data = nullptr){
         this->msg_name = name;
         this->data = data;
     }
 
-    /**
+    /*
      * @param name The type of message. See <b>ST::msg_type</b>.
      * @param base_data0 32 bits of data. Use this if you want to avoid creating a shared pointer.
      * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
      */
-    message(uint8_t name, uint32_t base_data0, const std::shared_ptr<void>& data){
+    message(uint8_t name, uint32_t base_data0, const std::shared_ptr<void>& data = nullptr){
         this->msg_name = name;
         this->base_data0 = base_data0;
         this->data = data;
