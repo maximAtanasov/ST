@@ -46,7 +46,9 @@ add_library(ST_util
         include/ST_util/string_util.hpp
         include/ST_util/bytell_hash_map.hpp
         include/ST_util/flat_hash_map.hpp
-        include/ST_util/flat_hash_map.hpp include/ST_util/pool_allocator_256.hpp)
+        include/ST_util/flat_hash_map.hpp
+        include/ST_util/pool_allocator_256.hpp
+        include/ST_util/pool_frame_allocator_256.hpp)
 
 add_executable(pool_allocator_256_test
         src/test/pool_allocator_256_tests.cpp

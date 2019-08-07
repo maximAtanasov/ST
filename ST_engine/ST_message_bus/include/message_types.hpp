@@ -7,74 +7,288 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVIC_TALES_MESSAGE_TYPES_HPP
-#define SLAVIC_TALES_MESSAGE_TYPES_HPP
+#ifndef ST_MESSAGE_TYPES_HPP
+#define ST_MESSAGE_TYPES_HPP
 
 //all the different messages are defined in this enum
 //to define a new one just add its name here - they are all used as integers
 
 enum msg_type : uint8_t {
+
+    /**
+     * base_data0 must contain an 8 bit value describing the darkness level. (uint8_t)
+     */
     SET_DARKNESS,
+
+    /**
+     * base_data0 must contain a 32 bit integer.
+     * The first 16 bits must describe the sample to be played. (uint16_t)
+     * The following 8 must describe the volume. (uint8_t)
+     * The last 8 must describe the amount of loops ot play. (int8_t)
+     */
     PLAY_SOUND,
+
+    /**
+     * base_data0 must contain a 32 bit integer.
+     * The first 16 bits must describe the music to be played. (uint16_t)
+     * The following 8 must describe the volume. (uint8_t)
+     * The last 8 must describe the amount of loops ot play. (int8_t)
+     */
     PLAY_MUSIC,
+
+    /**
+     * Must contain no data.
+     */
     STOP_MUSIC,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     SET_AUDIO_ENABLED,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     AUDIO_ENABLED,
+
+    /**
+     * Must contain no data.
+     */
     PAUSE_MUSIC,
+
+    /**
+     * base_data0 must contain an 8 bit value describing the volume level. (uint8_t)
+     */
     SET_SOUNDS_VOLUME,
+
+    /**
+     * base_data0 must contain an 8 bit value describing the volume level. (uint8_t)
+     */
     SOUNDS_VOLUME_LEVEL,
+
+    /**
+     * base_data0 must contain an 8 bit value describing the volume level. (uint8_t)
+     */
     SET_MUSIC_VOLUME,
+
+    /**
+     * base_data0 must contain an 8 bit value describing the volume level. (uint8_t)
+     */
     MUSIC_VOLUME_LEVEL,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOAD_LEVEL,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     START_LEVEL,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     UNLOAD_LEVEL,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     RELOAD_LEVEL,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOG_ERROR,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOG_SUCCESS,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOG_INFO,
+
+    /**
+     * Must contain no data.
+     */
     CONSOLE_TOGGLE,
+
+    /**
+     * Must contain no data.
+     */
     CONSOLE_CLEAR,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     SHOW_COLLISIONS,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOAD_LIST,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     UNLOAD_LIST,
+
     SURFACES_ASSETS,
     FONTS_ASSETS,
     CHUNKS_ASSETS,
     MUSIC_ASSETS,
+
+    /**
+     * base_data0 must be set and interpreted as type ST::key
+     */
     KEY_PRESSED,
+
+    /**
+     * base_data0 must be set and interpreted as type ST::key
+     */
     KEY_HELD,
+
+    /**
+     * base_data0 must be set and interpreted as type ST::key
+     */
     KEY_RELEASED,
+
     MOUSE_X,
     MOUSE_Y,
     MOUSE_SCROLL,
     SET_GRAVITY,
     SET_FRICTION,
     SET_FLOOR,
+
+    /**
+     * Must contain no data.
+     */
     END_GAME,
+
+    /**
+     * Must contain no data.
+     */
     STOP_ALL_SOUNDS,
+
+
+    /**
+     * base_data0 must be set. The first 16 bits must describe the width.
+     * The last 16 bits must describe the height.
+     */
     VIRTUAL_SCREEN_COORDINATES,
+
+    /**
+     * base_data0 must be set. The first 16 bits must describe the width.
+     * The last 16 bits must describe the height.
+     */
     REAL_SCREEN_COORDINATES,
+
+    /**
+     * Must contain no data.
+     */
     PAUSE_PHYSICS,
+
+    /**
+     * Must contain no data.
+     */
     UNPAUSE_PHYSICS,
+
+    /**
+     * Must contain no data.
+     */
     START_TEXT_INPUT,
+
+    /**
+     * Must contain no data.
+     */
     STOP_TEXT_INPUT,
     TEXT_STREAM,
+
+    /**
+     * Must contain no data.
+     */
     CLEAR_TEXT_STREAM,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     SHOW_MOUSE,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     SHOW_FPS,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     ENABLE_LIGHTING,
+
+    /**
+     * base_data0 must be set and interpreted as type ST::key
+     */
     REGISTER_KEY,
+
+    /**
+     * base_data0 must be set and interpreted as type ST::key
+     */
     UNREGISTER_KEY,
     SET_WINDOW_BRIGHTNESS,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     EXECUTE_SCRIPT,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     SET_FULLSCREEN,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     FULLSCREEN_STATUS,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOAD_ASSET,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     UNLOAD_ASSET,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     LOAD_BINARY,
+
+    /**
+     * base_data0 must be set. The first 16 bits must describe the width.
+     * The last 16 bits must describe the height.
+     */
     SET_INTERNAL_RESOLUTION,
+
+    /**
+     * base_data0 must be set. The first 16 bits must describe the width.
+     * The last 16 bits must describe the height.
+     */
     SET_WINDOW_RESOLUTION,
+
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     SET_VSYNC,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     VSYNC_STATE,
     LEFT_TRIGGER,
     RIGHT_TRIGGER,
@@ -83,91 +297,6 @@ enum msg_type : uint8_t {
     LEFT_STICK_VERTICAL,
     LEFT_STICK_HORIZONTAL,
     CONTROLLER_RUMBLE,
-
-
-
-
-
-
-/*    KEY_PRESSED_LEFT = 1,
-    KEY_PRESSED_RIGHT = 2,
-    KEY_PRESSED_UP = 3,
-    KEY_PRESSED_DOWN = 4,
-    KEY_PRESSED_A = 5,
-    KEY_PRESSED_B = 6,
-    KEY_PRESSED_C = 7,
-    KEY_PRESSED_D = 8,
-    KEY_PRESSED_E = 9,
-    KEY_PRESSED_F = 10,
-    KEY_PRESSED_G = 11,
-    KEY_PRESSED_H = 12,
-    KEY_PRESSED_I = 13,
-    KEY_PRESSED_J = 14,
-    KEY_PRESSED_K = 15,
-    KEY_PRESSED_L = 16,
-    KEY_PRESSED_M = 17,
-    KEY_PRESSED_N = 18,
-    KEY_PRESSED_O = 19,
-    KEY_PRESSED_P = 20,
-    KEY_PRESSED_Q = 21,
-    KEY_PRESSED_R = 22,
-    KEY_PRESSED_S = 23,
-    KEY_PRESSED_T = 24,
-    KEY_PRESSED_V = 26,
-    KEY_PRESSED_U = 25,
-    KEY_PRESSED_W = 27,
-    KEY_PRESSED_X = 28,
-    KEY_PRESSED_Y = 29,
-    KEY_PRESSED_Z = 30,
-    KEY_PRESSED_ONE = 31,
-    KEY_PRESSED_TWO = 32,
-    KEY_PRESSED_THREE = 33,
-    KEY_PRESSED_FOUR = 34,
-    KEY_PRESSED_FIVE = 35,
-    KEY_PRESSED_SIX = 36,
-    KEY_PRESSED_SEVEN = 37,
-    KEY_PRESSED_EIGHT = 38,
-    KEY_PRESSED_NINE = 39,
-    KEY_PRESSED_ZERO = 40,
-    KEY_PRESSED_ESCAPE = 41,
-    KEY_PRESSED_ENTER = 42,
-    KEY_PRESSED_SPACEBAR = 43,
-    KEY_PRESSED_TILDE = 44,
-    KEY_PRESSED_LSHIFT = 45,
-    KEY_PRESSED_BACKSPACE = 46,
-    KEY_PRESSED_BACKSLASH = 47,
-    KEY_PRESSED_CAPSLOCK = 48,
-    KEY_PRESSED_COMMA = 49,
-    KEY_PRESSED_EQUALS = 50,
-    KEY_PRESSED_LALT = 51,
-    KEY_PRESSED_LCTRL = 52,
-    KEY_PRESSED_LBRACKET = 53,
-    KEY_PRESSED_RBRACKET = 54,
-    KEY_PRESSED_MINUS = 55,
-    KEY_PRESSED_RALT = 56,
-    KEY_PRESSED_RCTRL = 57,
-    KEY_PRESSED_SEMICOLON = 58,
-    KEY_PRESSED_SLASH = 59,
-    KEY_PRESSED_TAB = 60,
-    KEY_PRESSED_MOUSELEFT = 61,
-    KEY_PRESSED_MOUSEMIDDLE = 62,
-    KEY_PRESSED_MOUSERIGHT = 63,
-    KEY_PRESSED_UNKNOWN = 64,
-    KEY_PRESSED_CONTROLLER_BUTTON_A = 65,
-    KEY_PRESSED_CONTROLLER_BUTTON_B = 66,
-    KEY_PRESSED_CONTROLLER_BUTTON_X = 67,
-    KEY_PRESSED_CONTROLLER_BUTTON_Y = 68,
-    KEY_PRESSED_CONTROLLER_BUTTON_SELECT = 69,
-    KEY_PRESSED_CONTROLLER_BUTTON_START = 70,
-    KEY_PRESSED_CONTROLLER_BUTTON_LEFTSTICK = 71,
-    KEY_PRESSED_CONTROLLER_BUTTON_RIGHTSTICK = 72,
-    KEY_PRESSED_CONTROLLER_BUTTON_LEFTSHOULDER = 73,
-    KEY_PRESSED_CONTROLLER_BUTTON_RIGHTSHOULDER = 74,
-    KEY_PRESSED_CONTROLLER_BUTTON_DPAD_UP = 75,
-    KEY_PRESSED_CONTROLLER_BUTTON_DPAD_DOWN = 75,
-    KEY_PRESSED_CONTROLLER_BUTTON_DPAD_LEFT = 76,
-    KEY_PRESSED_CONTROLLER_BUTTON_DPAD_RIGHT = 77,
-    KEY_PRESSED_DELETE = 78*/
 };
 
-#endif //SLAVIC_TALES_MESSAGE_TYPES_HPP
+#endif //ST_MESSAGE_TYPES_HPP

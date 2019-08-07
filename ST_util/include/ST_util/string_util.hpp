@@ -7,8 +7,8 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVICTALES_STRING_UTIL_HPP
-#define SLAVICTALES_STRING_UTIL_HPP
+#ifndef ST_STRING_UTIL_HPP
+#define ST_STRING_UTIL_HPP
 
 #include <string>
 
@@ -21,4 +21,4 @@ namespace ST {
     uint16_t hash_string(const std::string &value);
 
 }
-#endif //SLAVICTALES_STRING_UTIL_HPP
+#endif //ST_STRING_UTIL_HPP

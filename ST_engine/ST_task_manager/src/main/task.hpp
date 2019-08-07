@@ -11,7 +11,7 @@
 #define TASK_DEF
 
 #include "semaphore.hpp"
-#include <ST_util/pool_allocator_256.hpp>
+#include <ST_util/pool_frame_allocator_256.hpp>
 
 namespace ST {
 
@@ -23,10 +23,9 @@ namespace ST {
      */
     class task {
     private:
-        static pool_allocator_256<task> allocator;
+        static pool_frame_allocator_256<task> allocator;
 
     public:
-
 
         void (*task_func)(void *){};
 
@@ -51,9 +50,7 @@ namespace ST {
             return allocator.allocate();
         }
 
-        void operator delete (void* ptr){
-            allocator.deallocate(static_cast<task*>(ptr));
-        }
+        void operator delete (void* ptr){}
     };
 }
 

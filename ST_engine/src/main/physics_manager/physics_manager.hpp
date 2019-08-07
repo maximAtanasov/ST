@@ -29,9 +29,9 @@ class physics_manager{
         int8_t friction = 0;
 
 
-        int check_collision(uint64_t, std::vector<ST::entity>* entities);
-        int entity_set_x(int32_t x, uint64_t, std::vector<ST::entity>* entities);
-        int entity_set_y(int32_t y, uint64_t, std::vector<ST::entity>* entities);
+        static int check_collision(uint64_t, std::vector<ST::entity>* entities);
+        static int entity_set_x(int32_t x, uint64_t, std::vector<ST::entity>* entities);
+        static int entity_set_y(int32_t y, uint64_t, std::vector<ST::entity>* entities);
 
 		void process_horizontal(std::vector<ST::entity>* entities);
 		void process_vertical(std::vector<ST::entity>* entities);

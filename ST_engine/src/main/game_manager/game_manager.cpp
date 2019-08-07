@@ -80,8 +80,9 @@ void game_manager::reset_keys(){
  * Consumes message from the subscriber object and performs the appropriate actions.
  */
 void game_manager::handle_messages(){
-    message* temp = msg_sub.get_next_message();
+    auto temp = msg_sub.get_next_message();
     while(temp != nullptr){
+
         if(temp->msg_name == LOAD_LEVEL){
             load_level(*static_cast<std::string*>(temp->get_data()));
         }

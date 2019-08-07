@@ -7,8 +7,8 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVICTALES_GAME_MANAGER_MOCK_HPP
-#define SLAVICTALES_GAME_MANAGER_MOCK_HPP
+#ifndef ST_GAME_MANAGER_MOCK_HPP
+#define ST_GAME_MANAGER_MOCK_HPP
 
 #include <vector>
 #include <SDL_atomic.h>
@@ -80,4 +80,4 @@ public:
  };
 
 
-#endif //SLAVICTALES_GAME_MANAGER_MOCK_HPP
+#endif //ST_GAME_MANAGER_MOCK_HPP

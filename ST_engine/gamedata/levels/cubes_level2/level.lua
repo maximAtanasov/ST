@@ -11,6 +11,7 @@ use("trigger.lua")
 use("obstacle_1.lua")
 use("platform.lua")
 use("bar_hor.lua")
+use("life_pickup.lua")
 
 pause = 0
 
@@ -127,7 +128,25 @@ function resetPlayerPosition()
     player1:setXY(100,100)
 end
 
-trigger_pit_0 = trigger:new(0, floor-10, 10000, 20)
+
+function addLifeToPlayer()
+    player1.lives = player1.lives + 1;
+    if(player1.lives == 3) then
+        lifeCube3:setVisible(true)
+    elseif(player1.lives == 2) then
+        lifeCube2:setVisible(true)
+    elseif player1.lives == 1 then
+        lifeCube1:setVisible(true)
+    end
+    life_pickup1:delete()
+end
+
+life_pickup1 = trigger:new(8200, 220, 75, 75)
+life_pickup1:setTexture("live.png")
+life_pickup1:onCollisionWith(player1, addLifeToPlayer)
+
+
+trigger_pit_0 = trigger:new(0, floor-10, 32000, 20)
 trigger_pit_0:onCollisionWith(player1, resetPlayerPosition)
 --[[trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
 trigger_pit_1:onCollisionWith(player1, resetPlayerPosition)
@@ -299,9 +318,11 @@ function loop()
         obstacle_1_29:update()
 
         trigger_pit_0:update()
---[[        trigger_pit_1:update()
-        trigger_pit_2:update()
-        trigger_pit_3:update()]]
+        life_pickup1:update()
+
+        --[[        trigger_pit_1:update()
+                trigger_pit_2:update()
+                trigger_pit_3:update()]]
 
         endLevel:update()
         player1:update()

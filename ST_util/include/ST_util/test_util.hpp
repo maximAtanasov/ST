@@ -7,8 +7,8 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVICTALES_TEST_UTIL_HPP
-#define SLAVICTALES_TEST_UTIL_HPP
+#ifndef ST_TEST_UTIL_HPP
+#define ST_TEST_UTIL_HPP
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -22,4 +22,4 @@ bool compare_surfaces(SDL_Surface* expected, SDL_Surface* result);
 long get_file_size(const std::string& path);
 void copy_file(const std::string& src, const std::string& dest);
 
-#endif //SLAVICTALES_TEST_UTIL_HPP
+#endif //ST_TEST_UTIL_HPP
