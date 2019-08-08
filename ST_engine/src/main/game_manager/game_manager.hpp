@@ -7,8 +7,10 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef LVL_MNG_DEF
-#define LVL_MNG_DEF
+#ifndef ST_GAME_MANAGER_DEF
+#define ST_GAME_MANAGER_DEF
+
+#define FIRST_LEVEL_NAME "cubes"
 
 #include <game_manager/level/level.hpp>
 #include <message_bus.hpp>
@@ -203,4 +205,4 @@ inline void game_manager::center_camera_on_entity(uint64_t id) { //TODO: Get rid
     }
 }
 
-#endif
+#endif /*ST_GAME_MANAGER_DEF*/

@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <SDL_events.h>
 
-#define FIRST_LEVEL_NAME "cubes"
 
 static bool singleton_initialized = false;
 
@@ -101,7 +100,6 @@ void game_manager::handle_messages(){
         }
         else if(temp->msg_name == KEY_HELD){
             uint8_t key_index = temp->base_data0;
-            auto key_val = static_cast<ST::key>(temp->base_data0);
             keys_pressed_data[key_index] = false;
             keys_held_data[key_index] = true;
             keys_released_data[key_index] = false;
@@ -208,7 +206,7 @@ int8_t game_manager::load_level(const std::string& level_name){
  * @param level_name The name of the level to unload (this must the name of the folder).
  */
 void game_manager::unload_level(const std::string& level_name){
-    for(Uint32 i = 0; i < levels.size(); ++i) {
+    for(uint64_t i = 0; i < levels.size(); ++i) {
         if (levels[i].get_name() == level_name) {
             levels[i].unload();
             levels.erase(levels.begin() + i);
