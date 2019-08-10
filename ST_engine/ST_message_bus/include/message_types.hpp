@@ -127,18 +127,33 @@ enum msg_type : uint8_t {
     SHOW_COLLISIONS,
 
     /**
-     * data must contain a std::string created with make_data()
+     * data must contain a std::string* created with make_data()
      */
     LOAD_LIST,
 
     /**
-     * data must contain a std::string created with make_data()
+     * data must contain a std::string* created with make_data()
      */
     UNLOAD_LIST,
 
+    /**
+     * data must contain a ska::bytell_hash_map<uint16_t, SDL_Surface *>** created with make_data()
+     */
     SURFACES_ASSETS,
+
+    /**
+     * data must contain a ska::bytell_hash_map<uint16_t, TTF_Font *>** created with make_data()
+     */
     FONTS_ASSETS,
+
+    /**
+     * data must contain a ska::bytell_hash_map<uint16_t, Mix_Chunk *>** created with make_data()
+     */
     CHUNKS_ASSETS,
+
+    /**
+     * data must contain a ska::bytell_hash_map<uint16_t, Mix_Music *>** created with make_data()
+     */
     MUSIC_ASSETS,
 
     /**
@@ -156,11 +171,35 @@ enum msg_type : uint8_t {
      */
     KEY_RELEASED,
 
+    /**
+     * base_data0 must be set and interpreted as a int32_t value.
+     */
     MOUSE_X,
+
+    /**
+     * base_data0 must be set and interpreted as a int32_t value.
+     */
     MOUSE_Y,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     MOUSE_SCROLL,
+
+
+    /**
+     * base_data0 must be set and interpreted as a int8_t value.
+     */
     SET_GRAVITY,
+
+    /**
+     * base_data0 must be set and interpreted as a int8_t value.
+     */
     SET_FRICTION,
+
+    /**
+     * base_data0 must be set and interpreted as a int32_t value.
+     */
     SET_FLOOR,
 
     /**
@@ -205,6 +244,10 @@ enum msg_type : uint8_t {
      * Must contain no data.
      */
     STOP_TEXT_INPUT,
+
+    /**
+     * data must contain a std::string created with make_data()
+     */
     TEXT_STREAM,
 
     /**
@@ -290,12 +333,40 @@ enum msg_type : uint8_t {
      * base_data0 must be set and interpreted as a boolean value.
      */
     VSYNC_STATE,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     LEFT_TRIGGER,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     RIGHT_TRIGGER,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     RIGHT_STICK_VERTICAL,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     RIGHT_STICK_HORIZONTAL,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     LEFT_STICK_VERTICAL,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
     LEFT_STICK_HORIZONTAL,
+
+    /**
+     * data must contain a std::tuple<float, uint32_t>* created with make_data.
+     */
     CONTROLLER_RUMBLE,
 };
 

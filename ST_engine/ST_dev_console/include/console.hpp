@@ -11,7 +11,6 @@
 #define DEVCONSOLE_DEF
 
 #include <message_bus.hpp>
-#include <SDL_pixels.h>
 #include "../src/main/console_log.hpp"
 
 ///This object represents the console window.

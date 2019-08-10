@@ -14,8 +14,6 @@ set(CMAKE_CXX_STANDARD 14)
 include(GoogleTest)
 enable_testing()
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../../cmake)
-
 include_directories(${PROJECT_SOURCE_DIR}/src/main)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
