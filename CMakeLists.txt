@@ -8,7 +8,10 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(ST)
 
+add_compile_definitions(VMEM_OVERRIDE_NEW_DELETE)
+
 if(MSVC)
+    add_compile_definitions(VMEM_PLATFORM_WIN)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     set(CMAKE_CXX_FLAGS_RELEASE "/Ox /MD")
     set(CMAKE_CXX_FLAGS_DEBUG "/MDd")

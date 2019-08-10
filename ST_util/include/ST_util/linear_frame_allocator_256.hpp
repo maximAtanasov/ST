@@ -1,5 +1,5 @@
-#ifndef ST_POOL_FRAME_ALLOCATOR_256_HPP
-#define ST_POOL_FRAME_ALLOCATOR_256_HPP
+#ifndef ST_LINEAR_FRAME_ALLOCATOR_256_HPP
+#define ST_LINEAR_FRAME_ALLOCATOR_256_HPP
 
 #include <atomic>
 
@@ -13,7 +13,7 @@
  * from multiple threads.
  */
 namespace ST {
-    template <class T> class pool_frame_allocator_256 {
+    template <class T> class linear_frame_allocator_256 {
 
     private:
         T memory[256];
@@ -26,4 +26,4 @@ namespace ST {
     };
 }
 
-#endif //ST_POOL_FRAME_ALLOCATOR_256_HPP
+#endif //ST_LINEAR_FRAME_ALLOCATOR_256_HPP

@@ -39,6 +39,8 @@ include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 add_library(ST_util
         include/ST_util/test_util.hpp
+        include/ST_util/VMem/VMem.cpp
+        include/ST_util/VMem/VMem.h
         include/ST_util/math.hpp
         src/main/math.cpp
         src/main/test_util.cpp
@@ -48,7 +50,7 @@ add_library(ST_util
         include/ST_util/flat_hash_map.hpp
         include/ST_util/flat_hash_map.hpp
         include/ST_util/pool_allocator_256.hpp
-        include/ST_util/pool_frame_allocator_256.hpp)
+        include/ST_util/linear_frame_allocator_256.hpp)
 
 add_executable(pool_allocator_256_test
         src/test/pool_allocator_256_tests.cpp

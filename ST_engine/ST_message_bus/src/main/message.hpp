@@ -12,7 +12,7 @@
 
 
 #include <memory>
-#include <ST_util/pool_frame_allocator_256.hpp>
+#include <ST_util/linear_frame_allocator_256.hpp>
 
 ///A message object passed around in the message bus. Holds anything created with make_data<>().
 /**
@@ -20,7 +20,7 @@
  */
 class message{
 private:
-    static ST::pool_frame_allocator_256<message> allocator;
+    static ST::linear_frame_allocator_256<message> allocator;
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
 
 public:

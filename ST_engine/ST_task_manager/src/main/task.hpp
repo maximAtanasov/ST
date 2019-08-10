@@ -11,7 +11,7 @@
 #define TASK_DEF
 
 #include "semaphore.hpp"
-#include <ST_util/pool_frame_allocator_256.hpp>
+#include <ST_util/linear_frame_allocator_256.hpp>
 
 namespace ST {
 
@@ -23,7 +23,7 @@ namespace ST {
      */
     class task {
     private:
-        static pool_frame_allocator_256<task> allocator;
+        static linear_frame_allocator_256<task> allocator;
 
     public:
 
