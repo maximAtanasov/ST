@@ -190,16 +190,16 @@ int8_t assets_manager::load_asset(std::string path){
         count.emplace(ST::trim_path(path), 0);
     }
 
-    ST::asset_file_type extention = ST::get_file_extension(path);
+    ST::asset_file_type extension = ST::get_file_extension(path);
     //Handle the different extensions - currently png, webp, wav, mp3, ttf
 
-    if(extention == ST::asset_file_type::BIN){
+    if(extension == ST::asset_file_type::BIN){
         gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Loading from binary " + path)));
     }else {
         gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Loading " + path)));
     }
 
-    if(extention == ST::asset_file_type::PNG || extention == ST::asset_file_type::WEBP){
+    if(extension == ST::asset_file_type::PNG || extension == ST::asset_file_type::WEBP){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
         if(temp1 != nullptr){
             path = ST::trim_path(path);
@@ -210,7 +210,7 @@ int8_t assets_manager::load_asset(std::string path){
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
-    }else if(extention == ST::asset_file_type::WAV){
+    }else if(extension == ST::asset_file_type::WAV){
         Mix_Chunk* temp1 = Mix_LoadWAV(path.c_str());
         if (temp1 != nullptr){
             path = ST::trim_path(path);
@@ -222,7 +222,7 @@ int8_t assets_manager::load_asset(std::string path){
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
-    }else if(extention == ST::asset_file_type::OGG){
+    }else if(extension == ST::asset_file_type::OGG){
         Mix_Music* temp1 = Mix_LoadMUS(path.c_str());
         if (temp1 != nullptr) {
             path = ST::trim_path(path);
@@ -234,13 +234,14 @@ int8_t assets_manager::load_asset(std::string path){
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
         }
-    }else if(extention == ST::asset_file_type::BIN){
+    }else if(extension == ST::asset_file_type::BIN){
         load_assets_from_binary(path);
     }else{ //if file is a font
         std::vector<std::string> result;
         std::istringstream iss(path);
-        for(std::string path_; iss >> path;)
+        for(std::string path_; iss >> path;) {
             result.push_back(path);
+        }
         uint32_t size;
         try{
             std::stringstream convert(result.at(1));
@@ -304,7 +305,10 @@ int8_t assets_manager::unload_assets_from_list(const std::string& path){
         while(!file.eof()){
             getline(file, temp);
             if(!temp.empty()){
-                unload_asset(temp);
+                //Ignore comments
+                if(path.at(0) != '#'){
+                    unload_asset(temp);
+                }
             }
         }
         file.close();
@@ -323,11 +327,6 @@ int8_t assets_manager::unload_assets_from_list(const std::string& path){
  * @return Always returns 0.
  */
 int8_t assets_manager::unload_asset(std::string path){
-    //Ignore comments
-    if(path.at(0) == '#'){
-        return 0;
-    }
-
     auto _asset_count = count.find(ST::trim_path(path));
     if (_asset_count != count.end() && _asset_count->second > 1) {
         _asset_count->second -= 1;
