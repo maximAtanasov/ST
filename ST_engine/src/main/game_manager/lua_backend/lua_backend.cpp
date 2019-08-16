@@ -293,7 +293,7 @@ std::string lua_backend::hash_file(const std::string& path){
         while(!file.eof()){
             getline(file, temp);
             if(!temp.empty()){
-                temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
+                temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind(std::not_equal_to<char>(), ' ', std::placeholders::_1)));
                 while(temp.find("playSound(\"") != std::string::npos) {
                     std::string to_find = "playSound(\"";
                     std::string temp_buf;
@@ -389,7 +389,7 @@ std::string lua_backend::hash_file(const std::string& path){
     }
     else{
         gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
-        return nullptr;
+        return "";
     }
 }
 
@@ -403,7 +403,7 @@ std::string lua_backend::hash_string(const std::string& arg){
     std::string result;
     std::string temp = arg;
     if(!temp.empty()){
-        temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
+        temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind(std::not_equal_to<char>(), ' ', std::placeholders::_1)));
         while(temp.find("playSound(\"") != std::string::npos) {
             std::string to_find = "playSound(\"";
             std::string temp_buf;

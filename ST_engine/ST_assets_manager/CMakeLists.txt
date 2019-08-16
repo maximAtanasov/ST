@@ -32,7 +32,6 @@ include_directories(${PROJECT_SOURCE_DIR}/../../ST_loaders/include)
 include_directories(${PROJECT_SOURCE_DIR}/../ST_message_bus/include)
 include_directories(${PROJECT_SOURCE_DIR}/../ST_task_manager/include)
 
-
 add_library(ST_assets_manager STATIC
         ${PROJECT_SOURCE_DIR}/include/assets_manager.hpp
         ${PROJECT_SOURCE_DIR}/src/main/assets_manager.cpp
@@ -55,7 +54,6 @@ target_link_libraries(assets_manager_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
-
         )
 
 #Run the tests on each build
