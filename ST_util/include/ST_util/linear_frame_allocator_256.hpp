@@ -20,7 +20,7 @@ namespace ST {
         std::atomic_uint8_t pointer{0};
 
     public:
-        T* allocate(){
+        inline T* allocate(){
             return &memory[pointer++];
         }
     };

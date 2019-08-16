@@ -56,11 +56,11 @@ public:
         this->data = data;
     }
 
-    void* operator new (std::size_t count){
+    static void* operator new (size_t count){
         return allocator.allocate();
     }
 
-    void operator delete (void* ptr){}
+    static void operator delete (void* ptr){}
 
     ~message(){
         this->data.reset();
