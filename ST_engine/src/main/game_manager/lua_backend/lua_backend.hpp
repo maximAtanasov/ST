@@ -11,6 +11,7 @@
 #define LUA_BACKEND_HPP
 
 #include <message_bus.hpp>
+#include <functional>
 
 extern "C" {
     #include <lua.h>
@@ -33,7 +34,7 @@ private:
     lua_State* L;
     message_bus* gMessage_bus;
     std::string hash_file(const std::string& path);
-    std::string hash_string(const std::string& string);
+    static std::string hash_string(const std::string& string);
 
 public:
     int initialize(message_bus* msg_bus, game_manager* game_mngr);

@@ -6,15 +6,13 @@
 # Author: Maxim Atanasov
 # E-mail: maxim.atanasov@protonmail.com
 
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 project(ST_dev_console)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include(GoogleTest)
 enable_testing()
-
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../../cmake)
 
 include_directories(${PROJECT_SOURCE_DIR}/src/main)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -27,14 +25,12 @@ include_directories(${SDL2_INCLUDE_DIR})
 add_library(ST_dev_console STATIC
         ${PROJECT_SOURCE_DIR}/src/main/console.cpp
         ${PROJECT_SOURCE_DIR}/src/main/console_log.hpp
-        ${PROJECT_SOURCE_DIR}/include/console.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/console_log.cpp)
+        ${PROJECT_SOURCE_DIR}/include/console.hpp)
 
 add_executable(dev_console_test
 		${PROJECT_SOURCE_DIR}/src/main/console.cpp
         ${PROJECT_SOURCE_DIR}/src/main/console_log.hpp
         ${PROJECT_SOURCE_DIR}/include/console.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/console_log.cpp
         ${PROJECT_SOURCE_DIR}/src/test/console_tests.cpp)
 
 target_link_libraries(dev_console_test

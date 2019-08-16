@@ -5,8 +5,10 @@
 #
 # Author: Maxim Atanasov
 # E-mail: maxim.atanasov@protonmail.com
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 project(ST)
+
+add_compile_definitions(VMEM_OVERRIDE_NEW_DELETE)
 
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)

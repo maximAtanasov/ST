@@ -27,7 +27,7 @@ void audio_manager::update_task(void* arg){
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task manager.
  */
-audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
+audio_manager::audio_manager(task_manager *tsk_mngr, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
     if(singleton_initialized){
         throw std::runtime_error("The audio manager cannot be initialized more than once!");
     }else{
@@ -46,7 +46,6 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
 		fprintf(stderr, "Failed to initialize SDL_Mixer: %s\n", Mix_GetError());
 		exit(1);
 	}
-    gMessage_bus = msg_bus;
     gTask_manager = tsk_mngr;
 
     Mix_Volume(-1, chunk_volume);
@@ -54,16 +53,16 @@ audio_manager::audio_manager(message_bus* msg_bus, task_manager* tsk_mngr){
     Mix_AllocateChannels(8);
 
     //subscribe to messages
-    gMessage_bus->subscribe(PLAY_SOUND, &msg_sub);
-    gMessage_bus->subscribe(PLAY_MUSIC, &msg_sub);
-    gMessage_bus->subscribe(STOP_MUSIC, &msg_sub);
-    gMessage_bus->subscribe(SET_AUDIO_ENABLED, &msg_sub);
-    gMessage_bus->subscribe(MUSIC_ASSETS, &msg_sub);
-    gMessage_bus->subscribe(CHUNKS_ASSETS, &msg_sub);
-	gMessage_bus->subscribe(STOP_ALL_SOUNDS, &msg_sub);
-    gMessage_bus->subscribe(SET_MUSIC_VOLUME, &msg_sub);
-    gMessage_bus->subscribe(SET_SOUNDS_VOLUME, &msg_sub);
-    gMessage_bus->subscribe(PAUSE_MUSIC, &msg_sub);
+    gMessage_bus.subscribe(PLAY_SOUND, &msg_sub);
+    gMessage_bus.subscribe(PLAY_MUSIC, &msg_sub);
+    gMessage_bus.subscribe(STOP_MUSIC, &msg_sub);
+    gMessage_bus.subscribe(SET_AUDIO_ENABLED, &msg_sub);
+    gMessage_bus.subscribe(MUSIC_ASSETS, &msg_sub);
+    gMessage_bus.subscribe(CHUNKS_ASSETS, &msg_sub);
+	gMessage_bus.subscribe(STOP_ALL_SOUNDS, &msg_sub);
+    gMessage_bus.subscribe(SET_MUSIC_VOLUME, &msg_sub);
+    gMessage_bus.subscribe(SET_SOUNDS_VOLUME, &msg_sub);
+    gMessage_bus.subscribe(PAUSE_MUSIC, &msg_sub);
 }
 
 /**
@@ -89,27 +88,27 @@ void audio_manager::handle_messages(){
         }
         else if(temp->msg_name == STOP_MUSIC){
             stop_music();
-            gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music stopped")));
+            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music stopped")));
         }
         else if(temp->msg_name == PAUSE_MUSIC){
             pause_music();
-            gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music paused")));
+            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music paused")));
         }
         else if(temp->msg_name == STOP_ALL_SOUNDS){
 			stop_channels();
-            gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Sounds stopped")));
+            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Sounds stopped")));
         }
         else if(temp->msg_name == SET_AUDIO_ENABLED){
             auto arg = static_cast<bool>(temp->base_data0);
             if(!arg){
-                gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio muted")));
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio muted")));
                 mute();
             }
             else{
                 unmute();
-                gMessage_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio unmuted")));
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio unmuted")));
             }
-            gMessage_bus->send_msg(new message(AUDIO_ENABLED, arg, nullptr));
+            gMessage_bus.send_msg(new message(AUDIO_ENABLED, arg));
         }
         else if(temp->msg_name == MUSIC_ASSETS){
             music_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Music*>**>(temp->get_data());
@@ -120,13 +119,13 @@ void audio_manager::handle_messages(){
         else if(temp->msg_name == SET_SOUNDS_VOLUME){
             set_chunk_volume(static_cast<uint8_t>(temp->base_data0));
             if(!muted) {
-                gMessage_bus->send_msg(new message(SOUNDS_VOLUME_LEVEL, chunk_volume, nullptr));
+                gMessage_bus.send_msg(new message(SOUNDS_VOLUME_LEVEL, chunk_volume));
             }
         }
         else if(temp->msg_name == SET_MUSIC_VOLUME){
             set_music_volume(static_cast<uint8_t>(temp->base_data0));
             if(!muted) {
-                gMessage_bus->send_msg(new message(MUSIC_VOLUME_LEVEL, music_volume, nullptr));
+                gMessage_bus.send_msg(new message(MUSIC_VOLUME_LEVEL, music_volume));
             }
         }
         delete temp;

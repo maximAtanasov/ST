@@ -19,7 +19,7 @@
 
 /**
  * \mainpage A small program that will combine multiple png, wav and ogg files into a single file that can
- * then be read by the slavicTales game engine.
+ * then be read by the ST game engine.
  * File format version: v0.9
  * Maxim Atanasov
  */

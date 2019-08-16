@@ -6,10 +6,10 @@
 # Author: Maxim Atanasov
 # E-mail: maxim.atanasov@protonmail.com
 
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 project(ST_util)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
@@ -39,6 +39,8 @@ include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 add_library(ST_util
         include/ST_util/test_util.hpp
+        include/ST_util/VMem/VMem.cpp
+        include/ST_util/VMem/VMem.h
         include/ST_util/math.hpp
         src/main/math.cpp
         src/main/test_util.cpp
@@ -46,7 +48,9 @@ add_library(ST_util
         include/ST_util/string_util.hpp
         include/ST_util/bytell_hash_map.hpp
         include/ST_util/flat_hash_map.hpp
-        include/ST_util/flat_hash_map.hpp include/ST_util/pool_allocator_256.hpp)
+        include/ST_util/flat_hash_map.hpp
+        include/ST_util/pool_allocator_256.hpp
+        include/ST_util/linear_frame_allocator_256.hpp)
 
 add_executable(pool_allocator_256_test
         src/test/pool_allocator_256_tests.cpp

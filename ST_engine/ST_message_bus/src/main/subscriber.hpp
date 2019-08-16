@@ -7,8 +7,8 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVIC_TALES_SUBSCRIBER_HPP
-#define SLAVIC_TALES_SUBSCRIBER_HPP
+#ifndef ST_SUBSCRIBER_HPP
+#define ST_SUBSCRIBER_HPP
 
 #include <ST_util/atomic_queue/concurrentqueue.h>
 #include "message.hpp"
@@ -48,4 +48,4 @@ inline void subscriber::push_message(message* arg){
     //and again, the queues are thread-safe so no locks are needed
 }
 
-#endif //SLAVIC_TALES_SUBSCRIBER_HPP
+#endif //ST_SUBSCRIBER_HPP

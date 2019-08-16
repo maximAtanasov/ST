@@ -9,7 +9,6 @@
 
 #include <gtest/gtest.h>
 #include <audio_manager.hpp>
-#include <ST_util/test_util.hpp>
 
 /// Tests fixture for the audio_manager
 class audio_manager_test : public ::testing::Test {
@@ -33,20 +32,26 @@ protected:
     }
 
     audio_manager* test_mngr{};
+    message_bus* msg_bus{};
 
     static void SetUpTestCase(){
-        initialize_SDL();
+        SDL_Init(SDL_INIT_VIDEO);
+        Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 1024);
+        Mix_Init(MIX_INIT_OGG);
     }
 
     static void TearDownTestCase(){
-        close_SDL();
+        while(Mix_Init(0)) {
+            Mix_Quit();
+        }
+        Mix_CloseAudio();
+        SDL_Quit();
     }
 
-    message_bus* msg_bus{};
 
     void SetUp() override{
         msg_bus = new message_bus();
-        test_mngr = new audio_manager(msg_bus, nullptr);
+        test_mngr = new audio_manager(nullptr, *msg_bus);
     }
 
     void TearDown() override{
@@ -74,6 +79,7 @@ TEST_F(audio_manager_test, test_play_wav_half_volume) {
     set_chunks(&assets);
     play_sound(1, MIX_MAX_VOLUME/2, 0);
     SDL_Delay(1000);
+    Mix_FreeChunk(test_wav);
 }
 
 TEST_F(audio_manager_test, test_play_wav_looping) {
@@ -84,6 +90,7 @@ TEST_F(audio_manager_test, test_play_wav_looping) {
     set_chunks(&assets);
     play_sound(1, MIX_MAX_VOLUME, 3);
     SDL_Delay(2000);
+    Mix_FreeChunk(test_wav);
 }
 
 TEST_F(audio_manager_test, test_play_ogg_full_volume) {
@@ -94,6 +101,7 @@ TEST_F(audio_manager_test, test_play_ogg_full_volume) {
     set_music(&assets);
     play_music(1, MIX_MAX_VOLUME, 3);
     SDL_Delay(10000);
+    Mix_FreeMusic(test_ogg);
 }
 
 TEST_F(audio_manager_test, test_play_ogg_half_volume) {
@@ -104,6 +112,7 @@ TEST_F(audio_manager_test, test_play_ogg_half_volume) {
     set_music(&assets);
     play_music(1, MIX_MAX_VOLUME/2, 3);
     SDL_Delay(10000);
+    Mix_FreeMusic(test_ogg);
 }
 
 int main(int argc, char **argv) {

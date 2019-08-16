@@ -16,7 +16,7 @@
 /// Tests fixture for the renderer_sdl
 // These these are purely visual - you have to watch them run and
 // look out for anything wrong. This means that you won't get
-// a test failiure if for some reason nothing is rendered.
+// a test failure if for some reason nothing is rendered.
 // However these are still useful as they provide you with a quick
 // way to test if any of the specific rendering functions is broken.
 class renderer_sdl_tests : public ::testing::Test {

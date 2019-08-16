@@ -18,17 +18,15 @@
  */
 void message_bus::send_msg(message* arg){
     std::vector<subscriber*>* temp = &subscribers[arg->msg_name];
-
+    uint64_t size = temp->size();
     //Locks aren't really needed here as there won't be any new subscribers in the middle of the game
     //(if you do want to have subsystems subscribe at random times you should definitely add locks)
 
-    if(!temp->empty()){
-        temp->at(0)->push_message(arg);
-        for(uint32_t i = 1; i < temp->size(); i++){
-            temp->at(i)->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
+    if(size != 0){
+        temp->operator[](0)->push_message(arg);
+        for(uint64_t i = 1; i < size; i++){
+            temp->operator[](i)->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
         }
-    } else {
-        arg->get_data();
     }
 }
 
@@ -46,11 +44,19 @@ message_bus::message_bus() {
     }
 }
 
+/**
+ * Message bus destructor.
+ * Clears all subscribers and sets the init flag to
+ * false to allow later initialization.
+ */
 message_bus::~message_bus() {
     subscribers.clear();
     singleton_initialized = false;
 }
 
+/**
+ * Removes all subscribers from the message bus.
+ */
 void message_bus::clear() {
     subscribers.clear();
 }

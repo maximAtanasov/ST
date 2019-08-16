@@ -7,12 +7,12 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 
-#ifndef SLAVIC_TALES_MESSAGE_HPP
-#define SLAVIC_TALES_MESSAGE_HPP
+#ifndef ST_MESSAGE_HPP
+#define ST_MESSAGE_HPP
 
 
 #include <memory>
-#include <ST_util/pool_allocator_256.hpp>
+#include <ST_util/linear_frame_allocator_256.hpp>
 
 ///A message object passed around in the message bus. Holds anything created with make_data<>().
 /**
@@ -20,7 +20,7 @@
  */
 class message{
 private:
-    static ST::pool_allocator_256<message> allocator;
+    static ST::linear_frame_allocator_256<message> allocator;
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
 
 public:
@@ -40,29 +40,27 @@ public:
      * @param name The type of message. See <b>ST::msg_type</b>.
      * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
      */
-    message(uint8_t name, const std::shared_ptr<void>& data){
+    explicit message(uint8_t name, const std::shared_ptr<void>& data = nullptr){
         this->msg_name = name;
         this->data = data;
     }
 
-    /**
+    /*
      * @param name The type of message. See <b>ST::msg_type</b>.
      * @param base_data0 32 bits of data. Use this if you want to avoid creating a shared pointer.
      * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
      */
-    message(uint8_t name, uint32_t base_data0, const std::shared_ptr<void>& data){
+    message(uint8_t name, uint32_t base_data0, const std::shared_ptr<void>& data = nullptr){
         this->msg_name = name;
         this->base_data0 = base_data0;
         this->data = data;
     }
 
-    void* operator new (std::size_t count){
+    static void* operator new (size_t count){
         return allocator.allocate();
     }
 
-    void operator delete (void* ptr){
-        allocator.deallocate(static_cast<message*>(ptr));
-    }
+    static void operator delete (void* ptr){}
 
     ~message(){
         this->data.reset();
@@ -74,14 +72,17 @@ static_assert(sizeof(message) == 24, "sizeof message is not 24");
 //INLINED METHODS
 
 /**
- * @return The data contained within a message. Always a void* that MUST be properly casted to an actual type on the other end
+ * @return The data contained within a message. Always a void* that MUST be properly cast to an actual type on the other end
  */
 inline void* message::get_data() const{
     return this->data.get();
 }
 
+/**
+ * @return A copy of this message.
+ */
 inline message* message::make_copy() {
-    return new message(this->msg_name, this->base_data0, this->data);
+    return &(*allocator.allocate() = *this);
 }
 
 #endif //ST_MESSAGE_HPP

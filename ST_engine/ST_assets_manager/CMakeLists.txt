@@ -6,10 +6,10 @@
 # Author: Maxim Atanasov
 # E-mail: maxim.atanasov@protonmail.com
 
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 project(ST_assets_manager)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include(GoogleTest)
 enable_testing()
@@ -31,7 +31,6 @@ include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
 include_directories(${PROJECT_SOURCE_DIR}/../../ST_loaders/include)
 include_directories(${PROJECT_SOURCE_DIR}/../ST_message_bus/include)
 include_directories(${PROJECT_SOURCE_DIR}/../ST_task_manager/include)
-
 
 add_library(ST_assets_manager STATIC
         ${PROJECT_SOURCE_DIR}/include/assets_manager.hpp
@@ -55,7 +54,6 @@ target_link_libraries(assets_manager_test
         ${SDL2_IMAGE_LIBRARY}
         ${SDL2_TTF_LIBRARY}
         ${SDL2_MIXER_LIBRARY}
-
         )
 
 #Run the tests on each build
