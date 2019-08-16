@@ -56,7 +56,7 @@ class input_manager{
 		SDL_Event event{};
 
 		message_bus& gMessage_bus;
-        task_manager* gTask_manager{};
+        task_manager& gTask_manager;
 		subscriber msg_sub{};
 		std::vector<SDL_GameController*> controllers;
 		std::vector<SDL_Haptic*> controllers_haptic;
@@ -83,7 +83,7 @@ class input_manager{
 
 	public:
 
-        input_manager(task_manager *tsk_mngr, message_bus &gMessageBus);
+        input_manager(task_manager &gTask_manager, message_bus &gMessageBus);
         ~input_manager();
         void update();
 };
@@ -97,7 +97,7 @@ inline void input_manager::update() {
 #ifdef _MSC_VER
     input_manager::update_task(this);
 #else
-    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr));
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
 #endif
 }
 

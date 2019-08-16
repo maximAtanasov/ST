@@ -25,7 +25,7 @@ class assets_manager{
     friend class asset_manager_test;
 private:
         message_bus& gMessage_bus;
-        task_manager* gTask_manager{};
+        task_manager& gTask_manager;
         subscriber msg_sub{};
         ST::assets all_assets;
         ska::bytell_hash_map<std::string, uint16_t> count;
@@ -39,7 +39,7 @@ private:
 		void send_assets();
 
 public:
-        assets_manager(message_bus &gMessageBus, task_manager *tsk_mngr);
+        assets_manager(message_bus &gMessageBus, task_manager& tsk_mngr);
         ~assets_manager();
         void update();
 
@@ -52,7 +52,7 @@ public:
  * will start the update task using the task manager.
  */
 inline void assets_manager::update(){
-    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr));
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
 }
 
 #endif

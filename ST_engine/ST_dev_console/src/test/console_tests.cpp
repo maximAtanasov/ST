@@ -29,7 +29,7 @@ protected:
 
     void SetUp() override{
         msg_bus = new message_bus();
-        test_cnsl = new console(msg_bus);
+        test_cnsl = new console(*msg_bus);
     }
 
     void TearDown() override{

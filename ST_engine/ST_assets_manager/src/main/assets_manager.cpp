@@ -18,16 +18,13 @@ static bool singleton_initialized = false;
  * @param msg_bus - A pointer to the global message bus.
  * @param tsk_mngr - A pointer to the global task manager.
  */
-assets_manager::assets_manager(message_bus &gMessageBus, task_manager *tsk_mngr) : gMessage_bus(gMessageBus) {
+assets_manager::assets_manager(message_bus &gMessageBus, task_manager &gTask_manager) : gMessage_bus(gMessageBus), gTask_manager(gTask_manager) {
 
     if(singleton_initialized){
         throw std::runtime_error("The assets manager cannot be initialized more than once!");
     }else{
         singleton_initialized = true;
     }
-
-    //set external dependencies
-    gTask_manager = tsk_mngr;
 
     //subscribe to messages
     gMessage_bus.subscribe(LOAD_LIST, &msg_sub);

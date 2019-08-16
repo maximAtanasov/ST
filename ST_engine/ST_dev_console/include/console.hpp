@@ -49,9 +49,9 @@ class console{
         uint16_t hold_counter = 0;
 		
 
-        message_bus* gMessage_bus{};
+        message_bus& gMessage_bus;
 public:
-        explicit console(message_bus* msg_bus);
+        explicit console(message_bus &gMessageBus);
         ~console();
         void set_log_level(ST::log_type arg);
         bool is_open() const;

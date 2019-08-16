@@ -34,7 +34,7 @@ class audio_manager{
         ska::bytell_hash_map<uint16_t, Mix_Chunk*>* chunks_ptr{};
         ska::bytell_hash_map<uint16_t, Mix_Music*>* music_ptr{};//-Delivered as a message
         message_bus& gMessage_bus; //-Delivered in constructor
-        task_manager* gTask_manager{}; //-Delivered in constructor
+        task_manager& gTask_manager; //-Delivered in constructor
 
         ///internal update functions
         void handle_messages();
@@ -53,7 +53,7 @@ class audio_manager{
         static void update_task(void* arg);
 
     public:
-        audio_manager(task_manager *tsk_mngr, message_bus &gMessageBus);
+        audio_manager(task_manager &tsk_mngr, message_bus &gMessageBus);
         ~audio_manager();
         void update();
 };
@@ -64,7 +64,7 @@ class audio_manager{
  * Starts the update_task() method using the task manager.
  */
 inline void audio_manager::update(){
-    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr));
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
 }
 
 

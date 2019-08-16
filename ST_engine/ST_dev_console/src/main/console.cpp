@@ -16,14 +16,13 @@ static bool singleton_initialized = false;
  *
  * @param msg_bus A pointer to the global message bus.
  */
-console::console(message_bus* msg_bus){
+console::console(message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
     if(singleton_initialized){
         throw std::runtime_error("The dev console cannot be initialized more than once!");
     }else{
         singleton_initialized = true;
     }
 
-    gMessage_bus = msg_bus;
     color = {50, 50, 50, 100};
     color_text = {255, 255, 255, 255};
     color_info = {10, 50, 255, 255};
@@ -31,27 +30,27 @@ console::console(message_bus* msg_bus){
     color_success = {50, 255, 10, 255};
     shown = false;
     scroll_offset = 0;
-    gMessage_bus->subscribe(LOG_ERROR, &msg_sub);
-    gMessage_bus->subscribe(LOG_SUCCESS, &msg_sub);
-    gMessage_bus->subscribe(LOG_INFO, &msg_sub);
-    gMessage_bus->subscribe(CONSOLE_TOGGLE, &msg_sub);
-    gMessage_bus->subscribe(MOUSE_SCROLL, &msg_sub);
-    gMessage_bus->subscribe(KEY_PRESSED, &msg_sub);
-	gMessage_bus->subscribe(KEY_HELD, &msg_sub);
-    gMessage_bus->subscribe(KEY_RELEASED, &msg_sub);
-    gMessage_bus->subscribe(TEXT_STREAM, &msg_sub);
-    gMessage_bus->subscribe(CONSOLE_CLEAR, &msg_sub);
+    gMessage_bus.subscribe(LOG_ERROR, &msg_sub);
+    gMessage_bus.subscribe(LOG_SUCCESS, &msg_sub);
+    gMessage_bus.subscribe(LOG_INFO, &msg_sub);
+    gMessage_bus.subscribe(CONSOLE_TOGGLE, &msg_sub);
+    gMessage_bus.subscribe(MOUSE_SCROLL, &msg_sub);
+    gMessage_bus.subscribe(KEY_PRESSED, &msg_sub);
+	gMessage_bus.subscribe(KEY_HELD, &msg_sub);
+    gMessage_bus.subscribe(KEY_RELEASED, &msg_sub);
+    gMessage_bus.subscribe(TEXT_STREAM, &msg_sub);
+    gMessage_bus.subscribe(CONSOLE_CLEAR, &msg_sub);
 }
 
 void console::post_init() const{
-    gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::ENTER)));
-    gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::TILDE)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::LEFT)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::RIGHT)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::UP)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DOWN)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::BACKSPACE)));
-	gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DELETE)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::ENTER)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::TILDE)));
+	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::LEFT)));
+	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::RIGHT)));
+	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::UP)));
+	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DOWN)));
+	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::BACKSPACE)));
+	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DELETE)));
 }
 
 
@@ -125,12 +124,12 @@ void console::handle_messages(){
 				if (!composition.empty()) {
 					write(composition, ST::log_type::INFO);
 					command_entries.emplace_back(composition);
-					gMessage_bus->send_msg(new message(EXECUTE_SCRIPT, make_data(composition)));
+					gMessage_bus.send_msg(new message(EXECUTE_SCRIPT, make_data(composition)));
 				}
 				composition.clear();
 				cursor_position = 0;
 				entries_history_index = -1;
-				gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM));
+				gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
 			}
 			else if (key_val == ST::key::TILDE) {
 				toggle();
@@ -155,7 +154,7 @@ void console::handle_messages(){
 						entries_history_index--;
 						composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
 					}
-					gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM));
+					gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
 					cursor_position = static_cast<uint16_t>(composition.size());
 				}
 				else if (key_val == ST::key::DOWN) {
@@ -167,7 +166,7 @@ void console::handle_messages(){
 						entries_history_index = -1;
 						composition = "";
 					}
-					gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM));
+					gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
 					cursor_position = static_cast<uint16_t>(composition.size());
 				}
 				else if (key_val == ST::key::BACKSPACE) {
@@ -190,7 +189,7 @@ void console::handle_messages(){
 				composition.insert(cursor_position, recieved_data);
 			}
 			cursor_position += static_cast<uint16_t>(recieved_data.size());
-			gMessage_bus->send_msg(new message(CLEAR_TEXT_STREAM));
+			gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
         }
         delete temp;
         temp = msg_sub.get_next_message();
@@ -215,10 +214,10 @@ void console::set_log_level(ST::log_type arg) {
 void console::toggle() {
     if (is_open()) {
         hide();
-        gMessage_bus->send_msg(new message(STOP_TEXT_INPUT));
+        gMessage_bus.send_msg(new message(STOP_TEXT_INPUT));
     } else {
         show();
-        gMessage_bus->send_msg(new message(START_TEXT_INPUT));
+        gMessage_bus.send_msg(new message(START_TEXT_INPUT));
     }
 }
 

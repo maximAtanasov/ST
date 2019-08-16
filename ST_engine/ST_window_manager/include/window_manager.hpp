@@ -22,7 +22,7 @@ class window_manager{
         SDL_Surface* icon{};
         SDL_Window* window{};
         SDL_DisplayMode DM{};
-        task_manager* gTask_manager{};
+        task_manager& gTask_manager;
         message_bus& gMessage_bus;
         int16_t height = 0;
         int16_t width = 0;
@@ -34,7 +34,7 @@ class window_manager{
         static void update_task(void* mngr);
 
     public:
-        window_manager(message_bus &gMessageBus, task_manager *tsk_mngr, const std::string &window_name);
+        window_manager(message_bus &gMessageBus, task_manager &gTask_manager, const std::string &window_name);
         ~window_manager();
         void update();
         SDL_Window* get_window();
@@ -47,7 +47,7 @@ class window_manager{
  * Starts an the update_task() method using the task manager.
  */
 inline void window_manager::update(){
-    gTask_manager->start_task_lockfree(new ST::task(update_task, this, nullptr));
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
 }
 
 #endif

@@ -21,7 +21,6 @@ class physics_manager{
     private:
         message_bus& gMessage_bus;
         std::vector<ST::entity>* entities{};
-		task_manager* gTask_manager{};
         subscriber msg_sub{};
         int32_t level_floor = 0;
 		bool physics_paused = false;
@@ -38,7 +37,7 @@ class physics_manager{
 
 
     public:
-        physics_manager(message_bus &gMessageBus, task_manager *tsk_mngr);
+        physics_manager(message_bus &gMessageBus);
         void update(std::vector<ST::entity>* data);
         ~physics_manager();
 };

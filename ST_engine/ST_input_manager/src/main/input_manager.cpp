@@ -24,16 +24,13 @@ input_manager::~input_manager() {
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
  */
-input_manager::input_manager(task_manager *tsk_mngr, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
+input_manager::input_manager(task_manager &gTask_manager, message_bus &gMessageBus) : gMessage_bus(gMessageBus), gTask_manager(gTask_manager) {
 
     if(singleton_initialized){
         throw std::runtime_error("The input manager cannot be initialized more than once!");
     }else{
         singleton_initialized = true;
     }
-
-    //SET OUR EXTERNAL DEPENDENCIES
-    gTask_manager = tsk_mngr;
 
     if( SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC) < 0 ){
         gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Could not initialize gamepad subsystem!")));

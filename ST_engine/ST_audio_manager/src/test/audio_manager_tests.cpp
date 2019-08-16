@@ -33,6 +33,7 @@ protected:
 
     audio_manager* test_mngr{};
     message_bus* msg_bus{};
+    task_manager* task_mngr{};
 
     static void SetUpTestCase(){
         SDL_Init(SDL_INIT_VIDEO);
@@ -51,12 +52,14 @@ protected:
 
     void SetUp() override{
         msg_bus = new message_bus();
-        test_mngr = new audio_manager(nullptr, *msg_bus);
+        task_mngr = new task_manager(0);
+        test_mngr = new audio_manager(*task_mngr, *msg_bus);
     }
 
     void TearDown() override{
         delete test_mngr;
         delete msg_bus;
+        delete task_mngr;
     }
 };
 

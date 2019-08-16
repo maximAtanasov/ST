@@ -28,7 +28,7 @@ function newLight(self, origin_x, origin_y, radius, intensity, brightness)
     self.__index = self
     if(origin_x ~= nil and origin_y ~= nil) then
         o.ID = newLightID()
-        createLight(o.ID, origin_x, origin_y, radius, intensity, brightness)
+        createLight(origin_x, origin_y, radius, intensity, brightness)
     end
     return o
 end

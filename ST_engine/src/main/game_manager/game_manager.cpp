@@ -19,7 +19,7 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
-game_manager::game_manager(task_manager *tsk_mngr, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
+game_manager::game_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
 
     if(singleton_initialized){
         throw std::runtime_error("The game manager cannot be initialized more than once!");
@@ -28,7 +28,6 @@ game_manager::game_manager(task_manager *tsk_mngr, message_bus &gMessageBus) : g
     }
 
     gScript_backend.initialize(&gMessage_bus, this);
-    gTask_manager = tsk_mngr;
 
     //subscribe to messages
     gMessage_bus.subscribe(LOAD_LEVEL, &msg_sub);

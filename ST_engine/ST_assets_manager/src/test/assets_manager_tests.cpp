@@ -55,15 +55,18 @@ protected:
     }
 
     message_bus* msg_bus{};
+    task_manager* task_mngr{};
 
     void SetUp() override{
         msg_bus = new message_bus();
-        test_mngr = new assets_manager(*msg_bus, nullptr);
+        task_mngr = new task_manager(0);
+        test_mngr = new assets_manager(*msg_bus, *task_mngr);
     }
 
     void TearDown() override{
         delete test_mngr;
         delete msg_bus;
+        delete task_mngr;
     }
 };
 

@@ -27,7 +27,7 @@ void audio_manager::update_task(void* arg){
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task manager.
  */
-audio_manager::audio_manager(task_manager *tsk_mngr, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
+audio_manager::audio_manager(task_manager &gTask_manager, message_bus &gMessageBus) : gMessage_bus(gMessageBus), gTask_manager(gTask_manager){
     if(singleton_initialized){
         throw std::runtime_error("The audio manager cannot be initialized more than once!");
     }else{
@@ -46,8 +46,6 @@ audio_manager::audio_manager(task_manager *tsk_mngr, message_bus &gMessageBus) :
 		fprintf(stderr, "Failed to initialize SDL_Mixer: %s\n", Mix_GetError());
 		exit(1);
 	}
-    gTask_manager = tsk_mngr;
-
     Mix_Volume(-1, chunk_volume);
     Mix_VolumeMusic(music_volume);
     Mix_AllocateChannels(8);

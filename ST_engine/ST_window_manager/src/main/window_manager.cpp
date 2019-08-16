@@ -30,8 +30,8 @@ window_manager::~window_manager(){
  * @param msg_bus a pointer to the global message bus
  * @param tsk_mngr a pointer to the global task manager
  */
-window_manager::window_manager(message_bus &gMessageBus, task_manager *tsk_mngr, const std::string &window_name)
-        : gMessage_bus(gMessageBus) {
+window_manager::window_manager(message_bus &gMessageBus, task_manager &gTask_manager, const std::string &window_name)
+        : gMessage_bus(gMessageBus), gTask_manager(gTask_manager) {
 
     if(singleton_initialized){
         throw std::runtime_error("The window manager cannot be initialized more than once!");
@@ -47,7 +47,6 @@ window_manager::window_manager(message_bus &gMessageBus, task_manager *tsk_mngr,
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);
     }
-    gTask_manager = tsk_mngr;
 	SDL_GetDisplayMode(0, 0, &DM);
 	width = static_cast<int16_t>(DM.w);
     height = static_cast<int16_t>(DM.h);

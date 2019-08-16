@@ -63,7 +63,7 @@ class game_manager{
         bool audio_enabled = true;
         int8_t gravity = 0;
 
-        game_manager(task_manager* tsk_mngr, message_bus& msg_bus);
+        explicit game_manager(message_bus& msg_bus);
         ~game_manager();
         std::string get_active_level() const;
         bool key_pressed(uint16_t arg) const;

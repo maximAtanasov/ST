@@ -14,14 +14,12 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_mngr.
  */
-physics_manager::physics_manager(message_bus &gMessageBus, task_manager *tsk_mngr) : gMessage_bus(gMessageBus) {
+physics_manager::physics_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
     if(singleton_initialized){
         throw std::runtime_error("The phsyics manager cannot be initialized more than once!");
     }else{
         singleton_initialized = true;
     }
-
-    gTask_manager = tsk_mngr;
     gMessage_bus.subscribe(SET_GRAVITY, &msg_sub);
     gMessage_bus.subscribe(SET_FRICTION, &msg_sub);
 	gMessage_bus.subscribe(SET_FLOOR, &msg_sub);

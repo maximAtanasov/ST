@@ -293,7 +293,7 @@ std::string lua_backend::hash_file(const std::string& path){
         while(!file.eof()){
             getline(file, temp);
             if(!temp.empty()){
-                temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind(std::not_equal_to<char>(), ' ', std::placeholders::_1)));
+                temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind(std::not_equal_to<>(), ' ', std::placeholders::_1)));
                 while(temp.find("playSound(\"") != std::string::npos) {
                     std::string to_find = "playSound(\"";
                     std::string temp_buf;
@@ -403,7 +403,7 @@ std::string lua_backend::hash_string(const std::string& arg){
     std::string result;
     std::string temp = arg;
     if(!temp.empty()){
-        temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind(std::not_equal_to<char>(), ' ', std::placeholders::_1)));
+        temp.erase(temp.begin(), std::find_if(temp.begin(), temp.end(), std::bind(std::not_equal_to<>(), ' ', std::placeholders::_1)));
         while(temp.find("playSound(\"") != std::string::npos) {
             std::string to_find = "playSound(\"";
             std::string temp_buf;
@@ -497,12 +497,11 @@ extern "C" int enableLightingLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int createLightLua(lua_State* L){
-    auto ID = static_cast<uint64_t >(lua_tointeger(L, 1));
-    auto origin_x = static_cast<int32_t>(lua_tointeger(L, 2));
-    auto origin_y = static_cast<int32_t>(lua_tointeger(L, 3));
-    auto radius = static_cast<uint16_t>(lua_tointeger(L, 4));
-    auto intensity = static_cast<uint16_t>(lua_tointeger(L, 5));
-    auto brightness = static_cast<uint16_t>(lua_tointeger(L, 6));
+    auto origin_x = static_cast<int32_t>(lua_tointeger(L, 1));
+    auto origin_y = static_cast<int32_t>(lua_tointeger(L, 2));
+    auto radius = static_cast<uint16_t>(lua_tointeger(L, 3));
+    auto intensity = static_cast<uint16_t>(lua_tointeger(L, 4));
+    auto brightness = static_cast<uint16_t>(lua_tointeger(L, 5));
     gGame_managerLua->get_level()->lights.emplace_back(origin_x, origin_y, radius, intensity, brightness);
     return 0;
 }
