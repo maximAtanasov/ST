@@ -11,6 +11,7 @@
 #define LUA_BACKEND_HPP
 
 #include <message_bus.hpp>
+#include <functional>
 
 extern "C" {
     #include <lua.h>
