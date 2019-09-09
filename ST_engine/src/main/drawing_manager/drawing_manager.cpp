@@ -11,9 +11,6 @@
 #include <ST_util/string_util.hpp>
 #include <ST_util/math.hpp>
 
-#define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
-#define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
-
 static bool singleton_initialized = false;
 
 /**
@@ -145,18 +142,16 @@ void drawing_manager::draw_console(console& cnsl){
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
 		int32_t cursor_draw_position = 0;
 		if (cnsl.cursor_position == cnsl.composition.size()) {
-			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + cnsl.composition, 0, w_height / 2, cnsl.color_text, -1);
-		}
-		else {
+			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text, -1);
+		} else {
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
 			cursor_draw_position = ST::renderer_sdl::draw_text(default_font_normal, "Command: " + to_cursor, 0, w_height / 2, cnsl.color_text, -1);
 			ST::renderer_sdl::draw_text(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text, -1);
 		}
-
         if(ticks - cnsl.cursor_timer >= 500) {
             cnsl.cursor_timer = ticks;
-        }else if (ticks - cnsl.cursor_timer < 250) {
+        } else if (ticks - cnsl.cursor_timer < 250) {
             ST::renderer_sdl::draw_rectangle_filled(
 				cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);

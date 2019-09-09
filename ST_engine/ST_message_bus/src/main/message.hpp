@@ -31,7 +31,7 @@ public:
 
     uint8_t msg_name{};
 
-    void* get_data() const;
+    [[nodiscard]] void* get_data() const;
     message *make_copy();
 
     message() = default;

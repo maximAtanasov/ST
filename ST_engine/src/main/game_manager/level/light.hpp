@@ -34,7 +34,7 @@ namespace ST {
 
         light(int32_t origin_x, int32_t origin_y, uint16_t radius, uint16_t intensity, uint16_t brightness);
     };
-    static_assert(sizeof(ST::light) == 16, "class 'text' is not sized properly, maybe you have misaligned the fields");
+    static_assert(sizeof(ST::light) == 16, "class 'light' is not sized properly, maybe you have misaligned the fields");
 }
 
 #endif //LIGHT_DEF

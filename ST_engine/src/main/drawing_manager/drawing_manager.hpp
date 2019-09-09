@@ -17,6 +17,10 @@
 #include <game_manager/level/level.hpp>
 #include <console.hpp>
 
+
+#define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
+#define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
+
 ///This object is responsible for issuing drawing commands and drawing the current level.
 class drawing_manager{
     private:
@@ -33,8 +37,8 @@ class drawing_manager{
         ST::camera Camera{};
 
         //Internal rendering resolution
-        int16_t w_width = 1920;
-        int16_t w_height = 1080;
+        uint16_t w_width = 1920;
+        uint16_t w_height = 1080;
 
         //variables for drawing light
         uint8_t lightmap[1920][1080]{};
@@ -60,8 +64,8 @@ class drawing_manager{
 
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
-        bool is_onscreen(const ST::entity& i) const;
-        bool is_onscreen(const ST::text& i) const;
+        [[nodiscard]] bool is_onscreen(const ST::entity& i) const;
+        [[nodiscard]] bool is_onscreen(const ST::text& i) const;
 
         //Other functions
         void handle_messages();

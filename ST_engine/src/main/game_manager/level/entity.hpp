@@ -75,16 +75,16 @@ namespace ST {
             toggles &= ~(1U<<3U);
         };
 
-        int32_t get_col_x() const;
-        int32_t get_col_y() const;
-        int16_t get_col_y_offset() const;
-        int16_t get_col_x_offset() const;
-        bool collides(const entity&) const;
+        [[nodiscard]] int32_t get_col_x() const;
+        [[nodiscard]] int32_t get_col_y() const;
+        [[nodiscard]] int16_t get_col_y_offset() const;
+        [[nodiscard]] int16_t get_col_x_offset() const;
+        [[nodiscard]] bool collides(const entity&) const;
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
-        bool is_active() const;
-        bool is_static() const;
-        bool is_visible() const;
-        bool is_affected_by_physics() const;
+        [[nodiscard]] bool is_active() const;
+        [[nodiscard]] bool is_static() const;
+        [[nodiscard]] bool is_visible() const;
+        [[nodiscard]] bool is_affected_by_physics() const;
         void set_active(bool active);
         void set_static(bool static_);
         void set_visible(bool visible);

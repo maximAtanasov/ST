@@ -25,6 +25,7 @@ ST::level::level(const std::string& lvl_name, message_bus* msg_bus){
 /**
  * Loads the level.
  * Sends a LOAD_LIST message to load the assets.list in the directory of the level.
+ * @return -1 if the input configuration could not be loaded, 0 on success
  */
 int8_t ST::level::load(){
     if(load_input_conf() != 0){

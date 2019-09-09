@@ -55,7 +55,7 @@ namespace ST {
         int8_t load();
         void reload();
         void unload();
-        std::string get_name() const;
+        [[nodiscard]] std::string get_name() const;
         ~level();
         int8_t load_input_conf();
     };

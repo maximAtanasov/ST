@@ -44,4 +44,6 @@ namespace ST {
     };
 }
 
+static_assert(sizeof(ST::text) == 48, "class 'text' is not sized properly, maybe you have misaligned the fields");
+
 #endif
