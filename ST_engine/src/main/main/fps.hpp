@@ -27,7 +27,7 @@ class fps {
     public:
         fps();
         void update(double time, double frame_time);
-        double get_value() const;
+        [[nodiscard]] double get_value() const;
 };
 
 //INLINED METHODS
