@@ -56,7 +56,7 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
 
 	//Initialize the rendering object
 	ST::renderer_sdl::initialize(window, w_width, w_height);
-    uint32_t screen_width_height = w_width | (w_height << 16U);
+    uint32_t screen_width_height = w_width | static_cast<uint32_t>(w_height << 16U);
     gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
 }
 
