@@ -16,8 +16,7 @@ static bool singleton_initialized;
 #ifdef _MSC_VER
 #include <Windows.h>
 #include <malloc.h>
-#include <stdio.h>
-#include <tchar.h>
+#include <cstdio>
 
 typedef BOOL (WINAPI *LPFN_GLPI)(
         PSYSTEM_LOGICAL_PROCESSOR_INFORMATION,

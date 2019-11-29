@@ -162,7 +162,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_small){
     ska::bytell_hash_map<uint16_t , TTF_Font*> test_assets;
     test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text(font_hash, "The quick brown fox!", 300, 300, {255, 0, 0, 255}, -1);
+    ST::renderer_sdl::draw_text_cached_glyphs(font_hash, "The quick brown fox!", 300, 300, {255, 0, 0, 255});
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -175,7 +175,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_medium){
     ska::bytell_hash_map<uint16_t, TTF_Font*> test_assets;
     test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text(font_hash, "The quick brown fox!", 200, 300, {0, 255, 0, 255}, -1);
+    ST::renderer_sdl::draw_text_cached_glyphs(font_hash, "The quick brown fox!", 200, 300, {0, 255, 0, 255});
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -188,7 +188,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_english_large){
     ska::bytell_hash_map<uint16_t, TTF_Font*> test_assets;
     test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text(font_hash, "The quick brown fox!", 100, 300, {0, 0, 255, 255}, -1);
+    ST::renderer_sdl::draw_text_cached_glyphs(font_hash, "The quick brown fox!", 100, 300, {0, 0, 255, 255});
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -201,7 +201,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_small){
     ska::bytell_hash_map<uint16_t, TTF_Font*> test_assets;
     test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text(font_hash, "Этот тест тестирует шрифты!", 300, 300, {255, 0, 0, 255}, -1);
+    ST::renderer_sdl::draw_text_lru_cached(font_hash, "Этот тест тестирует шрифты!", 300, 300, {255, 0, 0, 255});
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -214,7 +214,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_medium){
     ska::bytell_hash_map<uint16_t, TTF_Font*> test_assets;
     test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text(font_hash, "Этот тест тестирует шрифты!", 200, 300, {0, 255, 0, 255}, -1);
+    ST::renderer_sdl::draw_text_lru_cached(font_hash, "Этот тест тестирует шрифты!", 200, 300, {0, 255, 0, 255});
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
@@ -227,7 +227,7 @@ TEST_F(renderer_sdl_tests, test_draw_font_russian_large){
     ska::bytell_hash_map<uint16_t, TTF_Font*> test_assets;
     test_assets[font_hash] = test_font;
     ST::renderer_sdl::upload_fonts(&test_assets);
-    ST::renderer_sdl::draw_text(font_hash, "Этот тест тестирует шрифты!", 100, 300, {0, 0, 255, 255}, -1);
+    ST::renderer_sdl::draw_text_lru_cached(font_hash, "Этот тест тестирует шрифты!", 100, 300, {0, 0, 255, 255});
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }

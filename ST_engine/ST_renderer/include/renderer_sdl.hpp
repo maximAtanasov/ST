@@ -21,8 +21,7 @@
  * rendering techniques to draw textures, text and primitives to the screen.
  */
 
-namespace ST {
-    namespace renderer_sdl {
+namespace ST::renderer_sdl {
 
         void set_draw_color(uint8_t, uint8_t, uint8_t, uint8_t);
 
@@ -47,8 +46,10 @@ namespace ST {
         void draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num);
 
         void draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
-        
-        int32_t draw_text(uint16_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font , int8_t flag);
+
+        uint16_t draw_text_cached_glyphs(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
+
+        uint16_t draw_text_lru_cached(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
 
         void upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces);
 
@@ -65,6 +66,5 @@ namespace ST {
         void set_resolution(int16_t r_width, int16_t r_height);
 
     }
-}
 
 #endif //RENDER_SDL_DEF

@@ -34,7 +34,7 @@ class drawing_manager{
         uint32_t ticks = 0;
 
         //Basically the viewport
-        ST::camera Camera{};
+        ST::camera camera{};
 
         //Internal rendering resolution
         uint16_t w_width = 1920;

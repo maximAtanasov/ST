@@ -46,7 +46,7 @@ TEST_F(level_tests, test_load_input_configuration){
 
     //Test
     ASSERT_EQ(0, load_input_conf(&level));
-    ska::bytell_hash_map<uint16_t, std::vector<ST::key>> actions_buttons = level.actions_Buttons;
+    ska::bytell_hash_map<uint16_t, std::vector<ST::key>> actions_buttons = level.actions_buttons;
 
     ST::key check_key1 = actions_buttons.at(key1_hash).at(0);
     ASSERT_EQ(ST::key::I, check_key1);

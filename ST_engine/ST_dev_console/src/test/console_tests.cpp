@@ -62,10 +62,10 @@ TEST_F(console_test, set_log_level) {
 }
 
 TEST_F(console_test, console_write_error) {
-    ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
     test_cnsl->set_log_level(ST::log_type::ERROR);
     write(ST::log_type::ERROR, "TEST_STRING");
-    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStderr());
 }
 
 TEST_F(console_test, console_write_info) {
@@ -85,13 +85,17 @@ TEST_F(console_test, console_write_success) {
 
 TEST_F(console_test, console_write_all) {
     ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
+
     test_cnsl->set_log_level(ST::log_type::SUCCESS | ST::log_type::INFO | ST::log_type::ERROR);
 
     write(ST::log_type::INFO, "TEST_STRING");
     write(ST::log_type::ERROR, "TEST_STRING2");
     write(ST::log_type::SUCCESS, "TEST_STRING3");
 
-    ASSERT_EQ("TEST_STRING\nTEST_STRING2\nTEST_STRING3\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("TEST_STRING\nTEST_STRING3\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("TEST_STRING2\n", testing::internal::GetCapturedStderr());
+
 }
 
 int main(int argc, char **argv) {
