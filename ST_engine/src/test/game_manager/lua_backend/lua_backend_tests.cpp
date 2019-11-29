@@ -750,7 +750,7 @@ TEST_F(lua_backend_test, test_call_function_setBrightness){
 TEST_F(lua_backend_test, test_call_function_setOverlay){
     test_subject.run_script("setOverlay(\"some_bg.webp\", 3)");
     ASSERT_EQ(2, game_mngr->get_level_calls);
-    ASSERT_EQ(3, game_mngr->get_level()->overlay_spriteNum);
+    ASSERT_EQ(3, game_mngr->get_level()->overlay_sprite_num);
     ASSERT_EQ(ST::hash_string("some_bg.webp"), game_mngr->get_level()->overlay);
 }
 
@@ -790,8 +790,8 @@ TEST_F(lua_backend_test, test_call_function_setLevelSize){
 
     //Check result
     ASSERT_EQ(2, game_mngr->get_level_calls);
-    ASSERT_EQ(5000, game_mngr->get_level()->Camera.limitX2);
-    ASSERT_EQ(5000, game_mngr->get_level()->Camera.limitY2);
+    ASSERT_EQ(5000, game_mngr->get_level()->camera.limitX2);
+    ASSERT_EQ(5000, game_mngr->get_level()->camera.limitY2);
 }
 
 TEST_F(lua_backend_test, test_call_function_getMouseX){
@@ -850,6 +850,26 @@ TEST_F(lua_backend_test, test_call_function_rightStickVertical){
     //Check result
     ASSERT_EQ(300, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
+
+TEST_F(lua_backend_test, test_call_function_controllerRumble){
+    subscriber subscriber1;
+    msg_bus->subscribe(CONTROLLER_RUMBLE, &subscriber1);
+    test_subject.run_script("return controllerRumble(0.7, 1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(CONTROLLER_RUMBLE, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    float strength = *reinterpret_cast<float*>(&result->base_data0);
+    uint16_t duration = result->base_data1;
+
+    ASSERT_EQ(0.7f, strength);
+    ASSERT_EQ(1000, duration);
+}
+
 
 TEST_F(lua_backend_test, test_call_function_keyHeld){
     test_subject.run_script("return keyHeld(\"SOME_KEY\")");

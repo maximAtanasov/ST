@@ -277,8 +277,8 @@ void game_manager::start_level(const std::string& level_name) {
     get_level()->text_objects.clear();
 
     //construct level
-    get_level()->Camera.x = 0;
-    get_level()->Camera.y = 0;
+    get_level()->camera.x = 0;
+    get_level()->camera.y = 0;
 
     std::string temp = "levels/";
     temp = temp + active_level;
@@ -295,7 +295,6 @@ game_manager::~game_manager(){
 }
 
 
-//TODO: Docs
 /**
  * @return The value of the left trigger button on a controller
  */
@@ -310,18 +309,30 @@ int16_t game_manager::get_right_trigger() const {
     return right_trigger;
 }
 
+/**
+ * @return The value of the left analog stick horizontal axis on a controller
+ */
 int16_t game_manager::get_left_stick_horizontal() const {
     return left_stick_horizontal;
 }
 
+/**
+ * @return The value of the left analog stick vertical axis on a controller
+ */
 int16_t game_manager::get_left_stick_vertical() const {
     return left_stick_vertical;
 }
 
+/**
+ * @return The value of the right analog stick vertical axis on a controller
+ */
 int16_t game_manager::get_right_stick_vertical() const {
     return right_stick_vertical;
 }
 
+/**
+ * @return The value of the right analog stick horizontal axis on a controller
+ */
 int16_t game_manager::get_right_stick_horizontal() const {
     return right_stick_horizontal;
 }

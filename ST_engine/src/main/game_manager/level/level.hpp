@@ -41,15 +41,15 @@ namespace ST {
          * Contains all entities, lights and text objects.
          * Contains the background overlay and the camera.
          */
-        ska::bytell_hash_map<uint16_t , std::vector<ST::key>> actions_Buttons{};
+        ska::bytell_hash_map<uint16_t , std::vector<ST::key>> actions_buttons{};
         std::vector<ST::entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};
         uint16_t background = 65535;
         SDL_Color background_color{0, 0, 0, 0};
         uint16_t overlay = 65535;
-        uint8_t overlay_spriteNum = 1;
-        ST::camera Camera = {0, 0, -1, 1920, 0, 1080};
+        uint8_t overlay_sprite_num = 1;
+        ST::camera camera = {0, 0, -1, 1920, 0, 1080};
 
         level(const std::string&, message_bus*);
         int8_t load();

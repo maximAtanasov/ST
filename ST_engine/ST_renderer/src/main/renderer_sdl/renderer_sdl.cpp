@@ -11,13 +11,11 @@
 #include "font_cache.hpp"
 #include <renderer_sdl.hpp>
 
-namespace ST {
-    namespace renderer_sdl {
+namespace ST::renderer_sdl {
         void cache_font(TTF_Font *Font, uint16_t font_and_size);
         uint16_t draw_text_lru_cached(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
         uint16_t draw_text_cached_glyphs(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
     }
-}
 
 static SDL_Renderer *sdl_renderer;
 
@@ -179,36 +177,6 @@ uint16_t ST::renderer_sdl::draw_text_cached_glyphs(uint16_t font, const std::str
 }
 
 /**
- * This method will decide which of the two text rendering methods to use based on the flag that is passed, if you are unsure if your
- * font will render properly just pass in 0 (the default for all non-internal engine text).
- * @param arg The font to render with.
- * @param arg2 The text to render.
- * @param x The x position to render at.
- * @param y The y position to render at.
- * @param color_font The color to render with.
- * @param size The size of the font to render at.
- * @param flag 1 to render with draw_text_cached, 0 to render with draw_text_normal
- * and any other value will cause a method to be picked automatically.
- * @return The width of the rendered string in pixels
- *
- * Note that the font must previously be loaded at the selected size.
- */
-int32_t ST::renderer_sdl::draw_text(uint16_t font, const std::string& arg2, int32_t x, int32_t y, SDL_Color color_font, int8_t flag){
-    if(flag == 1){
-        return draw_text_cached_glyphs(font, arg2, x, y, color_font);
-    }else if(flag == 0){
-        return draw_text_lru_cached(font, arg2, x, y, color_font);
-    }else{
-        for(unsigned int i = 0; i < arg2.size(); i++) {
-            if (arg2.at(i) > 126 || (arg2.at(i) < 32)) {
-                return draw_text_lru_cached(font, arg2, x, y, color_font);
-            }
-        }
-        return draw_text_cached_glyphs(font, arg2, x, y, color_font);
-    }
-}
-
-/**
  * Upload all surface to the GPU. (Create textures from them).
  * @param surfaces The surfaces to upload.
  */
@@ -340,7 +308,8 @@ void ST::renderer_sdl::draw_texture_scaled(const uint16_t arg, int32_t x, int32_
     if (texture != textures.end()) {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect dst_rect = {x, y - static_cast<int>(tex_h * scale_y), static_cast<int>(tex_w * scale_x), static_cast<int>(tex_h * scale_y)};
+        SDL_Rect dst_rect = {x, y - static_cast<int>(static_cast<float>(tex_h) * scale_y), static_cast<int>(static_cast<float>(tex_w) * scale_x),
+                             static_cast<int>(static_cast<float>(tex_h) * scale_y)};
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &dst_rect);
     }
 }
@@ -426,8 +395,8 @@ void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, ui
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
         int temp1 = tex_h / animation_num;
         int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, y - static_cast<int>(temp1 * scale_y), static_cast<int>(temp2 * scale_x),
-                             static_cast<int>(temp1 * scale_y)};
+        SDL_Rect dst_rect = {x, y - static_cast<int>(static_cast<float>(temp1) * scale_y), static_cast<int>(static_cast<float>(temp2) * scale_x),
+                             static_cast<int>(static_cast<float>(temp1) * scale_y)};
         SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
     }
@@ -445,9 +414,7 @@ void ST::renderer_sdl::draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite
     if (texture != textures.end()) {
         int32_t tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        int32_t temp1 = tex_h;
-        int32_t temp2 = tex_w / sprite_num;
-        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), 0, temp2, temp1};
+        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), 0, tex_w / sprite_num, tex_h};
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, nullptr);
     }
 }

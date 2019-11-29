@@ -32,7 +32,7 @@ int8_t ST::level::load(){
         return -1;
     }
     //Register all the keys this level uses with the input manager.
-    for(const auto &i : actions_Buttons) {
+    for(const auto &i : actions_buttons) {
         for(const auto& key : i.second) {
             if(key != ST::key::UNKNOWN){
                 gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(key), nullptr));
@@ -50,17 +50,17 @@ int8_t ST::level::load(){
 void ST::level::reload(){
     std::string temp = "levels/" + name + "/assets.list";
     gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
-    for(const auto &i : actions_Buttons) {
+    for(const auto &i : actions_buttons) {
         for(const auto &key : i.second){
             if(key != ST::key::UNKNOWN){
                 gMessage_bus->send_msg(new message(UNREGISTER_KEY, static_cast<uint8_t>(key), nullptr));
             }
         }
     }
-    actions_Buttons.clear();
+    actions_buttons.clear();
     gMessage_bus->send_msg(new message(LOAD_LIST, make_data(temp)));
     load_input_conf();
-    for(const auto &i : actions_Buttons) {
+    for(const auto &i : actions_buttons) {
         for(const auto& key : i.second) {
             if(key != ST::key::UNKNOWN){
                 gMessage_bus->send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(key), nullptr));
@@ -83,7 +83,7 @@ std::string ST::level::get_name() const{
  */
 ST::level::~level(){
     //unload inputConf
-    actions_Buttons.clear();
+    actions_buttons.clear();
 
     //unload entities.
     entities.clear();
@@ -100,7 +100,7 @@ ST::level::~level(){
  * Sends a UNLOAD_LIST message to unload all assets and unregisters all keys.
  */
 void ST::level::unload(){
-    for(const auto &i : actions_Buttons) {
+    for(const auto &i : actions_buttons) {
         for (const auto &key : i.second) {
             if(key != ST::key::UNKNOWN){
                 gMessage_bus->send_msg(new message(UNREGISTER_KEY, static_cast<uint8_t>(key), nullptr));
@@ -111,7 +111,7 @@ void ST::level::unload(){
     gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
 
     //unload inputConf
-    actions_Buttons.clear();
+    actions_buttons.clear();
 
     //unload entities
     entities.clear();
@@ -158,8 +158,8 @@ int8_t ST::level::load_input_conf(){
                 std::istringstream buf(button);
                 std::istream_iterator<std::string> beg(buf), end;
                 std::vector<std::string> tokens(beg, end);
-                actions_Buttons.emplace(ST::hash_string(action), std::vector<ST::key>());
-                std::vector<ST::key>* buttons_for_action = &actions_Buttons.at(ST::hash_string(action));
+                actions_buttons.emplace(ST::hash_string(action), std::vector<ST::key>());
+                std::vector<ST::key>* buttons_for_action = &actions_buttons.at(ST::hash_string(action));
                 for(const auto &token : tokens) {
                     buttons_for_action->emplace_back(key_index(token));
                 }

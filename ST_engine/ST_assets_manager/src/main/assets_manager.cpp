@@ -161,7 +161,7 @@ int8_t assets_manager::unload_assets_from_binary(const std::string& path) {
 
 void assets_manager::send_assets() {
 	gMessage_bus.send_msg(new message(SURFACES_ASSETS, make_data(&all_assets.surfaces)));
-	gMessage_bus.send_msg(new message(FONTS_ASSETS, make_data(&all_assets.fonts)));
+    gMessage_bus.send_msg(new message(FONTS_ASSETS, make_data(&all_assets.fonts)));
 	gMessage_bus.send_msg(new message(CHUNKS_ASSETS, make_data(&all_assets.chunks)));
 	gMessage_bus.send_msg(new message(MUSIC_ASSETS, make_data(&all_assets.music)));
 }
@@ -198,7 +198,7 @@ int8_t assets_manager::load_asset(std::string path){
 
     if(extension == ST::asset_file_type::PNG || extension == ST::asset_file_type::WEBP){
         SDL_Surface* temp1 = IMG_Load(path.c_str());
-        if(temp1 != nullptr){
+        if(temp1 != nullptr) {
             path = ST::trim_path(path);
             uint16_t string_hash = ST::hash_string(path);
             all_assets.surfaces[string_hash] = temp1;

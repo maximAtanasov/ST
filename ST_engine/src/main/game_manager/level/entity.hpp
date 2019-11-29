@@ -58,7 +58,7 @@ namespace ST {
         //2 bytes
         /*
         [0] is_active = true;
-        [1] is_static = false; does not move with Camera
+        [1] is_static = false; does not move with camera
         [2] is_visible = true;
         [3] is_affected_by_physics;
          */
@@ -197,5 +197,7 @@ inline bool ST::entity::collides(const entity& other) const{
     return !((y + offset_y <= other.y + other.col_y + other.offset_y) || (y + col_y + offset_y >= other.y + other.offset_y)
           || (x + offset_x >= other.x + other.col_x + other.offset_x) || (x + col_x + offset_x <= other.x + other.offset_x));
 }
+
+static_assert(sizeof(ST::entity) == 36, "class 'entity' is not sized properly, maybe you have misaligned the fields");
 
 #endif

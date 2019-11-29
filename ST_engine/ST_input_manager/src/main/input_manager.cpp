@@ -274,9 +274,10 @@ void input_manager::handle_messages(){
             }
         }else if(temp->msg_name == CONTROLLER_RUMBLE){
             if(!controllers.empty() && !controllers_haptic.empty()){
-                auto data = static_cast<std::tuple<float, uint32_t>*>(temp->get_data());
+                float strength = *reinterpret_cast<float*>(&temp->base_data0);
+                uint16_t duration = temp->base_data1;
                 for(SDL_Haptic* haptic : controllers_haptic){
-                    SDL_HapticRumblePlay(haptic, std::get<0>(*data), std::get<1>(*data));
+                    SDL_HapticRumblePlay(haptic, strength, duration);
                 }
             }
 		}

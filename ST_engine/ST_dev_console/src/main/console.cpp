@@ -112,12 +112,6 @@ void console::handle_messages(){
                 }
             }
         }
-/*        else if(temp->msg_name == KEY_RELEASED){
-            auto key_val = *static_cast<ST::key*>(temp->get_data());
-            if (key_val == ST::key::LEFT || key_val == ST::key::RIGHT) {
-                hold_counter = 0;
-            }
-        }*/
         else if (temp->msg_name == KEY_PRESSED) {
             auto key_val = static_cast<ST::key>(temp->base_data0);
 			if (key_val == ST::key::ENTER) {
@@ -225,7 +219,11 @@ void console::toggle() {
  * @param arg the text to write to the console window AND <b>stdout</b>.
  */
 void console::write(const std::string &arg, ST::log_type type){
-    printf("%s\n", arg.c_str());
+    if(type == ST::log_type::ERROR){
+        fprintf(stderr, "%s\n", arg.c_str());
+    } else {
+        fprintf(stdout, "%s\n", arg.c_str());
+    }
     entries.emplace_back(type, arg);
     //remove entries if there are too many
     if(entries.size() > 1000) {

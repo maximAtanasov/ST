@@ -10,7 +10,7 @@
 #ifndef ST_GAME_MANAGER_DEF
 #define ST_GAME_MANAGER_DEF
 
-#define FIRST_LEVEL_NAME "cubes"
+#define FIRST_LEVEL_NAME "main"
 
 #include <game_manager/level/level.hpp>
 #include <message_bus.hpp>
@@ -22,7 +22,7 @@
 class game_manager{
     private:
 
-    std::vector<ST::level> levels{};
+        std::vector<ST::level> levels{};
         std::string active_level{};
         ST::level* current_level_pointer{};
         subscriber msg_sub{};
@@ -65,21 +65,21 @@ class game_manager{
 
         explicit game_manager(message_bus& msg_bus);
         ~game_manager();
-        std::string get_active_level() const;
-        bool key_pressed(uint16_t arg) const;
-        bool key_held(uint16_t arg) const;
-        bool key_released(uint16_t arg) const;
-        int32_t get_mouse_x() const;
-        int32_t get_mouse_y() const;
-        int16_t get_left_trigger() const;
-        int16_t get_right_trigger() const;
-        int16_t get_left_stick_horizontal() const;
-        int16_t get_left_stick_vertical() const;
-        int16_t get_right_stick_vertical() const;
-        int16_t get_right_stick_horizontal() const;
+        [[nodiscard]] std::string get_active_level() const;
+        [[nodiscard]] bool key_pressed(uint16_t arg) const;
+        [[nodiscard]] bool key_held(uint16_t arg) const;
+        [[nodiscard]] bool key_released(uint16_t arg) const;
+        [[nodiscard]] int32_t get_mouse_x() const;
+        [[nodiscard]] int32_t get_mouse_y() const;
+        [[nodiscard]] int16_t get_left_trigger() const;
+        [[nodiscard]] int16_t get_right_trigger() const;
+        [[nodiscard]] int16_t get_left_stick_horizontal() const;
+        [[nodiscard]] int16_t get_left_stick_vertical() const;
+        [[nodiscard]] int16_t get_right_stick_vertical() const;
+        [[nodiscard]] int16_t get_right_stick_horizontal() const;
         void update();
-        bool game_is_running() const;
-        ST::level* get_level() const;
+        [[nodiscard]] bool game_is_running() const;
+        [[nodiscard]] ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
 
 };
@@ -147,7 +147,7 @@ inline int game_manager::get_mouse_y() const{
  * @return True if pressed, false otherwise.
  */
 inline bool game_manager::key_pressed(uint16_t arg) const{
-    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+    for(ST::key key : current_level_pointer->actions_buttons[arg]){
         if(keys_pressed_data[static_cast<uint8_t>(key)]){
             return true;
         }
@@ -161,7 +161,7 @@ inline bool game_manager::key_pressed(uint16_t arg) const{
  * @return True if held, false otherwise.
  */
 inline bool game_manager::key_held(uint16_t arg) const{
-    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+    for(ST::key key : current_level_pointer->actions_buttons[arg]){
         if(keys_held_data[static_cast<uint8_t>(key)]){
             return true;
         }
@@ -175,7 +175,7 @@ inline bool game_manager::key_held(uint16_t arg) const{
  * @return True if released, false otherwise.
  */
 inline bool game_manager::key_released(uint16_t arg) const{
-    for(ST::key key : current_level_pointer->actions_Buttons[arg]){
+    for(ST::key key : current_level_pointer->actions_buttons[arg]){
         if(keys_released_data[static_cast<uint8_t>(key)]){
             return true;
         }
@@ -188,20 +188,20 @@ inline bool game_manager::key_released(uint16_t arg) const{
  * @param id The ID of the entity to center on.
  */
 inline void game_manager::center_camera_on_entity(uint64_t id) { //TODO: Get rid of hardcoded values
-    current_level_pointer->Camera.x = current_level_pointer->entities.at(id).x - v_width/4;
-    while(current_level_pointer->Camera.x < current_level_pointer->Camera.limitX1 + 1) {
-        current_level_pointer->Camera.x++;
+    current_level_pointer->camera.x = current_level_pointer->entities.at(id).x - v_width / 4;
+    while(current_level_pointer->camera.x < current_level_pointer->camera.limitX1 + 1) {
+        current_level_pointer->camera.x++;
     }
-    while(current_level_pointer->Camera.x > current_level_pointer->Camera.limitX2 - 1) {
-        current_level_pointer->Camera.x--;
+    while(current_level_pointer->camera.x > current_level_pointer->camera.limitX2 - 1) {
+        current_level_pointer->camera.x--;
     }
 
-    current_level_pointer->Camera.y = current_level_pointer->entities.at(id).y - v_height;
-    while(current_level_pointer->Camera.y < current_level_pointer->Camera.limitY1 + 1) {
-        current_level_pointer->Camera.y++;
+    current_level_pointer->camera.y = current_level_pointer->entities.at(id).y - v_height;
+    while(current_level_pointer->camera.y < current_level_pointer->camera.limitY1 + 1) {
+        current_level_pointer->camera.y++;
     }
-    while(current_level_pointer->Camera.y > current_level_pointer->Camera.limitY2 - 1) {
-        current_level_pointer->Camera.y--;
+    while(current_level_pointer->camera.y > current_level_pointer->camera.limitY2 - 1) {
+        current_level_pointer->camera.y--;
     }
 }
 

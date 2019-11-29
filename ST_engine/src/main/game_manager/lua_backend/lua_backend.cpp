@@ -354,7 +354,7 @@ std::string lua_backend::hash_file(const std::string& path){
                     std::string temp_buf_2 = "\"" + temp_buf + "\"";
                     ST::replace_string(temp, temp_buf_2, string_hash);
                 }
-                //A way for creating annotations in lua
+                //Process annotations
                 while(temp.find("----@Key") != std::string::npos) {
                     std::string to_find = "\"";
                     std::string temp_buf;
@@ -1309,8 +1309,8 @@ extern "C" int centerCameraLua(lua_State* L){
 extern "C" int setLevelsizeLua(lua_State* L){
     auto x = static_cast<int32_t>(lua_tointeger(L, 1));
     auto y = static_cast<int32_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->Camera.limitX2 = x;
-    gGame_managerLua->get_level()->Camera.limitY2 = y;
+    gGame_managerLua->get_level()->camera.limitX2 = x;
+    gGame_managerLua->get_level()->camera.limitY2 = y;
     return 0;
 }
 
@@ -1481,7 +1481,7 @@ extern "C" int setOverlayLua(lua_State* L){
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
     auto spriteNum = static_cast<uint8_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level()->overlay = ST::hash_string(arg);
-    gGame_managerLua->get_level()->overlay_spriteNum = spriteNum;
+    gGame_managerLua->get_level()->overlay_sprite_num = spriteNum;
     return 0;
 }
 
@@ -1542,8 +1542,10 @@ extern "C" int leftStickVerticalLua(lua_State* L){
 
 extern "C" int controllerRumbleLua(lua_State* L){
     auto strength = static_cast<float>(lua_tonumber(L, 1));
-    auto duration = static_cast<uint32_t>(lua_tonumber(L, 2));
-    gMessage_busLua->send_msg(new message(CONTROLLER_RUMBLE, make_data(std::make_tuple(strength, duration))));
+    auto duration = static_cast<uint16_t>(lua_tonumber(L, 2));
+    auto msg = new message(CONTROLLER_RUMBLE, *reinterpret_cast<uint32_t*>(&strength));
+    msg->base_data1 = duration;
+    gMessage_busLua->send_msg(msg);
     return 0;
 }
 
