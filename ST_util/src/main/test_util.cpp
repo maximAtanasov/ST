@@ -30,8 +30,8 @@ void initialize_SDL(){
         fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
         exit(1);
     }
-    if(Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 1024) < 0){
-        fprintf(stderr, "Failiure to initialize audio\n");
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0){
+        fprintf(stderr, "Failure to initialize audio: %s\n", Mix_GetError());
         exit(1);
     }
     if(Mix_Init(MIX_INIT_OGG) < 0){

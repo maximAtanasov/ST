@@ -163,7 +163,7 @@ trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
 
 labelTimer = 0;
 
-label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
+--[[ label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
 label1:hide()
 label2 = label:new(300, 800, "Why am I a SQUARE????", "font1.ttf", 50)
 label2:hide()
@@ -178,15 +178,15 @@ label6:hide()
 label7 = label:new(470, 800, "WHY???", "font1.ttf", 50)
 label7:hide()
 label8 = label:new(300, 800, "WHAT'S GOING ON!?", "font1.ttf", 50)
-label8:hide()
+label8:hide() ]]
 
-bouncyTriggerCounter = 0
+--[[ bouncyTriggerCounter = 0
 bouncyTriggerAmount = 0
 label9 = label:new(270, 800, "Hehe, it's bouncy", "font1.ttf", 50)
 label9:hide()
 
 label10 = label:new(270, 800, "I should probably stop...", "font1.ttf", 50)
-label10:hide()
+label10:hide() ]]
 
 --PAUSE MENU=========================================================================
 pauseBG = entity:new(0, floor)
@@ -317,7 +317,7 @@ function loop()
         endLevel:update()
         player1:update()
 
-        if(labelTimer > 10 and labelTimer < 150) then
+--[[         if(labelTimer > 10 and labelTimer < 150) then
             label1:show()
             label1.text:setY(player1:getY()-150)
         elseif labelTimer > 150 and labelTimer < 300 then
@@ -353,7 +353,7 @@ function loop()
             player1.speed = 15
         end
 
-        labelTimer = labelTimer + 1
+        labelTimer = labelTimer + 1 ]]
         centreCamera(player1.ID)
     elseif(pause == 1) then
         -- setDarkness(0)

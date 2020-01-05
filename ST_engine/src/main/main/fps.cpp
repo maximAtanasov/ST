@@ -25,23 +25,23 @@ fps::fps() {
  */
 void fps::update(double time, double frame_time) {
     average[counter++] = frame_time;
-    if(counter == 60){
+    if(counter == 16){
         counter = 0;
     }
     new_time = time;
-    if(new_time - old_time > 1000){
+    if(new_time - old_time > 64){
         value = get_average();
         old_time = new_time;
     }
 }
 
 /**
- * @return The average framerate of the last second.
+ * @return The average framerate.
  */
 double fps::get_average() {
     double sum = 0;
     for(double i : average){
         sum += i;
     }
-    return sum/60;
+    return sum/16;
 }

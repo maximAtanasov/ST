@@ -97,7 +97,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
  * Draws all visible text objects in the current level
  * @param objects a pointer to a vector of text_objects
  */
-void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const{
+void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const {
     for(auto& i : objects) {
         if (is_onscreen(i)) {
             ST::renderer_sdl::draw_text_lru_cached(i.font, i.text_string, i.x, i.y, i.color);
@@ -120,16 +120,16 @@ void drawing_manager::draw_fps(double fps) const{
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
  */
-void drawing_manager::draw_console(console& cnsl){
-    if(cnsl.is_open()){
+void drawing_manager::draw_console(console& cnsl) {
+    if(cnsl.is_open()) {
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
         SDL_Color log_entry_color{};
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
             if (pos - cnsl.font_size + cnsl.scroll_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
-                if(i->type == ST::log_type::ERROR){
+                if(i->type == ST::log_type::ERROR) {
                     log_entry_color = cnsl.color_error;
-                } else if(i->type == ST::log_type::INFO){
+                } else if(i->type == ST::log_type::INFO) {
                     log_entry_color = cnsl.color_info;
                 } else {
                     log_entry_color = cnsl.color_success;
@@ -146,7 +146,7 @@ void drawing_manager::draw_console(console& cnsl){
 		} else {
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
-			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Command: " + to_cursor, 0, w_height / 2, cnsl.color_text);
+			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
 			ST::renderer_sdl::draw_text_lru_cached(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
 		}
         if(ticks - cnsl.cursor_timer >= 500) {
@@ -446,12 +446,10 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
                     y_offset = camera.y;
                     x_offset = camera.x;
                 }
-                std::string tempX = "x: " + std::to_string(i.x);
-                std::string tempY = "y: " + std::to_string(i.y);
                 SDL_Colour colour_text = {255, 255, 0, 255};
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, tempX, i.x - x_offset,
+                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "x: " + std::to_string(i.x), i.x - x_offset,
                                                           i.y - y_offset - i.tex_h, colour_text);
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, tempY, i.x - x_offset,
+                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "y: " + std::to_string(i.y), i.x - x_offset,
                                                           i.y - y_offset - i.tex_h + 30, colour_text);
             }
         }

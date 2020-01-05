@@ -11,6 +11,8 @@
 #define FPS_DEF
 
 ///An fps counter
+#include <cstdint>
+
 /**
  * Provides average frame-rates over 1 second.
  * We need this class, because the framerate is otherwise constantly fluctuating.
@@ -18,13 +20,13 @@
 class fps {
 
     private:
-        int counter = 0;
         double old_time = 0;
         double new_time = 0;
         double value = 0;
-        double average[60]{};
+        double average[16]{};
         double get_average();
-    public:
+        uint8_t counter = 0;
+public:
         fps();
         void update(double time, double frame_time);
         [[nodiscard]] double get_value() const;

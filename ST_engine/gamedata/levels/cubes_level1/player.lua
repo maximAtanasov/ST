@@ -25,7 +25,7 @@ player.jumpC = 0
 player.isVisible = true
 player.prevY = 0
 player.affectedByPhysics = true
-player.speed = 5;
+player.speed = 15;
 
 player.width = 150;
 player.height = 150;
@@ -37,27 +37,21 @@ player.lives = 3
 
 function player:update()
     if(leftTrigger() > 20000 or keyHeld("DASH")) then
-        if(self.speed > 5) then
-            self.speed = 26;
-            if self.speedSound == false then
-                playSound("speed.wav", 20, 0)
-                self.speedSound = true
-                local velocity = self:getVelocityX()
-                if self.lastDirection == 0 then
-                    self:setVelocityX(velocity + 66)
-                else
-                    self:setVelocityX(velocity - 66)
-                end
-                return
+        self.speed = 36;
+        if self.speedSound == false then
+            playSound("speed.wav", 20, 0)
+            self.speedSound = true
+            local velocity = self:getVelocityX()
+            if self.lastDirection == 0 then
+                self:setVelocityX(velocity + 66)
+            else
+                self:setVelocityX(velocity - 66)
             end
+            return
         end
     else
-        if(self.speed > 5) then
-            if self.speedSound == true then
-                self.speedSound = false
-            end
-            self.speed = 15;
-        end
+        self.speedSound = false
+        self.speed = 15;
     end
 
     leftStick = leftStickHorizontal()
@@ -80,15 +74,14 @@ function player:update()
         self:jump()
     end
 
-
-    --handle jumping
+--[[     --handle jumping
     if self:getVelocityY() < 0 then
         if self.lastDirection == 1 then
            -- self:playAnimation(self.jumpLeft)
         elseif self.lastDirection == 0 then
             --self:playAnimation(self.jumpRight)
         end
-    end
+    end ]]
     self.prevY = self:getY()
 
 end
