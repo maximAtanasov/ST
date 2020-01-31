@@ -43,7 +43,7 @@ window_manager::window_manager(message_bus &gMessageBus, task_manager &gTask_man
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
-    if(IMG_Init(IMG_INIT_PNG | IMG_INIT_WEBP) < 0){
+    if(IMG_Init(IMG_INIT_PNG | IMG_INIT_WEBP) < 0){ // NOLINT(hicpp-signed-bitwise)
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);
     }
@@ -52,7 +52,7 @@ window_manager::window_manager(message_bus &gMessageBus, task_manager &gTask_man
     height = static_cast<int16_t>(DM.h);
     window = SDL_CreateWindow(window_name.c_str(), 0, 0, width, height, SDL_WINDOW_OPENGL);
     gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Current screen resolution is " + std::to_string(width) + "x" + std::to_string(height))));
-    uint32_t screen_width_height = width | (height << 16U);
+    uint32_t screen_width_height = width | (height << 16U); // NOLINT(hicpp-signed-bitwise)
     gMessage_bus.send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height));
 
     //Load and set icon
@@ -95,7 +95,7 @@ void window_manager::handle_messages(){
             int16_t new_width = data & 0x0000ffffU;
             int16_t new_height = (data >> 16U) & 0x0000ffffU;
             if(new_width != width && new_height != height) {
-                uint32_t screen_width_height = new_width | (new_height << 16U);
+                uint32_t screen_width_height = new_width | (new_height << 16U); // NOLINT(hicpp-signed-bitwise)
                 gMessage_bus.send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height));
                 SDL_SetWindowSize(window, new_width, new_height);
                 width = new_width;
@@ -122,16 +122,16 @@ SDL_Window* window_manager::get_window(){
  */
 void window_manager::set_fullscreen(bool arg){
 #ifdef _MSC_VER
-    if(arg && !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)) {
+    if(arg && !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)) { // NOLINT(hicpp-signed-bitwise)
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
     }
-    else if(!arg && (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)){
+    else if(!arg && (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)){ // NOLINT(hicpp-signed-bitwise)
 	    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, 0);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		SDL_SetWindowFullscreen(window, 0);
-		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); // NOLINT(hicpp-signed-bitwise)
     }
 #else
     if(arg && !(SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN)) {

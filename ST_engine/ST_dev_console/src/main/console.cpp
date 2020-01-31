@@ -225,11 +225,9 @@ void console::write(const std::string &arg, ST::log_type type){
         fprintf(stdout, "%s\n", arg.c_str());
     }
     entries.emplace_back(type, arg);
-    //remove entries if there are too many
+    //remove an entry if there are too many
     if(entries.size() > 1000) {
-        for (int i = 0; i < 900; i++) {
-           entries.pop_back();
-       }
+        entries.pop_back();
     }
 }
 

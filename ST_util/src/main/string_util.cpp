@@ -33,6 +33,7 @@ namespace ST {
 
 
     static std::vector<size_t> string_hashes;
+    static uint16_t string_hashes_size;
 
     static std::hash<std::string> hash_f;
 
@@ -41,12 +42,13 @@ namespace ST {
 
         //Now just a simple linear search
         uint16_t i = 0;
-        for (i = 0; i < string_hashes.size(); i++) {
+        for (i = 0; i < string_hashes_size; i++) {
             if (string_hashes.at(i) == hashed_value) {
                 return i;
             }
         }
         string_hashes.emplace_back(hashed_value);
+        ++string_hashes_size;
         return i;
     }
 }
