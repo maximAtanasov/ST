@@ -108,6 +108,8 @@ TEST_F(asset_manager_test, loadWAV) {
     ASSERT_TRUE(expected_chunk);
     ASSERT_TRUE(result_chunk);
     ASSERT_EQ(expected_chunk->alen, result_chunk->alen);
+
+
     for (Uint32 i = 0; i < expected_chunk->alen; i++) {
         ASSERT_EQ(expected_chunk->abuf[i], result_chunk->abuf[i]);
     }

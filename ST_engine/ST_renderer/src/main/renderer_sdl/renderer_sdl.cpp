@@ -255,7 +255,7 @@ void ST::renderer_sdl::cache_font(TTF_Font* Font, uint16_t font_and_size){
 void ST::renderer_sdl::vsync_on(){
     SDL_RendererInfo info;
     SDL_GetRendererInfo(sdl_renderer, &info);
-    if(!(info.flags & SDL_RENDERER_PRESENTVSYNC)){
+    if(!(info.flags & SDL_RENDERER_PRESENTVSYNC)){ // NOLINT(hicpp-signed-bitwise)
         vsync = true;
         close();
         initialize(window, width, height);
