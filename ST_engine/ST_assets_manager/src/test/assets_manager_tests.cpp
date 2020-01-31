@@ -111,7 +111,6 @@ TEST_F(asset_manager_test, loadWAV) {
 
 
     for (Uint32 i = 0; i < expected_chunk->alen; i++) {
-        printf("%d\n", i);
         ASSERT_EQ(expected_chunk->abuf[i], result_chunk->abuf[i]);
     }
     Mix_FreeChunk(expected_chunk);
