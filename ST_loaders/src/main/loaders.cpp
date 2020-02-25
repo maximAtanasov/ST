@@ -208,10 +208,10 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
             for (const std::string &filename : file_names) {
                 ST::asset_file_type ext = get_file_extension(filename);
                 if(ext == ST::asset_file_type::PNG) {
-                    seek += sizes.at(i);
-                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
-                    input->read(input, to_write, 1, sizes.at(i));
-                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
+                    seek += sizes[i];
+                    auto to_write = static_cast<char*>(malloc(sizes[i]));
+                    input->read(input, to_write, 1, sizes[i]);
+                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes[i]));
                     SDL_Surface* temp_surface = IMG_LoadPNG_RW(output);
                     if(temp_surface != nullptr) {
                         assets->surfaces[filename] = temp_surface;
@@ -220,10 +220,10 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == ST::asset_file_type::WEBP) {
-                    seek += sizes.at(i);
-                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
-                    input->read(input, to_write, 1, sizes.at(i));
-                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
+                    seek += sizes[i];
+                    auto to_write = static_cast<char*>(malloc(sizes[i]));
+                    input->read(input, to_write, 1, sizes[i]);
+                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes[i]));
                     SDL_Surface* temp_surface = IMG_LoadWEBP_RW(output);
                     if(temp_surface != nullptr) {
                         assets->surfaces[filename] = temp_surface;
@@ -232,10 +232,10 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == ST::asset_file_type::WAV){
-                    seek += sizes.at(i);
-                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
-                    input->read(input, to_write, 1, sizes.at(i));
-                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
+                    seek += sizes[i];
+                    auto to_write = static_cast<char*>(malloc(sizes[i]));
+                    input->read(input, to_write, 1, sizes[i]);
+                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes[i]));
                     Mix_Chunk* temp_chunk = Mix_LoadWAV_RW(output, 1);
                     if(temp_chunk != nullptr) {
                         assets->chunks[filename] = temp_chunk;
@@ -243,10 +243,10 @@ ST::assets_named* ST::unpack_binary(const std::string& path){
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);
                 }else if(ext == ST::asset_file_type::OGG){
-                    seek += sizes.at(i);
-                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
-                    input->read(input, to_write, 1, sizes.at(i));
-                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes.at(i)));
+                    seek += sizes[i];
+                    auto to_write = static_cast<char*>(malloc(sizes[i]));
+                    input->read(input, to_write, 1, sizes[i]);
+                    SDL_RWops* output = SDL_RWFromMem(to_write, static_cast<int>(sizes[i]));
                     Mix_Music* temp_music = Mix_LoadMUSType_RW(output, MUS_OGG, 1);
                     if(temp_music != nullptr) {
                         assets->music[filename] = temp_music;
@@ -325,10 +325,10 @@ int8_t ST::unpack_binary_to_disk(const std::string& path){
                 if(ext == ST::asset_file_type::PNG || ext == ST::asset_file_type::WEBP
                 || ext == ST::asset_file_type::WAV || ext == ST::asset_file_type::OGG) {
                     SDL_RWops *output = SDL_RWFromFile(filename.c_str(), "w");
-                    seek += sizes.at(i);
-                    auto to_write = static_cast<char*>(malloc(sizes.at(i)));
-                    input->read(input, to_write, 1, sizes.at(i));
-                    output->write(output, to_write, 1, sizes.at(i));
+                    seek += sizes[i];
+                    auto to_write = static_cast<char*>(malloc(sizes[i]));
+                    input->read(input, to_write, 1, sizes[i]);
+                    output->write(output, to_write, 1, sizes[i]);
                     output->close(output);
                     free(to_write);
                     input->seek(input, seek, RW_SEEK_SET);

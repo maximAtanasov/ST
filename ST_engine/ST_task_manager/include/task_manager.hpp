@@ -34,7 +34,7 @@ class task_manager{
 
         static int task_thread(task_manager* self);
         static void do_work(ST::task* work);
-        void start_thread(int (*thread_func)(void*), void* data);
+        static void start_thread(int (*thread_func)(void*), void* data);
 
     public:
         explicit task_manager();

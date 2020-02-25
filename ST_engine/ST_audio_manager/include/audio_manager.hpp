@@ -74,7 +74,7 @@ inline void audio_manager::update(){
  */
 inline void audio_manager::set_chunk_volume(uint8_t arg) {
     chunk_volume = arg;
-    chunk_playback_volume_ratio = static_cast<float>(MIX_MAX_VOLUME)/chunk_volume;
+    chunk_playback_volume_ratio = static_cast<float>(MIX_MAX_VOLUME)/ static_cast<float>(chunk_volume);
     if(!muted){
         Mix_Volume(-1, chunk_volume);
     }
@@ -86,7 +86,7 @@ inline void audio_manager::set_chunk_volume(uint8_t arg) {
  */
 inline void audio_manager::set_music_volume(uint8_t arg) {
     music_volume = arg;
-    music_playback_volume_ratio = static_cast<float>(MIX_MAX_VOLUME)/music_volume;
+    music_playback_volume_ratio = static_cast<float>(MIX_MAX_VOLUME)/ static_cast<float>(music_volume);
     if(!muted){
         Mix_VolumeMusic(music_volume);
     }
@@ -120,7 +120,7 @@ inline void audio_manager::play_sound(uint16_t arg, uint8_t volume, int8_t loops
     auto data = chunks_ptr->find(arg);
     if(data != chunks_ptr->end()){
         if(!muted){
-            Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float >(volume) / chunk_playback_volume_ratio));
+            Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float>(volume) / chunk_playback_volume_ratio));
         }
         if(Mix_PlayChannel( -1, data->second, loops ) == -1){
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayChannel Error " + std::string(Mix_GetError()))));
@@ -138,7 +138,6 @@ inline void audio_manager::play_music(uint16_t arg, uint8_t volume, int8_t loops
     auto data = music_ptr->find(arg);
     if(data != music_ptr->end() ){
         if(!muted) {
-            //Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
             Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
         }
         if(Mix_PlayMusic(data->second, loops) == -1){

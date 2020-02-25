@@ -269,7 +269,7 @@ task_manager::task_manager(uint8_t thread_num){
 /**
  * This method will start a completely new thread, separate from the worker threads.
  * @param thread_func The function pointer.
- * @param data The data to suppply to it.
+ * @param data The data to supplied to it.
  */
 void task_manager::start_thread(int (*thread_func)(void*), void* data){
     std::thread(thread_func, data);

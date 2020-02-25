@@ -513,9 +513,9 @@ extern "C" int createLightLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setLightOriginXLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto origin_x = static_cast<int32_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->lights.at(ID).origin_x = origin_x;
+    gGame_managerLua->get_level()->lights[id].origin_x = origin_x;
     return 0;
 }
 
@@ -526,8 +526,8 @@ extern "C" int setLightOriginXLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int getLightOriginXLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushinteger(L, gGame_managerLua->get_level()->lights.at(ID).origin_x);
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level()->lights[id].origin_x);
     return 1;
 }
 
@@ -538,9 +538,9 @@ extern "C" int getLightOriginXLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setLightOriginYLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto origin_y = static_cast<int32_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->lights.at(ID).origin_y = origin_y;
+    gGame_managerLua->get_level()->lights[id].origin_y = origin_y;
     return 0;
 }
 
@@ -551,8 +551,8 @@ extern "C" int setLightOriginYLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int getLightOriginYLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushinteger(L, gGame_managerLua->get_level()->lights.at(ID).origin_y);
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level()->lights[id].origin_y);
     return 1;
 }
 
@@ -563,8 +563,8 @@ extern "C" int getLightOriginYLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int getLightRadiusLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushinteger(L, gGame_managerLua->get_level()->lights.at(ID).radius);
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level()->lights[id].radius);
     return 1;
 }
 
@@ -575,9 +575,9 @@ extern "C" int getLightRadiusLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setLightRadiusLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto radius = static_cast<uint16_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->lights.at(ID).radius = radius;
+    gGame_managerLua->get_level()->lights[id].radius = radius;
     return 0;
 }
 
@@ -588,8 +588,8 @@ extern "C" int setLightRadiusLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int getLightIntensityLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushinteger(L, gGame_managerLua->get_level()->lights.at(ID).intensity);
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level()->lights[id].intensity);
     return 1;
 }
 
@@ -600,9 +600,9 @@ extern "C" int getLightIntensityLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setLightIntensityLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto intensity = static_cast<uint16_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->lights.at(ID).intensity = intensity;
+    gGame_managerLua->get_level()->lights[id].intensity = intensity;
     return 0;
 }
 
@@ -613,8 +613,8 @@ extern "C" int setLightIntensityLua(lua_State* L){
  * @return Always 1.
  */
 extern "C" int getLightBrightnessLua(lua_State* L) {
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushinteger(L, gGame_managerLua->get_level()->lights.at(ID).brightness);
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushinteger(L, gGame_managerLua->get_level()->lights[id].brightness);
     return 1;
 }
 
@@ -625,9 +625,9 @@ extern "C" int getLightBrightnessLua(lua_State* L) {
  * @return Always 0.
  */
 extern "C" int setLightBrightnessLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto brightness = static_cast<uint16_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->lights.at(ID).brightness = brightness;
+    gGame_managerLua->get_level()->lights[id].brightness = brightness;
     return 0;
 }
 
@@ -638,9 +638,9 @@ extern "C" int setLightBrightnessLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setLightStaticLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto is_static = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->lights.at(ID).is_static = is_static;
+    gGame_managerLua->get_level()->lights[id].is_static = is_static;
     return 0;
 }
 
@@ -651,8 +651,8 @@ extern "C" int setLightStaticLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int isLightStaticLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushboolean(L, gGame_managerLua->get_level()->lights.at(ID).is_static);
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    lua_pushboolean(L, gGame_managerLua->get_level()->lights[id].is_static);
     return 1;
 }
 
@@ -718,12 +718,12 @@ extern "C" int createTextObjectLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setTextObjectColorLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto r = static_cast<uint8_t>(lua_tointeger(L, 2));
     auto g = static_cast<uint8_t>(lua_tointeger(L, 3));
     auto b = static_cast<uint8_t>(lua_tointeger(L, 4));
     auto a = static_cast<uint8_t>(lua_tointeger(L, 5));
-    gGame_managerLua->get_level()->text_objects.at(ID).color = {r,g,b,a};
+    gGame_managerLua->get_level()->text_objects[id].color = {r,g,b,a};
     return 0;
 }
 
@@ -734,9 +734,9 @@ extern "C" int setTextObjectColorLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setTextObjectTextLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto text = static_cast<std::string>(lua_tostring(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).text_string = text;
+    gGame_managerLua->get_level()->text_objects[id].text_string = text;
     return 0;
 }
 
@@ -747,9 +747,9 @@ extern "C" int setTextObjectTextLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setTextObjectFontLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto font = static_cast<std::string>(lua_tostring(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).font = ST::hash_string(font);
+    gGame_managerLua->get_level()->text_objects[id].font = ST::hash_string(font);
     return 0;
 }
 
@@ -760,9 +760,9 @@ extern "C" int setTextObjectFontLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setTextObjectXLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto x = static_cast<int>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).x = x;
+    gGame_managerLua->get_level()->text_objects[id].x = x;
     return 0;
 }
 
@@ -773,9 +773,9 @@ extern "C" int setTextObjectXLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setTextObjectYLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto y = static_cast<int>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).y = y;
+    gGame_managerLua->get_level()->text_objects[id].y = y;
     return 0;
 }
 
@@ -786,9 +786,9 @@ extern "C" int setTextObjectYLua(lua_State* L){
  * @return Always 0.
  */
 extern "C" int setTextObjectVisibleLua(lua_State* L){
-    auto ID = static_cast<uint64_t>(lua_tointeger(L, 1));
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->text_objects.at(ID).is_visible = arg;
+    gGame_managerLua->get_level()->text_objects[id].is_visible = arg;
     return 0;
 }
 
@@ -815,7 +815,7 @@ extern "C" int createEntityLua(lua_State*){
 extern "C" int setEntityXLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto x = static_cast<int>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).x = x;
+    gGame_managerLua->get_level()->entities[id].x = x;
     return 0;
 }
 
@@ -828,7 +828,7 @@ extern "C" int setEntityXLua(lua_State *L){
 extern "C" int setEntityActiveLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).set_active(arg);
+    gGame_managerLua->get_level()->entities[id].set_active(arg);
     return 0;
 }
 
@@ -841,7 +841,7 @@ extern "C" int setEntityActiveLua(lua_State *L){
 extern "C" int setEntityYLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto y = static_cast<int>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).y = y;
+    gGame_managerLua->get_level()->entities[id].y = y;
     return 0;
 }
 
@@ -854,7 +854,7 @@ extern "C" int setEntityYLua(lua_State *L){
 extern "C" int setEntityVelocityXLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<int8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).velocity_x = arg;
+    gGame_managerLua->get_level()->entities[id].velocity_x = arg;
     return 0;
 }
 
@@ -867,7 +867,7 @@ extern "C" int setEntityVelocityXLua(lua_State *L){
 extern "C" int setEntityVelocityYLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<int8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).velocity_y = arg;
+    gGame_managerLua->get_level()->entities[id].velocity_y = arg;
     return 0;
 }
 
@@ -879,7 +879,7 @@ extern "C" int setEntityVelocityYLua(lua_State *L){
  */
 extern "C" int getEntityVelocityXLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L , gGame_managerLua->get_level()->entities.at(id).velocity_x);
+    lua_pushnumber(L , gGame_managerLua->get_level()->entities[id].velocity_x);
     return 1;
 }
 
@@ -891,7 +891,7 @@ extern "C" int getEntityVelocityXLua(lua_State *L){
  */
 extern "C" int getEntityVelocityYLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L , gGame_managerLua->get_level()->entities.at(id).velocity_y);
+    lua_pushnumber(L , gGame_managerLua->get_level()->entities[id].velocity_y);
     return 1;
 }
 
@@ -904,7 +904,7 @@ extern "C" int getEntityVelocityYLua(lua_State *L){
 extern "C" int setEntityStaticLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).set_static(arg);
+    gGame_managerLua->get_level()->entities[id].set_static(arg);
     return 0;
 }
 
@@ -916,7 +916,7 @@ extern "C" int setEntityStaticLua(lua_State *L){
  */
 extern "C" int getEntityXLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L , gGame_managerLua->get_level()->entities.at(id).x);
+    lua_pushnumber(L , gGame_managerLua->get_level()->entities[id].x);
     return 1;
 }
 
@@ -928,7 +928,7 @@ extern "C" int getEntityXLua(lua_State *L){
  */
 extern "C" int getEntityYLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L , gGame_managerLua->get_level()->entities.at(id).y);
+    lua_pushnumber(L , gGame_managerLua->get_level()->entities[id].y);
     return 1;
 }
 
@@ -942,7 +942,7 @@ extern "C" int getEntityYLua(lua_State *L){
  */
 extern "C" int getEntityTexWLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).tex_w);
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities[id].tex_w);
     return 1;
 }
 
@@ -954,7 +954,7 @@ extern "C" int getEntityTexWLua(lua_State *L){
  */
 extern "C" int getEntityTexHLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).tex_h);
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities[id].tex_h);
     return 1;
 }
 
@@ -967,7 +967,7 @@ extern "C" int getEntityTexHLua(lua_State *L){
 extern "C" int setEntityTexWLua(lua_State *L){
     auto id = static_cast<unsigned long>(lua_tonumber(L, 1));
     auto tex_w = static_cast<uint16_t>(lua_tonumber(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).tex_w = tex_w;
+    gGame_managerLua->get_level()->entities[id].tex_w = tex_w;
     return 0;
 }
 
@@ -980,7 +980,7 @@ extern "C" int setEntityTexWLua(lua_State *L){
 extern "C" int setEntityTexHLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tonumber(L, 1));
     auto tex_h = static_cast<uint16_t>(lua_tonumber(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).tex_h = tex_h;
+    gGame_managerLua->get_level()->entities[id].tex_h = tex_h;
     return 0;
 }
 
@@ -994,7 +994,7 @@ extern "C" int setEntityTextureScaleLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto scale_x = static_cast<float>(lua_tonumber(L, 2));
     auto scale_y = static_cast<float>(lua_tonumber(L, 3));
-    auto ent = &gGame_managerLua->get_level()->entities.at(id);
+    auto ent = &gGame_managerLua->get_level()->entities[id];
     ent->tex_scale_x = scale_x;
     ent->tex_scale_y = scale_y;
     ent->tex_w = static_cast<uint16_t>(static_cast<float>(ent->tex_w)*scale_x);
@@ -1011,7 +1011,7 @@ extern "C" int setEntityTextureScaleLua(lua_State* L){
 extern "C" int setEntityVisibleLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).set_visible(arg);
+    gGame_managerLua->get_level()->entities[id].set_visible(arg);
     return 0;
 }
 
@@ -1024,7 +1024,7 @@ extern "C" int setEntityVisibleLua(lua_State *L){
 extern "C" int setEntityTextureLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     std::string arg = static_cast<std::string>(lua_tostring(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).texture = ST::hash_string(arg);
+    gGame_managerLua->get_level()->entities[id].texture = ST::hash_string(arg);
     return 0;
 }
 
@@ -1039,7 +1039,7 @@ extern "C" int setEntityTextureLua(lua_State *L){
 extern "C" int setEntityAffectedByPhysicsLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).set_affected_by_physics(arg);
+    gGame_managerLua->get_level()->entities[id].set_affected_by_physics(arg);
     return 0;
 }
 
@@ -1053,8 +1053,8 @@ extern "C" int entityCollidesLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto id2 = static_cast<uint64_t>(lua_tointeger(L, 2));
     ST::level* temp = gGame_managerLua->get_level();
-    if(temp->entities.at(id).is_active()){
-        lua_pushboolean(L,temp->entities.at(id).collides(temp->entities.at(id2)));
+    if(temp->entities[id].is_active()){
+        lua_pushboolean(L,temp->entities[id].collides(temp->entities[id2]));
     }
     else{
         lua_pushboolean(L,false);
@@ -1074,7 +1074,7 @@ extern "C" int setEntityCollisionBoxLua(lua_State *L){
     auto offset_y = static_cast<int16_t>(lua_tonumber(L, 3));
     auto x = static_cast<int16_t>(lua_tonumber(L, 4));
     auto y = static_cast<int16_t>(lua_tonumber(L, 5));
-    gGame_managerLua->get_level()->entities.at(id).set_collision_box(offset_x, offset_y, x, y);
+    gGame_managerLua->get_level()->entities[id].set_collision_box(offset_x, offset_y, x, y);
     return 0;
 }
 
@@ -1086,7 +1086,7 @@ extern "C" int setEntityCollisionBoxLua(lua_State *L){
  */
 extern "C" int getEntityColXLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_x());
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities[id].get_col_x());
     return 1;
 }
 
@@ -1098,7 +1098,7 @@ extern "C" int getEntityColXLua(lua_State *L){
  */
 extern "C" int getEntityColYLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y());
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities[id].get_col_y());
     return 1;
 }
 
@@ -1110,7 +1110,7 @@ extern "C" int getEntityColYLua(lua_State *L){
  */
 extern "C" int getEntityColXOffsetLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_x_offset());
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities[id].get_col_x_offset());
     return 1;
 }
 
@@ -1122,7 +1122,7 @@ extern "C" int getEntityColXOffsetLua(lua_State *L){
  */
 extern "C" int getEntityColYOffsetLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
-    lua_pushnumber(L, gGame_managerLua->get_level()->entities.at(id).get_col_y_offset());
+    lua_pushnumber(L, gGame_managerLua->get_level()->entities[id].get_col_y_offset());
     return 1;
 }
 
@@ -1157,7 +1157,7 @@ extern "C" int unpausePhysicsLua(lua_State*){
 extern "C" int setEntityAnimationLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).animation = arg;
+    gGame_managerLua->get_level()->entities[id].animation = arg;
     return 0;
 }
 
@@ -1170,7 +1170,7 @@ extern "C" int setEntityAnimationLua(lua_State *L){
 extern "C" int setEntityAnimationNumLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).animation_num = arg;
+    gGame_managerLua->get_level()->entities[id].animation_num = arg;
     return 0;
 }
 
@@ -1183,7 +1183,7 @@ extern "C" int setEntityAnimationNumLua(lua_State *L){
 extern "C" int setEntitySpriteNumLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<uint8_t>(lua_tointeger(L, 2));
-    gGame_managerLua->get_level()->entities.at(id).sprite_num = arg;
+    gGame_managerLua->get_level()->entities[id].sprite_num = arg;
     return 0;
 }
 

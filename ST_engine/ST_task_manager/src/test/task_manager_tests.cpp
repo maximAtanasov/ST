@@ -11,21 +11,21 @@
 #include <task_manager.hpp>
 #include <thread>
 
-class task_manager_tests : public::testing::TestWithParam<int>{
+class task_manager_tests : public::testing::TestWithParam<int> {
 };
 
-static void test_task_function(void* arg){
+static void test_task_function(void* arg) {
     auto val = static_cast<uint8_t*>(arg);
     ++*val;
 }
 
-static void test_task_function2(void* arg){
+static void test_task_function2(void* arg) {
     auto val = static_cast<uint8_t*>(arg);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::milliseconds (500));
     ++*val;
 }
 
-TEST_F(task_manager_tests, test_start_task_without_dependency){
+TEST_F(task_manager_tests, test_start_task_without_dependency) {
     //Set up
     task_manager test_subject;
     uint8_t test_value = 10;
@@ -36,7 +36,7 @@ TEST_F(task_manager_tests, test_start_task_without_dependency){
     ASSERT_EQ(test_value, 11);
 }
 
-TEST_F(task_manager_tests, test_start_tasks_with_dependency){
+TEST_F(task_manager_tests, test_start_tasks_with_dependency) {
     //Set up
     task_manager test_subject;
     uint8_t test_value = 10;
@@ -49,7 +49,7 @@ TEST_F(task_manager_tests, test_start_tasks_with_dependency){
     ASSERT_EQ(test_value, 12);
 }
 
-TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
+TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency) {
     //Set up
     task_manager test_subject;
     uint8_t test_value = 10;
@@ -58,11 +58,11 @@ TEST_F(task_manager_tests, test_start_task_lockfree_without_dependency){
     test_subject.start_task_lockfree(new ST::task(test_task_function, &test_value, nullptr));
 
     //Wait a suffecent amount of time
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::milliseconds (500));
     ASSERT_EQ(test_value, 11);
 }
 
-TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
+TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency) {
     //Set up
     task_manager test_subject;
     uint8_t test_value = 10;
@@ -71,13 +71,13 @@ TEST_F(task_manager_tests, test_start_task_lockfree_with_dependency){
     task_id id1 = test_subject.start_task(new ST::task(test_task_function2, &test_value, nullptr));
     test_subject.start_task_lockfree(new ST::task(test_task_function, &test_value, id1));
 
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds (2));
     ASSERT_EQ(test_value, 12);
 }
 
 //With only one task thread running the test will take about 2 seconds to complete if
 //the waiter isn't doing any work
-TEST_P(task_manager_tests, test_do_work_while_waiting){
+TEST_P(task_manager_tests, test_do_work_while_waiting) {
     //Set up
     task_manager test_subject(1);
     uint8_t test_value1 = 10;
@@ -93,7 +93,7 @@ TEST_P(task_manager_tests, test_do_work_while_waiting){
     test_subject.wait_for_task(id2);
     auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
-    ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 1100, 200);
+    ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 515, 200);
     ASSERT_EQ(test_value1, 11);
     ASSERT_EQ(test_value2, 21);
 }
