@@ -175,13 +175,19 @@ void console::handle_messages(){
 			}
 		}
         else if(temp->msg_name == TEXT_STREAM){
-			std::string recieved_data = *static_cast<std::string*>(temp->get_data());
-			if (composition.size() == cursor_position) {
-				composition += recieved_data;
-			}
-			else {
-				composition.insert(cursor_position, recieved_data);
-			}
+            std::string recieved_data = *static_cast<std::string*>(temp->get_data());
+			if(recieved_data == "(") {
+			    recieved_data += ")";
+                composition.insert(cursor_position--, recieved_data);
+            } else if(recieved_data == "\"") {
+                recieved_data += recieved_data;
+                composition.insert(cursor_position--, recieved_data);
+            } else if(recieved_data == "[") {
+                recieved_data += "]";
+                composition.insert(cursor_position--, recieved_data);
+            } else {
+                composition.insert(cursor_position, recieved_data);
+            }
 			cursor_position += static_cast<uint16_t>(recieved_data.size());
 			gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
         }
