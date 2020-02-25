@@ -37,13 +37,19 @@ namespace ST {
 
     static std::hash<std::string> hash_f;
 
+    /**
+     * Returns a uint16_t hash value for a given string.
+     * Works by hashing the string using std::hash and saving hashed value in a vector.
+     * @param value
+     * @return
+     */
     uint16_t hash_string(const std::string &value) {
         size_t hashed_value = hash_f(value);
 
         //Now just a simple linear search
         uint16_t i = 0;
         for (i = 0; i < string_hashes_size; i++) {
-            if (string_hashes.at(i) == hashed_value) {
+            if (string_hashes[i] == hashed_value) {
                 return i;
             }
         }
