@@ -176,6 +176,11 @@ void console::handle_messages(){
 		}
         else if(temp->msg_name == TEXT_STREAM){
             std::string recieved_data = *static_cast<std::string*>(temp->get_data());
+            for(char const &c : recieved_data){
+                if(c > 126 || c < 0) {
+                    recieved_data.clear();
+                }
+            }
 			if(recieved_data == "(") {
 			    recieved_data += ")";
                 composition.insert(cursor_position--, recieved_data);

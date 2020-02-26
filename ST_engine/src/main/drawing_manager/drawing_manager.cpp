@@ -142,16 +142,16 @@ void drawing_manager::draw_console(console& cnsl) {
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
 		int32_t cursor_draw_position = 0;
 		if (cnsl.cursor_position == cnsl.composition.size()) {
-			cursor_draw_position = ST::renderer_sdl::draw_text_lru_cached(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
+			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
 		} else {
 			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
 			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
 			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
-			ST::renderer_sdl::draw_text_lru_cached(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
+			ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
 		}
-        if(ticks - cnsl.cursor_timer >= 500) {
+        if(ticks - cnsl.cursor_timer >= 400) {
             cnsl.cursor_timer = ticks;
-        } else if (ticks - cnsl.cursor_timer < 250) {
+        } else if (ticks - cnsl.cursor_timer < 200) {
             ST::renderer_sdl::draw_rectangle_filled(
 				cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);
