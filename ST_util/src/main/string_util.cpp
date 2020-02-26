@@ -38,10 +38,9 @@ namespace ST {
     static std::hash<std::string> hash_f;
 
     /**
-     * Returns a uint16_t hash value for a given string.
      * Works by hashing the string using std::hash and saving hashed value in a vector.
-     * @param value
-     * @return
+     * @param value The string to hash.
+     * @return a uint16_t hash value for the given string.
      */
     uint16_t hash_string(const std::string &value) {
         size_t hashed_value = hash_f(value);

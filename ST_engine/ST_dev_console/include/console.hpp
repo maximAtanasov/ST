@@ -25,6 +25,14 @@ class console{
         void write(const std::string &arg, ST::log_type type);
         void handle_messages();
 
+        void backspaceAction();
+        void leftKeyAction();
+        void rightKeyAction();
+        void downKeyAction();
+        void upKeyAction();
+        void enterKeyAction();
+        void deleteKeyAction();
+
         uint8_t log_level = 0x00;
 
         SDL_Color color{};
@@ -46,6 +54,7 @@ class console{
 		uint64_t cursor_timer = 0;
 		int16_t entries_history_index = -1;
         std::string composition;
+        std::string composition_history_temp;
         uint16_t hold_counter = 0;
 		
 

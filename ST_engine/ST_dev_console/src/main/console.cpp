@@ -95,93 +95,71 @@ void console::handle_messages(){
         }else if(temp->msg_name == KEY_HELD){
             auto key_val = static_cast<ST::key>(temp->base_data0);
             if (is_open()) {
-                if(hold_counter > 10) {
-                    if (key_val == ST::key::LEFT) {
-                        if (cursor_position > 0) {
-                            cursor_position -= 1;
-                            hold_counter = 0;
-                        }
+                cursor_timer = 0; //Cursor won't blink when holding these keys
+                if(hold_counter > 10) { //These values can be changed to adjust the key hold delay.
+                    hold_counter = 9;
+                    if (key_val == ST::key::ENTER) {
+                        enterKeyAction();
+                    } else if (key_val == ST::key::LEFT) {
+                        leftKeyAction();
                     } else if (key_val == ST::key::RIGHT) {
-                        if (cursor_position < composition.size()) {
-                            cursor_position += 1;
-                            hold_counter = 0;
-                        }
+                        rightKeyAction();
+                    } else if (key_val == ST::key::UP) {
+                        upKeyAction();
+                    } else if (key_val == ST::key::DOWN) {
+                        downKeyAction();
+                    } else if (key_val == ST::key::BACKSPACE) {
+                        backspaceAction();
+                    } else if (key_val == ST::key::DELETE) {
+                        deleteKeyAction();
                     }
-                }else{
-                    ++hold_counter;
+                } else {
+                    hold_counter++;
                 }
             }
         }
         else if (temp->msg_name == KEY_PRESSED) {
             auto key_val = static_cast<ST::key>(temp->base_data0);
-			if (key_val == ST::key::ENTER) {
-				if (!composition.empty()) {
-					write(composition, ST::log_type::INFO);
-					command_entries.emplace_back(composition);
-					gMessage_bus.send_msg(new message(EXECUTE_SCRIPT, make_data(composition)));
-				}
-				composition.clear();
-				cursor_position = 0;
-				entries_history_index = -1;
-				gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
-			}
-			else if (key_val == ST::key::TILDE) {
+			if (key_val == ST::key::TILDE) {
 				toggle();
-			}
-			else if (is_open()) {
-				if (key_val == ST::key::LEFT) {
-					if (cursor_position > 0) {
-						cursor_position -= 1;
-					}
+			} else if (is_open()) {
+                if (key_val == ST::key::ENTER) {
+                    enterKeyAction();
+                } else if (key_val == ST::key::LEFT) {
+					leftKeyAction();
+				} else if (key_val == ST::key::RIGHT) {
+                    rightKeyAction();
+                } else if (key_val == ST::key::UP) {
+					upKeyAction();
+				} else if (key_val == ST::key::DOWN) {
+					downKeyAction();
+				} else if (key_val == ST::key::BACKSPACE) {
+                    backspaceAction();
+                } else if (key_val == ST::key::DELETE) {
+					deleteKeyAction();
 				}
-				else if (key_val == ST::key::RIGHT) {
-					if (cursor_position < composition.size()) {
-						cursor_position += 1;
-					}
-				}
-				else if (key_val == ST::key::UP) {
-					if (entries_history_index == -1 && !command_entries.empty()) {
-						composition = command_entries.back();
-						entries_history_index = static_cast<int16_t>(command_entries.size() - 1);
-					}
-					else if (entries_history_index > 0) {
-						entries_history_index--;
-						composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
-					}
-					gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
-					cursor_position = static_cast<uint16_t>(composition.size());
-				}
-				else if (key_val == ST::key::DOWN) {
-					if (entries_history_index < command_entries.size() - 1) {
-						entries_history_index++;
-						composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
-					}
-					else {
-						entries_history_index = -1;
-						composition = "";
-					}
-					gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
-					cursor_position = static_cast<uint16_t>(composition.size());
-				}
-				else if (key_val == ST::key::BACKSPACE) {
-					if (cursor_position > 0) {
-						composition.erase(static_cast<uint16_t>(cursor_position - 1), 1);
-						cursor_position -= 1;
-					}
-				}
-				else if (key_val == ST::key::DELETE) {
-					composition.erase(cursor_position, 1);
-				}
-			}
+                hold_counter = 0;
+            }
 		}
         else if(temp->msg_name == TEXT_STREAM){
-			std::string recieved_data = *static_cast<std::string*>(temp->get_data());
-			if (composition.size() == cursor_position) {
-				composition += recieved_data;
-			}
-			else {
-				composition.insert(cursor_position, recieved_data);
-			}
+            std::string recieved_data = *static_cast<std::string*>(temp->get_data());
+            for(char const &c : recieved_data){
+                if(c > 126 || c < 0) {
+                    recieved_data.clear();
+                }
+            }
+			if(recieved_data == "(") {
+			    recieved_data += ")";
+                composition.insert(cursor_position--, recieved_data);
+            } else if(recieved_data == "\"") {
+                recieved_data += recieved_data;
+                composition.insert(cursor_position--, recieved_data);
+            } else if(recieved_data == "[" || recieved_data == "{") {
+                recieved_data += static_cast<char>(recieved_data.at(0) + 2);
+                composition.insert(cursor_position--, recieved_data);
+            } else {
+                composition.insert(cursor_position, recieved_data);
+            }
 			cursor_position += static_cast<uint16_t>(recieved_data.size());
 			gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
         }
@@ -258,6 +236,98 @@ void console::show(){
  */
 console::~console(){
     singleton_initialized = false;
+}
+
+/**
+ * Runs the actions associated with the backspace key.
+ * Erases the last character of the current composition.
+ */
+void console::backspaceAction() {
+    if (cursor_position > 0) {
+        composition.erase(static_cast<uint16_t>(cursor_position - 1), 1);
+        cursor_position -= 1;
+    }
+}
+
+/**
+ * Runs the actions associated with the right key.
+ * Moves the cursor to the right.
+ */
+void console::rightKeyAction() {
+    if (cursor_position < composition.size()) {
+        cursor_position += 1;
+    }
+}
+
+/**
+ * Runs the actions associated with the left key.
+ * Moves the cursor to the left.
+ */
+void console::leftKeyAction() {
+    if (cursor_position > 0) {
+        cursor_position -= 1;
+    }
+}
+
+/**
+ * Runs the actions associated with the down key.
+ * Displays the next entry in the command history.
+ */
+void console::downKeyAction() {
+    if (entries_history_index < command_entries.size() - 1) {
+        entries_history_index++;
+        composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
+    }
+    else {
+        entries_history_index = -1;
+        composition = composition_history_temp;
+    }
+    gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
+    cursor_position = static_cast<uint16_t>(composition.size());
+}
+
+/**
+ * Runs the actions associated with the up key.
+ * Displays the previous entry in the command history.
+ */
+void console::upKeyAction() {
+    if (entries_history_index == -1 && !command_entries.empty()) {
+        composition_history_temp = composition;
+        composition = command_entries.back();
+        entries_history_index = static_cast<int16_t>(command_entries.size() - 1);
+    } else if (entries_history_index > 0) {
+        entries_history_index--;
+        composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
+    }
+    gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
+    cursor_position = static_cast<uint16_t>(composition.size());
+}
+
+/**
+ * Runs the actions associated with the enter key.
+ * Sends an EXECUTE_SCRIPT message with the current composition as it's data.
+ * Writes the current composition to the console with log_type INFO.
+ * Resets the cursor position and the history index.
+ * Clears the text stream.
+ */
+void console::enterKeyAction() {
+    if (!composition.empty()) {
+        write(composition, ST::log_type::INFO);
+        command_entries.emplace_back(composition);
+        gMessage_bus.send_msg(new message(EXECUTE_SCRIPT, make_data(composition)));
+    }
+    composition.clear();
+    cursor_position = 0;
+    entries_history_index = -1;
+    gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
+}
+
+/**
+ * Runs the actions associated with the delete key.
+ * Erases one character after the cursor position.
+ */
+void console::deleteKeyAction() {
+    composition.erase(cursor_position, 1);
 }
 
 
