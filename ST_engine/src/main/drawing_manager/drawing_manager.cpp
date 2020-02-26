@@ -149,12 +149,13 @@ void drawing_manager::draw_console(console& cnsl) {
 			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
 			ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
 		}
-        if(ticks - cnsl.cursor_timer >= 400) {
-            cnsl.cursor_timer = ticks;
-        } else if (ticks - cnsl.cursor_timer < 200) {
-            ST::renderer_sdl::draw_rectangle_filled(
+		if (ticks - cnsl.cursor_timer < 250 || cnsl.cursor_timer == 0) {
+		    ST::renderer_sdl::draw_rectangle_filled(
 				cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);
+        }
+        if (ticks - cnsl.cursor_timer >= 500) {
+            cnsl.cursor_timer = ticks;
         }
     }
 }
