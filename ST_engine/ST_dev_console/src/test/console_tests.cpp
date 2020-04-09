@@ -63,25 +63,75 @@ TEST_F(console_test, set_log_level) {
 
 TEST_F(console_test, console_write_error) {
     ::testing::internal::CaptureStderr();
+    ::testing::internal::CaptureStdout();
     test_cnsl->set_log_level(ST::log_type::ERROR);
-    write(ST::log_type::ERROR, "TEST_STRING");
+    msg_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("TEST_STRING")));
+    msg_bus->send_msg(new message(LOG_INFO, make_data<std::string>("TEST_STRING2")));
+    msg_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("TEST_STRING3")));
+    test_cnsl->update();
     ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStderr());
+    ASSERT_EQ("", testing::internal::GetCapturedStdout());
 }
 
 TEST_F(console_test, console_write_info) {
     ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
     test_cnsl->set_log_level(ST::log_type::INFO);
-    write(ST::log_type::INFO, "TEST_STRING");
-    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
+    msg_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("TEST_STRING")));
+    msg_bus->send_msg(new message(LOG_INFO, make_data<std::string>("TEST_STRING2")));
+    msg_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("TEST_STRING3")));
+    test_cnsl->update();
+    ASSERT_EQ("TEST_STRING2\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("", testing::internal::GetCapturedStderr());
 }
 
 TEST_F(console_test, console_write_success) {
     ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
     test_cnsl->set_log_level(ST::log_type::SUCCESS);
-    write(ST::log_type::SUCCESS, "TEST_STRING");
-    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStdout());
+    msg_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("TEST_STRING")));
+    msg_bus->send_msg(new message(LOG_INFO, make_data<std::string>("TEST_STRING2")));
+    msg_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("TEST_STRING3")));
+    test_cnsl->update();
+    ASSERT_EQ("TEST_STRING3\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("", testing::internal::GetCapturedStderr());
 }
 
+TEST_F(console_test, console_write_error_info) {
+    ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
+    test_cnsl->set_log_level(ST::log_type::ERROR | ST::log_type::INFO);
+    msg_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("TEST_STRING")));
+    msg_bus->send_msg(new message(LOG_INFO, make_data<std::string>("TEST_STRING2")));
+    msg_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("TEST_STRING3")));
+    test_cnsl->update();
+    ASSERT_EQ("TEST_STRING2\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStderr());
+}
+
+TEST_F(console_test, console_write_error_success) {
+    ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
+    test_cnsl->set_log_level(ST::log_type::ERROR | ST::log_type::SUCCESS);
+    msg_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("TEST_STRING")));
+    msg_bus->send_msg(new message(LOG_INFO, make_data<std::string>("TEST_STRING2")));
+    msg_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("TEST_STRING3")));
+    test_cnsl->update();
+    ASSERT_EQ("TEST_STRING3\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("TEST_STRING\n", testing::internal::GetCapturedStderr());
+}
+
+TEST_F(console_test, console_write_info_success) {
+    ::testing::internal::CaptureStdout();
+    ::testing::internal::CaptureStderr();
+    test_cnsl->set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS);
+    msg_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("TEST_STRING")));
+    msg_bus->send_msg(new message(LOG_INFO, make_data<std::string>("TEST_STRING2")));
+    msg_bus->send_msg(new message(LOG_SUCCESS, make_data<std::string>("TEST_STRING3")));
+    test_cnsl->update();
+    ASSERT_EQ("TEST_STRING2\nTEST_STRING3\n", testing::internal::GetCapturedStdout());
+    ASSERT_EQ("", testing::internal::GetCapturedStderr());
+}
 
 TEST_F(console_test, console_write_all) {
     ::testing::internal::CaptureStdout();

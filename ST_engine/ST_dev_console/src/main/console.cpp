@@ -70,17 +70,17 @@ void console::handle_messages(){
     while(temp != nullptr){
         if(temp->msg_name == LOG_ERROR){
             auto log = static_cast<std::string*>(temp->get_data());
-            if(log_level == 0x01 || log_level >= 0x03) {
+            if(log_level == 0x07 || log_level == 0x01 || log_level == 0x03 || log_level == 0x05) {
                 write(*log, ST::log_type::ERROR);
             }
         }else if(temp->msg_name == LOG_INFO){
             auto log = static_cast<std::string*>(temp->get_data());
-            if(log_level == 0x04 || log_level >= 0x05) {
+            if(log_level >= 0x04) {
                 write(*log, ST::log_type::INFO);
             }
         }else if(temp->msg_name == LOG_SUCCESS){
             auto log = static_cast<std::string*>(temp->get_data());
-            if(log_level == 0x02 || log_level == 0x03 || log_level > 0x06) {
+            if(log_level >= 0x06 || log_level == 0x02 || log_level == 0x03) {
                 write(*log, ST::log_type::SUCCESS);
             }
         }
