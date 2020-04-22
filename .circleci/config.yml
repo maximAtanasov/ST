@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-        - image: eoshep/build-essentials:disco
+        - image: eoshep/build-essentials:bionic
     steps:
       - checkout
       - run:
