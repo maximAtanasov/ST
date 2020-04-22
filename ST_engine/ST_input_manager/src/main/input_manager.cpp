@@ -51,6 +51,12 @@ input_manager::input_manager(task_manager &gTask_manager, message_bus &gMessageB
     gMessage_bus.subscribe(REGISTER_KEY, &msg_sub);
     gMessage_bus.subscribe(UNREGISTER_KEY, &msg_sub);
     gMessage_bus.subscribe(CONTROLLER_RUMBLE, &msg_sub);
+    gMessage_bus.subscribe(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, &msg_sub);
+    gMessage_bus.subscribe(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, &msg_sub);
+    gMessage_bus.subscribe(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, &msg_sub);
+    gMessage_bus.subscribe(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, &msg_sub);
+    gMessage_bus.subscribe(SET_LEFT_TRIGGER_THRESHOLD, &msg_sub);
+    gMessage_bus.subscribe(SET_RIGHT_TRIGGER_THRESHOLD, &msg_sub);
 }
 
 /**
@@ -217,21 +223,49 @@ void input_manager::take_controller_input(){
         controller_buttons.left_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTX);
         controller_buttons.left_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY);
     }
-    //only send controller axis values if they change
+    //only send controller axis values if they change and the values exceed the thresholds
+
+    if(controller_buttons.left_trigger < left_trigger_threshold){
+        controller_buttons.left_trigger = 0;
+    }
     if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
         gMessage_bus.send_msg(new message(LEFT_TRIGGER, controller_buttons.left_trigger));
+    }
+
+    if(controller_buttons.right_trigger < right_trigger_threshold){
+        controller_buttons.right_trigger = 0;
     }
     if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
         gMessage_bus.send_msg(new message(RIGHT_TRIGGER, controller_buttons.right_trigger));
     }
+
+    if(!(controller_buttons.left_stick_vertical > left_stick_vertical_threshold
+         || controller_buttons.left_stick_vertical < -left_stick_vertical_threshold)){
+        controller_buttons.right_stick_vertical = 0;
+    }
     if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
         gMessage_bus.send_msg(new message(LEFT_STICK_VERTICAL, controller_buttons.left_stick_vertical));
+    }
+
+    if(!(controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold
+        || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold)){
+        controller_buttons.left_stick_horizontal = 0;
     }
     if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
         gMessage_bus.send_msg(new message(LEFT_STICK_HORIZONTAL, controller_buttons.left_stick_horizontal));
     }
+
+    if(!(controller_buttons.right_stick_vertical > right_stick_vertical_threshold
+         || controller_buttons.right_stick_vertical < -right_stick_vertical_threshold)){
+        controller_buttons.right_stick_vertical = 0;
+    }
     if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
         gMessage_bus.send_msg(new message(RIGHT_STICK_VERTICAL, controller_buttons.right_stick_vertical));
+    }
+
+    if(!(controller_buttons.right_stick_horizontal > right_stick_horizontal_threshold
+         || controller_buttons.right_stick_horizontal < -right_stick_horizontal_threshold)){
+        controller_buttons.right_stick_horizontal = 0;
     }
     if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
         gMessage_bus.send_msg(new message(RIGHT_STICK_HORIZONTAL, controller_buttons.right_stick_horizontal));
@@ -280,7 +314,19 @@ void input_manager::handle_messages(){
                     SDL_HapticRumblePlay(haptic, strength, duration);
                 }
             }
-		}
+		}else if(temp->msg_name == SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD){
+		    this->left_stick_horizontal_threshold = static_cast<int16_t>(temp->base_data0);
+        }else if(temp->msg_name == SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD){
+            this->left_stick_vertical_threshold = static_cast<int16_t>(temp->base_data0);
+        }else if(temp->msg_name == SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD){
+            this->right_stick_horizontal_threshold = static_cast<int16_t>(temp->base_data0);
+        }else if(temp->msg_name == SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD){
+            this->right_stick_vertical_threshold = static_cast<int16_t>(temp->base_data0);
+        }else if(temp->msg_name == SET_RIGHT_TRIGGER_THRESHOLD){
+            this->right_trigger_threshold = static_cast<int16_t>(temp->base_data0);
+        }else if(temp->msg_name == SET_LEFT_TRIGGER_THRESHOLD){
+            this->left_trigger_threshold = static_cast<int16_t>(temp->base_data0);
+        }
 		delete temp;
 		temp = msg_sub.get_next_message();
 	}

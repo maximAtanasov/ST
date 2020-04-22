@@ -52,8 +52,19 @@ class input_manager{
 
 		int32_t v_width = 1, v_height = 1;
 		int32_t r_width = 1, r_height = 1;
+
 		float ratio_w = 1, ratio_h = 1;
-		SDL_Event event{};
+
+        int16_t left_stick_horizontal_threshold = 0;
+        int16_t left_stick_vertical_threshold = 0;
+
+        int16_t right_stick_horizontal_threshold = 0;
+        int16_t right_stick_vertical_threshold = 0;
+
+        int16_t left_trigger_threshold = 0;
+        int16_t right_trigger_threshold = 0;
+
+    SDL_Event event{};
 
 		message_bus& gMessage_bus;
         task_manager& gTask_manager;

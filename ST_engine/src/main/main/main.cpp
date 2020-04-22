@@ -54,8 +54,8 @@ int ST_engine_main(int argc, char *argv[]) {
     const double UPDATE_RATE = 16.666667; //GAME LOGIC RUNS AT 60 FPS (or less)
     double total_time = 0;
     double current_time = gTimer.time_since_start();
-    double frame_time = 0;
-    double new_time = 0;
+    double frame_time;
+    double new_time;
 
     //Temporary fix for an occasional startup crash
     assets_manager::update_task(&gAssets_manager);
@@ -69,8 +69,8 @@ int ST_engine_main(int argc, char *argv[]) {
         total_time += frame_time;
 
         if(total_time >= UPDATE_RATE){
-			do{
-                gInput_manager.update();
+            gInput_manager.update();
+            do{
                 gGame_manager.update();
                 gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 total_time -= UPDATE_RATE;

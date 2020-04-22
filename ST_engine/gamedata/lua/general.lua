@@ -150,3 +150,11 @@ if(vsync == "vsyncEnabled") then
 else
     setVsyncLua(false)
 end
+
+
+setLeftStickHorizontalThreshold(controllerJoystickThreshold)
+setLeftStickVerticalThreshold(controllerJoystickThreshold)
+setRightStickHorizontalThreshold(controllerJoystickThreshold)
+setRightStickVerticalThreshold(controllerJoystickThreshold)
+setRightTriggerThreshold(controllerJoystickThreshold)
+setLeftTriggerThreshold(controllerJoystickThreshold)

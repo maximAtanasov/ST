@@ -368,6 +368,36 @@ enum msg_type : uint8_t {
      * data must contain a std::tuple<float, uint32_t>* created with make_data.
      */
     CONTROLLER_RUMBLE,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
+    SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
+    SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
+    SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
+    SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
+    SET_RIGHT_TRIGGER_THRESHOLD,
+
+    /**
+     * base_data0 must be set and interpreted as a int16_t value.
+     */
+    SET_LEFT_TRIGGER_THRESHOLD
 };
 
 #endif //ST_MESSAGE_TYPES_HPP

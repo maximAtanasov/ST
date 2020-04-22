@@ -9,7 +9,7 @@
 enableLighting(true)
 stopAllSounds()
 stopMusic()
-showFps(false)
+showFps(true)
 
 label = label:new(600, 500, "So, a game about a cube?", "font1.ttf", 50)
 label1 = label:new(400, 600, "Actually it’s a game about a bunch of cubes", "font1.ttf", 50)

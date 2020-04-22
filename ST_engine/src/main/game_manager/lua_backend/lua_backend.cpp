@@ -113,6 +113,12 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "leftStickHorizontal", leftStickHorizontalLua);
     lua_register(L, "leftStickVertical", leftStickVerticalLua);
     lua_register(L, "controllerRumble", controllerRumbleLua);
+    lua_register(L, "setLeftStickHorizontalThreshold", setLeftStickHorizontalThresholdLua);
+    lua_register(L, "setLeftStickVerticalThreshold", setLeftStickVerticalThresholdLua);
+    lua_register(L, "setRightStickHorizontalThreshold", setRightStickHorizontalThresholdLua);
+    lua_register(L, "setRightStickVerticalThreshold", setRightStickVerticalThresholdLua);
+    lua_register(L, "setLeftTriggerThreshold", setLeftTriggerThresholdLua);
+    lua_register(L, "setRightTriggerThreshold", setRightTriggerThresholdLua);
 
     //Audio functions
     lua_register(L, "playSound", playSoundLua);
@@ -1583,6 +1589,49 @@ extern "C" int keyReleasedLua(lua_State* L){
     auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     lua_pushboolean(L, gGame_managerLua->key_released(arg));
     return 1;
+}
+
+
+extern "C" int setLeftStickVerticalThresholdLua(lua_State* L){
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
+    auto msg = new message(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, static_cast<uint32_t>(arg));
+    gMessage_busLua->send_msg(msg);
+    return 0;
+}
+
+extern "C" int setLeftStickHorizontalThresholdLua(lua_State* L){
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
+    auto msg = new message(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, static_cast<uint32_t>(arg));
+    gMessage_busLua->send_msg(msg);
+    return 0;
+}
+
+extern "C" int setRightStickVerticalThresholdLua(lua_State* L){
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
+    auto msg = new message(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, static_cast<uint32_t>(arg));
+    gMessage_busLua->send_msg(msg);
+    return 0;
+}
+
+extern "C" int setRightStickHorizontalThresholdLua(lua_State* L){
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
+    auto msg = new message(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, static_cast<uint32_t>(arg));
+    gMessage_busLua->send_msg(msg);
+    return 0;
+}
+
+extern "C" int setRightTriggerThresholdLua(lua_State* L){
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
+    auto msg = new message(SET_RIGHT_TRIGGER_THRESHOLD, static_cast<uint32_t>(arg));
+    gMessage_busLua->send_msg(msg);
+    return 0;
+}
+
+extern "C" int setLeftTriggerThresholdLua(lua_State* L){
+    auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
+    auto msg = new message(SET_LEFT_TRIGGER_THRESHOLD, static_cast<uint32_t>(arg));
+    gMessage_busLua->send_msg(msg);
+    return 0;
 }
 
 

@@ -871,6 +871,108 @@ TEST_F(lua_backend_test, test_call_function_controllerRumble){
 }
 
 
+TEST_F(lua_backend_test, test_call_function_setLeftStickHorizontalThreshold){
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, &subscriber1);
+    test_subject.run_script("setLeftStickHorizontalThreshold(1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    uint16_t threshold = static_cast<int16_t>(result->base_data0);
+
+    ASSERT_EQ(1000, threshold);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLeftStickVerticalThreshold){
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, &subscriber1);
+    test_subject.run_script("setLeftStickVerticalThreshold(1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    uint16_t threshold = static_cast<int16_t>(result->base_data0);
+
+    ASSERT_EQ(1000, threshold);
+}
+
+TEST_F(lua_backend_test, test_call_function_setRightStickHorizontalThreshold){
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, &subscriber1);
+    test_subject.run_script("setRightStickHorizontalThreshold(1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    uint16_t threshold = static_cast<int16_t>(result->base_data0);
+
+    ASSERT_EQ(1000, threshold);
+}
+
+TEST_F(lua_backend_test, test_call_function_setRightStickVerticalThreshold){
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, &subscriber1);
+    test_subject.run_script("setRightStickVerticalThreshold(1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    uint16_t threshold = static_cast<int16_t>(result->base_data0);
+
+    ASSERT_EQ(1000, threshold);
+}
+
+TEST_F(lua_backend_test, test_call_function_setLeftTriggerThreshold){
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_LEFT_TRIGGER_THRESHOLD, &subscriber1);
+    test_subject.run_script("setLeftTriggerThreshold(1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_LEFT_TRIGGER_THRESHOLD, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    uint16_t threshold = static_cast<int16_t>(result->base_data0);
+
+    ASSERT_EQ(1000, threshold);
+}
+
+TEST_F(lua_backend_test, test_call_function_setRightTriggerThreshold){
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_RIGHT_TRIGGER_THRESHOLD, &subscriber1);
+    test_subject.run_script("setRightTriggerThreshold(1000)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_RIGHT_TRIGGER_THRESHOLD, result->msg_name);
+    ASSERT_FALSE(result->get_data());
+
+    uint16_t threshold = static_cast<int16_t>(result->base_data0);
+
+    ASSERT_EQ(1000, threshold);
+}
+
 TEST_F(lua_backend_test, test_call_function_keyHeld){
     test_subject.run_script("return keyHeld(\"SOME_KEY\")");
 

@@ -205,7 +205,7 @@ void console::write(const std::string &arg, ST::log_type type){
     entries.emplace_back(type, arg);
     //remove an entry if there are too many
     if(entries.size() > 1000) {
-        entries.pop_back();
+        entries.erase(entries.begin());
     }
 }
 
