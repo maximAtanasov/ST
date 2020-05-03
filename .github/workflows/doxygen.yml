@@ -34,4 +34,4 @@ jobs:
       with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: ST/ST_engine/docs/html # The folder the action should deploy.
+          FOLDER: ST_engine/docs/html # The folder the action should deploy.
