@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: dependencies_install
-          command:  apt-get update && apt-get install -y software-properties-common wget build-essential
+          command:  export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y software-properties-common wget build-essential
 
       - run:
           name: cmake_install
