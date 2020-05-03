@@ -60,6 +60,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
@@ -68,9 +69,15 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>The renderer for the engine.  
+<p>A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer class.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceST_1_1renderer__sdl"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceST_1_1renderer__sdl.html">renderer_sdl</a></td></tr>
+<tr class="memdesc:namespaceST_1_1renderer__sdl"><td class="mdescLeft">&#160;</td><td class="mdescRight">The renderer for the engine. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structST_1_1assets.html">assets</a></td></tr>
@@ -136,8 +143,8 @@ Enumerations</h2></td></tr>
 <b>S</b> = 23, 
 <b>T</b> = 24, 
 <br />
-&#160;&#160;<b>U</b> = 25, 
-<b>V</b> = 26, 
+&#160;&#160;<b>V</b> = 26, 
+<b>U</b> = 25, 
 <b>W</b> = 27, 
 <b>X</b> = 28, 
 <br />
@@ -202,7 +209,8 @@ Enumerations</h2></td></tr>
 <b>CONTROLLER_BUTTON_DPAD_DOWN</b> = 75, 
 <br />
 &#160;&#160;<b>CONTROLLER_BUTTON_DPAD_LEFT</b> = 76, 
-<b>CONTROLLER_BUTTON_DPAD_RIGHT</b> = 77
+<b>CONTROLLER_BUTTON_DPAD_RIGHT</b> = 77, 
+<b>DELETE</b> = 78
 <br />
  }<tr class="memdesc:a7b163991d6aaf5c4ee55a33732f37a4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">An enum containing all mouse/keyboard keys supported by the engine. <br /></td></tr>
 </td></tr>
@@ -214,9 +222,7 @@ Functions</h2></td></tr>
 <tr class="separator:a99ea5340dfdae4f70000e2759272c216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The renderer for the engine. </p>
-<p>A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer class.</p>
-<p>This renderer is based entirely on the SDL2 renderer and uses it, along with some helper methods and rendering techniques to draw textures, text and primitives to the screen.</p>
+<div class="textblock"><p>A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer class. </p>
 <p>Caches textures and the string, font+size used to render them. </p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a3533cd4876c4c14d02d0077ffe36e3c0"></a>

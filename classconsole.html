@@ -75,8 +75,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9d015b3612f299fd6ad0fd1f7679bc46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconsole.html#a9d015b3612f299fd6ad0fd1f7679bc46">console</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus)</td></tr>
-<tr class="separator:a9d015b3612f299fd6ad0fd1f7679bc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e631fb759ac9d02e35333119fa23bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconsole.html#ac7e631fb759ac9d02e35333119fa23bc">console</a> (<a class="el" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus)</td></tr>
+<tr class="separator:ac7e631fb759ac9d02e35333119fa23bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64e288005da1008a195331b2ff74b287"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconsole.html#a64e288005da1008a195331b2ff74b287">~console</a> ()</td></tr>
 <tr class="separator:a64e288005da1008a195331b2ff74b287"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a714ff019da31383d469e326da0710a1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classconsole.html#a714ff019da31383d469e326da0710a1c">set_log_level</a> (<a class="el" href="namespaceST.html#a3533cd4876c4c14d02d0077ffe36e3c0">ST::log_type</a> arg)</td></tr>
@@ -100,33 +100,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This object represents the console window. </p>
-<p>Displays all in-game logs and provides an interface to the lua scripting engine. <br />
-</p>
-<p>Messages this object listens to: <br />
-</p>
-<p><b>CONSOLE_WRITE</b> - Writes a log to the console window. <br />
-</p>
-<p>Message must contain: a pointer to a <b><a class="el" href="classST_1_1console__log.html" title="Represents a log message to be displayed in the console. ">ST::console_log</a></b> object.</p>
-<p><b>CONSOLE_TOGGLE</b> - Toggles the console window. <br />
-</p>
-<p>Message must contain: a <b>nullptr</b></p>
-<p><b>CONSOLE_CLEAR</b> - Clears the console window. <br />
-</p>
-<p>Message must contain: a <b>nullptr</b></p>
-<p><b>MOUSE_SCROLL</b> - Scrolls the console window the given amount. <br />
-</p>
-<p>Message must contain: a pointer to an <b>int</b>.</p>
-<p><b>KEY_PRESSED</b> - Checks if a key is pressed - only cares about the ENTER key. <br />
-</p>
-<p>Message must contain: a pointer to an <b><a class="el" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f" title="An enum containing all mouse/keyboard keys supported by the engine. ">ST::key</a></b> object.</p>
-<p><b>TEXT_STREAM</b> - Updates the internal composition given a pointer to a std::string. <br />
-</p>
-<p>Message must contain: a pointer to a <b>std::string</b>. </p>
 
-<p class="definition">Definition at line <a class="el" href="console_8hpp_source.html#l00048">48</a> of file <a class="el" href="console_8hpp_source.html">console.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="console_8hpp_source.html#l00017">17</a> of file <a class="el" href="console_8hpp_source.html">console.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9d015b3612f299fd6ad0fd1f7679bc46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d015b3612f299fd6ad0fd1f7679bc46">&#9670;&nbsp;</a></span>console()</h2>
+<a id="ac7e631fb759ac9d02e35333119fa23bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7e631fb759ac9d02e35333119fa23bc">&#9670;&nbsp;</a></span>console()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -137,8 +115,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
         <tr>
           <td class="memname">console::console </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> &amp;&#160;</td>
+          <td class="paramname"><em>gMessageBus</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -155,7 +133,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00017">17</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00019">19</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
 
 </div>
 </div>
@@ -173,9 +151,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close the console. Consume any leftover messages. </p>
+<p>Close the console. </p>
 
-<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00164">164</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00237">237</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
 
 </div>
 </div>
@@ -196,7 +174,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>bool indicating if the console window is open. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00142">142</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00216">216</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
 
 </div>
 </div>
@@ -223,7 +201,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
 </dl>
 <p>For example: <b>set_log_level(log_type::INFO | log_type::SUCCESS | log_type::ERROR)</b>; </p>
 
-<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00107">107</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="console_8cpp_source.html#l00179">179</a> of file <a class="el" href="console_8cpp_source.html">console.cpp</a>.</p>
 
 </div>
 </div>
@@ -251,7 +229,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>console_test</b></td
 </div><div class="memdoc">
 <p>Consumes messages from the subscriber object. </p>
 
-<p class="definition">Definition at line <a class="el" href="console_8hpp_source.html#l00088">88</a> of file <a class="el" href="console_8hpp_source.html">console.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="console_8hpp_source.html#l00076">76</a> of file <a class="el" href="console_8hpp_source.html">console.hpp</a>.</p>
 
 </div>
 </div>

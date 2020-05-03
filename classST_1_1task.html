@@ -79,8 +79,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3315eecc790abc9fe73d49a41a148909"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classST_1_1task.html#a3315eecc790abc9fe73d49a41a148909">task</a> (uint16_t id, void(*function)(void *), void *arg, <a class="el" href="classsemaphore.html">semaphore</a> *dependency)</td></tr>
-<tr class="separator:a3315eecc790abc9fe73d49a41a148909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6bb843c3d55578bedc18b630a0a2e32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classST_1_1task.html#ae6bb843c3d55578bedc18b630a0a2e32">task</a> (void(*function)(void *), void *arg, <a class="el" href="classsemaphore.html">semaphore</a> *dependency)</td></tr>
+<tr class="separator:ae6bb843c3d55578bedc18b630a0a2e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e88cf8049ae40f10776093f572fe79a"><td class="memItemLeft" align="right" valign="top"><a id="a6e88cf8049ae40f10776093f572fe79a"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (std::size_t count)</td></tr>
+<tr class="separator:a6e88cf8049ae40f10776093f572fe79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6432556f6fbae0340282cd7b8dfb8b0e"><td class="memItemLeft" align="right" valign="top"><a id="a6432556f6fbae0340282cd7b8dfb8b0e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *ptr)</td></tr>
+<tr class="separator:a6432556f6fbae0340282cd7b8dfb8b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -88,7 +94,7 @@ Public Attributes</h2></td></tr>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><b>task_func</b> )(void *)</td></tr>
 <tr class="separator:a84f7e68c9631124951a60d379010f780"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4839caa6a462377f0844e62ee149686"><td class="memItemLeft" align="right" valign="top"><a id="ab4839caa6a462377f0844e62ee149686"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> {}</td></tr>
 <tr class="separator:ab4839caa6a462377f0844e62ee149686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a775f2c8501ba247269e01fe8500dbfcb"><td class="memItemLeft" align="right" valign="top"><a id="a775f2c8501ba247269e01fe8500dbfcb"></a>
 <a class="el" href="classsemaphore.html">semaphore</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>lock</b> = nullptr</td></tr>
@@ -96,18 +102,15 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
 <tr class="memitem:a8ed48e9508fc61bcfa2f846cb97de8be"><td class="memItemLeft" align="right" valign="top"><a id="a8ed48e9508fc61bcfa2f846cb97de8be"></a>
 <a class="el" href="classsemaphore.html">semaphore</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>dependency</b> {}</td></tr>
 <tr class="separator:a8ed48e9508fc61bcfa2f846cb97de8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab21bbbbd9517f1165ece6853e69da31e"><td class="memItemLeft" align="right" valign="top"><a id="ab21bbbbd9517f1165ece6853e69da31e"></a>
-const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> {}</td></tr>
-<tr class="separator:ab21bbbbd9517f1165ece6853e69da31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An object representing a task to be run by the task manager. </p>
 <p>Contains a function pointer. Data to pass to that function pointer. And some locking mechanisms. </p>
 
-<p class="definition">Definition at line <a class="el" href="task_8hpp_source.html#l00023">23</a> of file <a class="el" href="task_8hpp_source.html">task.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task_8hpp_source.html#l00024">24</a> of file <a class="el" href="task_8hpp_source.html">task.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a3315eecc790abc9fe73d49a41a148909"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3315eecc790abc9fe73d49a41a148909">&#9670;&nbsp;</a></span>task()</h2>
+<a id="ae6bb843c3d55578bedc18b630a0a2e32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6bb843c3d55578bedc18b630a0a2e32">&#9670;&nbsp;</a></span>task()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,12 +121,6 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> {}</
         <tr>
           <td class="memname">ST::task::task </td>
           <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">void(*)(void *)&#160;</td>
           <td class="paramname"><em>function</em>, </td>
         </tr>
@@ -153,21 +150,20 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> {}</
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>An id given to each task by the task allocator </td></tr>
     <tr><td class="paramname">function</td><td>A function representing a work task </td></tr>
     <tr><td class="paramname">arg</td><td>The arguments to above function </td></tr>
     <tr><td class="paramname">dependency</td><td>A lock acting as a dependency to the task or nullptr if there is no such dependency </td></tr>
-    <tr><td class="paramname">affinity</td><td>Thread affinity for the task </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="task_8hpp_source.html#l00040">40</a> of file <a class="el" href="task_8hpp_source.html">task.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="task_8hpp_source.html#l00043">43</a> of file <a class="el" href="task_8hpp_source.html">task.hpp</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>ST_task_manager/src/main/<a class="el" href="task_8hpp_source.html">task.hpp</a></li>
+<li>ST_task_manager/src/main/<a class="el" href="task_8cpp_source.html">task.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -74,45 +74,20 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a787df0147d3a5b4d631c1d848a09b943"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a787df0147d3a5b4d631c1d848a09b943">drawing_manager</a> (SDL_Window *win, <a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus)</td></tr>
-<tr class="separator:a787df0147d3a5b4d631c1d848a09b943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18ad7d7e75650943e3089c6177bf8a28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a18ad7d7e75650943e3089c6177bf8a28">drawing_manager</a> (SDL_Window *window, <a class="el" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus)</td></tr>
+<tr class="separator:a18ad7d7e75650943e3089c6177bf8a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a607e5ea758beeabcd5b6824ab8fcfb3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">~drawing_manager</a> ()</td></tr>
 <tr class="separator:a607e5ea758beeabcd5b6824ab8fcfb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a144ff6e8e16b0ff57255fc3379f31eee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a144ff6e8e16b0ff57255fc3379f31eee">update</a> (const <a class="el" href="classST_1_1level.html">ST::level</a> &amp;temp, double, const <a class="el" href="classconsole.html">console</a> &amp;gConsole)</td></tr>
-<tr class="separator:a144ff6e8e16b0ff57255fc3379f31eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a993886a01154adc813f63ab9b7036cef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdrawing__manager.html#a993886a01154adc813f63ab9b7036cef">update</a> (const <a class="el" href="classST_1_1level.html">ST::level</a> &amp;temp, double, <a class="el" href="classconsole.html">console</a> &amp;gConsole)</td></tr>
+<tr class="separator:a993886a01154adc813f63ab9b7036cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This object is responsible for issuing drawing commands and drawing the current level. </p>
-<p>Handles drawing the entities, text objects, lights, the console window and debug information on the screen.</p>
-<p>Messages this subsystem listens to: <br />
-</p>
-<p><b>SET_VSYNC</b> - Enables or disables VSYNC.</p>
-<p>Message must contain: a pointer to a <b>bool</b>. <br />
-</p>
-<p><b>SHOW_COLLISIONS</b> - Enables the drawing of collision boxes and coordinates.</p>
-<p>Message must contain: a pointer to a <b>bool</b>. <br />
-</p>
-<p><b>SHOW_FPS</b> - Show or hide the current fps.</p>
-<p>Message must contain: a pointer to a <b>bool</b>. <br />
-</p>
-<p><b>SET_DARKNESS</b> - Sets the current darkness level.</p>
-<p>Message must contain: a pointer to a <b>uint8_t</b>. <br />
-</p>
-<p><b>ASSETS</b> - Updates the internal pointer to the assets. This messages is recieved from the asset manager whenever new assets are loaded. <br />
-</p>
-<p>Message must contain: a pointer to a <b><a class="el" href="structST_1_1assets.html" title="A container that holds all asset types used in the game. ">ST::assets</a>*</b> containing the assets struct. <br />
-</p>
-<p><b>ENABLE_LIGHTING</b> - Enable or disable the lighting.</p>
-<p>Message must contain: a pointer to a <b>bool</b>. <br />
-</p>
-<p><b>SET_RESOLUTION</b> - Sets the rendering resolution for the renderer.</p>
-<p>Message must contain: a pointer to a <b>std::tuple&lt;int16_t, int16_t&gt;</b> containing the width and the height of the screen. <br />
- </p>
 
-<p class="definition">Definition at line <a class="el" href="drawing__manager_8hpp_source.html#l00055">55</a> of file <a class="el" href="drawing__manager_8hpp_source.html">drawing_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="drawing__manager_8hpp_source.html#l00025">25</a> of file <a class="el" href="drawing__manager_8hpp_source.html">drawing_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a787df0147d3a5b4d631c1d848a09b943"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a787df0147d3a5b4d631c1d848a09b943">&#9670;&nbsp;</a></span>drawing_manager()</h2>
+<a id="a18ad7d7e75650943e3089c6177bf8a28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18ad7d7e75650943e3089c6177bf8a28">&#9670;&nbsp;</a></span>drawing_manager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,8 +101,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> &amp;&#160;</td>
+          <td class="paramname"><em>gMessageBus</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,7 +120,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00020">20</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00022">22</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -165,13 +140,13 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Closes the drawing manager. Quits the Font subsystem and destroys the renderer object. </p>
 
-<p class="definition">Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00462">462</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00464">464</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a144ff6e8e16b0ff57255fc3379f31eee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a144ff6e8e16b0ff57255fc3379f31eee">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a993886a01154adc813f63ab9b7036cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a993886a01154adc813f63ab9b7036cef">&#9670;&nbsp;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,7 +166,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classconsole.html">console</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classconsole.html">console</a> &amp;&#160;</td>
           <td class="paramname"><em>cnsl</em>&#160;</td>
         </tr>
         <tr>
@@ -210,7 +185,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00059">59</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="drawing__manager_8cpp_source.html#l00070">70</a> of file <a class="el" href="drawing__manager_8cpp_source.html">drawing_manager.cpp</a>.</p>
 
 </div>
 </div>

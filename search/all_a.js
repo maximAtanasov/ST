@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['make_5fcopy',['make_copy',['../classmessage.html#a1e07a8c8f302d91a913e0b2606ae74c1',1,'message']]],
-  ['message',['message',['../classmessage.html',1,'']]],
-  ['message_5fallocator',['message_allocator',['../classmessage__allocator.html',1,'message_allocator'],['../classmessage__allocator.html#ad64d333154a87e579a81cd803665e50e',1,'message_allocator::message_allocator()']]],
+  ['make_5fcopy',['make_copy',['../classmessage.html#a26418d1aec70f3f917e5d86e7841d15e',1,'message']]],
+  ['message',['message',['../classmessage.html',1,'message'],['../classmessage.html#a59bf39857235c4d5d8db41e7b6b57d90',1,'message::message()']]],
   ['message_5fbus',['message_bus',['../classmessage__bus.html',1,'message_bus'],['../classmessage__bus.html#a00ed71930504938fad8a5429e2b70ac9',1,'message_bus::message_bus()']]],
   ['message_5fbus_5ftests',['message_bus_tests',['../classmessage__bus__tests.html',1,'']]]
 ];

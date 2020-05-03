@@ -74,30 +74,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9f7760a373f4ed8d2b3d2254079d7cf7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphysics__manager.html#a9f7760a373f4ed8d2b3d2254079d7cf7">physics_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:a9f7760a373f4ed8d2b3d2254079d7cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa170228e2545a7e93d9108615883b499"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphysics__manager.html#aa170228e2545a7e93d9108615883b499">physics_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus)</td></tr>
+<tr class="separator:aa170228e2545a7e93d9108615883b499"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa05ebdc5e002c7f6a5129a2bd70c5cf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphysics__manager.html#aa05ebdc5e002c7f6a5129a2bd70c5cf3">update</a> (std::vector&lt; <a class="el" href="classST_1_1entity.html">ST::entity</a> &gt; *data)</td></tr>
 <tr class="separator:aa05ebdc5e002c7f6a5129a2bd70c5cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class handles all physics related actions in the engine. </p>
-<p>Messages this subsystem listens to: <br />
-</p>
-<p><b>SET_GRAVITY</b> - Sets the current gravity.</p>
-<p>Message must contain: a pointer to a <b>int8_t</b>.</p>
-<p><b>SET_FRICTION</b> - Sets the current friction.</p>
-<p>Message must contain: a pointer to a <b>int8_t</b>.</p>
-<p><b>SET_FLOOR</b> - Sets the floor of the level.</p>
-<p>Message must contain: a pointer to a <b>int32_t</b>.</p>
-<p><b>PAUSE_PHYSICS</b> - Pauses all physics.</p>
-<p>Message must contain: a <b>nullptr</b>.</p>
-<p><b>UNPAUSE_PHYSICS</b> - Resumes all physics.</p>
-<p>Message must contain: a <b>nullptr</b>. </p>
 
-<p class="definition">Definition at line <a class="el" href="physics__manager_8hpp_source.html#l00041">41</a> of file <a class="el" href="physics__manager_8hpp_source.html">physics_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="physics__manager_8hpp_source.html#l00020">20</a> of file <a class="el" href="physics__manager_8hpp_source.html">physics_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9f7760a373f4ed8d2b3d2254079d7cf7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f7760a373f4ed8d2b3d2254079d7cf7">&#9670;&nbsp;</a></span>physics_manager()</h2>
+<a id="aa170228e2545a7e93d9108615883b499"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa170228e2545a7e93d9108615883b499">&#9670;&nbsp;</a></span>physics_manager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -105,19 +93,9 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">physics_manager::physics_manager </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> &amp;&#160;</td>
+          <td class="paramname"><em>gMessageBus</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
-          <td class="paramname"><em>tsk_mngr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -129,7 +107,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="physics__manager_8cpp_source.html#l00016">16</a> of file <a class="el" href="physics__manager_8cpp_source.html">physics_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="physics__manager_8cpp_source.html#l00017">17</a> of file <a class="el" href="physics__manager_8cpp_source.html">physics_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -164,7 +142,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="physics__manager_8hpp_source.html#l00070">70</a> of file <a class="el" href="physics__manager_8hpp_source.html">physics_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="physics__manager_8hpp_source.html#l00051">51</a> of file <a class="el" href="physics__manager_8hpp_source.html">physics_manager.hpp</a>.</p>
 
 </div>
 </div>

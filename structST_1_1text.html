@@ -79,17 +79,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab9708580183efc5be5be2aa847540076"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structST_1_1text.html#ab9708580183efc5be5be2aa847540076">text</a> (int32_t x, int32_t y, SDL_Color color, const std::string &amp;text_string, const std::string &amp;font, uint8_t font_size)</td></tr>
-<tr class="separator:ab9708580183efc5be5be2aa847540076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e9d201911063d66f6efbe7e3fe6841b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structST_1_1text.html#a9e9d201911063d66f6efbe7e3fe6841b">text</a> (int32_t x, int32_t y, SDL_Color color, const std::string &amp;text_string, uint16_t font)</td></tr>
+<tr class="separator:a9e9d201911063d66f6efbe7e3fe6841b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8f316fba58b2cb0cb5a1553cbbc06045"><td class="memItemLeft" align="right" valign="top"><a id="a8f316fba58b2cb0cb5a1553cbbc06045"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>text_string</b></td></tr>
 <tr class="separator:a8f316fba58b2cb0cb5a1553cbbc06045"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18f659ec433f6ca81e9c78dc201c4bab"><td class="memItemLeft" align="right" valign="top"><a id="a18f659ec433f6ca81e9c78dc201c4bab"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>font</b></td></tr>
-<tr class="separator:a18f659ec433f6ca81e9c78dc201c4bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6e024188098b752a3eb17ae779c55d8"><td class="memItemLeft" align="right" valign="top"><a id="ab6e024188098b752a3eb17ae779c55d8"></a>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>x</b></td></tr>
 <tr class="separator:ab6e024188098b752a3eb17ae779c55d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,14 +94,17 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>x</b></td></tr>
 int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>y</b></td></tr>
 <tr class="separator:ab3cd474a1f153f76307c4b59145f69c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ebc63cbe9a49f27fc7607fb5a21e76e"><td class="memItemLeft" align="right" valign="top"><a id="a8ebc63cbe9a49f27fc7607fb5a21e76e"></a>
-SDL_Color&#160;</td><td class="memItemRight" valign="bottom"><b>color</b></td></tr>
+SDL_Color&#160;</td><td class="memItemRight" valign="bottom"><b>color</b> {}</td></tr>
 <tr class="separator:a8ebc63cbe9a49f27fc7607fb5a21e76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d9541834f42a12a714f7c5f62952c1"><td class="memItemLeft" align="right" valign="top"><a id="aa7d9541834f42a12a714f7c5f62952c1"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>font</b></td></tr>
+<tr class="separator:aa7d9541834f42a12a714f7c5f62952c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36f2e41a637ed296b8913c31dc8b0441"><td class="memItemLeft" align="right" valign="top"><a id="a36f2e41a637ed296b8913c31dc8b0441"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_visible</b> = true</td></tr>
 <tr class="separator:a36f2e41a637ed296b8913c31dc8b0441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd1ecaa5978ecb3224c6406ebdb9185e"><td class="memItemLeft" align="right" valign="top"><a id="acd1ecaa5978ecb3224c6406ebdb9185e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>font_size</b></td></tr>
-<tr class="separator:acd1ecaa5978ecb3224c6406ebdb9185e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb710167238a38977a460135677811d"><td class="memItemLeft" align="right" valign="top"><a id="abfb710167238a38977a460135677811d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>padding</b> {}</td></tr>
+<tr class="separator:abfb710167238a38977a460135677811d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This struct represents text objects in the game. </p>
@@ -112,8 +112,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>font_size</b></td>
 
 <p class="definition">Definition at line <a class="el" href="text_8hpp_source.html#l00023">23</a> of file <a class="el" href="text_8hpp_source.html">text.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab9708580183efc5be5be2aa847540076"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9708580183efc5be5be2aa847540076">&#9670;&nbsp;</a></span>text()</h2>
+<a id="a9e9d201911063d66f6efbe7e3fe6841b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e9d201911063d66f6efbe7e3fe6841b">&#9670;&nbsp;</a></span>text()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,14 +145,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>font_size</b></td>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>font</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>font_size</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>font</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -168,12 +162,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>font_size</b></td>
     <tr><td class="paramname">color</td><td>The color of the text (RGBA). </td></tr>
     <tr><td class="paramname">text_string</td><td>The text itself. </td></tr>
     <tr><td class="paramname">font</td><td>The font to use (Must be already loaded). </td></tr>
-    <tr><td class="paramname">font_size</td><td>The size of the font. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="text_8cpp_source.html#l00021">21</a> of file <a class="el" href="text_8cpp_source.html">text.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="text_8cpp_source.html#l00020">20</a> of file <a class="el" href="text_8cpp_source.html">text.cpp</a>.</p>
 
 </div>
 </div>

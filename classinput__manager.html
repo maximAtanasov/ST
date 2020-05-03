@@ -75,41 +75,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa3b39ea80ab4c61d8335bf4401182852"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinput__manager.html#aa3b39ea80ab4c61d8335bf4401182852">input_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:aa3b39ea80ab4c61d8335bf4401182852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42b97c047282ce9b76962971d3c1fb2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinput__manager.html#a42b97c047282ce9b76962971d3c1fb2c">input_manager</a> (<a class="el" href="classtask__manager.html">task_manager</a> &amp;gTask_manager, <a class="el" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus)</td></tr>
+<tr class="separator:a42b97c047282ce9b76962971d3c1fb2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ea71ec270312897110d94a68df59479"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinput__manager.html#a9ea71ec270312897110d94a68df59479">update</a> ()</td></tr>
 <tr class="separator:a9ea71ec270312897110d94a68df59479"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This object is responsible for taking input. </p>
-<p>Messages this subsystem listens to: <br />
-</p>
-<p><b>VIRTUAL_SCREEN_COORDINATES</b> - Tell the input manager what the virtual screen resolution is.</p>
-<p>Message must contain: a pointer to a <b>std::tuple&lt;int16_t, int16_t&gt;</b> containing the width and the height of the viewport. <br />
-</p>
-<p><b>REAL_SCREEN_COORDINATES</b> - Tell the input manager what the actual screen resolution is.</p>
-<p>Message must contain: a pointer to a <b>std::tuple&lt;int16_t, int16_t&gt;</b> containing the width and the height of the screen. <br />
-</p>
-<p><b>START_TEXT_INPUT</b> - Starts taking all keyboard input and sends <b>TEXT_STREAM</b> messages.</p>
-<p>Message must contain: a <b>nullptr</b>.<br />
-</p>
-<p><b>STOP_TEXT_INPUT</b> - Stops taking all keyboard input.</p>
-<p>Message must contain: a <b>nullptr</b>.<br />
-</p>
-<p><b>CLEAR_TEXT_STREAM</b> - Clears the text buffer if text_input is true.</p>
-<p>Message must contain: a <b>nullptr</b>.<br />
-</p>
-<p><b>REGISTER_KEY</b> - Registers the given key and sends input events (pressed, held, released) for it.</p>
-<p>Message must contain: a pointer to a <b><a class="el" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f" title="An enum containing all mouse/keyboard keys supported by the engine. ">ST::key</a></b>. <br />
-</p>
-<p><b>UNREGISTER_KEY</b> - Unregisters a previously registered key and stops sending input events for it.</p>
-<p>Message must contain: a pointer to a <b><a class="el" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f" title="An enum containing all mouse/keyboard keys supported by the engine. ">ST::key</a></b>. <br />
- </p>
 
-<p class="definition">Definition at line <a class="el" href="input__manager_8hpp_source.html#l00051">51</a> of file <a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="input__manager_8hpp_source.html#l00020">20</a> of file <a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa3b39ea80ab4c61d8335bf4401182852"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3b39ea80ab4c61d8335bf4401182852">&#9670;&nbsp;</a></span>input_manager()</h2>
+<a id="a42b97c047282ce9b76962971d3c1fb2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42b97c047282ce9b76962971d3c1fb2c">&#9670;&nbsp;</a></span>input_manager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -117,14 +94,14 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">input_manager::input_manager </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>, </td>
+          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> &amp;&#160;</td>
+          <td class="paramname"><em>gTask_manager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
-          <td class="paramname"><em>tsk_mngr</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> &amp;&#160;</td>
+          <td class="paramname"><em>gMessageBus</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -136,12 +113,12 @@ Public Member Functions</h2></td></tr>
 <p>initializes the input manager </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">msg_bus</td><td>A pointer to the global message bus. </td></tr>
-    <tr><td class="paramname">tsk_mngr</td><td>A pointer to the global task_mngr. </td></tr>
+    <tr><td class="paramname">tsk_mngr</td><td>A pointer to the global <a class="el" href="classtask__manager.html" title="The Task Manager handles all things multi-threaded in the engine. ">task_manager</a>. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="input__manager_8cpp_source.html#l00019">19</a> of file <a class="el" href="input__manager_8cpp_source.html">input_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="input__manager_8cpp_source.html#l00027">27</a> of file <a class="el" href="input__manager_8cpp_source.html">input_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -170,7 +147,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Starts the update_task() method using the task manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="input__manager_8hpp_source.html#l00126">126</a> of file <a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="input__manager_8hpp_source.html#l00107">107</a> of file <a class="el" href="input__manager_8hpp_source.html">input_manager.hpp</a>.</p>
 
 </div>
 </div>

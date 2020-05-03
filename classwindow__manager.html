@@ -61,7 +61,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classwindow__manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">window_manager Class Reference</div>  </div>
@@ -75,37 +74,22 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acd6d7a15d4cccf5afe20eec5c35d1709"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwindow__manager.html#acd6d7a15d4cccf5afe20eec5c35d1709">window_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr, const std::string &amp;window_name)</td></tr>
-<tr class="separator:acd6d7a15d4cccf5afe20eec5c35d1709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55bac0019122e10fbf15a87d316de03e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwindow__manager.html#a55bac0019122e10fbf15a87d316de03e">window_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus, <a class="el" href="classtask__manager.html">task_manager</a> &amp;gTask_manager, const std::string &amp;window_name)</td></tr>
+<tr class="separator:a55bac0019122e10fbf15a87d316de03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3609eab644fa39d90e18e8286488ea4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwindow__manager.html#a3609eab644fa39d90e18e8286488ea4c">~window_manager</a> ()</td></tr>
 <tr class="separator:a3609eab644fa39d90e18e8286488ea4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0aa050f4f00752971164c2f6719087e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwindow__manager.html#a0aa050f4f00752971164c2f6719087e7">update</a> ()</td></tr>
 <tr class="separator:a0aa050f4f00752971164c2f6719087e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0393bcb6fe86954cd9fdddbc6eeebf2c"><td class="memItemLeft" align="right" valign="top">SDL_Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwindow__manager.html#a0393bcb6fe86954cd9fdddbc6eeebf2c">get_window</a> ()</td></tr>
 <tr class="separator:a0393bcb6fe86954cd9fdddbc6eeebf2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a70c2d66b57258fd06dd0193a7e15120c"><td class="memItemLeft" align="right" valign="top"><a id="a70c2d66b57258fd06dd0193a7e15120c"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>window_manager_tests</b></td></tr>
-<tr class="separator:a70c2d66b57258fd06dd0193a7e15120c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This object is responsible for managing the window. </p>
-<p>Creates and manages an SDL_Window.</p>
-<p>Messages this subsystem listens to: <br />
-</p>
-<p><b>SET_FULLSCREEN</b> - Sets the window to fullscreen or windowed mode.</p>
-<p>Message must contain: a pointer to a <b>bool</b>. <br />
-</p>
-<p><b>SET_WINDOW_BRIGHTNESS</b> - Sets the window brightness. Does not currently work.</p>
-<p>Message must contain: a pointer to a <b>float</b>. <br />
- </p>
 
-<p class="definition">Definition at line <a class="el" href="window__manager_8hpp_source.html#l00034">34</a> of file <a class="el" href="window__manager_8hpp_source.html">window_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="window__manager_8hpp_source.html#l00020">20</a> of file <a class="el" href="window__manager_8hpp_source.html">window_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acd6d7a15d4cccf5afe20eec5c35d1709"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd6d7a15d4cccf5afe20eec5c35d1709">&#9670;&nbsp;</a></span>window_manager()</h2>
+<a id="a55bac0019122e10fbf15a87d316de03e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55bac0019122e10fbf15a87d316de03e">&#9670;&nbsp;</a></span>window_manager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -113,14 +97,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>window_manager_tests
         <tr>
           <td class="memname">window_manager::window_manager </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>, </td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> &amp;&#160;</td>
+          <td class="paramname"><em>gMessageBus</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
-          <td class="paramname"><em>tsk_mngr</em>, </td>
+          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> &amp;&#160;</td>
+          <td class="paramname"><em>gTask_manager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -143,7 +127,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>window_manager_tests
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="window__manager_8cpp_source.html#l00030">30</a> of file <a class="el" href="window__manager_8cpp_source.html">window_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="window__manager_8cpp_source.html#l00033">33</a> of file <a class="el" href="window__manager_8cpp_source.html">window_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -161,9 +145,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>window_manager_tests
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Closes the Display Manager. Destroys the window and quits SDL. </p>
+<p>Closes the Window Manager. Destroys the window and quits SDL. </p>
 
-<p class="definition">Definition at line <a class="el" href="window__manager_8cpp_source.html#l00018">18</a> of file <a class="el" href="window__manager_8cpp_source.html">window_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="window__manager_8cpp_source.html#l00020">20</a> of file <a class="el" href="window__manager_8cpp_source.html">window_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -184,7 +168,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>window_manager_tests
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Returns a handle to the SDL_Window* </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="window__manager_8cpp_source.html#l00100">100</a> of file <a class="el" href="window__manager_8cpp_source.html">window_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="window__manager_8cpp_source.html#l00115">115</a> of file <a class="el" href="window__manager_8cpp_source.html">window_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -212,7 +196,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>window_manager_tests
 </div><div class="memdoc">
 <p>Starts an the update_task() method using the task manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="window__manager_8hpp_source.html#l00064">64</a> of file <a class="el" href="window__manager_8hpp_source.html">window_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="window__manager_8hpp_source.html#l00049">49</a> of file <a class="el" href="window__manager_8hpp_source.html">window_manager.hpp</a>.</p>
 
 </div>
 </div>

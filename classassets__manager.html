@@ -76,8 +76,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aee50f45589cd1445827eba5f2deb5644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#aee50f45589cd1445827eba5f2deb5644">assets_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> *msg_bus, <a class="el" href="classtask__manager.html">task_manager</a> *tsk_mngr)</td></tr>
-<tr class="separator:aee50f45589cd1445827eba5f2deb5644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae3b571a436de93bf127207f7b04673d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#aae3b571a436de93bf127207f7b04673d">assets_manager</a> (<a class="el" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus, <a class="el" href="classtask__manager.html">task_manager</a> &amp;tsk_mngr)</td></tr>
+<tr class="separator:aae3b571a436de93bf127207f7b04673d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e3d043c52eea4c50b788d15b6457466"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#a5e3d043c52eea4c50b788d15b6457466">~assets_manager</a> ()</td></tr>
 <tr class="separator:a5e3d043c52eea4c50b788d15b6457466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eee870009e6ac35daad4be4c311e6e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classassets__manager.html#a4eee870009e6ac35daad4be4c311e6e8">update</a> ()</td></tr>
@@ -96,33 +96,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This object is responsible for loading/unloading assets. </p>
-<p>Messages this subsystem listens to: <br />
-</p>
-<p><b>LOAD_LIST</b> - Loads assets from a <b>.list</b> file. <br />
-</p>
-<p>Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br />
-</p>
-<p><b>UNLOAD_LIST</b> - Unloads assets from a <b>.list</b> file. <br />
-</p>
-<p>Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br />
-</p>
-<p><b>LOAD_ASSET</b> - Loads an asset given a path. <br />
-</p>
-<p>Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br />
-</p>
-<p><b>UNLOAD_ASSET</b> - Unload an asset given a path to it. <br />
-</p>
-<p>Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br />
-</p>
-<p><b>LOAD_BINARY</b> - Loads assets contained within a binary. <br />
-</p>
-<p>Message must contain: a pointer to a <b>std::string</b> containing the path to the file. <br />
- </p>
 
-<p class="definition">Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00049">49</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00024">24</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aee50f45589cd1445827eba5f2deb5644"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee50f45589cd1445827eba5f2deb5644">&#9670;&nbsp;</a></span>assets_manager()</h2>
+<a id="aae3b571a436de93bf127207f7b04673d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae3b571a436de93bf127207f7b04673d">&#9670;&nbsp;</a></span>assets_manager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -130,14 +108,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
         <tr>
           <td class="memname">assets_manager::assets_manager </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> *&#160;</td>
-          <td class="paramname"><em>msg_bus</em>, </td>
+          <td class="paramtype"><a class="el" href="classmessage__bus.html">message_bus</a> &amp;&#160;</td>
+          <td class="paramname"><em>gMessageBus</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> *&#160;</td>
-          <td class="paramname"><em>tsk_mngr</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classtask__manager.html">task_manager</a> &amp;&#160;</td>
+          <td class="paramname"><em>gTask_manager</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -154,7 +132,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00019">19</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00021">21</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -172,9 +150,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Closes the asset_manager. Consumes any leftover messages and unloads all assets. </p>
+<p>Closes the asset_manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00366">366</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00370">370</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -203,7 +181,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
 </div><div class="memdoc">
 <p>will start the update task using the task manager. </p>
 
-<p class="definition">Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00078">78</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assets__manager_8hpp_source.html#l00054">54</a> of file <a class="el" href="assets__manager_8hpp_source.html">assets_manager.hpp</a>.</p>
 
 </div>
 </div>
@@ -237,7 +215,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>asset_manager_test</
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00040">40</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assets__manager_8cpp_source.html#l00045">45</a> of file <a class="el" href="assets__manager_8cpp_source.html">assets_manager.cpp</a>.</p>
 
 </div>
 </div>

@@ -61,8 +61,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#friends">Friends</a> &#124;
 <a href="classmessage-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">message Class Reference</div>  </div>
@@ -76,31 +76,92 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad3d7678d1a6dcc0d3fb76ee396a306f0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#ad3d7678d1a6dcc0d3fb76ee396a306f0">get_id</a> () const</td></tr>
-<tr class="separator:ad3d7678d1a6dcc0d3fb76ee396a306f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9255a3a662adbefcf9d9e6ee166a970b"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a9255a3a662adbefcf9d9e6ee166a970b">get_data</a> () const</td></tr>
 <tr class="separator:a9255a3a662adbefcf9d9e6ee166a970b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e07a8c8f302d91a913e0b2606ae74c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmessage.html">message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a1e07a8c8f302d91a913e0b2606ae74c1">make_copy</a> () const</td></tr>
-<tr class="separator:a1e07a8c8f302d91a913e0b2606ae74c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26418d1aec70f3f917e5d86e7841d15e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmessage.html">message</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a26418d1aec70f3f917e5d86e7841d15e">make_copy</a> ()</td></tr>
+<tr class="separator:a26418d1aec70f3f917e5d86e7841d15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bf39857235c4d5d8db41e7b6b57d90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmessage.html#a59bf39857235c4d5d8db41e7b6b57d90">message</a> (uint8_t name, const std::shared_ptr&lt; void &gt; &amp;data=nullptr)</td></tr>
+<tr class="separator:a59bf39857235c4d5d8db41e7b6b57d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3854283bed806eaae5afb9d057fa65dc"><td class="memItemLeft" align="right" valign="top"><a id="a3854283bed806eaae5afb9d057fa65dc"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>message</b> (uint8_t name, uint32_t base_data0, const std::shared_ptr&lt; void &gt; &amp;data=nullptr)</td></tr>
+<tr class="separator:a3854283bed806eaae5afb9d057fa65dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a8f4c99b2a001357f29c35a25e6426daf"><td class="memItemLeft" align="right" valign="top"><a id="a8f4c99b2a001357f29c35a25e6426daf"></a>
+static void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t count)</td></tr>
+<tr class="separator:a8f4c99b2a001357f29c35a25e6426daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e5d119c2bbd009ad0e3b65f5d2418ed"><td class="memItemLeft" align="right" valign="top"><a id="a3e5d119c2bbd009ad0e3b65f5d2418ed"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *ptr)</td></tr>
+<tr class="separator:a3e5d119c2bbd009ad0e3b65f5d2418ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a228c1beb27e80faa6aa3d35a376bbf1c"><td class="memItemLeft" align="right" valign="top"><a id="a228c1beb27e80faa6aa3d35a376bbf1c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>msg_name</b></td></tr>
-<tr class="separator:a228c1beb27e80faa6aa3d35a376bbf1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:ad72513bc13ac793c74c69ca1f649d1b2"><td class="memItemLeft" align="right" valign="top"><a id="ad72513bc13ac793c74c69ca1f649d1b2"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b></td></tr>
-<tr class="separator:ad72513bc13ac793c74c69ca1f649d1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0570dffee08395c4ba836ced42002a3"><td class="memItemLeft" align="right" valign="top"><a id="af0570dffee08395c4ba836ced42002a3"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>base_data0</b> = 0</td></tr>
+<tr class="separator:af0570dffee08395c4ba836ced42002a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb9711950483d4cfe9c550b5ed38194e"><td class="memItemLeft" align="right" valign="top"><a id="aeb9711950483d4cfe9c550b5ed38194e"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>base_data1</b> = 0</td></tr>
+<tr class="separator:aeb9711950483d4cfe9c550b5ed38194e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a9b7f756fe178d9dd1a7b455be4fb87"><td class="memItemLeft" align="right" valign="top"><a id="a3a9b7f756fe178d9dd1a7b455be4fb87"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>base_data2</b> = 0</td></tr>
+<tr class="separator:a3a9b7f756fe178d9dd1a7b455be4fb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac15588f05fdf2a8edff579348c866b81"><td class="memItemLeft" align="right" valign="top"><a id="ac15588f05fdf2a8edff579348c866b81"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>msg_name</b> {}</td></tr>
+<tr class="separator:ac15588f05fdf2a8edff579348c866b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A message object passed around in the message bus. Holds anything created with make_data&lt;&gt;(). </p>
-<p>Only use make_msg() and destroy_msg() for the creation of a message. </p>
+<p>Only use new <a class="el" href="classmessage.html" title="A message object passed around in the message bus. Holds anything created with make_data&lt;&gt;(). ">message()</a> and delete() for the creation of a message. </p>
 
-<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00023">23</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00021">21</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a59bf39857235c4d5d8db41e7b6b57d90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59bf39857235c4d5d8db41e7b6b57d90">&#9670;&nbsp;</a></span>message()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">message::message </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; void &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The type of message. See <b>ST::msg_type</b>. </td></tr>
+    <tr><td class="paramname">data</td><td>The data the message carries - created with <b>make_data&lt;&gt;()</b> or is <b>nullptr</b> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00043">43</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9255a3a662adbefcf9d9e6ee166a970b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9255a3a662adbefcf9d9e6ee166a970b">&#9670;&nbsp;</a></span>get_data()</h2>
 
@@ -123,42 +184,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The data contained within a message. Always a void* that MUST be properly casted to an actual type on the other end </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The data contained within a message. Always a void* that MUST be properly cast to an actual type on the other end </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00054">54</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
-
-</div>
-</div>
-<a id="ad3d7678d1a6dcc0d3fb76ee396a306f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3d7678d1a6dcc0d3fb76ee396a306f0">&#9670;&nbsp;</a></span>get_id()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t message::get_id </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The id of the mesage. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00061">61</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00077">77</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
-<a id="a1e07a8c8f302d91a913e0b2606ae74c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e07a8c8f302d91a913e0b2606ae74c1">&#9670;&nbsp;</a></span>make_copy()</h2>
+<a id="a26418d1aec70f3f917e5d86e7841d15e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26418d1aec70f3f917e5d86e7841d15e">&#9670;&nbsp;</a></span>make_copy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,7 +203,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
           <td class="memname"><a class="el" href="classmessage.html">message</a> * message::make_copy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -179,15 +212,15 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>message_allocator</b
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Makes a copy of itself. </p><dl class="section return"><dt>Returns</dt><dd>A new message that is an exact copy of the original. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A copy of this message. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="message__bus_8hpp_source.html#l00068">68</a> of file <a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="message_8hpp_source.html#l00084">84</a> of file <a class="el" href="message_8hpp_source.html">message.hpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>ST_message_bus/src/main/<a class="el" href="message_8hpp_source.html">message.hpp</a></li>
-<li>ST_message_bus/include/<a class="el" href="message__bus_8hpp_source.html">message_bus.hpp</a></li>
+<li>ST_message_bus/src/main/<a class="el" href="message_8cpp_source.html">message.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
