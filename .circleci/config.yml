@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-        - image: devimages/eoan-ci-builder:latest
+        - image: devimages/ubuntu:focal
     steps:
       - checkout
       - run:
