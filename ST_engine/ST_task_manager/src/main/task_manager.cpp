@@ -192,7 +192,6 @@ int task_manager::task_thread(task_manager* self){
  */
 void task_manager::do_work(ST::task* work) {
     if(work->dependency != nullptr){ //wait for dependency to finish
-        printf("working\n");
         work->dependency->wait();
         delete work->dependency;
     }
@@ -208,7 +207,6 @@ void task_manager::do_work(ST::task* work) {
  * Starts as many worker threads as there are logical cores in the system - 1.
  */
 task_manager::task_manager(){
-
     if(singleton_initialized){
         throw std::runtime_error("The task manager cannot be initialized more than once!");
     }else{

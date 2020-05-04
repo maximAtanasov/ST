@@ -28,6 +28,7 @@ class drawing_manager{
         //external dependency - delivered in the constructor
         message_bus& gMessage_bus;
         task_manager& gTask_manager;
+        SDL_Window* window{};
 
         //a subscriber object - so we can subscribe to and recieve messages
         subscriber msg_sub{};
@@ -80,13 +81,14 @@ class drawing_manager{
         void copy_level_state(ST::level *level);
 
 public:
-        drawing_manager(SDL_Window *window, message_bus &gMessageBus, task_manager &gTaskManager);
+        drawing_manager(message_bus &gMessageBus, task_manager &gTaskManager);
         ~drawing_manager();
+        task_id initialize(SDL_Window *window);
         task_id update(ST::level* temp, double, console* gConsole);
         static void update_task(void* self);
 
 
-
+    static void init_task(void *arg);
 };
 
 #endif

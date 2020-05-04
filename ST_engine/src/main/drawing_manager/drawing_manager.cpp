@@ -19,51 +19,18 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
  */
-drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus, task_manager &gTaskManager) :
+drawing_manager::drawing_manager(message_bus &gMessageBus, task_manager &gTaskManager) :
     gMessage_bus(gMessageBus), gTask_manager(gTaskManager) {
-
-    if(singleton_initialized){
-        throw std::runtime_error("The drawing manager cannot be initialized more than once!");
-    }else{
-        singleton_initialized = true;
+    if(TTF_Init() < 0){
+        fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
+        exit(1);
     }
-
-	if(TTF_Init() < 0){
-		fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
-		exit(1);
-	}
-
-	//Subscribe to certain messages
-	gMessage_bus.subscribe(VSYNC_STATE, &msg_sub);
-	gMessage_bus.subscribe(SET_VSYNC, &msg_sub);
-	gMessage_bus.subscribe(SHOW_COLLISIONS, &msg_sub);
-    gMessage_bus.subscribe(SHOW_FPS, &msg_sub);
-	gMessage_bus.subscribe(SET_DARKNESS, &msg_sub);
-	gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
-    gMessage_bus.subscribe(FONTS_ASSETS, &msg_sub);
-    gMessage_bus.subscribe(ENABLE_LIGHTING, &msg_sub);
-    gMessage_bus.subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);\
-
-    //debug collisions aren't shown by default
-	collisions_shown = false;
-
-	//Variables for lights
-	darkness_level = 0;
-    lights_quality = 5;
-
-    //hash of default font
-    default_font_normal = ST::hash_string(DEFAULT_FONT_NORMAL);
-    default_font_small = ST::hash_string(DEFAULT_FONT_SMALL);
-
-	//Initialize the rendering object
-	ST::renderer_sdl::initialize(window, w_width, w_height);
-    uint32_t screen_width_height = w_width | static_cast<uint32_t>(w_height << 16U);
-    gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
 }
 
 
 void drawing_manager::update_task(void* self) {
     auto this_ = static_cast<drawing_manager*>(self);
+
     this_->camera = this_->level.camera;
     this_->handle_messages();
 
@@ -494,4 +461,47 @@ void drawing_manager::copy_level_state(ST::level *level_) {
     this->level.overlay = level_->overlay;
     this->level.overlay_sprite_num = level_->overlay_sprite_num;
     this->level.text_objects = level_->text_objects;
+}
+
+void drawing_manager::init_task(void* arg){
+    printf("aaa\n");
+    auto this_ = static_cast<drawing_manager*>(arg);
+
+    //Initialize the rendering object
+    ST::renderer_sdl::initialize(static_cast<SDL_Window*>(arg), this_->w_width, this_->w_height);
+    uint32_t screen_width_height = this_->w_width | static_cast<uint32_t>(this_->w_height << 16U);
+    this_->gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
+}
+
+task_id drawing_manager::initialize(SDL_Window *window_) {
+    window = window_;
+    if(singleton_initialized){
+        throw std::runtime_error("The drawing manager cannot be initialized more than once!");
+    }else{
+        singleton_initialized = true;
+    }
+
+    //Subscribe to certain messages
+    gMessage_bus.subscribe(VSYNC_STATE, &msg_sub);
+    gMessage_bus.subscribe(SET_VSYNC, &msg_sub);
+    gMessage_bus.subscribe(SHOW_COLLISIONS, &msg_sub);
+    gMessage_bus.subscribe(SHOW_FPS, &msg_sub);
+    gMessage_bus.subscribe(SET_DARKNESS, &msg_sub);
+    gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
+    gMessage_bus.subscribe(FONTS_ASSETS, &msg_sub);
+    gMessage_bus.subscribe(ENABLE_LIGHTING, &msg_sub);
+    gMessage_bus.subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);\
+
+    //debug collisions aren't shown by default
+    collisions_shown = false;
+
+    //Variables for lights
+    darkness_level = 0;
+    lights_quality = 5;
+
+    //hash of default font
+    default_font_normal = ST::hash_string(DEFAULT_FONT_NORMAL);
+    default_font_small = ST::hash_string(DEFAULT_FONT_SMALL);
+
+    return gTask_manager.start_task(new ST::task(init_task, this, nullptr));
 }
