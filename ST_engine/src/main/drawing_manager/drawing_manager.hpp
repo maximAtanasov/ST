@@ -16,6 +16,7 @@
 #include <renderer_sdl.hpp>
 #include <game_manager/level/level.hpp>
 #include <console.hpp>
+#include <task_manager.hpp>
 
 
 #define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
@@ -26,6 +27,7 @@ class drawing_manager{
     private:
         //external dependency - delivered in the constructor
         message_bus& gMessage_bus;
+        task_manager& gTask_manager;
 
         //a subscriber object - so we can subscribe to and recieve messages
         subscriber msg_sub{};
@@ -72,9 +74,14 @@ class drawing_manager{
         void set_darkness(uint8_t arg);
 
     public:
-        drawing_manager(SDL_Window *window, message_bus &gMessageBus);
+        drawing_manager(SDL_Window *window, message_bus &gMessageBus, task_manager &gTaskManager);
         ~drawing_manager();
-        void update(const ST::level& temp, double, console& gConsole);
+        task_id update(ST::level* temp, double, console* gConsole);
+        static void update_task(void* self);
+
+    ST::level level = ST::level("", &gMessage_bus);
+    double fps;
+    console* cnsl{};
 };
 
 #endif

@@ -41,7 +41,7 @@ int ST_engine_main(int argc, char *argv[]) {
     audio_manager gAudio_manager(gTask_manager, gMessage_bus);
     input_manager gInput_manager(gTask_manager, gMessage_bus);
     window_manager gDisplay_manager(gMessage_bus, gTask_manager, "ST");
-    drawing_manager gDrawing_manager(gDisplay_manager.get_window(), gMessage_bus);
+    drawing_manager gDrawing_manager(gDisplay_manager.get_window(), gMessage_bus, gTask_manager);
 
     assets_manager gAssets_manager(gMessage_bus, gTask_manager);
     physics_manager gPhysics_manager(gMessage_bus);
@@ -62,6 +62,7 @@ int ST_engine_main(int argc, char *argv[]) {
     gDisplay_manager.update();
 
     //main loop
+    task_id render_thread{};
     while(gGame_manager.game_is_running()){
         new_time = gTimer.time_since_start();
         frame_time = new_time - current_time;
@@ -81,9 +82,11 @@ int ST_engine_main(int argc, char *argv[]) {
             gDisplay_manager.update();
             gAudio_manager.update();
         }
+        gTask_manager.wait_for_task(render_thread);
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
-        gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);
+        render_thread = gDrawing_manager.update(gGame_manager.get_level(), gFps.get_value(), &gConsole);
     }
+    gTask_manager.wait_for_task(render_thread);
     return 0;
 }

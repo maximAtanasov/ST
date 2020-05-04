@@ -19,7 +19,8 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  * @param tsk_mngr A pointer to the global task_manager.
  */
-drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
+drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus, task_manager &gTaskManager) :
+    gMessage_bus(gMessageBus), gTask_manager(gTaskManager) {
 
     if(singleton_initialized){
         throw std::runtime_error("The drawing manager cannot be initialized more than once!");
@@ -60,6 +61,34 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
     gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
 }
 
+
+void drawing_manager::update_task(void* self) {
+    auto this_ = static_cast<drawing_manager*>(self);
+    this_->camera = this_->level.camera;
+    this_->handle_messages();
+
+    this_->ticks = SDL_GetTicks(); //CPU ticks since start
+    ST::renderer_sdl::clear_screen(this_->level.background_color);
+    ST::renderer_sdl::draw_background(this_->level.background);
+    this_->draw_entities(this_->level.entities);
+    ST::renderer_sdl::draw_overlay(this_->level.overlay, static_cast<uint8_t>(
+            ST::pos_mod(this_->ticks, this_->level.overlay_sprite_num)), this_->level.overlay_sprite_num);
+    this_->draw_text_objects(this_->level.text_objects);
+    //draw the lights when we are sure they are processed
+    if(this_->lighting_enabled) {
+        this_->process_lights(this_->level.lights);
+        this_->draw_lights();
+    }
+    //Draw debug info and the console in a debug build
+    if (this_->collisions_shown) {
+        this_->draw_collisions(this_->level.entities);
+        this_->draw_coordinates(this_->level.entities);
+    }
+    this_->draw_fps(this_->fps);
+    this_->draw_console(*this_->cnsl);
+    ST::renderer_sdl::present();
+}
+
 /**
  * Consumes messages from the subscriber object.
  * Performs all drawing operations.
@@ -67,30 +96,20 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
  * @param fps the current frames per second.
  * @param cnsl a console object.
  */
-void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
-    camera = temp.camera;
-	handle_messages();
+task_id drawing_manager::update(ST::level* temp, double fps, console* cnsl){
+    this->level.actions_buttons = temp->actions_buttons;
+    this->level.background = temp->background;
+    this->level.background_color  = temp->background_color;
+    this->level.camera = temp->camera;
+    this->level.entities = temp->entities;
+    this->level.lights = temp->lights;
+    this->level.overlay = temp->overlay;
+    this->level.overlay_sprite_num = temp->overlay_sprite_num;
+    this->level.text_objects = temp->text_objects;
 
-	ticks = SDL_GetTicks(); //CPU ticks since start
-    ST::renderer_sdl::clear_screen(temp.background_color);
-    ST::renderer_sdl::draw_background(temp.background);
-	draw_entities(temp.entities);
-    ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ST::pos_mod(ticks, temp.overlay_sprite_num)), temp.overlay_sprite_num);
-    draw_text_objects(temp.text_objects);
-    //draw the lights when we are sure they are processed
-    if(lighting_enabled) {
-        process_lights(temp.lights);
-        draw_lights();
-    }
-    //Draw debug info and the console in a debug build
-	if (collisions_shown) {
-		draw_collisions(temp.entities);
-		draw_coordinates(temp.entities);
-	}
-	draw_fps(fps);
-	draw_console(cnsl);
-
-    ST::renderer_sdl::present();
+    this->fps = fps;
+    this->cnsl = cnsl;
+    return gTask_manager.start_task(new ST::task(update_task, this, nullptr));
 }
 
 /**

@@ -36,7 +36,7 @@ player.speedSound = false
 player.lives = 3
 
 function player:update()
-    if(leftTrigger() > 20000 or keyHeld("DASH")) then
+    if(leftTrigger() > 20000 or keyPressed("DASH") or keyHeld("DASH")) then
         self.speed = 36;
         if self.speedSound == false then
             playSound("speed.wav", 20, 0)
@@ -63,9 +63,9 @@ function player:update()
         self:moveRight(5)
     elseif leftStick > 15000 then
         self:moveRight(self.speed)
-    elseif keyHeld("LEFT") then
+    elseif keyPressed("LEFT") or keyHeld("LEFT") then
         self:moveLeft(self.speed)
-    elseif keyHeld("RIGHT") then
+    elseif keyPressed("RIGHT") or keyHeld("RIGHT") then
         self:moveRight(self.speed)
     else
         self:idle()

@@ -72,9 +72,9 @@ class input_manager{
 		std::vector<SDL_GameController*> controllers;
 		std::vector<SDL_Haptic*> controllers_haptic;
 		struct keyboard_and_mouse_controls controls{};
-		struct keyboard_and_mouse_controls controls_prev_frame;
-		struct controller_buttons controller_buttons;
-		struct controller_buttons controller_button_prev_frame;
+		struct keyboard_and_mouse_controls controls_prev_frame{};
+		struct controller_buttons controller_buttons{};
+		struct controller_buttons controller_button_prev_frame{};
 
 		//Store ST::keys and the amount of times the have been registered as values;
 		ska::bytell_hash_map<ST::key, uint8_t> registered_keys;
