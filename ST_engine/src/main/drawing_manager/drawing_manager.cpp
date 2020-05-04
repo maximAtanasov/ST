@@ -42,7 +42,7 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus, t
 	gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
     gMessage_bus.subscribe(FONTS_ASSETS, &msg_sub);
     gMessage_bus.subscribe(ENABLE_LIGHTING, &msg_sub);
-    gMessage_bus.subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
+    gMessage_bus.subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);\
 
     //debug collisions aren't shown by default
 	collisions_shown = false;
@@ -70,22 +70,25 @@ void drawing_manager::update_task(void* self) {
     this_->ticks = SDL_GetTicks(); //CPU ticks since start
     ST::renderer_sdl::clear_screen(this_->level.background_color);
     ST::renderer_sdl::draw_background(this_->level.background);
-    this_->draw_entities(this_->level.entities);
+    this_->draw_entities();
+
     ST::renderer_sdl::draw_overlay(this_->level.overlay, static_cast<uint8_t>(
             ST::pos_mod(this_->ticks, this_->level.overlay_sprite_num)), this_->level.overlay_sprite_num);
-    this_->draw_text_objects(this_->level.text_objects);
-    //draw the lights when we are sure they are processed
+
+    this_->draw_text_objects();
+
     if(this_->lighting_enabled) {
         this_->process_lights(this_->level.lights);
         this_->draw_lights();
     }
-    //Draw debug info and the console in a debug build
+
     if (this_->collisions_shown) {
-        this_->draw_collisions(this_->level.entities);
-        this_->draw_coordinates(this_->level.entities);
+        this_->draw_collisions();
+        this_->draw_coordinates();
     }
-    this_->draw_fps(this_->fps);
-    this_->draw_console(*this_->cnsl);
+
+    this_->draw_fps();
+    this_->draw_console();
     ST::renderer_sdl::present();
 }
 
@@ -96,28 +99,18 @@ void drawing_manager::update_task(void* self) {
  * @param fps the current frames per second.
  * @param cnsl a console object.
  */
-task_id drawing_manager::update(ST::level* temp, double fps, console* cnsl){
-    this->level.actions_buttons = temp->actions_buttons;
-    this->level.background = temp->background;
-    this->level.background_color  = temp->background_color;
-    this->level.camera = temp->camera;
-    this->level.entities = temp->entities;
-    this->level.lights = temp->lights;
-    this->level.overlay = temp->overlay;
-    this->level.overlay_sprite_num = temp->overlay_sprite_num;
-    this->level.text_objects = temp->text_objects;
-
-    this->fps = fps;
-    this->cnsl = cnsl;
+task_id drawing_manager::update(ST::level* temp, double fps_, console* cnsl_){
+    this->copy_level_state(temp);
+    this->fps = fps_;
+    this->cnsl = cnsl_;
     return gTask_manager.start_task(new ST::task(update_task, this, nullptr));
 }
 
 /**
- * Draws all visible text objects in the current level
- * @param objects a pointer to a vector of text_objects
+ * Draws all visible text objects in the current level.
  */
-void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) const {
-    for(auto& i : objects) {
+void drawing_manager::draw_text_objects() const {
+    for(auto& i : this->level.text_objects) {
         if (is_onscreen(i)) {
             ST::renderer_sdl::draw_text_lru_cached(i.font, i.text_string, i.x, i.y, i.color);
         }
@@ -128,7 +121,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
  * Draws the fps counter on the screen.
  * @param fps The current fps.
  */
-void drawing_manager::draw_fps(double fps) const{
+void drawing_manager::draw_fps() const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
         ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 50, color_font);
@@ -139,42 +132,42 @@ void drawing_manager::draw_fps(double fps) const{
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
  */
-void drawing_manager::draw_console(console& cnsl) {
-    if(cnsl.is_open()) {
-        ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
+void drawing_manager::draw_console() {
+    if(cnsl->is_open()) {
+        ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl->color);
         int pos = w_height/2;
         SDL_Color log_entry_color{};
-        for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
-            if (pos - cnsl.font_size + cnsl.scroll_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
+        for(auto i = cnsl->entries.rbegin(); i != cnsl->entries.rend(); ++i) {
+            if (pos - cnsl->font_size + cnsl->scroll_offset <= w_height / 2 + 50 - cnsl->font_size * 2) {
                 if(i->type == ST::log_type::ERROR) {
-                    log_entry_color = cnsl.color_error;
+                    log_entry_color = cnsl->color_error;
                 } else if(i->type == ST::log_type::INFO) {
-                    log_entry_color = cnsl.color_info;
+                    log_entry_color = cnsl->color_info;
                 } else {
-                    log_entry_color = cnsl.color_success;
+                    log_entry_color = cnsl->color_success;
                 }
                 ST::renderer_sdl::draw_text_lru_cached(default_font_normal, i->text, 0,
-                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset, log_entry_color);
+                                     pos - cnsl->font_size - 20 + cnsl->scroll_offset, log_entry_color);
             }
-            pos -= cnsl.font_size + 5;
+            pos -= cnsl->font_size + 5;
         }
-        ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
+        ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl->font_size - 12, w_width, 3, cnsl->color_text);
 		int32_t cursor_draw_position = 0;
-		if (cnsl.cursor_position == cnsl.composition.size()) {
-			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
+		if (cnsl->cursor_position == cnsl->composition.size()) {
+			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl->composition, 0, w_height / 2, cnsl->color_text);
 		} else {
-			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
-			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
-			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
-			ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
+			std::string to_cursor = cnsl->composition.substr(0, cnsl->cursor_position);
+			std::string after_cursor = cnsl->composition.substr(cnsl->cursor_position, INT_MAX);
+			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl->color_text);
+			ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl->color_text);
 		}
-		if (ticks - cnsl.cursor_timer < 250 || cnsl.cursor_timer == 0) {
+		if (ticks - cnsl->cursor_timer < 250 || cnsl->cursor_timer == 0) {
 		    ST::renderer_sdl::draw_rectangle_filled(
 				cursor_draw_position, w_height / 2 - 50 + 5, 3,
-                    cnsl.font_size, cnsl.color_text);
+                    cnsl->font_size, cnsl->color_text);
         }
-        if (ticks - cnsl.cursor_timer >= 500) {
-            cnsl.cursor_timer = ticks;
+        if (ticks - cnsl->cursor_timer >= 500) {
+            cnsl->cursor_timer = ticks;
         }
     }
 }
@@ -370,9 +363,9 @@ void drawing_manager::set_darkness(uint8_t arg){
  * Draws all visible entities on the screen.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) const{
+void drawing_manager::draw_entities() const{
     uint32_t time = ticks >> 7U; //ticks/128
-    for(auto& i : entities){
+    for(auto& i : level.entities){
         if(is_onscreen(i)){
             if(i.animation_num == 0){
                 if(i.is_static()){
@@ -424,8 +417,8 @@ bool drawing_manager::is_onscreen(const ST::text& i) const {
  * Draws the collision boxes for entities that are affected by physics.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) const{
-    for(auto& i : entities) {
+void drawing_manager::draw_collisions() const{
+    for(auto& i : level.entities) {
         if (is_onscreen(i)) {
             int x_offset, y_offset;
             if (i.is_static()) {
@@ -454,8 +447,8 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
  * Draws the coordinates for entities that are affected by physics.
  * @param entities A vector of entities in the current level.
  */
-void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) const{
-    for(auto& i : entities) {
+void drawing_manager::draw_coordinates() const{
+    for(auto& i : level.entities) {
         if (is_onscreen(i)) {
             if (i.is_affected_by_physics()) {
                 int x_offset, y_offset;
@@ -484,4 +477,21 @@ drawing_manager::~drawing_manager(){
     ST::renderer_sdl::close();
 	TTF_Quit();
 	singleton_initialized = false;
+}
+
+/**
+ * Copies all of data in a level object.
+ * We need this in order to enable data independence for the render thread.
+ * @param level The level to copy.
+ */
+void drawing_manager::copy_level_state(ST::level *level_) {
+    this->level.actions_buttons = level_->actions_buttons;
+    this->level.background = level_->background;
+    this->level.background_color  = level_->background_color;
+    this->level.camera = level_->camera;
+    this->level.entities = level_->entities;
+    this->level.lights = level_->lights;
+    this->level.overlay = level_->overlay;
+    this->level.overlay_sprite_num = level_->overlay_sprite_num;
+    this->level.text_objects = level_->text_objects;
 }

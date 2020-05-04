@@ -105,7 +105,7 @@ class input_manager{
  * Starts the update_task() method using the task manager.
  */
 inline void input_manager::update() {
-#ifdef _MSC_VER
+#ifdef _MSC_VER //On Windows, we must run the update on the main thread.
     input_manager::update_task(this);
 #else
     gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));

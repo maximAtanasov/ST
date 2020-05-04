@@ -55,14 +55,19 @@ class drawing_manager{
         bool show_fps = true;
         bool lighting_enabled = true;
 
+        //Level and dev console state
+        ST::level level = ST::level("", &gMessage_bus); //Initial level state - empty
+        double fps = 0;
+        console* cnsl{};
+
         //Drawing functions
-        void draw_entities(const std::vector<ST::entity>&) const;
-        void draw_collisions(const std::vector<ST::entity>&) const;
-        void draw_coordinates(const std::vector<ST::entity>&) const;
+        void draw_entities() const;
+        void draw_collisions() const;
+        void draw_coordinates() const;
         void draw_lights() const;
-        void draw_fps(double fps) const;
-        void draw_console(console& cnsl);
-        void draw_text_objects(const std::vector<ST::text>&) const;
+        void draw_fps() const;
+        void draw_console();
+        void draw_text_objects() const;
 
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
@@ -72,16 +77,16 @@ class drawing_manager{
         //Other functions
         void handle_messages();
         void set_darkness(uint8_t arg);
+        void copy_level_state(ST::level *level);
 
-    public:
+public:
         drawing_manager(SDL_Window *window, message_bus &gMessageBus, task_manager &gTaskManager);
         ~drawing_manager();
         task_id update(ST::level* temp, double, console* gConsole);
         static void update_task(void* self);
 
-    ST::level level = ST::level("", &gMessage_bus);
-    double fps;
-    console* cnsl{};
+
+
 };
 
 #endif
