@@ -9,7 +9,7 @@
 --Contains global variable definitions
 
 language = "english"
-vsync = "vsyncEnabled"
+vsync = "vsyncDisabled"
 audio = "audioDisabled"
 fullscreen = "fullscreenEnabled"
 controllerJoystickThreshold = 6000

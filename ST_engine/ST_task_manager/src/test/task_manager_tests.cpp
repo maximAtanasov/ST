@@ -89,13 +89,22 @@ TEST_P(task_manager_tests, test_do_work_while_waiting) {
     task_id id1 = test_subject.start_task(new ST::task(test_task_function2, &test_value1, nullptr));
     task_id id2 = test_subject.start_task(new ST::task(test_task_function2, &test_value2, nullptr));
 
-    test_subject.wait_for_task(id1);
-    test_subject.wait_for_task(id2);
+    test_subject.work_wait_for_task(id1);
+    test_subject.work_wait_for_task(id2);
     auto end = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 
     ASSERT_NEAR(static_cast<double>(end.count()-start.count()), 515, 200);
     ASSERT_EQ(test_value1, 11);
     ASSERT_EQ(test_value2, 21);
+}
+
+TEST_P(task_manager_tests, test_wait_for_task) {
+    //Set up
+    task_manager test_subject(1);
+    uint8_t test_value1 = 10;
+    task_id id1 = test_subject.start_task(new ST::task(test_task_function2, &test_value1, nullptr));
+    test_subject.wait_for_task(id1);
+    ASSERT_EQ(test_value1, 11);
 }
 
 INSTANTIATE_TEST_CASE_P(test_do_work_while_waiting, task_manager_tests, ::testing::Range(0, 15));

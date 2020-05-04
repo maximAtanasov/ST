@@ -62,7 +62,7 @@ int ST_engine_main(int argc, char *argv[]) {
     gDisplay_manager.update();
 
     //main loop
-    task_id render_thread_task{};
+    task_id render_thread_task = nullptr;
 
     while(gGame_manager.game_is_running()){
         new_time = gTimer.time_since_start();
