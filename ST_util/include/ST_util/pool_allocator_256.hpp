@@ -1,3 +1,12 @@
+/* This file is part of the "ST" project.
+ * You may use, distribute or modify this code under the terms
+ * of the GNU General Public License version 2.
+ * See LICENCE.txt in the root directory of the project.
+ *
+ * Author: Maxim Atanasov
+ * E-mail: maxim.atanasov@protonmail.com
+ */
+
 #ifndef ST_POOL_ALLOCATOR_256_HPP
 #define ST_POOL_ALLOCATOR_256_HPP
 
@@ -17,7 +26,7 @@ namespace ST{
     public:
 
         pool_allocator_256(){
-            for(uint16_t i = 0; i < memory_size; i++){
+            for(uint16_t i = 0; i < memory_size; ++i){
                 allocated[i] = false; //mark all memory as free
             }
         }

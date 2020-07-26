@@ -166,8 +166,8 @@ void drawing_manager::draw_console(console& cnsl) {
  * @param lights A vector of <b>ST::light</b> objects.
  */
 void drawing_manager::process_lights(const std::vector<ST::light>& lights){
-    for(int i = 0; i < w_width; i++){
-        for(int j = 0; j < w_height; j++){
+    for(int i = 0; i < w_width; ++i){
+        for(int j = 0; j < w_height; ++j){
             lightmap[i][j] = darkness_level;
         }
     }
@@ -186,8 +186,8 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
             continue;
         }
         double step2 = 0;
-        for(int i = y; i < y + radius + intensity; i++){
-            for(int j = x; j < x + radius + intensity; j++){
+        for(int i = y; i < y + radius + intensity; ++i){
+            for(int j = x; j < x + radius + intensity; ++j){
                 if(j > 0 && j < w_width && i > 0 && i < w_height) {
                     lightmap[j][i] = (uint8_t) light.brightness + static_cast<uint8_t>(count);
                 }
@@ -202,8 +202,8 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         }
         count = 0;
         step2 = 0;
-        for(int i = y; i > y - radius - intensity; i--){
-            for(int j = x; j > x - radius - intensity; j--){
+        for(int i = y; i > y - radius - intensity; --i){
+            for(int j = x; j > x - radius - intensity; --j){
                 if(j > 0 && j < w_width && i > 0 && i < w_height) {
                     lightmap[j][i] = light.brightness + (uint8_t) count;
                 }
@@ -219,8 +219,8 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         }
         count = 0;
         step2 = 0;
-        for(int i = y; i > y - radius - intensity; i--){
-            for(int j = x; j < x + radius + intensity; j++){
+        for(int i = y; i > y - radius - intensity; --i){
+            for(int j = x; j < x + radius + intensity; ++j){
                 if(j > 0 && j < w_width && i > 0 && i < w_height){
                     lightmap[j][i] = light.brightness + (uint8_t)count;
                 }
@@ -236,8 +236,8 @@ void drawing_manager::process_lights(const std::vector<ST::light>& lights){
         }
         count = 0;
         step2 = 0;
-        for(int i = y; i < y + radius + intensity; i++){
-            for(int j = x; j > x - radius - intensity; j--){
+        for(int i = y; i < y + radius + intensity; ++i){
+            for(int j = x; j > x - radius - intensity; --j){
                 if(j > 0 && j < w_width && i > 0 && i < w_height) {
                     lightmap[j][i] = light.brightness + (uint8_t) count;
                 }
@@ -285,7 +285,6 @@ void drawing_manager::draw_lights() const{
     }
 }
 
-
 /**
  * Consume messages from the message bus and perform
  * the appropriate actions.
@@ -293,42 +292,48 @@ void drawing_manager::draw_lights() const{
 void drawing_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == SET_VSYNC){
-            auto arg = static_cast<bool>(temp->base_data0);
-            if(arg){
-                ST::renderer_sdl::vsync_on();
-            }else{
-                ST::renderer_sdl::vsync_off();
+        switch (temp->msg_name) {
+            case SET_VSYNC: {
+                auto arg = static_cast<bool>(temp->base_data0);
+                if(arg){
+                    ST::renderer_sdl::vsync_on();
+                }else{
+                    ST::renderer_sdl::vsync_off();
+                }
+                gMessage_bus.send_msg(new message(VSYNC_STATE, arg));
+                break;
             }
-            gMessage_bus.send_msg(new message(VSYNC_STATE, arg));
-        }
-        else if(temp->msg_name == SET_DARKNESS){
-            set_darkness(static_cast<uint8_t>(temp->base_data0));
-        }
-        else if(temp->msg_name == SHOW_COLLISIONS){
-            collisions_shown = static_cast<bool>(temp->base_data0);
-        }
-        else if(temp->msg_name == SHOW_FPS){
-            show_fps = static_cast<bool>(temp->base_data0);
-        }
-        else if(temp->msg_name == ENABLE_LIGHTING){
-            lighting_enabled = static_cast<bool>(temp->base_data0);
-        }
-        else if(temp->msg_name == SURFACES_ASSETS) {
-            auto surfaces = *static_cast<ska::bytell_hash_map<uint16_t, SDL_Surface *>**>(temp->get_data());
-            ST::renderer_sdl::upload_surfaces(surfaces);
-        }
-        else if(temp->msg_name == FONTS_ASSETS) {
-            auto fonts = *static_cast<ska::bytell_hash_map<uint16_t , TTF_Font *>**>(temp->get_data());
-            ST::renderer_sdl::upload_fonts(fonts);
-        }
-        else if(temp->msg_name == SET_INTERNAL_RESOLUTION) {
-            auto data = temp->base_data0;
-            w_width = data & 0x0000ffffU;
-            w_height = (data >> 16U) & 0x0000ffffU;
-            uint32_t screen_width_height = w_width | static_cast<uint16_t>(w_height << 16U);
-            gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
-            ST::renderer_sdl::set_resolution(w_width, w_height);
+            case SET_DARKNESS:
+                set_darkness(static_cast<uint8_t>(temp->base_data0));
+                break;
+            case SHOW_COLLISIONS:
+                collisions_shown = static_cast<bool>(temp->base_data0);
+                break;
+            case SHOW_FPS:
+                show_fps = static_cast<bool>(temp->base_data0);
+                break;
+            case ENABLE_LIGHTING:
+                lighting_enabled = static_cast<bool>(temp->base_data0);
+                break;
+            case SURFACES_ASSETS: {
+                auto surfaces = *static_cast<ska::bytell_hash_map<uint16_t, SDL_Surface *>**>(temp->get_data());
+                ST::renderer_sdl::upload_surfaces(surfaces);
+                break;
+            }
+            case FONTS_ASSETS: {
+                auto fonts = *static_cast<ska::bytell_hash_map<uint16_t , TTF_Font *>**>(temp->get_data());
+                ST::renderer_sdl::upload_fonts(fonts);
+                break;
+            }
+            case SET_INTERNAL_RESOLUTION: {
+                auto data = temp->base_data0;
+                w_width = data & 0x0000ffffU;
+                w_height = (data >> 16U) & 0x0000ffffU;
+                uint32_t screen_width_height = w_width | static_cast<uint16_t>(w_height << 16U);
+                gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
+                ST::renderer_sdl::set_resolution(w_width, w_height);
+                break;
+            }
         }
         delete temp;
         temp = msg_sub.get_next_message();
@@ -341,8 +346,8 @@ void drawing_manager::handle_messages(){
  */
 void drawing_manager::set_darkness(uint8_t arg){
     darkness_level = arg;
-    for(int i = 0; i < w_width; i++){
-        for(int j = 0; j < w_height; j++)
+    for(int i = 0; i < w_width; ++i){
+        for(int j = 0; j < w_height; ++j)
             lightmap[i][j] = arg;
     }
 }

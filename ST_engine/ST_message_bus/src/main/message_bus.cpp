@@ -24,7 +24,7 @@ void message_bus::send_msg(message* arg){
 
     if(size != 0){
         temp->operator[](0)->push_message(arg);
-        for(uint64_t i = 1; i < size; i++){
+        for(uint64_t i = 1; i < size; ++i){
             temp->operator[](i)->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
         }
     }
@@ -34,7 +34,7 @@ static bool singleton_initialized = false;
 
 /**
  * Default constructor for the message bus.
- * Throws exception if initialized twice.
+ * Throws an exception if initialized twice.
  */
 message_bus::message_bus() {
     if(singleton_initialized){

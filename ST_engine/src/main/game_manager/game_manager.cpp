@@ -79,89 +79,96 @@ void game_manager::reset_keys(){
 void game_manager::handle_messages(){
     auto temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == LOAD_LEVEL){
-            load_level(*static_cast<std::string*>(temp->get_data()));
-        }
-        else if(temp->msg_name == RELOAD_LEVEL){
-            reload_level(*static_cast<std::string*>(temp->get_data()));
-        }
-        else if(temp->msg_name == START_LEVEL){
-            start_level(*static_cast<std::string*>(temp->get_data()));
-        }
-        else if(temp->msg_name == UNLOAD_LEVEL){
-            unload_level(*static_cast<std::string*>(temp->get_data()));
-        }
-        else if(temp->msg_name == KEY_PRESSED){
-            uint8_t key_index = temp->base_data0;
-            keys_pressed_data[key_index] = true;
-            keys_held_data[key_index] = false;
-            keys_released_data[key_index] = false;
-        }
-        else if(temp->msg_name == KEY_HELD){
-            uint8_t key_index = temp->base_data0;
-            keys_pressed_data[key_index] = false;
-            keys_held_data[key_index] = true;
-            keys_released_data[key_index] = false;
-        }
-        else if(temp->msg_name == KEY_RELEASED){
-            uint8_t key_index = temp->base_data0;
-            keys_pressed_data[key_index] = false;
-            keys_held_data[key_index] = false;
-            keys_released_data[key_index] = true;
-        }
-        else if(temp->msg_name == MOUSE_X){
-            mouse_x = static_cast<int32_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == MOUSE_Y){
-            mouse_y = static_cast<int32_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == LEFT_TRIGGER){
-            left_trigger = static_cast<int16_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == RIGHT_TRIGGER){
-            right_trigger = static_cast<int16_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == LEFT_STICK_VERTICAL){
-            left_stick_vertical = static_cast<int16_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == LEFT_STICK_HORIZONTAL){
-            left_stick_horizontal = static_cast<int16_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == RIGHT_STICK_VERTICAL){
-            right_stick_vertical = static_cast<int16_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == RIGHT_STICK_HORIZONTAL){
-            right_stick_horizontal = static_cast<int16_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == MUSIC_VOLUME_LEVEL){
-            music_volume_level = static_cast<uint8_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == SOUNDS_VOLUME_LEVEL){
-            sounds_volume_level = static_cast<uint8_t>(temp->base_data0);
-        }
-        else if(temp->msg_name == AUDIO_ENABLED){
-            audio_enabled = static_cast<bool>(temp->base_data0);
-        }
-        else if(temp->msg_name == VSYNC_STATE){
-            vsync_flag = static_cast<bool>(temp->base_data0);
-        }
-        else if(temp->msg_name == END_GAME){
-            game_is_running_ = false;
-        }
-        else if(temp->msg_name == SHOW_MOUSE){
-            SDL_ShowCursor(static_cast<bool>(temp->base_data0));
-        }
-        else if(temp->msg_name == EXECUTE_SCRIPT){
-            auto script = static_cast<std::string*>(temp->get_data());
-            gScript_backend.run_script(*script);
-        }
-        else if(temp->msg_name == FULLSCREEN_STATUS){
-            fullscreen_status = static_cast<bool>(temp->base_data0);
-        }
-        else if(temp->msg_name == VIRTUAL_SCREEN_COORDINATES){
-            auto data = temp->base_data0;
-            v_width = data & 0x0000ffffU;
-            v_height = (data >> 16U) & 0x0000ffffU;
+        switch (temp->msg_name) {
+            case LOAD_LEVEL:
+                load_level(*static_cast<std::string*>(temp->get_data()));
+                break;
+            case RELOAD_LEVEL:
+                reload_level(*static_cast<std::string*>(temp->get_data()));
+                break;
+            case START_LEVEL:
+                start_level(*static_cast<std::string*>(temp->get_data()));
+                break;
+            case UNLOAD_LEVEL:
+                unload_level(*static_cast<std::string*>(temp->get_data()));
+                break;
+            case KEY_PRESSED: {
+                uint8_t key_index = temp->base_data0;
+                keys_pressed_data[key_index] = true;
+                keys_held_data[key_index] = false;
+                keys_released_data[key_index] = false;
+                break;
+            }
+            case KEY_HELD: {
+                uint8_t key_index = temp->base_data0;
+                keys_pressed_data[key_index] = false;
+                keys_held_data[key_index] = true;
+                keys_released_data[key_index] = false;
+                break;
+            }
+            case KEY_RELEASED: {
+                uint8_t key_index = temp->base_data0;
+                keys_pressed_data[key_index] = false;
+                keys_held_data[key_index] = false;
+                keys_released_data[key_index] = true;
+                break;
+            }
+            case MOUSE_X:
+                mouse_x = static_cast<int32_t>(temp->base_data0);
+                break;
+            case MOUSE_Y:
+                mouse_y = static_cast<int32_t>(temp->base_data0);
+                break;
+            case LEFT_TRIGGER:
+                left_trigger = static_cast<int16_t>(temp->base_data0);
+                break;
+            case RIGHT_TRIGGER:
+                right_trigger = static_cast<int16_t>(temp->base_data0);
+                break;
+            case LEFT_STICK_VERTICAL:
+                left_stick_vertical = static_cast<int16_t>(temp->base_data0);
+                break;
+            case LEFT_STICK_HORIZONTAL:
+                left_stick_horizontal = static_cast<int16_t>(temp->base_data0);
+                break;
+            case RIGHT_STICK_VERTICAL:
+                right_stick_vertical = static_cast<int16_t>(temp->base_data0);
+                break;
+            case RIGHT_STICK_HORIZONTAL:
+                right_stick_horizontal = static_cast<int16_t>(temp->base_data0);
+                break;
+            case MUSIC_VOLUME_LEVEL:
+                music_volume_level = static_cast<uint8_t>(temp->base_data0);
+                break;
+            case SOUNDS_VOLUME_LEVEL:
+                sounds_volume_level = static_cast<uint8_t>(temp->base_data0);
+                break;
+            case AUDIO_ENABLED:
+                audio_enabled = static_cast<bool>(temp->base_data0);
+                break;
+            case VSYNC_STATE:
+                vsync_flag = static_cast<bool>(temp->base_data0);
+                break;
+            case END_GAME:
+                game_is_running_ = false;
+                break;
+            case SHOW_MOUSE:
+                SDL_ShowCursor(static_cast<bool>(temp->base_data0));
+                break;
+            case EXECUTE_SCRIPT: {
+                auto script = static_cast<std::string*>(temp->get_data());
+                gScript_backend.run_script(*script);
+                break;
+            }
+            case FULLSCREEN_STATUS:
+                fullscreen_status = static_cast<bool>(temp->base_data0);
+                break;
+            case VIRTUAL_SCREEN_COORDINATES: {
+                auto data = temp->base_data0;
+                v_width = data & 0x0000ffffU;
+                v_height = (data >> 16U) & 0x0000ffffU;
+                break;
+            }
         }
         delete temp;
         temp = msg_sub.get_next_message();

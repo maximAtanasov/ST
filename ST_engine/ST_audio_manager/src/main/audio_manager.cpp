@@ -70,60 +70,70 @@ audio_manager::audio_manager(task_manager &gTask_manager, message_bus &gMessageB
 void audio_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == PLAY_SOUND){
-            auto data = temp->base_data0;
-            uint16_t name = data & 0x0000ffffU;
-            uint8_t volume = (data >> 16U) & 0x000000ffU;
-            int8_t loops = (data >> 24U) & 0x000000ffU;
-            play_sound(name, volume, loops);
-        }
-        else if(temp->msg_name == PLAY_MUSIC){
-            auto data = temp->base_data0;
-            uint16_t name = data & 0x0000ffffU;
-            uint8_t volume = (data >> 16U) & 0x000000ffU;
-            int8_t loops = (data >> 24U) & 0x000000ffU;
-            play_music(name, volume, loops);
-        }
-        else if(temp->msg_name == STOP_MUSIC){
-            stop_music();
-            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music stopped")));
-        }
-        else if(temp->msg_name == PAUSE_MUSIC){
-            pause_music();
-            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music paused")));
-        }
-        else if(temp->msg_name == STOP_ALL_SOUNDS){
-			stop_channels();
-            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Sounds stopped")));
-        }
-        else if(temp->msg_name == SET_AUDIO_ENABLED){
-            auto arg = static_cast<bool>(temp->base_data0);
-            if(!arg){
-                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio muted")));
-                mute();
+        switch (temp->msg_name) {
+            case PLAY_SOUND: {
+                auto data = temp->base_data0;
+                uint16_t name = data & 0x0000ffffU;
+                uint8_t volume = (data >> 16U) & 0x000000ffU;
+                int8_t loops = (data >> 24U) & 0x000000ffU;
+                play_sound(name, volume, loops);
+                break;
             }
-            else{
-                unmute();
-                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio unmuted")));
+            case PLAY_MUSIC: {
+                auto data = temp->base_data0;
+                uint16_t name = data & 0x0000ffffU;
+                uint8_t volume = (data >> 16U) & 0x000000ffU;
+                int8_t loops = (data >> 24U) & 0x000000ffU;
+                play_music(name, volume, loops);
+                break;
             }
-            gMessage_bus.send_msg(new message(AUDIO_ENABLED, arg));
-        }
-        else if(temp->msg_name == MUSIC_ASSETS){
-            music_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Music*>**>(temp->get_data());
-        }
-        else if(temp->msg_name == CHUNKS_ASSETS){
-            chunks_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Chunk*>**>(temp->get_data());
-        }
-        else if(temp->msg_name == SET_SOUNDS_VOLUME){
-            set_chunk_volume(static_cast<uint8_t>(temp->base_data0));
-            if(!muted) {
-                gMessage_bus.send_msg(new message(SOUNDS_VOLUME_LEVEL, chunk_volume));
+            case STOP_MUSIC: {
+                stop_music();
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music stopped")));
+                break;
             }
-        }
-        else if(temp->msg_name == SET_MUSIC_VOLUME){
-            set_music_volume(static_cast<uint8_t>(temp->base_data0));
-            if(!muted) {
-                gMessage_bus.send_msg(new message(MUSIC_VOLUME_LEVEL, music_volume));
+            case PAUSE_MUSIC: {
+                pause_music();
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Music paused")));
+                break;
+            }
+            case STOP_ALL_SOUNDS: {
+                stop_channels();
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Sounds stopped")));
+                break;
+            }
+            case SET_AUDIO_ENABLED: {
+                auto arg = static_cast<bool>(temp->base_data0);
+                if(!arg){
+                    gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio muted")));
+                    mute();
+                }
+                else{
+                    unmute();
+                    gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Audio unmuted")));
+                }
+                gMessage_bus.send_msg(new message(AUDIO_ENABLED, arg));
+                break;
+            }
+            case MUSIC_ASSETS:
+                music_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Music*>**>(temp->get_data());
+                break;
+            case CHUNKS_ASSETS:
+                chunks_ptr = *static_cast<ska::bytell_hash_map<uint16_t, Mix_Chunk*>**>(temp->get_data());
+                break;
+            case SET_SOUNDS_VOLUME: {
+                set_chunk_volume(static_cast<uint8_t>(temp->base_data0));
+                if(!muted) {
+                    gMessage_bus.send_msg(new message(SOUNDS_VOLUME_LEVEL, chunk_volume));
+                }
+                break;
+            }
+            case SET_MUSIC_VOLUME: {
+                set_music_volume(static_cast<uint8_t>(temp->base_data0));
+                if (!muted) {
+                    gMessage_bus.send_msg(new message(MUSIC_VOLUME_LEVEL, music_volume));
+                }
+                break;
             }
         }
         delete temp;

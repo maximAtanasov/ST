@@ -80,27 +80,30 @@ void window_manager::update_task(void* mngr){
 void window_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == SET_FULLSCREEN){
-            auto arg = static_cast<bool>(temp->base_data0);
-            set_fullscreen(arg);
-            gMessage_bus.send_msg(new message(FULLSCREEN_STATUS, arg));
-        }
-        else if(temp->msg_name == SET_WINDOW_BRIGHTNESS){
-            auto arg = *static_cast<float*>(temp->get_data());
-            set_brightness(arg);
-            gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(arg))));
-        }
-        else if(temp->msg_name == SET_WINDOW_RESOLUTION){
-            auto data = temp->base_data0;
-            int16_t new_width = data & 0x0000ffffU;
-            int16_t new_height = (data >> 16U) & 0x0000ffffU;
-            if(new_width != width && new_height != height) {
-                uint32_t screen_width_height = new_width | (new_height << 16U); // NOLINT(hicpp-signed-bitwise)
-                gMessage_bus.send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height));
-                SDL_SetWindowSize(window, new_width, new_height);
-                width = new_width;
-                height = new_height;
-                SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); // NOLINT(hicpp-signed-bitwise)
+        switch (temp->msg_name) {
+            case SET_FULLSCREEN: {
+                auto arg = static_cast<bool>(temp->base_data0);
+                set_fullscreen(arg);
+                gMessage_bus.send_msg(new message(FULLSCREEN_STATUS, arg));
+                break;
+            } case SET_WINDOW_BRIGHTNESS: {
+                auto arg = *static_cast<float*>(temp->get_data());
+                set_brightness(arg);
+                gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Brightness set to: " + std::to_string(arg))));
+                break;
+            } case SET_WINDOW_RESOLUTION: {
+                auto data = temp->base_data0;
+                int16_t new_width = data & 0x0000ffffU;
+                int16_t new_height = (data >> 16U) & 0x0000ffffU;
+                if(new_width != width && new_height != height) {
+                    uint32_t screen_width_height = new_width | (new_height << 16U); // NOLINT(hicpp-signed-bitwise)
+                    gMessage_bus.send_msg(new message(REAL_SCREEN_COORDINATES, screen_width_height));
+                    SDL_SetWindowSize(window, new_width, new_height);
+                    width = new_width;
+                    height = new_height;
+                    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED); // NOLINT(hicpp-signed-bitwise)
+                }
+                break;
             }
         }
         delete temp;

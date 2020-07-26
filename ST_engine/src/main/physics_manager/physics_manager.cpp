@@ -107,16 +107,22 @@ void physics_manager::process_vertical(std::vector<ST::entity>* entities, int8_t
 void physics_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == SET_GRAVITY){
-            gravity = static_cast<int8_t>(temp->base_data0);
-        }else if(temp->msg_name == SET_FLOOR){
-            level_floor = static_cast<int32_t>(temp->base_data0);
-        }else if(temp->msg_name == SET_FRICTION){
-            friction = static_cast<int8_t>(temp->base_data0);
-        }else if(temp->msg_name == PAUSE_PHYSICS){
-            physics_paused = true;
-        }else if(temp->msg_name == UNPAUSE_PHYSICS){
-            physics_paused = false;
+        switch (temp->msg_name) {
+            case SET_GRAVITY:
+                gravity = static_cast<int8_t>(temp->base_data0);
+                break;
+            case SET_FLOOR:
+                level_floor = static_cast<int32_t>(temp->base_data0);
+                break;
+            case SET_FRICTION:
+                friction = static_cast<int8_t>(temp->base_data0);
+                break;
+            case PAUSE_PHYSICS:
+                physics_paused = true;
+                break;
+            case UNPAUSE_PHYSICS:
+                physics_paused = false;
+                break;
         }
         delete temp;
         temp = msg_sub.get_next_message();

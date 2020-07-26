@@ -11,6 +11,7 @@
 #define INPUT_DEF
 
 #include <key_definitions.hpp>
+#include <key_event.hpp>
 #include <message_bus.hpp>
 #include <task_manager.hpp>
 #include <SDL_events.h>
@@ -21,20 +22,20 @@ class input_manager{
 	private:
 
 		struct controller_buttons{
-			uint8_t a = 0;
-			uint8_t b = 0;
-			uint8_t x = 0;
-			uint8_t y = 0;
-			uint8_t left_stick = 0;
-			uint8_t right_stick = 0;
-			uint8_t dpad_up = 0;
-			uint8_t dpad_down = 0;
-			uint8_t dpad_right = 0;
-			uint8_t dpad_left = 0;
-			uint8_t left_shoulder = 0;
-			uint8_t right_shoulder = 0;
-			uint8_t start = 0;
-			uint8_t select = 0;
+			bool a = false;
+            bool b = false;
+            bool x = false;
+            bool y = false;
+            bool left_stick = false;
+            bool right_stick = false;
+            bool dpad_up = false;
+            bool dpad_down = false;
+            bool dpad_right = false;
+            bool dpad_left = false;
+            bool left_shoulder = false;
+            bool right_shoulder = false;
+            bool start = false;
+            bool select = false;
 			int16_t left_trigger = 0;
             int16_t right_trigger = 0;
             int16_t right_stick_vertical = 0;
@@ -46,8 +47,8 @@ class input_manager{
         struct keyboard_and_mouse_controls{
             int32_t mouse_x = 0, mouse_y = 0;
             int16_t mouse_scroll = 0;
-			uint8_t *keyboard{};
-            int8_t mouse_clicks[3]{};
+			bool *keyboard{};
+            bool mouse_clicks[3]{};
         };
 
 		int32_t v_width = 1, v_height = 1;
@@ -83,9 +84,7 @@ class input_manager{
         std::string composition;
         bool text_input = false;
 
-		bool keypress(ST::key) const;
-		bool keyheld(ST::key) const;
-		bool keyrelease(ST::key) const;
+		bool key_event(ST::key, ST::key_event k_event) const;
 		void handle_messages();
         void take_input();
         void take_controller_input();

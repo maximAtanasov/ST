@@ -54,29 +54,29 @@ void assets_manager::update_task(void* arg){
 void assets_manager::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == LOAD_LIST){
-            auto path = *static_cast<std::string*>(temp->get_data());
-            load_assets_from_list(path);
-        }
-        else if(temp->msg_name == UNLOAD_LIST){
-            auto path = *static_cast<std::string*>(temp->get_data());
-            unload_assets_from_list(path);
-        }
-        else if(temp->msg_name == LOAD_ASSET){
-            auto path = *static_cast<std::string*>(temp->get_data());
-			if (load_asset(path) == 0) {
-				send_assets();
-			}
-        }
-        else if(temp->msg_name == UNLOAD_ASSET){
-            auto path = *static_cast<std::string*>(temp->get_data());
-			if (unload_asset(path) == 0) {
-				send_assets();
-			}
-        }
-        else if(temp->msg_name == LOAD_BINARY){
-            auto path = *static_cast<std::string*>(temp->get_data());
-            load_assets_from_binary(path);
+        auto path = *static_cast<std::string *>(temp->get_data());
+        switch (temp->msg_name) {
+            case LOAD_LIST:
+                load_assets_from_list(path);
+                break;
+            case UNLOAD_LIST:
+                unload_assets_from_list(path);
+                break;
+            case LOAD_ASSET: {
+                if (load_asset(path) == 0) {
+                    send_assets();
+                }
+                break;
+            }
+            case UNLOAD_ASSET: {
+                if (unload_asset(path) == 0) {
+                    send_assets();
+                }
+                break;
+            }
+            case LOAD_BINARY:
+                load_assets_from_binary(path);
+                break;
         }
         delete temp;
         temp = msg_sub.get_next_message();

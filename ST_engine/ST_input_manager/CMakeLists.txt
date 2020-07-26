@@ -26,4 +26,4 @@ include_directories(${PROJECT_SOURCE_DIR}/../ST_task_manager/include)
 add_library(ST_input_manager STATIC
         ${PROJECT_SOURCE_DIR}/include/key_definitions.hpp
         ${PROJECT_SOURCE_DIR}/include/input_manager.hpp
-        ${PROJECT_SOURCE_DIR}/src/main/input_manager.cpp)
+        ${PROJECT_SOURCE_DIR}/src/main/input_manager.cpp include/key_event.hpp)

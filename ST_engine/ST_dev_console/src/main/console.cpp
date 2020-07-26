@@ -68,36 +68,68 @@ void console::scroll(int32_t scroll_y){
 void console::handle_messages(){
     message* temp = msg_sub.get_next_message();
     while(temp != nullptr){
-        if(temp->msg_name == LOG_ERROR){
-            auto log = static_cast<std::string*>(temp->get_data());
-            if(log_level == 0x07 || log_level == 0x01 || log_level == 0x03 || log_level == 0x05) {
-                write(*log, ST::log_type::ERROR);
+        switch (temp->msg_name) {
+            case LOG_ERROR: {
+                auto log = static_cast<std::string*>(temp->get_data());
+                if(log_level == 0x07 || log_level == 0x01 || log_level == 0x03 || log_level == 0x05) {
+                    write(*log, ST::log_type::ERROR);
+                }
+                break;
             }
-        }else if(temp->msg_name == LOG_INFO){
-            auto log = static_cast<std::string*>(temp->get_data());
-            if(log_level >= 0x04) {
-                write(*log, ST::log_type::INFO);
+            case LOG_INFO: {
+                auto log = static_cast<std::string*>(temp->get_data());
+                if(log_level >= 0x04) {
+                    write(*log, ST::log_type::INFO);
+                }
+                break;
             }
-        }else if(temp->msg_name == LOG_SUCCESS){
-            auto log = static_cast<std::string*>(temp->get_data());
-            if(log_level >= 0x06 || log_level == 0x02 || log_level == 0x03) {
-                write(*log, ST::log_type::SUCCESS);
+            case LOG_SUCCESS: {
+                auto log = static_cast<std::string*>(temp->get_data());
+                if(log_level >= 0x06 || log_level == 0x02 || log_level == 0x03) {
+                    write(*log, ST::log_type::SUCCESS);
+                }
             }
-        }
-        else if(temp->msg_name == CONSOLE_TOGGLE){
-            toggle();
-        }
-        else if(temp->msg_name == CONSOLE_CLEAR){
-            this->entries.clear();
-        }
-        else if(temp->msg_name == MOUSE_SCROLL){
-            scroll(static_cast<int32_t>(temp->base_data0));
-        }else if(temp->msg_name == KEY_HELD){
-            auto key_val = static_cast<ST::key>(temp->base_data0);
-            if (is_open()) {
-                cursor_timer = 0; //Cursor won't blink when holding these keys
-                if(hold_counter > 10) { //These values can be changed to adjust the key hold delay.
-                    hold_counter = 9;
+            case CONSOLE_TOGGLE:
+                toggle();
+                break;
+            case CONSOLE_CLEAR:
+                this->entries.clear();
+                break;
+            case MOUSE_SCROLL:
+                scroll(static_cast<int32_t>(temp->base_data0));
+                break;
+            case KEY_HELD: {
+                auto key_val = static_cast<ST::key>(temp->base_data0);
+                if (is_open()) {
+                    cursor_timer = 0; //Cursor won't blink when holding these keys
+                    if(hold_counter > 10) { //These values can be changed to adjust the key hold delay.
+                        hold_counter = 9;
+                        if (key_val == ST::key::ENTER) {
+                            enterKeyAction();
+                        } else if (key_val == ST::key::LEFT) {
+                            leftKeyAction();
+                        } else if (key_val == ST::key::RIGHT) {
+                            rightKeyAction();
+                        } else if (key_val == ST::key::UP) {
+                            upKeyAction();
+                        } else if (key_val == ST::key::DOWN) {
+                            downKeyAction();
+                        } else if (key_val == ST::key::BACKSPACE) {
+                            backspaceAction();
+                        } else if (key_val == ST::key::DELETE) {
+                            deleteKeyAction();
+                        }
+                    } else {
+                        hold_counter++;
+                    }
+                }
+                break;
+            }
+            case KEY_PRESSED: {
+                auto key_val = static_cast<ST::key>(temp->base_data0);
+                if (key_val == ST::key::TILDE) {
+                    toggle();
+                } else if (is_open()) {
                     if (key_val == ST::key::ENTER) {
                         enterKeyAction();
                     } else if (key_val == ST::key::LEFT) {
@@ -113,55 +145,33 @@ void console::handle_messages(){
                     } else if (key_val == ST::key::DELETE) {
                         deleteKeyAction();
                     }
+                    hold_counter = 0;
+                }
+                break;
+            }
+            case TEXT_STREAM: {
+                std::string recieved_data = *static_cast<std::string*>(temp->get_data());
+                for(char const &c : recieved_data){
+                    if(c > 126 || c < 0) {
+                        recieved_data.clear();
+                    }
+                }
+                if(recieved_data == "(") {
+                    recieved_data += ")";
+                    composition.insert(cursor_position--, recieved_data);
+                } else if(recieved_data == "\"") {
+                    recieved_data += recieved_data;
+                    composition.insert(cursor_position--, recieved_data);
+                } else if(recieved_data == "[" || recieved_data == "{") {
+                    recieved_data += static_cast<char>(recieved_data.at(0) + 2);
+                    composition.insert(cursor_position--, recieved_data);
                 } else {
-                    hold_counter++;
+                    composition.insert(cursor_position, recieved_data);
                 }
+                cursor_position += static_cast<uint16_t>(recieved_data.size());
+                gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
+                break;
             }
-        }
-        else if (temp->msg_name == KEY_PRESSED) {
-            auto key_val = static_cast<ST::key>(temp->base_data0);
-			if (key_val == ST::key::TILDE) {
-				toggle();
-			} else if (is_open()) {
-                if (key_val == ST::key::ENTER) {
-                    enterKeyAction();
-                } else if (key_val == ST::key::LEFT) {
-					leftKeyAction();
-				} else if (key_val == ST::key::RIGHT) {
-                    rightKeyAction();
-                } else if (key_val == ST::key::UP) {
-					upKeyAction();
-				} else if (key_val == ST::key::DOWN) {
-					downKeyAction();
-				} else if (key_val == ST::key::BACKSPACE) {
-                    backspaceAction();
-                } else if (key_val == ST::key::DELETE) {
-					deleteKeyAction();
-				}
-                hold_counter = 0;
-            }
-		}
-        else if(temp->msg_name == TEXT_STREAM){
-            std::string recieved_data = *static_cast<std::string*>(temp->get_data());
-            for(char const &c : recieved_data){
-                if(c > 126 || c < 0) {
-                    recieved_data.clear();
-                }
-            }
-			if(recieved_data == "(") {
-			    recieved_data += ")";
-                composition.insert(cursor_position--, recieved_data);
-            } else if(recieved_data == "\"") {
-                recieved_data += recieved_data;
-                composition.insert(cursor_position--, recieved_data);
-            } else if(recieved_data == "[" || recieved_data == "{") {
-                recieved_data += static_cast<char>(recieved_data.at(0) + 2);
-                composition.insert(cursor_position--, recieved_data);
-            } else {
-                composition.insert(cursor_position, recieved_data);
-            }
-			cursor_position += static_cast<uint16_t>(recieved_data.size());
-			gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
         }
         delete temp;
         temp = msg_sub.get_next_message();
