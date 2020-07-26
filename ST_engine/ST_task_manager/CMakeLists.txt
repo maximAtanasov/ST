@@ -9,7 +9,7 @@
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 project(ST_task_manager)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 include(GoogleTest)
 enable_testing()

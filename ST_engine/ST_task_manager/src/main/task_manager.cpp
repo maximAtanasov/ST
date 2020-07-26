@@ -188,7 +188,7 @@ int task_manager::task_thread(task_manager* self){
 /**
  * Runs a function pointer from a task with it's associated data.
  * Waits for any other tasks that are dependencies to the current one and waits for them.
- * @param work The ST::task object conatining job data.
+ * @param work The ST::task object containing job data.
  */
 void task_manager::do_work(ST::task* work) {
     if(work->dependency != nullptr){ //wait for dependency to finish
@@ -326,7 +326,7 @@ void task_manager::start_task_lockfree(ST::task* arg){
  * Wait for a task to finish and do work from the work queue while waiting.
  * @param id The ID of the task.
  */
-void task_manager::wait_for_task(task_id id){
+void task_manager::work_wait_for_task(task_id id){
     if(id != nullptr) {
         while(!id->try_wait()) {
             ST::task* work;
@@ -336,6 +336,17 @@ void task_manager::wait_for_task(task_id id){
                 }
             }
         }
+        delete id;
+    }
+}
+
+/**
+ * Wait for a task to finish and do work from the work queue while waiting.
+ * @param id The ID of the task.
+ */
+void task_manager::wait_for_task(task_id id){
+    if(id != nullptr) {
+        id->wait();
         delete id;
     }
 }
