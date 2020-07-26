@@ -222,7 +222,7 @@ int8_t lua_backend::run_file(const std::string& file){
         fprintf(stderr, "cannot compile script\n");
         lua_error(L);
         return -1;
-    }else{
+    }else [[likely]] {
         return 0;
     }
 }

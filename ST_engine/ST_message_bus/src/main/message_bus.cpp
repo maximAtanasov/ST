@@ -22,7 +22,7 @@ void message_bus::send_msg(message* arg){
     //Locks aren't really needed here as there won't be any new subscribers in the middle of the game
     //(if you do want to have subsystems subscribe at random times you should definitely add locks)
 
-    if(size != 0){
+    if(size != 0) [[likely]] {
         temp->operator[](0)->push_message(arg);
         for(uint64_t i = 1; i < size; ++i){
             temp->operator[](i)->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine

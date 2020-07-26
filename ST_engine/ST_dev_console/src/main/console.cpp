@@ -88,6 +88,7 @@ void console::handle_messages(){
                 if(log_level >= 0x06 || log_level == 0x02 || log_level == 0x03) {
                     write(*log, ST::log_type::SUCCESS);
                 }
+                break;
             }
             case CONSOLE_TOGGLE:
                 toggle();

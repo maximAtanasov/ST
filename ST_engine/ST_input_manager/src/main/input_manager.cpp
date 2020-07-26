@@ -43,8 +43,8 @@ input_manager::input_manager(task_manager &gTask_manager, message_bus &gMessageB
     SDL_PollEvent(&event);
 
     //Subscribe to the messages we need
-	gMessage_bus.subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
-	gMessage_bus.subscribe(REAL_SCREEN_COORDINATES, &msg_sub);
+    gMessage_bus.subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
+    gMessage_bus.subscribe(REAL_SCREEN_COORDINATES, &msg_sub);
     gMessage_bus.subscribe(START_TEXT_INPUT, &msg_sub);
     gMessage_bus.subscribe(STOP_TEXT_INPUT, &msg_sub);
     gMessage_bus.subscribe(CLEAR_TEXT_STREAM, &msg_sub);
@@ -108,11 +108,11 @@ void input_manager::take_input(){
                 }
             }
         }
-		if(event.type == SDL_MOUSEMOTION){
-			SDL_GetMouseState(&controls.mouse_x, &controls.mouse_y);
-			controls.mouse_x = static_cast<int>(static_cast<float>(controls.mouse_x)*ratio_w);
-			controls.mouse_y = static_cast<int>(static_cast<float>(controls.mouse_y)*ratio_h);
-		}
+        if(event.type == SDL_MOUSEMOTION){
+            SDL_GetMouseState(&controls.mouse_x, &controls.mouse_y);
+            controls.mouse_x = static_cast<int>(static_cast<float>(controls.mouse_x)*ratio_w);
+            controls.mouse_y = static_cast<int>(static_cast<float>(controls.mouse_y)*ratio_h);
+        }
         if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
             r_width = event.window.data1;
             r_height = event.window.data2;
@@ -122,25 +122,25 @@ void input_manager::take_input(){
         if(event.cdevice.type == SDL_CONTROLLERDEVICEADDED){
             SDL_GameController* controller = SDL_GameControllerOpen(static_cast<int>(controllers.size()));
             controllers.emplace_back(controller);
-			gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
-			SDL_Haptic* haptic = SDL_HapticOpen(static_cast<int32_t>(controllers.size() - 1));
-			if (haptic != nullptr) {
-				if (SDL_HapticRumbleInit(haptic) < 0){
-					gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>(
-						"Unable to initialize rumble for controller " + std::string(SDL_GameControllerName(controller)))));
-				}
-				else {
+            gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Found a controller: " + std::string(SDL_GameControllerName(controller)))));
+            SDL_Haptic* haptic = SDL_HapticOpen(static_cast<int32_t>(controllers.size() - 1));
+            if (haptic != nullptr) {
+                if (SDL_HapticRumbleInit(haptic) < 0){
+                    gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>(
+                            "Unable to initialize rumble for controller " + std::string(SDL_GameControllerName(controller)))));
+                }
+                else {
                     gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>(
                             "The controller \"" + std::string(SDL_GameControllerName(controller)) +
                             "\" supports haptic feedback")));
                     controllers_haptic.emplace_back(haptic);
-				}
-			}
-			else {
-				gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>(
-					"The controller \"" + std::string(SDL_GameControllerName(controller)) + 
-					"\" does not support haptic feedback")));		
-			}
+                }
+            }
+            else {
+                gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>(
+                        "The controller \"" + std::string(SDL_GameControllerName(controller)) +
+                        "\" does not support haptic feedback")));
+            }
         }
         if(event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED){
             uint8_t number = 0;
@@ -151,31 +151,28 @@ void input_manager::take_input(){
             }
             SDL_GameControllerClose(controllers.at(number));
             controllers.erase(controllers.begin() + number);
-			if (number < controllers_haptic.size()) {
-				SDL_HapticClose(controllers_haptic.at(number));
-				controllers_haptic.erase(controllers_haptic.begin() + number);
-			}
+            if (number < controllers_haptic.size()) {
+                SDL_HapticClose(controllers_haptic.at(number));
+                controllers_haptic.erase(controllers_haptic.begin() + number);
+            }
             gMessage_bus.send_msg(new message(LOG_INFO, make_data<std::string>("Controller " + std::to_string(number+1) + " disconnected")));
         }
     }
 
     //check if any of the registered keys is pressed and send a message if so
     for(auto i : registered_keys){
-        if(i.second > 0) {
-            if (key_event(i.first, ST::key_event::PRESS)) {
-                gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(i.first)));
-            }
-            if (key_event(i.first, ST::key_event::HOLD)) {
-                gMessage_bus.send_msg(new message(KEY_HELD, static_cast<uint8_t>(i.first)));
-            }
-            if (key_event(i.first, ST::key_event::RELEASE)) {
-                gMessage_bus.send_msg(new message(KEY_RELEASED, static_cast<uint8_t>(i.first)));
-            }
+        if (key_event(i.first, ST::key_event::PRESS)) {
+            gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(i.first)));
+        }
+        if (key_event(i.first, ST::key_event::HOLD)) {
+            gMessage_bus.send_msg(new message(KEY_HELD, static_cast<uint8_t>(i.first)));
+        }
+        if (key_event(i.first, ST::key_event::RELEASE)) {
+            gMessage_bus.send_msg(new message(KEY_RELEASED, static_cast<uint8_t>(i.first)));
         }
     }
 }
 
-#pragma clang diagnostic push
 void input_manager::take_mouse_input() {
     //Collect mouse input
     controls_prev_frame.mouse_clicks[0] = controls.mouse_clicks[0];
@@ -195,7 +192,6 @@ void input_manager::take_mouse_input() {
         controls_prev_frame.mouse_y = controls.mouse_y;
     }
 }
-#pragma clang diagnostic pop
 
 /**
  * Takes input from all available controllers and
@@ -252,7 +248,7 @@ void input_manager::take_controller_input(){
     }
 
     if(!(controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold
-        || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold)){
+         || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold)){
         controller_buttons.left_stick_horizontal = 0;
     }
     if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
@@ -281,8 +277,8 @@ void input_manager::take_controller_input(){
  * performs the appropriate actions.
  */
 void input_manager::handle_messages(){
-	message* temp = msg_sub.get_next_message();
-	while(temp != nullptr){
+    message* temp = msg_sub.get_next_message();
+    while(temp != nullptr){
         switch (temp->msg_name) {
             case VIRTUAL_SCREEN_COORDINATES: {
                 auto data = temp->base_data0;
@@ -316,8 +312,10 @@ void input_manager::handle_messages(){
             }
             case UNREGISTER_KEY: {
                 auto key_val = static_cast<ST::key>(temp->base_data0);
-                if (registered_keys[key_val] > 0) {
+                if (registered_keys[key_val] > 1) {
                     --registered_keys[key_val];
+                } else if(registered_keys[key_val] == 1) {
+                    registered_keys.erase(key_val);
                 }
                 break;
             }
@@ -350,9 +348,9 @@ void input_manager::handle_messages(){
                 this->left_trigger_threshold = static_cast<int16_t>(temp->base_data0);
                 break;
         }
-		delete temp;
-		temp = msg_sub.get_next_message();
-	}
+        delete temp;
+        temp = msg_sub.get_next_message();
+    }
 }
 
 /**
@@ -362,250 +360,312 @@ void input_manager::handle_messages(){
  * @param k_event an <b>ST::key_event</b> to test for.
  * @return True if event k_event has happened for key arg, false otherwise.
  */
-bool input_manager::key_event(ST::key arg, ST::key_event k_event) const{
-    bool pressed = false;
+bool input_manager::key_event(ST::key arg, ST::key_event k_event) const {
+    bool result = false;
     bool first = k_event == ST::key_event::RELEASE;
     bool second = k_event == ST::key_event::PRESS;
 
     switch (arg) {
         case ST::key::LEFT:
-            pressed = (controls.keyboard[SDL_SCANCODE_LEFT] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_LEFT] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_LEFT] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_LEFT] ^ second);
             break;
         case ST::key::RIGHT:
-            pressed = (controls.keyboard[SDL_SCANCODE_RIGHT] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_RIGHT] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT] ^ second);
             break;
         case ST::key::UP:
-            pressed = (controls.keyboard[SDL_SCANCODE_UP] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_UP] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_UP] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_UP] ^ second);
             break;
         case ST::key::DOWN:
-            pressed = (controls.keyboard[SDL_SCANCODE_DOWN] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_DOWN] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_DOWN] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_DOWN] ^ second);
             break;
         case ST::key::A:
-            pressed = (controls.keyboard[SDL_SCANCODE_A] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_A] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_A] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_A] ^ second);
             break;
         case ST::key::B:
-            pressed = (controls.keyboard[SDL_SCANCODE_B] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_B] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_B] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_B] ^ second);
             break;
         case ST::key::C:
-            pressed = (controls.keyboard[SDL_SCANCODE_C] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_C] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_C] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_C] ^ second);
             break;
         case ST::key::D:
-            pressed = (controls.keyboard[SDL_SCANCODE_D] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_D] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_D] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_D] ^ second);
             break;
         case ST::key::E:
-            pressed = (controls.keyboard[SDL_SCANCODE_E] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_E] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_E] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_E] ^ second);
             break;
         case ST::key::F:
-            pressed = (controls.keyboard[SDL_SCANCODE_F] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_F] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_F] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_F] ^ second);
             break;
         case ST::key::G:
-            pressed = (controls.keyboard[SDL_SCANCODE_G] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_G] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_G] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_G] ^ second);
             break;
         case ST::key::H:
-            pressed = (controls.keyboard[SDL_SCANCODE_H] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_H] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_H] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_H] ^ second);
             break;
         case ST::key::I:
-            pressed = (controls.keyboard[SDL_SCANCODE_I] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_I] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_I] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_I] ^ second);
             break;
         case ST::key::J:
-            pressed = (controls.keyboard[SDL_SCANCODE_J] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_J] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_J] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_J] ^ second);
             break;
         case ST::key::K:
-            pressed = (controls.keyboard[SDL_SCANCODE_K] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_K] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_K] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_K] ^ second);
             break;
         case ST::key::L:
-            pressed = (controls.keyboard[SDL_SCANCODE_L] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_L] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_L] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_L] ^ second);
             break;
         case ST::key::M:
-            pressed = (controls.keyboard[SDL_SCANCODE_M] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_M] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_M] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_M] ^ second);
             break;
         case ST::key::N:
-            pressed = (controls.keyboard[SDL_SCANCODE_N] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_N] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_N] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_N] ^ second);
             break;
         case ST::key::O:
-            pressed = (controls.keyboard[SDL_SCANCODE_O] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_O] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT] ^ second);
             break;
         case ST::key::P:
-            pressed = (controls.keyboard[SDL_SCANCODE_P] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_P] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_P] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_P] ^ second);
             break;
         case ST::key::Q:
-            pressed = (controls.keyboard[SDL_SCANCODE_Q] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_Q] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_Q] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_Q] ^ second);
             break;
         case ST::key::R:
-            pressed = (controls.keyboard[SDL_SCANCODE_R] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_R] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_R] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_R] ^ second);
             break;
         case ST::key::S:
-            pressed = (controls.keyboard[SDL_SCANCODE_S] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_S] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_S] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_S] ^ second);
             break;
         case ST::key::T:
-            pressed = (controls.keyboard[SDL_SCANCODE_T] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_T] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_T] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_T] ^ second);
             break;
         case ST::key::V:
-            pressed = (controls.keyboard[SDL_SCANCODE_V] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_V] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_V] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_V] ^ second);
             break;
         case ST::key::U:
-            pressed = (controls.keyboard[SDL_SCANCODE_U] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_U] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_U] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_U] ^ second);
             break;
         case ST::key::W:
-            pressed = (controls.keyboard[SDL_SCANCODE_W] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_W] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_W] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_W] ^ second);
             break;
         case ST::key::X:
-            pressed = (controls.keyboard[SDL_SCANCODE_X] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_X] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_X] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_X] ^ second);
             break;
         case ST::key::Y:
-            pressed = (controls.keyboard[SDL_SCANCODE_Y] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_Y] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_Y] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_Y] ^ second);
             break;
         case ST::key::Z:
-            pressed = (controls.keyboard[SDL_SCANCODE_Z] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_Z] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_Z] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_Z] ^ second);
             break;
         case ST::key::ONE:
-            pressed = (controls.keyboard[SDL_SCANCODE_1] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_1] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_1] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_1] ^ second);
             break;
         case ST::key::TWO:
-            pressed = (controls.keyboard[SDL_SCANCODE_2] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_2] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_2] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_2] ^ second);
             break;
         case ST::key::THREE:
-            pressed = (controls.keyboard[SDL_SCANCODE_3] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_3] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_3] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_3] ^ second);
             break;
         case ST::key::FOUR:
-            pressed = (controls.keyboard[SDL_SCANCODE_4] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_4] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_4] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_4] ^ second);
             break;
         case ST::key::FIVE:
-            pressed = (controls.keyboard[SDL_SCANCODE_5] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_5] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_5] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_5] ^ second);
             break;
         case ST::key::SIX:
-            pressed = (controls.keyboard[SDL_SCANCODE_6] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_6] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_6] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_6] ^ second);
             break;
         case ST::key::SEVEN:
-            pressed = (controls.keyboard[SDL_SCANCODE_7] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_7] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_7] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_7] ^ second);
             break;
         case ST::key::EIGHT:
-            pressed = (controls.keyboard[SDL_SCANCODE_8] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_8] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_8] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_8] ^ second);
             break;
         case ST::key::NINE:
-            pressed = (controls.keyboard[SDL_SCANCODE_9] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_9] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_9] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_9] ^ second);
             break;
         case ST::key::ZERO:
-            pressed = (controls.keyboard[SDL_SCANCODE_0] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_0] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_0] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_0] ^ second);
             break;
         case ST::key::ESCAPE:
-            pressed = (controls.keyboard[SDL_SCANCODE_ESCAPE] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_ESCAPE] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE] ^ second);
             break;
         case ST::key::ENTER:
-            pressed = (controls.keyboard[SDL_SCANCODE_RETURN] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_RETURN] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_RETURN] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_RETURN] ^ second);
             break;
         case ST::key::SPACEBAR:
-            pressed = (controls.keyboard[SDL_SCANCODE_SPACE] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_SPACE] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_SPACE] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_SPACE] ^ second);
             break;
         case ST::key::TILDE:
-            pressed = (controls.keyboard[SDL_SCANCODE_GRAVE] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_GRAVE] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE] ^ second);
             break;
         case ST::key::LSHIFT:
-            pressed = (controls.keyboard[SDL_SCANCODE_LSHIFT] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_LSHIFT] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT] ^ second);
             break;
         case ST::key::BACKSPACE:
-            pressed = (controls.keyboard[SDL_SCANCODE_BACKSPACE] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_BACKSPACE] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE] ^ second);
             break;
         case ST::key::DELETE:
-            pressed = (controls.keyboard[SDL_SCANCODE_DELETE] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_DELETE] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_DELETE] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_DELETE] ^ second);
             break;
         case ST::key::BACKSLASH:
-            pressed = (controls.keyboard[SDL_SCANCODE_BACKSLASH] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_BACKSLASH] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH] ^ second);
             break;
         case ST::key::CAPSLOCK:
-            pressed = (controls.keyboard[SDL_SCANCODE_CAPSLOCK] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_CAPSLOCK] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK] ^ second);
             break;
         case ST::key::COMMA:
-            pressed = (controls.keyboard[SDL_SCANCODE_COMMA] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_COMMA] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_COMMA] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_COMMA] ^ second);
             break;
         case ST::key::EQUALS:
-            pressed = (controls.keyboard[SDL_SCANCODE_EQUALS] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_EQUALS] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS] ^ second);
             break;
         case ST::key::LALT:
-            pressed = (controls.keyboard[SDL_SCANCODE_LALT] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_LALT] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_LALT] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_LALT] ^ second);
             break;
         case ST::key::LCTRL:
-            pressed = (controls.keyboard[SDL_SCANCODE_LCTRL] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_LCTRL] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL] ^ second);
             break;
         case ST::key::LBRACKET:
-            pressed = (controls.keyboard[SDL_SCANCODE_LEFTBRACKET] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_LEFTBRACKET] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET] ^ second);
             break;
         case ST::key::RBRACKET:
-            pressed = (controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET] ^ second);
             break;
         case ST::key::MINUS:
-            pressed = (controls.keyboard[SDL_SCANCODE_MINUS] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_MINUS] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_MINUS] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_MINUS] ^ second);
             break;
         case ST::key::RALT:
-            pressed = (controls.keyboard[SDL_SCANCODE_RALT] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_RALT] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_RALT] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_RALT] ^ second);
             break;
         case ST::key::RCTRL:
-            pressed = (controls.keyboard[SDL_SCANCODE_RCTRL] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_RCTRL] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL] ^ second);
             break;
         case ST::key::SEMICOLON:
-            pressed = (controls.keyboard[SDL_SCANCODE_SEMICOLON] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_SEMICOLON] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON] ^ second);
             break;
         case ST::key::SLASH:
-            pressed = (controls.keyboard[SDL_SCANCODE_SLASH] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_SLASH] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_SLASH] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_SLASH] ^ second);
             break;
         case ST::key::TAB:
-            pressed = (controls.keyboard[SDL_SCANCODE_TAB] ^ first) && (controls_prev_frame.keyboard[SDL_SCANCODE_TAB] ^ second);
+            result = (controls.keyboard[SDL_SCANCODE_TAB] ^ first) &&
+                     (controls_prev_frame.keyboard[SDL_SCANCODE_TAB] ^ second);
             break;
         case ST::key::MOUSELEFT:
-            pressed = (controls_prev_frame.mouse_clicks[0] ^ first) && (controls.mouse_clicks[0] ^ second);
+            result = (controls.mouse_clicks[0] ^ first) && (controls_prev_frame.mouse_clicks[0] ^ second);
             break;
         case ST::key::MOUSEMIDDLE:
-            pressed = (controls_prev_frame.mouse_clicks[1] ^ first) && (controls.mouse_clicks[1] ^ second);
+            result = (controls.mouse_clicks[1] ^ first) && (controls_prev_frame.mouse_clicks[1] ^ second);
             break;
         case ST::key::MOUSERIGHT:
-            pressed = (controls_prev_frame.mouse_clicks[2] ^ first) && (controls.mouse_clicks[2] ^ second);
+            result = (controls.mouse_clicks[2] ^ first) && (controls_prev_frame.mouse_clicks[2] ^ second);
             break;
-
         case ST::key::CONTROLLER_BUTTON_A:
-            pressed = (controller_button_prev_frame.a ^ first) && (controller_buttons.a ^ second);
+            result = (controller_buttons.a ^ first) && (controller_button_prev_frame.a ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_B:
-            pressed = (controller_button_prev_frame.b ^ first) && (controller_buttons.b ^ second);
+            result = (controller_buttons.b ^ first) && (controller_button_prev_frame.b ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_X:
-            pressed = (controller_button_prev_frame.x ^ first) && (controller_buttons.x ^ second);
+            result = (controller_buttons.x ^ first) && (controller_button_prev_frame.x ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_Y:
-            pressed = (controller_button_prev_frame.y ^ first) && (controller_buttons.y ^ second);
+            result = (controller_buttons.y ^ first) && (controller_button_prev_frame.y ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_SELECT:
-            pressed = (controller_button_prev_frame.select ^ first) && (controller_buttons.select ^ second);
+            result = (controller_buttons.select ^ first) && (controller_button_prev_frame.select ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_START:
-            pressed = (controller_button_prev_frame.start ^ first) && (controller_buttons.start ^ second);
+            result = (controller_buttons.start ^ first) && (controller_button_prev_frame.start ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_LEFTSTICK:
-            pressed = (controller_button_prev_frame.left_stick ^ first) && (controller_buttons.left_stick ^ second);
+            result = (controller_buttons.left_stick ^ first) && (controller_button_prev_frame.left_stick ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_RIGHTSTICK:
-            pressed = (controller_button_prev_frame.right_stick ^ first) && (controller_buttons.right_stick ^ second);
+            result = (controller_buttons.right_stick ^ first) && (controller_button_prev_frame.right_stick ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_LEFTSHOULDER:
-            pressed = (controller_button_prev_frame.left_shoulder ^ first) && (controller_buttons.left_shoulder ^ second);
+            result =
+                    (controller_buttons.left_shoulder ^ first) && (controller_button_prev_frame.left_shoulder ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER:
-            pressed = (controller_button_prev_frame.right_shoulder ^ first) && (controller_buttons.right_shoulder ^ second);
+            result = (controller_buttons.right_shoulder ^ first) &&
+                     (controller_button_prev_frame.right_shoulder ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_DPAD_UP:
-            pressed = (controller_button_prev_frame.dpad_up ^ first) && (controller_buttons.dpad_up ^ second);
+            result = (controller_buttons.dpad_up ^ first) && (controller_button_prev_frame.dpad_up ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_DPAD_LEFT:
-            pressed = (controller_button_prev_frame.dpad_left ^ first) && (controller_buttons.dpad_left ^ second);
+            result = (controller_buttons.dpad_left ^ first) && (controller_button_prev_frame.dpad_left ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_DPAD_RIGHT:
-            pressed = (controller_button_prev_frame.dpad_right ^ first) && (controller_buttons.dpad_right ^ second);
+            result = (controller_buttons.dpad_right ^ first) && (controller_button_prev_frame.dpad_right ^ second);
             break;
         case ST::key::CONTROLLER_BUTTON_DPAD_DOWN:
-            pressed = (controller_button_prev_frame.dpad_down ^ first) && (controller_buttons.dpad_down ^ second);
+            result = (controller_buttons.dpad_down ^ first) && (controller_button_prev_frame.dpad_down ^ second);
             break;
         case ST::key::UNKNOWN:
-            pressed = false;
+            result = false;
             break;
     }
-    return pressed;
+    return result;
 }
