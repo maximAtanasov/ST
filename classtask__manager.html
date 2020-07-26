@@ -86,6 +86,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a84f3600a490f4a93380d4f57524cb606"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862d0af333a16300f82c0701682e6d99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">wait_for_task</a> (<a class="el" href="classsemaphore.html">task_id</a> id)</td></tr>
 <tr class="separator:a862d0af333a16300f82c0701682e6d99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90842b8964fe015e598fd6276326ab13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtask__manager.html#a90842b8964fe015e598fd6276326ab13">work_wait_for_task</a> (<a class="el" href="classsemaphore.html">task_id</a> id)</td></tr>
+<tr class="separator:a90842b8964fe015e598fd6276326ab13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Task Manager handles all things multi-threaded in the engine. </p>
@@ -237,6 +239,32 @@ Public Member Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void task_manager::wait_for_task </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsemaphore.html">task_id</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Wait for a task to finish and do work from the work queue while waiting. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The ID of the task. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="task__manager_8cpp_source.html#l00347">347</a> of file <a class="el" href="task__manager_8cpp_source.html">task_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a90842b8964fe015e598fd6276326ab13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90842b8964fe015e598fd6276326ab13">&#9670;&nbsp;</a></span>work_wait_for_task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void task_manager::work_wait_for_task </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classsemaphore.html">task_id</a>&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
