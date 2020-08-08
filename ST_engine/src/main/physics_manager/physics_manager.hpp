@@ -54,7 +54,6 @@ inline void physics_manager::update(std::vector<ST::entity>* data){
         process_horizontal(data, friction);
         process_vertical(data, gravity, level_floor);
     }
-    auto end = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
 }
 
 #endif //PHYSICS_DEF

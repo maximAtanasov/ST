@@ -254,7 +254,7 @@ int8_t lua_backend::run_script(const std::string& script) {
     if (luaL_dostring(L, temp.c_str())){
         gMessage_bus->send_msg(new message(LOG_ERROR, make_data<std::string>("Cannot run script")));
         return -1;
-    }else{
+    }else [[likely]] {
         return 0;
     }
 }

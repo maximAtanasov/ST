@@ -239,7 +239,7 @@ void ST::renderer_sdl::cache_font(TTF_Font* Font, uint16_t font_and_size){
     char temp[2];
     temp[1] = 0;
     std::vector<SDL_Texture*> tempVector;
-    for(char j = 32; j < 127; j++){
+    for(char j = 32; j < 127; j++) {
         temp[0] = j;
         SDL_Surface* glyph = TTF_RenderUTF8_Blended(Font, temp, color_font);
         SDL_Texture* texture = SDL_CreateTextureFromSurface(sdl_renderer, glyph);
@@ -270,7 +270,7 @@ void ST::renderer_sdl::vsync_on(){
 void ST::renderer_sdl::vsync_off(){
     SDL_RendererInfo info;
     SDL_GetRendererInfo(sdl_renderer, &info);
-    if(info.flags & SDL_RENDERER_PRESENTVSYNC){
+    if(info.flags & SDL_RENDERER_PRESENTVSYNC){ // NOLINT(hicpp-signed-bitwise)
         vsync = false;
         close();
         initialize(window, width, height);
@@ -350,7 +350,7 @@ void ST::renderer_sdl::draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h
  */
 void ST::renderer_sdl::draw_background(const uint16_t arg) {
     auto texture = textures.find(arg);
-    if (texture != textures.end()) {
+    if (texture != textures.end()) [[likely]] {
         SDL_RenderCopy(sdl_renderer, texture->second, nullptr, nullptr);
     }
 }

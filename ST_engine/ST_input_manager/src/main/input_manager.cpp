@@ -225,48 +225,41 @@ void input_manager::take_controller_input(){
     }
     //only send controller axis values if they change and the values exceed the thresholds
 
-    if(controller_buttons.left_trigger < left_trigger_threshold){
-        controller_buttons.left_trigger = 0;
-    }
+    controller_buttons.left_trigger = (controller_buttons.left_trigger >= left_trigger_threshold) * controller_buttons.left_trigger;
+    controller_buttons.right_trigger = (controller_buttons.right_trigger >= right_trigger_threshold) * controller_buttons.right_trigger;
+
     if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
         gMessage_bus.send_msg(new message(LEFT_TRIGGER, controller_buttons.left_trigger));
     }
 
-    if(controller_buttons.right_trigger < right_trigger_threshold){
-        controller_buttons.right_trigger = 0;
-    }
     if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
         gMessage_bus.send_msg(new message(RIGHT_TRIGGER, controller_buttons.right_trigger));
     }
 
-    if(!(controller_buttons.left_stick_vertical > left_stick_vertical_threshold
-         || controller_buttons.left_stick_vertical < -left_stick_vertical_threshold)){
-        controller_buttons.right_stick_vertical = 0;
-    }
+    controller_buttons.right_stick_vertical = (controller_buttons.left_stick_vertical > left_stick_vertical_threshold
+            || controller_buttons.left_stick_vertical < -left_stick_vertical_threshold) * controller_buttons.right_stick_vertical;
+
+    controller_buttons.left_stick_horizontal = (controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold
+            || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold) * controller_buttons.left_stick_horizontal;
+
+    controller_buttons.right_stick_horizontal = (controller_buttons.right_stick_horizontal > right_stick_horizontal_threshold
+            || controller_buttons.right_stick_horizontal < -right_stick_horizontal_threshold) * controller_buttons.right_stick_horizontal;
+
+    controller_buttons.right_stick_vertical = (controller_buttons.right_stick_vertical > right_stick_vertical_threshold
+            || controller_buttons.right_stick_vertical < -right_stick_vertical_threshold) * controller_buttons.right_stick_vertical;
+
     if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
         gMessage_bus.send_msg(new message(LEFT_STICK_VERTICAL, controller_buttons.left_stick_vertical));
     }
 
-    if(!(controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold
-         || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold)){
-        controller_buttons.left_stick_horizontal = 0;
-    }
     if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
         gMessage_bus.send_msg(new message(LEFT_STICK_HORIZONTAL, controller_buttons.left_stick_horizontal));
     }
 
-    if(!(controller_buttons.right_stick_vertical > right_stick_vertical_threshold
-         || controller_buttons.right_stick_vertical < -right_stick_vertical_threshold)){
-        controller_buttons.right_stick_vertical = 0;
-    }
     if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
         gMessage_bus.send_msg(new message(RIGHT_STICK_VERTICAL, controller_buttons.right_stick_vertical));
     }
 
-    if(!(controller_buttons.right_stick_horizontal > right_stick_horizontal_threshold
-         || controller_buttons.right_stick_horizontal < -right_stick_horizontal_threshold)){
-        controller_buttons.right_stick_horizontal = 0;
-    }
     if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
         gMessage_bus.send_msg(new message(RIGHT_STICK_HORIZONTAL, controller_buttons.right_stick_horizontal));
     }

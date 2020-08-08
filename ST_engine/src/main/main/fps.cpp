@@ -10,24 +10,13 @@
 #include <main/fps.hpp>
 
 /**
- * Initializes the fps counter.
- */
-fps::fps() {
-    for(double& i : average) {
-        i = 0;
-    }
-}
-
-/**
  * Updates the fps counter with the current time and current frame_time.
  * @param time The current time.
  * @param frame_time The current frame time.
  */
 void fps::update(double time, double frame_time) {
     average[counter++] = frame_time;
-    if(counter == 16){
-        counter = 0;
-    }
+    counter = (counter != 16)*counter;
     new_time = time;
     if(new_time - old_time > 64){
         value = get_average();

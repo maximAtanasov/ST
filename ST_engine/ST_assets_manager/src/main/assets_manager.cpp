@@ -93,37 +93,29 @@ int8_t assets_manager::load_assets_from_binary(const std::string& path) {
     ST::assets_named* assets1 = ST::unpack_binary(path);
     if(assets1 != nullptr){
         for(const auto &surface : assets1->surfaces){
-            if(count[surface.first] > 0){
-                count[surface.first]++;
-                continue;
-            }else{
+            if(count[surface.first] == 0){
                 gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + surface.first)));
-                count[surface.first]++;
                 uint16_t hashed = ST::hash_string(surface.first);
                 all_assets.surfaces[hashed] = surface.second;
             }
+            ++count[surface.first];
         }
         for(const auto &chunk : assets1->chunks){
-            if(count[chunk.first] > 0){
-                count[chunk.first]++;
-                continue;
-            }else{
+            if(count[chunk.first] == 0){
                 gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + chunk.first)));
-                count[chunk.first]++;
                 uint16_t hashed = ST::hash_string(chunk.first);
                 all_assets.chunks[hashed] = chunk.second;
             }
+            ++count[chunk.first];
         }
         for(const auto &music : assets1->music){
-            if(count[music.first] > 0){
-                count[music.first]++;
-                continue;
-            }else{
+            if(count[music.first] == 0){
                 gMessage_bus.send_msg(new message(LOG_SUCCESS, make_data<std::string>("Unpacking " + music.first)));
                 count[music.first]++;
                 uint16_t hashed = ST::hash_string(music.first);
                 all_assets.music[hashed] = music.second;
             }
+            ++count[music.first];
         }
         delete assets1;
     }else{
@@ -181,7 +173,7 @@ int8_t assets_manager::load_asset(std::string path){
     //check if the file is already loaded and increase the reference count
     auto _asset_count = count.find(ST::trim_path(path));
     if (_asset_count != count.end() && _asset_count->second > 0) {
-        _asset_count->second += 1;
+        ++_asset_count->second;
         return 0;
     } else if (_asset_count == count.end()) {
         count.emplace(ST::trim_path(path), 0);
@@ -202,7 +194,7 @@ int8_t assets_manager::load_asset(std::string path){
             path = ST::trim_path(path);
             uint16_t string_hash = ST::hash_string(path);
             all_assets.surfaces[string_hash] = temp1;
-            count.at(path) += 1;
+            ++count.at(path);
         }else{
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
             return -1;
@@ -213,7 +205,7 @@ int8_t assets_manager::load_asset(std::string path){
             path = ST::trim_path(path);
             uint16_t string_hash = ST::hash_string(path);
             all_assets.chunks[string_hash] = temp1;
-            count.at(path) += 1;
+            ++count.at(path);
         }
         else{
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
@@ -225,7 +217,7 @@ int8_t assets_manager::load_asset(std::string path){
             path = ST::trim_path(path);
             uint16_t string_hash = ST::hash_string(path);
             all_assets.music[string_hash] = temp1;
-            count.at(path) += 1;
+            ++count.at(path);
         }
         else {
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + path + " not found")));
@@ -254,7 +246,7 @@ int8_t assets_manager::load_asset(std::string path){
             font = ST::trim_path(font);
             std::string font_and_size = font + " " + result.at(1);
             all_assets.fonts[ST::hash_string(font_and_size)] = tempFont;
-            count.at(font_and_size) += 1;
+            ++count.at(font_and_size);
         }else{
             gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("File " + font + " not found!")));
             return -1;
@@ -326,7 +318,7 @@ int8_t assets_manager::unload_assets_from_list(const std::string& path){
 int8_t assets_manager::unload_asset(std::string path){
     auto _asset_count = count.find(ST::trim_path(path));
     if (_asset_count != count.end() && _asset_count->second > 1) {
-        _asset_count->second -= 1;
+        --_asset_count->second;
         return 0;
     }else if((_asset_count == count.end() || _asset_count->second == 0) && ST::get_file_extension(path) != ST::asset_file_type::BIN){
         return -1;
@@ -340,26 +332,26 @@ int8_t assets_manager::unload_asset(std::string path){
         uint16_t string_hash = ST::hash_string(path);
         SDL_FreeSurface(all_assets.surfaces[string_hash]);
         all_assets.surfaces[string_hash] = nullptr;
-        count.at(path)--;
+        --count.at(path);
     }else if(extension == ST::asset_file_type::WAV){
         path = ST::trim_path(path);
         uint16_t string_hash = ST::hash_string(path);
         Mix_FreeChunk(all_assets.chunks[string_hash]);
         all_assets.chunks[string_hash] = nullptr;
-        count.at(path)--;
+        --count.at(path);
     }else if(extension == ST::asset_file_type::OGG){
         path = ST::trim_path(path);
         uint16_t string_hash = ST::hash_string(path);
         Mix_FreeMusic(all_assets.music[string_hash]);
         all_assets.music[string_hash] = nullptr;
-        count.at(path)--;
+        --count.at(path);
     }else if(extension == ST::asset_file_type::BIN){
         return unload_assets_from_binary(path);
     }else{ //if file is a font
         path = ST::trim_path(path);
         TTF_CloseFont(all_assets.fonts[ST::hash_string(path)]);
         all_assets.fonts[ST::hash_string(path)] = nullptr;
-        count.at(path)--;
+        --count.at(path);
     }
     return 0;
 }
