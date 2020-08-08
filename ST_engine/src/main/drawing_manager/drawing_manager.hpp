@@ -59,7 +59,7 @@ class drawing_manager{
         void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
         void draw_fps(double fps) const;
-        void draw_console(console& cnsl);
+        void draw_console(console& cnsl) const;
         void draw_text_objects(const std::vector<ST::text>&) const;
 
         //Pre-processing

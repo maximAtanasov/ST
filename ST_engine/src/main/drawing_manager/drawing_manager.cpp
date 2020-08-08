@@ -74,7 +74,15 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     ticks = SDL_GetTicks(); //CPU ticks since start
     ST::renderer_sdl::clear_screen(temp.background_color);
     ST::renderer_sdl::draw_background(temp.background);
-    draw_entities(temp.entities);
+
+    std::vector<ST::entity> entities{};
+
+    // Filter entities on screen
+    std::copy_if (temp.entities.begin(), temp.entities.end(), std::back_inserter(entities), [this](ST::entity e){
+        return is_onscreen(e);
+    });
+
+    draw_entities(entities);
     ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ST::pos_mod(ticks, temp.overlay_sprite_num)), temp.overlay_sprite_num);
     draw_text_objects(temp.text_objects);
     //draw the lights when we are sure they are processed
@@ -84,8 +92,8 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     }
     //Draw debug info and the console in a debug build
     if (collisions_shown) {
-        draw_collisions(temp.entities);
-        draw_coordinates(temp.entities);
+        draw_collisions(entities);
+        draw_coordinates(entities);
     }
     draw_fps(fps);
     draw_console(cnsl);
@@ -120,7 +128,7 @@ void drawing_manager::draw_fps(double fps) const{
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
  */
-void drawing_manager::draw_console(console& cnsl) {
+void drawing_manager::draw_console(console& cnsl) const {
     if(cnsl.is_open()) {
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
@@ -140,7 +148,7 @@ void drawing_manager::draw_console(console& cnsl) {
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-        int32_t cursor_draw_position = 0;
+        int32_t cursor_draw_position;
         if (cnsl.cursor_position == cnsl.composition.size()) {
             cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
         } else {
@@ -154,9 +162,8 @@ void drawing_manager::draw_console(console& cnsl) {
                     cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);
         }
-        if (ticks - cnsl.cursor_timer >= 500) {
-            cnsl.cursor_timer = ticks;
-        }
+        cnsl.cursor_timer = (ticks - cnsl.cursor_timer >= 500)*ticks +
+                (ticks - cnsl.cursor_timer < 500)*cnsl.cursor_timer;
     }
 }
 
@@ -166,17 +173,10 @@ void drawing_manager::draw_console(console& cnsl) {
  * @param lights A vector of <b>ST::light</b> objects.
  */
 void drawing_manager::process_lights(const std::vector<ST::light>& lights){
-    for(int i = 0; i < w_width; ++i){
-        for(int j = 0; j < w_height; ++j){
-            lightmap[i][j] = darkness_level;
-        }
-    }
+    memset(lightmap, darkness_level, sizeof lightmap);
     for (const auto &light : lights) {
-        int x = light.origin_x, y = light.origin_y;
-        if(!light.is_static){
-            x -= camera.x;
-            y -= camera.y;
-        }
+        int x = !light.is_static*(light.origin_x - camera.x) + light.is_static*light.origin_x;
+        int y = !light.is_static*(light.origin_y - camera.y) + light.is_static*light.origin_y;
         double count = 0;
         double step = darkness_level/ static_cast<double>(light.radius);
         count = 0;
@@ -356,16 +356,14 @@ void drawing_manager::set_darkness(uint8_t arg){
 void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) const{
     uint32_t time = ticks >> 7U; //ticks/128
     for(auto& i : entities){
-        if(is_onscreen(i)){
-            int32_t camera_offset_x = (!i.is_static())*camera.x;
-            int32_t camera_offset_y = (camera_offset_x != 0)*camera.y;
-            if(i.animation_num == 0){
-                ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y, i.tex_scale_x, i.tex_scale_y);
-            } else {
-                ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y ,
-                                                     ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num,
-                                                     i.tex_scale_x, i.tex_scale_y);
-            }
+        int32_t camera_offset_x = (!i.is_static())*camera.x; //If entity isn't static add camera offset
+        int32_t camera_offset_y = (camera_offset_x != 0)*camera.y;
+        if(i.animation_num == 0){
+            ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y, i.tex_scale_x, i.tex_scale_y);
+        } else {
+            ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y ,
+                                                 ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num,
+                                                 i.tex_scale_x, i.tex_scale_y);
         }
     }
 }
@@ -395,15 +393,13 @@ bool drawing_manager::is_onscreen(const ST::text& i) const {
  */
 void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
-        if (is_onscreen(i)) {
-            int32_t x_offset = (!i.is_static())*camera.x;
-            int32_t y_offset = (x_offset != 0)*camera.y;
-            uint8_t b = (!i.is_affected_by_physics())*220;
-            uint8_t r = (!b)*240;
-            ST::renderer_sdl::draw_rectangle_filled(i.x - x_offset + i.get_col_x_offset(),
-                                                    i.y - y_offset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
-                                                    {r, 0, b, 100});
-        }
+        int32_t x_offset = (!i.is_static())*camera.x;
+        int32_t y_offset = (x_offset != 0)*camera.y;
+        uint8_t b = (!i.is_affected_by_physics())*220;
+        uint8_t r = (!b)*240;
+        ST::renderer_sdl::draw_rectangle_filled(i.x - x_offset + i.get_col_x_offset(),
+                                                i.y - y_offset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
+                                                {r, 0, b, 100});
     }
 }
 
@@ -413,16 +409,14 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
  */
 void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
-        if (is_onscreen(i)) {
-            if (i.is_affected_by_physics()) {
-                int32_t x_offset = (!i.is_static())*camera.x;
-                int32_t y_offset = (x_offset != 0)*camera.y;
-                SDL_Colour colour_text = {255, 255, 0, 255};
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "x: " + std::to_string(i.x), i.x - x_offset,
-                                                          i.y - y_offset - i.tex_h, colour_text);
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "y: " + std::to_string(i.y), i.x - x_offset,
-                                                          i.y - y_offset - i.tex_h + 30, colour_text);
-            }
+        if (i.is_affected_by_physics()) {
+            int32_t x_offset = (!i.is_static())*camera.x;
+            int32_t y_offset = (x_offset != 0)*camera.y;
+            SDL_Colour colour_text = {255, 255, 0, 255};
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "x: " + std::to_string(i.x), i.x - x_offset,
+                                                      i.y - y_offset - i.tex_h, colour_text);
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "y: " + std::to_string(i.y), i.x - x_offset,
+                                                      i.y - y_offset - i.tex_h + 30, colour_text);
         }
     }
 }
