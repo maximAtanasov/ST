@@ -121,7 +121,7 @@ void console::handle_messages(){
                             deleteKeyAction();
                         }
                     } else {
-                        hold_counter++;
+                        ++hold_counter;
                     }
                 }
                 break;

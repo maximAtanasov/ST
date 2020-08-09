@@ -46,7 +46,7 @@ namespace ST {
         size_t hashed_value = hash_f(value);
 
         //Now just a simple linear search
-        uint16_t i = 0;
+        uint16_t i;
         for (i = 0; i < string_hashes_size; i++) {
             if (string_hashes[i] == hashed_value) {
                 return i;

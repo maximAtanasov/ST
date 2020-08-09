@@ -66,6 +66,6 @@ void message_bus::clear() {
  * @param msg The type of the message.
  * @param sub The subscriber object.
  */
-void message_bus::subscribe(uint8_t msg, subscriber* sub){
-    subscribers[msg].push_back(sub);
+void message_bus::subscribe(uint8_t msg, subscriber* sub) {
+    subscribers[msg].emplace_back(sub);
 }

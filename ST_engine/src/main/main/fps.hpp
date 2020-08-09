@@ -12,6 +12,7 @@
 
 ///An fps counter
 #include <cstdint>
+#include <algorithm>
 
 /**
  * Provides average frame-rates over 1 second.
@@ -27,7 +28,6 @@ class fps {
         double get_average();
         uint8_t counter = 0;
 public:
-        fps();
         void update(double time, double frame_time);
         [[nodiscard]] double get_value() const;
 };

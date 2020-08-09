@@ -27,35 +27,35 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
         singleton_initialized = true;
     }
 
-	if(TTF_Init() < 0){
-		fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
-		exit(1);
-	}
+    if(TTF_Init() < 0){
+        fprintf(stderr, "Failed to initialize SDL_TTF: %s\n", TTF_GetError());
+        exit(1);
+    }
 
-	//Subscribe to certain messages
-	gMessage_bus.subscribe(VSYNC_STATE, &msg_sub);
-	gMessage_bus.subscribe(SET_VSYNC, &msg_sub);
-	gMessage_bus.subscribe(SHOW_COLLISIONS, &msg_sub);
+    //Subscribe to certain messages
+    gMessage_bus.subscribe(VSYNC_STATE, &msg_sub);
+    gMessage_bus.subscribe(SET_VSYNC, &msg_sub);
+    gMessage_bus.subscribe(SHOW_COLLISIONS, &msg_sub);
     gMessage_bus.subscribe(SHOW_FPS, &msg_sub);
-	gMessage_bus.subscribe(SET_DARKNESS, &msg_sub);
-	gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
+    gMessage_bus.subscribe(SET_DARKNESS, &msg_sub);
+    gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
     gMessage_bus.subscribe(FONTS_ASSETS, &msg_sub);
     gMessage_bus.subscribe(ENABLE_LIGHTING, &msg_sub);
     gMessage_bus.subscribe(SET_INTERNAL_RESOLUTION, &msg_sub);
 
     //debug collisions aren't shown by default
-	collisions_shown = false;
+    collisions_shown = false;
 
-	//Variables for lights
-	darkness_level = 0;
+    //Variables for lights
+    darkness_level = 0;
     lights_quality = 5;
 
     //hash of default font
     default_font_normal = ST::hash_string(DEFAULT_FONT_NORMAL);
     default_font_small = ST::hash_string(DEFAULT_FONT_SMALL);
 
-	//Initialize the rendering object
-	ST::renderer_sdl::initialize(window, w_width, w_height);
+    //Initialize the rendering object
+    ST::renderer_sdl::initialize(window, w_width, w_height);
     uint32_t screen_width_height = w_width | static_cast<uint32_t>(w_height << 16U);
     gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
 }
@@ -69,12 +69,20 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
  */
 void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     camera = temp.camera;
-	handle_messages();
+    handle_messages();
 
-	ticks = SDL_GetTicks(); //CPU ticks since start
+    ticks = SDL_GetTicks(); //CPU ticks since start
     ST::renderer_sdl::clear_screen(temp.background_color);
     ST::renderer_sdl::draw_background(temp.background);
-	draw_entities(temp.entities);
+
+    std::vector<ST::entity> entities{};
+
+    // Filter entities on screen
+    std::copy_if (temp.entities.begin(), temp.entities.end(), std::back_inserter(entities), [this](ST::entity e){
+        return is_onscreen(e);
+    });
+
+    draw_entities(entities);
     ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ST::pos_mod(ticks, temp.overlay_sprite_num)), temp.overlay_sprite_num);
     draw_text_objects(temp.text_objects);
     //draw the lights when we are sure they are processed
@@ -83,12 +91,12 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
         draw_lights();
     }
     //Draw debug info and the console in a debug build
-	if (collisions_shown) {
-		draw_collisions(temp.entities);
-		draw_coordinates(temp.entities);
-	}
-	draw_fps(fps);
-	draw_console(cnsl);
+    if (collisions_shown) {
+        draw_collisions(entities);
+        draw_coordinates(entities);
+    }
+    draw_fps(fps);
+    draw_console(cnsl);
 
     ST::renderer_sdl::present();
 }
@@ -120,7 +128,7 @@ void drawing_manager::draw_fps(double fps) const{
  * Draws the console window on the screen.
  * @param cnsl A pointer to the console object.
  */
-void drawing_manager::draw_console(console& cnsl) {
+void drawing_manager::draw_console(console& cnsl) const {
     if(cnsl.is_open()) {
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
@@ -135,28 +143,27 @@ void drawing_manager::draw_console(console& cnsl) {
                     log_entry_color = cnsl.color_success;
                 }
                 ST::renderer_sdl::draw_text_lru_cached(default_font_normal, i->text, 0,
-                                     pos - cnsl.font_size - 20 + cnsl.scroll_offset, log_entry_color);
+                                                       pos - cnsl.font_size - 20 + cnsl.scroll_offset, log_entry_color);
             }
             pos -= cnsl.font_size + 5;
         }
         ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
-		int32_t cursor_draw_position = 0;
-		if (cnsl.cursor_position == cnsl.composition.size()) {
-			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
-		} else {
-			std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
-			std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
-			cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
-			ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
-		}
-		if (ticks - cnsl.cursor_timer < 250 || cnsl.cursor_timer == 0) {
-		    ST::renderer_sdl::draw_rectangle_filled(
-				cursor_draw_position, w_height / 2 - 50 + 5, 3,
+        int32_t cursor_draw_position;
+        if (cnsl.cursor_position == cnsl.composition.size()) {
+            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
+        } else {
+            std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
+            std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
+            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
+        }
+        if (ticks - cnsl.cursor_timer < 250 || cnsl.cursor_timer == 0) {
+            ST::renderer_sdl::draw_rectangle_filled(
+                    cursor_draw_position, w_height / 2 - 50 + 5, 3,
                     cnsl.font_size, cnsl.color_text);
         }
-        if (ticks - cnsl.cursor_timer >= 500) {
-            cnsl.cursor_timer = ticks;
-        }
+        cnsl.cursor_timer = (ticks - cnsl.cursor_timer >= 500)*ticks +
+                (ticks - cnsl.cursor_timer < 500)*cnsl.cursor_timer;
     }
 }
 
@@ -166,17 +173,10 @@ void drawing_manager::draw_console(console& cnsl) {
  * @param lights A vector of <b>ST::light</b> objects.
  */
 void drawing_manager::process_lights(const std::vector<ST::light>& lights){
-    for(int i = 0; i < w_width; ++i){
-        for(int j = 0; j < w_height; ++j){
-            lightmap[i][j] = darkness_level;
-        }
-    }
+    memset(lightmap, darkness_level, sizeof lightmap);
     for (const auto &light : lights) {
-        int x = light.origin_x, y = light.origin_y;
-        if(!light.is_static){
-            x -= camera.x;
-            y -= camera.y;
-        }
+        int x = !light.is_static*(light.origin_x - camera.x) + light.is_static*light.origin_x;
+        int y = !light.is_static*(light.origin_y - camera.y) + light.is_static*light.origin_y;
         double count = 0;
         double step = darkness_level/ static_cast<double>(light.radius);
         count = 0;
@@ -346,10 +346,7 @@ void drawing_manager::handle_messages(){
  */
 void drawing_manager::set_darkness(uint8_t arg){
     darkness_level = arg;
-    for(int i = 0; i < w_width; ++i){
-        for(int j = 0; j < w_height; ++j)
-            lightmap[i][j] = arg;
-    }
+    memset(lightmap, arg, sizeof lightmap);
 }
 
 /**
@@ -359,22 +356,14 @@ void drawing_manager::set_darkness(uint8_t arg){
 void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) const{
     uint32_t time = ticks >> 7U; //ticks/128
     for(auto& i : entities){
-        if(is_onscreen(i)){
-            if(i.animation_num == 0){
-                if(i.is_static()){
-                    ST::renderer_sdl::draw_texture_scaled(i.texture, i.x, i.y, i.tex_scale_x, i.tex_scale_y);
-				}
-                else{
-                    ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - camera.x, i.y - camera.y, i.tex_scale_x, i.tex_scale_y);
-				}
-            }
-            else{
-                if(i.is_static()){
-                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x , i.y, ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
-                }else{
-                    ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - camera.x, i.y - camera.y , ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num, i.tex_scale_x, i.tex_scale_y);
-				}
-            }
+        int32_t camera_offset_x = (!i.is_static())*camera.x; //If entity isn't static add camera offset
+        int32_t camera_offset_y = (camera_offset_x != 0)*camera.y;
+        if(i.animation_num == 0){
+            ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y, i.tex_scale_x, i.tex_scale_y);
+        } else {
+            ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y ,
+                                                 ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num,
+                                                 i.tex_scale_x, i.tex_scale_y);
         }
     }
 }
@@ -385,16 +374,8 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
  * @return True if it is on screen and false otherwise.
  */
 bool drawing_manager::is_onscreen(const ST::entity& i) const{
-    if(!i.is_visible()) {
-        return false;
-    }
-    else if(i.is_static()) {
-        return true;
-    }
-    else {
-        return i.x - camera.x + i.tex_w >= 0 && i.x - camera.x <= w_width
-               && i.y - camera.y > 0 && i.y - camera.y - i.tex_h <= w_height;
-    }
+    return i.is_visible() &&
+    (i.is_static() || (i.x - camera.x + i.tex_w >= 0 && i.x - camera.x <= w_width && i.y - camera.y > 0 && i.y - camera.y - i.tex_h <= w_height));
 }
 
 /**
@@ -412,27 +393,13 @@ bool drawing_manager::is_onscreen(const ST::text& i) const {
  */
 void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
-        if (is_onscreen(i)) {
-            int x_offset, y_offset;
-            if (i.is_static()) {
-                x_offset = 0;
-                y_offset = 0;
-            } else {
-                x_offset = camera.x;
-                y_offset = camera.y;
-            }
-            if (i.is_affected_by_physics()) {
-                SDL_Colour colour = {240, 0, 0, 100};
-                ST::renderer_sdl::draw_rectangle_filled(i.x - x_offset + i.get_col_x_offset(),
-                                                        i.y - y_offset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
-                                                        colour);
-            } else {
-                SDL_Colour colour2 = {0, 0, 220, 100};
-                ST::renderer_sdl::draw_rectangle_filled(i.x - x_offset + i.get_col_x_offset(),
-                                                        i.y - y_offset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
-                                                        colour2);
-            }
-        }
+        int32_t x_offset = (!i.is_static())*camera.x;
+        int32_t y_offset = (x_offset != 0)*camera.y;
+        uint8_t b = (!i.is_affected_by_physics())*220;
+        uint8_t r = (!b)*240;
+        ST::renderer_sdl::draw_rectangle_filled(i.x - x_offset + i.get_col_x_offset(),
+                                                i.y - y_offset + i.get_col_y_offset(), i.get_col_x(), i.get_col_y(),
+                                                {r, 0, b, 100});
     }
 }
 
@@ -442,22 +409,14 @@ void drawing_manager::draw_collisions(const std::vector<ST::entity>& entities) c
  */
 void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) const{
     for(auto& i : entities) {
-        if (is_onscreen(i)) {
-            if (i.is_affected_by_physics()) {
-                int x_offset, y_offset;
-                if (i.is_static()) {
-                    x_offset = 0;
-                    y_offset = 0;
-                } else {
-                    y_offset = camera.y;
-                    x_offset = camera.x;
-                }
-                SDL_Colour colour_text = {255, 255, 0, 255};
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "x: " + std::to_string(i.x), i.x - x_offset,
-                                                          i.y - y_offset - i.tex_h, colour_text);
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "y: " + std::to_string(i.y), i.x - x_offset,
-                                                          i.y - y_offset - i.tex_h + 30, colour_text);
-            }
+        if (i.is_affected_by_physics()) {
+            int32_t x_offset = (!i.is_static())*camera.x;
+            int32_t y_offset = (x_offset != 0)*camera.y;
+            SDL_Colour colour_text = {255, 255, 0, 255};
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "x: " + std::to_string(i.x), i.x - x_offset,
+                                                      i.y - y_offset - i.tex_h, colour_text);
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "y: " + std::to_string(i.y), i.x - x_offset,
+                                                      i.y - y_offset - i.tex_h + 30, colour_text);
         }
     }
 }
@@ -468,6 +427,6 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
  */
 drawing_manager::~drawing_manager(){
     ST::renderer_sdl::close();
-	TTF_Quit();
-	singleton_initialized = false;
+    TTF_Quit();
+    singleton_initialized = false;
 }
