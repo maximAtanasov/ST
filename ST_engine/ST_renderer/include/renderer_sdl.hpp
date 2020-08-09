@@ -14,6 +14,7 @@
 #include <SDL_ttf.h>
 #include <ST_util/bytell_hash_map.hpp>
 #include <string>
+#include <stdexcept>
 
 ///The renderer for the engine.
 /**
