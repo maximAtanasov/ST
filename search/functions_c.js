@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['send_5fmsg',['send_msg',['../classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a',1,'message_bus']]],
-  ['set_5fcollision_5fbox',['set_collision_box',['../classST_1_1entity.html#a1e1b3f93ff8d614106f97b4c61a797e4',1,'ST::entity']]],
-  ['set_5fdraw_5fcolor',['set_draw_color',['../namespaceST_1_1renderer__sdl.html#ae48a01fd55079f7adc9a88db8e5cbee5',1,'ST::renderer_sdl']]],
-  ['set_5fglobal',['set_global',['../classlua__backend.html#a14a4ce52834b67a72231f0749216f0c9',1,'lua_backend']]],
-  ['set_5flog_5flevel',['set_log_level',['../classconsole.html#a714ff019da31383d469e326da0710a1c',1,'console']]],
-  ['set_5fresolution',['set_resolution',['../namespaceST_1_1renderer__sdl.html#a8a97314f977102da2c77f34f5207447f',1,'ST::renderer_sdl']]],
-  ['start_5ftask',['start_task',['../classtask__manager.html#aaf1b0a1176405fb39bfedc0e4cc1cc3c',1,'task_manager']]],
-  ['start_5ftask_5flockfree',['start_task_lockfree',['../classtask__manager.html#a84f3600a490f4a93380d4f57524cb606',1,'task_manager']]],
-  ['subscribe',['subscribe',['../classmessage__bus.html#ac10ac62c586cae464da4deac52c5892a',1,'message_bus']]]
+  ['task',['task',['../classST_1_1task.html#ae6bb843c3d55578bedc18b630a0a2e32',1,'ST::task']]],
+  ['task_5fmanager',['task_manager',['../classtask__manager.html#aacbc52a95ea967ac642422cf7b71bbd7',1,'task_manager::task_manager()'],['../classtask__manager.html#a4d435319c91b0fe9077bbfaea1e812d1',1,'task_manager::task_manager(uint8_t thread_num)']]],
+  ['text',['text',['../structST_1_1text.html#a9e9d201911063d66f6efbe7e3fe6841b',1,'ST::text']]],
+  ['time_5fsince_5fstart',['time_since_start',['../classtimer.html#a43cec204e5ec442598bf317d7f971132',1,'timer']]],
+  ['timer',['timer',['../classtimer.html#ae536faf93e02933cd025a6fbcbb48d0a',1,'timer']]]
 ];

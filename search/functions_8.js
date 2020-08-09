@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['make_5fcopy',['make_copy',['../classmessage.html#a26418d1aec70f3f917e5d86e7841d15e',1,'message']]],
-  ['message',['message',['../classmessage.html#a59bf39857235c4d5d8db41e7b6b57d90',1,'message']]],
-  ['message_5fbus',['message_bus',['../classmessage__bus.html#a00ed71930504938fad8a5429e2b70ac9',1,'message_bus']]]
+  ['operator_7c',['operator|',['../namespaceST.html#a99ea5340dfdae4f70000e2759272c216',1,'ST']]]
 ];

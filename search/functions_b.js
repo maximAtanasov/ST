@@ -1,7 +1,12 @@
 var searchData=
 [
-  ['reload',['reload',['../classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb',1,'ST::level']]],
-  ['run_5ffile',['run_file',['../classlua__backend.html#ac56f14bbbf033c11f46fa0c01fb516b1',1,'lua_backend']]],
-  ['run_5fglobal',['run_global',['../classlua__backend.html#abd734514942af6c96d1f00a3528e063f',1,'lua_backend']]],
-  ['run_5fscript',['run_script',['../classlua__backend.html#afbd7a7cecb056d61b21b23280d9baae4',1,'lua_backend']]]
+  ['send_5fmsg',['send_msg',['../classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a',1,'message_bus']]],
+  ['set_5fcollision_5fbox',['set_collision_box',['../classST_1_1entity.html#a1e1b3f93ff8d614106f97b4c61a797e4',1,'ST::entity']]],
+  ['set_5fdraw_5fcolor',['set_draw_color',['../namespaceST_1_1renderer__sdl.html#ae48a01fd55079f7adc9a88db8e5cbee5',1,'ST::renderer_sdl']]],
+  ['set_5fglobal',['set_global',['../classlua__backend.html#a14a4ce52834b67a72231f0749216f0c9',1,'lua_backend']]],
+  ['set_5flog_5flevel',['set_log_level',['../classconsole.html#a714ff019da31383d469e326da0710a1c',1,'console']]],
+  ['set_5fresolution',['set_resolution',['../namespaceST_1_1renderer__sdl.html#a8a97314f977102da2c77f34f5207447f',1,'ST::renderer_sdl']]],
+  ['start_5ftask',['start_task',['../classtask__manager.html#aaf1b0a1176405fb39bfedc0e4cc1cc3c',1,'task_manager']]],
+  ['start_5ftask_5flockfree',['start_task_lockfree',['../classtask__manager.html#a84f3600a490f4a93380d4f57524cb606',1,'task_manager']]],
+  ['subscribe',['subscribe',['../classmessage__bus.html#ac10ac62c586cae464da4deac52c5892a',1,'message_bus']]]
 ];
