@@ -30,9 +30,9 @@ class game_manager{
         lua_backend gScript_backend{};
         message_bus& gMessage_bus;
         task_manager* gTask_manager{};
-        std::bitset<79> keys_pressed_data{};
-        std::bitset<79> keys_held_data{};
-        std::bitset<79> keys_released_data{};
+        std::bitset<80> keys_pressed_data{};
+        std::bitset<80> keys_held_data{};
+        std::bitset<80> keys_released_data{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
         int16_t left_trigger{};
@@ -81,7 +81,7 @@ class game_manager{
         [[nodiscard]] bool game_is_running() const;
         [[nodiscard]] ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
-
+        void save_state(const std::string& filepath);
 };
 
 //INLINED METHODS
@@ -129,7 +129,7 @@ inline bool game_manager::game_is_running() const{
  * Get the current mouse X position.
  * @return The X position of the mouse cursor.
  */
-inline int game_manager::get_mouse_x() const{
+inline int32_t game_manager::get_mouse_x() const{
     return mouse_x;
 }
 
@@ -137,7 +137,7 @@ inline int game_manager::get_mouse_x() const{
  * Get the current mouse Y position.
  * @return The Y position of the mouse cursor.
  */
-inline int game_manager::get_mouse_y() const{
+inline int32_t game_manager::get_mouse_y() const{
     return mouse_y;
 }
 

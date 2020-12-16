@@ -30,6 +30,8 @@ static lua_backend* gLua_backendLua;
 
 static bool singleton_initialized = false;
 
+//TODO: Most of the functions here should be moved to the game_manager class and only act as simple proxies
+
 /**
  * Initializes the Lua subsystem.
  * @param msg_bus A pointer to the global msg_bus.
@@ -65,6 +67,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "consoleClear", consoleClearLua);
 
     //General Functions
+    lua_register(L, "saveGame", saveGameLua);
     lua_register(L, "setFullscreenLua", setFullscreenLua);
     lua_register(L, "getFullscreenStatus", getFullscreenStatusLua);
     lua_register(L, "hashString", hashStringLua);
@@ -80,7 +83,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "endGame", endGameLua);
     lua_register(L, "centerCamera", centerCameraLua);
     lua_register(L, "centreCamera", centerCameraLua);
-    lua_register(L, "setLevelSize", setLevelsizeLua);
+    lua_register(L, "setLevelSize", setLevelSizeLua);
     lua_register(L, "setLevelFloor", setLevelFloorLua);
     lua_register(L, "loadLevel", load_levelLua);
     lua_register(L, "unloadLevel", unload_levelLua);
@@ -196,6 +199,10 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "setEntityAnimation", setEntityAnimationLua);
     lua_register(L, "setEntityAnimationNum", setEntityAnimationNumLua);
     lua_register(L, "setEntitySpriteNum", setEntitySpriteNumLua);
+
+    //mouse
+    lua_register(L, "mouseOverLua", mouseOverLua);
+    lua_register(L, "mouseOverTextureLua", mouseOverTextureLua);
 
     luaL_dofile(L, "lua/global_properties.lua");
     luaL_dofile(L, "lua/general.lua");
@@ -477,6 +484,15 @@ std::string lua_backend::hash_string(const std::string& arg){
 
 
 //External lua API
+
+//TODO: Docs
+//TODO: Test
+extern "C" int saveGameLua(lua_State* L){
+    auto arg = std::string(lua_tostring(L, 1));
+    gGame_managerLua->save_state(arg);
+    return 0;
+}
+
 
 /**
  * Sends a SET_DARKNESS message.
@@ -1034,6 +1050,32 @@ extern "C" int setEntityTextureLua(lua_State *L){
     return 0;
 }
 
+extern "C" int mouseOverTextureLua(lua_State* L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    int32_t mouse_x = gGame_managerLua->get_mouse_x();
+    int32_t mouse_y = gGame_managerLua->get_mouse_y();
+    ST::entity* object = &gGame_managerLua->get_level()->entities[id];
+    int32_t object_x = object->x;
+    int32_t object_y = object->y;
+    printf("%d", mouse_x < object->tex_w + object_x && mouse_x > object_x && mouse_y > object_y + object->tex_h && mouse_y < object_y);
+    lua_pushboolean(L, mouse_x < object->tex_w + object_x && mouse_x > object_x && mouse_y > object_y + object->tex_h && mouse_y < object_y);
+    return 1;
+}
+
+extern "C" int mouseOverLua(lua_State* L){
+    auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
+    int32_t mouse_x = gGame_managerLua->get_mouse_x();
+    int32_t mouse_y = gGame_managerLua->get_mouse_y();
+    ST::entity* object = &gGame_managerLua->get_level()->entities[id];
+    int32_t object_x = object->x;
+    int32_t object_y = object->y;
+    int32_t col_x_offset = object->get_col_x_offset();
+    int32_t col_y_offset = object->get_col_y_offset();
+    lua_pushboolean(L, mouse_x < object->get_col_x() + object_x + col_x_offset && mouse_x > object_x + col_x_offset
+        && mouse_y > object_y + col_y_offset + object->get_col_y() && mouse_y < object_y + col_y_offset);
+    return 1;
+}
+
 //PHYSICS//
 
 /**
@@ -1059,12 +1101,7 @@ extern "C" int entityCollidesLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto id2 = static_cast<uint64_t>(lua_tointeger(L, 2));
     ST::level* temp = gGame_managerLua->get_level();
-    if(temp->entities[id].is_active()){
-        lua_pushboolean(L,temp->entities[id].collides(temp->entities[id2]));
-    }
-    else{
-        lua_pushboolean(L,false);
-    }
+    lua_pushboolean(L, temp->entities[id].is_active() && temp->entities[id].collides(temp->entities[id2]));
     return 1;
 }
 
@@ -1312,7 +1349,7 @@ extern "C" int centerCameraLua(lua_State* L){
  * @param L The global Lua State.
  * @return Always 1.
  */
-extern "C" int setLevelsizeLua(lua_State* L){
+extern "C" int setLevelSizeLua(lua_State* L){
     auto x = static_cast<int32_t>(lua_tointeger(L, 1));
     auto y = static_cast<int32_t>(lua_tointeger(L, 2));
     gGame_managerLua->get_level()->camera.limitX2 = x;

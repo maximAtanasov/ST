@@ -73,6 +73,7 @@ public:
     int16_t get_left_stick_vertical() const{return 200;}
     int16_t get_right_stick_vertical() const{ return 300;}
     int16_t get_right_stick_horizontal() const{return 400;}
+    void save_state(const std::string& filepath) {};
 
     //Variables to keep track of method calls
     uint8_t get_level_calls = 0;

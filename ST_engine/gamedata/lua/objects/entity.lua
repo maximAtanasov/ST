@@ -8,32 +8,12 @@
 
 --tells if the mouse is over an objects texture
 function mouseOverTexture(object)
-    local mouse_x = getMouseX()
-    local mouse_y = getMouseY()
-    local objectX = getEntityX(object.ID)
-    local objectY = getEntityY(object.ID)
-    if mouse_x < getEntityTexW(object.ID) + objectX and mouse_x > objectX then
-        if mouse_y > objectY + getEntityTexH(object.ID) and mouse_y < objectY then
-            return true
-        end
-    end
-    return false
+    return mouseOverTextureLua(object.ID)
 end
 
 --tells if the mouse is over an objects collisions box
 function mouseOver(object)
-    local mouse_x = getMouseX()
-    local mouse_y = getMouseY()
-    local objectX = getEntityX(object.ID)
-    local objectY = getEntityY(object.ID)
-    local objectColYOffset = getEntityColYOffset(object.ID)
-    local objectColXOffset = getEntityColXOffset(object.ID)
-    if mouse_x < getEntityColX(object.ID) + objectColXOffset + objectX and mouse_x > objectX + objectColXOffset then
-        if mouse_y > objectY + objectColYOffset + getEntityColY(object.ID) and mouse_y < objectY + objectColYOffset then
-            return true
-        end
-    end
-    return false
+    return mouseOverLua(object.ID)
 end
 
 function newEntityID()

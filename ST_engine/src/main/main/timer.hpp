@@ -21,7 +21,7 @@ class timer{
         std::chrono::time_point<std::chrono::high_resolution_clock> start;
     public:
         timer();
-        double time_since_start() const;
+        [[nodiscard]] double time_since_start() const;
 };
 
 //INLINED METHODS

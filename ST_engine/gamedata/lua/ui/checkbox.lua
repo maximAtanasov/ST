@@ -53,10 +53,11 @@ end
 
 function checkbox:update()
     if mouseOver(self) then
-        self:onHover()
         if keyPressed(self.clickKey) then
             self:toggle()
             self:onClick()
+        else
+            self:onHover()
         end
     else
         self:onNothing()

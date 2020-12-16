@@ -69,7 +69,7 @@ extern "C" int unload_levelLua(lua_State* L);
 extern "C" int loadAssetLua(lua_State* L);
 extern "C" int unloadAssetLua(lua_State* L);
 extern "C" int endGameLua(lua_State* L);
-extern "C" int setLevelsizeLua(lua_State* L);
+extern "C" int setLevelSizeLua(lua_State* L);
 extern "C" int centerCameraLua(lua_State* L);
 extern "C" int showMouseCursorLua(lua_State* L);
 extern "C" int hideMouseCursorLua(lua_State* L);
@@ -107,6 +107,7 @@ extern "C" int setMusicVolumeLua(lua_State* L);
 extern "C" int setSoundsVolumeLua(lua_State* L);
 extern "C" int setInternalResolutionLua(lua_State* L);
 extern "C" int setWindowResolutionLua(lua_State* L);
+extern "C" int saveGameLua(lua_State*);
 
 //Text Object lua bindings definitions
 
@@ -171,6 +172,10 @@ extern "C" int getEntityColYOffsetLua(lua_State *L);
 extern "C" int setEntityAnimationLua(lua_State *L);
 extern "C" int setEntitySpriteNumLua(lua_State *L);
 extern "C" int setEntityAnimationNumLua(lua_State *L);
+
+//mouse
+extern "C" int mouseOverTextureLua(lua_State* L);
+extern "C" int mouseOverLua(lua_State* L);
 
 extern "C" int showCollisionsLua(lua_State* L);
 extern "C" int logLua(lua_State* L);

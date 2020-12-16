@@ -10,6 +10,7 @@
 #include <game_manager/game_manager.hpp>
 #include <algorithm>
 #include <SDL_events.h>
+#include <fstream>
 
 
 static bool singleton_initialized = false;
@@ -342,4 +343,66 @@ int16_t game_manager::get_right_stick_vertical() const {
  */
 int16_t game_manager::get_right_stick_horizontal() const {
     return right_stick_horizontal;
+}
+
+//TODO: Docs
+//TODO: Test
+void game_manager::save_state(const std::string& filepath) {
+    std::ofstream save_file;
+    save_file.open (filepath);
+
+    save_file << "L" + current_level_pointer->get_name();
+    save_file << "CX" + std::to_string(current_level_pointer->camera.x);
+    save_file << "CY" + std::to_string(current_level_pointer->camera.y);
+    save_file << "B" + std::to_string(current_level_pointer->background);
+    save_file << "BCR" + std::to_string(current_level_pointer->background_color.r) +
+                 "G" + std::to_string(current_level_pointer->background_color.g) +
+                 "B" + std::to_string(current_level_pointer->background_color.b) +
+                 "A" + std::to_string(current_level_pointer->background_color.a);
+    save_file << "O" + std::to_string(current_level_pointer->overlay);
+    save_file << "OSN" + std::to_string(current_level_pointer->overlay_sprite_num);
+    save_file << "E";
+    for(const auto& entity : current_level_pointer->entities) {
+        save_file << "X" + std::to_string(entity.x);
+        save_file << "Y" + std::to_string(entity.y);
+        save_file << "VX" + std::to_string(entity.velocity_x);
+        save_file << "VY" + std::to_string(entity.velocity_y);
+        save_file << "A" + std::to_string(entity.animation);
+        save_file << "AN" + std::to_string(entity.animation_num);
+        save_file << "SN" + std::to_string(entity.sprite_num);
+        save_file << "TH" + std::to_string(entity.tex_h);
+        save_file << "TW" + std::to_string(entity.tex_w);
+        save_file << "TSX" + std::to_string(entity.tex_scale_x);
+        save_file << "TSY" + std::to_string(entity.tex_scale_y);
+        save_file << "T" + std::to_string(entity.texture);
+        save_file << "S" + std::to_string(entity.is_static());
+        save_file << "V" + std::to_string(entity.is_visible());
+        save_file << "P" + std::to_string(entity.is_affected_by_physics());
+        save_file << "A" + std::to_string(entity.is_active());
+    }
+    save_file << "E";
+    save_file << "L";
+    for(const auto& light : current_level_pointer->lights) {
+        save_file << "X" + std::to_string(light.origin_x);
+        save_file << "Y" + std::to_string(light.origin_y);
+        save_file << "S" + std::to_string(light.is_static);
+        save_file << "B" + std::to_string(light.brightness);
+        save_file << "I" + std::to_string(light.intensity);
+        save_file << "R" + std::to_string(light.radius);
+    }
+    save_file << "L";
+    save_file << "T";
+    for(const auto& text_object : current_level_pointer->text_objects) {
+        save_file << "X" + std::to_string(text_object.x);
+        save_file << "Y" + std::to_string(text_object.y);
+        save_file << "T" + text_object.text_string;
+        save_file << "V" + std::to_string(text_object.is_visible);
+        save_file << "F" + std::to_string(text_object.font);
+        save_file << "CR" + std::to_string(text_object.color.r) +
+                     "G" + std::to_string(text_object.color.g) +
+                     "B" + std::to_string(text_object.color.b) +
+                     "A" + std::to_string(text_object.color.a);
+    }
+    save_file << "T";
+    save_file.close();
 }

@@ -63,7 +63,9 @@ public:
     static void operator delete (void* ptr){}
 
     ~message(){
-        this->data.reset();
+        if (data != nullptr) {
+            this->data.reset();
+        }
     }
 
 };

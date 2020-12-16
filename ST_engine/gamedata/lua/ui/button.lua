@@ -62,9 +62,10 @@ end
 
 function button:update()
     if mouseOver(self) then
-        self:onHover()
         if keyPressed(self.clickKey) then
             self:onClick()
+        else
+            self:onHover()
         end
     else
         self:onNothing()
