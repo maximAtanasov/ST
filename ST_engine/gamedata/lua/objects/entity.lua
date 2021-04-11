@@ -182,7 +182,7 @@ function entity:setVisible(arg)
     setEntityVisible(self.ID, arg)
 end
 
---set weather an entity is static (always drawn at the same corrdinates, regardless of camera position)
+--set weather an entity is static (always drawn at the same coordinates, regardless of camera position)
 function entity:setStatic(arg)
     setEntityStatic(self.ID, arg)
 end

@@ -40,14 +40,16 @@ void physics_manager::process_horizontal(std::vector<ST::entity>* entities, int8
         if (entity.is_affected_by_physics()) {
             if (entity.velocity_x > 0) {
                 for (int j = 0; j < entity.velocity_x; ++j) {
-                    entity.velocity_x = entity_set_x(entity.x + 1, k, entities) * entity.velocity_x;
+                    //Branch-less check for whether x has been set.
+                    entity.velocity_x = entity_set_x(entity.x + 1, k, entities) * entity.velocity_x; // NOLINT(cppcoreguidelines-narrowing-conversions)
                 }
                 for (int j = 0; j < friction && entity.velocity_x > 0; ++j) {
                     entity.velocity_x = static_cast<int8_t>(entity.velocity_x - 1);
                 }
             } else if (entity.velocity_x < 0) {
                 for (int j = 0; j > entity.velocity_x; --j) {
-                    entity.velocity_x = entity_set_x(entity.x - 1, k, entities) * entity.velocity_x;
+                    //Branch-less check for whether x has been set.
+                    entity.velocity_x = entity_set_x(entity.x - 1, k, entities) * entity.velocity_x; // NOLINT(cppcoreguidelines-narrowing-conversions)
                 }
                 for (int j = 0; j < friction && entity.velocity_x < 0; ++j) {
                     entity.velocity_x = static_cast<int8_t>(entity.velocity_x + 1);
@@ -121,7 +123,7 @@ void physics_manager::handle_messages(){
  * @param entities All entities in the level.
  * @return 0 if there was no collision and X was set, 1 otherwise.
  */
-int physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity>* entities){
+uint8_t physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity>* entities){
     ST::entity* entity = &entities->operator[](ID);
     int32_t old_x = entity->x;
     entity->x = X;
@@ -137,7 +139,7 @@ int physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity
  * @param entities All entities in the level.
  * @return 0 if there was no collision and X was set, 1 otherwise.
  */
-int physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity>* entities){
+uint8_t physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity>* entities){
     ST::entity* entity = &entities->operator[](ID);
     int32_t old_y = entity->y;
     entity->y = Y;

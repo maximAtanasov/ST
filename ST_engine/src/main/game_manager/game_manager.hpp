@@ -10,7 +10,7 @@
 #ifndef ST_GAME_MANAGER_DEF
 #define ST_GAME_MANAGER_DEF
 
-#define FIRST_LEVEL_NAME "cubes"
+#define FIRST_LEVEL_NAME "cubes/intro"
 
 #include <game_manager/level/level.hpp>
 #include <message_bus.hpp>

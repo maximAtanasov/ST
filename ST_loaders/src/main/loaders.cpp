@@ -13,7 +13,7 @@
 /**
  * Gets the file extension from the filename.
  * @param filename The filename.
- * @return The extension. - "png", "webp", "wav", "mp3", or "ogg". Unknown when it's well, unknown.
+ * @return The extension. - "png", "webp", "wav", "mp3", or "ogg". Unknown when no match.
  */
 ST::asset_file_type ST::get_file_extension(const std::string& filename){
     if(filename.size() > 4){

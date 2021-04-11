@@ -151,25 +151,25 @@ void console::handle_messages(){
                 break;
             }
             case TEXT_STREAM: {
-                std::string recieved_data = *static_cast<std::string*>(temp->get_data());
-                for(char const &c : recieved_data){
+                std::string received_data = *static_cast<std::string*>(temp->get_data());
+                for(char const &c : received_data){
                     if(c > 126 || c < 0) {
-                        recieved_data.clear();
+                        received_data.clear();
                     }
                 }
-                if(recieved_data == "(") {
-                    recieved_data += ")";
-                    composition.insert(cursor_position--, recieved_data);
-                } else if(recieved_data == "\"") {
-                    recieved_data += recieved_data;
-                    composition.insert(cursor_position--, recieved_data);
-                } else if(recieved_data == "[" || recieved_data == "{") {
-                    recieved_data += static_cast<char>(recieved_data.at(0) + 2);
-                    composition.insert(cursor_position--, recieved_data);
+                if(received_data == "(") {
+                    received_data += ")";
+                    composition.insert(cursor_position--, received_data);
+                } else if(received_data == "\"") {
+                    received_data += received_data;
+                    composition.insert(cursor_position--, received_data);
+                } else if(received_data == "[" || received_data == "{") {
+                    received_data += static_cast<char>(received_data.at(0) + 2);
+                    composition.insert(cursor_position--, received_data);
                 } else {
-                    composition.insert(cursor_position, recieved_data);
+                    composition.insert(cursor_position, received_data);
                 }
-                cursor_position += static_cast<uint16_t>(recieved_data.size());
+                cursor_position += static_cast<uint16_t>(received_data.size());
                 gMessage_bus.send_msg(new message(CLEAR_TEXT_STREAM));
                 break;
             }

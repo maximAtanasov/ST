@@ -133,24 +133,9 @@ function setVsync(arg)
     setVsyncLua(arg)
 end
 
-if(audio == "audioEnabled") then
-    setAudioEnabledLua(true)
-else
-    setAudioEnabledLua(false)
-end
-
-if(fullscreen == "fullscreenEnabled") then
-    setFullscreenLua(true)
-else
-    setFullscreenLua(false)
-end
-
-if(vsync == "vsyncEnabled") then
-    setVsyncLua(true)
-else
-    setVsyncLua(false)
-end
-
+setAudioEnabledLua(audio == "audioEnabled")
+setFullscreenLua(fullscreen == "fullscreenEnabled")
+setVsyncLua(vsync == "vsyncEnabled")
 
 setLeftStickHorizontalThreshold(controllerJoystickThreshold)
 setLeftStickVerticalThreshold(controllerJoystickThreshold)

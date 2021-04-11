@@ -56,11 +56,11 @@ public:
         this->data = data;
     }
 
-    static void* operator new (size_t count){
+    static void* operator new (size_t){
         return allocator.allocate();
     }
 
-    static void operator delete (void* ptr){}
+    static void operator delete (void*){}
 
     ~message(){
         if (data != nullptr) {

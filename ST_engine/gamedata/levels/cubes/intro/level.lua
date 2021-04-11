@@ -17,7 +17,7 @@ label1 = label:new(400, 600, "Actually it’s a game about a bunch of cubes", "f
 setGravity(0)
 setDarkness(254)
 hideMouseCursor()
-loadLevel("cubes_level1")
+loadLevel("cubes/cubes_level1")
 splash = 255
 splashUp = 0
 dontSkip = false
@@ -30,7 +30,7 @@ function loop()
         splashUp = splashUp + 1
         setDarkness(splashUp)
     else
-        startLevel("cubes_level1")
+        startLevel("cubes/cubes_level1")
     end
 
     if keyPressed("START") then
@@ -41,6 +41,6 @@ function loop()
     end
 
     if(rightTrigger() > 20000) or keyPressed("SKIP") then
-        startLevel("cubes_level1")
+        startLevel("cubes/cubes_level1")
     end
 end

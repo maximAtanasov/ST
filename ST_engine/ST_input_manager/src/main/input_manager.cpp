@@ -225,8 +225,9 @@ void input_manager::take_controller_input(){
     }
     //only send controller axis values if they change and the values exceed the thresholds
 
-    controller_buttons.left_trigger = (controller_buttons.left_trigger >= left_trigger_threshold) * controller_buttons.left_trigger;
-    controller_buttons.right_trigger = (controller_buttons.right_trigger >= right_trigger_threshold) * controller_buttons.right_trigger;
+    //Branch-less checks
+    controller_buttons.left_trigger = (controller_buttons.left_trigger >= left_trigger_threshold) * controller_buttons.left_trigger; // NOLINT(cppcoreguidelines-narrowing-conversions)
+    controller_buttons.right_trigger = (controller_buttons.right_trigger >= right_trigger_threshold) * controller_buttons.right_trigger; // NOLINT(cppcoreguidelines-narrowing-conversions)
 
     if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
         gMessage_bus.send_msg(new message(LEFT_TRIGGER, controller_buttons.left_trigger));
@@ -236,16 +237,20 @@ void input_manager::take_controller_input(){
         gMessage_bus.send_msg(new message(RIGHT_TRIGGER, controller_buttons.right_trigger));
     }
 
-    controller_buttons.right_stick_vertical = (controller_buttons.left_stick_vertical > left_stick_vertical_threshold
+    //Branch-less check
+    controller_buttons.right_stick_vertical = (controller_buttons.left_stick_vertical > left_stick_vertical_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
             || controller_buttons.left_stick_vertical < -left_stick_vertical_threshold) * controller_buttons.right_stick_vertical;
 
-    controller_buttons.left_stick_horizontal = (controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold
+    //Branch-less check
+    controller_buttons.left_stick_horizontal = (controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
             || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold) * controller_buttons.left_stick_horizontal;
 
-    controller_buttons.right_stick_horizontal = (controller_buttons.right_stick_horizontal > right_stick_horizontal_threshold
+    //Branch-less check
+    controller_buttons.right_stick_horizontal = (controller_buttons.right_stick_horizontal > right_stick_horizontal_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
             || controller_buttons.right_stick_horizontal < -right_stick_horizontal_threshold) * controller_buttons.right_stick_horizontal;
 
-    controller_buttons.right_stick_vertical = (controller_buttons.right_stick_vertical > right_stick_vertical_threshold
+    //Branch-less check
+    controller_buttons.right_stick_vertical = (controller_buttons.right_stick_vertical > right_stick_vertical_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
             || controller_buttons.right_stick_vertical < -right_stick_vertical_threshold) * controller_buttons.right_stick_vertical;
 
     if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
@@ -275,16 +280,16 @@ void input_manager::handle_messages(){
         switch (temp->msg_name) {
             case VIRTUAL_SCREEN_COORDINATES: {
                 auto data = temp->base_data0;
-                v_width = data & 0x0000ffffU;
-                v_height = (data >> 16U) & 0x0000ffffU;
+                v_width = data & 0xffffU;
+                v_height = (data >> 16U) & 0xffffU;
                 ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
                 ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
                 break;
             }
             case REAL_SCREEN_COORDINATES: {
                 auto data = temp->base_data0;
-                r_width = data & 0x0000ffffU;
-                r_height = (data >> 16U) & 0x0000ffffU;
+                r_width = data & 0xffffU;
+                r_height = (data >> 16U) & 0xffffU;
                 ratio_w = static_cast<float>(v_width) / static_cast<float>(r_width);
                 ratio_h = static_cast<float>(v_height) / static_cast<float>(r_height);
                 break;

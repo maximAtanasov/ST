@@ -49,7 +49,7 @@ function endLevel:update()
         self:setAffectedByPhysics(true)
     end
     if(player1:getX() == 20500 and player1:getY() == self:getY()) then
-        startLevel("cubes_level2")
+        startLevel("cubes/cubes_level2")
     end
 end
 

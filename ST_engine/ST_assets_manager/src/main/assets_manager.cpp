@@ -241,7 +241,8 @@ int8_t assets_manager::load_asset(std::string path){
             return -1;
         }
         std::string font = result.at(0);
-        TTF_Font* tempFont = TTF_OpenFont(font.c_str(), size);
+        //font sizes can only be positive
+        TTF_Font* tempFont = TTF_OpenFont(font.c_str(), size); // NOLINT(cppcoreguidelines-narrowing-conversions)
         if(tempFont != nullptr){
             font = ST::trim_path(font);
             std::string font_and_size = font + " " + result.at(1);
