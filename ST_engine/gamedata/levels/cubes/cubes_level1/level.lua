@@ -121,17 +121,17 @@ obstacle_1_29 = platform:new(19200, floor-300);
 bar_ho1_30 = bar_hor:new(20000, floor);
 
 lifeCube1 = entity:new(1800,100)
-lifeCube1:setTexture("live.png")
+lifeCube1:setTexture("life.png")
 lifeCube1:setVisible(true)
 lifeCube1:setStatic(true)
 
 lifeCube2 = entity:new(1700,100)
-lifeCube2:setTexture("live.png")
+lifeCube2:setTexture("life.png")
 lifeCube2:setVisible(true)
 lifeCube2:setStatic(true)
 
 lifeCube3 = entity:new(1600,100)
-lifeCube3:setTexture("live.png")
+lifeCube3:setTexture("life.png")
 lifeCube3:setVisible(true)
 lifeCube3:setStatic(true)
 

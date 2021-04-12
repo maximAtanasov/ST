@@ -50,15 +50,13 @@ function endLevel:update()
         self:setAffectedByPhysics(true)
     end
     if(player1:getX() == 20500 and player1:getY() == self:getY()) then
-        startLevel("cubes_level2")
+        startLevel("cubes/cubes_level2")
     end
 end
 
 levelBeginBlock = entity:new(-10, floor)
 levelBeginBlock:setAffectedByPhysics(true)
 levelBeginBlock:setCollision(0,0,10, 1080)
-
-
 
 player1 = player:new(100, 100);
 
@@ -99,17 +97,17 @@ obstacle_1_29 = platform:new(19200, floor-300);
 bar_ho1_30 = bar_hor:new(20000, floor);
 
 lifeCube1 = entity:new(1800,100)
-lifeCube1:setTexture("live.png")
+lifeCube1:setTexture("life.png")
 lifeCube1:setVisible(true)
 lifeCube1:setStatic(true)
 
 lifeCube2 = entity:new(1700,100)
-lifeCube2:setTexture("live.png")
+lifeCube2:setTexture("life.png")
 lifeCube2:setVisible(true)
 lifeCube2:setStatic(true)
 
 lifeCube3 = entity:new(1600,100)
-lifeCube3:setTexture("live.png")
+lifeCube3:setTexture("life.png")
 lifeCube3:setVisible(true)
 lifeCube3:setStatic(true)
 
@@ -142,7 +140,7 @@ function addLifeToPlayer()
 end
 
 life_pickup1 = trigger:new(8200, 220, 75, 75)
-life_pickup1:setTexture("live.png")
+life_pickup1:setTexture("life.png")
 life_pickup1:onCollisionWith(player1, addLifeToPlayer)
 
 

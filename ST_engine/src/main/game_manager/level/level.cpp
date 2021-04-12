@@ -404,10 +404,10 @@ ST::key ST::level::key_index(const std::string& arg){
         index = key::CONTROLLER_BUTTON_RIGHTSTICK;
     }
     else if(arg == "controllerLeftShoulder"){
-        index = key::CONTROLLER_BUTTON_RIGHTSHOULDER;
+        index = key::CONTROLLER_BUTTON_LEFTSHOULDER;
     }
     else if(arg == "controllerRightShoulder"){
-        index = key::CONTROLLER_BUTTON_LEFTSHOULDER;
+        index = key::CONTROLLER_BUTTON_RIGHTSHOULDER;
     }
     else if(arg == "controllerDpadUp"){
         index = key::CONTROLLER_BUTTON_DPAD_UP;

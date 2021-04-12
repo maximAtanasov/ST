@@ -7,7 +7,7 @@
 -- E-mail: maxim.atanasov@protonmail.com
 
 life_pickup = trigger:new()
-life_pickup.texture = "live.png"
+life_pickup.texture = "life.png"
 life_pickup.texWidth = 75
 life_pickup.texHeight = 75
 life_pickup.colX = 75;
