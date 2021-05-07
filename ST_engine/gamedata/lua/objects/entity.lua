@@ -119,6 +119,8 @@ function entity:setTexH(arg)
 end
 
 function entity:setTextureScale(x, y)
+    self.textureScaleX = x;
+    self.textureScaleY = y;
     setEntityTextureScale(self.ID, x, y)
 end
 

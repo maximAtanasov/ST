@@ -493,7 +493,6 @@ extern "C" int saveGameLua(lua_State* L){
     return 0;
 }
 
-
 /**
  * Sends a SET_DARKNESS message.
  * See the Lua docs for more information.

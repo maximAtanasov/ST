@@ -1,0 +1,13 @@
+# This file is part of the "ST" project.
+# You may use, distribute or modify this code under the terms
+# of the GNU General Public License version 2.
+# See LICENCE.txt in the root directory of the project.
+#
+# Author: Maxim Atanasov
+# E-mail: maxim.atanasov@protonmail.com
+
+assets/splash.png
+fonts/font1.ttf 80
+fonts/font1.ttf 50
+fonts/font1.ttf 70
+fonts/font2.ttf 90
