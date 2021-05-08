@@ -364,10 +364,12 @@ void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16
     if (texture != textures.end()) [[likely]] {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+        float bg_ratio = (float)tex_w/(float)width;
+        int src_offset = (int)((float)offset*bg_ratio);
 
         SDL_Rect dst_rect1 = {0, 0, width - offset, height};
-        SDL_Rect src_rect1 = {offset, 0, tex_w - offset, tex_h};
-        SDL_Rect src_rect2 = {0, 0, offset, tex_h};
+        SDL_Rect src_rect1 = {src_offset, 0, tex_w - src_offset, tex_h};
+        SDL_Rect src_rect2 = {0, 0, src_offset, tex_h};
         SDL_Rect dst_rect2 = {width - offset, 0, offset, height};
 
         SDL_RenderCopy(sdl_renderer, texture->second, &src_rect1, &dst_rect1);
