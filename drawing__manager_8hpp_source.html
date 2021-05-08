@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ST_engine
-   &#160;<span id="projectnumber">0.2-ALPHA</span>
+   &#160;<span id="projectnumber">0.3-ALPHA</span>
    </div>
   </td>
  </tr>
@@ -132,23 +132,25 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> draw_fps(<span class="keywordtype">double</span> <a class="code" href="classfps.html">fps</a>) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> draw_console(<a class="code" href="classconsole.html">console</a>&amp; cnsl) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> draw_text_objects(<span class="keyword">const</span> std::vector&lt;ST::text&gt;&amp;) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="comment">//Pre-processing</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> process_lights(<span class="keyword">const</span> std::vector&lt;ST::light&gt;&amp; arg);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        [[nodiscard]] <span class="keywordtype">bool</span> is_onscreen(<span class="keyword">const</span> <a class="code" href="classST_1_1entity.html">ST::entity</a>&amp; i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        [[nodiscard]] <span class="keywordtype">bool</span> is_onscreen(<span class="keyword">const</span> <a class="code" href="structST_1_1text.html">ST::text</a>&amp; i) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">//Other functions</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">void</span> handle_messages();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">void</span> set_darkness(uint8_t arg);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classdrawing__manager.html#a18ad7d7e75650943e3089c6177bf8a28">drawing_manager</a>(SDL_Window *window, <a class="code" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">~drawing_manager</a>();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdrawing__manager.html#a993886a01154adc813f63ab9b7036cef">update</a>(<span class="keyword">const</span> <a class="code" href="classST_1_1level.html">ST::level</a>&amp; temp, <span class="keywordtype">double</span>, <a class="code" href="classconsole.html">console</a>&amp; gConsole);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> draw_background(<span class="keyword">const</span> uint16_t background[PARALLAX_BG_LAYERS], <span class="keyword">const</span> uint8_t parallax_speed[PARALLAX_BG_LAYERS]) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">//Pre-processing</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> process_lights(<span class="keyword">const</span> std::vector&lt;ST::light&gt;&amp; arg);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        [[nodiscard]] <span class="keywordtype">bool</span> is_onscreen(<span class="keyword">const</span> <a class="code" href="classST_1_1entity.html">ST::entity</a>&amp; i) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        [[nodiscard]] <span class="keywordtype">bool</span> is_onscreen(<span class="keyword">const</span> <a class="code" href="structST_1_1text.html">ST::text</a>&amp; i) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">//Other functions</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">void</span> handle_messages();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">void</span> set_darkness(uint8_t arg);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classdrawing__manager.html#a18ad7d7e75650943e3089c6177bf8a28">drawing_manager</a>(SDL_Window *window, <a class="code" href="classmessage__bus.html">message_bus</a> &amp;gMessageBus);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">~drawing_manager</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classdrawing__manager.html#a993886a01154adc813f63ab9b7036cef">update</a>(<span class="keyword">const</span> <a class="code" href="classST_1_1level.html">ST::level</a>&amp; temp, <span class="keywordtype">double</span>, <a class="code" href="classconsole.html">console</a>&amp; gConsole);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;};</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructST_1_1text_html"><div class="ttname"><a href="structST_1_1text.html">ST::text</a></div><div class="ttdoc">This struct represents text objects in the game.</div><div class="ttdef"><b>Definition:</b> <a href="text_8hpp_source.html#l00023">text.hpp:23</a></div></div>
 <div class="ttc" id="aclassdrawing__manager_html_a993886a01154adc813f63ab9b7036cef"><div class="ttname"><a href="classdrawing__manager.html#a993886a01154adc813f63ab9b7036cef">drawing_manager::update</a></div><div class="ttdeci">void update(const ST::level &amp;temp, double, console &amp;gConsole)</div><div class="ttdef"><b>Definition:</b> <a href="drawing__manager_8cpp_source.html#l00070">drawing_manager.cpp:70</a></div></div>
@@ -157,9 +159,9 @@ $(function() {
 <div class="ttc" id="aclassdrawing__manager_html"><div class="ttname"><a href="classdrawing__manager.html">drawing_manager</a></div><div class="ttdoc">This object is responsible for issuing drawing commands and drawing the current level.</div><div class="ttdef"><b>Definition:</b> <a href="drawing__manager_8hpp_source.html#l00025">drawing_manager.hpp:25</a></div></div>
 <div class="ttc" id="aclassdrawing__manager_html_a18ad7d7e75650943e3089c6177bf8a28"><div class="ttname"><a href="classdrawing__manager.html#a18ad7d7e75650943e3089c6177bf8a28">drawing_manager::drawing_manager</a></div><div class="ttdeci">drawing_manager(SDL_Window *window, message_bus &amp;gMessageBus)</div><div class="ttdef"><b>Definition:</b> <a href="drawing__manager_8cpp_source.html#l00022">drawing_manager.cpp:22</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html"><div class="ttname"><a href="classST_1_1entity.html">ST::entity</a></div><div class="ttdoc">This class represents all static or dynamic objects in the game (excluding text, see ST::text)</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00024">entity.hpp:24</a></div></div>
-<div class="ttc" id="aclassST_1_1level_html"><div class="ttname"><a href="classST_1_1level.html">ST::level</a></div><div class="ttdoc">This object contains all the data for a level and provides functions for loading and unloading a leve...</div><div class="ttdef"><b>Definition:</b> <a href="level_8hpp_source.html#l00027">level.hpp:27</a></div></div>
+<div class="ttc" id="aclassST_1_1level_html"><div class="ttname"><a href="classST_1_1level.html">ST::level</a></div><div class="ttdoc">This object contains all the data for a level and provides functions for loading and unloading a leve...</div><div class="ttdef"><b>Definition:</b> <a href="level_8hpp_source.html#l00029">level.hpp:29</a></div></div>
 <div class="ttc" id="aclasssubscriber_html"><div class="ttname"><a href="classsubscriber.html">subscriber</a></div><div class="ttdoc">This class handles a small queue for messages.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber_8hpp_source.html#l00020">subscriber.hpp:20</a></div></div>
-<div class="ttc" id="aclassdrawing__manager_html_a607e5ea758beeabcd5b6824ab8fcfb3c"><div class="ttname"><a href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">drawing_manager::~drawing_manager</a></div><div class="ttdeci">~drawing_manager()</div><div class="ttdef"><b>Definition:</b> <a href="drawing__manager_8cpp_source.html#l00428">drawing_manager.cpp:428</a></div></div>
+<div class="ttc" id="aclassdrawing__manager_html_a607e5ea758beeabcd5b6824ab8fcfb3c"><div class="ttname"><a href="classdrawing__manager.html#a607e5ea758beeabcd5b6824ab8fcfb3c">drawing_manager::~drawing_manager</a></div><div class="ttdeci">~drawing_manager()</div><div class="ttdef"><b>Definition:</b> <a href="drawing__manager_8cpp_source.html#l00440">drawing_manager.cpp:440</a></div></div>
 <div class="ttc" id="astructST_1_1camera_html"><div class="ttname"><a href="structST_1_1camera.html">ST::camera</a></div><div class="ttdoc">The camera object - represents the viewport for the game.</div><div class="ttdef"><b>Definition:</b> <a href="camera_8hpp_source.html#l00016">camera.hpp:16</a></div></div>
 <div class="ttc" id="aclassconsole_html"><div class="ttname"><a href="classconsole.html">console</a></div><div class="ttdoc">This object represents the console window.</div><div class="ttdef"><b>Definition:</b> <a href="console_8hpp_source.html#l00017">console.hpp:17</a></div></div>
 <!-- start footer part -->

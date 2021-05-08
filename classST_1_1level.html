@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ST_engine
-   &#160;<span id="projectnumber">0.2-ALPHA</span>
+   &#160;<span id="projectnumber">0.3-ALPHA</span>
    </div>
   </td>
  </tr>
@@ -112,9 +112,12 @@ std::vector&lt; <a class="el" href="structST_1_1light.html">ST::light</a> &gt;&#
 <tr class="memitem:aa2bc3982ddcf38f1f7f64b33b44e6416"><td class="memItemLeft" align="right" valign="top"><a id="aa2bc3982ddcf38f1f7f64b33b44e6416"></a>
 std::vector&lt; <a class="el" href="structST_1_1text.html">ST::text</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>text_objects</b> {}</td></tr>
 <tr class="separator:aa2bc3982ddcf38f1f7f64b33b44e6416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5269a0550ada0f1d52cb21d920799724"><td class="memItemLeft" align="right" valign="top"><a id="a5269a0550ada0f1d52cb21d920799724"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>background</b> = 65535</td></tr>
-<tr class="separator:a5269a0550ada0f1d52cb21d920799724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0c912836396b99c4de27835a30f478c"><td class="memItemLeft" align="right" valign="top"><a id="ae0c912836396b99c4de27835a30f478c"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>background</b> [PARALLAX_BG_LAYERS] = {65535, 65535, 65535, 65535}</td></tr>
+<tr class="separator:ae0c912836396b99c4de27835a30f478c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbfc70bc1b3c5e66c23254a9fdebd2ea"><td class="memItemLeft" align="right" valign="top"><a id="abbfc70bc1b3c5e66c23254a9fdebd2ea"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>parallax_speed</b> [PARALLAX_BG_LAYERS] = {0, 0, 0, 0}</td></tr>
+<tr class="separator:abbfc70bc1b3c5e66c23254a9fdebd2ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4af7ab47a8957254afd6bf31c6782d6c"><td class="memItemLeft" align="right" valign="top"><a id="a4af7ab47a8957254afd6bf31c6782d6c"></a>
 SDL_Color&#160;</td><td class="memItemRight" valign="bottom"><b>background_color</b> {0, 0, 0, 0}</td></tr>
 <tr class="separator:a4af7ab47a8957254afd6bf31c6782d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,7 +141,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>::level_tests</b></t
 <div class="textblock"><p>This object contains all the data for a level and provides functions for loading and unloading a level. </p>
 <p>Sends messages to load assets and loads the input configuration from disk. </p>
 
-<p class="definition">Definition at line <a class="el" href="level_8hpp_source.html#l00027">27</a> of file <a class="el" href="level_8hpp_source.html">level.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="level_8hpp_source.html#l00029">29</a> of file <a class="el" href="level_8hpp_source.html">level.hpp</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8592580d090d80586851cf4a72a937b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8592580d090d80586851cf4a72a937b8">&#9670;&nbsp;</a></span>level()</h2>
