@@ -356,6 +356,25 @@ void ST::renderer_sdl::draw_background(const uint16_t arg) {
 }
 
 /**
+ * @param arg The hash of the name of the texture.
+ * @param offset The offset in the texture for the parallax effect
+ */
+void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16_t offset) {
+    auto texture = textures.find(arg); //TODO: Implement scrolling
+    if (texture != textures.end()) [[likely]] {
+        int tex_w, tex_h;
+        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
+
+        SDL_Rect dst_rect = {0, 0, width - offset, height};
+        SDL_Rect src_rect = {offset, 0, tex_w - offset, tex_h};
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
+        src_rect = {0, 0, offset, tex_h};
+        dst_rect = {width - offset, 0, offset, height};
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
+    }
+}
+
+/**
  * Draws a texture that is a spritesheet.
  * @param arg The hash of the name of the spritesheet.
  * @param x The X position to render at.

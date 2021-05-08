@@ -13,6 +13,8 @@ use("platform.lua")
 use("bar_hor.lua")
 use("crate.lua")
 use("coin.lua")
+use("water.lua")
+use("edge_water.lua")
 
 pause = 0
 
@@ -32,7 +34,11 @@ setLevelFloor(floor)
 setDarkness(0)
 hideMouseCursor()
 
-setBackground("bg2.png")
+setBackground("bg2_1.png", 0, 0)
+setBackground("bg2_2.png", 1, 3)
+setBackground("bg2_3.png", 2, 4)
+setBackground("bg2_4.png", 3, 3)
+
 --playMusic("music5.ogg", 40, -1)
 --playSound("rain.wav", 50, -1)
 --Create and initialize entities
@@ -61,15 +67,6 @@ levelBeginBlock = entity:new(-10, floor)
 levelBeginBlock:setAffectedByPhysics(true)
 levelBeginBlock:setCollision(0,0,10, 1080)
 
-player1 = player:new(100, 100);
-
-coin1 = coin:new(1400, 900)
-coin2 = coin:new(1500, 900)
-coin3 = coin:new(1600, 900)
-
-coin4 = coin:new(1400, 700)
-coin5 = coin:new(1500, 700)
-coin6 = coin:new(1600, 700)
 
 bar_ho1_1 = bar_hor:new(0, floor);
 bar_ho1_2 = bar_hor:new(512, floor);
@@ -85,6 +82,12 @@ bar_ho1_10 = bar_hor:new(4096, floor);
 bar_ho1_11 = bar_hor:new(4608, floor);
 bar_ho1_12 = bar_hor:new(5120, floor);
 bar_ho1_13 = bar_hor:new(5632, floor);
+edge_water_1 = edge_water:new(6144, floor);
+water_1 = water:new(6272, floor);
+water_2 = water:new(6784, floor);
+water_3 = water:new(7296, floor);
+water_3 = water:new(7808, floor);
+
 --bar_ho1_14 = bar_hor:new(10400, floor);
 bar_ho1_15 = bar_hor:new(11200, floor);
 bar_ho1_16 = bar_hor:new(12000, floor);
@@ -132,17 +135,17 @@ obstacle_1_29 = platform:new(19200, floor-300);
 bar_ho1_30 = bar_hor:new(20000, floor);
 
 lifeCube1 = entity:new(1800,100)
-lifeCube1:setTexture("life.png")
+lifeCube1:setTexture("heart.png")
 lifeCube1:setVisible(true)
 lifeCube1:setStatic(true)
 
 lifeCube2 = entity:new(1700,100)
-lifeCube2:setTexture("life.png")
+lifeCube2:setTexture("heart.png")
 lifeCube2:setVisible(true)
 lifeCube2:setStatic(true)
 
 lifeCube3 = entity:new(1600,100)
-lifeCube3:setTexture("life.png")
+lifeCube3:setTexture("heart.png")
 lifeCube3:setVisible(true)
 lifeCube3:setStatic(true)
 
@@ -154,6 +157,16 @@ coinCounter:setStatic(true)
 
 coinCounterText = textObject:new(1920/2-128,100, 50, "font1.ttf")
 coinCounterText:setText('0')
+
+player1 = player:new(100, 100)
+
+coin1 = coin:new(1400, 900)
+coin2 = coin:new(1500, 900)
+coin3 = coin:new(1600, 900)
+
+coin4 = coin:new(1400, 700)
+coin5 = coin:new(1500, 700)
+coin6 = coin:new(1600, 700)
 
 function resetPlayerPosition()
     controllerRumble(0.5, 1000)
@@ -177,8 +190,6 @@ trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
 trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
 trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
 trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
-
-
 
 labelTimer = 0;
 
@@ -309,6 +320,16 @@ function loop()
         if keyPressed("PAUSE") then
             pauseGame()
         end
+        coin1:update()
+        coin2:update()
+        coin3:update()
+        coin4:update()
+        coin5:update()
+        coin6:update()
+        coinCounterText:setText(coinsCollected)
+
+        player1:update()
+
         obstacle_1_4:update()
         obstacle_1_5:update()
         obstacle_1_6:update()
@@ -340,15 +361,7 @@ function loop()
 
         endLevel:update()
 
-        coin1:update()
-        coin2:update()
-        coin3:update()
-        coin4:update()
-        coin5:update()
-        coin6:update()
-        coinCounterText:setText(coinsCollected)
 
-        player1:update()
 
 --[[         if(labelTimer > 10 and labelTimer < 150) then
             label1:show()

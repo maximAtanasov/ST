@@ -73,7 +73,8 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
 
     ticks = SDL_GetTicks(); //CPU ticks since start
     ST::renderer_sdl::clear_screen(temp.background_color);
-    ST::renderer_sdl::draw_background(temp.background);
+
+    draw_background(temp.background, temp.parallax_speed);
 
     std::vector<ST::entity> entities{};
 
@@ -83,7 +84,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     });
 
     draw_entities(entities);
-    ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ST::pos_mod(ticks, temp.overlay_sprite_num)), temp.overlay_sprite_num);
+    ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ticks % temp.overlay_sprite_num), temp.overlay_sprite_num);
     draw_text_objects(temp.text_objects);
     //draw the lights when we are sure they are processed
     if(lighting_enabled) {
@@ -362,7 +363,7 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
             ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y, i.tex_scale_x, i.tex_scale_y);
         } else {
             ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y ,
-                                                 ST::pos_mod(time, i.sprite_num), i.animation, i.animation_num, i.sprite_num,
+                                                 time % i.sprite_num, i.animation, i.animation_num, i.sprite_num,
                                                  i.tex_scale_x, i.tex_scale_y);
         }
     }
@@ -422,6 +423,17 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
 }
 
 /**
+ * Draws all parallax background layers with the corresponding speed.
+ * @param background an array of integers representing the background textures
+ * @param parallax_speed an array of integers representing the parallax scrolling speed
+ */
+void drawing_manager::draw_background(const uint16_t background[PARALLAX_BG_LAYERS], const uint8_t parallax_speed[PARALLAX_BG_LAYERS]) const {
+    for(uint8_t i = 0; i < PARALLAX_BG_LAYERS; i++) {
+        ST::renderer_sdl::draw_background_parallax(background[i], (camera.x*(parallax_speed[i] << 3))/(w_width >> 1) % w_width);
+    }
+}
+
+/**
  * Closes the drawing manager.
  * Quits the Font subsystem and destroys the renderer object.
  */
@@ -430,3 +442,4 @@ drawing_manager::~drawing_manager(){
     TTF_Quit();
     singleton_initialized = false;
 }
+

@@ -714,7 +714,7 @@ TEST_F(lua_backend_test, test_call_function_use){
 
 TEST_F(lua_backend_test, test_call_function_setBackground){
     test_subject.run_script("setBackground(\"some_bg.webp\")");
-    ASSERT_EQ(1, game_mngr->get_level_calls);
+    ASSERT_EQ(2, game_mngr->get_level_calls);
 }
 
 TEST_F(lua_backend_test, test_call_function_setBackgroundColor){

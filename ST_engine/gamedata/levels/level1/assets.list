@@ -15,6 +15,10 @@ fonts/font2.ttf 70
 assets/audio/coin.wav
 assets/coin.png
 assets/coin_hud.png
+assets/heart.png
+assets/water.png
+assets/ground_edge_water.png
+assets/water_bridge.png
 assets/crate1.png
 assets/crate2.png
 assets/crate3.png
@@ -27,5 +31,9 @@ assets/platform.png
 assets/alien_blue.png
 assets/bg1.png
 assets/bg2.png
+assets/bg2_1.png
+assets/bg2_2.png
+assets/bg2_3.png
+assets/bg2_4.png
 assets/button01.png
 assets/button01_hover.png

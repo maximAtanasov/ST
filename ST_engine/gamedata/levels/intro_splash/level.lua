@@ -19,7 +19,7 @@ end
 label = label:new(980-LABEL_OFFSET, 870, LABEL_TEXT, FONT, FONT_SIZE)
 
 setGravity(0)
-setBackground("splash.png")
+setBackground("splash.png", 0, 0)
 setDarkness(254)
 loadLevel("level1")
 hideMouseCursor()

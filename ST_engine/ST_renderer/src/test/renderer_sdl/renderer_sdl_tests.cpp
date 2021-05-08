@@ -129,6 +129,23 @@ TEST_F(renderer_sdl_tests, test_draw_background){
     SDL_Delay(wait_duration);
 }
 
+TEST_F(renderer_sdl_tests, test_draw_background_parallax){
+    SDL_Surface* test_surface1 = IMG_Load("bg2_1.png");
+    SDL_Surface* test_surface2 = IMG_Load("bg2_3.png");
+    ASSERT_TRUE(static_cast<bool>(test_surface1));
+    ASSERT_TRUE(static_cast<bool>(test_surface2));
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
+    test_assets[0] = test_surface1;
+    test_assets[1] = test_surface2;
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    for(uint16_t i = 0; i < 1000; i++) {
+        for(uint8_t j = 0; j < 2; j++) {
+            ST::renderer_sdl::draw_background_parallax(j, (i*30*(j << 3))/(1920 >> 1) % 1080);
+        }
+        ST::renderer_sdl::present();
+    }
+}
+
 TEST_F(renderer_sdl_tests, test_draw_texture){
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
     ASSERT_TRUE(static_cast<bool>(test_surface));
