@@ -360,17 +360,18 @@ void ST::renderer_sdl::draw_background(const uint16_t arg) {
  * @param offset The offset in the texture for the parallax effect
  */
 void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16_t offset) {
-    auto texture = textures.find(arg); //TODO: Implement scrolling
+    auto texture = textures.find(arg);
     if (texture != textures.end()) [[likely]] {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
 
-        SDL_Rect dst_rect = {0, 0, width - offset, height};
-        SDL_Rect src_rect = {offset, 0, tex_w - offset, tex_h};
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
-        src_rect = {0, 0, offset, tex_h};
-        dst_rect = {width - offset, 0, offset, height};
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
+        SDL_Rect dst_rect1 = {0, 0, width - offset, height};
+        SDL_Rect src_rect1 = {offset, 0, tex_w - offset, tex_h};
+        SDL_Rect src_rect2 = {0, 0, offset, tex_h};
+        SDL_Rect dst_rect2 = {width - offset, 0, offset, height};
+
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect1, &dst_rect1);
+        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect2, &dst_rect2);
     }
 }
 
