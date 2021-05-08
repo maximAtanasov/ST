@@ -23,12 +23,6 @@ namespace ST {
         return value;
     }
 
-    //mod function - only for positive integers (and yes, it is faster than %, I've tested it)
-    inline size_t pos_mod(size_t a, size_t b) {
-        return a >= b ? a % b : a;
-    }
-
-
     int random_int(int max);
 }
 

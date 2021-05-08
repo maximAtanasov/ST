@@ -6,186 +6,221 @@
 -- Author: Maxim Atanasov
 -- E-mail: maxim.atanasov@protonmail.com
 
-use("grass.lua")
-use("tree1.lua")
-use("tree2.lua")
-use("plant1.lua")
-use("plant2.lua")
-use("plant3.lua")
 use("player.lua")
-use("house1.lua")
-use("house2.lua")
-use("barrel1.lua")
-use("barrel2.lua")
-use("crystal_green.lua")
+use("trigger.lua")
+use("obstacle_1.lua")
+use("platform.lua")
+use("bar_hor.lua")
 use("crate.lua")
 use("coin.lua")
-use("wolf.lua")
-use("torch.lua")
-
-loadLevel("levelCard")
+use("water.lua")
+use("edge_water.lua")
 
 pause = 0
 
 stopAllSounds()
 unpausePhysics()
-enableLighting(true)
+enableLighting(false)
 
-setLevelSize(7000, 3000)
-floor = 1050
+setLevelSize(150000, 3000)
+floor = 1081
 gravity = 18
-initialFade = 255
-darkness = 195
+
+coinsCollected = 0;
 
 setGravity(gravity)
 
 setLevelFloor(floor)
-setDarkness(darkness)
+setDarkness(0)
 hideMouseCursor()
 
---Load the appropriate language configuration
-if language == "russian" then
-    use("language_russian.lua")
-elseif language == "english" then
-    use("language_english.lua")
-end
+setBackground("bg2_1.png", 0, 0)
+setBackground("bg2_2.png", 1, 3)
+setBackground("bg2_3.png", 2, 4)
+setBackground("bg2_4.png", 3, 3)
 
-setBackground("fortress.webp")
-
-setOverlay("rain.webp", 13);
-playMusic("Shades.ogg", 100, -1)
-playSound("rain.wav", 50, -1)
+--playMusic("music5.ogg", 40, -1)
+--playSound("rain.wav", 50, -1)
 --Create and initialize entities
 
-tree1_1 = tree1:new(725, floor)
+endLevel = entity:new(20500,floor-100)
+endLevel:setVisible(true)
+endLevel:setTexture("black.png")
+endLevel:setTexW(50)
+endLevel:setTexH(50)
+endLevel:setTextureScale(3, 3)
+endLevel:setCollision(150,0, 5, 30)
+endLevel:setAffectedByPhysics(true)
 
-plant1_1 = plant1:new(100, floor)
-plant1_2 = plant1:new(1400, floor)
-plant1_3 = plant1:new(6200, floor)
+function endLevel:update()
+    if(player1:getX() > self:getX()) then
+        self:setAffectedByPhysics(false)
+    else
+        self:setAffectedByPhysics(true)
+    end
+    if(player1:getX() == 20500 and player1:getY() == self:getY()) then
+        startLevel("cubes/cubes_level2")
+    end
+end
 
-plant2_1 = plant2:new(640, floor)
-plant2_2 = plant2:new(3550, floor)
-plant2_3 = plant2:new(1500, floor)
-
-plant3_1 = plant3:new(4000, floor)
-plant3_2 = plant3:new(750, floor)
-plant3_3 = plant3:new(6500, floor)
-
-house1_1 = house1:new(1700, floor)
-house2_1 = house2:new(2500, floor)
-house2_2 = house2:new(5000, floor)
-
-torch1 = torch:new(1900, 950)
-torch1:play_animation()
-
-torch2 = torch:new(2780, 950)
-torch2:play_animation()
-
-torch2 = torch:new(5280, 950)
-torch2:play_animation()
-
-tree1_2 = tree1:new(1040, floor)
-tree1_3 = tree1:new(2250, floor)
-tree1_4 = tree1:new(2900, floor)
-
-tree1_5 = tree1:new(4040, floor)
-tree1_6 = tree1:new(6250, floor)
-tree1_7 = tree1:new(8900, floor)
-
-barrel1_1 = barrel1:new(2450, floor)
-barrel2_1 = barrel2:new(3200, floor)
-
-player1 = player:new(10, floor)
-player1:idle()
-
---grass
-crate1 = crate:new(400, floor)
-crate2 = crate:new(3400, floor)
-crate3 = crate:new(460, floor-150)
-crate4 = crate:new(800, floor)
-crate5 = crate:new(900, floor-150)
-crate6 = crate:new(1000, floor)
-crate7 = crate:new(2000, floor)
-
-wolf1 = wolf:new(2500, 1000)
-wolfTrigger1 = wolfTrigger:new(2500, 1000)
-wolf1:idle()
-
-grass1 = grass:new(0, 1081)
-grass2 = grass:new(400, 1081)
-grass3 = grass:new(800, 1081)
-grass4 = grass:new(1200, 1081)
-grass5 = grass:new(1600, 1081)
-grass6 = grass:new(2000, 1081)
-grass7 = grass:new(2400, 1081)
-grass8 = grass:new(2800, 1081)
-grass9 = grass:new(3200, 1081)
-grass10 = grass:new(3600, 1081)
-grass11 = grass:new(4000, 1081)
-grass12 = grass:new(4400, 1081)
-grass13 = grass:new(4800, 1081)
-grass14 = grass:new(5200, 1081)
-grass15 = grass:new(5600, 1081)
-grass16 = grass:new(6000, 1081)
-grass17 = grass:new(6400, 1081)
-grass18 = grass:new(6800, 1081)
-grass19 = grass:new(7200, 1081)
-grass20 = grass:new(7600, 1081)
-grass21 = grass:new(8000, 1081)
-grass22 = grass:new(8400, 1081)
-grass23 = grass:new(8800, 1081)
-grass24 = grass:new(9200, 1081)
-grass25 = grass:new(9600, 1081)
-grass26 = grass:new(10000, 1081)
-grass26:setCollision(0, 0, 400, 100)
+levelBeginBlock = entity:new(-10, floor)
+levelBeginBlock:setAffectedByPhysics(true)
+levelBeginBlock:setCollision(0,0,10, 1080)
 
 
-coin1 = coin:new(1400, 1000)
-coin1:spin()
+bar_ho1_1 = bar_hor:new(0, floor);
+bar_ho1_2 = bar_hor:new(512, floor);
+bar_ho1_3 = bar_hor:new(1024, floor);
+bar_ho1_4 = bar_hor:new(1536, floor);
+bar_ho1_5 = bar_hor:new(2048, floor);
+bar_ho1_6 = bar_hor:new(2560, floor);
+bar_ho1_7 = bar_hor:new(3072, floor);
+bar_ho1_8 = bar_hor:new(3584, floor);
+--bar_ho1_9 = bar_hor:new(6400, floor);
 
-coin2 = coin:new(1470, 1000)
-coin2:spin()
+bar_ho1_10 = bar_hor:new(4096, floor);
+bar_ho1_11 = bar_hor:new(4608, floor);
+bar_ho1_12 = bar_hor:new(5120, floor);
+bar_ho1_13 = bar_hor:new(5632, floor);
+edge_water_1 = edge_water:new(6144, floor);
+water_1 = water:new(6272, floor);
+water_2 = water:new(6784, floor);
+water_3 = water:new(7296, floor);
+water_3 = water:new(7808, floor);
 
-coin3 = coin:new(1540, 1000)
-coin3:spin()
+--bar_ho1_14 = bar_hor:new(10400, floor);
+bar_ho1_15 = bar_hor:new(11200, floor);
+bar_ho1_16 = bar_hor:new(12000, floor);
+bar_ho1_17 = bar_hor:new(12800, floor);
+bar_ho1_18 = bar_hor:new(13600, floor);
 
-coin4 = coin:new(1610, 1000)
-coin4:spin()
+crate1 = crate:new(500, floor-200);
+crate2 = crate:new(540, floor-400);
+crate3 = crate:new(800, floor-600);
 
-coin5 = coin:new(1680, 1000)
-coin5:spin()
 
-coin6 = coin:new(1750, 1000)
-coin6:spin()
+obstacle_1_4 = platform:new(2000, floor-400);
+obstacle_1_5 = platform:new(3000, floor-200);
+obstacle_1_6 = platform:new(3500, floor-400);
+obstacle_1_7 = platform:new(4050, floor-290);
+obstacle_1_8 = obstacle_1:new(5280, floor-300);
+--obstacle_1_9 = obstacle_1:new(5500, floor-200);
 
-crystal_green1 = crystal_green:new(1850, 1000)
-crystal_green1:spin()
+obstacle_1_10 = platform:new(6100, floor-300);
 
-coin7 = coin:new(3600, 1000)
-coin7:spin()
+obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260, 360, 60);
 
-coin8 = coin:new(3670, 1000)
-coin8:spin()
+obstacle_1_11 = platform:new(6700, floor-300);
+obstacle_1_12 = platform:new(7250, floor-300);
+obstacle_1_13 = obstacle_1:new(8000, floor-200);
+obstacle_1_14 = obstacle_1:new(8800, floor-200);
+--obstacle_1_15 = obstacle_1:new(9500, floor-200);
 
-coin9 = coin:new(3740, 1000)
-coin9:spin()
 
-coin10 = coin:new(3810, 1000)
-coin10:spin()
+obstacle_1_16 = platform:new(10000, floor-300);
+obstacle_1_17 = platform:new(10500, floor-300);
+obstacle_1_18 = platform:new(11000, floor-300);
+obstacle_1_19 = obstacle_1:new(13200, floor-200);
+obstacle_1_20 = platform:new(14000, floor-300);
+obstacle_1_21 = platform:new(14800, floor-300);
+obstacle_1_22 = platform:new(15400, floor-300);
+obstacle_1_23 = platform:new(16000, floor-300);
+obstacle_1_24 = platform:new(16400, floor-700);
+obstacle_1_25 = platform:new(16900, floor-700);
+obstacle_1_26 = platform:new(17400, floor-700);
+obstacle_1_27 = platform:new(18000, floor-300);
+obstacle_1_28 = platform:new(18600, floor-300);
+obstacle_1_29 = platform:new(19200, floor-300);
 
-coin11 = coin:new(3880, 1000)
-coin11:spin()
+bar_ho1_30 = bar_hor:new(20000, floor);
 
-coin12 = coin:new(3950, 1000)
-coin12:spin()
+lifeCube1 = entity:new(1800,100)
+lifeCube1:setTexture("heart.png")
+lifeCube1:setVisible(true)
+lifeCube1:setStatic(true)
 
-light1 = light:new(1935, 850, 100, 85, 0)
-light2 = light:new(2815, 850, 100, 85, 0)
-light3 = light:new(5315, 850, 100, 85, 0)
+lifeCube2 = entity:new(1700,100)
+lifeCube2:setTexture("heart.png")
+lifeCube2:setVisible(true)
+lifeCube2:setStatic(true)
+
+lifeCube3 = entity:new(1600,100)
+lifeCube3:setTexture("heart.png")
+lifeCube3:setVisible(true)
+lifeCube3:setStatic(true)
+
+coinCounter = entity:new(1920/2-240,115)
+coinCounter:setTexture("coin_hud.png")
+coinCounter:setTextureScale(0.8, 0.8)
+coinCounter:setVisible(true)
+coinCounter:setStatic(true)
+
+coinCounterText = textObject:new(1920/2-128,100, 50, "font1.ttf")
+coinCounterText:setText('0')
+
+player1 = player:new(100, 100)
+
+coin1 = coin:new(1400, 900)
+coin2 = coin:new(1500, 900)
+coin3 = coin:new(1600, 900)
+
+coin4 = coin:new(1400, 700)
+coin5 = coin:new(1500, 700)
+coin6 = coin:new(1600, 700)
+
+function resetPlayerPosition()
+    controllerRumble(0.5, 1000)
+    playSound("respawn.wav", 80, 0)
+    player1.lives = player1.lives - 1;
+    if(player1.lives == 2) then
+        lifeCube3:setVisible(false)
+    elseif player1.lives == 1 then
+        lifeCube2:setVisible(false)
+    elseif player1.lives == 0 then
+        lifeCube1:setVisible(false)
+    end
+    player1:setXY(100,100)
+end
+
+trigger_pit_0 = trigger:new(6400, floor-10, 800, 20)
+trigger_pit_0:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
+trigger_pit_1:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
+trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
+trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
+trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
+
+labelTimer = 0;
+
+--[[ label1 = label:new(270, 800, "Woa, what's going on?!", "font1.ttf", 50)
+label1:hide()
+label2 = label:new(300, 800, "Why am I a SQUARE????", "font1.ttf", 50)
+label2:hide()
+label3 = label:new(280, 800, " ", "font1.ttf", 50)
+label3:hide()
+label4 = label:new(350, 800, "Is this a dream?!", "font1.ttf", 50)
+label4:hide()
+label5 = label:new(400, 800, "I hope it is...", "font1.ttf", 50)
+label5:hide()
+label6 = label:new(270, 800, "wait... PLATFORMS???", "font1.ttf", 50)
+label6:hide()
+label7 = label:new(470, 800, "WHY???", "font1.ttf", 50)
+label7:hide()
+label8 = label:new(300, 800, "WHAT'S GOING ON!?", "font1.ttf", 50)
+label8:hide() ]]
+
+--[[ bouncyTriggerCounter = 0
+bouncyTriggerAmount = 0
+label9 = label:new(270, 800, "Hehe, it's bouncy", "font1.ttf", 50)
+label9:hide()
+
+label10 = label:new(270, 800, "I should probably stop...", "font1.ttf", 50)
+label10:hide() ]]
 
 --PAUSE MENU=========================================================================
 pauseBG = entity:new(0, floor)
-pauseBG:setTexture("fortress.webp")
+--pauseBG:setTexture("fortress.webp")
 pauseBG:setVisible(false)
 pauseBG:setStatic(true)
 pauseBG:setY(1080)
@@ -195,11 +230,13 @@ pauseBG:setY(1080)
 all_buttons_key = "MOUSE1"
 
 ----@Audio
-all_buttons_sound = "buttonSelected.wav"
+--all_buttons_sound = "buttonSelected.wav"
 
 --CONTINUE BUTTON
-button_continue = button:new(50, 500, CONTINUE_TEXT, FONT, 80)
+button_continue = button:new(50, 500, "Continue", "font1.ttf", 80)
 button_continue:setClickKey(all_buttons_key)
+button_continue:setTexture("button01.png")
+button_continue:setTextureScale(2, 2)
 button_continue:setMarginX(474)
 button_continue:setMarginY(92)
 button_continue:hide()
@@ -213,16 +250,18 @@ function button_continue:onHover()
         playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
         self.text:setTextColor(255, 100, 100, 255)
+        self:setTexture("button01_hover.png")
     end
 end
 
 function button_continue:onNothing()
     self.soundPlayed = 1
     self.text:setTextColor(255, 255, 255, 255)
+    self:setTexture("button01.png")
 end
 
 --EXIT BUTTON
-button_exit = button:new(50, 600, EXIT_TEXT, FONT, 80)
+button_exit = button:new(50, 600, "Exit", "font1.ttf", 80)
 button_exit:setClickKey(all_buttons_key)
 button_exit:setMarginX(224)
 button_exit:setMarginY(85)
@@ -248,7 +287,7 @@ end
 --FUNCTIONS FOR PAUSING THE GAME
 function pauseGame()
     setOverlay(" ", 1)
-    setDarkness(0)
+    --setDarkness(0)
     pausePhysics()
     setGravity(0)
     pauseBG:setVisible(true)
@@ -259,15 +298,13 @@ function pauseGame()
 end
 
 function unpauseGame()
-    setDarkness(darkness)
-    setOverlay("rain.webp", 17)
     unpausePhysics()
     setGravity(gravity)
     pauseBG:setVisible(false)
     button_continue:hide()
     button_exit:hide()
     hideMouseCursor()
-    setBackground("fortress.webp")
+    --setBackground("fortress.webp")
     pause = 0
 end
 
@@ -283,40 +320,89 @@ function loop()
         if keyPressed("PAUSE") then
             pauseGame()
         end
-
-        player1:update()
         coin1:update()
         coin2:update()
         coin3:update()
         coin4:update()
         coin5:update()
         coin6:update()
-        crystal_green1:update()
+        coinCounterText:setText(coinsCollected)
 
-        coin7:update()
-        coin8:update()
-        coin9:update()
-        coin10:update()
-        coin11:update()
-        coin12:update()
-        wolf1:update()
+        player1:update()
 
-        centreCamera(player1.ID)
-        --thunderclap
-        local random = math.random
-        if random(1, 800) == 50 then
-            if random(1, 4) ~= 3 then
-                playSound("thunderclap.wav", 100, 0)
-            else
-                playSound("thunderclap2.wav", 75, 0)
-            end
-            setDarkness(0)
-        else
-            setDarkness(darkness)
+        obstacle_1_4:update()
+        obstacle_1_5:update()
+        obstacle_1_6:update()
+        obstacle_1_7:update()
+
+        obstacle_1_10:update()
+        obstacle_1_11:update()
+        obstacle_1_12:update()
+
+        obstacle_1_16:update()
+        obstacle_1_17:update()
+        obstacle_1_18:update()
+
+        obstacle_1_20:update()
+        obstacle_1_21:update()
+        obstacle_1_22:update()
+        obstacle_1_23:update()
+        obstacle_1_24:update()
+        obstacle_1_25:update()
+        obstacle_1_26:update()
+        obstacle_1_27:update()
+        obstacle_1_28:update()
+        obstacle_1_29:update()
+
+        trigger_pit_0:update()
+        trigger_pit_1:update()
+        trigger_pit_2:update()
+        trigger_pit_3:update()
+
+        endLevel:update()
+
+
+
+--[[         if(labelTimer > 10 and labelTimer < 150) then
+            label1:show()
+            label1.text:setY(player1:getY()-150)
+        elseif labelTimer > 150 and labelTimer < 300 then
+            label1:hide()
+            label2:show()
+            label2.text:setY(player1:getY()-150)
+        elseif labelTimer > 300 and labelTimer < 450 then
+            label2:hide()
+            label3:show()
+            label3.text:setY(player1:getY()-150)
+        elseif labelTimer > 450 and labelTimer < 600 then
+            label3:hide()
+            label4:show()
+            label4.text:setY(player1:getY()-150)
+        elseif labelTimer > 600 and labelTimer < 750 then
+            label4:hide()
+            label5:show()
+            label5.text:setY(player1:getY()-150)
+        elseif labelTimer > 750 and labelTimer < 850 then
+            label5:hide()
+            label6:show()
+            label6.text:setY(player1:getY()-150)
+        elseif labelTimer > 850 and labelTimer < 900 then
+            label6:hide()
+            label7:show()
+            label7.text:setY(player1:getY()-150)
+        elseif labelTimer > 900 and labelTimer < 950 then
+            label7:hide()
+            label8:show()
+            label8.text:setY(player1:getY()-150)
+        elseif labelTimer > 950 then
+            label8:hide()
+            player1.speed = 15
         end
 
+        labelTimer = labelTimer + 1 ]]
+        centreCamera(player1.ID)
     elseif(pause == 1) then
-        setDarkness(0)
+        -- setDarkness(0)
         button_continue:update()
         button_exit:update()
         if keyPressed("PAUSE") then

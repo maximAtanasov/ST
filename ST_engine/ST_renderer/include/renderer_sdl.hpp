@@ -24,48 +24,49 @@
 
 namespace ST::renderer_sdl {
 
-        void set_draw_color(uint8_t, uint8_t, uint8_t, uint8_t);
+    void set_draw_color(uint8_t, uint8_t, uint8_t, uint8_t);
 
-        void clear_screen(SDL_Color color);
+    void clear_screen(SDL_Color color);
 
-        void clear_screen();
+    void clear_screen();
 
-        void present();
+    void present();
 
-        void draw_background(uint16_t arg);
+    void draw_background(uint16_t arg);
 
-        void draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite_num);
+    void draw_background_parallax(uint16_t arg, uint16_t offset);
 
-        void draw_texture(uint16_t arg, int32_t x, int32_t y);
+    void draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite_num);
 
-        void draw_texture_scaled(uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y);
+    void draw_texture(uint16_t arg, int32_t x, int32_t y);
 
-        void draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color);
+    void draw_texture_scaled(uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y);
 
-        void draw_rectangle_filled(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color);
+    void draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color);
 
-        void draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num);
+    void draw_rectangle_filled(int32_t x, int32_t y, int32_t w, int32_t h, SDL_Color color);
 
-        void draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
+    void draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num);
 
-        uint16_t draw_text_cached_glyphs(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
+    void draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
 
-        uint16_t draw_text_lru_cached(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
+    uint16_t draw_text_cached_glyphs(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
 
-        void upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces);
+    uint16_t draw_text_lru_cached(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
 
-        void upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font *> *fonts);
+    void upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces);
 
-        void vsync_on();
+    void upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font *> *fonts);
 
-        void vsync_off();
+    void vsync_on();
 
-        int8_t initialize(SDL_Window *win, int16_t width, int16_t height);
+    void vsync_off();
 
-        void close();
+    int8_t initialize(SDL_Window *win, int16_t width, int16_t height);
 
-        void set_resolution(int16_t r_width, int16_t r_height);
+    void close();
 
-    }
+    void set_resolution(int16_t r_width, int16_t r_height);
+}
 
 #endif //RENDER_SDL_DEF

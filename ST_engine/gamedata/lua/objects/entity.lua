@@ -18,7 +18,7 @@ end
 
 function newEntityID()
     local temp = currentID
-    currentID = currentID + 1;
+    currentID = currentID + 1
     return temp
 end
 
@@ -51,7 +51,7 @@ function newEntity(self, x, y)
     return o
 end
 
---genieric game entity, from which all other entities inherit
+--generic game entity, from which all other entities inherit
 entity = {
 	texture = "";
     offsetColX = 0;
@@ -93,12 +93,12 @@ function entity:setXY(x, y)
 	setEntityY(self.ID, y)
 end
 
---get the x corrdinate of an entity
+--get the x coordinate of an entity
 function entity:getX()
     return getEntityX(self.ID)
 end
 
---get the y corrdinate of an entity
+--get the y coordinate of an entity
 function entity:getY()
     return getEntityY(self.ID)
 end
@@ -119,6 +119,8 @@ function entity:setTexH(arg)
 end
 
 function entity:setTextureScale(x, y)
+    self.textureScaleX = x;
+    self.textureScaleY = y;
     setEntityTextureScale(self.ID, x, y)
 end
 

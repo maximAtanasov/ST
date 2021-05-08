@@ -19,6 +19,8 @@
 
 class level_tests;
 
+#define PARALLAX_BG_LAYERS 4
+
 namespace ST {
     ///This object contains all the data for a level and provides functions for loading and unloading a level.
     /**
@@ -45,7 +47,8 @@ namespace ST {
         std::vector<ST::entity> entities{};
         std::vector<ST::light> lights{};
         std::vector<ST::text> text_objects{};
-        uint16_t background = 65535;
+        uint16_t background [PARALLAX_BG_LAYERS] = {65535, 65535, 65535, 65535};
+        uint8_t parallax_speed [PARALLAX_BG_LAYERS] = {0, 0, 0, 0};
         SDL_Color background_color{0, 0, 0, 0};
         uint16_t overlay = 65535;
         uint8_t overlay_sprite_num = 1;

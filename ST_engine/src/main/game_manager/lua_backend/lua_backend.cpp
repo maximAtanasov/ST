@@ -493,7 +493,6 @@ extern "C" int saveGameLua(lua_State* L){
     return 0;
 }
 
-
 /**
  * Sends a SET_DARKNESS message.
  * See the Lua docs for more information.
@@ -1487,14 +1486,17 @@ extern "C" int hideMouseCursorLua(lua_State*){
 }
 
 /**
- * Set the background of a level.
+ * Set the background of a level at a specified index and a specific scrolling speed.
  * See the Lua docs for more information.
  * @param L The global Lua State.
  * @return Always 0.
  */
 extern "C" int setBackgroundLua(lua_State* L){
-    std::string arg = static_cast<std::string>(lua_tostring(L, 1));
-    gGame_managerLua->get_level()->background = ST::hash_string(arg);
+    std::string texture = static_cast<std::string>(lua_tostring(L, 1));
+    auto index = static_cast<uint16_t>(lua_tointeger(L, 2));
+    auto parallax_speed = static_cast<uint8_t>(lua_tointeger(L, 3));
+    gGame_managerLua->get_level()->background[index] = ST::hash_string(texture);
+    gGame_managerLua->get_level()->parallax_speed[index] = parallax_speed;
     return 0;
 }
 

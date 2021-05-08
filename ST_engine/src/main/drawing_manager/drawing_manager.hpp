@@ -61,6 +61,7 @@ class drawing_manager{
         void draw_fps(double fps) const;
         void draw_console(console& cnsl) const;
         void draw_text_objects(const std::vector<ST::text>&) const;
+        void draw_background(const uint16_t background[PARALLAX_BG_LAYERS], const uint8_t parallax_speed[PARALLAX_BG_LAYERS]) const;
 
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
@@ -75,6 +76,7 @@ class drawing_manager{
         drawing_manager(SDL_Window *window, message_bus &gMessageBus);
         ~drawing_manager();
         void update(const ST::level& temp, double, console& gConsole);
+
 };
 
 #endif

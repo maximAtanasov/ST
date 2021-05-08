@@ -354,7 +354,11 @@ void game_manager::save_state(const std::string& filepath) {
     save_file << "L" + current_level_pointer->get_name();
     save_file << "CX" + std::to_string(current_level_pointer->camera.x);
     save_file << "CY" + std::to_string(current_level_pointer->camera.y);
-    save_file << "B" + std::to_string(current_level_pointer->background);
+
+    for(uint8_t i = 0; i < PARALLAX_BG_LAYERS; i++) {
+        save_file << "B" + std::to_string(i) + std::to_string(current_level_pointer->background[i]);
+    }
+
     save_file << "BCR" + std::to_string(current_level_pointer->background_color.r) +
                  "G" + std::to_string(current_level_pointer->background_color.g) +
                  "B" + std::to_string(current_level_pointer->background_color.b) +

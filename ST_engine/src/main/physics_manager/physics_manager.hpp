@@ -35,7 +35,6 @@ class physics_manager{
 
         void handle_messages();
 
-
     public:
         physics_manager(message_bus &gMessageBus);
         void update(std::vector<ST::entity>* data);
