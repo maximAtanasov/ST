@@ -187,8 +187,26 @@ inline bool game_manager::key_released(uint16_t arg) const{
  * Center the camera on an entity.
  * @param id The ID of the entity to center on.
  */
-inline void game_manager::center_camera_on_entity(uint64_t id) { //TODO: Get rid of hardcoded values
-    current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 4;
+inline void game_manager::center_camera_on_entity(uint64_t id) {
+    //TODO: Get rid of hardcoded values
+    //TODO: Move this functionality to lua
+    //TODO: Refactor
+    if(current_level_pointer->entities[id].velocity_x > 0) {
+        if(current_level_pointer->camera.x < current_level_pointer->entities[id].x - v_width / 4 - current_level_pointer->entities[id].velocity_x) {
+            current_level_pointer->camera.x += current_level_pointer->entities[id].velocity_x + 5;
+        } else{
+            current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 4;
+        }
+    } else if(current_level_pointer->entities[id].velocity_x < 0) {
+        if(current_level_pointer->camera.x > current_level_pointer->entities[id].x - v_width / 2 - current_level_pointer->entities[id].velocity_x) {
+            current_level_pointer->camera.x += current_level_pointer->entities[id].velocity_x - 5;
+        } else{
+            current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 2;
+        }
+    }
+    //TODO: Test different camera set-ups
+    //current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 4;
+
     current_level_pointer->camera.y = current_level_pointer->entities[id].y - v_height;
 
     uint8_t limit_x1_check = current_level_pointer->camera.x < current_level_pointer->camera.limitX1 + 1;

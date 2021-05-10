@@ -14,3 +14,13 @@ water.colX = 512
 water.colY = 128
 water.isVisible = true
 water.affectedByPhysics = false
+
+function water:new(x, y)
+    return newEntity(self, x, y)
+end
+
+function water:update()
+    if(self:overObject(player1)) then
+        resetPlayerPosition()
+    end
+end

@@ -24,7 +24,7 @@ end
 function coin:update()
     if self.isVisible == true then
 		if self:overObject(player1) then
-		    playSound("coin.wav", 70, 0)
+		    playSound("coin.wav", 70, 0) --string value is hashed away in preprocessing
 			coinsCollected = coinsCollected + 1;
 		   	self:delete()
 		end

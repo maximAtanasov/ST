@@ -37,9 +37,6 @@ player.speed = 15;
 player.animationNum = 7
 player.spriteNum = 2
 player.playerType = PLAYER_TYPE.BLUE
-
-player.width = 128;
-player.height = 200;
 player.textureScaleX = 1;
 player.textureScaleY = 1;
 player.speedSound = false
@@ -103,7 +100,6 @@ function player:jump()
         playSound("phaseJump1.ogg", 50, 0)
         self:setVelocityY(-47)
     end
-
 end
 
 function player:moveRight(speed)

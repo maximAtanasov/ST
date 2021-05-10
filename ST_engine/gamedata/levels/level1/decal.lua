@@ -1,3 +1,11 @@
+-- This file is part of the "ST" project.
+-- You may use, distribute or modify this code under the terms
+-- of the GNU General Public License version 2.
+-- See LICENCE.txt in the root directory of the project.
+--
+-- Author: Maxim Atanasov
+-- E-mail: maxim.atanasov@protonmail.com
+
 DECAL_TYPE = {
     GRASS = "grass.png",
     ROCK = "rock.png",
@@ -9,11 +17,10 @@ DECAL_TYPE = {
 }
 
 function makeDecal(x, y, decalType)
-    local decal = entity:new(x, y)
+    local decal = {}
     decal.texHeight = 128
     decal.texWidth = 128
-    decal:setTexW(128)
-    decal:setTexH(128)
-    decal:setVisible(true)
-    decal:setTexture(decalType)
+    decal.isVisible = true
+    decal.texture = decalType
+    return newEntity(decal, x, y)
 end
