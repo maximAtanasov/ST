@@ -19,7 +19,7 @@ platform.soundPlayed = false
 platform.soundTrigger = nil
 
 function platform:update ()
-    self:setVelocityY(-getGravity())
+    self:setVelocityY(-gravity)
 --[[    if self.soundTrigger:overObject(player1) then
         if self.soundPlayed == false then
             playSound("jump.wav", 128, 0)
@@ -33,6 +33,6 @@ end
 function platform:new(x, y)
     self = newEntity(self, x, y)
     self.height = y;
-    self.soundTrigger = trigger:new(x, y+2, self.colX, 3)
+    --self.soundTrigger = trigger:new(x, y+2, self.colX, 3)
     return self;
 end

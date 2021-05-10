@@ -6,6 +6,14 @@
 -- Author: Maxim Atanasov
 -- E-mail: maxim.atanasov@protonmail.com
 
+PLAYER_TYPE = {
+    BLUE = 0,
+    PINK = 1,
+    GREEN = 2,
+    YELLOW = 3,
+    BEIGE = 4
+}
+
 player = entity:new()
 player.texture = "alien_blue.png"
 player.texWidth = 128
@@ -28,6 +36,7 @@ player.affectedByPhysics = true
 player.speed = 15;
 player.animationNum = 7
 player.spriteNum = 2
+player.playerType = PLAYER_TYPE.BLUE
 
 player.width = 128;
 player.height = 200;
@@ -46,7 +55,7 @@ function player:update()
         end
     end
 
-    if(keyPressed("DASH")) then
+    if(keyPressed("DASH") or leftTrigger() > 10000) then
         self.speed = 36;
         if self.speedSound == false then
             playSound("speed.wav", 20, 0)

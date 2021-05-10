@@ -1049,6 +1049,8 @@ extern "C" int setEntityTextureLua(lua_State *L){
     return 0;
 }
 
+
+//TODO: Is this needed?
 extern "C" int mouseOverTextureLua(lua_State* L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     int32_t mouse_x = gGame_managerLua->get_mouse_x();
@@ -1056,7 +1058,6 @@ extern "C" int mouseOverTextureLua(lua_State* L){
     ST::entity* object = &gGame_managerLua->get_level()->entities[id];
     int32_t object_x = object->x;
     int32_t object_y = object->y;
-    printf("%d", mouse_x < object->tex_w + object_x && mouse_x > object_x && mouse_y > object_y + object->tex_h && mouse_y < object_y);
     lua_pushboolean(L, mouse_x < object->tex_w + object_x && mouse_x > object_x && mouse_y > object_y + object->tex_h && mouse_y < object_y);
     return 1;
 }

@@ -86,7 +86,8 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     draw_entities(entities);
     ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ticks % temp.overlay_sprite_num), temp.overlay_sprite_num);
     draw_text_objects(temp.text_objects);
-    //draw the lights when we are sure they are processed
+
+
     if(lighting_enabled) {
         process_lights(temp.lights);
         draw_lights();
@@ -133,9 +134,10 @@ void drawing_manager::draw_console(console& cnsl) const {
     if(cnsl.is_open()) {
         ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
         int pos = w_height/2;
-        SDL_Color log_entry_color{};
+        SDL_Color log_entry_color;
         for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
-            if (pos - cnsl.font_size + cnsl.scroll_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
+            int pos_offset = pos - cnsl.font_size + cnsl.scroll_offset;
+            if (pos_offset > 0 && pos_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
                 if(i->type == ST::log_type::ERROR) {
                     log_entry_color = cnsl.color_error;
                 } else if(i->type == ST::log_type::INFO) {
@@ -143,7 +145,7 @@ void drawing_manager::draw_console(console& cnsl) const {
                 } else {
                     log_entry_color = cnsl.color_success;
                 }
-                ST::renderer_sdl::draw_text_lru_cached(default_font_normal, i->text, 0,
+                ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, i->text, 0,
                                                        pos - cnsl.font_size - 20 + cnsl.scroll_offset, log_entry_color);
             }
             pos -= cnsl.font_size + 5;

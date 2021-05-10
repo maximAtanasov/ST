@@ -15,6 +15,8 @@ use("crate.lua")
 use("coin.lua")
 use("water.lua")
 use("edge_water.lua")
+use("decal.lua")
+use("spikes.lua")
 
 pause = 0
 
@@ -88,11 +90,14 @@ water_2 = water:new(6784, floor);
 water_3 = water:new(7296, floor);
 water_3 = water:new(7808, floor);
 
---bar_ho1_14 = bar_hor:new(10400, floor);
-bar_ho1_15 = bar_hor:new(11200, floor);
-bar_ho1_16 = bar_hor:new(12000, floor);
-bar_ho1_17 = bar_hor:new(12800, floor);
-bar_ho1_18 = bar_hor:new(13600, floor);
+bar_hor:new(8000, floor):setTexture("ground_grass2.png");
+bar_hor:new(8768, floor):setTexture("ground_grass3.png");
+
+bar_ho1_14 = bar_hor:new(9280, floor);
+bar_ho1_15 = bar_hor:new(9792, floor);
+bar_ho1_16 = bar_hor:new(10304, floor);
+bar_ho1_17 = bar_hor:new(10816, floor);
+bar_ho1_18 = bar_hor:new(11328, floor);
 
 crate1 = crate:new(500, floor-200);
 crate2 = crate:new(540, floor-400);
@@ -103,8 +108,7 @@ obstacle_1_4 = platform:new(2000, floor-400);
 obstacle_1_5 = platform:new(3000, floor-200);
 obstacle_1_6 = platform:new(3500, floor-400);
 obstacle_1_7 = platform:new(4050, floor-290);
-obstacle_1_8 = obstacle_1:new(5280, floor-300);
---obstacle_1_9 = obstacle_1:new(5500, floor-200);
+crate4 = crate:new(5650, floor-300);
 
 obstacle_1_10 = platform:new(6100, floor-300);
 
@@ -112,10 +116,6 @@ obstacle_1_10_dialogTrigger = trigger:new(6130, floor-260, 360, 60);
 
 obstacle_1_11 = platform:new(6700, floor-300);
 obstacle_1_12 = platform:new(7250, floor-300);
-obstacle_1_13 = obstacle_1:new(8000, floor-200);
-obstacle_1_14 = obstacle_1:new(8800, floor-200);
---obstacle_1_15 = obstacle_1:new(9500, floor-200);
-
 
 obstacle_1_16 = platform:new(10000, floor-300);
 obstacle_1_17 = platform:new(10500, floor-300);
@@ -158,6 +158,16 @@ coinCounter:setStatic(true)
 coinCounterText = textObject:new(1920/2-128,100, 50, "font1.ttf")
 coinCounterText:setText('0')
 
+makeDecal(100, floor - 128, DECAL_TYPE.BUSH)
+makeDecal(1300, floor - 128, DECAL_TYPE.ROCK)
+makeDecal(1900, floor - 128, DECAL_TYPE.GRASS)
+makeDecal(4000, floor - 128, DECAL_TYPE.GRASS)
+makeDecal(8100, floor - 128, DECAL_TYPE.ROCK)
+makeDecal(4700, floor - 128, DECAL_TYPE.FENCE)
+makeDecal(5800, floor - 128, DECAL_TYPE.MUSHROOM_BROWN)
+makeDecal(9000, floor - 128, DECAL_TYPE.MUSHROOM_RED)
+makeDecal(9300, floor - 128, DECAL_TYPE.BUSH)
+
 player1 = player:new(100, 100)
 
 coin1 = coin:new(1400, 900)
@@ -190,6 +200,9 @@ trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
 trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
 trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
 trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
+
+spikes1 = makeSpikes(8512, floor)
+spikes2 = makeSpikes(8512+128, floor)
 
 labelTimer = 0;
 
@@ -310,6 +323,7 @@ end
 
 --END PAUSE MENU
 
+use("playerSwitch.lua")
 
 function loop()
     --log(INFO, "leftTrigger: "..tostring(leftTrigger()).." rightTrigger: "..tostring(rightTrigger())..
@@ -329,6 +343,7 @@ function loop()
         coinCounterText:setText(coinsCollected)
 
         player1:update()
+        playerSwitch:update()
 
         obstacle_1_4:update()
         obstacle_1_5:update()
@@ -358,6 +373,8 @@ function loop()
         trigger_pit_1:update()
         trigger_pit_2:update()
         trigger_pit_3:update()
+        spikes1:update()
+        spikes2:update()
 
         endLevel:update()
 
