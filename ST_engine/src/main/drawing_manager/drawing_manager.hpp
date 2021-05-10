@@ -51,7 +51,7 @@ class drawing_manager{
         //debug
         bool collisions_shown = false;
         bool show_fps = true;
-        bool lighting_enabled = true;
+        bool lighting_enabled = false;
 
         //Drawing functions
         void draw_entities(const std::vector<ST::entity>&) const;

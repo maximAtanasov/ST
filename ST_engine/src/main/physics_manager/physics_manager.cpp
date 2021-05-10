@@ -80,7 +80,7 @@ void physics_manager::process_vertical(std::vector<ST::entity>* entities, int8_t
                     }
                 }
             }
-            //decrease velocity of objects (apply gravity really)
+            //decrease velocity of objects (apply gravity)
             int8_t realVelocity = objectVelocity - gravity;
             entity.velocity_y = (realVelocity < 0)*static_cast<int8_t>(realVelocity + 2) + (realVelocity >= 0)*entity.velocity_y;
         }
