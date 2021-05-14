@@ -30,9 +30,9 @@ class game_manager{
         lua_backend gScript_backend{};
         message_bus& gMessage_bus;
         task_manager* gTask_manager{};
-        std::bitset<80> keys_pressed_data{};
-        std::bitset<80> keys_held_data{};
-        std::bitset<80> keys_released_data{};
+        std::bitset<256> keys_pressed_data{};
+        std::bitset<256> keys_held_data{};
+        std::bitset<256> keys_released_data{};
         int32_t mouse_x = 0;
         int32_t mouse_y = 0;
         int16_t left_trigger{};

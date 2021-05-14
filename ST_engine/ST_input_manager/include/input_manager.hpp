@@ -21,49 +21,35 @@
 class input_manager{
 	private:
 
-		struct controller_buttons{
-			bool a = false;
-            bool b = false;
-            bool x = false;
-            bool y = false;
-            bool left_stick = false;
-            bool right_stick = false;
-            bool dpad_up = false;
-            bool dpad_down = false;
-            bool dpad_right = false;
-            bool dpad_left = false;
-            bool left_shoulder = false;
-            bool right_shoulder = false;
-            bool start = false;
-            bool select = false;
-			int16_t left_trigger = 0;
-            int16_t right_trigger = 0;
-            int16_t right_stick_vertical = 0;
-            int16_t right_stick_horizontal = 0;
-            int16_t left_stick_vertical = 0;
-            int16_t left_stick_horizontal = 0;
-		};
+    struct controller_analog_inputs{
+        int16_t left_trigger = 0;
+        int16_t right_trigger = 0;
+        int16_t right_stick_vertical = 0;
+        int16_t right_stick_horizontal = 0;
+        int16_t left_stick_vertical = 0;
+        int16_t left_stick_horizontal = 0;
+    };
 
-        struct keyboard_and_mouse_controls{
+    struct button_and_mouse_controls{
             int32_t mouse_x = 0, mouse_y = 0;
             int16_t mouse_scroll = 0;
-			bool *keyboard{};
-            bool mouse_clicks[3]{};
-        };
+			bool *buttons{};
+    };
+    bool *keyboard_sdl_raw{};
 
-		int32_t v_width = 1, v_height = 1;
-		int32_t r_width = 1, r_height = 1;
+    uint32_t v_width = 1, v_height = 1;
+    uint32_t r_width = 1, r_height = 1;
 
-		float ratio_w = 1, ratio_h = 1;
+    float ratio_w = 1, ratio_h = 1;
 
-        int16_t left_stick_horizontal_threshold = 0;
-        int16_t left_stick_vertical_threshold = 0;
+    int16_t left_stick_horizontal_threshold = 0;
+    int16_t left_stick_vertical_threshold = 0;
 
-        int16_t right_stick_horizontal_threshold = 0;
-        int16_t right_stick_vertical_threshold = 0;
+    int16_t right_stick_horizontal_threshold = 0;
+    int16_t right_stick_vertical_threshold = 0;
 
-        int16_t left_trigger_threshold = 0;
-        int16_t right_trigger_threshold = 0;
+    int16_t left_trigger_threshold = 0;
+    int16_t right_trigger_threshold = 0;
 
     SDL_Event event{};
 
@@ -72,10 +58,10 @@ class input_manager{
 		subscriber msg_sub{};
 		std::vector<SDL_GameController*> controllers;
 		std::vector<SDL_Haptic*> controllers_haptic;
-		struct keyboard_and_mouse_controls controls{};
-		struct keyboard_and_mouse_controls controls_prev_frame;
-		struct controller_buttons controller_buttons;
-		struct controller_buttons controller_button_prev_frame;
+		struct button_and_mouse_controls controls{};
+		struct button_and_mouse_controls controls_prev_frame;
+		struct controller_analog_inputs controller_analog_inputs;
+		struct controller_analog_inputs controller_analog_inputs_prev_frame;
 
 		//Store ST::keys and the amount of times the have been registered as values;
 		ska::bytell_hash_map<ST::key, uint8_t> registered_keys;

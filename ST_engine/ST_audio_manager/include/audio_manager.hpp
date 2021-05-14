@@ -118,6 +118,8 @@ inline void audio_manager::unmute(){
  */
 inline void audio_manager::play_sound(uint16_t arg, uint8_t volume, int8_t loops) const{
     auto data = chunks_ptr->find(arg);
+    //TODO:  The branch is not necessary here. In practice, all needed chunks will always be in memory and if for
+    //some unexpected reason they are not, then MixPlayChannel also has a null check
     if(data != chunks_ptr->end()) [[likely]]{
         if(!muted){
             Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float>(volume) / chunk_playback_volume_ratio));

@@ -305,6 +305,7 @@ void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
  */
 void ST::renderer_sdl::draw_texture_scaled(const uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y) {
     auto texture = textures.find(arg);
+    //TODO: The branch is not needed, as in practice, textures will always be in memory and SDL will do a null-check anyway.
     if (texture != textures.end()) [[likely]] {
         int tex_w, tex_h;
         SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);

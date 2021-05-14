@@ -11,8 +11,6 @@
 #include <SDL.h>
 #include <string>
 
-
-
 static bool singleton_initialized = false;
 
 input_manager::~input_manager() {
@@ -38,8 +36,9 @@ input_manager::input_manager(task_manager &gTask_manager, message_bus &gMessageB
 
     //Initialize controls
     int32_t length = 0;
-    controls.keyboard = reinterpret_cast<bool*>(const_cast<uint8_t*>(SDL_GetKeyboardState(&length)));
-    controls_prev_frame.keyboard = static_cast<bool*>(malloc(static_cast<size_t>(length)));
+    keyboard_sdl_raw = reinterpret_cast<bool*>(const_cast<uint8_t*>(SDL_GetKeyboardState(&length)));
+    controls.buttons = static_cast<bool*>(malloc(static_cast<size_t>(length)));
+    controls_prev_frame.buttons = static_cast<bool*>(malloc(static_cast<size_t>(length)));
     SDL_PollEvent(&event);
 
     //Subscribe to the messages we need
@@ -74,11 +73,6 @@ void input_manager::update_task(void* mngr){
  * Checks the state of the keyboard and any incoming events and sends appropriate messages.
  */
 void input_manager::take_input(){
-
-    memcpy(controls_prev_frame.keyboard, controls.keyboard, 512);
-    take_controller_input();
-    take_mouse_input();
-
     while(SDL_PollEvent(&event) != 0){
         if(event.type == SDL_QUIT){
             gMessage_bus.send_msg(new message(END_GAME));
@@ -159,6 +153,11 @@ void input_manager::take_input(){
         }
     }
 
+    memcpy(controls_prev_frame.buttons, controls.buttons, 512);
+    memcpy(controls.buttons, keyboard_sdl_raw, 512);
+    take_controller_input();
+    take_mouse_input();
+
     //check if any of the registered keys is pressed and send a message if so
     for(auto i : registered_keys){
         if (key_event(i.first, ST::key_event::PRESS)) {
@@ -175,12 +174,10 @@ void input_manager::take_input(){
 
 void input_manager::take_mouse_input() {
     //Collect mouse input
-    controls_prev_frame.mouse_clicks[0] = controls.mouse_clicks[0];
-    controls_prev_frame.mouse_clicks[1] = controls.mouse_clicks[1];
-    controls_prev_frame.mouse_clicks[2] = controls.mouse_clicks[2];
-    controls.mouse_clicks[0] = SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT);
-    controls.mouse_clicks[1] = SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_MIDDLE);
-    controls.mouse_clicks[2] = SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT);
+    uint32_t mouse_state = SDL_GetMouseState(nullptr, nullptr);
+    controls.buttons[1] = mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT);
+    controls.buttons[2] = mouse_state & SDL_BUTTON(SDL_BUTTON_MIDDLE);
+    controls.buttons[3] = mouse_state & SDL_BUTTON(SDL_BUTTON_RIGHT);
 
     //only send mouse coordinates if they change
     if(controls.mouse_x != controls_prev_frame.mouse_x){
@@ -199,74 +196,74 @@ void input_manager::take_mouse_input() {
  * Messages for controller buttons are sent in the take input method.
  */
 void input_manager::take_controller_input(){
-    controller_button_prev_frame = controller_buttons;
+    controller_analog_inputs_prev_frame = controller_analog_inputs;
     for(SDL_GameController* c : controllers) {
-        controller_buttons.a = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_A);
-        controller_buttons.b = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_B);
-        controller_buttons.x = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_X);
-        controller_buttons.y = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_Y);
-        controller_buttons.dpad_up = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_UP);
-        controller_buttons.dpad_down = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-        controller_buttons.dpad_left = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
-        controller_buttons.dpad_right = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
-        controller_buttons.left_stick = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSTICK);
-        controller_buttons.right_stick = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
-        controller_buttons.left_shoulder = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
-        controller_buttons.right_shoulder = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
-        controller_buttons.start = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_START);
-        controller_buttons.select = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_BACK);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_A)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_A);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_B)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_B);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_X)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_X);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_Y)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_Y);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_DPAD_UP)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_UP);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_DPAD_DOWN)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_DPAD_LEFT)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_DPAD_RIGHT)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_LEFTSTICK)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSTICK);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_RIGHTSTICK)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSTICK);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_LEFTSHOULDER)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_START)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_START);
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_SELECT)] = SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_BACK);
 
-        controller_buttons.left_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
-        controller_buttons.right_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
-        controller_buttons.right_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTX);
-        controller_buttons.right_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTY);
-        controller_buttons.left_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTX);
-        controller_buttons.left_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY);
+        controller_analog_inputs.left_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+        controller_analog_inputs.right_trigger = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+        controller_analog_inputs.right_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTX);
+        controller_analog_inputs.right_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTY);
+        controller_analog_inputs.left_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTX);
+        controller_analog_inputs.left_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY);
     }
     //only send controller axis values if they change and the values exceed the thresholds
 
     //Branch-less checks
-    controller_buttons.left_trigger = (controller_buttons.left_trigger >= left_trigger_threshold) * controller_buttons.left_trigger; // NOLINT(cppcoreguidelines-narrowing-conversions)
-    controller_buttons.right_trigger = (controller_buttons.right_trigger >= right_trigger_threshold) * controller_buttons.right_trigger; // NOLINT(cppcoreguidelines-narrowing-conversions)
+    controller_analog_inputs.left_trigger = (controller_analog_inputs.left_trigger >= left_trigger_threshold) * controller_analog_inputs.left_trigger; // NOLINT(cppcoreguidelines-narrowing-conversions)
+    controller_analog_inputs.right_trigger = (controller_analog_inputs.right_trigger >= right_trigger_threshold) * controller_analog_inputs.right_trigger; // NOLINT(cppcoreguidelines-narrowing-conversions)
 
-    if(controller_buttons.left_trigger != controller_button_prev_frame.left_trigger){
-        gMessage_bus.send_msg(new message(LEFT_TRIGGER, controller_buttons.left_trigger));
+    if(controller_analog_inputs.left_trigger != controller_analog_inputs_prev_frame.left_trigger){
+        gMessage_bus.send_msg(new message(LEFT_TRIGGER, controller_analog_inputs.left_trigger));
     }
 
-    if(controller_buttons.right_trigger != controller_button_prev_frame.right_trigger){
-        gMessage_bus.send_msg(new message(RIGHT_TRIGGER, controller_buttons.right_trigger));
+    if(controller_analog_inputs.right_trigger != controller_analog_inputs_prev_frame.right_trigger){
+        gMessage_bus.send_msg(new message(RIGHT_TRIGGER, controller_analog_inputs.right_trigger));
     }
 
     //Branch-less check
-    controller_buttons.right_stick_vertical = (controller_buttons.left_stick_vertical > left_stick_vertical_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
-            || controller_buttons.left_stick_vertical < -left_stick_vertical_threshold) * controller_buttons.right_stick_vertical;
+    controller_analog_inputs.left_stick_vertical = (controller_analog_inputs.left_stick_vertical > left_stick_vertical_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
+            || controller_analog_inputs.left_stick_vertical < -left_stick_vertical_threshold) * controller_analog_inputs.left_stick_vertical;
 
     //Branch-less check
-    controller_buttons.left_stick_horizontal = (controller_buttons.left_stick_horizontal > left_stick_horizontal_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
-            || controller_buttons.left_stick_horizontal < -left_stick_horizontal_threshold) * controller_buttons.left_stick_horizontal;
+    controller_analog_inputs.left_stick_horizontal = (controller_analog_inputs.left_stick_horizontal > left_stick_horizontal_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
+            || controller_analog_inputs.left_stick_horizontal < -left_stick_horizontal_threshold) * controller_analog_inputs.left_stick_horizontal;
 
     //Branch-less check
-    controller_buttons.right_stick_horizontal = (controller_buttons.right_stick_horizontal > right_stick_horizontal_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
-            || controller_buttons.right_stick_horizontal < -right_stick_horizontal_threshold) * controller_buttons.right_stick_horizontal;
+    controller_analog_inputs.right_stick_horizontal = (controller_analog_inputs.right_stick_horizontal > right_stick_horizontal_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
+            || controller_analog_inputs.right_stick_horizontal < -right_stick_horizontal_threshold) * controller_analog_inputs.right_stick_horizontal;
 
     //Branch-less check
-    controller_buttons.right_stick_vertical = (controller_buttons.right_stick_vertical > right_stick_vertical_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
-            || controller_buttons.right_stick_vertical < -right_stick_vertical_threshold) * controller_buttons.right_stick_vertical;
+    controller_analog_inputs.right_stick_vertical = (controller_analog_inputs.right_stick_vertical > right_stick_vertical_threshold // NOLINT(cppcoreguidelines-narrowing-conversions)
+            || controller_analog_inputs.right_stick_vertical < -right_stick_vertical_threshold) * controller_analog_inputs.right_stick_vertical;
 
-    if(controller_buttons.left_stick_vertical != controller_button_prev_frame.left_stick_vertical){
-        gMessage_bus.send_msg(new message(LEFT_STICK_VERTICAL, controller_buttons.left_stick_vertical));
+    if(controller_analog_inputs.left_stick_vertical != controller_analog_inputs_prev_frame.left_stick_vertical){
+        gMessage_bus.send_msg(new message(LEFT_STICK_VERTICAL, controller_analog_inputs.left_stick_vertical));
     }
 
-    if(controller_buttons.left_stick_horizontal != controller_button_prev_frame.left_stick_horizontal){
-        gMessage_bus.send_msg(new message(LEFT_STICK_HORIZONTAL, controller_buttons.left_stick_horizontal));
+    if(controller_analog_inputs.left_stick_horizontal != controller_analog_inputs_prev_frame.left_stick_horizontal){
+        gMessage_bus.send_msg(new message(LEFT_STICK_HORIZONTAL, controller_analog_inputs.left_stick_horizontal));
     }
 
-    if(controller_buttons.right_stick_vertical != controller_button_prev_frame.right_stick_vertical){
-        gMessage_bus.send_msg(new message(RIGHT_STICK_VERTICAL, controller_buttons.right_stick_vertical));
+    if(controller_analog_inputs.right_stick_vertical != controller_analog_inputs_prev_frame.right_stick_vertical){
+        gMessage_bus.send_msg(new message(RIGHT_STICK_VERTICAL, controller_analog_inputs.right_stick_vertical));
     }
 
-    if(controller_buttons.right_stick_horizontal != controller_button_prev_frame.right_stick_horizontal){
-        gMessage_bus.send_msg(new message(RIGHT_STICK_HORIZONTAL, controller_buttons.right_stick_horizontal));
+    if(controller_analog_inputs.right_stick_horizontal != controller_analog_inputs_prev_frame.right_stick_horizontal){
+        gMessage_bus.send_msg(new message(RIGHT_STICK_HORIZONTAL, controller_analog_inputs.right_stick_horizontal));
     }
 }
 
@@ -327,23 +324,30 @@ void input_manager::handle_messages(){
                 }
                 break;
             }
-            case SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD:
-                this->left_stick_horizontal_threshold = static_cast<int16_t>(temp->base_data0);
-                break;
-            case SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD:
-                this->left_stick_vertical_threshold = static_cast<int16_t>(temp->base_data0);
-                break;
-            case SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD:
-                this->right_stick_horizontal_threshold = static_cast<int16_t>(temp->base_data0);
-                break;
-            case SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD:
-                this->right_stick_vertical_threshold = static_cast<int16_t>(temp->base_data0);
-                break;
-            case SET_RIGHT_TRIGGER_THRESHOLD:
-                this->right_trigger_threshold = static_cast<int16_t>(temp->base_data0);
-                break;
-            case SET_LEFT_TRIGGER_THRESHOLD:
-                this->left_trigger_threshold = static_cast<int16_t>(temp->base_data0);
+            default: //Otherwise we process any threshold messages
+                uint8_t left_stick_hor_check = (temp->msg_name == SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD);
+                this->left_stick_horizontal_threshold = left_stick_hor_check*static_cast<int16_t>(temp->base_data0) + // NOLINT(cppcoreguidelines-narrowing-conversions)
+                        !left_stick_hor_check*this->left_stick_horizontal_threshold;
+
+                uint8_t left_stick_ver_check = (temp->msg_name == SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD);
+                this->left_stick_vertical_threshold = left_stick_ver_check*static_cast<int16_t>(temp->base_data0) + // NOLINT(cppcoreguidelines-narrowing-conversions)
+                        !left_stick_ver_check*this->left_stick_vertical_threshold;
+
+                uint8_t right_stick_hor_check = (temp->msg_name == SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD);
+                this->right_stick_horizontal_threshold = right_stick_hor_check*static_cast<int16_t>(temp->base_data0) + // NOLINT(cppcoreguidelines-narrowing-conversions)
+                        !right_stick_hor_check*this->right_stick_horizontal_threshold;
+
+                uint8_t right_stick_ver_check = (temp->msg_name == SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD);
+                this->right_stick_vertical_threshold = right_stick_ver_check*static_cast<int16_t>(temp->base_data0) + // NOLINT(cppcoreguidelines-narrowing-conversions)
+                        !right_stick_ver_check*this->right_stick_vertical_threshold;
+
+                uint8_t right_trigger_check = (temp->msg_name == SET_RIGHT_TRIGGER_THRESHOLD);
+                this->right_trigger_threshold = right_trigger_check*static_cast<int16_t>(temp->base_data0) + // NOLINT(cppcoreguidelines-narrowing-conversions)
+                        !right_trigger_check*this->right_trigger_threshold;
+
+                uint8_t left_trigger_check = (temp->msg_name == SET_LEFT_TRIGGER_THRESHOLD);
+                this->left_trigger_threshold = left_trigger_check*static_cast<int16_t>(temp->base_data0) + // NOLINT(cppcoreguidelines-narrowing-conversions)
+                        !left_trigger_check*this->left_trigger_threshold;
                 break;
         }
         delete temp;
@@ -359,311 +363,7 @@ void input_manager::handle_messages(){
  * @return True if event k_event has happened for key arg, false otherwise.
  */
 bool input_manager::key_event(ST::key arg, ST::key_event k_event) const {
-    bool result = false;
-    bool first = k_event == ST::key_event::RELEASE;
-    bool second = k_event == ST::key_event::PRESS;
-
-    switch (arg) {
-        case ST::key::LEFT:
-            result = (controls.keyboard[SDL_SCANCODE_LEFT] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_LEFT] ^ second);
-            break;
-        case ST::key::RIGHT:
-            result = (controls.keyboard[SDL_SCANCODE_RIGHT] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT] ^ second);
-            break;
-        case ST::key::UP:
-            result = (controls.keyboard[SDL_SCANCODE_UP] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_UP] ^ second);
-            break;
-        case ST::key::DOWN:
-            result = (controls.keyboard[SDL_SCANCODE_DOWN] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_DOWN] ^ second);
-            break;
-        case ST::key::A:
-            result = (controls.keyboard[SDL_SCANCODE_A] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_A] ^ second);
-            break;
-        case ST::key::B:
-            result = (controls.keyboard[SDL_SCANCODE_B] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_B] ^ second);
-            break;
-        case ST::key::C:
-            result = (controls.keyboard[SDL_SCANCODE_C] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_C] ^ second);
-            break;
-        case ST::key::D:
-            result = (controls.keyboard[SDL_SCANCODE_D] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_D] ^ second);
-            break;
-        case ST::key::E:
-            result = (controls.keyboard[SDL_SCANCODE_E] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_E] ^ second);
-            break;
-        case ST::key::F:
-            result = (controls.keyboard[SDL_SCANCODE_F] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_F] ^ second);
-            break;
-        case ST::key::G:
-            result = (controls.keyboard[SDL_SCANCODE_G] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_G] ^ second);
-            break;
-        case ST::key::H:
-            result = (controls.keyboard[SDL_SCANCODE_H] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_H] ^ second);
-            break;
-        case ST::key::I:
-            result = (controls.keyboard[SDL_SCANCODE_I] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_I] ^ second);
-            break;
-        case ST::key::J:
-            result = (controls.keyboard[SDL_SCANCODE_J] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_J] ^ second);
-            break;
-        case ST::key::K:
-            result = (controls.keyboard[SDL_SCANCODE_K] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_K] ^ second);
-            break;
-        case ST::key::L:
-            result = (controls.keyboard[SDL_SCANCODE_L] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_L] ^ second);
-            break;
-        case ST::key::M:
-            result = (controls.keyboard[SDL_SCANCODE_M] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_M] ^ second);
-            break;
-        case ST::key::N:
-            result = (controls.keyboard[SDL_SCANCODE_N] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_N] ^ second);
-            break;
-        case ST::key::O:
-            result = (controls.keyboard[SDL_SCANCODE_O] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHT] ^ second);
-            break;
-        case ST::key::P:
-            result = (controls.keyboard[SDL_SCANCODE_P] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_P] ^ second);
-            break;
-        case ST::key::Q:
-            result = (controls.keyboard[SDL_SCANCODE_Q] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_Q] ^ second);
-            break;
-        case ST::key::R:
-            result = (controls.keyboard[SDL_SCANCODE_R] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_R] ^ second);
-            break;
-        case ST::key::S:
-            result = (controls.keyboard[SDL_SCANCODE_S] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_S] ^ second);
-            break;
-        case ST::key::T:
-            result = (controls.keyboard[SDL_SCANCODE_T] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_T] ^ second);
-            break;
-        case ST::key::V:
-            result = (controls.keyboard[SDL_SCANCODE_V] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_V] ^ second);
-            break;
-        case ST::key::U:
-            result = (controls.keyboard[SDL_SCANCODE_U] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_U] ^ second);
-            break;
-        case ST::key::W:
-            result = (controls.keyboard[SDL_SCANCODE_W] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_W] ^ second);
-            break;
-        case ST::key::X:
-            result = (controls.keyboard[SDL_SCANCODE_X] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_X] ^ second);
-            break;
-        case ST::key::Y:
-            result = (controls.keyboard[SDL_SCANCODE_Y] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_Y] ^ second);
-            break;
-        case ST::key::Z:
-            result = (controls.keyboard[SDL_SCANCODE_Z] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_Z] ^ second);
-            break;
-        case ST::key::ONE:
-            result = (controls.keyboard[SDL_SCANCODE_1] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_1] ^ second);
-            break;
-        case ST::key::TWO:
-            result = (controls.keyboard[SDL_SCANCODE_2] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_2] ^ second);
-            break;
-        case ST::key::THREE:
-            result = (controls.keyboard[SDL_SCANCODE_3] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_3] ^ second);
-            break;
-        case ST::key::FOUR:
-            result = (controls.keyboard[SDL_SCANCODE_4] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_4] ^ second);
-            break;
-        case ST::key::FIVE:
-            result = (controls.keyboard[SDL_SCANCODE_5] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_5] ^ second);
-            break;
-        case ST::key::SIX:
-            result = (controls.keyboard[SDL_SCANCODE_6] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_6] ^ second);
-            break;
-        case ST::key::SEVEN:
-            result = (controls.keyboard[SDL_SCANCODE_7] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_7] ^ second);
-            break;
-        case ST::key::EIGHT:
-            result = (controls.keyboard[SDL_SCANCODE_8] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_8] ^ second);
-            break;
-        case ST::key::NINE:
-            result = (controls.keyboard[SDL_SCANCODE_9] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_9] ^ second);
-            break;
-        case ST::key::ZERO:
-            result = (controls.keyboard[SDL_SCANCODE_0] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_0] ^ second);
-            break;
-        case ST::key::ESCAPE:
-            result = (controls.keyboard[SDL_SCANCODE_ESCAPE] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_ESCAPE] ^ second);
-            break;
-        case ST::key::ENTER:
-            result = (controls.keyboard[SDL_SCANCODE_RETURN] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_RETURN] ^ second);
-            break;
-        case ST::key::SPACEBAR:
-            result = (controls.keyboard[SDL_SCANCODE_SPACE] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_SPACE] ^ second);
-            break;
-        case ST::key::TILDE:
-            result = (controls.keyboard[SDL_SCANCODE_GRAVE] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_GRAVE] ^ second);
-            break;
-        case ST::key::LSHIFT:
-            result = (controls.keyboard[SDL_SCANCODE_LSHIFT] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_LSHIFT] ^ second);
-            break;
-        case ST::key::BACKSPACE:
-            result = (controls.keyboard[SDL_SCANCODE_BACKSPACE] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_BACKSPACE] ^ second);
-            break;
-        case ST::key::DELETE:
-            result = (controls.keyboard[SDL_SCANCODE_DELETE] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_DELETE] ^ second);
-            break;
-        case ST::key::BACKSLASH:
-            result = (controls.keyboard[SDL_SCANCODE_BACKSLASH] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_BACKSLASH] ^ second);
-            break;
-        case ST::key::CAPSLOCK:
-            result = (controls.keyboard[SDL_SCANCODE_CAPSLOCK] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_CAPSLOCK] ^ second);
-            break;
-        case ST::key::COMMA:
-            result = (controls.keyboard[SDL_SCANCODE_COMMA] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_COMMA] ^ second);
-            break;
-        case ST::key::EQUALS:
-            result = (controls.keyboard[SDL_SCANCODE_EQUALS] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_EQUALS] ^ second);
-            break;
-        case ST::key::LALT:
-            result = (controls.keyboard[SDL_SCANCODE_LALT] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_LALT] ^ second);
-            break;
-        case ST::key::LCTRL:
-            result = (controls.keyboard[SDL_SCANCODE_LCTRL] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_LCTRL] ^ second);
-            break;
-        case ST::key::LBRACKET:
-            result = (controls.keyboard[SDL_SCANCODE_LEFTBRACKET] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_LEFTBRACKET] ^ second);
-            break;
-        case ST::key::RBRACKET:
-            result = (controls.keyboard[SDL_SCANCODE_RIGHTBRACKET] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_RIGHTBRACKET] ^ second);
-            break;
-        case ST::key::MINUS:
-            result = (controls.keyboard[SDL_SCANCODE_MINUS] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_MINUS] ^ second);
-            break;
-        case ST::key::RALT:
-            result = (controls.keyboard[SDL_SCANCODE_RALT] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_RALT] ^ second);
-            break;
-        case ST::key::RCTRL:
-            result = (controls.keyboard[SDL_SCANCODE_RCTRL] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_RCTRL] ^ second);
-            break;
-        case ST::key::SEMICOLON:
-            result = (controls.keyboard[SDL_SCANCODE_SEMICOLON] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_SEMICOLON] ^ second);
-            break;
-        case ST::key::SLASH:
-            result = (controls.keyboard[SDL_SCANCODE_SLASH] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_SLASH] ^ second);
-            break;
-        case ST::key::TAB:
-            result = (controls.keyboard[SDL_SCANCODE_TAB] ^ first) &&
-                     (controls_prev_frame.keyboard[SDL_SCANCODE_TAB] ^ second);
-            break;
-        case ST::key::MOUSELEFT:
-            result = (controls.mouse_clicks[0] ^ first) && (controls_prev_frame.mouse_clicks[0] ^ second);
-            break;
-        case ST::key::MOUSEMIDDLE:
-            result = (controls.mouse_clicks[1] ^ first) && (controls_prev_frame.mouse_clicks[1] ^ second);
-            break;
-        case ST::key::MOUSERIGHT:
-            result = (controls.mouse_clicks[2] ^ first) && (controls_prev_frame.mouse_clicks[2] ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_A:
-            result = (controller_buttons.a ^ first) && (controller_button_prev_frame.a ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_B:
-            result = (controller_buttons.b ^ first) && (controller_button_prev_frame.b ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_X:
-            result = (controller_buttons.x ^ first) && (controller_button_prev_frame.x ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_Y:
-            result = (controller_buttons.y ^ first) && (controller_button_prev_frame.y ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_SELECT:
-            result = (controller_buttons.select ^ first) && (controller_button_prev_frame.select ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_START:
-            result = (controller_buttons.start ^ first) && (controller_button_prev_frame.start ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_LEFTSTICK:
-            result = (controller_buttons.left_stick ^ first) && (controller_button_prev_frame.left_stick ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_RIGHTSTICK:
-            result = (controller_buttons.right_stick ^ first) && (controller_button_prev_frame.right_stick ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_LEFTSHOULDER:
-            result =
-                    (controller_buttons.left_shoulder ^ first) && (controller_button_prev_frame.left_shoulder ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_RIGHTSHOULDER:
-            result = (controller_buttons.right_shoulder ^ first) &&
-                     (controller_button_prev_frame.right_shoulder ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_DPAD_UP:
-            result = (controller_buttons.dpad_up ^ first) && (controller_button_prev_frame.dpad_up ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_DPAD_LEFT:
-            result = (controller_buttons.dpad_left ^ first) && (controller_button_prev_frame.dpad_left ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_DPAD_RIGHT:
-            result = (controller_buttons.dpad_right ^ first) && (controller_button_prev_frame.dpad_right ^ second);
-            break;
-        case ST::key::CONTROLLER_BUTTON_DPAD_DOWN:
-            result = (controller_buttons.dpad_down ^ first) && (controller_button_prev_frame.dpad_down ^ second);
-            break;
-        case ST::key::UNKNOWN:
-            result = false;
-            break;
-    }
-    return result;
+    auto key = static_cast<uint8_t>(arg);
+    return (controls.buttons[key] ^ (k_event == ST::key_event::RELEASE))
+    && (controls_prev_frame.buttons[key] ^ (k_event == ST::key_event::PRESS));
 }

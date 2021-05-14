@@ -100,7 +100,7 @@ coinCounter:setTextureScale(0.8, 0.8)
 coinCounter:setVisible(true)
 coinCounter:setStatic(true)
 
-coinCounterText = textObject:new(1920/2-128,100, 50, "font1.ttf")
+local coinCounterText = textObject:new(1920/2-128,100, 50, "font1.ttf")
 coinCounterText:setText('0')
 
 makeDecal(100, floor - 128, DECAL_TYPE.BUSH)
@@ -164,11 +164,11 @@ function resetPlayerPosition()
     player1:moveRight(5)
 end
 
-trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
+local trigger_pit_1 = trigger:new(10400, floor-10, 800, 20)
 trigger_pit_1:onCollisionWith(player1, resetPlayerPosition)
-trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
+local trigger_pit_2 = trigger:new(14400, floor-10, 5600, 20)
 trigger_pit_2:onCollisionWith(player1, resetPlayerPosition)
-trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
+local trigger_pit_3 = trigger:new(20800, floor-10, 1000, 20)
 trigger_pit_3:onCollisionWith(player1, resetPlayerPosition)
 
 local spikes1 = makeSpikes(8512, floor)
@@ -230,7 +230,7 @@ end
 function button_exit:onHover()
     if(self.soundPlayed == 1) then
         playSound(all_buttons_sound, 100, 0)
-        self.soundPlayed = 0;
+        self.soundPlayed = 0
         self.text:setTextColor(255, 100, 100, 255)
     end
 end
