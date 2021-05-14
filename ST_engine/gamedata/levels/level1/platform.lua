@@ -6,19 +6,22 @@
 -- Author: Maxim Atanasov
 -- E-mail: maxim.atanasov@protonmail.com
 
+PLATFORM_TYPE = {
+    GRASS = "platform_grass.png"
+}
+
 platform = entity:new()
-platform.texture = "platform_grass.png"
+platform.texture = PLATFORM_TYPE.GRASS
 platform.texWidth = 512
 platform.texHeight = 128
 platform.colX = 512
 platform.colY = 128
 platform.isVisible = true
 platform.affectedByPhysics = true
-platform.height = 0;
 platform.soundPlayed = false
 platform.soundTrigger = nil
 
-function platform:update ()
+function platform:update()
     self:setVelocityY(-gravity)
 --[[    if self.soundTrigger:overObject(player1) then
         if self.soundPlayed == false then
@@ -32,7 +35,6 @@ end
 
 function platform:new(x, y)
     self = newEntity(self, x, y)
-    self.height = y;
     --self.soundTrigger = trigger:new(x, y+2, self.colX, 3)
     return self;
 end

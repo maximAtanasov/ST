@@ -37,9 +37,6 @@ player.speed = 15;
 player.animationNum = 7
 player.spriteNum = 2
 player.playerType = PLAYER_TYPE.BLUE
-
-player.width = 128;
-player.height = 200;
 player.textureScaleX = 1;
 player.textureScaleY = 1;
 player.speedSound = false
@@ -58,7 +55,7 @@ function player:update()
     if(keyPressed("DASH") or leftTrigger() > 10000) then
         self.speed = 36;
         if self.speedSound == false then
-            playSound("speed.wav", 20, 0)
+            --playSound("speed.wav", 20, 0)
             self.speedSound = true
             local velocity = self:getVelocityX()
             if self.lastDirection == 0 then
@@ -100,10 +97,9 @@ end
 
 function player:jump()
     if self.prevY == self:getY() then
-        playSound("phaseJump1.ogg", 50, 0)
+        --playSound("phaseJump1.ogg", 50, 0)
         self:setVelocityY(-47)
     end
-
 end
 
 function player:moveRight(speed)

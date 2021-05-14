@@ -79,7 +79,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
     std::vector<ST::entity> entities{};
 
     // Filter entities on screen
-    std::copy_if (temp.entities.begin(), temp.entities.end(), std::back_inserter(entities), [this](ST::entity e){
+    std::copy_if (temp.entities.begin(), temp.entities.end(), std::back_inserter(entities), [this](ST::entity e) {
         return is_onscreen(e);
     });
 
@@ -92,7 +92,7 @@ void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
         process_lights(temp.lights);
         draw_lights();
     }
-    //Draw debug info and the console in a debug build
+
     if (collisions_shown) {
         draw_collisions(entities);
         draw_coordinates(entities);

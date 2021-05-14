@@ -13,8 +13,6 @@
 
 namespace ST::renderer_sdl {
         void cache_font(TTF_Font *Font, uint16_t font_and_size);
-        uint16_t draw_text_lru_cached(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
-        uint16_t draw_text_cached_glyphs(uint16_t font, const std::string &arg2, int x, int y, SDL_Color color_font);
     }
 
 static SDL_Renderer *sdl_renderer;
@@ -288,13 +286,12 @@ void ST::renderer_sdl::vsync_off(){
  * @param y The Y position to render at.
  */
 void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        int tex_w, tex_h;
-        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
-        SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &src_rect);
-    }
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    int tex_w, tex_h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
+    SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
+    SDL_RenderCopy(sdl_renderer, texture, nullptr, &src_rect);
 }
 
 /**
@@ -304,14 +301,15 @@ void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
  * @param y The Y position to render at.
  */
 void ST::renderer_sdl::draw_texture_scaled(const uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        int tex_w, tex_h;
-        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect dst_rect = {x, y - static_cast<int>(static_cast<float>(tex_h) * scale_y), static_cast<int>(static_cast<float>(tex_w) * scale_x),
-                             static_cast<int>(static_cast<float>(tex_h) * scale_y)};
-        SDL_RenderCopy(sdl_renderer, texture->second, nullptr, &dst_rect);
-    }
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    int tex_w, tex_h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
+    SDL_Rect dst_rect = {x,
+                         y - static_cast<int>(static_cast<float>(tex_h) * scale_y),
+                         static_cast<int>(static_cast<float>(tex_w) * scale_x),
+                         static_cast<int>(static_cast<float>(tex_h) * scale_y)};
+    SDL_RenderCopy(sdl_renderer, texture, nullptr, &dst_rect);
 }
 
 /**
@@ -349,10 +347,9 @@ void ST::renderer_sdl::draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h
  * @param arg The hash of the texture name.
  */
 void ST::renderer_sdl::draw_background(const uint16_t arg) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        SDL_RenderCopy(sdl_renderer, texture->second, nullptr, nullptr);
-    }
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    SDL_RenderCopy(sdl_renderer, texture, nullptr, nullptr);
 }
 
 /**
@@ -360,21 +357,21 @@ void ST::renderer_sdl::draw_background(const uint16_t arg) {
  * @param offset The offset in the texture for the parallax effect
  */
 void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16_t offset) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        int tex_w, tex_h;
-        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        float bg_ratio = (float)tex_w/(float)width;
-        int src_offset = (int)((float)offset*bg_ratio);
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
 
-        SDL_Rect dst_rect1 = {0, 0, width - offset, height};
-        SDL_Rect src_rect1 = {src_offset, 0, tex_w - src_offset, tex_h};
-        SDL_Rect src_rect2 = {0, 0, src_offset, tex_h};
-        SDL_Rect dst_rect2 = {width - offset, 0, offset, height};
+    int tex_w, tex_h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
+    float bg_ratio = (float)tex_w/(float)width;
+    int src_offset = (int)((float)offset*bg_ratio);
 
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect1, &dst_rect1);
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect2, &dst_rect2);
-    }
+    SDL_Rect dst_rect1 = {0, 0, width - offset, height};
+    SDL_Rect src_rect1 = {src_offset, 0, tex_w - src_offset, tex_h};
+    SDL_Rect src_rect2 = {0, 0, src_offset, tex_h};
+    SDL_Rect dst_rect2 = {width - offset, 0, offset, height};
+
+    SDL_RenderCopy(sdl_renderer, texture, &src_rect1, &dst_rect1);
+    SDL_RenderCopy(sdl_renderer, texture, &src_rect2, &dst_rect2);
 }
 
 /**
@@ -388,16 +385,16 @@ void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
 void ST::renderer_sdl::draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        int tex_w, tex_h;
-        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        int temp1 = tex_h / animation_num;
-        int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
-        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
-    }
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+
+    int tex_w, tex_h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
+    int temp1 = tex_h / animation_num;
+    int temp2 = tex_w / sprite_num;
+    SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
+    SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
+    SDL_RenderCopy(sdl_renderer, texture, &src_rect, &dst_rect);
 }
 
 /**
@@ -411,17 +408,19 @@ void ST::renderer_sdl::draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t s
  * @param sprite_num The total number of sprites in a spritesheet. (Columns in a spritesheet).
  */
 void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        int tex_w, tex_h;
-        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        int temp1 = tex_h / animation_num;
-        int temp2 = tex_w / sprite_num;
-        SDL_Rect dst_rect = {x, y - static_cast<int>(static_cast<float>(temp1) * scale_y), static_cast<int>(static_cast<float>(temp2) * scale_x),
-                             static_cast<int>(static_cast<float>(temp1) * scale_y)};
-        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, &dst_rect);
-    }
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+
+    int tex_w, tex_h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
+    int temp1 = tex_h / animation_num;
+    int temp2 = tex_w / sprite_num;
+    SDL_Rect dst_rect = {x,
+                         y - static_cast<int>(static_cast<float>(temp1) * scale_y),
+                         static_cast<int>(static_cast<float>(temp2) * scale_x),
+                         static_cast<int>(static_cast<float>(temp1) * scale_y)};
+    SDL_Rect src_rect = {sprite * (tex_w / sprite_num), temp1 * (animation - 1), temp2, temp1};
+    SDL_RenderCopy(sdl_renderer, texture, &src_rect, &dst_rect);
 }
 
 /**
@@ -432,13 +431,13 @@ void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, ui
  * @param sprite_num The total number of frames this spritesheet has.
  */
 void ST::renderer_sdl::draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite_num) {
-    auto texture = textures.find(arg);
-    if (texture != textures.end()) [[likely]] {
-        int32_t tex_w, tex_h;
-        SDL_QueryTexture(texture->second, nullptr, nullptr, &tex_w, &tex_h);
-        SDL_Rect src_rect = {sprite * (tex_w / sprite_num), 0, tex_w / sprite_num, tex_h};
-        SDL_RenderCopy(sdl_renderer, texture->second, &src_rect, nullptr);
-    }
+    auto data = textures.find(arg);
+    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+
+    int32_t tex_w, tex_h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
+    SDL_Rect src_rect = {sprite * (tex_w / sprite_num), 0, tex_w / sprite_num, tex_h};
+    SDL_RenderCopy(sdl_renderer, texture, &src_rect, nullptr);
 }
 
 /**

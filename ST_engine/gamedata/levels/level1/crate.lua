@@ -18,6 +18,5 @@ crate.affectedByPhysics = true
 function crate:new(x, y)
     local random = math.random
     self.texture = 'crate'..random(2, 4)..'.png'
-    self = newEntity(self, x, y)
-    return self;
+    return newEntity(self, x, y)
 end
