@@ -151,7 +151,7 @@ makeBlock(11328, floor, BLOCK_TYPE.GRASS)
 
 function resetPlayerPosition()
     controllerRumble(0.5, 1000)
-    playSound("respawn.wav", 80, 0)
+    --playSound("respawn.wav", 80, 0)
     player1.lives = player1.lives - 1;
     if(player1.lives == 2) then
         lifeCube3:setVisible(false)
@@ -203,7 +203,7 @@ end
 
 function button_continue:onHover()
     if(self.soundPlayed == 1) then
-        playSound(all_buttons_sound, 100, 0)
+        --playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
         self.text:setTextColor(255, 100, 100, 255)
         self:setTexture("button01_hover.png")
@@ -229,7 +229,7 @@ end
 
 function button_exit:onHover()
     if(self.soundPlayed == 1) then
-        playSound(all_buttons_sound, 100, 0)
+        --playSound(all_buttons_sound, 100, 0)
         self.soundPlayed = 0
         self.text:setTextColor(255, 100, 100, 255)
     end
