@@ -48,7 +48,7 @@ crate:new(500, floor-200);
 crate:new(540, floor-400);
 crate:new(800, floor-600);
 
-local platform_4 = platform:new(2000, floor-400);
+platform_4 = platform:new(2000, floor-400);
 local platform_5 = platform:new(3000, floor-200);
 local platform_6 = platform:new(3500, floor-400);
 local platform_7 = platform:new(4050, floor-290);
