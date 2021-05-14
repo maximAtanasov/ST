@@ -118,10 +118,11 @@ inline void audio_manager::unmute(){
  */
 inline void audio_manager::play_sound(uint16_t arg, uint8_t volume, int8_t loops) const{
     auto data = chunks_ptr->find(arg);
-    if(!muted){
-        Mix_VolumeChunk(data->second, static_cast<int>(static_cast<float>(volume) / chunk_playback_volume_ratio));
+    auto chunk = reinterpret_cast<Mix_Chunk*>((data != chunks_ptr->end())*reinterpret_cast<uint64_t>(data->second));
+    if(!muted && chunk){ //null-check can be removed with next release of SDL_Mixer
+        Mix_VolumeChunk(chunk, static_cast<int>(static_cast<float>(volume) / chunk_playback_volume_ratio));
     }
-    if(Mix_PlayChannel( -1, data->second, loops ) == -1){
+    if(Mix_PlayChannel( -1, chunk, loops ) == -1){
         gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayChannel Error " + std::string(Mix_GetError()))));
     }
 }
@@ -133,10 +134,12 @@ inline void audio_manager::play_sound(uint16_t arg, uint8_t volume, int8_t loops
  * @param loops How many times to play it, -1 will loop indefinitely.
  */
 inline void audio_manager::play_music(uint16_t arg, uint8_t volume, int8_t loops) const{
+    auto data = music_ptr->find(arg);
+    auto music = reinterpret_cast<Mix_Music*>((data != music_ptr->end())*reinterpret_cast<uint64_t>(data->second));
     if(!muted) {
         Mix_VolumeMusic(static_cast<int>(static_cast<float>(volume) / music_playback_volume_ratio));
     }
-    if(Mix_PlayMusic(music_ptr->find(arg)->second, loops) == -1){
+    if(Mix_PlayMusic(music, loops) == -1){
         gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Mix_PlayMusic Error " + std::string(Mix_GetError()))));
     }
 }
