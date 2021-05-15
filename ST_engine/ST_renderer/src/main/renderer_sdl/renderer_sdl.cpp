@@ -70,6 +70,7 @@ int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16
     SDL_RenderSetLogicalSize(sdl_renderer, width, height);
     SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
+    SDL_SetHint( SDL_HINT_RENDER_BATCHING, "1" );
     set_draw_color(0, 0, 0, 255);
     return 0;
 }
