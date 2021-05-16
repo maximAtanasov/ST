@@ -416,6 +416,7 @@ void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, ui
     SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
     int temp1 = tex_h / animation_num;
     int temp2 = tex_w / sprite_num;
+
     SDL_Rect dst_rect = {x,
                          y - static_cast<int>(static_cast<float>(temp1) * scale_y),
                          static_cast<int>(static_cast<float>(temp2) * scale_x),

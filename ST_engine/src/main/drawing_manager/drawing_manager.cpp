@@ -361,13 +361,15 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
     for(auto& i : entities){
         int32_t camera_offset_x = (!i.is_static())*camera.x; //If entity isn't static add camera offset
         int32_t camera_offset_y = (camera_offset_x != 0)*camera.y;
-        if(i.animation_num == 0){
-            ST::renderer_sdl::draw_texture_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y, i.tex_scale_x, i.tex_scale_y);
-        } else {
-            ST::renderer_sdl::draw_sprite_scaled(i.texture, i.x - camera_offset_x, i.y - camera_offset_y ,
-                                                 time % i.sprite_num, i.animation, i.animation_num, i.sprite_num,
-                                                 i.tex_scale_x, i.tex_scale_y);
-        }
+        ST::renderer_sdl::draw_sprite_scaled(i.texture,
+                                             i.x - camera_offset_x,
+                                             i.y - camera_offset_y,
+                                             time % i.sprite_num,
+                                             i.animation,
+                                             i.animation_num,
+                                             i.sprite_num,
+                                             i.tex_scale_x,
+                                             i.tex_scale_y);
     }
 }
 
@@ -378,7 +380,10 @@ void drawing_manager::draw_entities(const std::vector<ST::entity>& entities) con
  */
 bool drawing_manager::is_onscreen(const ST::entity& i) const{
     return i.is_visible() &&
-    (i.is_static() || (i.x - camera.x + i.tex_w >= 0 && i.x - camera.x <= w_width && i.y - camera.y > 0 && i.y - camera.y - i.tex_h <= w_height));
+    (i.is_static() ||
+    (i.x - camera.x + static_cast<int>(static_cast<float>(i.tex_w) * i.tex_scale_x) >= 0 &&
+    i.x - camera.x <= w_width && i.y - camera.y > 0 &&
+    i.y - camera.y -static_cast<int>(static_cast<float>(i.tex_h) * i.tex_scale_y) <= w_height));
 }
 
 /**
@@ -415,7 +420,7 @@ void drawing_manager::draw_coordinates(const std::vector<ST::entity>& entities) 
         if (i.is_affected_by_physics()) {
             int32_t x_offset = (!i.is_static())*camera.x;
             int32_t y_offset = (x_offset != 0)*camera.y;
-            SDL_Colour colour_text = {255, 255, 0, 255};
+            SDL_Color colour_text = {255, 255, 0, 255};
             ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "x: " + std::to_string(i.x), i.x - x_offset,
                                                       i.y - y_offset - i.tex_h, colour_text);
             ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "y: " + std::to_string(i.y), i.x - x_offset,

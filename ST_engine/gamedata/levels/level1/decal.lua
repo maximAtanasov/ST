@@ -17,7 +17,7 @@ DECAL_TYPE = {
 }
 
 function makeDecal(x, y, decalType)
-    local decal = {}
+    local decal = entity:new()
     decal.texHeight = 128
     decal.texWidth = 128
     decal.isVisible = true

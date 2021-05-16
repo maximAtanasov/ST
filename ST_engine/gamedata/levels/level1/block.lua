@@ -14,7 +14,7 @@ BLOCK_TYPE = {
 }
 
 function makeBlock(x, y, blockType)
-    local block = {}
+    local block = entity:new()
     block.texture = blockType
     if blockType == BLOCK_TYPE.GRASS_EDGE_WATER then
         block.texWidth = 128
