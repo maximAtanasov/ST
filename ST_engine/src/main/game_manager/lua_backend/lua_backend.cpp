@@ -1205,7 +1205,7 @@ extern "C" int setEntityAnimationLua(lua_State *L){
 }
 
 /**
- * Sets the number of animations of an entity. (colums in the spritesheet)
+ * Sets the number of animations of an entity. (columns in the spritesheet)
  * See the Lua docs for more information.
  * @param L The global Lua State.
  * @return Always 0.
