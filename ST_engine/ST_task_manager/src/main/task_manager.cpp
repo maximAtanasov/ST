@@ -330,10 +330,8 @@ void task_manager::work_wait_for_task(task_id id){
     if(id != nullptr) {
         while(!id->try_wait()) {
             ST::task* work;
-            if(run_threads){
-                if(global_task_queue.try_dequeue(work)){ //get a function pointer and data
-                    do_work(work);
-                }
+            if(run_threads && global_task_queue.try_dequeue(work)){ //get a function pointer and data
+                do_work(work);
             }
         }
         delete id;

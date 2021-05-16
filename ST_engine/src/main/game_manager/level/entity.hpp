@@ -48,8 +48,8 @@ namespace ST {
         uint16_t tex_h = 0;
 
         //2 bytes
-        uint8_t sprite_num = 0;
-        uint8_t animation = 0;
+        uint8_t sprite_num = 1;
+        uint8_t animation = 1;
 
         //2 bytes
         int8_t velocity_x = 0;
@@ -63,7 +63,7 @@ namespace ST {
         [3] is_affected_by_physics;
          */
         uint8_t toggles = 0;
-        uint8_t animation_num = 0;
+        uint8_t animation_num = 1;
 
         //2 bytes
         uint16_t texture = 65535;

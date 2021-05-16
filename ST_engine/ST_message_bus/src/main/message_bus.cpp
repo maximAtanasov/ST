@@ -23,6 +23,7 @@ void message_bus::send_msg(message* arg){
     //(if you do want to have subsystems subscribe at random times you should definitely add locks)
 
     //TODO: Branch needed? In practice, no messages without subscribers to them will be sent
+    //The branch cannot be removed with an #ifdef though, as the msg_bus is a library.
     if(size != 0) [[likely]] {
         temp->operator[](0)->push_message(arg);
         for(uint64_t i = 1; i < size; ++i){

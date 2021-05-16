@@ -30,7 +30,7 @@ namespace ST {
 
     public:
         inline T* allocate(){
-            return &memory[pointer++];
+            return &memory[++pointer];
         }
     };
 }

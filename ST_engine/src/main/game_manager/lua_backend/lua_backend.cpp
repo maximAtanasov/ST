@@ -1018,8 +1018,6 @@ extern "C" int setEntityTextureScaleLua(lua_State* L){
     auto ent = &gGame_managerLua->get_level()->entities[id];
     ent->tex_scale_x = scale_x;
     ent->tex_scale_y = scale_y;
-    ent->tex_w = static_cast<uint16_t>(static_cast<float>(ent->tex_w)*scale_x);
-    ent->tex_h = static_cast<uint16_t>(static_cast<float>(ent->tex_h)*scale_y);
     return 0;
 }
 
@@ -1205,7 +1203,7 @@ extern "C" int setEntityAnimationLua(lua_State *L){
 }
 
 /**
- * Sets the number of animations of an entity. (colums in the spritesheet)
+ * Sets the number of animations of an entity. (columns in the spritesheet)
  * See the Lua docs for more information.
  * @param L The global Lua State.
  * @return Always 0.

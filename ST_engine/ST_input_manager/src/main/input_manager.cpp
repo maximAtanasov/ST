@@ -58,6 +58,7 @@ input_manager::input_manager(task_manager &gTask_manager, message_bus &gMessageB
     gMessage_bus.subscribe(SET_RIGHT_TRIGGER_THRESHOLD, &msg_sub);
 }
 
+#ifndef _MSC_VER
 /**
  * Performs the update for the input_manager on a task thread.
  * @param arg pointer to an input_manager (a <b>this</b> pointer basically) as the
@@ -68,6 +69,7 @@ void input_manager::update_task(void* mngr){
     self->handle_messages();
     self->take_input();
 }
+#endif
 
 /**
  * Checks the state of the keyboard and any incoming events and sends appropriate messages.

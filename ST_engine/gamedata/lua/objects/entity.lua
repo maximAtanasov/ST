@@ -64,7 +64,7 @@ entity = {
 
     --animations
     spriteNum = 1;
-    animationNum = 0;
+    animationNum = 1;
 }
 
 --create a new instance of an entity (calls the constructor above)

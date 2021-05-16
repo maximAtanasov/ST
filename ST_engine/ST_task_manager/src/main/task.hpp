@@ -46,11 +46,11 @@ namespace ST {
             this->dependency = dependency;
         }
 
-        void* operator new (std::size_t count){
+        void* operator new (std::size_t){
             return allocator.allocate();
         }
 
-        void operator delete (void* ptr){}
+        void operator delete (void*){}
     };
 }
 
