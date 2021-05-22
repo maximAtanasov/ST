@@ -21,12 +21,12 @@ player.texHeight = 256
 player.offsetColX = 20
 player.offsetColY = 0
 player.colX = 88
-player.colY = 155
+player.colY = 150
 player.idleRightAnim = 1
-player.idleLeftAnim = 7
-player.leftAnim = 5
+player.idleLeftAnim = 6
+player.leftAnim = 4
 player.rightAnim = 2
-player.jumpLeft = 6
+player.jumpLeft = 5
 player.jumpRight = 3
 player.lastDirection = 0
 player.jumpC = 0
@@ -34,7 +34,7 @@ player.isVisible = true
 player.prevY = 0
 player.affectedByPhysics = true
 player.speed = 15;
-player.animationNum = 7
+player.animationNum = 6
 player.spriteNum = 2
 player.playerType = PLAYER_TYPE.BLUE
 player.textureScaleX = 1;
@@ -127,5 +127,24 @@ function player:idle()
         self:playAnimation(self.idleRightAnim)
     else
         self:playAnimation(self.idleLeftAnim)
+    end
+end
+
+function player:setPlayerType(playerType)
+    if playerType == PLAYER_TYPE.BLUE then
+        self:setCollision(20, 0, 88, 150)
+        self:setTexture("alien_blue.png")
+    elseif playerType == PLAYER_TYPE.GREEN then
+        self:setCollision(20, 0, 88, 150)
+        self:setTexture("alien_green.png")
+    elseif playerType == PLAYER_TYPE.PINK then
+        self:setCollision(20, 0, 88, 150)
+        self:setTexture("alien_pink.png")
+    elseif playerType == PLAYER_TYPE.BEIGE then
+        self:setCollision(20, 0, 88, 150)
+        self:setTexture("alien_beige.png")
+    elseif playerType == PLAYER_TYPE.YELLOW then
+        self:setCollision(20, 0, 88, 135)
+        self:setTexture("alien_yellow.png")
     end
 end

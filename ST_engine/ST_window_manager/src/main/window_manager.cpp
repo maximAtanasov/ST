@@ -156,3 +156,10 @@ void window_manager::set_fullscreen(bool arg){
 void window_manager::set_brightness(float arg) {
     SDL_SetWindowBrightness(this->window, arg);
 }
+
+/**
+ * Starts an the update_task() method using the task manager.
+ */
+void window_manager::update(){
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
+}

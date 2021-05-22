@@ -51,7 +51,7 @@ int ST_engine_main(int argc, char *argv[]) {
     gConsole.post_init();
 
     //time keeping variables
-    const double UPDATE_RATE = 16.666667; //GAME LOGIC RUNS AT 60 FPS (or less)
+    const double UPDATE_RATE = 16.6666666666; //GAME LOGIC RUNS AT 60 FPS (or less)
     double total_time = 0;
     double current_time = gTimer.time_since_start();
     double frame_time;

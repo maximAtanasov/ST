@@ -260,7 +260,7 @@ function loop()
         coinCounterText:setText(coinsCollected)
 
         player1:update()
-        playerSwitch:update()
+        playerSwitch:update(player1)
 
         platform_4:update()
         platform_5:update()

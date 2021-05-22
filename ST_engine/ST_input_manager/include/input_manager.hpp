@@ -77,7 +77,7 @@ class input_manager{
         void take_mouse_input();
 
 #ifndef _MSC_VER
-		static void update_task(void* mngr); //And private on linux
+		static void update_task(void* mngr);
 #endif
 
 	public:
@@ -87,21 +87,4 @@ class input_manager{
         void update();
 };
 
-//INLINED METHODS
-
-/**
- * Starts the update_task() method using the task manager.
- */
-#ifdef _MSC_VER
-inline void input_manager::update() {
-    handle_messages();
-    take_input();
-}
-#else
-inline void input_manager::update() {
-    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
-}
-#endif
-
-
-#endif
+#endif //INPUT_DEF

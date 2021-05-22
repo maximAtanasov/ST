@@ -341,4 +341,10 @@ void console::deleteKeyAction() {
     composition.erase(cursor_position, 1);
 }
 
+/**
+ * Consumes messages from the subscriber object.
+ */
+void console::update(){
+    handle_messages();
+}
 

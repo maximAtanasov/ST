@@ -69,6 +69,21 @@ void input_manager::update_task(void* mngr){
     self->handle_messages();
     self->take_input();
 }
+
+/**
+ * Starts the update_task() method using the task manager.
+ */
+void input_manager::update() {
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
+}
+#else
+/**
+ * Starts the update_task() method using the task manager.
+ */
+void input_manager::update() {
+    handle_messages();
+    take_input();
+}
 #endif
 
 /**

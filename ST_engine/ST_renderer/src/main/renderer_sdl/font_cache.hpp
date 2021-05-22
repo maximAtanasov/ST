@@ -46,8 +46,7 @@ typedef ska::bytell_hash_map<font_cache_tuple, cache_list::iterator> cache_hash;
 /**
  * Caches textures and the string, font+size used to render them.
  */
-namespace ST {
-    namespace renderer_sdl {
+namespace ST::renderer_sdl {
         namespace font_cache {
 
             void move_to_front(std::list<key_pair> &list, std::list<key_pair>::iterator element);
@@ -63,6 +62,5 @@ namespace ST {
             void close();
         };
     }
-}
 
 #endif // FONT_CACHE_DEF

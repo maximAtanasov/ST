@@ -34,3 +34,10 @@ double fps::get_average() {
     }
     return sum/16;
 }
+
+/**
+ * @return The current average framerate value.
+ */
+double fps::get_value() const{
+    return value;
+}

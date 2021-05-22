@@ -40,14 +40,4 @@ class window_manager{
         SDL_Window* get_window();
 };
 
-
-//INLINED METHODS
-
-/**
- * Starts an the update_task() method using the task manager.
- */
-inline void window_manager::update(){
-    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
-}
-
-#endif
+#endif //WM_DEF

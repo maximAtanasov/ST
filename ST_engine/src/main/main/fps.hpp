@@ -15,7 +15,7 @@
 #include <algorithm>
 
 /**
- * Provides average frame-rates over 1 second.
+ * Provides average frame-rates over ~1 second.
  * We need this class, because the framerate is otherwise constantly fluctuating.
  */
 class fps {
@@ -32,13 +32,4 @@ public:
         [[nodiscard]] double get_value() const;
 };
 
-//INLINED METHODS
-
-/**
- * @return The current average framerate value.
- */
-inline double fps::get_value() const{
-    return value;
-}
-
-#endif
+#endif //FPS_DEF

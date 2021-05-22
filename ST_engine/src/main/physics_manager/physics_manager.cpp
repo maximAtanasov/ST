@@ -162,3 +162,15 @@ int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entit
     }
     return result;
 }
+
+/**
+ * Responds to messages from the subscriber object and updates the physics if they are not paused.
+ * @param data A pointer to the level data. (containing the entities that we need).
+ */
+void physics_manager::update(std::vector<ST::entity>* data){
+    handle_messages();
+    if(!physics_paused) [[likely]] {
+        process_horizontal(data, friction);
+        process_vertical(data, gravity, level_floor);
+    }
+}

@@ -36,23 +36,9 @@ class physics_manager{
         void handle_messages();
 
     public:
-        physics_manager(message_bus &gMessageBus);
+        explicit physics_manager(message_bus &gMessageBus);
         void update(std::vector<ST::entity>* data);
         ~physics_manager();
 };
-
-//INLINED METHODS
-
-/**
- * Responds to messages from the subscriber object and updates the physics if they are not paused.
- * @param data A pointer to the level data. (containing the entities that we need).
- */
-inline void physics_manager::update(std::vector<ST::entity>* data){
-    handle_messages();
-    if(!physics_paused){
-        process_horizontal(data, friction);
-        process_vertical(data, gravity, level_floor);
-    }
-}
 
 #endif //PHYSICS_DEF

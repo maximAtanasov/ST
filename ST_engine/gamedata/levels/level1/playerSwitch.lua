@@ -35,7 +35,7 @@ playerSwitch.playerIndex = 2;
 --playerSwitch.activePlayerPink, playerSwitch.activePlayerYellow }
 
 
-function playerSwitch:update()
+function playerSwitch:update(player)
     leftSwitch = keyPressed("PLAYER_SWITCH_LEFT")
     rightSwitch = keyPressed("PLAYER_SWITCH_RIGHT")
     if leftSwitch or rightSwitch then
@@ -54,30 +54,35 @@ function playerSwitch:update()
         end
         self:setVisible(true)
         if(self.playerIndex == 1) then
+            player:setPlayerType(PLAYER_TYPE.BEIGE)
             self.activePlayerBeige:setVisible(true)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(false)
             self.activePlayerPink:setVisible(false)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 2) then
+            player:setPlayerType(PLAYER_TYPE.BLUE)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(true)
             self.activePlayerGreen:setVisible(false)
             self.activePlayerPink:setVisible(false)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 3) then
+            player:setPlayerType(PLAYER_TYPE.GREEN)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(true)
             self.activePlayerPink:setVisible(false)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 4) then
+            player:setPlayerType(PLAYER_TYPE.PINK)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(false)
             self.activePlayerPink:setVisible(true)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 5) then
+            player:setPlayerType(PLAYER_TYPE.YELLOW)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(false)

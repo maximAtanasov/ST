@@ -108,4 +108,4 @@ namespace ST {
     };
 }
 
-#endif
+#endif //KEY_DEFINITIONS_HPP
