@@ -13,6 +13,9 @@ fonts/font2.ttf 80
 fonts/font2.ttf 50
 fonts/font2.ttf 70
 assets/audio/coin.wav
+assets/audio/switch.wav
+assets/audio/death.wav
+assets/audio/song1.ogg
 assets/coin.png
 assets/coin_hud.png
 assets/heart.png

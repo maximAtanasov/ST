@@ -236,6 +236,9 @@ void input_manager::take_controller_input(){
         controller_analog_inputs.right_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTY);
         controller_analog_inputs.left_stick_horizontal = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTX);
         controller_analog_inputs.left_stick_vertical = SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY);
+
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_LEFT_TRIGGER)] = controller_analog_inputs.left_trigger > 0;
+        controls.buttons[static_cast<uint8_t>(ST::key::CONTROLLER_BUTTON_RIGHT_TRIGGER)] = controller_analog_inputs.right_trigger > 0;
     }
     //only send controller axis values if they change and the values exceed the thresholds
 

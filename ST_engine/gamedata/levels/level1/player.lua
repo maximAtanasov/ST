@@ -15,7 +15,6 @@ PLAYER_TYPE = {
 }
 
 player = entity:new()
-player.texture = "alien_blue.png"
 player.texWidth = 128
 player.texHeight = 256
 player.offsetColX = 20
@@ -36,12 +35,18 @@ player.affectedByPhysics = true
 player.speed = 15;
 player.animationNum = 6
 player.spriteNum = 2
-player.playerType = PLAYER_TYPE.BLUE
-player.textureScaleX = 1;
-player.textureScaleY = 1;
+player.playerType = PLAYER_TYPE.GREEN
+player.textureScaleX = 1
+player.textureScaleY = 1
 player.speedSound = false
 
 player.lives = 3
+
+function player:new(x, y)
+    self = newEntity(self, x, y)
+    self:setPlayerType(self.playerType)
+    return self
+end
 
 function player:update()
     if(self.prevY ~= self:getY()) then
@@ -52,7 +57,7 @@ function player:update()
         end
     end
 
-    if(keyPressed("DASH") or leftTrigger() > 10000) then
+    if keyPressed("DASH") then
         self.speed = 36;
         if self.speedSound == false then
             --playSound("speed.wav", 20, 0)

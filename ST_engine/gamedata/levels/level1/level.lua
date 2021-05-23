@@ -36,7 +36,8 @@ setBackground("bg2_2.png", 1, 3)
 setBackground("bg2_3.png", 2, 4)
 setBackground("bg2_4.png", 3, 3)
 
---playMusic("music5.ogg", 40, -1)
+
+playMusic("song1.ogg", 50, -1)
 --playSound("rain.wav", 50, -1)
 --Create and initialize entities
 
@@ -48,7 +49,7 @@ crate:new(500, floor-200);
 crate:new(540, floor-400);
 crate:new(800, floor-600);
 
-platform_4 = platform:new(2000, floor-400);
+local platform_4 = platform:new(2000, floor-400);
 local platform_5 = platform:new(3000, floor-200);
 local platform_6 = platform:new(3500, floor-400);
 local platform_7 = platform:new(4050, floor-290);
@@ -151,7 +152,7 @@ makeBlock(11328, floor, BLOCK_TYPE.GRASS)
 
 function resetPlayerPosition()
     controllerRumble(0.5, 1000)
-    --playSound("respawn.wav", 80, 0)
+    playSound("death.wav", 100, 0)
     player1.lives = player1.lives - 1;
     if(player1.lives == 2) then
         lifeCube3:setVisible(false)

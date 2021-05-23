@@ -39,6 +39,7 @@ function playerSwitch:update(player)
     leftSwitch = keyPressed("PLAYER_SWITCH_LEFT")
     rightSwitch = keyPressed("PLAYER_SWITCH_RIGHT")
     if leftSwitch or rightSwitch then
+        playSound("switch.wav", 100, 0)
         if(leftSwitch) then
             if(self.playerIndex > 1) then
                 self.playerIndex = self.playerIndex - 1
