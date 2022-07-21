@@ -111,7 +111,7 @@ $(function() {
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    gConsole.post_init();</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">//time keeping variables</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> UPDATE_RATE = 16.666667; <span class="comment">//GAME LOGIC RUNS AT 60 FPS (or less)</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> LOGIC_UPDATE_RATE = 13;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">double</span> total_time = 0;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">double</span> current_time = gTimer.<a class="code" href="classtimer.html#a43cec204e5ec442598bf317d7f971132">time_since_start</a>();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">double</span> frame_time;</div>
@@ -128,14 +128,14 @@ $(function() {
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        current_time = new_time;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        total_time += frame_time;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span>(total_time &gt;= UPDATE_RATE){</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span>(total_time &gt;= LOGIC_UPDATE_RATE){</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            gInput_manager.update();</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">do</span>{</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                gGame_manager.update();</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                gPhysics_manager.update(&amp;gGame_manager.get_level()-&gt;entities);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                total_time -= UPDATE_RATE;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                total_time -= LOGIC_UPDATE_RATE;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">while</span> (total_time &gt;= UPDATE_RATE);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">while</span> (total_time &gt;= LOGIC_UPDATE_RATE);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="comment">//All three start their own update tasks which run in the background</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            gAssets_manager.update();</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            gDisplay_manager.update();</div>
@@ -143,19 +143,19 @@ $(function() {
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        gConsole.update();</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        gFps.<a class="code" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">update</a>(current_time, 1000/frame_time);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        gDrawing_manager.update(*gGame_manager.get_level(), gFps.<a class="code" href="classfps.html#a6e8845e7bad08b1920c6444ba7db5825">get_value</a>(), gConsole);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        gDrawing_manager.update(*gGame_manager.get_level(), gFps.<a class="code" href="classfps.html#afdf934c44cd0d49007915159697f9607">get_value</a>(), gConsole);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassfps_html_afdf934c44cd0d49007915159697f9607"><div class="ttname"><a href="classfps.html#afdf934c44cd0d49007915159697f9607">fps::get_value</a></div><div class="ttdeci">float get_value() const</div><div class="ttdef"><b>Definition:</b> <a href="fps_8cpp_source.html#l00041">fps.cpp:41</a></div></div>
 <div class="ttc" id="aclassfps_html"><div class="ttname"><a href="classfps.html">fps</a></div><div class="ttdoc">An fps counter.</div><div class="ttdef"><b>Definition:</b> <a href="fps_8hpp_source.html#l00021">fps.hpp:21</a></div></div>
-<div class="ttc" id="aclassfps_html_a6e8845e7bad08b1920c6444ba7db5825"><div class="ttname"><a href="classfps.html#a6e8845e7bad08b1920c6444ba7db5825">fps::get_value</a></div><div class="ttdeci">double get_value() const</div><div class="ttdef"><b>Definition:</b> <a href="fps_8hpp_source.html#l00040">fps.hpp:40</a></div></div>
 <div class="ttc" id="aclasstimer_html"><div class="ttname"><a href="classtimer.html">timer</a></div><div class="ttdoc">A timer used for keeping track of time in the main loop.</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00019">timer.hpp:19</a></div></div>
 <div class="ttc" id="aclassgame__manager_html"><div class="ttname"><a href="classgame__manager.html">game_manager</a></div><div class="ttdoc">This class is responsible for managing all levels and the lua backend, it is the heart of the engine.</div><div class="ttdef"><b>Definition:</b> <a href="game__manager_8hpp_source.html#l00022">game_manager.hpp:22</a></div></div>
 <div class="ttc" id="aclassmessage__bus_html"><div class="ttname"><a href="classmessage__bus.html">message_bus</a></div><div class="ttdoc">The central messaging system of the engine. All subsystem make extensive use of it.</div><div class="ttdef"><b>Definition:</b> <a href="message__bus_8hpp_source.html#l00029">message_bus.hpp:29</a></div></div>
 <div class="ttc" id="aclassdrawing__manager_html"><div class="ttname"><a href="classdrawing__manager.html">drawing_manager</a></div><div class="ttdoc">This object is responsible for issuing drawing commands and drawing the current level.</div><div class="ttdef"><b>Definition:</b> <a href="drawing__manager_8hpp_source.html#l00025">drawing_manager.hpp:25</a></div></div>
 <div class="ttc" id="aclassassets__manager_html_aeafab4b0388a019b5b3c43e7e91e8c50"><div class="ttname"><a href="classassets__manager.html#aeafab4b0388a019b5b3c43e7e91e8c50">assets_manager::update_task</a></div><div class="ttdeci">static void update_task(void *arg)</div><div class="ttdef"><b>Definition:</b> <a href="assets__manager_8cpp_source.html#l00045">assets_manager.cpp:45</a></div></div>
-<div class="ttc" id="aclasstimer_html_a43cec204e5ec442598bf317d7f971132"><div class="ttname"><a href="classtimer.html#a43cec204e5ec442598bf317d7f971132">timer::time_since_start</a></div><div class="ttdeci">double time_since_start() const</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00033">timer.hpp:33</a></div></div>
+<div class="ttc" id="aclasstimer_html_a43cec204e5ec442598bf317d7f971132"><div class="ttname"><a href="classtimer.html#a43cec204e5ec442598bf317d7f971132">timer::time_since_start</a></div><div class="ttdeci">double time_since_start() const</div><div class="ttdef"><b>Definition:</b> <a href="timer_8cpp_source.html#l00022">timer.cpp:22</a></div></div>
 <div class="ttc" id="aclassinput__manager_html"><div class="ttname"><a href="classinput__manager.html">input_manager</a></div><div class="ttdoc">This object is responsible for taking input.</div><div class="ttdef"><b>Definition:</b> <a href="input__manager_8hpp_source.html#l00021">input_manager.hpp:21</a></div></div>
 <div class="ttc" id="aclassphysics__manager_html"><div class="ttname"><a href="classphysics__manager.html">physics_manager</a></div><div class="ttdoc">This class handles all physics related actions in the engine.</div><div class="ttdef"><b>Definition:</b> <a href="physics__manager_8hpp_source.html#l00020">physics_manager.hpp:20</a></div></div>
 <div class="ttc" id="aclasstask__manager_html"><div class="ttname"><a href="classtask__manager.html">task_manager</a></div><div class="ttdoc">The Task Manager handles all things multi-threaded in the engine.</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8hpp_source.html#l00026">task_manager.hpp:26</a></div></div>

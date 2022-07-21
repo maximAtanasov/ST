@@ -119,19 +119,19 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    ASSERT_EQ(0, load_input_conf(&amp;level));</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    ska::bytell_hash_map&lt;uint16_t, std::vector&lt;ST::key&gt;&gt; actions_buttons = level.actions_buttons;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> check_key1 = actions_buttons.at(key1_hash).at(0);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    ST::key check_key1 = actions_buttons.at(key1_hash).at(0);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    ASSERT_EQ(ST::key::I, check_key1);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> check_key2 = actions_buttons.at(key1_hash).at(1);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    ST::key check_key2 = actions_buttons.at(key1_hash).at(1);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ASSERT_EQ(ST::key::CONTROLLER_BUTTON_B, check_key2);</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> check_key3 = actions_buttons.at(key2_hash).at(0);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    ST::key check_key3 = actions_buttons.at(key2_hash).at(0);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    ASSERT_EQ(ST::key::ENTER, check_key3);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> check_key4 = actions_buttons.at(key3_hash).at(0);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    ST::key check_key4 = actions_buttons.at(key3_hash).at(0);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    ASSERT_EQ(ST::key::SPACEBAR, check_key4);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> check_key5 = actions_buttons.at(key3_hash).at(1);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    ST::key check_key5 = actions_buttons.at(key3_hash).at(1);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    ASSERT_EQ(ST::key::CONTROLLER_BUTTON_A, check_key5);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
@@ -143,7 +143,6 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassST_1_1level_html_a2d43f87cace11516ea5cf3b3ef3b91ec"><div class="ttname"><a href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">ST::level::load_input_conf</a></div><div class="ttdeci">int8_t load_input_conf()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00131">level.cpp:131</a></div></div>
 <div class="ttc" id="aclassmessage__bus_html"><div class="ttname"><a href="classmessage__bus.html">message_bus</a></div><div class="ttdoc">The central messaging system of the engine. All subsystem make extensive use of it.</div><div class="ttdef"><b>Definition:</b> <a href="message__bus_8hpp_source.html#l00029">message_bus.hpp:29</a></div></div>
-<div class="ttc" id="anamespaceST_html_a7b163991d6aaf5c4ee55a33732f37a4f"><div class="ttname"><a href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a></div><div class="ttdeci">key</div><div class="ttdoc">An enum containing all mouse/keyboard keys supported by the engine.</div><div class="ttdef"><b>Definition:</b> <a href="key__definitions_8hpp_source.html#l00023">key_definitions.hpp:23</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html"><div class="ttname"><a href="classST_1_1level.html">ST::level</a></div><div class="ttdoc">This object contains all the data for a level and provides functions for loading and unloading a leve...</div><div class="ttdef"><b>Definition:</b> <a href="level_8hpp_source.html#l00029">level.hpp:29</a></div></div>
 <div class="ttc" id="aclasslevel__tests_html"><div class="ttname"><a href="classlevel__tests.html">level_tests</a></div><div class="ttdoc">Tests fixture for the level object.</div><div class="ttdef"><b>Definition:</b> <a href="level__tests_8cpp_source.html#l00016">level_tests.cpp:16</a></div></div>
 <!-- start footer part -->

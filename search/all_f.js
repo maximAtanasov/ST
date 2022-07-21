@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['this_20file_20is_20part_20of_20the_20_22st_22_20project_2e_93',['This file is part of the &quot;ST&quot; project.',['../index.html',1,'']]],
-  ['task_94',['task',['../classST_1_1task.html',1,'ST::task'],['../classST_1_1task.html#ae6bb843c3d55578bedc18b630a0a2e32',1,'ST::task::task()']]],
-  ['task_5fmanager_95',['task_manager',['../classtask__manager.html',1,'task_manager'],['../classtask__manager.html#aacbc52a95ea967ac642422cf7b71bbd7',1,'task_manager::task_manager()'],['../classtask__manager.html#a4d435319c91b0fe9077bbfaea1e812d1',1,'task_manager::task_manager(uint8_t thread_num)']]],
-  ['task_5fmanager_5ftests_96',['task_manager_tests',['../classtask__manager__tests.html',1,'']]],
-  ['text_97',['text',['../structST_1_1text.html',1,'ST::text'],['../structST_1_1text.html#a9e9d201911063d66f6efbe7e3fe6841b',1,'ST::text::text()']]],
-  ['time_5fsince_5fstart_98',['time_since_start',['../classtimer.html#a43cec204e5ec442598bf317d7f971132',1,'timer']]],
-  ['timer_99',['timer',['../classtimer.html',1,'timer'],['../classtimer.html#ae536faf93e02933cd025a6fbcbb48d0a',1,'timer::timer()']]]
+  ['unload_96',['unload',['../classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3',1,'ST::level']]],
+  ['update_97',['update',['../classdrawing__manager.html#a7d1afcc67dd104787ea38eb7f79017db',1,'drawing_manager::update()'],['../classgame__manager.html#acfe4a62964b10fe72a499575b573055d',1,'game_manager::update()'],['../classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6',1,'fps::update()'],['../classphysics__manager.html#aa05ebdc5e002c7f6a5129a2bd70c5cf3',1,'physics_manager::update()'],['../classassets__manager.html#a4eee870009e6ac35daad4be4c311e6e8',1,'assets_manager::update()'],['../classaudio__manager.html#a9ddeddf517a79cbcc4be751bb73972b4',1,'audio_manager::update()'],['../classconsole.html#a6b3161ea98925d0e26e23d6c6eed8375',1,'console::update()'],['../classinput__manager.html#a9ea71ec270312897110d94a68df59479',1,'input_manager::update()'],['../classwindow__manager.html#a0aa050f4f00752971164c2f6719087e7',1,'window_manager::update()']]],
+  ['update_5ftask_98',['update_task',['../classassets__manager.html#aeafab4b0388a019b5b3c43e7e91e8c50',1,'assets_manager']]],
+  ['upload_5ffonts_99',['upload_fonts',['../namespaceST_1_1renderer__sdl.html#a0e57577573fd276e92c0b4643f7eea7e',1,'ST::renderer_sdl']]],
+  ['upload_5fsurfaces_100',['upload_surfaces',['../namespaceST_1_1renderer__sdl.html#a3344b49be2aa75755d0b360bcb826e7f',1,'ST::renderer_sdl']]]
 ];

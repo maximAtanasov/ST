@@ -114,29 +114,27 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceST.html">ST</a> {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">namespace </span>renderer_sdl {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">namespace </span>font_cache {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordtype">void</span> move_to_front(std::list&lt;key_pair&gt; &amp;list, std::list&lt;key_pair&gt;::iterator element);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordtype">void</span> set_max(uint32_t max);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> cache_string(<span class="keyword">const</span> std::string&amp; str, SDL_Texture *texture, uint16_t font);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            SDL_Texture *get_cached_string(<span class="keyword">const</span> std::string&amp; str, uint16_t font);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">void</span> clear();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="namespaceST_1_1renderer__sdl.html#a6b53e5454c51be82874002f522e5b8d1">close</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        };</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif // FONT_CACHE_DEF</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceST_1_1renderer__sdl.html">ST::renderer_sdl</a> {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">namespace </span>font_cache {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordtype">void</span> move_to_front(std::list&lt;key_pair&gt; &amp;list, std::list&lt;key_pair&gt;::iterator element);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordtype">void</span> set_max(uint32_t max);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordtype">void</span> cache_string(<span class="keyword">const</span> std::string&amp; str, SDL_Texture *texture, uint16_t font);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            SDL_Texture *get_cached_string(<span class="keyword">const</span> std::string&amp; str, uint16_t font);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="namespaceST_1_1renderer__sdl.html#a6b53e5454c51be82874002f522e5b8d1">close</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        };</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif // FONT_CACHE_DEF</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anamespaceST_html"><div class="ttname"><a href="namespaceST.html">ST</a></div><div class="ttdoc">A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer c...</div><div class="ttdef"><b>Definition:</b> <a href="camera_8hpp_source.html#l00013">camera.hpp:13</a></div></div>
-<div class="ttc" id="anamespaceST_1_1renderer__sdl_html_a6b53e5454c51be82874002f522e5b8d1"><div class="ttname"><a href="namespaceST_1_1renderer__sdl.html#a6b53e5454c51be82874002f522e5b8d1">ST::renderer_sdl::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition:</b> <a href="renderer__sdl_8cpp_source.html#l00080">renderer_sdl.cpp:80</a></div></div>
+<div class="ttc" id="anamespaceST_1_1renderer__sdl_html_a6b53e5454c51be82874002f522e5b8d1"><div class="ttname"><a href="namespaceST_1_1renderer__sdl.html#a6b53e5454c51be82874002f522e5b8d1">ST::renderer_sdl::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition:</b> <a href="renderer__sdl_8cpp_source.html#l00081">renderer_sdl.cpp:81</a></div></div>
+<div class="ttc" id="anamespaceST_1_1renderer__sdl_html"><div class="ttname"><a href="namespaceST_1_1renderer__sdl.html">ST::renderer_sdl</a></div><div class="ttdoc">The renderer for the engine.</div><div class="ttdef"><b>Definition:</b> <a href="renderer__sdl_8hpp_source.html#l00025">renderer_sdl.hpp:25</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

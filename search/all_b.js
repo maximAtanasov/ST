@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['operator_7c_71',['operator|',['../namespaceST.html#a99ea5340dfdae4f70000e2759272c216',1,'ST']]]
+  ['physics_5fmanager_69',['physics_manager',['../classphysics__manager.html',1,'physics_manager'],['../classphysics__manager.html#aa170228e2545a7e93d9108615883b499',1,'physics_manager::physics_manager()']]],
+  ['present_70',['present',['../namespaceST_1_1renderer__sdl.html#ac4991524aa01805488761ecf1b014809',1,'ST::renderer_sdl']]],
+  ['push_5fmessage_71',['push_message',['../classsubscriber.html#af8f2598d0df147d9e3047be1a571a097',1,'subscriber']]]
 ];

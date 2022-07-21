@@ -86,7 +86,7 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;cstddef&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceST.html">ST</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>ST {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classST_1_1entity.html">   24</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classST_1_1entity.html">entity</a> {</div>
@@ -116,8 +116,8 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        uint16_t tex_h = 0;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">//2 bytes</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        uint8_t sprite_num = 0;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        uint8_t animation = 0;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        uint8_t sprite_num = 1;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        uint8_t animation = 1;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="comment">//2 bytes</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        int8_t velocity_x = 0;</div>
@@ -131,7 +131,7 @@ $(function() {
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">        [3] is_affected_by_physics;</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">         */</span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        uint8_t toggles = 0;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        uint8_t animation_num = 0;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        uint8_t animation_num = 1;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">//2 bytes</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        uint16_t texture = 65535;</div>
@@ -233,20 +233,19 @@ $(function() {
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    offset_y = offsetY;</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;}</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="classST_1_1entity.html#a26bc46bcc98bf27a6938e9a2da7565bd">  196</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classST_1_1entity.html#a26bc46bcc98bf27a6938e9a2da7565bd">ST::entity::collides</a>(<span class="keyword">const</span> <a class="code" href="classST_1_1entity.html">entity</a>&amp; other)<span class="keyword"> const</span>{</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordflow">return</span> !((y + offset_y &lt;= other.y + other.col_y + other.offset_y) || (y + col_y + offset_y &gt;= other.y + other.offset_y)</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;          || (x + offset_x &gt;= other.x + other.col_x + other.offset_x) || (x + col_x + offset_x &lt;= other.x + other.offset_x));</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;static_assert(<span class="keyword">sizeof</span>(<a class="code" href="classST_1_1entity.html">ST::entity</a>) == 36, <span class="stringliteral">&quot;class &#39;entity&#39; is not sized properly, maybe you have misaligned the fields&quot;</span>);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classST_1_1entity.html#a26bc46bcc98bf27a6938e9a2da7565bd">  197</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classST_1_1entity.html#a26bc46bcc98bf27a6938e9a2da7565bd">ST::entity::collides</a>(<span class="keyword">const</span> <a class="code" href="classST_1_1entity.html">entity</a>&amp; other)<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">return</span> !((y + offset_y &lt;= other.y + other.col_y + other.offset_y) || (y + col_y + offset_y &gt;= other.y + other.offset_y)</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;          || (x + offset_x &gt;= other.x + other.col_x + other.offset_x) || (x + col_x + offset_x &lt;= other.x + other.offset_x));</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;static_assert(<span class="keyword">sizeof</span>(<a class="code" href="classST_1_1entity.html">ST::entity</a>) == 36, <span class="stringliteral">&quot;class &#39;entity&#39; is not sized properly, maybe you have misaligned the fields&quot;</span>);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassST_1_1entity_html_abf997873bac48cc78bc0697677107edb"><div class="ttname"><a href="classST_1_1entity.html#abf997873bac48cc78bc0697677107edb">ST::entity::get_col_x</a></div><div class="ttdeci">int32_t get_col_x() const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00149">entity.hpp:149</a></div></div>
-<div class="ttc" id="anamespaceST_html"><div class="ttname"><a href="namespaceST.html">ST</a></div><div class="ttdoc">A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer c...</div><div class="ttdef"><b>Definition:</b> <a href="camera_8hpp_source.html#l00013">camera.hpp:13</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html_a591b2536c814d4cd8534a253b6ddb9f7"><div class="ttname"><a href="classST_1_1entity.html#a591b2536c814d4cd8534a253b6ddb9f7">ST::entity::get_col_y_offset</a></div><div class="ttdeci">int16_t get_col_y_offset() const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00173">entity.hpp:173</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html_a1e1b3f93ff8d614106f97b4c61a797e4"><div class="ttname"><a href="classST_1_1entity.html#a1e1b3f93ff8d614106f97b4c61a797e4">ST::entity::set_collision_box</a></div><div class="ttdeci">void set_collision_box(int16_t, int16_t, int16_t, int16_t)</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00184">entity.hpp:184</a></div></div>
-<div class="ttc" id="aclassST_1_1entity_html_a26bc46bcc98bf27a6938e9a2da7565bd"><div class="ttname"><a href="classST_1_1entity.html#a26bc46bcc98bf27a6938e9a2da7565bd">ST::entity::collides</a></div><div class="ttdeci">bool collides(const entity &amp;) const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00196">entity.hpp:196</a></div></div>
+<div class="ttc" id="aclassST_1_1entity_html_a26bc46bcc98bf27a6938e9a2da7565bd"><div class="ttname"><a href="classST_1_1entity.html#a26bc46bcc98bf27a6938e9a2da7565bd">ST::entity::collides</a></div><div class="ttdeci">bool collides(const entity &amp;) const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00197">entity.hpp:197</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html"><div class="ttname"><a href="classST_1_1entity.html">ST::entity</a></div><div class="ttdoc">This class represents all static or dynamic objects in the game (excluding text, see ST::text)</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00024">entity.hpp:24</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html_a074c9814bc2190d707ad619e91be3926"><div class="ttname"><a href="classST_1_1entity.html#a074c9814bc2190d707ad619e91be3926">ST::entity::get_col_y</a></div><div class="ttdeci">int32_t get_col_y() const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00157">entity.hpp:157</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html_a2bc0c832ca0b4eed917f511e37b0705d"><div class="ttname"><a href="classST_1_1entity.html#a2bc0c832ca0b4eed917f511e37b0705d">ST::entity::get_col_x_offset</a></div><div class="ttdeci">int16_t get_col_x_offset() const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00165">entity.hpp:165</a></div></div>

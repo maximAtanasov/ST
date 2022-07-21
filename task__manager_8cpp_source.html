@@ -357,22 +357,20 @@ $(function() {
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">id</span> != <span class="keyword">nullptr</span>) {</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        <span class="keywordflow">while</span>(!id-&gt;try_wait()) {</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;            <a class="code" href="classST_1_1task.html">ST::task</a>* work;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            <span class="keywordflow">if</span>(run_threads){</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                <span class="keywordflow">if</span>(global_task_queue.try_dequeue(work)){ <span class="comment">//get a function pointer and data</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                    do_work(work);</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            }</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        }</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        <span class="keyword">delete</span> id;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    }</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;}</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00347"></a><span class="lineno"><a class="line" href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">  347</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">task_manager::wait_for_task</a>(<a class="code" href="classsemaphore.html">task_id</a> <span class="keywordtype">id</span>){</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">id</span> != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <span class="keywordtype">id</span>-&gt;wait();</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        <span class="keyword">delete</span> id;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    }</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            <span class="keywordflow">if</span>(run_threads &amp;&amp; global_task_queue.try_dequeue(work)){ <span class="comment">//get a function pointer and data</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                do_work(work);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;            }</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        }</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keyword">delete</span> id;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;}</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
+<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">  345</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">task_manager::wait_for_task</a>(<a class="code" href="classsemaphore.html">task_id</a> <span class="keywordtype">id</span>){</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keywordflow">if</span>(<span class="keywordtype">id</span> != <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <span class="keywordtype">id</span>-&gt;wait();</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        <span class="keyword">delete</span> id;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasstask__manager_html_a6f1eb4ceea5db9b096171115af6b7e14"><div class="ttname"><a href="classtask__manager.html#a6f1eb4ceea5db9b096171115af6b7e14">task_manager::~task_manager</a></div><div class="ttdeci">~task_manager()</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8cpp_source.html#l00282">task_manager.cpp:282</a></div></div>
 <div class="ttc" id="aclasssemaphore_html"><div class="ttname"><a href="classsemaphore.html">semaphore</a></div><div class="ttdef"><b>Definition:</b> <a href="semaphore_8hpp_source.html#l00007">semaphore.hpp:7</a></div></div>
@@ -380,7 +378,7 @@ $(function() {
 <div class="ttc" id="aclassST_1_1task_html"><div class="ttname"><a href="classST_1_1task.html">ST::task</a></div><div class="ttdoc">An object representing a task to be run by the task manager.</div><div class="ttdef"><b>Definition:</b> <a href="task_8hpp_source.html#l00024">task.hpp:24</a></div></div>
 <div class="ttc" id="aclasstask__manager_html_aaf1b0a1176405fb39bfedc0e4cc1cc3c"><div class="ttname"><a href="classtask__manager.html#aaf1b0a1176405fb39bfedc0e4cc1cc3c">task_manager::start_task</a></div><div class="ttdeci">task_id start_task(ST::task *arg)</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8cpp_source.html#l00307">task_manager.cpp:307</a></div></div>
 <div class="ttc" id="aclasstask__manager_html_aacbc52a95ea967ac642422cf7b71bbd7"><div class="ttname"><a href="classtask__manager.html#aacbc52a95ea967ac642422cf7b71bbd7">task_manager::task_manager</a></div><div class="ttdeci">task_manager()</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8cpp_source.html#l00209">task_manager.cpp:209</a></div></div>
-<div class="ttc" id="aclasstask__manager_html_a862d0af333a16300f82c0701682e6d99"><div class="ttname"><a href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">task_manager::wait_for_task</a></div><div class="ttdeci">void wait_for_task(task_id id)</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8cpp_source.html#l00347">task_manager.cpp:347</a></div></div>
+<div class="ttc" id="aclasstask__manager_html_a862d0af333a16300f82c0701682e6d99"><div class="ttname"><a href="classtask__manager.html#a862d0af333a16300f82c0701682e6d99">task_manager::wait_for_task</a></div><div class="ttdeci">void wait_for_task(task_id id)</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8cpp_source.html#l00345">task_manager.cpp:345</a></div></div>
 <div class="ttc" id="aclasstask__manager_html"><div class="ttname"><a href="classtask__manager.html">task_manager</a></div><div class="ttdoc">The Task Manager handles all things multi-threaded in the engine.</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8hpp_source.html#l00026">task_manager.hpp:26</a></div></div>
 <div class="ttc" id="aclasstask__manager_html_a84f3600a490f4a93380d4f57524cb606"><div class="ttname"><a href="classtask__manager.html#a84f3600a490f4a93380d4f57524cb606">task_manager::start_task_lockfree</a></div><div class="ttdeci">void start_task_lockfree(ST::task *arg)</div><div class="ttdef"><b>Definition:</b> <a href="task__manager_8cpp_source.html#l00320">task_manager.cpp:320</a></div></div>
 <!-- start footer part -->

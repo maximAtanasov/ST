@@ -93,7 +93,7 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define PARALLAX_BG_LAYERS 4</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceST.html">ST</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>ST {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classST_1_1level.html">   29</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classST_1_1level.html">level</a> {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">friend</span> class ::level_tests;</div>
@@ -102,7 +102,7 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        std::string name;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classmessage__bus.html">message_bus</a> *gMessage_bus;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">static</span> <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> key_index(<span class="keyword">const</span> std::string&amp; arg);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">static</span> key key_index(<span class="keyword">const</span> std::string&amp; arg);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
@@ -121,25 +121,24 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        SDL_Color background_color{0, 0, 0, 0};</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        uint16_t overlay = 65535;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        uint8_t overlay_sprite_num = 1;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="structST_1_1camera.html">ST::camera</a> <a class="code" href="structST_1_1camera.html">camera</a> = {0, 0, -1, 1920, 0, 1080};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classST_1_1level.html#a8592580d090d80586851cf4a72a937b8">level</a>(<span class="keyword">const</span> std::string&amp;, <a class="code" href="classmessage__bus.html">message_bus</a>*);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        int8_t <a class="code" href="classST_1_1level.html#a898bbdee53677f45a964f551eead23f1">load</a>();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb">reload</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3">unload</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        [[nodiscard]] std::string <a class="code" href="classST_1_1level.html#a0d4f39e1343341f019ad0f12c59edf3f">get_name</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="classST_1_1level.html#aa157d5ff0d48e9ac2e973869bae411d8">~level</a>();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        int8_t <a class="code" href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">load_input_conf</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;       <span class="comment">// ST::camera camera = {0, 0, -1, 1920, 0, 1080};</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="structST_1_1camera.html">ST::camera</a> <a class="code" href="structST_1_1camera.html">camera</a> = {0, 0, -1, 1920, 0, 1080};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="classST_1_1level.html#a8592580d090d80586851cf4a72a937b8">level</a>(<span class="keyword">const</span> std::string&amp;, <a class="code" href="classmessage__bus.html">message_bus</a>*);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        int8_t <a class="code" href="classST_1_1level.html#a898bbdee53677f45a964f551eead23f1">load</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb">reload</a>();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3">unload</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        [[nodiscard]] std::string <a class="code" href="classST_1_1level.html#a0d4f39e1343341f019ad0f12c59edf3f">get_name</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="classST_1_1level.html#aa157d5ff0d48e9ac2e973869bae411d8">~level</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        int8_t <a class="code" href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">load_input_conf</a>();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    };</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassST_1_1level_html_aad3c9e551f1e87ef9e79797574de9ccb"><div class="ttname"><a href="classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb">ST::level::reload</a></div><div class="ttdeci">void reload()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00050">level.cpp:50</a></div></div>
-<div class="ttc" id="anamespaceST_html"><div class="ttname"><a href="namespaceST.html">ST</a></div><div class="ttdoc">A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer c...</div><div class="ttdef"><b>Definition:</b> <a href="camera_8hpp_source.html#l00013">camera.hpp:13</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a2d43f87cace11516ea5cf3b3ef3b91ec"><div class="ttname"><a href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">ST::level::load_input_conf</a></div><div class="ttdeci">int8_t load_input_conf()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00131">level.cpp:131</a></div></div>
 <div class="ttc" id="aclassmessage__bus_html"><div class="ttname"><a href="classmessage__bus.html">message_bus</a></div><div class="ttdoc">The central messaging system of the engine. All subsystem make extensive use of it.</div><div class="ttdef"><b>Definition:</b> <a href="message__bus_8hpp_source.html#l00029">message_bus.hpp:29</a></div></div>
-<div class="ttc" id="anamespaceST_html_a7b163991d6aaf5c4ee55a33732f37a4f"><div class="ttname"><a href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a></div><div class="ttdeci">key</div><div class="ttdoc">An enum containing all mouse/keyboard keys supported by the engine.</div><div class="ttdef"><b>Definition:</b> <a href="key__definitions_8hpp_source.html#l00023">key_definitions.hpp:23</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a0d4f39e1343341f019ad0f12c59edf3f"><div class="ttname"><a href="classST_1_1level.html#a0d4f39e1343341f019ad0f12c59edf3f">ST::level::get_name</a></div><div class="ttdeci">std::string get_name() const</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00076">level.cpp:76</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a898bbdee53677f45a964f551eead23f1"><div class="ttname"><a href="classST_1_1level.html#a898bbdee53677f45a964f551eead23f1">ST::level::load</a></div><div class="ttdeci">int8_t load()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00030">level.cpp:30</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a5c9acbede6f97b6bd577a1c93ad97dc3"><div class="ttname"><a href="classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3">ST::level::unload</a></div><div class="ttdeci">void unload()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00102">level.cpp:102</a></div></div>

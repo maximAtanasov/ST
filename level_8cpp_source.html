@@ -95,9 +95,9 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">//Register all the keys this level uses with the input manager.</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;i : actions_buttons) {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> : i.second) {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> != ST::key::UNKNOWN){</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(REGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a>), <span class="keyword">nullptr</span>));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; key : i.second) {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">if</span>(key != ST::key::UNKNOWN){</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(REGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(key), <span class="keyword">nullptr</span>));</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
@@ -110,9 +110,9 @@ $(function() {
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::string temp = <span class="stringliteral">&quot;levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNLOAD_LIST, make_data(temp)));</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;i : actions_buttons) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> : i.second){</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> != ST::key::UNKNOWN){</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNREGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a>), <span class="keyword">nullptr</span>));</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;key : i.second){</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">if</span>(key != ST::key::UNKNOWN){</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNREGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(key), <span class="keyword">nullptr</span>));</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            }</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
@@ -120,9 +120,9 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOAD_LIST, make_data(temp)));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    load_input_conf();</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;i : actions_buttons) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> : i.second) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> != ST::key::UNKNOWN){</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(REGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a>), <span class="keyword">nullptr</span>));</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; key : i.second) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">if</span>(key != ST::key::UNKNOWN){</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(REGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(key), <span class="keyword">nullptr</span>));</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
@@ -148,9 +148,9 @@ $(function() {
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
 <div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3">  102</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3">ST::level::unload</a>(){</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;i : actions_buttons) {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> : i.second) {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> != ST::key::UNKNOWN){</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNREGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a>), <span class="keyword">nullptr</span>));</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;key : i.second) {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordflow">if</span>(key != ST::key::UNKNOWN){</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNREGISTER_KEY, <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(key), <span class="keyword">nullptr</span>));</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            }        }</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">//unload assets</span></div>
@@ -222,8 +222,8 @@ $(function() {
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a> ST::level::key_index(<span class="keyword">const</span> std::string&amp; arg){</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">key</a> index = key::UNKNOWN;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;ST::key ST::level::key_index(<span class="keyword">const</span> std::string&amp; arg){</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    key index = key::UNKNOWN;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">if</span>(arg == <span class="stringliteral">&quot;left&quot;</span>){</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        index = key::LEFT;</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    }</div>
@@ -458,13 +458,18 @@ $(function() {
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(arg == <span class="stringliteral">&quot;controllerDpadRight&quot;</span>){</div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        index = key::CONTROLLER_BUTTON_DPAD_RIGHT;</div>
 <div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    }</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordflow">return</span> index;</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;}</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(arg == <span class="stringliteral">&quot;controllerRightTrigger&quot;</span>){</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        index = key::CONTROLLER_BUTTON_RIGHT_TRIGGER;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    }</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span>(arg == <span class="stringliteral">&quot;controllerLeftTrigger&quot;</span>){</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;        index = key::CONTROLLER_BUTTON_LEFT_TRIGGER;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    }</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="keywordflow">return</span> index;</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassST_1_1level_html_aad3c9e551f1e87ef9e79797574de9ccb"><div class="ttname"><a href="classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb">ST::level::reload</a></div><div class="ttdeci">void reload()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00050">level.cpp:50</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a2d43f87cace11516ea5cf3b3ef3b91ec"><div class="ttname"><a href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">ST::level::load_input_conf</a></div><div class="ttdeci">int8_t load_input_conf()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00131">level.cpp:131</a></div></div>
 <div class="ttc" id="aclassmessage__bus_html"><div class="ttname"><a href="classmessage__bus.html">message_bus</a></div><div class="ttdoc">The central messaging system of the engine. All subsystem make extensive use of it.</div><div class="ttdef"><b>Definition:</b> <a href="message__bus_8hpp_source.html#l00029">message_bus.hpp:29</a></div></div>
-<div class="ttc" id="anamespaceST_html_a7b163991d6aaf5c4ee55a33732f37a4f"><div class="ttname"><a href="namespaceST.html#a7b163991d6aaf5c4ee55a33732f37a4f">ST::key</a></div><div class="ttdeci">key</div><div class="ttdoc">An enum containing all mouse/keyboard keys supported by the engine.</div><div class="ttdef"><b>Definition:</b> <a href="key__definitions_8hpp_source.html#l00023">key_definitions.hpp:23</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a0d4f39e1343341f019ad0f12c59edf3f"><div class="ttname"><a href="classST_1_1level.html#a0d4f39e1343341f019ad0f12c59edf3f">ST::level::get_name</a></div><div class="ttdeci">std::string get_name() const</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00076">level.cpp:76</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a898bbdee53677f45a964f551eead23f1"><div class="ttname"><a href="classST_1_1level.html#a898bbdee53677f45a964f551eead23f1">ST::level::load</a></div><div class="ttdeci">int8_t load()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00030">level.cpp:30</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html_a5c9acbede6f97b6bd577a1c93ad97dc3"><div class="ttname"><a href="classST_1_1level.html#a5c9acbede6f97b6bd577a1c93ad97dc3">ST::level::unload</a></div><div class="ttdeci">void unload()</div><div class="ttdef"><b>Definition:</b> <a href="level_8cpp_source.html#l00102">level.cpp:102</a></div></div>

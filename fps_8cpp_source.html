@@ -82,7 +82,7 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;main/fps.hpp&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">   17</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">fps::update</a>(<span class="keywordtype">double</span> time, <span class="keywordtype">double</span> frame_time) {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    average[counter++] = frame_time;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    average[counter++] = frame_time; <span class="comment">//TODO: Fix</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    counter = (counter != 16)*counter;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    new_time = time;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">if</span>(new_time - old_time &gt; 64){</div>
@@ -91,14 +91,19 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    }</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">double</span> fps::get_average() {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">double</span> sum = 0;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">double</span> i : average){</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keywordtype">float</span> fps::get_average() {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">float</span> sum = 0;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">float</span> i : average){</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        sum += i;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">return</span> sum/16;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classfps.html#afdf934c44cd0d49007915159697f9607">   41</a></span>&#160;<span class="keywordtype">float</span> <a class="code" href="classfps.html#afdf934c44cd0d49007915159697f9607">fps::get_value</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">return</span> value;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassfps_html_afdf934c44cd0d49007915159697f9607"><div class="ttname"><a href="classfps.html#afdf934c44cd0d49007915159697f9607">fps::get_value</a></div><div class="ttdeci">float get_value() const</div><div class="ttdef"><b>Definition:</b> <a href="fps_8cpp_source.html#l00041">fps.cpp:41</a></div></div>
 <div class="ttc" id="aclassfps_html_a2c8c59b44f0ce9cde8b0a6265fcf0ca6"><div class="ttname"><a href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">fps::update</a></div><div class="ttdeci">void update(double time, double frame_time)</div><div class="ttdef"><b>Definition:</b> <a href="fps_8cpp_source.html#l00017">fps.cpp:17</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

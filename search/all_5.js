@@ -19,6 +19,6 @@ var searchData=
   ['get_5fright_5fstick_5fhorizontal_45',['get_right_stick_horizontal',['../classgame__manager.html#ac50accb3b205612f37c74316a6a2befe',1,'game_manager']]],
   ['get_5fright_5fstick_5fvertical_46',['get_right_stick_vertical',['../classgame__manager.html#a5afd0a69c58d4f213a3ca6855f50c2d9',1,'game_manager']]],
   ['get_5fright_5ftrigger_47',['get_right_trigger',['../classgame__manager.html#a9b2496ea313fdfa71f6a19af88647503',1,'game_manager']]],
-  ['get_5fvalue_48',['get_value',['../classfps.html#a6e8845e7bad08b1920c6444ba7db5825',1,'fps']]],
+  ['get_5fvalue_48',['get_value',['../classfps.html#afdf934c44cd0d49007915159697f9607',1,'fps']]],
   ['get_5fwindow_49',['get_window',['../classwindow__manager.html#a0393bcb6fe86954cd9fdddbc6eeebf2c',1,'window_manager']]]
 ];

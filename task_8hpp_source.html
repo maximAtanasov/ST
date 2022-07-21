@@ -85,7 +85,7 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;semaphore.hpp&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;ST_util/linear_frame_allocator_256.hpp&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceST.html">ST</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>ST {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classST_1_1task.html">   24</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classST_1_1task.html">task</a> {</div>
@@ -108,18 +108,17 @@ $(function() {
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            this-&gt;dependency = dependency;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        }</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">void</span>* <span class="keyword">operator</span> <span class="keyword">new</span> (std::size_t count){</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">void</span>* <span class="keyword">operator</span> <span class="keyword">new</span> (std::size_t){</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordflow">return</span> allocator.allocate();</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> <span class="keyword">operator</span> <span class="keyword">delete</span> (<span class="keywordtype">void</span>* ptr){}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> <span class="keyword">operator</span> <span class="keyword">delete</span> (<span class="keywordtype">void</span>*){}</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasssemaphore_html"><div class="ttname"><a href="classsemaphore.html">semaphore</a></div><div class="ttdef"><b>Definition:</b> <a href="semaphore_8hpp_source.html#l00007">semaphore.hpp:7</a></div></div>
-<div class="ttc" id="anamespaceST_html"><div class="ttname"><a href="namespaceST.html">ST</a></div><div class="ttdoc">A LRU Cache that caches rendered strings, it is used in the drawTextNormal() method of the renderer c...</div><div class="ttdef"><b>Definition:</b> <a href="camera_8hpp_source.html#l00013">camera.hpp:13</a></div></div>
 <div class="ttc" id="aclassST_1_1task_html"><div class="ttname"><a href="classST_1_1task.html">ST::task</a></div><div class="ttdoc">An object representing a task to be run by the task manager.</div><div class="ttdef"><b>Definition:</b> <a href="task_8hpp_source.html#l00024">task.hpp:24</a></div></div>
 <div class="ttc" id="aclassST_1_1task_html_ae6bb843c3d55578bedc18b630a0a2e32"><div class="ttname"><a href="classST_1_1task.html#ae6bb843c3d55578bedc18b630a0a2e32">ST::task::task</a></div><div class="ttdeci">task(void(*function)(void *), void *arg, semaphore *dependency)</div><div class="ttdef"><b>Definition:</b> <a href="task_8hpp_source.html#l00043">task.hpp:43</a></div></div>
 <!-- start footer part -->
