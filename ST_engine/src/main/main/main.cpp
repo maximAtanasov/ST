@@ -69,8 +69,8 @@ int ST_engine_main(int argc, char *argv[]) {
         total_time += frame_time;
 
         if(total_time >= LOGIC_UPDATE_RATE){
-            gInput_manager.update();
             do{
+                gInput_manager.update();
                 gGame_manager.update();
                 gPhysics_manager.update(&gGame_manager.get_level()->entities);
                 total_time -= LOGIC_UPDATE_RATE;

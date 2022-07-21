@@ -2346,6 +2346,64 @@ TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
+TEST_F(lua_backend_test, test_call_function_setInternalResolutionLua){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_INTERNAL_RESOLUTION, &subscriber1);
+
+    //Test
+    test_subject.run_script("setInternalResolution(3840, 2160)");
+
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_INTERNAL_RESOLUTION, result->msg_name);
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
+    auto data = result->base_data0;
+    ASSERT_EQ(data & 0x0000ffffU, 3840);
+    ASSERT_EQ((data >> 16U) & 0x0000ffffU, 2160);
+}
+
+TEST_F(lua_backend_test, test_call_function_setWindowResolutionLua){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SET_WINDOW_RESOLUTION, &subscriber1);
+
+    //Test
+    test_subject.run_script("setWindowResolution(3840, 2160)");
+
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SET_WINDOW_RESOLUTION, result->msg_name);
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
+    auto data = result->base_data0;
+    ASSERT_EQ(data & 0x0000ffffU, 3840);
+    ASSERT_EQ((data >> 16U) & 0x0000ffffU, 2160);
+}
+
+TEST_F(lua_backend_test, test_call_function_getInternalResolutionLua){
+    //Test
+    test_subject.run_script("return getInternalResolution()");
+
+    //Check result
+    ASSERT_EQ(1080, lua_tointeger(get_lua_state(), -1));
+    ASSERT_EQ(1920, lua_tointeger(get_lua_state(), -2));
+}
+
+TEST_F(lua_backend_test, test_call_function_getWindowResolutionLua){
+    //Test
+    test_subject.run_script("return getWindowResolution()");
+
+    //Check result
+    ASSERT_EQ(1440, lua_tointeger(get_lua_state(), -1));
+    ASSERT_EQ(2560, lua_tointeger(get_lua_state(), -2));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

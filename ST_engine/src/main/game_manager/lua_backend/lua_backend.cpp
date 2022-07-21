@@ -90,7 +90,9 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
 	lua_register(L, "loadAsset", loadAssetLua);
 	lua_register(L, "unloadAsset", unloadAssetLua);
     lua_register(L, "setInternalResolution", setInternalResolutionLua);
+    lua_register(L, "getInternalResolution", getInternalResolutionLua);
     lua_register(L, "setWindowResolution", setWindowResolutionLua);
+    lua_register(L, "getWindowResolution", getWindowResolutionLua);
 
     //Physics functions.
     lua_register(L, "setGravity", setGravityLua);
@@ -1304,17 +1306,41 @@ extern "C" int setInternalResolutionLua(lua_State* L){
 }
 
 /**
+ * Returns the current internal resolutio.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 2.
+ */
+extern "C" int getInternalResolutionLua(lua_State *L) {
+    lua_pushnumber(L, gGame_managerLua->get_internal_width());
+    lua_pushnumber(L, gGame_managerLua->get_internal_height());
+    return 2;}
+
+
+/**
  * Set the resolution for the window.
  * See the Lua docs for more information.
  * @param L The global Lua State.
  * @return Always 0.
  */
-int setWindowResolutionLua(lua_State *L) {
+extern "C" int setWindowResolutionLua(lua_State *L) {
     auto width = static_cast<int16_t>(lua_tointeger(L, 1));
     auto height = static_cast<int16_t>(lua_tointeger(L, 2));
     uint32_t width_height = width | (height << 16U);
     gMessage_busLua->send_msg(new message(SET_WINDOW_RESOLUTION, width_height));
     return 0;
+}
+
+/**
+ * Returns the current resolution for the window.
+ * See the Lua docs for more information.
+ * @param L The global Lua State.
+ * @return Always 2.
+ */
+extern "C" int getWindowResolutionLua(lua_State *L) {
+    lua_pushnumber(L, gGame_managerLua->get_window_width());
+    lua_pushnumber(L, gGame_managerLua->get_window_height());
+    return 2;
 }
 
 /**

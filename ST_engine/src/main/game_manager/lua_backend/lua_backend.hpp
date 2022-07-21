@@ -107,6 +107,8 @@ extern "C" int setMusicVolumeLua(lua_State* L);
 extern "C" int setSoundsVolumeLua(lua_State* L);
 extern "C" int setInternalResolutionLua(lua_State* L);
 extern "C" int setWindowResolutionLua(lua_State* L);
+extern "C" int getWindowResolutionLua(lua_State* L);
+extern "C" int getInternalResolutionLua(lua_State* L);
 extern "C" int saveGameLua(lua_State*);
 
 //Text Object lua bindings definitions

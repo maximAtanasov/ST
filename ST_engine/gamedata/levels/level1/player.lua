@@ -20,7 +20,7 @@ player.texHeight = 256
 player.offsetColX = 20
 player.offsetColY = 0
 player.colX = 88
-player.colY = 150
+player.colY = 140
 player.idleRightAnim = 1
 player.idleLeftAnim = 6
 player.leftAnim = 4
@@ -39,6 +39,7 @@ player.playerType = PLAYER_TYPE.GREEN
 player.textureScaleX = 1
 player.textureScaleY = 1
 player.speedSound = false
+player.jumpVelocity = -47
 
 player.lives = 3
 
@@ -72,7 +73,6 @@ function player:update()
         end
     else
         self.speedSound = false
-        self.speed = 15;
     end
 
     leftStick = leftStickHorizontal()
@@ -103,7 +103,7 @@ end
 function player:jump()
     if self.prevY == self:getY() then
         --playSound("phaseJump1.ogg", 50, 0)
-        self:setVelocityY(-47)
+        self:setVelocityY(self.jumpVelocity)
     end
 end
 
@@ -137,19 +137,29 @@ end
 
 function player:setPlayerType(playerType)
     if playerType == PLAYER_TYPE.BLUE then
-        self:setCollision(20, 0, 88, 150)
+        self:setCollision(20, 0, 88, 140)
+        self.jumpVelocity = -47
+        self.speed = 15
         self:setTexture("alien_blue.png")
     elseif playerType == PLAYER_TYPE.GREEN then
-        self:setCollision(20, 0, 88, 150)
+        self:setCollision(20, 0, 88, 140)
+        self.jumpVelocity = -47
+        self.speed = 15
         self:setTexture("alien_green.png")
     elseif playerType == PLAYER_TYPE.PINK then
-        self:setCollision(20, 0, 88, 150)
+        self:setCollision(20, 0, 88, 140)
+        self.jumpVelocity = -47
+        self.speed = 15
         self:setTexture("alien_pink.png")
     elseif playerType == PLAYER_TYPE.BEIGE then
-        self:setCollision(20, 0, 88, 150)
+        self:setCollision(20, 0, 88, 140)
+        self.jumpVelocity = -55
+        self.speed = 15
         self:setTexture("alien_beige.png")
     elseif playerType == PLAYER_TYPE.YELLOW then
-        self:setCollision(20, 0, 88, 135)
+        self:setCollision(20, 0, 88, 130)
+        self.jumpVelocity = -44
+        self.speed = 21
         self:setTexture("alien_yellow.png")
     end
 end

@@ -38,8 +38,8 @@ audio_manager::audio_manager(task_manager &gTask_manager, message_bus &gMessageB
         fprintf(stderr, "Failed to initialize SDL audio subsystem: %s\n", SDL_GetError());
         exit(1);
     }
-    if(Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 640) == -1){
-        fprintf(stderr, "Failiure to open audio device\n");
+    if(Mix_OpenAudio(48000, AUDIO_F32SYS ,2, 1024) == -1){
+        fprintf(stderr, "Failure to open audio device\n");
         exit(1);
     }
 	if (Mix_Init(MIX_INIT_OGG) == 0) {
@@ -48,7 +48,7 @@ audio_manager::audio_manager(task_manager &gTask_manager, message_bus &gMessageB
 	}
     Mix_Volume(-1, chunk_volume);
     Mix_VolumeMusic(music_volume);
-    Mix_AllocateChannels(8);
+    Mix_AllocateChannels(32);
 
     //subscribe to messages
     gMessage_bus.subscribe(PLAY_SOUND, &msg_sub);

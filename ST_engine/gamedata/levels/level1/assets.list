@@ -30,6 +30,7 @@ assets/ground_grass1.png
 assets/ground_grass2.png
 assets/ground_grass3.png
 assets/platform_grass.png
+assets/platform_stone.png
 assets/platform_grass2.png
 assets/planet_ground.png
 assets/platform.png
@@ -52,6 +53,9 @@ assets/grass.png
 assets/mushroomRed.png
 assets/mushroomBrown.png
 assets/bush.png
+assets/infoBlock.png
+assets/blockGrey.png
+assets/blockBrown.png
 assets/spikes.png
 assets/player_switch.png
 assets/hudPlayer_green.png
@@ -59,3 +63,4 @@ assets/hudPlayer_blue.png
 assets/hudPlayer_pink.png
 assets/hudPlayer_yellow.png
 assets/hudPlayer_beige.png
+assets/player_unknown.png
