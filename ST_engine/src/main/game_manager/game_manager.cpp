@@ -280,13 +280,15 @@ void game_manager::start_level(const std::string& level_name) {
     gScript_backend.initialize(&gMessage_bus, this);
     active_level = level_name;
 
-    get_level()->lights.clear();
-    get_level()->entities.clear();
-    get_level()->text_objects.clear();
+    current_level_pointer->lights.clear();
+    current_level_pointer->entities.clear();
+    current_level_pointer->text_objects.clear();
 
     //construct level
-    get_level()->camera.x = 0;
-    get_level()->camera.y = 0;
+    current_level_pointer->camera.x = 0;
+    current_level_pointer->camera.y = 0;
+    current_level_pointer->camera.limitX2 = v_width;
+    current_level_pointer->camera.limitY2 = v_height;
 
     std::string temp = "levels/";
     temp = temp + active_level;
@@ -343,6 +345,148 @@ int16_t game_manager::get_right_stick_vertical() const {
  */
 int16_t game_manager::get_right_stick_horizontal() const {
     return right_stick_horizontal;
+}
+
+/**
+ * Center the camera on an entity.
+ * @param id The ID of the entity to center on.
+ */
+void game_manager::center_camera_on_entity(uint64_t id) {
+    //TODO: Get rid of hardcoded values
+    //TODO: Move this functionality to lua
+    //TODO: Refactor
+    if(current_level_pointer->entities[id].velocity_x > 0) {
+        if(current_level_pointer->camera.x < current_level_pointer->entities[id].x - v_width / 4 - current_level_pointer->entities[id].velocity_x) {
+            current_level_pointer->camera.x += current_level_pointer->entities[id].velocity_x + 5;
+        } else{
+            current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 4;
+        }
+    } else if(current_level_pointer->entities[id].velocity_x < 0) {
+        if(current_level_pointer->camera.x > current_level_pointer->entities[id].x - v_width / 2 - current_level_pointer->entities[id].velocity_x) {
+            current_level_pointer->camera.x += current_level_pointer->entities[id].velocity_x - 5;
+        } else{
+            current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 2;
+        }
+    }
+    //TODO: Test different camera set-ups
+    //current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 4;
+
+    current_level_pointer->camera.y = current_level_pointer->entities[id].y - v_height;
+
+    uint8_t limit_x1_check = current_level_pointer->camera.x < current_level_pointer->camera.limitX1 + 1;
+    uint8_t limit_x2_check = current_level_pointer->camera.x > current_level_pointer->camera.limitX2 - 1;
+    uint8_t limit_y1_check = current_level_pointer->camera.y < current_level_pointer->camera.limitY1 + 1;
+    uint8_t limit_y2_check = current_level_pointer->camera.y > current_level_pointer->camera.limitY2 - 1;
+
+    current_level_pointer->camera.x =
+            limit_x1_check * (current_level_pointer->camera.limitX1 + 1) +
+            !limit_x1_check * current_level_pointer->camera.x;
+    current_level_pointer->camera.x =
+            limit_x2_check * (current_level_pointer->camera.limitX2 - 1) +
+            !limit_x2_check * current_level_pointer->camera.x;
+    current_level_pointer->camera.y =
+            limit_y1_check*(current_level_pointer->camera.limitY1 + 1) +
+            !limit_y1_check*current_level_pointer->camera.y;
+    current_level_pointer->camera.y =
+            limit_y2_check * (current_level_pointer->camera.limitY2 - 1) +
+            !limit_y2_check * current_level_pointer->camera.y;
+}
+
+/**
+ * Listens to messages and runs one iteration of loop.lua for the specific level.
+ */
+void game_manager::update(){
+    handle_messages();
+    run_level_loop();
+}
+
+/**
+ * Get the name of the active level.
+ * @return The name of the current level.
+ */
+std::string game_manager::get_active_level() const{
+    return active_level;
+}
+
+/**
+ * Runs one iteration of the global loop script.
+ */
+void game_manager::run_level_loop() {
+    gScript_backend.run_global("loop");
+}
+
+/**
+ * @return A pointer to the current level.
+ */
+ST::level* game_manager::get_level() const{
+    return current_level_pointer;
+}
+
+/**
+ * Tells is if the game is still running or not.
+ * This is the main condition for running the main loop (the entire engine).
+ * @return True if running, false otherwise.
+ */
+bool game_manager::game_is_running() const{
+    return game_is_running_;
+}
+
+/**
+ * Get the current mouse X position.
+ * @return The X position of the mouse cursor.
+ */
+int32_t game_manager::get_mouse_x() const{
+    return mouse_x;
+}
+
+/**
+ * Get the current mouse Y position.
+ * @return The Y position of the mouse cursor.
+ */
+int32_t game_manager::get_mouse_y() const{
+    return mouse_y;
+}
+
+/**
+ * Tells if a key corresponding to a certain action has been pressed.
+ * @param arg A hash of the name of the action.
+ * @return True if pressed, false otherwise.
+ */
+bool game_manager::key_pressed(uint16_t arg) const{
+    for(ST::key key : current_level_pointer->actions_buttons[arg]){
+        if(keys_pressed_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Tells if a key corresponding to a certain action has been held.
+ * @param arg A hash of the name of the action.
+ * @return True if held, false otherwise.
+ */
+bool game_manager::key_held(uint16_t arg) const{
+    for(ST::key key : current_level_pointer->actions_buttons[arg]){
+        if(keys_held_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Tells if a key corresponding to a certain action has been released.
+ * @param arg A hash of the name of the action.
+ * @return True if released, false otherwise.
+ */
+bool game_manager::key_released(uint16_t arg) const{
+    for(ST::key key : current_level_pointer->actions_buttons[arg]){
+        if(keys_released_data[static_cast<uint8_t>(key)]){
+            return true;
+        }
+    }
+    return false;
 }
 
 //TODO: Docs

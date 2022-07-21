@@ -1,30 +1,30 @@
-playerSwitch = entity:new(1920/2-384, 1080/2-64)
+playerSwitch = entity:new(screenWidth/2-384, screenHeight/2-64)
 playerSwitch:setTexture("player_switch.png")
 playerSwitch:setVisible(false)
 playerSwitch:setStatic(true)
 
 playerSwitch.activePlayer = PLAYER_TYPE.BLUE
-playerSwitch.activePlayerBlue = entity:new(1920/2-256, 1080/2-64)
+playerSwitch.activePlayerBlue = entity:new(screenWidth/2-256, screenHeight/2-64)
 playerSwitch.activePlayerBlue:setTexture("hudPlayer_blue.png")
 playerSwitch.activePlayerBlue:setStatic(true)
 playerSwitch.activePlayerBlue:setVisible(false)
 
-playerSwitch.activePlayerBeige = entity:new(1920/2-384, 1080/2-64)
+playerSwitch.activePlayerBeige = entity:new(screenWidth/2-384, screenHeight/2-64)
 playerSwitch.activePlayerBeige:setTexture("hudPlayer_beige.png")
 playerSwitch.activePlayerBeige:setStatic(true)
 playerSwitch.activePlayerBeige:setVisible(false)
 
-playerSwitch.activePlayerGreen = entity:new(1920/2-128, 1080/2-64)
+playerSwitch.activePlayerGreen = entity:new(screenWidth/2-128, screenHeight/2-64)
 playerSwitch.activePlayerGreen:setTexture("hudPlayer_green.png")
 playerSwitch.activePlayerGreen:setStatic(true)
 playerSwitch.activePlayerGreen:setVisible(false)
 
-playerSwitch.activePlayerPink = entity:new(1920/2 - 7, 1080/2-64)
+playerSwitch.activePlayerPink = entity:new(screenWidth/2 - 7, screenHeight/2-64)
 playerSwitch.activePlayerPink:setTexture("hudPlayer_pink.png")
 playerSwitch.activePlayerPink:setStatic(true)
 playerSwitch.activePlayerPink:setVisible(false)
 
-playerSwitch.activePlayerYellow = entity:new(1920/2 + 121, 1080/2-64)
+playerSwitch.activePlayerYellow = entity:new(screenWidth/2 + 121, screenHeight/2-64)
 playerSwitch.activePlayerYellow:setTexture("hudPlayer_yellow.png")
 playerSwitch.activePlayerYellow:setStatic(true)
 playerSwitch.activePlayerYellow:setVisible(false)
@@ -35,10 +35,11 @@ playerSwitch.playerIndex = 2;
 --playerSwitch.activePlayerPink, playerSwitch.activePlayerYellow }
 
 
-function playerSwitch:update()
+function playerSwitch:update(player)
     leftSwitch = keyPressed("PLAYER_SWITCH_LEFT")
     rightSwitch = keyPressed("PLAYER_SWITCH_RIGHT")
     if leftSwitch or rightSwitch then
+        playSound("switch.wav", 100, 0)
         if(leftSwitch) then
             if(self.playerIndex > 1) then
                 self.playerIndex = self.playerIndex - 1
@@ -54,30 +55,35 @@ function playerSwitch:update()
         end
         self:setVisible(true)
         if(self.playerIndex == 1) then
+            player:setPlayerType(PLAYER_TYPE.BEIGE)
             self.activePlayerBeige:setVisible(true)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(false)
             self.activePlayerPink:setVisible(false)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 2) then
+            player:setPlayerType(PLAYER_TYPE.BLUE)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(true)
             self.activePlayerGreen:setVisible(false)
             self.activePlayerPink:setVisible(false)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 3) then
+            player:setPlayerType(PLAYER_TYPE.GREEN)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(true)
             self.activePlayerPink:setVisible(false)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 4) then
+            player:setPlayerType(PLAYER_TYPE.PINK)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(false)
             self.activePlayerPink:setVisible(true)
             self.activePlayerYellow:setVisible(false)
         elseif(self.playerIndex == 5) then
+            player:setPlayerType(PLAYER_TYPE.YELLOW)
             self.activePlayerBeige:setVisible(false)
             self.activePlayerBlue:setVisible(false)
             self.activePlayerGreen:setVisible(false)

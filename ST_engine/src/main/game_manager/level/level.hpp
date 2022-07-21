@@ -52,6 +52,7 @@ namespace ST {
         SDL_Color background_color{0, 0, 0, 0};
         uint16_t overlay = 65535;
         uint8_t overlay_sprite_num = 1;
+       // ST::camera camera = {0, 0, -1, 1920, 0, 1080};
         ST::camera camera = {0, 0, -1, 1920, 0, 1080};
 
         level(const std::string&, message_bus*);

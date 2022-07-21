@@ -13,6 +13,9 @@ fonts/font2.ttf 80
 fonts/font2.ttf 50
 fonts/font2.ttf 70
 assets/audio/coin.wav
+assets/audio/switch.wav
+assets/audio/death.wav
+assets/audio/song1.ogg
 assets/coin.png
 assets/coin_hud.png
 assets/heart.png
@@ -31,6 +34,10 @@ assets/platform_grass2.png
 assets/planet_ground.png
 assets/platform.png
 assets/alien_blue.png
+assets/alien_green.png
+assets/alien_pink.png
+assets/alien_yellow.png
+assets/alien_beige.png
 assets/bg1.png
 assets/bg2_1.png
 assets/bg2_2.png

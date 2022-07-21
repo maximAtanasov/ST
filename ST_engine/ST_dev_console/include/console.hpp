@@ -68,13 +68,4 @@ public:
         void post_init() const;
 };
 
-//INLINED METHODS
-
-/**
- * Consumes messages from the subscriber object.
- */
-inline void console::update(){
-    handle_messages();
-}
-
 #endif

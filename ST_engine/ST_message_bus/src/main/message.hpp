@@ -32,7 +32,7 @@ public:
     uint8_t msg_name{};
 
     [[nodiscard]] void* get_data() const;
-    message *make_copy();
+    [[nodiscard]] message *make_copy() const;
 
     message() = default;
 
@@ -83,7 +83,7 @@ inline void* message::get_data() const{
 /**
  * @return A copy of this message.
  */
-inline message* message::make_copy() {
+inline message* message::make_copy() const {
     return &(*allocator.allocate() = *this);
 }
 

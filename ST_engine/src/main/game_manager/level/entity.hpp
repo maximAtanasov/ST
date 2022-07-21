@@ -189,6 +189,7 @@ inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int1
 }
 
 /**
+ * //TODO: Can't move this to the physics manager because of entityCollidesLua(), but it does not belong here.
  * Tells if two entities are colliding or not.
  * @param other Entity to test collision against.
  * @return True if colliding, false otherwise.

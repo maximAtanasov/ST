@@ -48,4 +48,4 @@ template <class T> std::shared_ptr<void> make_data(T data){
     return std::make_shared<T>(data);
 }
 
-#endif
+#endif //MSG_BUS_DEF

@@ -421,5 +421,11 @@ ST::key ST::level::key_index(const std::string& arg){
     else if(arg == "controllerDpadRight"){
         index = key::CONTROLLER_BUTTON_DPAD_RIGHT;
     }
+    else if(arg == "controllerRightTrigger"){
+        index = key::CONTROLLER_BUTTON_RIGHT_TRIGGER;
+    }
+    else if(arg == "controllerLeftTrigger"){
+        index = key::CONTROLLER_BUTTON_LEFT_TRIGGER;
+    }
     return index;
 }

@@ -47,6 +47,9 @@ window_manager::window_manager(message_bus &gMessageBus, task_manager &gTask_man
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);
     }
+    //TODO: Max res reported by my 4K TV => 4096x2160 => not widescreen
+    //TODO: List all modes in a dropdown in the UI and allow the player to select the appropriate one.
+    //TODO: Default res, should be the one the OS is currently using
 	SDL_GetDisplayMode(0, 0, &DM);
 	width = static_cast<int16_t>(DM.w);
     height = static_cast<int16_t>(DM.h);
@@ -155,4 +158,11 @@ void window_manager::set_fullscreen(bool arg){
  */
 void window_manager::set_brightness(float arg) {
     SDL_SetWindowBrightness(this->window, arg);
+}
+
+/**
+ * Starts an the update_task() method using the task manager.
+ */
+void window_manager::update(){
+    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
 }

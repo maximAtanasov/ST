@@ -46,13 +46,4 @@ public:
     static void update_task(void* arg);
 };
 
-//INLINED METHODS
-
-/**
- * will start the update task using the task manager.
- */
-inline void assets_manager::update(){
-    gTask_manager.start_task_lockfree(new ST::task(update_task, this, nullptr));
-}
-
 #endif

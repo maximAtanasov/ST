@@ -15,3 +15,11 @@
 timer::timer(){
     start = std::chrono::high_resolution_clock::now();
 }
+
+/**
+ * @return The elapsed time since the initialization of the timer.
+ */
+double timer::time_since_start() const{
+    std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
+    return elapsed_seconds.count() * 1000;
+}

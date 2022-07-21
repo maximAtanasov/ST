@@ -24,15 +24,4 @@ class timer{
         [[nodiscard]] double time_since_start() const;
 };
 
-//INLINED METHODS
-
-/**
- *
- * @return The elapsed time since the initialization of the timer.
- */
-inline double timer::time_since_start() const{
-    std::chrono::duration<double> elapsed_seconds = std::chrono::high_resolution_clock::now() - start;
-    return elapsed_seconds.count() * 1000;
-}
-
-#endif
+#endif //TIMER_DEF
