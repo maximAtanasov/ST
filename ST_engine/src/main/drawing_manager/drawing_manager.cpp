@@ -67,7 +67,7 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
  * @param fps the current frames per second.
  * @param cnsl a console object.
  */
-void drawing_manager::update(const ST::level& temp, double fps, console& cnsl){
+void drawing_manager::update(const ST::level& temp, float fps, console& cnsl){
     camera = temp.camera;
     handle_messages();
 
@@ -119,7 +119,7 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
  * Draws the fps counter on the screen.
  * @param fps The current fps.
  */
-void drawing_manager::draw_fps(double fps) const{
+void drawing_manager::draw_fps(float fps) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
         ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 50, color_font);
@@ -128,45 +128,51 @@ void drawing_manager::draw_fps(double fps) const{
 
 /**
  * Draws the console window on the screen.
- * @param cnsl A pointer to the console object.
+ * @param console A pointer to the console object.
  */
-void drawing_manager::draw_console(console& cnsl) const {
-    if(cnsl.is_open()) {
-        ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, cnsl.color);
+void drawing_manager::draw_console(console& console) const {
+    if(console.is_open()) {
+        ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, console.color);
         int pos = w_height/2;
         SDL_Color log_entry_color;
-        for(auto i = cnsl.entries.rbegin(); i != cnsl.entries.rend(); ++i) {
-            int pos_offset = pos - cnsl.font_size + cnsl.scroll_offset;
-            if (pos_offset > 0 && pos_offset <= w_height / 2 + 50 - cnsl.font_size * 2) {
-                if(i->type == ST::log_type::ERROR) {
-                    log_entry_color = cnsl.color_error;
-                } else if(i->type == ST::log_type::INFO) {
-                    log_entry_color = cnsl.color_info;
-                } else {
-                    log_entry_color = cnsl.color_success;
+        for(auto i = console.entries.rbegin(); i != console.entries.rend(); ++i) {
+            int pos_offset = pos - console.font_size + console.scroll_offset;
+            if (pos_offset > 0 && pos_offset <= w_height / 2 + 50 - console.font_size * 2) {
+                switch (i->type) {
+                    case ST::log_type::ERROR:
+                        log_entry_color = console.color_error;
+                        break;
+
+                    case ST::log_type::INFO:
+                        log_entry_color = console.color_info;
+                        break;
+
+                    default:
+                        log_entry_color = console.color_success;
+                        break;
                 }
                 ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, i->text, 0,
-                                                       pos - cnsl.font_size - 20 + cnsl.scroll_offset, log_entry_color);
+                                                          pos - console.font_size - 20 + console.scroll_offset, log_entry_color);
             }
-            pos -= cnsl.font_size + 5;
+            pos -= console.font_size + 5;
         }
-        ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - cnsl.font_size - 12, w_width, 3, cnsl.color_text);
+        ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - console.font_size - 12, w_width, 3, console.color_text);
         int32_t cursor_draw_position;
-        if (cnsl.cursor_position == cnsl.composition.size()) {
-            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + cnsl.composition, 0, w_height / 2, cnsl.color_text);
+        if (console.cursor_position == console.composition.size()) {
+            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + console.composition, 0, w_height / 2, console.color_text);
         } else {
-            std::string to_cursor = cnsl.composition.substr(0, cnsl.cursor_position);
-            std::string after_cursor = cnsl.composition.substr(cnsl.cursor_position, INT_MAX);
-            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, cnsl.color_text);
-            ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, cnsl.color_text);
+            std::string to_cursor = console.composition.substr(0, console.cursor_position);
+            std::string after_cursor = console.composition.substr(console.cursor_position, INT_MAX);
+            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, console.color_text);
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, console.color_text);
         }
-        if (ticks - cnsl.cursor_timer < 250 || cnsl.cursor_timer == 0) {
+        if (ticks - console.cursor_timer < 250 || console.cursor_timer == 0) {
             ST::renderer_sdl::draw_rectangle_filled(
                     cursor_draw_position, w_height / 2 - 50 + 5, 3,
-                    cnsl.font_size, cnsl.color_text);
+                    console.font_size, console.color_text);
         }
-        cnsl.cursor_timer = (ticks - cnsl.cursor_timer >= 500)*ticks +
-                (ticks - cnsl.cursor_timer < 500)*cnsl.cursor_timer;
+        console.cursor_timer = (ticks - console.cursor_timer >= 500) * ticks +
+                               (ticks - console.cursor_timer < 500) * console.cursor_timer;
     }
 }
 
@@ -332,8 +338,7 @@ void drawing_manager::handle_messages(){
                 auto data = temp->base_data0;
                 w_width = data & 0x0000ffffU;
                 w_height = (data >> 16U) & 0x0000ffffU;
-                uint32_t screen_width_height = w_width | static_cast<uint16_t>(w_height << 16U);
-                gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, screen_width_height));
+                gMessage_bus.send_msg(new message(VIRTUAL_SCREEN_COORDINATES, data));
                 ST::renderer_sdl::set_resolution(w_width, w_height);
                 break;
             }

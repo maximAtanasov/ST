@@ -58,8 +58,8 @@ class drawing_manager{
         void draw_collisions(const std::vector<ST::entity>&) const;
         void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
-        void draw_fps(double fps) const;
-        void draw_console(console& cnsl) const;
+        void draw_fps(float fps) const;
+        void draw_console(console& console) const;
         void draw_text_objects(const std::vector<ST::text>&) const;
         void draw_background(const uint16_t background[PARALLAX_BG_LAYERS], const uint8_t parallax_speed[PARALLAX_BG_LAYERS]) const;
 
@@ -75,7 +75,7 @@ class drawing_manager{
     public:
         drawing_manager(SDL_Window *window, message_bus &gMessageBus);
         ~drawing_manager();
-        void update(const ST::level& temp, double, console& gConsole);
+        void update(const ST::level& temp, float fps, console& gConsole);
 
 };
 

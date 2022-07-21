@@ -17,7 +17,16 @@ use("decal.lua")
 use("spikes.lua")
 use("pauseMenu.lua")
 pause = 0
-floor = 1081
+
+--Internal rendering resolution is currently 1080p
+--TODO: This should be set dynamically according to the current window/screen resolution
+--TODO: Experiment with different assets sizes on different resolutions
+screenWidth = 1920
+screenHeight = 1080
+
+setInternalResolution(screenWidth, screenHeight)
+floor = screenHeight
+
 gravity = 18
 coinsCollected = 0;
 
@@ -43,7 +52,7 @@ playMusic("song1.ogg", 50, -1)
 
 levelBeginBlock = entity:new(-10, floor)
 levelBeginBlock:setAffectedByPhysics(true)
-levelBeginBlock:setCollision(0,0,10, 1080)
+levelBeginBlock:setCollision(0,0,10, screenHeight)
 
 crate:new(500, floor-200);
 crate:new(540, floor-400);
@@ -80,28 +89,31 @@ local platform_29 = platform:new(19200, floor-300);
 
 makeBlock(20000, floor, BLOCK_TYPE.GRASS)
 
-lifeCube1 = entity:new(1800,100)
+lifeCube1 = entity:new(screenWidth - 200,100)
 lifeCube1:setTexture("heart.png")
+lifeCube1:setTextureScale(0.8, 0.8)
 lifeCube1:setVisible(true)
 lifeCube1:setStatic(true)
 
-lifeCube2 = entity:new(1700,100)
+lifeCube2 = entity:new(screenWidth - 300,100)
 lifeCube2:setTexture("heart.png")
+lifeCube2:setTextureScale(0.8, 0.8)
 lifeCube2:setVisible(true)
 lifeCube2:setStatic(true)
 
-lifeCube3 = entity:new(1600,100)
+lifeCube3 = entity:new(screenWidth - 400,100)
 lifeCube3:setTexture("heart.png")
+lifeCube3:setTextureScale(0.8, 0.8)
 lifeCube3:setVisible(true)
 lifeCube3:setStatic(true)
 
-coinCounter = entity:new(1920/2-240,115)
+coinCounter = entity:new(screenWidth/2-240,115)
 coinCounter:setTexture("coin_hud.png")
 coinCounter:setTextureScale(0.8, 0.8)
 coinCounter:setVisible(true)
 coinCounter:setStatic(true)
 
-local coinCounterText = textObject:new(1920/2-128,100, 50, "font1.ttf")
+local coinCounterText = textObject:new(screenWidth/2-128,100, 50, "font1.ttf")
 coinCounterText:setText('0')
 
 makeDecal(100, floor - 128, DECAL_TYPE.BUSH)
@@ -116,13 +128,13 @@ makeDecal(9300, floor - 128, DECAL_TYPE.BUSH)
 
 player1 = player:new(100, 100)
 
-local coin1 = coin:new(1400, 900)
-local coin2 = coin:new(1500, 900)
-local coin3 = coin:new(1600, 900)
+local coin1 = coin:new(1400, screenHeight - 700)
+local coin2 = coin:new(1500, screenHeight - 700)
+local coin3 = coin:new(1600, screenHeight - 700)
 
-local coin4 = coin:new(1400, 700)
-local coin5 = coin:new(1500, 700)
-local coin6 = coin:new(1600, 700)
+local coin4 = coin:new(1400, screenHeight - 500)
+local coin5 = coin:new(1500, screenHeight - 500)
+local coin6 = coin:new(1600, screenHeight - 500)
 
 local water_1 = water:new(6272, floor);
 local water_2 = water:new(6784, floor);
@@ -180,7 +192,7 @@ pauseBG = entity:new(0, floor)
 --pauseBG:setTexture("fortress.webp")
 pauseBG:setVisible(false)
 pauseBG:setStatic(true)
-pauseBG:setY(1080)
+pauseBG:setY(screenHeight)
 
 --Buttons and their update functions
 ----@Key

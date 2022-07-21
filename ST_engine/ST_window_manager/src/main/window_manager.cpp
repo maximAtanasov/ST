@@ -47,6 +47,9 @@ window_manager::window_manager(message_bus &gMessageBus, task_manager &gTask_man
         fprintf(stderr, "Failed to initialize SDL_IMG: %s\n", IMG_GetError());
         exit(1);
     }
+    //TODO: Max res reported by my 4K TV => 4096x2160 => not widescreen
+    //TODO: List all modes in a dropdown in the UI and allow the player to select the appropriate one.
+    //TODO: Default res, should be the one the OS is currently using
 	SDL_GetDisplayMode(0, 0, &DM);
 	width = static_cast<int16_t>(DM.w);
     height = static_cast<int16_t>(DM.h);

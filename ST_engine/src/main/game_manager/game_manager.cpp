@@ -280,13 +280,15 @@ void game_manager::start_level(const std::string& level_name) {
     gScript_backend.initialize(&gMessage_bus, this);
     active_level = level_name;
 
-    get_level()->lights.clear();
-    get_level()->entities.clear();
-    get_level()->text_objects.clear();
+    current_level_pointer->lights.clear();
+    current_level_pointer->entities.clear();
+    current_level_pointer->text_objects.clear();
 
     //construct level
-    get_level()->camera.x = 0;
-    get_level()->camera.y = 0;
+    current_level_pointer->camera.x = 0;
+    current_level_pointer->camera.y = 0;
+    current_level_pointer->camera.limitX2 = v_width;
+    current_level_pointer->camera.limitY2 = v_height;
 
     std::string temp = "levels/";
     temp = temp + active_level;

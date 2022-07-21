@@ -1,30 +1,30 @@
-playerSwitch = entity:new(1920/2-384, 1080/2-64)
+playerSwitch = entity:new(screenWidth/2-384, screenHeight/2-64)
 playerSwitch:setTexture("player_switch.png")
 playerSwitch:setVisible(false)
 playerSwitch:setStatic(true)
 
 playerSwitch.activePlayer = PLAYER_TYPE.BLUE
-playerSwitch.activePlayerBlue = entity:new(1920/2-256, 1080/2-64)
+playerSwitch.activePlayerBlue = entity:new(screenWidth/2-256, screenHeight/2-64)
 playerSwitch.activePlayerBlue:setTexture("hudPlayer_blue.png")
 playerSwitch.activePlayerBlue:setStatic(true)
 playerSwitch.activePlayerBlue:setVisible(false)
 
-playerSwitch.activePlayerBeige = entity:new(1920/2-384, 1080/2-64)
+playerSwitch.activePlayerBeige = entity:new(screenWidth/2-384, screenHeight/2-64)
 playerSwitch.activePlayerBeige:setTexture("hudPlayer_beige.png")
 playerSwitch.activePlayerBeige:setStatic(true)
 playerSwitch.activePlayerBeige:setVisible(false)
 
-playerSwitch.activePlayerGreen = entity:new(1920/2-128, 1080/2-64)
+playerSwitch.activePlayerGreen = entity:new(screenWidth/2-128, screenHeight/2-64)
 playerSwitch.activePlayerGreen:setTexture("hudPlayer_green.png")
 playerSwitch.activePlayerGreen:setStatic(true)
 playerSwitch.activePlayerGreen:setVisible(false)
 
-playerSwitch.activePlayerPink = entity:new(1920/2 - 7, 1080/2-64)
+playerSwitch.activePlayerPink = entity:new(screenWidth/2 - 7, screenHeight/2-64)
 playerSwitch.activePlayerPink:setTexture("hudPlayer_pink.png")
 playerSwitch.activePlayerPink:setStatic(true)
 playerSwitch.activePlayerPink:setVisible(false)
 
-playerSwitch.activePlayerYellow = entity:new(1920/2 + 121, 1080/2-64)
+playerSwitch.activePlayerYellow = entity:new(screenWidth/2 + 121, screenHeight/2-64)
 playerSwitch.activePlayerYellow:setTexture("hudPlayer_yellow.png")
 playerSwitch.activePlayerYellow:setStatic(true)
 playerSwitch.activePlayerYellow:setVisible(false)

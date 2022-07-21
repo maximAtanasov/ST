@@ -23,13 +23,13 @@ class fps {
     private:
         double old_time = 0;
         double new_time = 0;
-        double value = 0;
-        double average[16]{};
-        double get_average();
+        float value = 0;
+        float average[16]{};
+        float get_average();
         uint8_t counter = 0;
 public:
         void update(double time, double frame_time);
-        [[nodiscard]] double get_value() const;
+        [[nodiscard]] float get_value() const;
 };
 
 #endif //FPS_DEF

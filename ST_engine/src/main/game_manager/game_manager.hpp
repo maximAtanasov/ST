@@ -42,8 +42,8 @@ class game_manager{
         int16_t right_stick_vertical{};
         int16_t right_stick_horizontal{};
 
-        int16_t v_width = 1920;
-        int16_t v_height = 1080;
+        uint16_t v_width = 1920;
+        uint16_t v_height = 1080;
 
 
     //methods
