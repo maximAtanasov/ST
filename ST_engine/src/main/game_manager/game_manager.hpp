@@ -42,9 +42,13 @@ class game_manager{
         int16_t right_stick_vertical{};
         int16_t right_stick_horizontal{};
 
+        //Virtual screen size
         uint16_t v_width = 1920;
         uint16_t v_height = 1080;
 
+        //Window screen size
+        uint16_t w_width = 1920;
+        uint16_t w_height = 1080;
 
     //methods
         void handle_messages();
@@ -81,7 +85,13 @@ class game_manager{
         [[nodiscard]] bool game_is_running() const;
         [[nodiscard]] ST::level* get_level() const;
         void center_camera_on_entity(uint64_t id);
+        uint16_t get_window_width() const;
+        uint16_t get_window_height() const;
+        uint16_t get_internal_width() const;
+        uint16_t get_internal_height() const;
         void save_state(const std::string& filepath);
+
+
 };
 
 #endif /*ST_GAME_MANAGER_DEF*/

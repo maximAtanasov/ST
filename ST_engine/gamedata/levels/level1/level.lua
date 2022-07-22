@@ -10,6 +10,8 @@ use("player.lua")
 use("trigger.lua")
 use("platform.lua")
 use("block.lua")
+use("infoBlock.lua")
+use("floatBlock.lua")
 use("crate.lua")
 use("coin.lua")
 use("water.lua")
@@ -18,13 +20,10 @@ use("spikes.lua")
 use("pauseMenu.lua")
 pause = 0
 
---Internal rendering resolution is currently 1080p
---TODO: This should be set dynamically according to the current window/screen resolution
 --TODO: Experiment with different assets sizes on different resolutions
-screenWidth = 1920
-screenHeight = 1080
-
+screenWidth, screenHeight = getWindowResolution()
 setInternalResolution(screenWidth, screenHeight)
+
 floor = screenHeight
 
 gravity = 18
@@ -59,7 +58,7 @@ crate:new(540, floor-400);
 crate:new(800, floor-600);
 
 local platform_4 = platform:new(2000, floor-400);
-local platform_5 = platform:new(3000, floor-200);
+local platform_5 = platform:new(2700, floor-200);
 local platform_6 = platform:new(3500, floor-400);
 local platform_7 = platform:new(4050, floor-290);
 
@@ -72,9 +71,9 @@ platform_10_dialogTrigger = trigger:new(6130, floor-260, 360, 60);
 local platform_11 = platform:new(6700, floor-300);
 local platform_12 = platform:new(7250, floor-300);
 
-local platform_16 = platform:new(10000, floor-300);
-local platform_17 = platform:new(10500, floor-300);
-local platform_18 = platform:new(11000, floor-300);
+local platform_16 = platform:new(9500, floor-300);
+local platform_17 = platform:new(10100, floor-300);
+local platform_18 = platform:new(10700, floor-300);
 local platform_19 = platform:new(13200, floor-200);
 local platform_20 = platform:new(14000, floor-300);
 local platform_21 = platform:new(14800, floor-300);
@@ -121,20 +120,48 @@ makeDecal(1300, floor - 128, DECAL_TYPE.ROCK)
 makeDecal(1900, floor - 128, DECAL_TYPE.GRASS)
 makeDecal(4000, floor - 128, DECAL_TYPE.GRASS)
 makeDecal(8100, floor - 128, DECAL_TYPE.ROCK)
-makeDecal(4700, floor - 128, DECAL_TYPE.FENCE)
+makeDecal(8250, floor - 128, DECAL_TYPE.GRASS)
 makeDecal(5800, floor - 128, DECAL_TYPE.MUSHROOM_BROWN)
 makeDecal(9000, floor - 128, DECAL_TYPE.MUSHROOM_RED)
 makeDecal(9300, floor - 128, DECAL_TYPE.BUSH)
 
 player1 = player:new(100, 100)
 
-local coin1 = coin:new(1400, screenHeight - 700)
-local coin2 = coin:new(1500, screenHeight - 700)
-local coin3 = coin:new(1600, screenHeight - 700)
+makeDecal(4700, floor - 128, DECAL_TYPE.FENCE)
+makeDecal(4830, floor - 128, DECAL_TYPE.FENCE)
+makeDecal(4960, floor - 128, DECAL_TYPE.FENCE_BROKEN)
 
-local coin4 = coin:new(1400, screenHeight - 500)
-local coin5 = coin:new(1500, screenHeight - 500)
-local coin6 = coin:new(1600, screenHeight - 500)
+local infoBlock1 = infoBlock:new(250, screenHeight - 450)
+
+local block1 = floatBlock:new(1300, screenHeight - 400)
+local block2 = floatBlock:new(1429, screenHeight - 400)
+local block3 = floatBlock:new(1558, screenHeight - 400)
+local block4 = floatBlock:new(1687, screenHeight - 400)
+local block5 = floatBlock:new(9200, screenHeight - 200)
+
+local coin1 = coin:new(1400, screenHeight - 800)
+local coin2 = coin:new(1500, screenHeight - 800)
+local coin3 = coin:new(1600, screenHeight - 800)
+
+local coin4 = coin:new(1400, screenHeight - 600)
+local coin5 = coin:new(1500, screenHeight - 600)
+local coin6 = coin:new(1600, screenHeight - 600)
+
+local coin7 = coin:new(9800, screenHeight - 600)
+local coin8 = coin:new(9900, screenHeight - 600)
+local coin9 = coin:new(10000, screenHeight - 600)
+
+local coin10 = coin:new(10100, screenHeight - 600)
+local coin11 = coin:new(10200, screenHeight - 600)
+local coin12 = coin:new(10300, screenHeight - 600)
+
+local coin13 = coin:new(10000, screenHeight - 200)
+local coin14 = coin:new(10100, screenHeight - 200)
+local coin15 = coin:new(10200, screenHeight - 200)
+
+local coin16 = coin:new(10300, screenHeight - 200)
+local coin17 = coin:new(10400, screenHeight - 200)
+local coin18 = coin:new(10500, screenHeight - 200)
 
 local water_1 = water:new(6272, floor);
 local water_2 = water:new(6784, floor);
@@ -270,7 +297,27 @@ function loop()
         coin4:update()
         coin5:update()
         coin6:update()
+        coin7:update()
+        coin8:update()
+        coin9:update()
+        coin10:update()
+        coin11:update()
+        coin12:update()
+        coin13:update()
+        coin14:update()
+        coin15:update()
+        coin16:update()
+        coin17:update()
+        coin18:update()
+
         coinCounterText:setText(coinsCollected)
+
+        infoBlock1:update()
+        block1:update()
+        block2:update()
+        block3:update()
+        block4:update()
+        block5:update()
 
         player1:update()
         playerSwitch:update(player1)

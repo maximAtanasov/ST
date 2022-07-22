@@ -55,6 +55,7 @@ game_manager::game_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus)
     gMessage_bus.subscribe(FULLSCREEN_STATUS, &msg_sub);
     gMessage_bus.subscribe(AUDIO_ENABLED, &msg_sub);
     gMessage_bus.subscribe(VIRTUAL_SCREEN_COORDINATES, &msg_sub);
+    gMessage_bus.subscribe(REAL_SCREEN_COORDINATES, &msg_sub);
 
     //initialize initial states of keys
     reset_keys();
@@ -168,6 +169,12 @@ void game_manager::handle_messages(){
                 auto data = temp->base_data0;
                 v_width = data & 0x0000ffffU;
                 v_height = (data >> 16U) & 0x0000ffffU;
+                break;
+            }
+            case REAL_SCREEN_COORDINATES: {
+                auto data = temp->base_data0;
+                w_width = data & 0x0000ffffU;
+                w_height = (data >> 16U) & 0x0000ffffU;
                 break;
             }
         }
@@ -553,4 +560,32 @@ void game_manager::save_state(const std::string& filepath) {
     }
     save_file << "T";
     save_file.close();
+}
+
+/**
+ * @return The width of the game window.
+ */
+uint16_t game_manager::get_window_width() const {
+    return w_width;
+}
+
+/**
+ * @return The height of the game window.
+ */
+uint16_t game_manager::get_window_height() const {
+    return w_height;
+}
+
+/**
+ * @return The internal rendering width.
+ */
+uint16_t game_manager::get_internal_width() const {
+    return v_width;
+}
+
+/**
+ * @return The internal rendering height.
+ */
+uint16_t game_manager::get_internal_height() const {
+    return v_height;
 }

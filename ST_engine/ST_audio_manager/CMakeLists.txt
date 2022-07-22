@@ -41,6 +41,7 @@ target_link_libraries(audio_manager_test
         gtest
         ST_task_manager
         ST_message_bus
+        ST_util
         ${SDL2_LIBRARY}
         ${SDL2_MIXER_LIBRARY})
 
