@@ -9,13 +9,22 @@
  */
 
 #include "font_cache.hpp"
+#include "texture.h"
 #include <renderer_sdl.hpp>
 
 namespace ST::renderer_sdl {
-        void cache_font(TTF_Font *Font, uint16_t font_and_size);
-    }
+    void cache_font(TTF_Font *Font, uint16_t font_and_size);
+    void process_surfaces(std::vector<std::pair<uint16_t, SDL_Surface *>> &surfaces_pairs);
+}
 
+static const uint16_t ATLAS_SIZE = 4096;
+static const uint16_t atlas_grid_size = ATLAS_SIZE / 32;
+
+#ifdef TESTING
+SDL_Renderer *sdl_renderer;
+#else
 static SDL_Renderer *sdl_renderer;
+#endif
 
 //reference to a window
 static SDL_Window *window;
@@ -25,7 +34,11 @@ static int16_t width;
 static int16_t height;
 
 //Textures with no corresponding surface in our assets need to be freed
-static ska::bytell_hash_map<uint16_t, SDL_Texture *> textures{};
+#ifdef TESTING
+ska::bytell_hash_map<uint16_t, ST::renderer_sdl::texture> textures{};
+#else
+static ska::bytell_hash_map<uint16_t, ST::renderer_sdl::texture> textures{};
+#endif
 
 static ska::bytell_hash_map<uint16_t, SDL_Surface *> *surfaces_pointer;
 static ska::bytell_hash_map<uint16_t, TTF_Font *> *fonts_pointer;
@@ -63,14 +76,14 @@ int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16
 	width = r_width;
 	height = r_height;
     if(vsync){
-        sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
     }else{
-        sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
+        sdl_renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
     }
     SDL_RenderSetLogicalSize(sdl_renderer, width, height);
     SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ); //Linear texture filtering
-    SDL_SetHint( SDL_HINT_RENDER_BATCHING, "1" );
+    SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "2" ); //Linear texture filtering
+    //SDL_SetHint( SDL_HINT_RENDER_BATCHING, "1" );
     set_draw_color(0, 0, 0, 255);
     return 0;
 }
@@ -91,9 +104,9 @@ void ST::renderer_sdl::close(){
         }
     }
     for ( auto& it : textures){
-        if(it.second != nullptr ){
-            SDL_DestroyTexture(textures[it.first]);
-            it.second = nullptr;
+        if(it.second.atlas != nullptr ){
+            SDL_DestroyTexture(it.second.atlas);
+            it.second.atlas = nullptr;
         }
     }
     font_cache::clear();
@@ -182,20 +195,117 @@ uint16_t ST::renderer_sdl::draw_text_cached_glyphs(uint16_t font, const std::str
 void ST::renderer_sdl::upload_surfaces(ska::bytell_hash_map<uint16_t, SDL_Surface*>* surfaces){
 	if(surfaces != nullptr){
 		surfaces_pointer = surfaces;
-        for ( auto& it : *surfaces){
-            if(it.second == nullptr && textures[it.first] != nullptr){
-                SDL_DestroyTexture(textures[it.first]);
-                textures[it.first] = nullptr;
-            }
-            else if(it.second != nullptr){
-                    if(textures[it.first] != nullptr){
-                    SDL_DestroyTexture(textures[it.first]);
-                    textures[it.first] = nullptr;
-                }
-                textures[it.first] = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
+        //Clear all textures, when adding surfaces. This is far from optimal and additional logic should be implemented to check which atlases are to be cleared and
+        //re-created.
+        for (auto& it : textures){
+            if(it.second.atlas != nullptr ){
+                SDL_DestroyTexture(it.second.atlas);
+                it.second.atlas = nullptr;
             }
         }
+        std::vector<std::pair<uint16_t, SDL_Surface*>> surfaces_pairs{};
+        for ( auto& it : *surfaces){
+            surfaces_pairs.emplace_back(it.first, it.second);
+        }
+        process_surfaces(surfaces_pairs);
     }
+}
+
+//Helper function for sorting surfaces by their width and height.
+bool sort_by_surface_width_height(const std::pair<uint16_t, SDL_Surface*> &a, const std::pair<uint16_t, SDL_Surface*> &b) {
+    if(a.second-> w == b.second->w) {
+        return a.second->h > b.second->h;
+    }
+    return a.second->w > b.second->w;
+}
+
+/**
+ * Iterates over all surfaces, adding them to texture atlases if they have dimensions that are a power of 2.
+ * If a surfaces how non POW2 dimensions, a separate texture is created for it. If the atlas becomes full,
+ * this function is called recursively with the remaining textures.
+ * @param surfaces_pairs Surfaces to process.
+ */
+void ST::renderer_sdl::process_surfaces(std::vector<std::pair<uint16_t, SDL_Surface *>> &surfaces_pairs) {
+    if(surfaces_pairs.empty()) {
+        return;
+    } else if(surfaces_pairs.size() == 1) { //Only one surface in vector => no point in creating an atlas.
+        auto tex = ST::renderer_sdl::texture{};
+        tex.width = surfaces_pairs.back().second->w;
+        tex.height = surfaces_pairs.back().second->h;
+        tex.atlas_v_offset = 0;
+        tex.atlas_h_offset = 0;
+        tex.atlas = SDL_CreateTextureFromSurface(sdl_renderer, surfaces_pairs.back().second);
+        textures[surfaces_pairs.back().first] = tex;
+        return;
+    }
+    sort(surfaces_pairs.begin(), surfaces_pairs.end(), sort_by_surface_width_height);
+
+    std::vector<std::pair<uint16_t, SDL_Surface*>> remaining_surface_pairs{};
+    uint8_t atlas[atlas_grid_size][atlas_grid_size] = {0};
+    int h_index = 0;
+    int v_index = 0;
+
+    SDL_Texture* atlas_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STATIC, ATLAS_SIZE, ATLAS_SIZE);
+    SDL_SetTextureBlendMode(atlas_texture, SDL_BLENDMODE_BLEND);
+    for(auto& it : surfaces_pairs) {
+        int t_width = it.second->w/32;
+        int t_height = it.second->h/32;
+
+        //Texture either too large for atlas or has dimensions not power of 2
+        if((it.second->w & (it.second->w - 1)) != 0 || (it.second->h & (it.second->h - 1)) != 0 || t_width > atlas_grid_size || t_height > atlas_grid_size) {
+            auto tex = ST::renderer_sdl::texture{};
+            tex.width = it.second->w;
+            tex.height = it.second->h;
+            tex.atlas_v_offset = 0;
+            tex.atlas_h_offset = 0;
+            tex.atlas = SDL_CreateTextureFromSurface(sdl_renderer, it.second);
+            textures[it.first] = tex;
+            continue;
+        }
+
+        while(atlas[h_index][v_index] != 0) {
+            ++h_index;
+            if(h_index == atlas_grid_size) {
+                h_index = 0;
+                ++v_index;
+
+                if(v_index == atlas_grid_size) {
+                    remaining_surface_pairs.emplace_back(it);
+                    break;
+                }
+            }
+        }
+
+        if(v_index + t_height > atlas_grid_size) {
+            remaining_surface_pairs.emplace_back(it);
+            continue;
+        }
+
+        for(int i = h_index; i < h_index + t_width; ++i) {
+            for(int j = v_index; j < v_index + t_height; ++j){
+                atlas[i][j] = 1;
+            }
+        }
+
+        //Blit to the larger surface
+        auto tex = ST::renderer_sdl::texture{};
+        tex.width = it.second->w;
+        tex.height = it.second->h;
+        tex.atlas_h_offset = h_index * 32;
+        tex.atlas_v_offset = v_index * 32;
+        tex.atlas = atlas_texture;
+        textures[it.first] = tex;
+
+        SDL_Rect dst_rect = {tex.atlas_h_offset, tex.atlas_v_offset, tex.width, tex.height};
+        SDL_UpdateTexture(atlas_texture, &dst_rect, it.second->pixels, it.second->pitch);
+
+        h_index += t_width;
+        if(h_index == atlas_grid_size) {
+            h_index = 0;
+            v_index += 1;
+        }
+    }
+    ST::renderer_sdl::process_surfaces(remaining_surface_pairs);
 }
 
 /**
@@ -288,11 +398,13 @@ void ST::renderer_sdl::vsync_off(){
  */
 void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
-    int tex_w, tex_h;
-    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
-    SDL_Rect src_rect = {x, y - tex_h, tex_w, tex_h};
-    SDL_RenderCopy(sdl_renderer, texture, nullptr, &src_rect);
+    if(data != textures.end()) {
+        auto texture = data->second;
+        SDL_Rect src_rect = {texture.atlas_h_offset, texture.atlas_v_offset, texture.width, texture.height};
+        SDL_Rect dst_rect = {x, y - texture.height, texture.width, texture.height};
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, &dst_rect);
+    }
+    //auto texture = reinterpret_cast<ST::renderer_sdl::texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
 }
 
 /**
@@ -303,14 +415,16 @@ void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
  */
 void ST::renderer_sdl::draw_texture_scaled(const uint16_t arg, int32_t x, int32_t y, float scale_x, float scale_y) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
-    int tex_w, tex_h;
-    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
-    SDL_Rect dst_rect = {x,
-                         y - static_cast<int>(static_cast<float>(tex_h) * scale_y),
-                         static_cast<int>(static_cast<float>(tex_w) * scale_x),
-                         static_cast<int>(static_cast<float>(tex_h) * scale_y)};
-    SDL_RenderCopy(sdl_renderer, texture, nullptr, &dst_rect);
+    if(data != textures.end()) {
+        auto texture = data->second;
+        SDL_Rect src_rect = {texture.atlas_h_offset, texture.atlas_v_offset, texture.width, texture.height};
+        SDL_Rect dst_rect = {x,
+                             y - static_cast<int>(static_cast<float>(texture.height) * scale_y),
+                             static_cast<int>(static_cast<float>(texture.width) * scale_x),
+                             static_cast<int>(static_cast<float>(texture.height) * scale_y)};
+
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, &dst_rect);
+    }
 }
 
 /**
@@ -349,8 +463,11 @@ void ST::renderer_sdl::draw_rectangle(int32_t x, int32_t y, int32_t w, int32_t h
  */
 void ST::renderer_sdl::draw_background(const uint16_t arg) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
-    SDL_RenderCopy(sdl_renderer, texture, nullptr, nullptr);
+    if(data != textures.end()) {
+        auto texture = data->second;
+        SDL_Rect src_rect = {texture.atlas_h_offset, texture.atlas_v_offset, texture.width, texture.height};
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, nullptr);
+    }
 }
 
 /**
@@ -359,20 +476,20 @@ void ST::renderer_sdl::draw_background(const uint16_t arg) {
  */
 void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16_t offset) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    if(data != textures.end()) {
+        auto texture = data->second;
 
-    int tex_w, tex_h;
-    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
-    float bg_ratio = (float)tex_w/(float)width;
-    int src_offset = (int)((float)offset*bg_ratio);
+        float bg_ratio = (float)texture.width/(float)width;
+        int src_offset = (int)((float)offset*bg_ratio);
 
-    SDL_Rect dst_rect1 = {0, 0, width - offset, height};
-    SDL_Rect src_rect1 = {src_offset, 0, tex_w - src_offset, tex_h};
-    SDL_Rect src_rect2 = {0, 0, src_offset, tex_h};
-    SDL_Rect dst_rect2 = {width - offset, 0, offset, height};
+        SDL_Rect dst_rect1 = {0, 0, width - offset, height};
+        SDL_Rect src_rect1 = {texture.atlas_h_offset + src_offset, texture.atlas_v_offset, texture.width - src_offset, texture.height};
+        SDL_Rect src_rect2 = {texture.atlas_h_offset, texture.atlas_v_offset, src_offset, texture.height};
+        SDL_Rect dst_rect2 = {width - offset, 0, offset, height};
 
-    SDL_RenderCopy(sdl_renderer, texture, &src_rect1, &dst_rect1);
-    SDL_RenderCopy(sdl_renderer, texture, &src_rect2, &dst_rect2);
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect1, &dst_rect1);
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect2, &dst_rect2);
+    }
 }
 
 /**
@@ -387,15 +504,15 @@ void ST::renderer_sdl::draw_background_parallax(const uint16_t arg, const uint16
  */
 void ST::renderer_sdl::draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    if(data != textures.end()) {
+        auto texture = data->second;
 
-    int tex_w, tex_h;
-    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
-    int temp1 = tex_h / animation_num;
-    int temp2 = tex_w / sprite_num;
-    SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
-    SDL_Rect src_rect = {sprite * temp2, temp1 * (animation - 1), temp2, temp1};
-    SDL_RenderCopy(sdl_renderer, texture, &src_rect, &dst_rect);
+        int temp1 = texture.height / animation_num;
+        int temp2 = texture.width / sprite_num;
+        SDL_Rect dst_rect = {x, y - temp1, temp2, temp1};
+        SDL_Rect src_rect = {texture.atlas_h_offset + (sprite * temp2), texture.atlas_v_offset + (temp1 * (animation - 1)), temp2, temp1};
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, &dst_rect);
+    }
 }
 
 /**
@@ -410,19 +527,18 @@ void ST::renderer_sdl::draw_sprite(uint16_t arg, int32_t x, int32_t y, uint8_t s
  */
 void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    if(data != textures.end()) {
+        auto texture = data->second;
 
-    int tex_w, tex_h;
-    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
-    int temp1 = tex_h / animation_num;
-    int temp2 = tex_w / sprite_num;
-
-    SDL_Rect dst_rect = {x,
-                         y - static_cast<int>(static_cast<float>(temp1) * scale_y),
-                         static_cast<int>(static_cast<float>(temp2) * scale_x),
-                         static_cast<int>(static_cast<float>(temp1) * scale_y)};
-    SDL_Rect src_rect = {sprite * temp2, temp1 * (animation - 1), temp2, temp1};
-    SDL_RenderCopy(sdl_renderer, texture, &src_rect, &dst_rect);
+        int temp1 = texture.height / animation_num;
+        int temp2 = texture.width / sprite_num;
+        SDL_Rect dst_rect = {x,
+                             y - static_cast<int>(static_cast<float>(temp1) * scale_y),
+                             static_cast<int>(static_cast<float>(temp2) * scale_x),
+                             static_cast<int>(static_cast<float>(temp1) * scale_y)};
+        SDL_Rect src_rect = {texture.atlas_h_offset + (sprite * temp2), texture.atlas_v_offset + (temp1 * (animation - 1)), temp2, temp1};
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, &dst_rect);
+    }
 }
 
 /**
@@ -434,12 +550,12 @@ void ST::renderer_sdl::draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, ui
  */
 void ST::renderer_sdl::draw_overlay(uint16_t arg, uint8_t sprite, uint8_t sprite_num) {
     auto data = textures.find(arg);
-    auto texture = reinterpret_cast<SDL_Texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
+    if(data != textures.end()) {
+        auto texture = data->second;
 
-    int32_t tex_w, tex_h;
-    SDL_QueryTexture(texture, nullptr, nullptr, &tex_w, &tex_h);
-    SDL_Rect src_rect = {sprite * (tex_w / sprite_num), 0, tex_w / sprite_num, tex_h};
-    SDL_RenderCopy(sdl_renderer, texture, &src_rect, nullptr);
+        SDL_Rect src_rect = {sprite * (texture.width / sprite_num), 0, texture.width / sprite_num, texture.height};
+        SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, nullptr);
+    }
 }
 
 /**
@@ -486,3 +602,5 @@ void ST::renderer_sdl::set_resolution(int16_t r_width, int16_t r_height) {
     height = r_height;
     SDL_RenderSetLogicalSize(sdl_renderer, width, height);
 }
+
+
