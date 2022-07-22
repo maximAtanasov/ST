@@ -1,4 +1,4 @@
-playerSwitch = entity:new(screenWidth/2-384, screenHeight/2-64)
+playerSwitch = entity:new(screenWidth/2-580, screenHeight/2-64)
 playerSwitch:setTexture("player_switch.png")
 playerSwitch:setVisible(false)
 playerSwitch:setStatic(true)

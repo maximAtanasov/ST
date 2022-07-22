@@ -36,14 +36,13 @@ add_library(ST_renderer STATIC
         ${PROJECT_SOURCE_DIR}/include/renderer_sdl.hpp
         ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.cpp
         ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.hpp
-        )
+        src/main/renderer_sdl/texture.cpp src/main/renderer_sdl/texture.h)
 
 add_executable(renderer_sdl_test
-        ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/renderer_sdl.cpp
         ${PROJECT_SOURCE_DIR}/include/renderer_sdl.hpp
         ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.cpp
         ${PROJECT_SOURCE_DIR}/src/main/renderer_sdl/font_cache.hpp
-        ${PROJECT_SOURCE_DIR}/src/test/renderer_sdl/renderer_sdl_tests.cpp)
+        ${PROJECT_SOURCE_DIR}/src/test/renderer_sdl/renderer_sdl_tests.cpp src/main/renderer_sdl/texture.cpp src/main/renderer_sdl/texture.h)
 
 include_directories(renderer_sdl_test ../src/test ../ST_loaders/include)
 

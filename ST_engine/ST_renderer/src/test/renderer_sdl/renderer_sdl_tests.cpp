@@ -9,8 +9,10 @@
 
 #include <gtest/gtest.h>
 
+#define TESTING
+
 #include <ST_util/test_util.hpp>
-#include <renderer_sdl.hpp>
+#include "renderer_sdl.cpp"
 #include <ST_util/string_util.hpp>
 
 /// Tests fixture for the renderer_sdl
@@ -156,6 +158,22 @@ TEST_F(renderer_sdl_tests, test_draw_texture){
     ST::renderer_sdl::present();
     SDL_Delay(wait_duration);
 }
+
+TEST_F(renderer_sdl_tests, test_draw_textures_from_atlas){
+    SDL_Surface* test_surface1 = IMG_Load("crate1.png");
+    SDL_Surface* test_surface2 = IMG_Load("fence.png");
+    ASSERT_TRUE(static_cast<bool>(test_surface1));
+    ASSERT_TRUE(static_cast<bool>(test_surface2));
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
+    test_assets[1] = test_surface1;
+    test_assets[2] = test_surface2;
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    ST::renderer_sdl::draw_texture(1, 300, 300);
+    ST::renderer_sdl::draw_texture(2, 500, 600);
+    ST::renderer_sdl::present();
+    SDL_Delay(wait_duration);
+}
+
 
 TEST_F(renderer_sdl_tests, test_draw_texture_scaled){
     SDL_Surface* test_surface = IMG_Load("test_image_1.png");
@@ -309,6 +327,77 @@ TEST_F(renderer_sdl_tests, test_draw_overlay){
         ST::renderer_sdl::present();
         SDL_Delay(16);
     }
+}
+
+/**
+ * Private function test. Still quite useful to know how the atlas is composed.
+ */
+TEST_F(renderer_sdl_tests, test_create_atlas){
+    //Load test assets
+    SDL_Surface* test_surface1 = IMG_Load("atlas_test/1.png");
+    SDL_Surface* test_surface2 = IMG_Load("atlas_test/2.png");
+    SDL_Surface* test_surface3 = IMG_Load("atlas_test/3.png");
+    SDL_Surface* test_surface4 = IMG_Load("atlas_test/4.png");
+    SDL_Surface* test_surface5 = IMG_Load("atlas_test/5.png");
+    SDL_Surface* test_surface6 = IMG_Load("atlas_test/6.png");
+    SDL_Surface* test_surface7 = IMG_Load("atlas_test/7.png");
+    SDL_Surface* test_surface8 = IMG_Load("atlas_test/8.png");
+    SDL_Surface* test_surface9 = IMG_Load("atlas_test/9.png");
+    SDL_Surface* test_surface10 = IMG_Load("atlas_test/10.png");
+    SDL_Surface* test_surface11 = IMG_Load("atlas_test/11.png");
+    SDL_Surface* test_surface12 = IMG_Load("atlas_test/12.png");
+    SDL_Surface* test_surface13 = IMG_Load("atlas_test/13.png");
+    SDL_Surface* test_surface14 = IMG_Load("atlas_test/14.png");
+    SDL_Surface* test_surface15 = IMG_Load("atlas_test/15.png");
+    SDL_Surface* test_surface16 = IMG_Load("atlas_test/16.png");
+    SDL_Surface* test_surface17 = IMG_Load("atlas_test/17.png");
+
+    //Check that all assets are successfully loaded
+    ASSERT_TRUE(static_cast<bool>(test_surface1));
+    ASSERT_TRUE(static_cast<bool>(test_surface2));
+    ASSERT_TRUE(static_cast<bool>(test_surface3));
+    ASSERT_TRUE(static_cast<bool>(test_surface4));
+    ASSERT_TRUE(static_cast<bool>(test_surface5));
+    ASSERT_TRUE(static_cast<bool>(test_surface6));
+    ASSERT_TRUE(static_cast<bool>(test_surface7));
+    ASSERT_TRUE(static_cast<bool>(test_surface8));
+    ASSERT_TRUE(static_cast<bool>(test_surface9));
+    ASSERT_TRUE(static_cast<bool>(test_surface10));
+    ASSERT_TRUE(static_cast<bool>(test_surface11));
+    ASSERT_TRUE(static_cast<bool>(test_surface12));
+    ASSERT_TRUE(static_cast<bool>(test_surface13));
+    ASSERT_TRUE(static_cast<bool>(test_surface14));
+    ASSERT_TRUE(static_cast<bool>(test_surface15));
+    ASSERT_TRUE(static_cast<bool>(test_surface16));
+    ASSERT_TRUE(static_cast<bool>(test_surface17));
+
+    //Pass the assets to the renderer
+    ska::bytell_hash_map<uint16_t, SDL_Surface*> test_assets;
+    test_assets[1] = test_surface1;
+    test_assets[2] = test_surface2;
+    test_assets[3] = test_surface3;
+    test_assets[4] = test_surface4;
+    test_assets[5] = test_surface5;
+    for(int i = 0; i < 90*12; i += 17) {
+        test_assets[6 + i] = test_surface6;
+        test_assets[7 + i] = test_surface7;
+        test_assets[8 + i] = test_surface8;
+        test_assets[9 + i] = test_surface9;
+        test_assets[10 + i] = test_surface10;
+        test_assets[11 + i] = test_surface11;
+        test_assets[12 + i] = test_surface12;
+        test_assets[13 + i] = test_surface13;
+        test_assets[14 + i] = test_surface14;
+        test_assets[15 + i] = test_surface15;
+        test_assets[16 + i] = test_surface16;
+        test_assets[17 + i] = test_surface17;
+    }
+
+    ST::renderer_sdl::upload_surfaces(&test_assets);
+    SDL_Rect dst_rect = {0, 0, 1024, 1024};
+    SDL_RenderCopy(sdl_renderer, textures[1].atlas, nullptr, &dst_rect);
+    ST::renderer_sdl::present();
+    SDL_Delay(10000);
 }
 
 int main(int argc, char **argv) {
