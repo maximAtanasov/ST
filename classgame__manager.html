@@ -114,6 +114,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a65880b246c686d6dce27281c1fd14726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25c4c5c82a51b0820131ecd85e7f1da1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a25c4c5c82a51b0820131ecd85e7f1da1">center_camera_on_entity</a> (uint64_t id)</td></tr>
 <tr class="separator:a25c4c5c82a51b0820131ecd85e7f1da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cd83d926ae84e84d21677c7d0239305"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a6cd83d926ae84e84d21677c7d0239305">get_window_width</a> () const</td></tr>
+<tr class="separator:a6cd83d926ae84e84d21677c7d0239305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28654c2c610b4e185996fc17670d7d72"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a28654c2c610b4e185996fc17670d7d72">get_window_height</a> () const</td></tr>
+<tr class="separator:a28654c2c610b4e185996fc17670d7d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1893dbceb83b1a2c4c6a1376b8d9e175"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a1893dbceb83b1a2c4c6a1376b8d9e175">get_internal_width</a> () const</td></tr>
+<tr class="separator:a1893dbceb83b1a2c4c6a1376b8d9e175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a858efddb6a75bc578635546d121051ed"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgame__manager.html#a858efddb6a75bc578635546d121051ed">get_internal_height</a> () const</td></tr>
+<tr class="separator:a858efddb6a75bc578635546d121051ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefc0ed2028a548ad9567d1168a355e4a"><td class="memItemLeft" align="right" valign="top"><a id="aefc0ed2028a548ad9567d1168a355e4a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>save_state</b> (const std::string &amp;filepath)</td></tr>
 <tr class="separator:aefc0ed2028a548ad9567d1168a355e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,6 +179,18 @@ int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_right_stick_ho
 <tr class="memitem:aefc0ed2028a548ad9567d1168a355e4a"><td class="memItemLeft" align="right" valign="top"><a id="aefc0ed2028a548ad9567d1168a355e4a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>save_state</b> (const std::string &amp;filepath)</td></tr>
 <tr class="separator:aefc0ed2028a548ad9567d1168a355e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1893dbceb83b1a2c4c6a1376b8d9e175"><td class="memItemLeft" align="right" valign="top"><a id="a1893dbceb83b1a2c4c6a1376b8d9e175"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_internal_width</b> () const</td></tr>
+<tr class="separator:a1893dbceb83b1a2c4c6a1376b8d9e175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a858efddb6a75bc578635546d121051ed"><td class="memItemLeft" align="right" valign="top"><a id="a858efddb6a75bc578635546d121051ed"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_internal_height</b> () const</td></tr>
+<tr class="separator:a858efddb6a75bc578635546d121051ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cd83d926ae84e84d21677c7d0239305"><td class="memItemLeft" align="right" valign="top"><a id="a6cd83d926ae84e84d21677c7d0239305"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_window_width</b> () const</td></tr>
+<tr class="separator:a6cd83d926ae84e84d21677c7d0239305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28654c2c610b4e185996fc17670d7d72"><td class="memItemLeft" align="right" valign="top"><a id="a28654c2c610b4e185996fc17670d7d72"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_window_height</b> () const</td></tr>
+<tr class="separator:a28654c2c610b4e185996fc17670d7d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -256,7 +276,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <p>Closes the game manager and the lua backend. </p>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00302">302</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00309">309</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -283,7 +303,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00354">354</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00361">361</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -303,7 +323,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <p>Tells is if the game is still running or not. This is the main condition for running the main loop (the entire engine). </p><dl class="section return"><dt>Returns</dt><dd>True if running, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00430">430</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00437">437</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -323,7 +343,47 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <p>Get the name of the active level. </p><dl class="section return"><dt>Returns</dt><dd>The name of the current level. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00407">407</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00414">414</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a858efddb6a75bc578635546d121051ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a858efddb6a75bc578635546d121051ed">&#9670;&nbsp;</a></span>get_internal_height()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t game_manager::get_internal_height </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The internal rendering height. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00589">589</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1893dbceb83b1a2c4c6a1376b8d9e175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1893dbceb83b1a2c4c6a1376b8d9e175">&#9670;&nbsp;</a></span>get_internal_width()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t game_manager::get_internal_width </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The internal rendering width. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00582">582</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -343,7 +403,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The value of the left analog stick horizontal axis on a controller </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00325">325</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00332">332</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -363,7 +423,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The value of the left analog stick vertical axis on a controller </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00332">332</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00339">339</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -383,7 +443,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The value of the left trigger button on a controller </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00311">311</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00318">318</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -403,7 +463,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the current level. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00421">421</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00428">428</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -423,7 +483,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <p>Get the current mouse X position. </p><dl class="section return"><dt>Returns</dt><dd>The X position of the mouse cursor. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00438">438</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00445">445</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -443,7 +503,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <p>Get the current mouse Y position. </p><dl class="section return"><dt>Returns</dt><dd>The Y position of the mouse cursor. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00446">446</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00453">453</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -463,7 +523,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The value of the right analog stick horizontal axis on a controller </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00346">346</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00353">353</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -483,7 +543,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The value of the right analog stick vertical axis on a controller </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00339">339</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00346">346</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -503,7 +563,47 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The value of the right trigger button on a controller </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00318">318</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00325">325</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a28654c2c610b4e185996fc17670d7d72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28654c2c610b4e185996fc17670d7d72">&#9670;&nbsp;</a></span>get_window_height()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t game_manager::get_window_height </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The height of the game window. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00575">575</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6cd83d926ae84e84d21677c7d0239305"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cd83d926ae84e84d21677c7d0239305">&#9670;&nbsp;</a></span>get_window_width()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t game_manager::get_window_width </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The width of the game window. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00568">568</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -530,7 +630,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if held, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00469">469</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00476">476</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -557,7 +657,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if pressed, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00455">455</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00462">462</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -584,7 +684,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if released, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00483">483</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00490">490</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -604,7 +704,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>center_camera_on_e
 </div><div class="memdoc">
 <p>Listens to messages and runs one iteration of loop.lua for the specific level. </p>
 
-<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00398">398</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="game__manager_8cpp_source.html#l00405">405</a> of file <a class="el" href="game__manager_8cpp_source.html">game_manager.cpp</a>.</p>
 
 </div>
 </div>

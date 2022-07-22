@@ -99,8 +99,8 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        fprintf(stderr, <span class="stringliteral">&quot;Failed to initialize SDL audio subsystem: %s\n&quot;</span>, SDL_GetError());</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        exit(1);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span>(Mix_OpenAudio(22050, AUDIO_F32SYS ,2, 640) == -1){</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        fprintf(stderr, <span class="stringliteral">&quot;Failiure to open audio device\n&quot;</span>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">if</span>(Mix_OpenAudio(48000, AUDIO_F32SYS ,2, 1024) == -1){</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        fprintf(stderr, <span class="stringliteral">&quot;Failure to open audio device\n&quot;</span>);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        exit(1);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">if</span> (Mix_Init(MIX_INIT_OGG) == 0) {</div>
@@ -109,7 +109,7 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Mix_Volume(-1, chunk_volume);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    Mix_VolumeMusic(music_volume);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    Mix_AllocateChannels(8);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    Mix_AllocateChannels(32);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">//subscribe to messages</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    gMessage_bus.<a class="code" href="classmessage__bus.html#ac10ac62c586cae464da4deac52c5892a">subscribe</a>(PLAY_SOUND, &amp;msg_sub);</div>

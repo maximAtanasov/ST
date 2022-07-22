@@ -2417,14 +2417,72 @@ $(function() {
 <div class="line"><a name="l02346"></a><span class="lineno"> 2346</span>&#160;    ASSERT_TRUE(game_mngr-&gt;get_level()-&gt;entities.at(0).is_active());</div>
 <div class="line"><a name="l02347"></a><span class="lineno"> 2347</span>&#160;}</div>
 <div class="line"><a name="l02348"></a><span class="lineno"> 2348</span>&#160; </div>
-<div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160;<span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {</div>
-<div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160;    ::testing::InitGoogleTest(&amp;argc, argv);</div>
-<div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;    <span class="keywordflow">return</span> RUN_ALL_TESTS();</div>
-<div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160;}</div>
+<div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160;TEST_F(<a class="code" href="classlua__backend__test.html">lua_backend_test</a>, test_call_function_setInternalResolutionLua){</div>
+<div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160;    <span class="comment">//Set up</span></div>
+<div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;    <a class="code" href="classsubscriber.html">subscriber</a> subscriber1;</div>
+<div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160;    msg_bus-&gt;subscribe(SET_INTERNAL_RESOLUTION, &amp;subscriber1);</div>
+<div class="line"><a name="l02353"></a><span class="lineno"> 2353</span>&#160; </div>
+<div class="line"><a name="l02354"></a><span class="lineno"> 2354</span>&#160;    <span class="comment">//Test</span></div>
+<div class="line"><a name="l02355"></a><span class="lineno"> 2355</span>&#160;    test_subject.run_script(<span class="stringliteral">&quot;setInternalResolution(3840, 2160)&quot;</span>);</div>
+<div class="line"><a name="l02356"></a><span class="lineno"> 2356</span>&#160; </div>
+<div class="line"><a name="l02357"></a><span class="lineno"> 2357</span>&#160; </div>
+<div class="line"><a name="l02358"></a><span class="lineno"> 2358</span>&#160;    <span class="comment">//Check result - expect to see a message with appropriate content</span></div>
+<div class="line"><a name="l02359"></a><span class="lineno"> 2359</span>&#160;    <a class="code" href="classmessage.html">message</a>* result = subscriber1.<a class="code" href="classsubscriber.html#ae149b2386aa2d15d7e2df2b9fe8b4e90">get_next_message</a>();</div>
+<div class="line"><a name="l02360"></a><span class="lineno"> 2360</span>&#160; </div>
+<div class="line"><a name="l02361"></a><span class="lineno"> 2361</span>&#160;    ASSERT_TRUE(result);</div>
+<div class="line"><a name="l02362"></a><span class="lineno"> 2362</span>&#160;    ASSERT_EQ(SET_INTERNAL_RESOLUTION, result-&gt;msg_name);</div>
+<div class="line"><a name="l02363"></a><span class="lineno"> 2363</span>&#160;    ASSERT_TRUE(<span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(result-&gt;base_data0));</div>
+<div class="line"><a name="l02364"></a><span class="lineno"> 2364</span>&#160;    <span class="keyword">auto</span> data = result-&gt;base_data0;</div>
+<div class="line"><a name="l02365"></a><span class="lineno"> 2365</span>&#160;    ASSERT_EQ(data &amp; 0x0000ffffU, 3840);</div>
+<div class="line"><a name="l02366"></a><span class="lineno"> 2366</span>&#160;    ASSERT_EQ((data &gt;&gt; 16U) &amp; 0x0000ffffU, 2160);</div>
+<div class="line"><a name="l02367"></a><span class="lineno"> 2367</span>&#160;}</div>
+<div class="line"><a name="l02368"></a><span class="lineno"> 2368</span>&#160; </div>
+<div class="line"><a name="l02369"></a><span class="lineno"> 2369</span>&#160;TEST_F(<a class="code" href="classlua__backend__test.html">lua_backend_test</a>, test_call_function_setWindowResolutionLua){</div>
+<div class="line"><a name="l02370"></a><span class="lineno"> 2370</span>&#160;    <span class="comment">//Set up</span></div>
+<div class="line"><a name="l02371"></a><span class="lineno"> 2371</span>&#160;    <a class="code" href="classsubscriber.html">subscriber</a> subscriber1;</div>
+<div class="line"><a name="l02372"></a><span class="lineno"> 2372</span>&#160;    msg_bus-&gt;subscribe(SET_WINDOW_RESOLUTION, &amp;subscriber1);</div>
+<div class="line"><a name="l02373"></a><span class="lineno"> 2373</span>&#160; </div>
+<div class="line"><a name="l02374"></a><span class="lineno"> 2374</span>&#160;    <span class="comment">//Test</span></div>
+<div class="line"><a name="l02375"></a><span class="lineno"> 2375</span>&#160;    test_subject.run_script(<span class="stringliteral">&quot;setWindowResolution(3840, 2160)&quot;</span>);</div>
+<div class="line"><a name="l02376"></a><span class="lineno"> 2376</span>&#160; </div>
+<div class="line"><a name="l02377"></a><span class="lineno"> 2377</span>&#160; </div>
+<div class="line"><a name="l02378"></a><span class="lineno"> 2378</span>&#160;    <span class="comment">//Check result - expect to see a message with appropriate content</span></div>
+<div class="line"><a name="l02379"></a><span class="lineno"> 2379</span>&#160;    <a class="code" href="classmessage.html">message</a>* result = subscriber1.<a class="code" href="classsubscriber.html#ae149b2386aa2d15d7e2df2b9fe8b4e90">get_next_message</a>();</div>
+<div class="line"><a name="l02380"></a><span class="lineno"> 2380</span>&#160; </div>
+<div class="line"><a name="l02381"></a><span class="lineno"> 2381</span>&#160;    ASSERT_TRUE(result);</div>
+<div class="line"><a name="l02382"></a><span class="lineno"> 2382</span>&#160;    ASSERT_EQ(SET_WINDOW_RESOLUTION, result-&gt;msg_name);</div>
+<div class="line"><a name="l02383"></a><span class="lineno"> 2383</span>&#160;    ASSERT_TRUE(<span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(result-&gt;base_data0));</div>
+<div class="line"><a name="l02384"></a><span class="lineno"> 2384</span>&#160;    <span class="keyword">auto</span> data = result-&gt;base_data0;</div>
+<div class="line"><a name="l02385"></a><span class="lineno"> 2385</span>&#160;    ASSERT_EQ(data &amp; 0x0000ffffU, 3840);</div>
+<div class="line"><a name="l02386"></a><span class="lineno"> 2386</span>&#160;    ASSERT_EQ((data &gt;&gt; 16U) &amp; 0x0000ffffU, 2160);</div>
+<div class="line"><a name="l02387"></a><span class="lineno"> 2387</span>&#160;}</div>
+<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160; </div>
+<div class="line"><a name="l02389"></a><span class="lineno"> 2389</span>&#160;TEST_F(<a class="code" href="classlua__backend__test.html">lua_backend_test</a>, test_call_function_getInternalResolutionLua){</div>
+<div class="line"><a name="l02390"></a><span class="lineno"> 2390</span>&#160;    <span class="comment">//Test</span></div>
+<div class="line"><a name="l02391"></a><span class="lineno"> 2391</span>&#160;    test_subject.run_script(<span class="stringliteral">&quot;return getInternalResolution()&quot;</span>);</div>
+<div class="line"><a name="l02392"></a><span class="lineno"> 2392</span>&#160; </div>
+<div class="line"><a name="l02393"></a><span class="lineno"> 2393</span>&#160;    <span class="comment">//Check result</span></div>
+<div class="line"><a name="l02394"></a><span class="lineno"> 2394</span>&#160;    ASSERT_EQ(1080, lua_tointeger(get_lua_state(), -1));</div>
+<div class="line"><a name="l02395"></a><span class="lineno"> 2395</span>&#160;    ASSERT_EQ(1920, lua_tointeger(get_lua_state(), -2));</div>
+<div class="line"><a name="l02396"></a><span class="lineno"> 2396</span>&#160;}</div>
+<div class="line"><a name="l02397"></a><span class="lineno"> 2397</span>&#160; </div>
+<div class="line"><a name="l02398"></a><span class="lineno"> 2398</span>&#160;TEST_F(<a class="code" href="classlua__backend__test.html">lua_backend_test</a>, test_call_function_getWindowResolutionLua){</div>
+<div class="line"><a name="l02399"></a><span class="lineno"> 2399</span>&#160;    <span class="comment">//Test</span></div>
+<div class="line"><a name="l02400"></a><span class="lineno"> 2400</span>&#160;    test_subject.run_script(<span class="stringliteral">&quot;return getWindowResolution()&quot;</span>);</div>
+<div class="line"><a name="l02401"></a><span class="lineno"> 2401</span>&#160; </div>
+<div class="line"><a name="l02402"></a><span class="lineno"> 2402</span>&#160;    <span class="comment">//Check result</span></div>
+<div class="line"><a name="l02403"></a><span class="lineno"> 2403</span>&#160;    ASSERT_EQ(1440, lua_tointeger(get_lua_state(), -1));</div>
+<div class="line"><a name="l02404"></a><span class="lineno"> 2404</span>&#160;    ASSERT_EQ(2560, lua_tointeger(get_lua_state(), -2));</div>
+<div class="line"><a name="l02405"></a><span class="lineno"> 2405</span>&#160;}</div>
+<div class="line"><a name="l02406"></a><span class="lineno"> 2406</span>&#160; </div>
+<div class="line"><a name="l02407"></a><span class="lineno"> 2407</span>&#160;<span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {</div>
+<div class="line"><a name="l02408"></a><span class="lineno"> 2408</span>&#160;    ::testing::InitGoogleTest(&amp;argc, argv);</div>
+<div class="line"><a name="l02409"></a><span class="lineno"> 2409</span>&#160;    <span class="keywordflow">return</span> RUN_ALL_TESTS();</div>
+<div class="line"><a name="l02410"></a><span class="lineno"> 2410</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructST_1_1text_html"><div class="ttname"><a href="structST_1_1text.html">ST::text</a></div><div class="ttdoc">This struct represents text objects in the game.</div><div class="ttdef"><b>Definition:</b> <a href="text_8hpp_source.html#l00023">text.hpp:23</a></div></div>
 <div class="ttc" id="aclasslua__backend_html"><div class="ttname"><a href="classlua__backend.html">lua_backend</a></div><div class="ttdoc">This class handles all interaction with lua.</div><div class="ttdef"><b>Definition:</b> <a href="lua__backend_8hpp_source.html#l00031">lua_backend.hpp:31</a></div></div>
-<div class="ttc" id="aclasslua__backend_html_a533a373f8b78e2738d699db2d6666932"><div class="ttname"><a href="classlua__backend.html#a533a373f8b78e2738d699db2d6666932">lua_backend::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition:</b> <a href="lua__backend_8cpp_source.html#l00289">lua_backend.cpp:289</a></div></div>
+<div class="ttc" id="aclasslua__backend_html_a533a373f8b78e2738d699db2d6666932"><div class="ttname"><a href="classlua__backend.html#a533a373f8b78e2738d699db2d6666932">lua_backend::close</a></div><div class="ttdeci">void close()</div><div class="ttdef"><b>Definition:</b> <a href="lua__backend_8cpp_source.html#l00291">lua_backend.cpp:291</a></div></div>
 <div class="ttc" id="aclasstimer_html"><div class="ttname"><a href="classtimer.html">timer</a></div><div class="ttdoc">A timer used for keeping track of time in the main loop.</div><div class="ttdef"><b>Definition:</b> <a href="timer_8hpp_source.html#l00019">timer.hpp:19</a></div></div>
 <div class="ttc" id="aclassgame__manager_html"><div class="ttname"><a href="classgame__manager.html">game_manager</a></div><div class="ttdoc">This class is responsible for managing all levels and the lua backend, it is the heart of the engine.</div><div class="ttdef"><b>Definition:</b> <a href="game__manager_8hpp_source.html#l00022">game_manager.hpp:22</a></div></div>
 <div class="ttc" id="aclassmessage__bus_html"><div class="ttname"><a href="classmessage__bus.html">message_bus</a></div><div class="ttdoc">The central messaging system of the engine. All subsystem make extensive use of it.</div><div class="ttdef"><b>Definition:</b> <a href="message__bus_8hpp_source.html#l00029">message_bus.hpp:29</a></div></div>
