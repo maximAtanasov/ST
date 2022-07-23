@@ -10,6 +10,6 @@
 
 language = "english"
 vsync = "vsyncDisabled"
-audio = "audioEnabled"
+audio = "audioDisabled"
 fullscreen = "fullscreenEnabled"
 controllerJoystickThreshold = 6000

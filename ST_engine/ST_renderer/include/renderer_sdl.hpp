@@ -50,7 +50,7 @@ namespace ST::renderer_sdl {
 
     void draw_sprite_scaled(uint16_t arg, int32_t x, int32_t y, uint8_t sprite, uint8_t animation, uint8_t animation_num, uint8_t sprite_num, float scale_x, float scale_y);
 
-    uint16_t draw_text_cached_glyphs(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
+    uint16_t draw_text_cached_glyphs(uint16_t font, const std::string& text, int x, int y, SDL_Color color_font);
 
     uint16_t draw_text_lru_cached(uint16_t font, const std::string& arg2, int x, int y, SDL_Color color_font);
 
