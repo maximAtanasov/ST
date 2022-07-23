@@ -7,7 +7,7 @@ var searchData=
   ['draw_5frectangle_5ffilled_19',['draw_rectangle_filled',['../namespaceST_1_1renderer__sdl.html#aec61e740390241998f50cc02a9a810ad',1,'ST::renderer_sdl']]],
   ['draw_5fsprite_20',['draw_sprite',['../namespaceST_1_1renderer__sdl.html#a415002390af69bcff4c46cbe478919b3',1,'ST::renderer_sdl']]],
   ['draw_5fsprite_5fscaled_21',['draw_sprite_scaled',['../namespaceST_1_1renderer__sdl.html#a41205116eece3ed87ce06079d420ea36',1,'ST::renderer_sdl']]],
-  ['draw_5ftext_5fcached_5fglyphs_22',['draw_text_cached_glyphs',['../namespaceST_1_1renderer__sdl.html#ab70a479b8ecc24a12b43b50250d30777',1,'ST::renderer_sdl']]],
+  ['draw_5ftext_5fcached_5fglyphs_22',['draw_text_cached_glyphs',['../namespaceST_1_1renderer__sdl.html#a7c75f1f8fa715c4786db2f59af9d88b5',1,'ST::renderer_sdl']]],
   ['draw_5ftext_5flru_5fcached_23',['draw_text_lru_cached',['../namespaceST_1_1renderer__sdl.html#a0b399bd4751c77e949889bf18d7bb3ca',1,'ST::renderer_sdl']]],
   ['draw_5ftexture_24',['draw_texture',['../namespaceST_1_1renderer__sdl.html#a777a865c938bc87593e8cb00a4968439',1,'ST::renderer_sdl']]],
   ['draw_5ftexture_5fscaled_25',['draw_texture_scaled',['../namespaceST_1_1renderer__sdl.html#a88240fd0aca4db737613f4a7a8e3de4b',1,'ST::renderer_sdl']]],

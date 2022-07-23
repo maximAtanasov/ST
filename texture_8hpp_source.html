@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ST_engine: ST_renderer/src/main/renderer_sdl/texture.cpp Source File</title>
+<title>ST_engine: ST_renderer/src/main/renderer_sdl/texture.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,7 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">texture.cpp</div>  </div>
+<div class="title">texture.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* This file is part of the &quot;ST&quot; project.</span></div>
@@ -80,13 +80,27 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;texture.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>ST {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">namespace </span>renderer_sdl {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    }</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef ST_TEXTURE_HPP</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define ST_TEXTURE_HPP</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;SDL_render.h&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceST_1_1renderer__sdl.html">ST::renderer_sdl</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classST_1_1renderer__sdl_1_1texture.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classST_1_1renderer__sdl_1_1texture.html">texture</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            uint16_t height;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            uint16_t width;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            uint16_t atlas_h_offset;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            uint16_t atlas_v_offset;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            SDL_Texture* atlas;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    };</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif //ST_TEXTURE_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassST_1_1renderer__sdl_1_1texture_html"><div class="ttname"><a href="classST_1_1renderer__sdl_1_1texture.html">ST::renderer_sdl::texture</a></div><div class="ttdef"><b>Definition:</b> <a href="texture_8hpp_source.html#l00018">texture.hpp:18</a></div></div>
+<div class="ttc" id="anamespaceST_1_1renderer__sdl_html"><div class="ttname"><a href="namespaceST_1_1renderer__sdl.html">ST::renderer_sdl</a></div><div class="ttdoc">The renderer for the engine.</div><div class="ttdef"><b>Definition:</b> <a href="renderer__sdl_8hpp_source.html#l00025">renderer_sdl.hpp:25</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
