@@ -67,6 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">ST::renderer_sdl Namespace Reference</div>  </div>
@@ -76,6 +77,11 @@ $(function() {
 <p>The renderer for the engine.  
 <a href="namespaceST_1_1renderer__sdl.html#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classST_1_1renderer__sdl_1_1texture.html">texture</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae48a01fd55079f7adc9a88db8e5cbee5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceST_1_1renderer__sdl.html#ae48a01fd55079f7adc9a88db8e5cbee5">set_draw_color</a> (uint8_t, uint8_t, uint8_t, uint8_t)</td></tr>
@@ -124,6 +130,8 @@ Functions</h2></td></tr>
 <tr class="separator:a8a97314f977102da2c77f34f5207447f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2595bef73670589cb4ac2e7d9e8064e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceST_1_1renderer__sdl.html#a2595bef73670589cb4ac2e7d9e8064e6">cache_font</a> (TTF_Font *Font, uint16_t font_and_size)</td></tr>
 <tr class="separator:a2595bef73670589cb4ac2e7d9e8064e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b39e89c0fbee40d287458f82293296"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceST_1_1renderer__sdl.html#a94b39e89c0fbee40d287458f82293296">process_surfaces</a> (std::vector&lt; std::pair&lt; uint16_t, SDL_Surface * &gt;&gt; &amp;surfaces_pairs)</td></tr>
+<tr class="separator:a94b39e89c0fbee40d287458f82293296"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The renderer for the engine. </p>
@@ -164,7 +172,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00236">236</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00346">346</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -184,7 +192,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Clears the screen with the color set by set_draw_color </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00457">457</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00573">573</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -205,7 +213,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Clears the screen given a color </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00448">448</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00564">564</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -225,7 +233,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Closes the renderer. Deletes all textures and fonts. </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00081">81</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00094">94</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -251,7 +259,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00350">350</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00464">464</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -288,7 +296,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00360">360</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00477">477</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -332,7 +340,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00435">435</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00551">551</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -390,7 +398,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00339">339</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00453">453</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -448,7 +456,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00324">324</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00438">438</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -520,7 +528,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00388">388</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00505">505</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -604,7 +612,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00411">411</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00528">528</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -665,7 +673,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The width of the rendered string in pixels</dd></dl>
 <p>Note that the font must previously be loaded at the selected size. </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00156">156</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00169">169</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -726,7 +734,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The width of the rendered string in pixels</dd></dl>
 <p>Note that the font must previously be loaded at the selected size. </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00118">118</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00131">131</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -770,7 +778,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00289">289</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00399">399</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -826,7 +834,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00304">304</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00416">416</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -871,7 +879,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Always 0. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00052">52</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00065">65</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -891,7 +899,33 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Presents the framebuffer to the window. </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00475">475</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00591">591</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a94b39e89c0fbee40d287458f82293296"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94b39e89c0fbee40d287458f82293296">&#9670;&nbsp;</a></span>process_surfaces()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ST::renderer_sdl::process_surfaces </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::pair&lt; uint16_t, SDL_Surface * &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>surfaces_pairs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Iterates over all surfaces, adding them to texture atlases if they have dimensions that are a power of 2. If a surfaces how non POW2 dimensions, a separate texture is created for it. If the atlas becomes full, this function is called recursively with the remaining textures. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">surfaces_pairs</td><td>Surfaces to process. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00228">228</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -942,7 +976,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00468">468</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00584">584</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -979,7 +1013,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00484">484</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00600">600</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -1000,7 +1034,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Upload fonts to the GPU. (save and cache their glyphs). </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00204">204</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00314">314</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -1026,7 +1060,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00182">182</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00195">195</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -1046,7 +1080,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Turns off vsync. </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00269">269</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00379">379</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
@@ -1066,7 +1100,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Turns on vsync. </p>
 
-<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00254">254</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="renderer__sdl_8cpp_source.html#l00364">364</a> of file <a class="el" href="renderer__sdl_8cpp_source.html">renderer_sdl.cpp</a>.</p>
 
 </div>
 </div>
