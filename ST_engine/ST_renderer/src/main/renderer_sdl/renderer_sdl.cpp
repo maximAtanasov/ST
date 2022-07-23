@@ -9,7 +9,7 @@
  */
 
 #include "font_cache.hpp"
-#include "texture.h"
+#include "texture.hpp"
 #include <renderer_sdl.hpp>
 
 namespace ST::renderer_sdl {
@@ -48,8 +48,8 @@ static ska::bytell_hash_map<uint16_t, TTF_Font *> *fonts_pointer;
 //that will handle the cleanup
 static ska::bytell_hash_map<uint16_t, TTF_Font *> fonts{};
 
-//we do however need to cleanup the cache as that lives on the GPU
-static ska::bytell_hash_map<uint16_t, std::vector<SDL_Texture *>> fonts_cache{};
+//we do however need to clean up the cache as that lives on the GPU
+static ska::bytell_hash_map<uint16_t, std::vector<ST::renderer_sdl::texture>> fonts_cache{};
 
 static bool vsync = false;
 
@@ -83,7 +83,6 @@ int8_t ST::renderer_sdl::initialize(SDL_Window* r_window, int16_t r_width, int16
     SDL_RenderSetLogicalSize(sdl_renderer, width, height);
     SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "2" ); //Linear texture filtering
-    //SDL_SetHint( SDL_HINT_RENDER_BATCHING, "1" );
     set_draw_color(0, 0, 0, 255);
     return 0;
 }
@@ -96,7 +95,10 @@ void ST::renderer_sdl::close(){
         if (it.second != nullptr) {
             if (fonts[it.first] != nullptr) {
                 for(auto& k : fonts_cache[it.first]) {
-                    SDL_DestroyTexture(k);
+                    if(k.atlas != nullptr) {
+                        SDL_DestroyTexture(k.atlas);
+                        k.atlas = nullptr;
+                    }
                 }
                 fonts[it.first] = nullptr;
             }
@@ -157,7 +159,7 @@ uint16_t ST::renderer_sdl::draw_text_lru_cached(uint16_t font, const std::string
  * This will draw text using cached glyphs - the fastest way possible, works only with ASCII and relatively simple fonts
  * (any complex cursive fonts won't be rendered properly).
  * @param arg The font to render with.
- * @param arg2 The text to render.
+ * @param text The text to render.
  * @param x The x position to render at.
  * @param y The y position to render at.
  * @param color_font The color to render with.
@@ -166,22 +168,22 @@ uint16_t ST::renderer_sdl::draw_text_lru_cached(uint16_t font, const std::string
  *
  * Note that the font must previously be loaded at the selected size.
  */
-uint16_t ST::renderer_sdl::draw_text_cached_glyphs(uint16_t font, const std::string& arg2, const int x, const int y, const SDL_Color color_font) {
+uint16_t ST::renderer_sdl::draw_text_cached_glyphs(uint16_t font, const std::string& text, const int x, const int y, const SDL_Color color_font) {
     int32_t tempX = 0;
     auto cached_vector = fonts_cache.find(font);
     if(cached_vector != fonts_cache.end()) [[likely]] {
-        std::vector<SDL_Texture*> tempVector = cached_vector->second;
+        std::vector<ST::renderer_sdl::texture> tempVector = cached_vector->second;
         if(!tempVector.empty()) [[likely]] {
-            int32_t texW, texH;
             tempX = x;
-            const char* arg3 = arg2.c_str();
-            for(int j = 0; arg3[j] != 0; j++){
-                SDL_Texture* texture = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
-                SDL_QueryTexture(texture, nullptr, nullptr, &texW, &texH);
-                SDL_Rect Rect = {tempX, y - texH, texW, texH};
+            const char* arg3 = text.c_str();
+            for(int j = 0; arg3[j] != 0; j++) {
+                ST::renderer_sdl::texture glyph = tempVector.at(static_cast<unsigned int>(arg3[j]-32));
+                SDL_Texture* texture = glyph.atlas;
+                SDL_Rect dstRect = {tempX, y - glyph.height, glyph.width, glyph.height};
+                SDL_Rect srcRect = {glyph.atlas_h_offset, glyph.atlas_v_offset, glyph.width, glyph.height};
                 SDL_SetTextureColorMod(texture, color_font.r, color_font.g, color_font.b);
-                SDL_RenderCopy(sdl_renderer, texture, nullptr, &Rect);
-                tempX += texW;
+                SDL_RenderCopy(sdl_renderer, texture, &srcRect, &dstRect);
+                tempX += glyph.width;
             }
         }
     }
@@ -311,20 +313,26 @@ void ST::renderer_sdl::process_surfaces(std::vector<std::pair<uint16_t, SDL_Surf
 /**
  * Upload fonts to the GPU. (save and cache their glyphs).
  */
-void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font*>* fonts_t){
-    if(fonts_t != nullptr){
+void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font*>* fonts_t) {
+    if(fonts_t != nullptr) {
 		fonts_pointer = fonts_t;
-        for ( auto& it : *fonts_t){
-            if(it.second == nullptr){
-                for(auto& k : fonts_cache[it.first]){
-                    SDL_DestroyTexture(k);
+        for ( auto& it : *fonts_t) {
+            if(it.second == nullptr) {
+                for(auto& k : fonts_cache[it.first]) {
+                    if(k.atlas != nullptr) {
+                        SDL_DestroyTexture(k.atlas);
+                        k.atlas = nullptr;
+                    }
                 }
                 fonts[it.first] = nullptr;
             }
-            else if(it.second != nullptr){
-                if(fonts[it.first] != nullptr){
-                    for(auto& k : fonts_cache[it.first]){
-                        SDL_DestroyTexture(k);
+            else if(it.second != nullptr) {
+                if(fonts[it.first] != nullptr) {
+                    for(auto& k : fonts_cache[it.first]) {
+                        if(k.atlas != nullptr) {
+                            SDL_DestroyTexture(k.atlas);
+                            k.atlas = nullptr;
+                        }
                     }
                     fonts[it.first] = nullptr;
                 }
@@ -343,19 +351,42 @@ void ST::renderer_sdl::upload_fonts(ska::bytell_hash_map<uint16_t, TTF_Font*>* f
  * @param Font The Font to render with.
  * @param font_and_size The name+size of the font.
  */
-void ST::renderer_sdl::cache_font(TTF_Font* Font, uint16_t font_and_size){
+void ST::renderer_sdl::cache_font(TTF_Font* Font, uint16_t font_and_size) {
     SDL_Color color_font = {255, 255, 255, 255};
     char temp[2];
     temp[1] = 0;
-    std::vector<SDL_Texture*> tempVector;
+    std::vector<ST::renderer_sdl::texture> result_glyphs{};
+    std::vector<SDL_Surface*> glyph_surfaces{};
+    result_glyphs.reserve(95);
+    glyph_surfaces.reserve(95);
+    int32_t total_width = 0;
+    int32_t max_height = 0;
     for(char j = 32; j < 127; j++) {
         temp[0] = j;
-        SDL_Surface* glyph = TTF_RenderUTF8_Blended(Font, temp, color_font);
-        SDL_Texture* texture = SDL_CreateTextureFromSurface(sdl_renderer, glyph);
-        tempVector.push_back(texture);
-        SDL_FreeSurface(glyph);
+        SDL_Surface* glyph_surface = TTF_RenderUTF8_Blended(Font, temp, color_font);
+        total_width += glyph_surface->w;
+        if(glyph_surface->h > max_height) {
+            max_height = glyph_surface->h;
+        }
+        glyph_surfaces.emplace_back(glyph_surface);
     }
-    fonts_cache[font_and_size] = tempVector;
+    SDL_Texture* atlas_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, total_width, max_height);
+    SDL_SetTextureBlendMode(atlas_texture, SDL_BLENDMODE_BLEND);
+    int atlas_offset = 0;
+    for(auto surface : glyph_surfaces) {
+        ST::renderer_sdl::texture glyph{};
+        glyph.width = surface->w;
+        glyph.height = surface->h;
+        glyph.atlas_h_offset = atlas_offset;
+        glyph.atlas_v_offset = 0;
+        glyph.atlas = atlas_texture;
+        result_glyphs.push_back(glyph);
+        SDL_Rect dst_rect = {glyph.atlas_h_offset, glyph.atlas_v_offset, glyph.width, glyph.height};
+        SDL_UpdateTexture(atlas_texture, &dst_rect, surface->pixels, surface->pitch);
+        SDL_FreeSurface(surface);
+        atlas_offset += glyph.width;
+    }
+    fonts_cache[font_and_size] = result_glyphs;
 }
 
 /**
@@ -404,7 +435,6 @@ void ST::renderer_sdl::draw_texture(const uint16_t arg, int32_t x, int32_t y) {
         SDL_Rect dst_rect = {x, y - texture.height, texture.width, texture.height};
         SDL_RenderCopy(sdl_renderer, texture.atlas, &src_rect, &dst_rect);
     }
-    //auto texture = reinterpret_cast<ST::renderer_sdl::texture*>((data != textures.end())*reinterpret_cast<uint64_t>(data->second));
 }
 
 /**

@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef ST_TEXTURE_H
-#define ST_TEXTURE_H
+#ifndef ST_TEXTURE_HPP
+#define ST_TEXTURE_HPP
 
 #include "SDL_render.h"
 
@@ -25,4 +25,4 @@ namespace ST::renderer_sdl {
     };
 }
 
-#endif //ST_TEXTURE_H
+#endif //ST_TEXTURE_HPP
