@@ -1087,6 +1087,14 @@ extern "C" int mouseOverLua(lua_State* L){
 extern "C" int setEntityAffectedByPhysicsLua(lua_State *L){
     auto id = static_cast<uint64_t>(lua_tointeger(L, 1));
     auto arg = static_cast<bool>(lua_toboolean(L, 2));
+    if(gGame_managerLua->get_level()->entities[id].is_affected_by_physics()) {
+        if(!arg) {
+            --gGame_managerLua->get_level()->physics_objects_count;
+        }
+    } else if(arg) {
+        ++gGame_managerLua->get_level()->physics_objects_count;
+    }
+
     gGame_managerLua->get_level()->entities[id].set_affected_by_physics(arg);
     return 0;
 }

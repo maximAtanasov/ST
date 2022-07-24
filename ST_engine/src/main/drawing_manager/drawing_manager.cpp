@@ -10,6 +10,8 @@
 #include <drawing_manager/drawing_manager.hpp>
 #include <ST_util/string_util.hpp>
 #include <ST_util/math.hpp>
+#include "main/metrics.hpp"
+#include "main/timer.hpp"
 
 static bool singleton_initialized = false;
 
@@ -65,9 +67,9 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
  * Performs all drawing operations.
  * @param temp a pointer to the data of the current level.
  * @param fps the current frames per second.
- * @param cnsl a console object.
+ * @param gConsole a console object.
  */
-void drawing_manager::update(const ST::level& temp, float fps, console& cnsl){
+void drawing_manager::update(const ST::level &temp, float fps, console &gConsole, ST::metrics metrics) {
     camera = temp.camera;
     handle_messages();
 
@@ -78,10 +80,18 @@ void drawing_manager::update(const ST::level& temp, float fps, console& cnsl){
 
     std::vector<ST::entity> entities{};
 
+    timer timer_;
+
+    //TODO: Huge bottleneck on this copy here
+    double copy_begin = timer_.time_since_start();
     // Filter entities on screen
     std::copy_if (temp.entities.begin(), temp.entities.end(), std::back_inserter(entities), [this](ST::entity e) {
         return is_onscreen(e);
     });
+
+    double copy_end = timer_.time_since_start();
+    //printf("copy time: %f\n", copy_end - copy_begin);
+
 
     draw_entities(entities);
     ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ticks % temp.overlay_sprite_num), temp.overlay_sprite_num);
@@ -97,8 +107,8 @@ void drawing_manager::update(const ST::level& temp, float fps, console& cnsl){
         draw_collisions(entities);
         draw_coordinates(entities);
     }
-    draw_fps(fps);
-    draw_console(cnsl);
+    draw_fps(fps, metrics, temp, entities);
+    draw_console(gConsole);
 
     ST::renderer_sdl::present();
 }
@@ -119,10 +129,19 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
  * Draws the fps counter on the screen.
  * @param fps The current fps.
  */
-void drawing_manager::draw_fps(float fps) const{
+void
+drawing_manager::draw_fps(float fps, ST::metrics metrics, const ST::level& level, std::vector<ST::entity> entities) const{
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
         ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 50, color_font);
+
+        //TODO: param to show or hide metrics
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "game_logic_time:" + std::to_string(metrics.game_logic_time), 0, 100, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "physics_time:" + std::to_string(metrics.physics_time), 0, 150, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "render_time:" + std::to_string(metrics.render_time), 0, 200, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "entities_on_screen:" + std::to_string(entities.size()), 0, 250, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "physics_objects:" + std::to_string(level.physics_objects_count), 0, 300, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "entities_total:" + std::to_string(level.entities.size()), 0, 350, color_font);
     }
 }
 
