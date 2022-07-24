@@ -2082,7 +2082,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
     test_subject.run_script("setEntityAffectedByPhysics(0, true)");
 
     //Check results
-    ASSERT_EQ(2, game_mngr->get_level_calls);
+    ASSERT_EQ(4, game_mngr->get_level_calls);
     ASSERT_EQ(1, game_mngr->get_level()->entities.size());
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).x);
     ASSERT_EQ(0, game_mngr->get_level()->entities.at(0).y);

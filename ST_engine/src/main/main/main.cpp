@@ -8,6 +8,7 @@
  */
 
 #include <main/main.hpp>
+#include "metrics.hpp"
 
 #ifdef TESTING
 message_bus gMessage_bus;
@@ -57,6 +58,8 @@ int ST_engine_main(int argc, char *argv[]) {
     double frame_time;
     double new_time;
 
+    ST::metrics gMetrics;
+
     //Temporary fix for an occasional startup crash
     assets_manager::update_task(&gAssets_manager);
     gDisplay_manager.update();
@@ -68,11 +71,22 @@ int ST_engine_main(int argc, char *argv[]) {
         current_time = new_time;
         total_time += frame_time;
 
+        gMetrics.reset_accumulators();
+
         if(total_time >= LOGIC_UPDATE_RATE){
             do{
                 gInput_manager.update();
+
+                double game_logic_begin = gTimer.time_since_start();
                 gGame_manager.update();
-                gPhysics_manager.update(&gGame_manager.get_level()->entities);
+                double game_logic_end = gTimer.time_since_start();
+                gMetrics.game_logic_time += game_logic_end - game_logic_begin;
+
+                double physics_begin = gTimer.time_since_start();
+                gPhysics_manager.update(*gGame_manager.get_level());
+                double physics_end = gTimer.time_since_start();
+                gMetrics.physics_time += physics_end - physics_begin;
+
                 total_time -= LOGIC_UPDATE_RATE;
             }
             while (total_time >= LOGIC_UPDATE_RATE);
@@ -83,7 +97,11 @@ int ST_engine_main(int argc, char *argv[]) {
         }
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
-        gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole);
+
+        double render_begin = gTimer.time_since_start();
+        gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole, gMetrics);
+        double render_end = gTimer.time_since_start();
+        gMetrics.render_time = render_end - render_begin;
     }
     return 0;
 }

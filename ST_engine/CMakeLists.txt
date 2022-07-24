@@ -72,7 +72,7 @@ add_executable(ST_engine
         src/main/main/fps.hpp
         src/main/game_manager/lua_backend/lua_backend.cpp
         src/main/game_manager/lua_backend/lua_backend.hpp
-        src/main/game_manager/level/text.cpp)
+        src/main/game_manager/level/text.cpp src/main/main/metrics.hpp)
 
 target_link_libraries(ST_engine
         ST_util
@@ -165,7 +165,7 @@ add_executable(ST_engine_integration_test
         src/main/main/fps.hpp
         src/main/game_manager/lua_backend/lua_backend.cpp
         src/main/game_manager/lua_backend/lua_backend.hpp
-        src/main/game_manager/level/text.cpp)
+        src/main/game_manager/level/text.cpp src/main/main/metrics.hpp)
 
 target_link_libraries(ST_engine_integration_test
         ST_util

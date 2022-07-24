@@ -90,8 +90,6 @@ class game_manager{
         uint16_t get_internal_width() const;
         uint16_t get_internal_height() const;
         void save_state(const std::string& filepath);
-
-
 };
 
 #endif /*ST_GAME_MANAGER_DEF*/

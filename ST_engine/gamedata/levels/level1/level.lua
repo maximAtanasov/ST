@@ -115,6 +115,7 @@ coinCounter:setStatic(true)
 local coinCounterText = textObject:new(screenWidth/2-128,100, 50, "font1.ttf")
 coinCounterText:setText('0')
 
+
 makeDecal(100, floor - 128, DECAL_TYPE.BUSH)
 makeDecal(1300, floor - 128, DECAL_TYPE.ROCK)
 makeDecal(1900, floor - 128, DECAL_TYPE.GRASS)
@@ -125,13 +126,19 @@ makeDecal(5800, floor - 128, DECAL_TYPE.MUSHROOM_BROWN)
 makeDecal(9000, floor - 128, DECAL_TYPE.MUSHROOM_RED)
 makeDecal(9300, floor - 128, DECAL_TYPE.BUSH)
 
+--[[local loopIndex = 0
+while loopIndex < 50000 do
+    makeDecal(100, floor - 500, DECAL_TYPE.BUSH)
+    loopIndex = loopIndex + 1
+end]]
+
 player1 = player:new(100, 100)
 
 makeDecal(4700, floor - 128, DECAL_TYPE.FENCE)
 makeDecal(4830, floor - 128, DECAL_TYPE.FENCE)
 makeDecal(4960, floor - 128, DECAL_TYPE.FENCE_BROKEN)
 
-local infoBlock1 = infoBlock:new(250, screenHeight - 450)
+infoBlock1 = infoBlock:new(250, screenHeight - 450)
 
 local block1 = floatBlock:new(1300, screenHeight - 400)
 local block2 = floatBlock:new(1429, screenHeight - 400)

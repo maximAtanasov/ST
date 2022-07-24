@@ -7,6 +7,7 @@
  * E-mail: maxim.atanasov@protonmail.com
  */
 #include <physics_manager/physics_manager.hpp>
+#include "main/timer.hpp"
 
 static bool singleton_initialized = false;
 /**
@@ -33,27 +34,25 @@ physics_manager::physics_manager(message_bus &gMessageBus) : gMessage_bus(gMessa
 /**
  * Process horizontal collisions for all entities.
  */
-void physics_manager::process_horizontal(std::vector<ST::entity>* entities, int8_t friction) {
+void physics_manager::process_horizontal(std::vector<ST::entity*>* entities, int8_t friction) {
     for(uint64_t k = 0; k < entities->size(); ++k) {
         auto& entity = entities->operator[](k);
         //handle horizontal velocity
-        if (entity.is_affected_by_physics()) {
-            if (entity.velocity_x > 0) {
-                for (int j = 0; j < entity.velocity_x; ++j) {
-                    //Branch-less check for whether x has been set.
-                    entity.velocity_x = entity_set_x(entity.x + 1, k, entities) * entity.velocity_x; // NOLINT(cppcoreguidelines-narrowing-conversions)
-                }
-                for (int j = 0; j < friction && entity.velocity_x > 0; ++j) {
-                    entity.velocity_x = static_cast<int8_t>(entity.velocity_x - 1);
-                }
-            } else if (entity.velocity_x < 0) {
-                for (int j = 0; j > entity.velocity_x; --j) {
-                    //Branch-less check for whether x has been set.
-                    entity.velocity_x = entity_set_x(entity.x - 1, k, entities) * entity.velocity_x; // NOLINT(cppcoreguidelines-narrowing-conversions)
-                }
-                for (int j = 0; j < friction && entity.velocity_x < 0; ++j) {
-                    entity.velocity_x = static_cast<int8_t>(entity.velocity_x + 1);
-                }
+        if (entity->velocity_x > 0) {
+            for (int j = 0; j < entity->velocity_x; ++j) {
+                //Branch-less check for whether x has been set.
+                entity->velocity_x = entity_set_x(entity->x + 1, k, entities) * entity->velocity_x; // NOLINT(cppcoreguidelines-narrowing-conversions)
+            }
+            for (int j = 0; j < friction && entity->velocity_x > 0; ++j) {
+                entity->velocity_x = static_cast<int8_t>(entity->velocity_x - 1);
+            }
+        } else if (entity->velocity_x < 0) {
+            for (int j = 0; j > entity->velocity_x; --j) {
+                //Branch-less check for whether x has been set.
+                entity->velocity_x = entity_set_x(entity->x - 1, k, entities) * entity->velocity_x; // NOLINT(cppcoreguidelines-narrowing-conversions)
+            }
+            for (int j = 0; j < friction && entity->velocity_x < 0; ++j) {
+                entity->velocity_x = static_cast<int8_t>(entity->velocity_x + 1);
             }
         }
     }
@@ -66,24 +65,22 @@ physics_manager::~physics_manager() {
 /**
  * Process vertical collisions for all entities.
  */
-void physics_manager::process_vertical(std::vector<ST::entity>* entities, int8_t gravity, int32_t level_floor) {
+void physics_manager::process_vertical(std::vector<ST::entity*>* entities, int8_t gravity, int32_t level_floor) {
     for(uint64_t k = 0; k < entities->size(); ++k) {
         auto& entity = entities->operator[](k);
-        if (entity.is_affected_by_physics()) {
-            //handle vertical velocity
-            const int8_t objectVelocity = entity.velocity_y + gravity;
-            for (int j = 0; j > objectVelocity && entity_set_y(entity.y - 1, k, entities) != 0; --j);
-            for (int j = 0; j < objectVelocity; ++j) {
-                if (entity.y + entity.get_col_y_offset() < level_floor) {
-                    if (entity_set_y(entity.y + 1, k, entities) == 0) {
-                        break;
-                    }
+        //handle vertical velocity
+        const int8_t objectVelocity = entity->velocity_y + gravity;
+        for (int j = 0; j > objectVelocity && entity_set_y(entity->y - 1, k, entities) != 0; --j);
+        for (int j = 0; j < objectVelocity; ++j) {
+            if (entity->y + entity->get_col_y_offset() < level_floor) {
+                if (entity_set_y(entity->y + 1, k, entities) == 0) {
+                    break;
                 }
             }
-            //decrease velocity of objects (apply gravity)
-            int8_t realVelocity = objectVelocity - gravity;
-            entity.velocity_y = (realVelocity < 0)*static_cast<int8_t>(realVelocity + 2) + (realVelocity >= 0)*entity.velocity_y;
         }
+        //decrease velocity of objects (apply gravity)
+        int8_t realVelocity = objectVelocity - gravity;
+        entity->velocity_y = (realVelocity < 0)*static_cast<int8_t>(realVelocity + 2) + (realVelocity >= 0)*entity->velocity_y;
     }
 }
 
@@ -123,8 +120,8 @@ void physics_manager::handle_messages(){
  * @param entities All entities in the level.
  * @return 0 if there was no collision and X was set, 1 otherwise.
  */
-uint8_t physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity>* entities){
-    ST::entity* entity = &entities->operator[](ID);
+uint8_t physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::entity*>* entities){
+    ST::entity* entity = entities->operator[](ID);
     int32_t old_x = entity->x;
     entity->x = X;
     uint8_t collision = check_collision(ID, entities);
@@ -139,8 +136,8 @@ uint8_t physics_manager::entity_set_x(int32_t X, uint64_t ID, std::vector<ST::en
  * @param entities All entities in the level.
  * @return 0 if there was no collision and X was set, 1 otherwise.
  */
-uint8_t physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity>* entities){
-    ST::entity* entity = &entities->operator[](ID);
+uint8_t physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::entity*>* entities){
+    ST::entity* entity = entities->operator[](ID);
     int32_t old_y = entity->y;
     entity->y = Y;
     uint8_t collision = check_collision(ID, entities);
@@ -154,11 +151,11 @@ uint8_t physics_manager::entity_set_y(int32_t Y, uint64_t ID, std::vector<ST::en
  * @param entities All entities in the current level.
  * @return 1 if there was a collision, 0 otherwise.
  */
-int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entities){
+int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity*>* entities){
     uint8_t result = 0;
     for(size_t i = 0; i < entities->size() && result == 0; i++){
-        ST::entity* temp = &entities->operator[](i);
-        result = temp->is_affected_by_physics() && i != ID && temp->collides(entities->operator[](ID));
+        ST::entity* temp = entities->operator[](i);
+        result = temp->is_affected_by_physics() && i != ID && temp->collides(*entities->operator[](ID));
     }
     return result;
 }
@@ -167,10 +164,21 @@ int physics_manager::check_collision(uint64_t ID, std::vector<ST::entity>* entit
  * Responds to messages from the subscriber object and updates the physics if they are not paused.
  * @param data A pointer to the level data. (containing the entities that we need).
  */
-void physics_manager::update(std::vector<ST::entity>* data){
+void physics_manager::update(ST::level &level){
     handle_messages();
     if(!physics_paused) [[likely]] {
-        process_horizontal(data, friction);
-        process_vertical(data, gravity, level_floor);
+        if(entities_ref.size() != level.physics_objects_count) {
+            entities_ref.clear();
+            entities_ref.reserve(level.physics_objects_count);
+            // Filter entities with physics enabled
+            //TODO: This is all very slow
+            for(uint64_t i = 0; i < level.entities.size(); i++) {
+                if(level.entities.operator[](i).is_affected_by_physics() ) {
+                    entities_ref.emplace_back(&level.entities.operator[](i));
+                }
+            }
+        }
+        process_horizontal(&entities_ref, friction);
+        process_vertical(&entities_ref, gravity, level_floor);
     }
 }
