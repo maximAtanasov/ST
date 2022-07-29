@@ -21,6 +21,12 @@ platform.isVisible = true
 platform.affectedByPhysics = true
 platform.soundPlayed = false
 platform.soundTrigger = nil
+platform.shadow = entity:new()
+platform.shadow.texture = "shadow.png"
+platform.shadow.texWidth = 512
+platform.shadow.texWidth = 512
+platform.shadow.isVisible = true
+platform.shadow.affectedByPhysics = false
 
 function platform:update()
     self:setVelocityY(-gravity)
@@ -38,5 +44,7 @@ end
 function platform:new(x, y)
     self = newEntity(self, x, y)
     self.soundTrigger = trigger:new(x, y+2, self.colX, 3)
+    --self.shadow = newEntity(self.shadow, x, y + 512*2)
+    self.shadow:setTextureScale(1, 2)
     return self;
 end

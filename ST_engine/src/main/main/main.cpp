@@ -25,7 +25,7 @@ int ST_engine_main(int argc, char *argv[]) {
 #endif
     //we get rid of the two warnings for unused parameters.
     //int main() will work fine on linux, but not on Windows
-    //where SDL does some weird stuff with the main function
+    //where SDL does some weird stuff with the main function,
     //so we need to specify main like this to avoid conflict with SDL
     (void)argc;
     (void)argv;
@@ -38,6 +38,7 @@ int ST_engine_main(int argc, char *argv[]) {
     console gConsole(gMessage_bus);
     gConsole.set_log_level(ST::log_type::INFO | ST::log_type::SUCCESS | ST::log_type::ERROR);
 
+    //TODO: The initial resolution does not get passed to the game_manager due to the initialization order
     task_manager gTask_manager;
     audio_manager gAudio_manager(gTask_manager, gMessage_bus);
     input_manager gInput_manager(gTask_manager, gMessage_bus);
@@ -58,7 +59,7 @@ int ST_engine_main(int argc, char *argv[]) {
     double frame_time;
     double new_time;
 
-    ST::metrics gMetrics;
+    ST::metrics gMetrics{};
 
     //Temporary fix for an occasional startup crash
     assets_manager::update_task(&gAssets_manager);
@@ -97,6 +98,8 @@ int ST_engine_main(int argc, char *argv[]) {
         }
         gConsole.update();
         gFps.update(current_time, 1000/frame_time);
+
+        gMetrics.frame_time = frame_time;
 
         double render_begin = gTimer.time_since_start();
         gDrawing_manager.update(*gGame_manager.get_level(), gFps.get_value(), gConsole, gMetrics);

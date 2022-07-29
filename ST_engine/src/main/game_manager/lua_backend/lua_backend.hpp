@@ -182,6 +182,7 @@ extern "C" int mouseOverLua(lua_State* L);
 extern "C" int showCollisionsLua(lua_State* L);
 extern "C" int logLua(lua_State* L);
 extern "C" int showFpsLua(lua_State* L);
+extern "C" int showMetricsLua(lua_State* L);
 extern "C" int consoleClearLua(lua_State*);
 
 #endif

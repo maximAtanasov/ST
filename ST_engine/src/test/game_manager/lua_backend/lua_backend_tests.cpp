@@ -395,6 +395,40 @@ TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
     ASSERT_FALSE(static_cast<bool>(result->base_data0));
 }
 
+
+TEST_F(lua_backend_test, test_call_function_showFps){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SHOW_FPS, &subscriber1);
+
+    //Test
+    test_subject.run_script("showFps(true)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SHOW_FPS, result->msg_name);
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
+}
+
+TEST_F(lua_backend_test, test_call_function_showMetrics){
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(SHOW_METRICS, &subscriber1);
+
+    //Test
+    test_subject.run_script("showMetrics(true)");
+
+    //Check result - expect to see a message with appropriate content
+    message* result = subscriber1.get_next_message();
+
+    ASSERT_TRUE(result);
+    ASSERT_EQ(SHOW_METRICS, result->msg_name);
+    ASSERT_TRUE(static_cast<bool>(result->base_data0));
+}
+
+
 TEST_F(lua_backend_test, test_call_function_endGame){
     //Set up
     subscriber subscriber1;

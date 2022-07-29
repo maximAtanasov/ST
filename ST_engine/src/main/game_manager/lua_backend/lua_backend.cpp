@@ -18,9 +18,7 @@
 
 #include <ST_util/string_util.hpp>
 #include <game_manager/level/light.hpp>
-#include "lua_backend.hpp"
 #include <fstream>
-#include <sstream>
 #include <SDL_timer.h>
 
 //local to the file, as lua bindings cannot be in a class
@@ -64,6 +62,7 @@ int lua_backend::initialize(message_bus* msg_bus, game_manager* game_mngr) {
     lua_register(L, "logLua", logLua);
     lua_register(L, "showCollisions", showCollisionsLua);
     lua_register(L, "showFps", showFpsLua);
+    lua_register(L, "showMetrics", showMetricsLua);
     lua_register(L, "consoleClear", consoleClearLua);
 
     //General Functions
@@ -1875,6 +1874,18 @@ extern "C" int logLua(lua_State* L) {
 extern "C" int showFpsLua(lua_State* L){
     auto arg = static_cast<bool>(lua_toboolean(L, 1));
     gMessage_busLua->send_msg(new message(SHOW_FPS, arg));
+    return 0;
+}
+
+/**
+ * Show or hide the metric counters from rendering.
+ * See the Lua docs for more information.
+ * @param L The global Lua state.
+ * @return Always 0.
+ */
+extern "C" int showMetricsLua(lua_State* L){
+    auto arg = static_cast<bool>(lua_toboolean(L, 1));
+    gMessage_busLua->send_msg(new message(SHOW_METRICS, arg));
     return 0;
 }
 
