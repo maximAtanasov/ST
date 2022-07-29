@@ -20,7 +20,7 @@
 
 
 #define DEFAULT_FONT_NORMAL "OpenSans-Regular.ttf 40"
-#define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 40"
+#define DEFAULT_FONT_SMALL "OpenSans-Regular.ttf 25"
 
 ///This object is responsible for issuing drawing commands and drawing the current level.
 class drawing_manager{
@@ -53,16 +53,18 @@ class drawing_manager{
         bool collisions_shown = false;
         bool show_fps = true;
         bool lighting_enabled = false;
+        bool metrics_shown = false;
 
         //Drawing functions
         void draw_entities(const std::vector<ST::entity>&) const;
         void draw_collisions(const std::vector<ST::entity>&) const;
         void draw_coordinates(const std::vector<ST::entity>&) const;
         void draw_lights() const;
-        void draw_fps(float fps, ST::metrics metrics, const ST::level &level, std::vector<ST::entity> vector) const;
+        void draw_fps(float fps) const;
         void draw_console(console& console) const;
         void draw_text_objects(const std::vector<ST::text>&) const;
         void draw_background(const uint16_t background[PARALLAX_BG_LAYERS], const uint8_t parallax_speed[PARALLAX_BG_LAYERS]) const;
+        void draw_metrics(ST::metrics metrics, const ST::level& level, const std::vector<ST::entity>& entities) const;
 
         //Pre-processing
         void process_lights(const std::vector<ST::light>& arg);
@@ -73,10 +75,12 @@ class drawing_manager{
         void handle_messages();
         void set_darkness(uint8_t arg);
 
+
     public:
         drawing_manager(SDL_Window *window, message_bus &gMessageBus);
         ~drawing_manager();
         void update(const ST::level &temp, float fps, console &gConsole, ST::metrics metrics);
+
 
 };
 

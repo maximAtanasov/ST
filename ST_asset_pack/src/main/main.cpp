@@ -34,20 +34,22 @@ int asset_pack_main(int argc, char *argv[]) {
 #ifndef TESTING
      initialize_SDL();
 #endif
-     
+
      if (argc < 3) {
-         fprintf(stderr, "Not enough arguments!\n");
+         fprintf(stderr, "Not enough arguments!\nUsage pack: ST_asset_pack -p binary_name file1.png file2.png\nUsage unpack: ST_asset_pack -u binary_name\n");
          return -1;
      }
 
      std::string pack_arg = std::string(argv[1]);
 
-     //Copy the char** to a nice little std::vector of std::string's
+     //Copy the char** to a std::vector of std::string's
      std::vector<std::string> args;
      for (int i = 2; i < argc; i++) {
          args.emplace_back(argv[i]);
      }
 
+     //TODO: Passing * should pack all files in a directory
+     //TODO: Hande ./filename (Powershell) properly.
      if (pack_arg == "-p" || pack_arg == "--pack") { //Pack assets to a binary
          std::string binary_name = args.at(0);
          args.erase(args.begin(), args.begin() + 1);

@@ -268,6 +268,11 @@ enum msg_type : uint8_t {
     /**
      * base_data0 must be set and interpreted as a boolean value.
      */
+    SHOW_METRICS,
+
+    /**
+     * base_data0 must be set and interpreted as a boolean value.
+     */
     ENABLE_LIGHTING,
 
     /**

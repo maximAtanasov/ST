@@ -57,6 +57,9 @@ crate:new(500, floor-200);
 crate:new(540, floor-400);
 crate:new(800, floor-600);
 
+player1 = player:new(100, 100)
+
+
 local platform_4 = platform:new(2000, floor-400);
 local platform_5 = platform:new(2700, floor-200);
 local platform_6 = platform:new(3500, floor-400);
@@ -126,13 +129,6 @@ makeDecal(5800, floor - 128, DECAL_TYPE.MUSHROOM_BROWN)
 makeDecal(9000, floor - 128, DECAL_TYPE.MUSHROOM_RED)
 makeDecal(9300, floor - 128, DECAL_TYPE.BUSH)
 
---[[local loopIndex = 0
-while loopIndex < 50000 do
-    makeDecal(100, floor - 500, DECAL_TYPE.BUSH)
-    loopIndex = loopIndex + 1
-end]]
-
-player1 = player:new(100, 100)
 
 makeDecal(4700, floor - 128, DECAL_TYPE.FENCE)
 makeDecal(4830, floor - 128, DECAL_TYPE.FENCE)

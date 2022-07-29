@@ -14,6 +14,7 @@ namespace ST {
         double physics_time;
         double game_logic_time;
         double render_time;
+        double frame_time;
 
         void reset_accumulators() {
             physics_time = 0;

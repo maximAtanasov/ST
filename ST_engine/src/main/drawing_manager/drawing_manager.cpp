@@ -9,7 +9,6 @@
 
 #include <drawing_manager/drawing_manager.hpp>
 #include <ST_util/string_util.hpp>
-#include <ST_util/math.hpp>
 #include "main/metrics.hpp"
 #include "main/timer.hpp"
 
@@ -39,6 +38,7 @@ drawing_manager::drawing_manager(SDL_Window *window, message_bus &gMessageBus) :
     gMessage_bus.subscribe(SET_VSYNC, &msg_sub);
     gMessage_bus.subscribe(SHOW_COLLISIONS, &msg_sub);
     gMessage_bus.subscribe(SHOW_FPS, &msg_sub);
+    gMessage_bus.subscribe(SHOW_METRICS, &msg_sub);
     gMessage_bus.subscribe(SET_DARKNESS, &msg_sub);
     gMessage_bus.subscribe(SURFACES_ASSETS, &msg_sub);
     gMessage_bus.subscribe(FONTS_ASSETS, &msg_sub);
@@ -79,24 +79,13 @@ void drawing_manager::update(const ST::level &temp, float fps, console &gConsole
     draw_background(temp.background, temp.parallax_speed);
 
     std::vector<ST::entity> entities{};
-
-    timer timer_;
-
-    //TODO: Huge bottleneck on this copy here
-    double copy_begin = timer_.time_since_start();
-    // Filter entities on screen
     std::copy_if (temp.entities.begin(), temp.entities.end(), std::back_inserter(entities), [this](ST::entity e) {
         return is_onscreen(e);
     });
 
-    double copy_end = timer_.time_since_start();
-    //printf("copy time: %f\n", copy_end - copy_begin);
-
-
     draw_entities(entities);
     ST::renderer_sdl::draw_overlay(temp.overlay, static_cast<uint8_t>(ticks % temp.overlay_sprite_num), temp.overlay_sprite_num);
     draw_text_objects(temp.text_objects);
-
 
     if(lighting_enabled) {
         process_lights(temp.lights);
@@ -107,8 +96,14 @@ void drawing_manager::update(const ST::level &temp, float fps, console &gConsole
         draw_collisions(entities);
         draw_coordinates(entities);
     }
-    draw_fps(fps, metrics, temp, entities);
-    draw_console(gConsole);
+    draw_fps(fps);
+
+    if(!gConsole.is_open()) {
+        draw_metrics(metrics, temp, entities);
+    } else {
+        draw_console(gConsole);
+    }
+
 
     ST::renderer_sdl::present();
 }
@@ -129,19 +124,27 @@ void drawing_manager::draw_text_objects(const std::vector<ST::text>& objects) co
  * Draws the fps counter on the screen.
  * @param fps The current fps.
  */
-void
-drawing_manager::draw_fps(float fps, ST::metrics metrics, const ST::level& level, std::vector<ST::entity> entities) const{
+void drawing_manager::draw_fps(float fps) const {
     if(show_fps) {
         SDL_Color color_font = {255, 0, 255, 255};
         ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "fps:" + std::to_string(static_cast<int32_t>(fps)), 0, 50, color_font);
+    }
+}
 
-        //TODO: param to show or hide metrics
-        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "game_logic_time:" + std::to_string(metrics.game_logic_time), 0, 100, color_font);
-        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "physics_time:" + std::to_string(metrics.physics_time), 0, 150, color_font);
-        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "render_time:" + std::to_string(metrics.render_time), 0, 200, color_font);
-        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "entities_on_screen:" + std::to_string(entities.size()), 0, 250, color_font);
-        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "physics_objects:" + std::to_string(level.physics_objects_count), 0, 300, color_font);
-        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "entities_total:" + std::to_string(level.entities.size()), 0, 350, color_font);
+/**
+ *
+ * @param metrics
+ */
+void drawing_manager::draw_metrics(ST::metrics metrics, const ST::level& level, const std::vector<ST::entity>& entities) const {
+    if(metrics_shown) {
+        SDL_Color color_font = {255, 0, 255, 255};
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "game_logic_time:" + std::to_string(metrics.game_logic_time), 0, 100, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "physics_time:" + std::to_string(metrics.physics_time), 0, 130, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "render_time:" + std::to_string(metrics.render_time), 0, 160, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "frame_time:" + std::to_string(metrics.frame_time), 0, 190, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "entities_on_screen:" + std::to_string(entities.size()), 0, 220, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "physics_objects:" + std::to_string(level.physics_objects_count), 0, 250, color_font);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_small, "entities_total:" + std::to_string(level.entities.size()), 0, 280, color_font);
     }
 }
 
@@ -150,49 +153,47 @@ drawing_manager::draw_fps(float fps, ST::metrics metrics, const ST::level& level
  * @param console A pointer to the console object.
  */
 void drawing_manager::draw_console(console& console) const {
-    if(console.is_open()) {
-        ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, console.color);
-        int pos = w_height/2;
-        SDL_Color log_entry_color;
-        for(auto i = console.entries.rbegin(); i != console.entries.rend(); ++i) {
-            int pos_offset = pos - console.font_size + console.scroll_offset;
-            if (pos_offset > 0 && pos_offset <= w_height / 2 + 50 - console.font_size * 2) {
-                switch (i->type) {
-                    case ST::log_type::ERROR:
-                        log_entry_color = console.color_error;
-                        break;
+    ST::renderer_sdl::draw_rectangle_filled(0, 0, w_width, w_height/2, console.color);
+    int pos = w_height/2;
+    SDL_Color log_entry_color;
+    for(auto i = console.entries.rbegin(); i != console.entries.rend(); ++i) {
+        int pos_offset = pos - console.font_size + console.scroll_offset;
+        if (pos_offset > 0 && pos_offset <= w_height / 2 + 50 - console.font_size * 2) {
+            switch (i->type) {
+                case ST::log_type::ERROR:
+                    log_entry_color = console.color_error;
+                    break;
 
-                    case ST::log_type::INFO:
-                        log_entry_color = console.color_info;
-                        break;
+                case ST::log_type::INFO:
+                    log_entry_color = console.color_info;
+                    break;
 
-                    default:
-                        log_entry_color = console.color_success;
-                        break;
-                }
-                ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, i->text, 0,
-                                                          pos - console.font_size - 20 + console.scroll_offset, log_entry_color);
+                default:
+                    log_entry_color = console.color_success;
+                    break;
             }
-            pos -= console.font_size + 5;
+            ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, i->text, 0,
+                                                      pos - console.font_size - 20 + console.scroll_offset, log_entry_color);
         }
-        ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - console.font_size - 12, w_width, 3, console.color_text);
-        int32_t cursor_draw_position;
-        if (console.cursor_position == console.composition.size()) {
-            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + console.composition, 0, w_height / 2, console.color_text);
-        } else {
-            std::string to_cursor = console.composition.substr(0, console.cursor_position);
-            std::string after_cursor = console.composition.substr(console.cursor_position, INT_MAX);
-            cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, console.color_text);
-            ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, console.color_text);
-        }
-        if (ticks - console.cursor_timer < 250 || console.cursor_timer == 0) {
-            ST::renderer_sdl::draw_rectangle_filled(
-                    cursor_draw_position, w_height / 2 - 50 + 5, 3,
-                    console.font_size, console.color_text);
-        }
-        console.cursor_timer = (ticks - console.cursor_timer >= 500) * ticks +
-                               (ticks - console.cursor_timer < 500) * console.cursor_timer;
+        pos -= console.font_size + 5;
     }
+    ST::renderer_sdl::draw_rectangle_filled(0, w_height/2 - console.font_size - 12, w_width, 3, console.color_text);
+    int32_t cursor_draw_position;
+    if (console.cursor_position == console.composition.size()) {
+        cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + console.composition, 0, w_height / 2, console.color_text);
+    } else {
+        std::string to_cursor = console.composition.substr(0, console.cursor_position);
+        std::string after_cursor = console.composition.substr(console.cursor_position, INT_MAX);
+        cursor_draw_position = ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, "Input: " + to_cursor, 0, w_height / 2, console.color_text);
+        ST::renderer_sdl::draw_text_cached_glyphs(default_font_normal, after_cursor, cursor_draw_position, w_height / 2, console.color_text);
+    }
+    if (ticks - console.cursor_timer < 250 || console.cursor_timer == 0) {
+        ST::renderer_sdl::draw_rectangle_filled(
+                cursor_draw_position, w_height / 2 - 50 + 5, 3,
+                console.font_size, console.color_text);
+    }
+    console.cursor_timer = (ticks - console.cursor_timer >= 500) * ticks +
+                               (ticks - console.cursor_timer < 500) * console.cursor_timer;
 }
 
 /**
@@ -340,6 +341,9 @@ void drawing_manager::handle_messages(){
             case SHOW_FPS:
                 show_fps = static_cast<bool>(temp->base_data0);
                 break;
+            case SHOW_METRICS:
+                metrics_shown = static_cast<bool>(temp->base_data0);
+                break;
             case ENABLE_LIGHTING:
                 lighting_enabled = static_cast<bool>(temp->base_data0);
                 break;
@@ -406,8 +410,9 @@ bool drawing_manager::is_onscreen(const ST::entity& i) const{
     return i.is_visible() &&
     (i.is_static() ||
     (i.x - camera.x + static_cast<int>(static_cast<float>(i.tex_w) * i.tex_scale_x) >= 0 &&
-    i.x - camera.x <= w_width && i.y - camera.y > 0 &&
-    i.y - camera.y -static_cast<int>(static_cast<float>(i.tex_h) * i.tex_scale_y) <= w_height));
+    i.x - camera.x <= w_width/* &&
+    i.y + camera.y > 0 && //TODO: Not working quite right
+    i.y - camera.y - static_cast<int>(static_cast<float>(i.tex_h) * i.tex_scale_y) <= w_height - static_cast<int>(static_cast<float>(i.tex_h) * i.tex_scale_y)*/));
 }
 
 /**
@@ -473,4 +478,3 @@ drawing_manager::~drawing_manager(){
     TTF_Quit();
     singleton_initialized = false;
 }
-
