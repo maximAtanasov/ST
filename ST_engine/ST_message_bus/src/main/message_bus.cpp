@@ -16,17 +16,17 @@
  * Sends a message to all subscribers of that message type.
  * Creates a copy of the message if it has more than one subscriber.
  */
-void message_bus::send_msg(message* arg){
-    std::vector<subscriber*>* temp = &subscribers[arg->msg_name];
+void message_bus::send_msg(message *arg) {
+    std::vector<subscriber *> *temp = &subscribers[arg->msg_name];
     uint64_t size = temp->size();
     //Locks aren't really needed here as there won't be any new subscribers in the middle of the game
     //(if you do want to have subsystems subscribe at random times you should definitely add locks)
 
     //TODO: Branch needed? In practice, no messages without subscribers to them will be sent
     //The branch cannot be removed with an #ifdef though, as the msg_bus is a library.
-    if(size != 0) [[likely]] {
+    if (size != 0) [[likely]] {
         temp->operator[](0)->push_message(arg);
-        for(uint64_t i = 1; i < size; ++i){
+        for (uint64_t i = 1; i < size; ++i) {
             temp->operator[](i)->push_message(arg->make_copy()); //yes all queues are thread-safe so this is fine
         }
     }
@@ -39,9 +39,9 @@ static bool singleton_initialized = false;
  * Throws an exception if initialized twice.
  */
 message_bus::message_bus() {
-    if(singleton_initialized){
+    if (singleton_initialized) {
         throw std::runtime_error("The message bus cannot be initialized more than once!");
-    }else{
+    } else {
         singleton_initialized = true;
     }
 }
@@ -68,6 +68,6 @@ void message_bus::clear() {
  * @param msg The type of the message.
  * @param sub The subscriber object.
  */
-void message_bus::subscribe(uint8_t msg, subscriber* sub) {
+void message_bus::subscribe(uint8_t msg, subscriber *sub) {
     subscribers[msg].emplace_back(sub);
 }

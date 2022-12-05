@@ -13,8 +13,9 @@
 #include <mutex>
 #include <atomic>
 
-namespace ST{
-    template <class T> class pool_allocator_256 {
+namespace ST {
+    template<class T>
+    class pool_allocator_256 {
 
     private:
         std::mutex access_mutex;
@@ -25,26 +26,26 @@ namespace ST{
 
     public:
 
-        pool_allocator_256(){
-            for(uint16_t i = 0; i < memory_size; ++i){
+        pool_allocator_256() {
+            for (uint16_t i = 0; i < memory_size; ++i) {
                 allocated[i] = false; //mark all memory as free
             }
         }
 
-        T* allocate(){
+        T *allocate() {
             uint8_t pointer_temp;
 
             access_mutex.lock();
             //find the next free spot in memory
-            while(allocated[++pointer]);
+            while (allocated[++pointer]);
             pointer_temp = pointer;
             allocated[pointer] = true;
             access_mutex.unlock();
             return &memory[pointer_temp];
         }
 
-        void deallocate(T* mem_location){
-            allocated[(mem_location-memory)] = false;
+        void deallocate(T *mem_location) {
+            allocated[(mem_location - memory)] = false;
         }
     };
 }

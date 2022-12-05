@@ -11,19 +11,19 @@
 #include <gtest/gtest.h>
 #include <game_manager/level/entity.hpp>
 
-TEST(entity_tests, test_set_collisions_box){
+TEST(entity_tests, test_set_collisions_box) {
     //Set up
     ST::entity test_subject;
 
     //Test
-    test_subject.set_collision_box(0,0,0,0);
+    test_subject.set_collision_box(0, 0, 0, 0);
 
     ASSERT_FALSE(test_subject.is_affected_by_physics());
     ASSERT_EQ(0, test_subject.get_col_x());
     ASSERT_EQ(0, test_subject.get_col_y());
 }
 
-TEST(entity_tests, test_entities_collision){
+TEST(entity_tests, test_entities_collision) {
     //Set up
     ST::entity test_subject1;
     ST::entity test_subject2;
@@ -40,7 +40,7 @@ TEST(entity_tests, test_entities_collision){
     ASSERT_TRUE(test_subject1.collides(test_subject2));
 }
 
-TEST(entity_tests, test_entities_colliding_on_edge){
+TEST(entity_tests, test_entities_colliding_on_edge) {
     //Set up
     ST::entity test_subject1;
     ST::entity test_subject2;
@@ -57,7 +57,7 @@ TEST(entity_tests, test_entities_colliding_on_edge){
     ASSERT_TRUE(test_subject1.collides(test_subject2));
 }
 
-TEST(entity_tests, test_entities_colliding_one_pixel_from_edge){
+TEST(entity_tests, test_entities_colliding_one_pixel_from_edge) {
     //Set up
     ST::entity test_subject1;
     ST::entity test_subject2;
@@ -75,7 +75,7 @@ TEST(entity_tests, test_entities_colliding_one_pixel_from_edge){
 }
 
 
-TEST(entity_tests, test_set_get_is_active){
+TEST(entity_tests, test_set_get_is_active) {
     //Set up
     ST::entity test_subject;
 
@@ -86,7 +86,7 @@ TEST(entity_tests, test_set_get_is_active){
     ASSERT_FALSE(test_subject.is_active());
 }
 
-TEST(entity_tests, test_set_get_is_static){
+TEST(entity_tests, test_set_get_is_static) {
     //Set up
     ST::entity test_subject;
 
@@ -97,7 +97,7 @@ TEST(entity_tests, test_set_get_is_static){
     ASSERT_FALSE(test_subject.is_static());
 }
 
-TEST(entity_tests, test_set_get_is_visible){
+TEST(entity_tests, test_set_get_is_visible) {
     //Set up
     ST::entity test_subject;
 
@@ -109,7 +109,7 @@ TEST(entity_tests, test_set_get_is_visible){
 }
 
 
-TEST(entity_tests, test_set_get_is_affected_by_physics){
+TEST(entity_tests, test_set_get_is_affected_by_physics) {
     //Set up
     ST::entity test_subject;
 

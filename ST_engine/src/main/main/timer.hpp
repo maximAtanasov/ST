@@ -16,12 +16,13 @@
 /**
  * Uses a std::chrono::high_resolution_clock internally to provide quite accurate timekeeping.
  */
-class timer{
-    private:
-        std::chrono::time_point<std::chrono::high_resolution_clock> start;
-    public:
-        timer();
-        [[nodiscard]] double time_since_start() const;
+class timer {
+private:
+    std::chrono::time_point<std::chrono::high_resolution_clock> start;
+public:
+    timer();
+
+    [[nodiscard]] double time_since_start() const;
 };
 
 #endif //TIMER_DEF

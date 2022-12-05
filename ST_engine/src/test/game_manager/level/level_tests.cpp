@@ -17,20 +17,20 @@ class level_tests : public ::testing::Test {
 
 protected:
 
-    int8_t load_input_conf(ST::level* lvl){
+    int8_t load_input_conf(ST::level *lvl) {
         return lvl->load_input_conf();
     }
 
-    void SetUp() override{
+    void SetUp() override {
         initialize_SDL();
     }
 
-    void TearDown() override{
+    void TearDown() override {
         close_SDL();
     }
 };
 
-TEST_F(level_tests, test_load_input_configuration){
+TEST_F(level_tests, test_load_input_configuration) {
 
     //Set up
     ST::level level("test_level", new message_bus());

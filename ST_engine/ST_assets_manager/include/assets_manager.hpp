@@ -21,29 +21,40 @@
 
 
 ///This object is responsible for loading/unloading assets.
-class assets_manager{
+class assets_manager {
     friend class asset_manager_test;
+
 private:
-        message_bus& gMessage_bus;
-        task_manager& gTask_manager;
-        subscriber msg_sub{};
-        ST::assets all_assets;
-        ska::bytell_hash_map<std::string, uint16_t> count;
-        int8_t load_asset(std::string path);
-        int8_t unload_asset(std::string path);
-        int8_t unload_assets_from_list(const std::string& path);
-        int8_t load_assets_from_list(const std::string& path);
-        int8_t load_assets_from_binary(const std::string& path);
-        int8_t unload_assets_from_binary(const std::string& path);
-        void handle_messages();
-		void send_assets();
+    message_bus &gMessage_bus;
+    task_manager &gTask_manager;
+    subscriber msg_sub{};
+    ST::assets all_assets;
+    ska::bytell_hash_map<std::string, uint16_t> count;
+
+    int8_t load_asset(std::string path);
+
+    int8_t unload_asset(std::string path);
+
+    int8_t unload_assets_from_list(const std::string &path);
+
+    int8_t load_assets_from_list(const std::string &path);
+
+    int8_t load_assets_from_binary(const std::string &path);
+
+    int8_t unload_assets_from_binary(const std::string &path);
+
+    void handle_messages();
+
+    void send_assets();
 
 public:
-        assets_manager(message_bus &gMessageBus, task_manager& tsk_mngr);
-        ~assets_manager();
-        void update();
+    assets_manager(message_bus &gMessageBus, task_manager &tsk_mngr);
 
-    static void update_task(void* arg);
+    ~assets_manager();
+
+    void update();
+
+    static void update_task(void *arg);
 };
 
 #endif

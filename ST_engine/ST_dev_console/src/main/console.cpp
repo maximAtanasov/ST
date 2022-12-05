@@ -17,16 +17,16 @@ static bool singleton_initialized = false;
  * @param msg_bus A pointer to the global message bus.
  */
 console::console(message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
-    if(singleton_initialized){
+    if (singleton_initialized) {
         throw std::runtime_error("The dev console cannot be initialized more than once!");
-    }else{
+    } else {
         singleton_initialized = true;
     }
 
     color = {50, 50, 50, 100};
     color_text = {255, 255, 255, 255};
     color_info = {10, 50, 255, 255};
-    color_error = {255, 0 ,0 , 255};
+    color_error = {255, 0, 0, 255};
     color_success = {50, 255, 10, 255};
     shown = false;
     scroll_offset = 0;
@@ -36,56 +36,56 @@ console::console(message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
     gMessage_bus.subscribe(CONSOLE_TOGGLE, &msg_sub);
     gMessage_bus.subscribe(MOUSE_SCROLL, &msg_sub);
     gMessage_bus.subscribe(KEY_PRESSED, &msg_sub);
-	gMessage_bus.subscribe(KEY_HELD, &msg_sub);
+    gMessage_bus.subscribe(KEY_HELD, &msg_sub);
     gMessage_bus.subscribe(KEY_RELEASED, &msg_sub);
     gMessage_bus.subscribe(TEXT_STREAM, &msg_sub);
     gMessage_bus.subscribe(CONSOLE_CLEAR, &msg_sub);
 }
 
-void console::post_init() const{
+void console::post_init() const {
     gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::ENTER)));
     gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::TILDE)));
-	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::LEFT)));
-	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::RIGHT)));
-	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::UP)));
-	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DOWN)));
-	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::BACKSPACE)));
-	gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DELETE)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::LEFT)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::RIGHT)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::UP)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DOWN)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::BACKSPACE)));
+    gMessage_bus.send_msg(new message(REGISTER_KEY, static_cast<uint8_t>(ST::key::DELETE)));
 }
 
 
 /**
  * @param scroll_y scrolls the console window relative to this amount.
  */
-void console::scroll(int32_t scroll_y){
-    scroll_offset = scroll_y*20;
+void console::scroll(int32_t scroll_y) {
+    scroll_offset = scroll_y * 20;
 }
 
 /**
  * Consumes messages from the subscriber object and
  * performs the appropriate actions.
  */
-void console::handle_messages(){
-    message* temp = msg_sub.get_next_message();
-    while(temp != nullptr){
+void console::handle_messages() {
+    message *temp = msg_sub.get_next_message();
+    while (temp != nullptr) {
         switch (temp->msg_name) {
             case LOG_ERROR: {
-                auto log = static_cast<std::string*>(temp->get_data());
-                if(log_level == 0x07 || log_level == 0x01 || log_level == 0x03 || log_level == 0x05) {
+                auto log = static_cast<std::string *>(temp->get_data());
+                if (log_level == 0x07 || log_level == 0x01 || log_level == 0x03 || log_level == 0x05) {
                     write(*log, ST::log_type::ERROR);
                 }
                 break;
             }
             case LOG_INFO: {
-                auto log = static_cast<std::string*>(temp->get_data());
-                if(log_level >= 0x04) {
+                auto log = static_cast<std::string *>(temp->get_data());
+                if (log_level >= 0x04) {
                     write(*log, ST::log_type::INFO);
                 }
                 break;
             }
             case LOG_SUCCESS: {
-                auto log = static_cast<std::string*>(temp->get_data());
-                if(log_level >= 0x06 || log_level == 0x02 || log_level == 0x03) {
+                auto log = static_cast<std::string *>(temp->get_data());
+                if (log_level >= 0x06 || log_level == 0x02 || log_level == 0x03) {
                     write(*log, ST::log_type::SUCCESS);
                 }
                 break;
@@ -103,7 +103,7 @@ void console::handle_messages(){
                 auto key_val = static_cast<ST::key>(temp->base_data0);
                 if (is_open()) {
                     cursor_timer = 0; //Cursor won't blink when holding these keys
-                    if(hold_counter > 10) { //These values can be changed to adjust the key hold delay.
+                    if (hold_counter > 10) { //These values can be changed to adjust the key hold delay.
                         hold_counter = 9;
                         if (key_val == ST::key::ENTER) {
                             enterKeyAction();
@@ -151,19 +151,19 @@ void console::handle_messages(){
                 break;
             }
             case TEXT_STREAM: {
-                std::string received_data = *static_cast<std::string*>(temp->get_data());
-                for(char const &c : received_data){
-                    if(c > 126 || c < 0) {
+                std::string received_data = *static_cast<std::string *>(temp->get_data());
+                for (char const &c: received_data) {
+                    if (c > 126 || c < 0) {
                         received_data.clear();
                     }
                 }
-                if(received_data == "(") {
+                if (received_data == "(") {
                     received_data += ")";
                     composition.insert(cursor_position--, received_data);
-                } else if(received_data == "\"") {
+                } else if (received_data == "\"") {
                     received_data += received_data;
                     composition.insert(cursor_position--, received_data);
-                } else if(received_data == "[" || received_data == "{") {
+                } else if (received_data == "[" || received_data == "{") {
                     received_data += static_cast<char>(received_data.at(0) + 2);
                     composition.insert(cursor_position--, received_data);
                 } else {
@@ -207,15 +207,15 @@ void console::toggle() {
 /**
  * @param arg the text to write to the console window AND <b>stdout</b>.
  */
-void console::write(const std::string &arg, ST::log_type type){
-    if(type == ST::log_type::ERROR){
+void console::write(const std::string &arg, ST::log_type type) {
+    if (type == ST::log_type::ERROR) {
         fprintf(stderr, "%s\n", arg.c_str());
     } else {
         fprintf(stdout, "%s\n", arg.c_str());
     }
     entries.emplace_back(type, arg);
     //remove an entry if there are too many
-    if(entries.size() > 1000) {
+    if (entries.size() > 1000) {
         entries.erase(entries.begin());
     }
 }
@@ -224,28 +224,28 @@ void console::write(const std::string &arg, ST::log_type type){
  *
  * @return bool indicating if the console window is open.
  */
-bool console::is_open() const{
+bool console::is_open() const {
     return shown;
 }
 
 /**
  * hide the console window.
  */
-void console::hide(){
+void console::hide() {
     shown = false;
 }
 
 /**
  * show the console window.
  */
-void console::show(){
+void console::show() {
     shown = true;
 }
 
 /**
  * Close the console.
  */
-console::~console(){
+console::~console() {
     singleton_initialized = false;
 }
 
@@ -288,8 +288,7 @@ void console::downKeyAction() {
     if (entries_history_index < command_entries.size() - 1) {
         entries_history_index++;
         composition = command_entries.at(static_cast<uint64_t>(entries_history_index));
-    }
-    else {
+    } else {
         entries_history_index = -1;
         composition = composition_history_temp;
     }
@@ -344,7 +343,7 @@ void console::deleteKeyAction() {
 /**
  * Consumes messages from the subscriber object.
  */
-void console::update(){
+void console::update() {
     handle_messages();
 }
 

@@ -16,9 +16,9 @@
  */
 void fps::update(double time, double frame_time) {
     average[counter++] = frame_time; //TODO: Fix
-    counter = (counter != 16)*counter;
+    counter = (counter != 16) * counter;
     new_time = time;
-    if(new_time - old_time > 64){
+    if (new_time - old_time > 64) {
         value = get_average();
         old_time = new_time;
     }
@@ -29,15 +29,15 @@ void fps::update(double time, double frame_time) {
  */
 float fps::get_average() {
     float sum = 0;
-    for(float i : average){
+    for (float i: average) {
         sum += i;
     }
-    return sum/16;
+    return sum / 16;
 }
 
 /**
  * @return The current average framerate value.
  */
-float fps::get_value() const{
+float fps::get_value() const {
     return value;
 }

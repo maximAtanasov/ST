@@ -68,77 +68,90 @@ namespace ST {
         //2 bytes
         uint16_t texture = 65535;
 
-        entity(){
-            toggles |= (1U<<0U);
-            toggles &= ~(1U<<1U);
-            toggles |= (1U<<2U);
-            toggles &= ~(1U<<3U);
+        entity() {
+            toggles |= (1U << 0U);
+            toggles &= ~(1U << 1U);
+            toggles |= (1U << 2U);
+            toggles &= ~(1U << 3U);
         };
 
         [[nodiscard]] int32_t get_col_x() const;
+
         [[nodiscard]] int32_t get_col_y() const;
+
         [[nodiscard]] int16_t get_col_y_offset() const;
+
         [[nodiscard]] int16_t get_col_x_offset() const;
-        [[nodiscard]] bool collides(const entity&) const;
+
+        [[nodiscard]] bool collides(const entity &) const;
+
         void set_collision_box(int16_t, int16_t, int16_t, int16_t);
+
         [[nodiscard]] bool is_active() const;
+
         [[nodiscard]] bool is_static() const;
+
         [[nodiscard]] bool is_visible() const;
+
         [[nodiscard]] bool is_affected_by_physics() const;
+
         void set_active(bool active);
+
         void set_static(bool static_);
+
         void set_visible(bool visible);
+
         void set_affected_by_physics(bool affected);
     };
 }
 
 //INLINED METHODS
 
-inline bool ST::entity::is_active() const{
+inline bool ST::entity::is_active() const {
     return static_cast<bool>(toggles & (1U << 0U));
 }
 
-inline bool ST::entity::is_static() const{
+inline bool ST::entity::is_static() const {
     return static_cast<bool>(toggles & (1U << 1U));
 }
 
-inline bool ST::entity::is_visible() const{
+inline bool ST::entity::is_visible() const {
     return static_cast<bool>(toggles & (1U << 2U));
 }
 
-inline bool ST::entity::is_affected_by_physics() const{
+inline bool ST::entity::is_affected_by_physics() const {
     return static_cast<bool>(toggles & (1U << 3U));
 }
 
 inline void ST::entity::set_active(bool active) {
-    if(active){
-        toggles |= (1U<<0U);
-    }else{
-        toggles &= ~(1U<<0U);
+    if (active) {
+        toggles |= (1U << 0U);
+    } else {
+        toggles &= ~(1U << 0U);
     }
 }
 
 inline void ST::entity::set_static(bool static_) {
-    if(static_){
-        toggles |= (1U<<1U);
-    }else{
-        toggles &= ~(1U<<1U);
+    if (static_) {
+        toggles |= (1U << 1U);
+    } else {
+        toggles &= ~(1U << 1U);
     }
 }
 
 inline void ST::entity::set_visible(bool visible) {
-    if(visible){
-        toggles |= (1U<<2U);
-    }else{
-        toggles &= ~(1U<<2U);
+    if (visible) {
+        toggles |= (1U << 2U);
+    } else {
+        toggles &= ~(1U << 2U);
     }
 }
 
 inline void ST::entity::set_affected_by_physics(bool affected) {
-    if(affected){
-        toggles |= (1U<<3U);
-    }else{
-        toggles &= ~(1U<<3U);
+    if (affected) {
+        toggles |= (1U << 3U);
+    } else {
+        toggles &= ~(1U << 3U);
     }
 }
 
@@ -146,7 +159,7 @@ inline void ST::entity::set_affected_by_physics(bool affected) {
  * Get the horizontal length of the collision box.
  * @return A int32_t representing the length.
  */
-inline int32_t ST::entity::get_col_x() const{
+inline int32_t ST::entity::get_col_x() const {
     return col_x;
 }
 
@@ -154,7 +167,7 @@ inline int32_t ST::entity::get_col_x() const{
  * Get the vertical length of the collision box.
  * @return A int32_t representing the length.
  */
-inline int32_t ST::entity::get_col_y() const{
+inline int32_t ST::entity::get_col_y() const {
     return col_y;
 }
 
@@ -162,7 +175,7 @@ inline int32_t ST::entity::get_col_y() const{
  * Get the horizontal offset for the collision box.
  * @return The offset relative to the current position.
  */
-inline int16_t ST::entity::get_col_x_offset() const{
+inline int16_t ST::entity::get_col_x_offset() const {
     return offset_x;
 }
 
@@ -170,7 +183,7 @@ inline int16_t ST::entity::get_col_x_offset() const{
  * Get the vertical offset for the collision box.
  * @return The offset relative to the current position.
  */
-inline int16_t ST::entity::get_col_y_offset() const{
+inline int16_t ST::entity::get_col_y_offset() const {
     return offset_y;
 }
 
@@ -181,7 +194,7 @@ inline int16_t ST::entity::get_col_y_offset() const{
  * @param X The horizontal length of the collision box.
  * @param Y The vertical length of the collision box.
  */
-inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t col_x_, int16_t col_y_){
+inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int16_t col_x_, int16_t col_y_) {
     this->col_x = col_x_;
     this->col_y = -col_y_;
     offset_x = offsetX;
@@ -194,9 +207,11 @@ inline void ST::entity::set_collision_box(int16_t offsetX, int16_t offsetY, int1
  * @param other Entity to test collision against.
  * @return True if colliding, false otherwise.
  */
-inline bool ST::entity::collides(const entity& other) const{
-    return !((y + offset_y <= other.y + other.col_y + other.offset_y) || (y + col_y + offset_y >= other.y + other.offset_y)
-          || (x + offset_x >= other.x + other.col_x + other.offset_x) || (x + col_x + offset_x <= other.x + other.offset_x));
+inline bool ST::entity::collides(const entity &other) const {
+    return !((y + offset_y <= other.y + other.col_y + other.offset_y) ||
+             (y + col_y + offset_y >= other.y + other.offset_y)
+             || (x + offset_x >= other.x + other.col_x + other.offset_x) ||
+             (x + col_x + offset_x <= other.x + other.offset_x));
 }
 
 static_assert(sizeof(ST::entity) == 36, "class 'entity' is not sized properly, maybe you have misaligned the fields");

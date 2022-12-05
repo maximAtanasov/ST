@@ -33,17 +33,21 @@ namespace ST {
         UNKNOWN
     };
 
-        ///This struct contains assets just like the regular ST::assets, except it uses asset names as keys instead of hashes.
-    struct assets_named{
-        ska::bytell_hash_map<std::string, SDL_Surface*> surfaces;
-        ska::bytell_hash_map<std::string, Mix_Chunk*> chunks;
-        ska::bytell_hash_map<std::string, Mix_Music*> music;
+    ///This struct contains assets just like the regular ST::assets, except it uses asset names as keys instead of hashes.
+    struct assets_named {
+        ska::bytell_hash_map<std::string, SDL_Surface *> surfaces;
+        ska::bytell_hash_map<std::string, Mix_Chunk *> chunks;
+        ska::bytell_hash_map<std::string, Mix_Music *> music;
     };
 
-    ST::assets_named* unpack_binary(const std::string &path);
-    int8_t pack_to_binary(const std::string &path, const std::vector<std::string>& args);
+    ST::assets_named *unpack_binary(const std::string &path);
+
+    int8_t pack_to_binary(const std::string &path, const std::vector<std::string> &args);
+
     int8_t unpack_binary_to_disk(const std::string &path);
+
     asset_file_type get_file_extension(const std::string &filename);
-    int8_t add_to_binary(const std::string &binary_name, const std::vector<std::string>& args_);
+
+    int8_t add_to_binary(const std::string &binary_name, const std::vector<std::string> &args_);
 }
 #endif

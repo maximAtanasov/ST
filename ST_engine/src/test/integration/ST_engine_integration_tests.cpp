@@ -21,13 +21,13 @@
  * CI environment, these tests will tell if the engine runs and if basic functionality causes a crash.
  */
 
-int start_engine_thread(){
-    auto args = static_cast<char**>(malloc(10));
-    args[0] = const_cast<char*>("ST_engine");
+int start_engine_thread() {
+    auto args = static_cast<char **>(malloc(10));
+    args[0] = const_cast<char *>("ST_engine");
     return ST_engine_main(1, args);
 }
 
-void basic_run(){
+void basic_run() {
     SDL_Delay(25000);
     gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(30);
@@ -36,18 +36,18 @@ void basic_run(){
     gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
-void run_for_five_minutes(){
+void run_for_five_minutes() {
     SDL_Delay(25000);
     gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(30);
     gMessage_bus.send_msg(new message(KEY_RELEASED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(2000);
     gMessage_bus.send_msg(new message(SET_VSYNC, false, nullptr)); //run uncapped to reveal possible memory leaks
-    SDL_Delay(60000*5);
+    SDL_Delay(60000 * 5);
     gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
-void set_vsync(){
+void set_vsync() {
     SDL_Delay(25000);
     gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(3000);
@@ -68,7 +68,7 @@ void set_vsync(){
     gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
-void set_fullscreen(){
+void set_fullscreen() {
     SDL_Delay(25000);
     gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(3000);
@@ -89,7 +89,7 @@ void set_fullscreen(){
     gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
-void set_audio_enabled(){
+void set_audio_enabled() {
     SDL_Delay(25000);
     gMessage_bus.send_msg(new message(KEY_PRESSED, static_cast<uint8_t>(ST::key::ENTER), nullptr));
     SDL_Delay(3000);
@@ -110,7 +110,7 @@ void set_audio_enabled(){
     gMessage_bus.send_msg(new message(END_GAME, nullptr));
 }
 
-void reload_and_restart(){
+void reload_and_restart() {
     SDL_Delay(25000);
     gMessage_bus.send_msg(new message(KEY_PRESSED, make_data(ST::key::ENTER)));
     SDL_Delay(2000);

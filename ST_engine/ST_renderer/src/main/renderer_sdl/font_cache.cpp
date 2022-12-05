@@ -19,8 +19,8 @@ static uint32_t cache_size = 0;
  * @param list The list.
  * @param element The element to move.
  */
-void ST::renderer_sdl::font_cache::move_to_front(std::list<key_pair>& list,std::list<key_pair>::iterator element){
-    if(element != list.begin()) {
+void ST::renderer_sdl::font_cache::move_to_front(std::list<key_pair> &list, std::list<key_pair>::iterator element) {
+    if (element != list.begin()) {
         list.splice(list.begin(), list, element, std::next(element));
     }
 }
@@ -39,9 +39,9 @@ void ST::renderer_sdl::font_cache::set_max(uint32_t max) {
  * @param SIZE The size of the font that the text was rendered at.
  * @return The cached string corresponding to the give parameters or nullptr if it was not found
  */
-SDL_Texture* ST::renderer_sdl::font_cache::get_cached_string(const std::string& str, uint16_t font){
+SDL_Texture *ST::renderer_sdl::font_cache::get_cached_string(const std::string &str, uint16_t font) {
     font_cache_tuple temp = std::make_tuple(str, font);
-    if(hash.find(temp) != hash.end()){
+    if (hash.find(temp) != hash.end()) {
         move_to_front(cache, hash[temp]);
         return hash.at(temp)->second;;
     }
@@ -55,12 +55,12 @@ SDL_Texture* ST::renderer_sdl::font_cache::get_cached_string(const std::string& 
  * @param FONT The font to cache.
  * @param SIZE The size to cache.
  */
-void ST::renderer_sdl::font_cache::cache_string(const std::string& str, SDL_Texture* texture, uint16_t font){
+void ST::renderer_sdl::font_cache::cache_string(const std::string &str, SDL_Texture *texture, uint16_t font) {
     font_cache_tuple temp = std::make_tuple(str, font);
     cache.push_front(std::make_pair(temp, texture));
     hash[temp] = cache.begin();
     entries++;
-    if(entries > cache_size){
+    if (entries > cache_size) {
         hash.erase(cache.back().first);
         SDL_DestroyTexture(cache.back().second);
         cache.pop_back();
@@ -71,8 +71,8 @@ void ST::renderer_sdl::font_cache::cache_string(const std::string& str, SDL_Text
 /**
  * Destroys the font_cache object and frees all cached textures.
  */
-void ST::renderer_sdl::font_cache::close(){
-    for(auto& i : cache){
+void ST::renderer_sdl::font_cache::close() {
+    for (auto &i: cache) {
         SDL_DestroyTexture(i.second);
     }
 }

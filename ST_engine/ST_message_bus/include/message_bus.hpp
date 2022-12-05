@@ -26,16 +26,21 @@
  *
  * Handles all passing of messages to subscribers.
  */
-class message_bus{
-    private:
-        friend class message_bus_tests;
-        ska::bytell_hash_map<uint8_t, std::vector<subscriber*>> subscribers; //each message enum maps to a list of subscribers for that message
-    public:
-        message_bus();
-        ~message_bus();
-        void clear();
-        void send_msg(message* msg);
-        void subscribe(uint8_t msg, subscriber* sub);
+class message_bus {
+private:
+    friend class message_bus_tests;
+
+    ska::bytell_hash_map<uint8_t, std::vector<subscriber *>> subscribers; //each message enum maps to a list of subscribers for that message
+public:
+    message_bus();
+
+    ~message_bus();
+
+    void clear();
+
+    void send_msg(message *msg);
+
+    void subscribe(uint8_t msg, subscriber *sub);
 };
 
 /**
@@ -44,7 +49,8 @@ class message_bus{
  * @param data The data itself - usually passed by value.
  * @return A new std::shared_ptr<void> representing the data.
  */
-template <class T> std::shared_ptr<void> make_data(T data){
+template<class T>
+std::shared_ptr<void> make_data(T data) {
     return std::make_shared<T>(data);
 }
 

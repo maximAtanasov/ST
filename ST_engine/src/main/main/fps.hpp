@@ -20,16 +20,19 @@
  */
 class fps {
 
-    private:
-        double old_time = 0;
-        double new_time = 0;
-        float value = 0;
-        float average[16]{};
-        float get_average();
-        uint8_t counter = 0;
+private:
+    double old_time = 0;
+    double new_time = 0;
+    float value = 0;
+    float average[16]{};
+
+    float get_average();
+
+    uint8_t counter = 0;
 public:
-        void update(double time, double frame_time);
-        [[nodiscard]] float get_value() const;
+    void update(double time, double frame_time);
+
+    [[nodiscard]] float get_value() const;
 };
 
 #endif //FPS_DEF

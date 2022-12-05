@@ -16,46 +16,58 @@
 #include <task_manager.hpp>
 
 ///This object is responsible for playing sounds and music
-class audio_manager{
+class audio_manager {
     friend class audio_manager_test;
-    private:
 
-        uint8_t chunk_volume = MIX_MAX_VOLUME;
-        uint8_t music_volume = MIX_MAX_VOLUME;
-        bool muted = false;
-        //ratio: MIX_MAX_VOLUME/volume
-        float chunk_playback_volume_ratio = 1;
-        float music_playback_volume_ratio = 1;
+private:
 
-        ///subscriber object to receive messages
-        subscriber msg_sub{};
+    uint8_t chunk_volume = MIX_MAX_VOLUME;
+    uint8_t music_volume = MIX_MAX_VOLUME;
+    bool muted = false;
+    //ratio: MIX_MAX_VOLUME/volume
+    float chunk_playback_volume_ratio = 1;
+    float music_playback_volume_ratio = 1;
 
-        ///External dependencies
-        ska::bytell_hash_map<uint16_t, Mix_Chunk*>* chunks_ptr{};
-        ska::bytell_hash_map<uint16_t, Mix_Music*>* music_ptr{};//-Delivered as a message
-        message_bus& gMessage_bus; //-Delivered in constructor
-        task_manager& gTask_manager; //-Delivered in constructor
+    ///subscriber object to receive messages
+    subscriber msg_sub{};
 
-        ///internal update functions
-        void handle_messages();
+    ///External dependencies
+    ska::bytell_hash_map<uint16_t, Mix_Chunk *> *chunks_ptr{};
+    ska::bytell_hash_map<uint16_t, Mix_Music *> *music_ptr{};//-Delivered as a message
+    message_bus &gMessage_bus; //-Delivered in constructor
+    task_manager &gTask_manager; //-Delivered in constructor
+
+    ///internal update functions
+    void handle_messages();
 
 
-        ///Audio control functions
-        void play_music(uint16_t arg, uint8_t volume, int8_t loops) const;
-        void play_sound(uint16_t arg, uint8_t volume, int8_t loops) const;
-        void mute();
-        void unmute();
-        static void stop_music() ;
-        static void pause_music() ;
-        static void stop_channels() ;
-        void set_chunk_volume(uint8_t arg);
-        void set_music_volume(uint8_t arg);
-        static void update_task(void* arg);
+    ///Audio control functions
+    void play_music(uint16_t arg, uint8_t volume, int8_t loops) const;
 
-    public:
-        audio_manager(task_manager &tsk_mngr, message_bus &gMessageBus);
-        ~audio_manager();
-        void update();
+    void play_sound(uint16_t arg, uint8_t volume, int8_t loops) const;
+
+    void mute();
+
+    void unmute();
+
+    static void stop_music();
+
+    static void pause_music();
+
+    static void stop_channels();
+
+    void set_chunk_volume(uint8_t arg);
+
+    void set_music_volume(uint8_t arg);
+
+    static void update_task(void *arg);
+
+public:
+    audio_manager(task_manager &tsk_mngr, message_bus &gMessageBus);
+
+    ~audio_manager();
+
+    void update();
 };
 
 
