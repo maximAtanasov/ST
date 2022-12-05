@@ -17,27 +17,33 @@
 #include <SDL_video.h>
 
 ///This object is responsible for managing the window.
-class window_manager{
-    private:
-        SDL_Surface* icon{};
-        SDL_Window* window{};
-        SDL_DisplayMode DM{};
-        task_manager& gTask_manager;
-        message_bus& gMessage_bus;
-        int16_t height = 0;
-        int16_t width = 0;
-        subscriber msg_sub{};
+class window_manager {
+private:
+    SDL_Surface *icon{};
+    SDL_Window *window{};
+    SDL_DisplayMode DM{};
+    task_manager &gTask_manager;
+    message_bus &gMessage_bus;
+    int16_t height = 0;
+    int16_t width = 0;
+    subscriber msg_sub{};
 
-        void set_fullscreen(bool arg);
-        void handle_messages();
-        void set_brightness(float arg);
-        static void update_task(void* mngr);
+    void set_fullscreen(bool arg);
 
-    public:
-        window_manager(message_bus &gMessageBus, task_manager &gTask_manager, const std::string &window_name);
-        ~window_manager();
-        void update();
-        SDL_Window* get_window();
+    void handle_messages();
+
+    void set_brightness(float arg);
+
+    static void update_task(void *mngr);
+
+public:
+    window_manager(message_bus &gMessageBus, task_manager &gTask_manager, const std::string &window_name);
+
+    ~window_manager();
+
+    void update();
+
+    SDL_Window *get_window();
 };
 
 #endif //WM_DEF

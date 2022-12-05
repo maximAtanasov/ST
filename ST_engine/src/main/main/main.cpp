@@ -19,16 +19,17 @@ message_bus gMessage_bus;
  * Initializes all subsystems and starts the main loop.
  */
 #ifndef TESTING
+
 int main(int argc, char *argv[]) {
 #elif defined(TESTING)
-int ST_engine_main(int argc, char *argv[]) {
+    int ST_engine_main(int argc, char *argv[]) {
 #endif
     //we get rid of the two warnings for unused parameters.
     //int main() will work fine on linux, but not on Windows
     //where SDL does some weird stuff with the main function,
     //so we need to specify main like this to avoid conflict with SDL
-    (void)argc;
-    (void)argv;
+    (void) argc;
+    (void) argv;
 
     //Order of subsystem initialization is crucial
 #ifndef TESTING
@@ -66,7 +67,7 @@ int ST_engine_main(int argc, char *argv[]) {
     gDisplay_manager.update();
 
     //main loop
-    while(gGame_manager.game_is_running()){
+    while (gGame_manager.game_is_running()) {
         new_time = gTimer.time_since_start();
         frame_time = new_time - current_time;
         current_time = new_time;
@@ -74,8 +75,8 @@ int ST_engine_main(int argc, char *argv[]) {
 
         gMetrics.reset_accumulators();
 
-        if(total_time >= LOGIC_UPDATE_RATE){
-            do{
+        if (total_time >= LOGIC_UPDATE_RATE) {
+            do {
                 gInput_manager.update();
 
                 double game_logic_begin = gTimer.time_since_start();
@@ -89,15 +90,14 @@ int ST_engine_main(int argc, char *argv[]) {
                 gMetrics.physics_time += physics_end - physics_begin;
 
                 total_time -= LOGIC_UPDATE_RATE;
-            }
-            while (total_time >= LOGIC_UPDATE_RATE);
+            } while (total_time >= LOGIC_UPDATE_RATE);
             //All three start their own update tasks which run in the background
             gAssets_manager.update();
             gDisplay_manager.update();
             gAudio_manager.update();
         }
         gConsole.update();
-        gFps.update(current_time, 1000/frame_time);
+        gFps.update(current_time, 1000 / frame_time);
 
         gMetrics.frame_time = frame_time;
 

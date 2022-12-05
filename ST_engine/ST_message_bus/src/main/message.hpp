@@ -18,7 +18,7 @@
 /**
  * Only use new message() and delete() for the creation of a message.
  */
-class message{
+class message {
 private:
     static ST::linear_frame_allocator_256<message> allocator;
     std::shared_ptr<void> data; //yes, this holds anything created with make_data<>() AND calls the correct destructor
@@ -31,7 +31,8 @@ public:
 
     uint8_t msg_name{};
 
-    [[nodiscard]] void* get_data() const;
+    [[nodiscard]] void *get_data() const;
+
     [[nodiscard]] message *make_copy() const;
 
     message() = default;
@@ -40,7 +41,7 @@ public:
      * @param name The type of message. See <b>ST::msg_type</b>.
      * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
      */
-    explicit message(uint8_t name, const std::shared_ptr<void>& data = nullptr){
+    explicit message(uint8_t name, const std::shared_ptr<void> &data = nullptr) {
         this->msg_name = name;
         this->data = data;
     }
@@ -50,19 +51,19 @@ public:
      * @param base_data0 32 bits of data. Use this if you want to avoid creating a shared pointer.
      * @param data The data the message carries - created with <b>make_data<>()</b> or is <b>nullptr</b>
      */
-    message(uint8_t name, uint32_t base_data0, const std::shared_ptr<void>& data = nullptr){
+    message(uint8_t name, uint32_t base_data0, const std::shared_ptr<void> &data = nullptr) {
         this->msg_name = name;
         this->base_data0 = base_data0;
         this->data = data;
     }
 
-    static void* operator new (size_t){
+    static void *operator new(size_t) {
         return allocator.allocate();
     }
 
-    static void operator delete (void*){}
+    static void operator delete(void *) {}
 
-    ~message(){
+    ~message() {
         if (data != nullptr) {
             this->data.reset();
         }
@@ -76,14 +77,14 @@ static_assert(sizeof(message) == 24, "sizeof message is not 24");
 /**
  * @return The data contained within a message. Always a void* that MUST be properly cast to an actual type on the other end
  */
-inline void* message::get_data() const{
+inline void *message::get_data() const {
     return this->data.get();
 }
 
 /**
  * @return A copy of this message.
  */
-inline message* message::make_copy() const {
+inline message *message::make_copy() const {
     return &(*allocator.allocate() = *this);
 }
 

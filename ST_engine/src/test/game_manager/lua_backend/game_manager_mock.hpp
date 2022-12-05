@@ -28,18 +28,23 @@
  * is done per hand. (A compile time error will occur if a method/attribute is not found, but things like wrong data types in
  * the method arguments may not be noticed easily).
  */
-class game_manager{
+class game_manager {
 private:
 
     //methods
     void handle_messages();
-    int8_t load_level(const std::string&){return 0;}
-    void unload_level(const std::string&){}
-    void start_level(const std::string&){}
-    void reset_keys(){}
-    void run_level_loop(){}
 
-    ST::level* level = new ST::level("test_level", nullptr);
+    int8_t load_level(const std::string &) { return 0; }
+
+    void unload_level(const std::string &) {}
+
+    void start_level(const std::string &) {}
+
+    void reset_keys() {}
+
+    void run_level_loop() {}
+
+    ST::level *level = new ST::level("test_level", nullptr);
 
 public:
 
@@ -50,39 +55,59 @@ public:
     bool audio_enabled = true;
     int8_t gravity = 0;
 
-    game_manager(message_bus* msg_bus, task_manager* tsk_mngr){}
-    ~game_manager() = default;
-    std::string get_active_level() const {return "test_level";}
+    game_manager(message_bus *msg_bus, task_manager *tsk_mngr) {}
 
-    ST::level* get_level() {
+    ~game_manager() = default;
+
+    std::string get_active_level() const { return "test_level"; }
+
+    ST::level *get_level() {
         get_level_calls++;
         return level;
     }
 
-    bool key_pressed(size_t arg) const { return true;};
-    bool key_held(size_t arg) const {return true;};
-    bool key_released(size_t arg) const {return true;};
-    int32_t get_mouse_x() const {return 100;};
-    int32_t get_mouse_y() const {return 200;};
+    bool key_pressed(size_t arg) const { return true; };
+
+    bool key_held(size_t arg) const { return true; };
+
+    bool key_released(size_t arg) const { return true; };
+
+    int32_t get_mouse_x() const { return 100; };
+
+    int32_t get_mouse_y() const { return 200; };
+
     void update() {};
+
     bool game_is_running() const { return true; };
-    void center_camera_on_entity(uint64_t id){center_camera_on_entity_calls++;}
-    int16_t get_left_trigger() const{return 100;}
-    int16_t get_right_trigger() const{return 200;}
-    int16_t get_left_stick_horizontal() const{return 100;}
-    int16_t get_left_stick_vertical() const{return 200;}
-    int16_t get_right_stick_vertical() const{ return 300;}
-    int16_t get_right_stick_horizontal() const{return 400;}
-    void save_state(const std::string& filepath) {};
-    uint16_t get_internal_width() const {return 1920;}
-    uint16_t get_internal_height() const {return 1080;};
-    uint16_t get_window_width() const {return 2560;};
-    uint16_t get_window_height() const {return 1440;};
+
+    void center_camera_on_entity(uint64_t id) { center_camera_on_entity_calls++; }
+
+    int16_t get_left_trigger() const { return 100; }
+
+    int16_t get_right_trigger() const { return 200; }
+
+    int16_t get_left_stick_horizontal() const { return 100; }
+
+    int16_t get_left_stick_vertical() const { return 200; }
+
+    int16_t get_right_stick_vertical() const { return 300; }
+
+    int16_t get_right_stick_horizontal() const { return 400; }
+
+    void save_state(const std::string &filepath) {};
+
+    uint16_t get_internal_width() const { return 1920; }
+
+    uint16_t get_internal_height() const { return 1080; };
+
+    uint16_t get_window_width() const { return 2560; };
+
+    uint16_t get_window_height() const { return 1440; };
 
     //Variables to keep track of method calls
     uint8_t get_level_calls = 0;
     uint8_t center_camera_on_entity_calls = 0;
- };
+};
 
 
 #endif //ST_GAME_MANAGER_MOCK_HPP

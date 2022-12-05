@@ -15,24 +15,24 @@
 class console_test : public ::testing::Test {
 
 protected:
-    console* test_cnsl{};
+    console *test_cnsl{};
 
-    uint8_t get_log_level(){
+    uint8_t get_log_level() {
         return test_cnsl->log_level;
     }
 
-    void write(ST::log_type type, const std::string &text){
+    void write(ST::log_type type, const std::string &text) {
         test_cnsl->write(text, type);
     }
 
-    message_bus* msg_bus{};
+    message_bus *msg_bus{};
 
-    void SetUp() override{
+    void SetUp() override {
         msg_bus = new message_bus();
         test_cnsl = new console(*msg_bus);
     }
 
-    void TearDown() override{
+    void TearDown() override {
         delete test_cnsl;
         delete msg_bus;
     }

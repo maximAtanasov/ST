@@ -22,7 +22,7 @@ static bool singleton_initialized = false;
  */
 game_manager::game_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus) {
 
-    if(singleton_initialized){
+    if (singleton_initialized) {
         throw std::runtime_error("The game manager cannot be initialized more than once!");
     } else {
         singleton_initialized = true;
@@ -69,7 +69,7 @@ game_manager::game_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus)
 /**
  * Reset all information about input.
  */
-void game_manager::reset_keys(){
+void game_manager::reset_keys() {
     keys_pressed_data.reset();
     keys_held_data.reset();
     keys_released_data.reset();
@@ -78,21 +78,21 @@ void game_manager::reset_keys(){
 /**
  * Consumes message from the subscriber object and performs the appropriate actions.
  */
-void game_manager::handle_messages(){
+void game_manager::handle_messages() {
     auto temp = msg_sub.get_next_message();
-    while(temp != nullptr){
+    while (temp != nullptr) {
         switch (temp->msg_name) {
             case LOAD_LEVEL:
-                load_level(*static_cast<std::string*>(temp->get_data()));
+                load_level(*static_cast<std::string *>(temp->get_data()));
                 break;
             case RELOAD_LEVEL:
-                reload_level(*static_cast<std::string*>(temp->get_data()));
+                reload_level(*static_cast<std::string *>(temp->get_data()));
                 break;
             case START_LEVEL:
-                start_level(*static_cast<std::string*>(temp->get_data()));
+                start_level(*static_cast<std::string *>(temp->get_data()));
                 break;
             case UNLOAD_LEVEL:
-                unload_level(*static_cast<std::string*>(temp->get_data()));
+                unload_level(*static_cast<std::string *>(temp->get_data()));
                 break;
             case KEY_PRESSED: {
                 uint8_t key_index = temp->base_data0;
@@ -158,7 +158,7 @@ void game_manager::handle_messages(){
                 SDL_ShowCursor(static_cast<bool>(temp->base_data0));
                 break;
             case EXECUTE_SCRIPT: {
-                auto script = static_cast<std::string*>(temp->get_data());
+                auto script = static_cast<std::string *>(temp->get_data());
                 gScript_backend.run_script(*script);
                 break;
             }
@@ -187,10 +187,10 @@ void game_manager::handle_messages(){
  * Loads a level if it is not already loaded.
  * @param level_name The name of the level to load (this must the name of the folder).
  */
-int8_t game_manager::load_level(const std::string& level_name){
+int8_t game_manager::load_level(const std::string &level_name) {
 
     //check if it is already loaded.
-    for(auto& i: levels) {
+    for (auto &i: levels) {
         if (i.get_name() == level_name) {
             return 0;
         }
@@ -198,16 +198,17 @@ int8_t game_manager::load_level(const std::string& level_name){
 
     //otherwise - create it
     auto temp = ST::level(level_name, &gMessage_bus);
-    if(temp.load() != 0){
-        gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>("Level with name " + level_name + " could not be loaded!")));
+    if (temp.load() != 0) {
+        gMessage_bus.send_msg(new message(LOG_ERROR, make_data<std::string>(
+                "Level with name " + level_name + " could not be loaded!")));
         return -1;
     }
     levels.emplace_back(temp);
 
     //current level pointer must be reset, because apparently adding to the vector changes the pointer address
     //(makes sense as it has to reallocate the whole thing)
-    for (auto &level : levels) {
-        if(level.get_name() == active_level){
+    for (auto &level: levels) {
+        if (level.get_name() == active_level) {
             current_level_pointer = &level;
             break;
         }
@@ -219,8 +220,8 @@ int8_t game_manager::load_level(const std::string& level_name){
  * Unloads a level.
  * @param level_name The name of the level to unload (this must the name of the folder).
  */
-void game_manager::unload_level(const std::string& level_name){
-    for(uint64_t i = 0; i < levels.size(); ++i) {
+void game_manager::unload_level(const std::string &level_name) {
+    for (uint64_t i = 0; i < levels.size(); ++i) {
         if (levels[i].get_name() == level_name) {
             levels[i].unload();
             levels.erase(levels.begin() + i);
@@ -230,8 +231,8 @@ void game_manager::unload_level(const std::string& level_name){
 
     //current level pointer must be reset, because apparently adding/removing to/from the vector changes the pointer address
     //(makes sense as it has to reallocate the whole thing)
-    for (auto &level : levels) {
-        if(level.get_name() == active_level) {
+    for (auto &level: levels) {
+        if (level.get_name() == active_level) {
             current_level_pointer = &level;
             break;
         }
@@ -243,8 +244,8 @@ void game_manager::unload_level(const std::string& level_name){
  * Reloads a level (works while the level is being run).
  * @param level_name The name of the level to unload (this must the name of the folder).
  */
-void game_manager::reload_level(const std::string& level_name){
-    for (auto &level : levels) {
+void game_manager::reload_level(const std::string &level_name) {
+    for (auto &level: levels) {
         if (level.get_name() == level_name) {
             level.reload();
             break;
@@ -257,21 +258,21 @@ void game_manager::reload_level(const std::string& level_name){
  * Starts a level given it's name.
  * @param level_name The name of the level to start (this must the name of the folder).
  */
-void game_manager::start_level(const std::string& level_name) {
+void game_manager::start_level(const std::string &level_name) {
 
     //set the current level pointer
     bool is_loaded = false;
-    for (auto &level : levels) {
-        if(level.get_name() == level_name) {
+    for (auto &level: levels) {
+        if (level.get_name() == level_name) {
             current_level_pointer = &level;
             is_loaded = true;
             break;
         }
     }
     //if the level wasn't loaded in advance, load it now
-    if(!is_loaded){
-        if(load_level(level_name) == 0) {
-            for (auto &level : levels) {
+    if (!is_loaded) {
+        if (load_level(level_name) == 0) {
+            for (auto &level: levels) {
                 if (level.get_name() == level_name) {
                     current_level_pointer = &level;
                     break;
@@ -306,7 +307,7 @@ void game_manager::start_level(const std::string& level_name) {
 /**
  * Closes the game manager and the lua backend.
  */
-game_manager::~game_manager(){
+game_manager::~game_manager() {
     gScript_backend.close();
     singleton_initialized = false;
 }
@@ -362,16 +363,18 @@ void game_manager::center_camera_on_entity(uint64_t id) {
     //TODO: Get rid of hardcoded values
     //TODO: Move this functionality to lua
     //TODO: Refactor
-    if(current_level_pointer->entities[id].velocity_x > 0) {
-        if(current_level_pointer->camera.x < current_level_pointer->entities[id].x - v_width / 4 - current_level_pointer->entities[id].velocity_x) {
+    if (current_level_pointer->entities[id].velocity_x > 0) {
+        if (current_level_pointer->camera.x <
+            current_level_pointer->entities[id].x - v_width / 4 - current_level_pointer->entities[id].velocity_x) {
             current_level_pointer->camera.x += current_level_pointer->entities[id].velocity_x + 5;
-        } else{
+        } else {
             current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 4;
         }
-    } else if(current_level_pointer->entities[id].velocity_x < 0) {
-        if(current_level_pointer->camera.x > current_level_pointer->entities[id].x - v_width / 2 - current_level_pointer->entities[id].velocity_x) {
+    } else if (current_level_pointer->entities[id].velocity_x < 0) {
+        if (current_level_pointer->camera.x >
+            current_level_pointer->entities[id].x - v_width / 2 - current_level_pointer->entities[id].velocity_x) {
             current_level_pointer->camera.x += current_level_pointer->entities[id].velocity_x - 5;
-        } else{
+        } else {
             current_level_pointer->camera.x = current_level_pointer->entities[id].x - v_width / 2;
         }
     }
@@ -392,8 +395,8 @@ void game_manager::center_camera_on_entity(uint64_t id) {
             limit_x2_check * (current_level_pointer->camera.limitX2 - 1) +
             !limit_x2_check * current_level_pointer->camera.x;
     current_level_pointer->camera.y =
-            limit_y1_check*(current_level_pointer->camera.limitY1 + 1) +
-            !limit_y1_check*current_level_pointer->camera.y;
+            limit_y1_check * (current_level_pointer->camera.limitY1 + 1) +
+            !limit_y1_check * current_level_pointer->camera.y;
     current_level_pointer->camera.y =
             limit_y2_check * (current_level_pointer->camera.limitY2 - 1) +
             !limit_y2_check * current_level_pointer->camera.y;
@@ -402,7 +405,7 @@ void game_manager::center_camera_on_entity(uint64_t id) {
 /**
  * Listens to messages and runs one iteration of loop.lua for the specific level.
  */
-void game_manager::update(){
+void game_manager::update() {
     handle_messages();
     run_level_loop();
 }
@@ -411,7 +414,7 @@ void game_manager::update(){
  * Get the name of the active level.
  * @return The name of the current level.
  */
-std::string game_manager::get_active_level() const{
+std::string game_manager::get_active_level() const {
     return active_level;
 }
 
@@ -425,7 +428,7 @@ void game_manager::run_level_loop() {
 /**
  * @return A pointer to the current level.
  */
-ST::level* game_manager::get_level() const{
+ST::level *game_manager::get_level() const {
     return current_level_pointer;
 }
 
@@ -434,7 +437,7 @@ ST::level* game_manager::get_level() const{
  * This is the main condition for running the main loop (the entire engine).
  * @return True if running, false otherwise.
  */
-bool game_manager::game_is_running() const{
+bool game_manager::game_is_running() const {
     return game_is_running_;
 }
 
@@ -442,7 +445,7 @@ bool game_manager::game_is_running() const{
  * Get the current mouse X position.
  * @return The X position of the mouse cursor.
  */
-int32_t game_manager::get_mouse_x() const{
+int32_t game_manager::get_mouse_x() const {
     return mouse_x;
 }
 
@@ -450,7 +453,7 @@ int32_t game_manager::get_mouse_x() const{
  * Get the current mouse Y position.
  * @return The Y position of the mouse cursor.
  */
-int32_t game_manager::get_mouse_y() const{
+int32_t game_manager::get_mouse_y() const {
     return mouse_y;
 }
 
@@ -459,9 +462,9 @@ int32_t game_manager::get_mouse_y() const{
  * @param arg A hash of the name of the action.
  * @return True if pressed, false otherwise.
  */
-bool game_manager::key_pressed(uint16_t arg) const{
-    for(ST::key key : current_level_pointer->actions_buttons[arg]){
-        if(keys_pressed_data[static_cast<uint8_t>(key)]){
+bool game_manager::key_pressed(uint16_t arg) const {
+    for (ST::key key: current_level_pointer->actions_buttons[arg]) {
+        if (keys_pressed_data[static_cast<uint8_t>(key)]) {
             return true;
         }
     }
@@ -473,9 +476,9 @@ bool game_manager::key_pressed(uint16_t arg) const{
  * @param arg A hash of the name of the action.
  * @return True if held, false otherwise.
  */
-bool game_manager::key_held(uint16_t arg) const{
-    for(ST::key key : current_level_pointer->actions_buttons[arg]){
-        if(keys_held_data[static_cast<uint8_t>(key)]){
+bool game_manager::key_held(uint16_t arg) const {
+    for (ST::key key: current_level_pointer->actions_buttons[arg]) {
+        if (keys_held_data[static_cast<uint8_t>(key)]) {
             return true;
         }
     }
@@ -487,9 +490,9 @@ bool game_manager::key_held(uint16_t arg) const{
  * @param arg A hash of the name of the action.
  * @return True if released, false otherwise.
  */
-bool game_manager::key_released(uint16_t arg) const{
-    for(ST::key key : current_level_pointer->actions_buttons[arg]){
-        if(keys_released_data[static_cast<uint8_t>(key)]){
+bool game_manager::key_released(uint16_t arg) const {
+    for (ST::key key: current_level_pointer->actions_buttons[arg]) {
+        if (keys_released_data[static_cast<uint8_t>(key)]) {
             return true;
         }
     }
@@ -498,15 +501,15 @@ bool game_manager::key_released(uint16_t arg) const{
 
 //TODO: Docs
 //TODO: Test
-void game_manager::save_state(const std::string& filepath) {
+void game_manager::save_state(const std::string &filepath) {
     std::ofstream save_file;
-    save_file.open (filepath);
+    save_file.open(filepath);
 
     save_file << "L" + current_level_pointer->get_name();
     save_file << "CX" + std::to_string(current_level_pointer->camera.x);
     save_file << "CY" + std::to_string(current_level_pointer->camera.y);
 
-    for(uint8_t i = 0; i < PARALLAX_BG_LAYERS; i++) {
+    for (uint8_t i = 0; i < PARALLAX_BG_LAYERS; i++) {
         save_file << "B" + std::to_string(i) + std::to_string(current_level_pointer->background[i]);
     }
 
@@ -517,7 +520,7 @@ void game_manager::save_state(const std::string& filepath) {
     save_file << "O" + std::to_string(current_level_pointer->overlay);
     save_file << "OSN" + std::to_string(current_level_pointer->overlay_sprite_num);
     save_file << "E";
-    for(const auto& entity : current_level_pointer->entities) {
+    for (const auto &entity: current_level_pointer->entities) {
         save_file << "X" + std::to_string(entity.x);
         save_file << "Y" + std::to_string(entity.y);
         save_file << "VX" + std::to_string(entity.velocity_x);
@@ -537,7 +540,7 @@ void game_manager::save_state(const std::string& filepath) {
     }
     save_file << "E";
     save_file << "L";
-    for(const auto& light : current_level_pointer->lights) {
+    for (const auto &light: current_level_pointer->lights) {
         save_file << "X" + std::to_string(light.origin_x);
         save_file << "Y" + std::to_string(light.origin_y);
         save_file << "S" + std::to_string(light.is_static);
@@ -547,7 +550,7 @@ void game_manager::save_state(const std::string& filepath) {
     }
     save_file << "L";
     save_file << "T";
-    for(const auto& text_object : current_level_pointer->text_objects) {
+    for (const auto &text_object: current_level_pointer->text_objects) {
         save_file << "X" + std::to_string(text_object.x);
         save_file << "Y" + std::to_string(text_object.y);
         save_file << "T" + text_object.text_string;

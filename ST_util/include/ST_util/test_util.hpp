@@ -17,9 +17,13 @@
 #include <string>
 
 void close_SDL();
+
 void initialize_SDL();
-bool compare_surfaces(SDL_Surface* expected, SDL_Surface* result);
-long get_file_size(const std::string& path);
-void copy_file(const std::string& src, const std::string& dest);
+
+bool compare_surfaces(SDL_Surface *expected, SDL_Surface *result);
+
+long get_file_size(const std::string &path);
+
+void copy_file(const std::string &src, const std::string &dest);
 
 #endif //ST_TEST_UTIL_HPP

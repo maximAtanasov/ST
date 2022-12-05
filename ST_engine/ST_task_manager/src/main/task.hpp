@@ -29,9 +29,9 @@ namespace ST {
 
         void (*task_func)(void *){};
 
-        void* data{};
-        semaphore* lock = nullptr;
-        semaphore* dependency{};
+        void *data{};
+        semaphore *lock = nullptr;
+        semaphore *dependency{};
 
         task() = default;
 
@@ -40,17 +40,17 @@ namespace ST {
          * @param arg The arguments to above function
          * @param dependency A lock acting as a dependency to the task or nullptr if there is no such dependency
          */
-        task(void (*function)(void *), void *arg, semaphore *dependency){
+        task(void (*function)(void *), void *arg, semaphore *dependency) {
             this->task_func = function;
             this->data = arg;
             this->dependency = dependency;
         }
 
-        void* operator new (std::size_t){
+        void *operator new(std::size_t) {
             return allocator.allocate();
         }
 
-        void operator delete (void*){}
+        void operator delete(void *) {}
     };
 }
 

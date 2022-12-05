@@ -19,249 +19,249 @@ class lua_backend_test : public ::testing::Test {
 protected:
     lua_backend test_subject{};
 
-    std::string hash_file(const std::string& path){
+    std::string hash_file(const std::string &path) {
         return test_subject.hash_file(path);
     }
 
-    std::string hash_string_lua(const std::string& string){
+    std::string hash_string_lua(const std::string &string) {
         return test_subject.hash_string(string);
     }
 
-    lua_State* get_lua_state(){
+    lua_State *get_lua_state() {
         return test_subject.L;
     }
 
-    message_bus* msg_bus{};
-    game_manager* game_mngr{};
+    message_bus *msg_bus{};
+    game_manager *game_mngr{};
 
-    void SetUp() override{
+    void SetUp() override {
         msg_bus = new message_bus();
         game_mngr = new game_manager(msg_bus, nullptr);
         test_subject.initialize(msg_bus, game_mngr);
     }
 
-    void TearDown() override{
+    void TearDown() override {
         test_subject.close();
         delete game_mngr;
         delete msg_bus;
     }
 };
 
-TEST_F(lua_backend_test, test_hash_file_playSound){
+TEST_F(lua_backend_test, test_hash_file_playSound) {
     std::string result = hash_file("lua_scripts/test_script_playSound.lua");
     std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-10);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 10);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_playMusic){
+TEST_F(lua_backend_test, test_hash_file_playMusic) {
     std::string result = hash_file("lua_scripts/test_script_playMusic.lua");
     std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-10);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 10);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_keyHeld){
+TEST_F(lua_backend_test, test_hash_file_keyHeld) {
     std::string result = hash_file("lua_scripts/test_script_keyHeld.lua");
     std::string resulting_integer = result.substr(8, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 3);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_keyPressed){
+TEST_F(lua_backend_test, test_hash_file_keyPressed) {
     std::string result = hash_file("lua_scripts/test_script_keyPressed.lua");
     std::string resulting_integer = result.substr(11, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-2);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 2);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_keyReleased){
+TEST_F(lua_backend_test, test_hash_file_keyReleased) {
     std::string result = hash_file("lua_scripts/test_script_keyReleased.lua");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-2);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 2);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_setClickKey){
+TEST_F(lua_backend_test, test_hash_file_setClickKey) {
     std::string result = hash_file("lua_scripts/test_script_setClickKey.lua");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-3);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 3);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_keyAnnotation){
+TEST_F(lua_backend_test, test_hash_file_keyAnnotation) {
     std::string result = hash_file("lua_scripts/test_script_keyAnnotation.lua");
     std::string resulting_integer = result.substr(10, std::string::npos);
-    try{
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_playSound){
+TEST_F(lua_backend_test, test_hash_string_playSound) {
     std::string result = hash_string_lua("playSound(\"sound.wav\", 100, 1)");
     std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-9);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 9);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_file_audioAnnotation){
+TEST_F(lua_backend_test, test_hash_file_audioAnnotation) {
     std::string result = hash_file("lua_scripts/test_script_audioAnnotation.lua");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    try{
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_playMusic){
+TEST_F(lua_backend_test, test_hash_string_playMusic) {
     std::string result = hash_string_lua("playMusic(\"music.mp3\", 100, 1)");
     std::string resulting_integer = result.substr(10, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-9);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 9);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_keyHeld){
+TEST_F(lua_backend_test, test_hash_string_keyHeld) {
     std::string result = hash_string_lua("keyHeld(\"JUMP\")");
     std::string resulting_integer = result.substr(8, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-1);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 1);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_keyPressed){
+TEST_F(lua_backend_test, test_hash_string_keyPressed) {
     std::string result = hash_string_lua("keyPressed(\"JUMP\")");
     std::string resulting_integer = result.substr(11, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-1);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 1);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_keyReleased){
+TEST_F(lua_backend_test, test_hash_string_keyReleased) {
     std::string result = hash_string_lua("keyReleased(\"JUMP\")");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-1);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 1);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_hash_string_setClickKey){
+TEST_F(lua_backend_test, test_hash_string_setClickKey) {
     std::string result = hash_string_lua("setClickKey(\"MOUSE1\")");
     std::string resulting_integer = result.substr(12, std::string::npos);
-    resulting_integer.erase(resulting_integer.size()-1);
-    try{
+    resulting_integer.erase(resulting_integer.size() - 1);
+    try {
         std::stoull(resulting_integer);
-    }catch(const std::invalid_argument& e) {
-        (void)e;
+    } catch (const std::invalid_argument &e) {
+        (void) e;
         FAIL();
-    }catch (const std::out_of_range& e){
-        (void)e;
+    } catch (const std::out_of_range &e) {
+        (void) e;
         FAIL();
     }
 }
 
-TEST_F(lua_backend_test, test_run_simple_script){
+TEST_F(lua_backend_test, test_run_simple_script) {
     ::testing::internal::CaptureStdout();
     ASSERT_EQ(0, test_subject.run_file("lua_scripts/test_script_simple.lua"));
     ASSERT_EQ("4\n", testing::internal::GetCapturedStdout());
 }
 
-TEST_F(lua_backend_test, test_fail_on_broken_script){
+TEST_F(lua_backend_test, test_fail_on_broken_script) {
     ::testing::FLAGS_gtest_death_test_style = "threadsafe";
 #ifdef _MSC_VER
     //Exit code 3 on WINDOWS
@@ -272,7 +272,7 @@ TEST_F(lua_backend_test, test_fail_on_broken_script){
 #endif
 }
 
-TEST_F(lua_backend_test, test_call_function_setFullscreenLua){
+TEST_F(lua_backend_test, test_call_function_setFullscreenLua) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_FULLSCREEN, &subscriber1);
@@ -282,24 +282,24 @@ TEST_F(lua_backend_test, test_call_function_setFullscreenLua){
 
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_FULLSCREEN, result->msg_name);
     ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_hashString){
+TEST_F(lua_backend_test, test_call_function_hashString) {
     //Set up
     std::string test_string = "TEST_STRING";
     size_t expected = ST::hash_string(test_string);
 
     //Test
-    test_subject.run_script("return hashString(\"" + test_string +"\")");
+    test_subject.run_script("return hashString(\"" + test_string + "\")");
     ASSERT_EQ(expected, lua_tointeger(get_lua_state(), -1));
 }
 
-TEST_F(lua_backend_test, test_call_function_delay){
+TEST_F(lua_backend_test, test_call_function_delay) {
     //Set up
     timer test_timer;
     double runtime = 500;
@@ -309,10 +309,10 @@ TEST_F(lua_backend_test, test_call_function_delay){
     test_subject.run_script("delay(" + std::to_string(runtime) + ")");
     double end_time = test_timer.time_since_start();
 
-    ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time-start_time), 250);
+    ASSERT_NEAR(runtime, static_cast<uint32_t>(end_time - start_time), 250);
 }
 
-TEST_F(lua_backend_test, test_call_function_setVsyncLua){
+TEST_F(lua_backend_test, test_call_function_setVsyncLua) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_VSYNC, &subscriber1);
@@ -321,7 +321,7 @@ TEST_F(lua_backend_test, test_call_function_setVsyncLua){
     test_subject.run_script("setVsyncLua(true)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_VSYNC, result->msg_name);
@@ -329,7 +329,7 @@ TEST_F(lua_backend_test, test_call_function_setVsyncLua){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_startLevelLua){
+TEST_F(lua_backend_test, test_call_function_startLevelLua) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(START_LEVEL, &subscriber1);
@@ -339,14 +339,14 @@ TEST_F(lua_backend_test, test_call_function_startLevelLua){
     test_subject.run_script("startLevelLua(\"" + level_name + "\")");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(START_LEVEL, result->msg_name);
-    ASSERT_EQ(level_name, *static_cast<std::string*>(result->get_data()));
+    ASSERT_EQ(level_name, *static_cast<std::string *>(result->get_data()));
 }
 
-TEST_F(lua_backend_test, test_call_function_loadLevel){
+TEST_F(lua_backend_test, test_call_function_loadLevel) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(LOAD_LEVEL, &subscriber1);
@@ -356,14 +356,14 @@ TEST_F(lua_backend_test, test_call_function_loadLevel){
     test_subject.run_script("loadLevel(\"" + level_name + "\")");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(LOAD_LEVEL, result->msg_name);
-    ASSERT_EQ(level_name, *static_cast<std::string*>(result->get_data()));
+    ASSERT_EQ(level_name, *static_cast<std::string *>(result->get_data()));
 }
 
-TEST_F(lua_backend_test, test_call_function_showMouseCursor){
+TEST_F(lua_backend_test, test_call_function_showMouseCursor) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SHOW_MOUSE, &subscriber1);
@@ -372,14 +372,14 @@ TEST_F(lua_backend_test, test_call_function_showMouseCursor){
     test_subject.run_script("showMouseCursor()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SHOW_MOUSE, result->msg_name);
     ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
+TEST_F(lua_backend_test, test_call_function_hideMouseCursor) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SHOW_MOUSE, &subscriber1);
@@ -388,7 +388,7 @@ TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
     test_subject.run_script("hideMouseCursor()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SHOW_MOUSE, result->msg_name);
@@ -396,7 +396,7 @@ TEST_F(lua_backend_test, test_call_function_hideMouseCursor){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_showFps){
+TEST_F(lua_backend_test, test_call_function_showFps) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SHOW_FPS, &subscriber1);
@@ -405,14 +405,14 @@ TEST_F(lua_backend_test, test_call_function_showFps){
     test_subject.run_script("showFps(true)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SHOW_FPS, result->msg_name);
     ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_showMetrics){
+TEST_F(lua_backend_test, test_call_function_showMetrics) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SHOW_METRICS, &subscriber1);
@@ -421,7 +421,7 @@ TEST_F(lua_backend_test, test_call_function_showMetrics){
     test_subject.run_script("showMetrics(true)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SHOW_METRICS, result->msg_name);
@@ -429,7 +429,7 @@ TEST_F(lua_backend_test, test_call_function_showMetrics){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_endGame){
+TEST_F(lua_backend_test, test_call_function_endGame) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(END_GAME, &subscriber1);
@@ -438,14 +438,14 @@ TEST_F(lua_backend_test, test_call_function_endGame){
     test_subject.run_script("endGame()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(END_GAME, result->msg_name);
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_setLevelFloor){
+TEST_F(lua_backend_test, test_call_function_setLevelFloor) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_FLOOR, &subscriber1);
@@ -454,14 +454,14 @@ TEST_F(lua_backend_test, test_call_function_setLevelFloor){
     test_subject.run_script("setLevelFloor(500)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_FLOOR, result->msg_name);
     ASSERT_EQ(500, static_cast<int32_t>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_unloadLevel){
+TEST_F(lua_backend_test, test_call_function_unloadLevel) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(UNLOAD_LEVEL, &subscriber1);
@@ -471,14 +471,14 @@ TEST_F(lua_backend_test, test_call_function_unloadLevel){
     test_subject.run_script("unloadLevel(\"" + level_name + "\")");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(UNLOAD_LEVEL, result->msg_name);
-    ASSERT_EQ(level_name, *static_cast<std::string*>(result->get_data()));
+    ASSERT_EQ(level_name, *static_cast<std::string *>(result->get_data()));
 }
 
-TEST_F(lua_backend_test, test_call_function_setGravity){
+TEST_F(lua_backend_test, test_call_function_setGravity) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_GRAVITY, &subscriber1);
@@ -487,14 +487,14 @@ TEST_F(lua_backend_test, test_call_function_setGravity){
     test_subject.run_script("setGravity(12)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_GRAVITY, result->msg_name);
     ASSERT_EQ(12, static_cast<uint8_t>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_getGravity){
+TEST_F(lua_backend_test, test_call_function_getGravity) {
     //Set up
     gGame_managerLua->gravity = 11;
 
@@ -508,7 +508,7 @@ TEST_F(lua_backend_test, test_call_function_getGravity){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_pausePhysics){
+TEST_F(lua_backend_test, test_call_function_pausePhysics) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(PAUSE_PHYSICS, &subscriber1);
@@ -517,14 +517,14 @@ TEST_F(lua_backend_test, test_call_function_pausePhysics){
     test_subject.run_script("pausePhysics()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(PAUSE_PHYSICS, result->msg_name);
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_unpausePhysics){
+TEST_F(lua_backend_test, test_call_function_unpausePhysics) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(UNPAUSE_PHYSICS, &subscriber1);
@@ -533,14 +533,14 @@ TEST_F(lua_backend_test, test_call_function_unpausePhysics){
     test_subject.run_script("unpausePhysics()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(UNPAUSE_PHYSICS, result->msg_name);
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_playSound){
+TEST_F(lua_backend_test, test_call_function_playSound) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(PLAY_SOUND, &subscriber1);
@@ -551,7 +551,7 @@ TEST_F(lua_backend_test, test_call_function_playSound){
     test_subject.run_script("playSound(\"" + test_string + "\", 100, 3)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
     ASSERT_TRUE(result);
     ASSERT_EQ(PLAY_SOUND, result->msg_name);
 
@@ -563,7 +563,7 @@ TEST_F(lua_backend_test, test_call_function_playSound){
     ASSERT_EQ(3, (data >> 24) & 0x000000ff);
 }
 
-TEST_F(lua_backend_test, test_call_function_playMusic){
+TEST_F(lua_backend_test, test_call_function_playMusic) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(PLAY_MUSIC, &subscriber1);
@@ -574,7 +574,7 @@ TEST_F(lua_backend_test, test_call_function_playMusic){
     test_subject.run_script("playMusic(\"" + test_string + "\", 128, 2)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
     ASSERT_TRUE(result);
     ASSERT_EQ(PLAY_MUSIC, result->msg_name);
 
@@ -585,7 +585,7 @@ TEST_F(lua_backend_test, test_call_function_playMusic){
     ASSERT_EQ(2, (data >> 24) & 0x000000ff);
 }
 
-TEST_F(lua_backend_test, test_call_function_stopMusic){
+TEST_F(lua_backend_test, test_call_function_stopMusic) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(STOP_MUSIC, &subscriber1);
@@ -594,14 +594,14 @@ TEST_F(lua_backend_test, test_call_function_stopMusic){
     test_subject.run_script("stopMusic()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(STOP_MUSIC, result->msg_name);
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_setAudioEnabledLua){
+TEST_F(lua_backend_test, test_call_function_setAudioEnabledLua) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_AUDIO_ENABLED, &subscriber1);
@@ -610,14 +610,14 @@ TEST_F(lua_backend_test, test_call_function_setAudioEnabledLua){
     test_subject.run_script("setAudioEnabledLua(true)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_AUDIO_ENABLED, result->msg_name);
     ASSERT_TRUE(static_cast<bool>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_stopAllSounds){
+TEST_F(lua_backend_test, test_call_function_stopAllSounds) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(STOP_ALL_SOUNDS, &subscriber1);
@@ -626,14 +626,14 @@ TEST_F(lua_backend_test, test_call_function_stopAllSounds){
     test_subject.run_script("stopAllSounds()");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(STOP_ALL_SOUNDS, result->msg_name);
     ASSERT_FALSE(result->get_data());
 }
 
-TEST_F(lua_backend_test, test_call_function_setMusicVolume){
+TEST_F(lua_backend_test, test_call_function_setMusicVolume) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_MUSIC_VOLUME, &subscriber1);
@@ -642,14 +642,14 @@ TEST_F(lua_backend_test, test_call_function_setMusicVolume){
     test_subject.run_script("setMusicVolume(50)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_MUSIC_VOLUME, result->msg_name);
     ASSERT_EQ(50, static_cast<uint8_t>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
+TEST_F(lua_backend_test, test_call_function_setSoundsVolume) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_SOUNDS_VOLUME, &subscriber1);
@@ -658,7 +658,7 @@ TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
     test_subject.run_script("setSoundsVolume(50)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_SOUNDS_VOLUME, result->msg_name);
@@ -666,38 +666,38 @@ TEST_F(lua_backend_test, test_call_function_setSoundsVolume){
 }
 
 TEST_F(lua_backend_test, test_call_function_loadAsset) {
-	//Set up
-	subscriber subscriber1;
-	msg_bus->subscribe(LOAD_ASSET, &subscriber1);
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(LOAD_ASSET, &subscriber1);
 
-	//Test
-	test_subject.run_script("loadAsset(\"path/to/asset.webp\")");
+    //Test
+    test_subject.run_script("loadAsset(\"path/to/asset.webp\")");
 
-	//Check result - expect to see a message with appropriate content
-	message* result = subscriber1.get_next_message();
+    //Check result - expect to see a message with appropriate content
+    message *result = subscriber1.get_next_message();
 
-	ASSERT_TRUE(result);
-	ASSERT_EQ(LOAD_ASSET, result->msg_name);
-	ASSERT_EQ("path/to/asset.webp", *static_cast<std::string*>(result->get_data()));
+    ASSERT_TRUE(result);
+    ASSERT_EQ(LOAD_ASSET, result->msg_name);
+    ASSERT_EQ("path/to/asset.webp", *static_cast<std::string *>(result->get_data()));
 }
 
 TEST_F(lua_backend_test, test_call_function_unloadAsset) {
-	//Set up
-	subscriber subscriber1;
-	msg_bus->subscribe(UNLOAD_ASSET, &subscriber1);
+    //Set up
+    subscriber subscriber1;
+    msg_bus->subscribe(UNLOAD_ASSET, &subscriber1);
 
-	//Test
-	test_subject.run_script("unloadAsset(\"path/to/asset.webp\")");
+    //Test
+    test_subject.run_script("unloadAsset(\"path/to/asset.webp\")");
 
-	//Check result - expect to see a message with appropriate content
-	message* result = subscriber1.get_next_message();
+    //Check result - expect to see a message with appropriate content
+    message *result = subscriber1.get_next_message();
 
-	ASSERT_TRUE(result);
-	ASSERT_EQ(UNLOAD_ASSET, result->msg_name);
-	ASSERT_EQ("path/to/asset.webp", *static_cast<std::string*>(result->get_data()));
+    ASSERT_TRUE(result);
+    ASSERT_EQ(UNLOAD_ASSET, result->msg_name);
+    ASSERT_EQ("path/to/asset.webp", *static_cast<std::string *>(result->get_data()));
 }
 
-TEST_F(lua_backend_test, test_call_function_setDarkness){
+TEST_F(lua_backend_test, test_call_function_setDarkness) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_DARKNESS, &subscriber1);
@@ -706,14 +706,14 @@ TEST_F(lua_backend_test, test_call_function_setDarkness){
     test_subject.run_script("setDarkness(250)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_DARKNESS, result->msg_name);
     ASSERT_EQ(250, static_cast<uint8_t>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_enableLighting){
+TEST_F(lua_backend_test, test_call_function_enableLighting) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(ENABLE_LIGHTING, &subscriber1);
@@ -722,14 +722,14 @@ TEST_F(lua_backend_test, test_call_function_enableLighting){
     test_subject.run_script("enableLighting(false)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(ENABLE_LIGHTING, result->msg_name);
     ASSERT_FALSE(static_cast<bool>(result->base_data0));
 }
 
-TEST_F(lua_backend_test, test_call_function_getFullscreenStatus){
+TEST_F(lua_backend_test, test_call_function_getFullscreenStatus) {
     game_mngr->fullscreen_status = false;
     test_subject.run_script("return getFullscreenStatus()");
 
@@ -737,7 +737,7 @@ TEST_F(lua_backend_test, test_call_function_getFullscreenStatus){
     ASSERT_FALSE(lua_toboolean(get_lua_state(), -1));
 }
 
-TEST_F(lua_backend_test, test_call_function_use){
+TEST_F(lua_backend_test, test_call_function_use) {
     //Set up
     ::testing::internal::CaptureStdout();
 
@@ -746,17 +746,17 @@ TEST_F(lua_backend_test, test_call_function_use){
     ASSERT_EQ("4\n", testing::internal::GetCapturedStdout());
 }
 
-TEST_F(lua_backend_test, test_call_function_setBackground){
+TEST_F(lua_backend_test, test_call_function_setBackground) {
     test_subject.run_script("setBackground(\"some_bg.webp\")");
     ASSERT_EQ(2, game_mngr->get_level_calls);
 }
 
-TEST_F(lua_backend_test, test_call_function_setBackgroundColor){
+TEST_F(lua_backend_test, test_call_function_setBackgroundColor) {
     test_subject.run_script("setBackgroundColor(255, 255, 255, 255)");
     ASSERT_EQ(1, game_mngr->get_level_calls);
 }
 
-TEST_F(lua_backend_test, test_call_function_getVsyncState){
+TEST_F(lua_backend_test, test_call_function_getVsyncState) {
     game_mngr->vsync_flag = true;
     test_subject.run_script("return getVsyncState()");
 
@@ -765,7 +765,7 @@ TEST_F(lua_backend_test, test_call_function_getVsyncState){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_setBrightness){
+TEST_F(lua_backend_test, test_call_function_setBrightness) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_WINDOW_BRIGHTNESS, &subscriber1);
@@ -774,21 +774,21 @@ TEST_F(lua_backend_test, test_call_function_setBrightness){
     test_subject.run_script("setBrightness(250)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_WINDOW_BRIGHTNESS, result->msg_name);
-    ASSERT_EQ(250, *static_cast<float*>(result->get_data()));
+    ASSERT_EQ(250, *static_cast<float *>(result->get_data()));
 }
 
-TEST_F(lua_backend_test, test_call_function_setOverlay){
+TEST_F(lua_backend_test, test_call_function_setOverlay) {
     test_subject.run_script("setOverlay(\"some_bg.webp\", 3)");
     ASSERT_EQ(2, game_mngr->get_level_calls);
     ASSERT_EQ(3, game_mngr->get_level()->overlay_sprite_num);
     ASSERT_EQ(ST::hash_string("some_bg.webp"), game_mngr->get_level()->overlay);
 }
 
-TEST_F(lua_backend_test, test_call_function_getMusicVolume){
+TEST_F(lua_backend_test, test_call_function_getMusicVolume) {
     game_mngr->music_volume_level = 123;
     test_subject.run_script("return getMusicVolume()");
 
@@ -796,7 +796,7 @@ TEST_F(lua_backend_test, test_call_function_getMusicVolume){
     ASSERT_EQ(123, lua_tointeger(get_lua_state(), -1));
 }
 
-TEST_F(lua_backend_test, test_call_function_getSoundsVolume){
+TEST_F(lua_backend_test, test_call_function_getSoundsVolume) {
     game_mngr->sounds_volume_level = 123;
     test_subject.run_script("return getSoundsVolume()");
 
@@ -804,14 +804,14 @@ TEST_F(lua_backend_test, test_call_function_getSoundsVolume){
     ASSERT_EQ(123, lua_tointeger(get_lua_state(), -1));
 }
 
-TEST_F(lua_backend_test, test_call_function_isAudioEnabled){
+TEST_F(lua_backend_test, test_call_function_isAudioEnabled) {
     test_subject.run_script("return isAudioEnabled()");
 
     //Check result
     ASSERT_TRUE(lua_toboolean(get_lua_state(), -1));
 }
 
-TEST_F(lua_backend_test, test_call_function_centerCamera){
+TEST_F(lua_backend_test, test_call_function_centerCamera) {
     test_subject.run_script("centerCamera(5)");  //Test US spelling
     test_subject.run_script("centreCamera(2)");  //Test UK spelling
 
@@ -819,7 +819,7 @@ TEST_F(lua_backend_test, test_call_function_centerCamera){
     ASSERT_EQ(2, game_mngr->center_camera_on_entity_calls);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLevelSize){
+TEST_F(lua_backend_test, test_call_function_setLevelSize) {
     test_subject.run_script("setLevelSize(5000, 5000)");
 
     //Check result
@@ -828,7 +828,7 @@ TEST_F(lua_backend_test, test_call_function_setLevelSize){
     ASSERT_EQ(5000, game_mngr->get_level()->camera.limitY2);
 }
 
-TEST_F(lua_backend_test, test_call_function_getMouseX){
+TEST_F(lua_backend_test, test_call_function_getMouseX) {
     test_subject.run_script("return getMouseX()");
 
     //Check result
@@ -836,68 +836,68 @@ TEST_F(lua_backend_test, test_call_function_getMouseX){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_getMouseY){
+TEST_F(lua_backend_test, test_call_function_getMouseY) {
     test_subject.run_script("return getMouseY()");
 
     //Check result
     ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_leftTrigger){
+TEST_F(lua_backend_test, test_call_function_leftTrigger) {
     test_subject.run_script("return leftTrigger()");
 
     //Check result
     ASSERT_EQ(100, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_rightTrigger){
+TEST_F(lua_backend_test, test_call_function_rightTrigger) {
     test_subject.run_script("return rightTrigger()");
 
     //Check result
     ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_rightStickHorizontal){
+TEST_F(lua_backend_test, test_call_function_rightStickHorizontal) {
     test_subject.run_script("return rightStickHorizontal()");
 
     //Check result
     ASSERT_EQ(400, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_leftStickHorizontal){
+TEST_F(lua_backend_test, test_call_function_leftStickHorizontal) {
     test_subject.run_script("return leftStickHorizontal()");
 
     //Check result
     ASSERT_EQ(100, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_leftStickVertical){
+TEST_F(lua_backend_test, test_call_function_leftStickVertical) {
     test_subject.run_script("return leftStickVertical()");
 
     //Check result
     ASSERT_EQ(200, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_rightStickVertical){
+TEST_F(lua_backend_test, test_call_function_rightStickVertical) {
     test_subject.run_script("return rightStickVertical()");
 
     //Check result
     ASSERT_EQ(300, lua_tointeger(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_controllerRumble){
+TEST_F(lua_backend_test, test_call_function_controllerRumble) {
     subscriber subscriber1;
     msg_bus->subscribe(CONTROLLER_RUMBLE, &subscriber1);
     test_subject.run_script("return controllerRumble(0.7, 1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(CONTROLLER_RUMBLE, result->msg_name);
     ASSERT_FALSE(result->get_data());
 
-    float strength = *reinterpret_cast<float*>(&result->base_data0);
+    float strength = *reinterpret_cast<float *>(&result->base_data0);
     uint16_t duration = result->base_data1;
 
     ASSERT_EQ(0.7f, strength);
@@ -905,13 +905,13 @@ TEST_F(lua_backend_test, test_call_function_controllerRumble){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_setLeftStickHorizontalThreshold){
+TEST_F(lua_backend_test, test_call_function_setLeftStickHorizontalThreshold) {
     subscriber subscriber1;
     msg_bus->subscribe(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, &subscriber1);
     test_subject.run_script("setLeftStickHorizontalThreshold(1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, result->msg_name);
@@ -922,13 +922,13 @@ TEST_F(lua_backend_test, test_call_function_setLeftStickHorizontalThreshold){
     ASSERT_EQ(1000, threshold);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLeftStickVerticalThreshold){
+TEST_F(lua_backend_test, test_call_function_setLeftStickVerticalThreshold) {
     subscriber subscriber1;
     msg_bus->subscribe(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, &subscriber1);
     test_subject.run_script("setLeftStickVerticalThreshold(1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, result->msg_name);
@@ -939,13 +939,13 @@ TEST_F(lua_backend_test, test_call_function_setLeftStickVerticalThreshold){
     ASSERT_EQ(1000, threshold);
 }
 
-TEST_F(lua_backend_test, test_call_function_setRightStickHorizontalThreshold){
+TEST_F(lua_backend_test, test_call_function_setRightStickHorizontalThreshold) {
     subscriber subscriber1;
     msg_bus->subscribe(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, &subscriber1);
     test_subject.run_script("setRightStickHorizontalThreshold(1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, result->msg_name);
@@ -956,13 +956,13 @@ TEST_F(lua_backend_test, test_call_function_setRightStickHorizontalThreshold){
     ASSERT_EQ(1000, threshold);
 }
 
-TEST_F(lua_backend_test, test_call_function_setRightStickVerticalThreshold){
+TEST_F(lua_backend_test, test_call_function_setRightStickVerticalThreshold) {
     subscriber subscriber1;
     msg_bus->subscribe(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, &subscriber1);
     test_subject.run_script("setRightStickVerticalThreshold(1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, result->msg_name);
@@ -973,13 +973,13 @@ TEST_F(lua_backend_test, test_call_function_setRightStickVerticalThreshold){
     ASSERT_EQ(1000, threshold);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLeftTriggerThreshold){
+TEST_F(lua_backend_test, test_call_function_setLeftTriggerThreshold) {
     subscriber subscriber1;
     msg_bus->subscribe(SET_LEFT_TRIGGER_THRESHOLD, &subscriber1);
     test_subject.run_script("setLeftTriggerThreshold(1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_LEFT_TRIGGER_THRESHOLD, result->msg_name);
@@ -990,13 +990,13 @@ TEST_F(lua_backend_test, test_call_function_setLeftTriggerThreshold){
     ASSERT_EQ(1000, threshold);
 }
 
-TEST_F(lua_backend_test, test_call_function_setRightTriggerThreshold){
+TEST_F(lua_backend_test, test_call_function_setRightTriggerThreshold) {
     subscriber subscriber1;
     msg_bus->subscribe(SET_RIGHT_TRIGGER_THRESHOLD, &subscriber1);
     test_subject.run_script("setRightTriggerThreshold(1000)");
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_RIGHT_TRIGGER_THRESHOLD, result->msg_name);
@@ -1007,21 +1007,21 @@ TEST_F(lua_backend_test, test_call_function_setRightTriggerThreshold){
     ASSERT_EQ(1000, threshold);
 }
 
-TEST_F(lua_backend_test, test_call_function_keyHeld){
+TEST_F(lua_backend_test, test_call_function_keyHeld) {
     test_subject.run_script("return keyHeld(\"SOME_KEY\")");
 
     //Check result
     ASSERT_TRUE(lua_toboolean(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_keyPressed){
+TEST_F(lua_backend_test, test_call_function_keyPressed) {
     test_subject.run_script("return keyPressed(\"SOME_KEY\")");
 
     //Check result
     ASSERT_TRUE(lua_toboolean(get_lua_state(), lua_gettop(get_lua_state())));
 }
 
-TEST_F(lua_backend_test, test_call_function_keyReleased){
+TEST_F(lua_backend_test, test_call_function_keyReleased) {
     test_subject.run_script("return keyReleased(\"SOME_KEY\")");
 
     //Check result
@@ -1029,7 +1029,7 @@ TEST_F(lua_backend_test, test_call_function_keyReleased){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_createLight){
+TEST_F(lua_backend_test, test_call_function_createLight) {
     test_subject.run_script("createLight(500, 600, 100, 50, 400)");
 
     //Check results
@@ -1042,7 +1042,7 @@ TEST_F(lua_backend_test, test_call_function_createLight){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLightOriginX){
+TEST_F(lua_backend_test, test_call_function_setLightOriginX) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1059,7 +1059,7 @@ TEST_F(lua_backend_test, test_call_function_setLightOriginX){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLightOriginY){
+TEST_F(lua_backend_test, test_call_function_setLightOriginY) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1076,7 +1076,7 @@ TEST_F(lua_backend_test, test_call_function_setLightOriginY){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_getLightOriginX){
+TEST_F(lua_backend_test, test_call_function_getLightOriginX) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1096,7 +1096,7 @@ TEST_F(lua_backend_test, test_call_function_getLightOriginX){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_getLightOriginY){
+TEST_F(lua_backend_test, test_call_function_getLightOriginY) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1116,7 +1116,7 @@ TEST_F(lua_backend_test, test_call_function_getLightOriginY){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLightIntensity){
+TEST_F(lua_backend_test, test_call_function_setLightIntensity) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1133,7 +1133,7 @@ TEST_F(lua_backend_test, test_call_function_setLightIntensity){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_getLightIntensity){
+TEST_F(lua_backend_test, test_call_function_getLightIntensity) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1153,7 +1153,7 @@ TEST_F(lua_backend_test, test_call_function_getLightIntensity){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_getLightRadius){
+TEST_F(lua_backend_test, test_call_function_getLightRadius) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1173,7 +1173,7 @@ TEST_F(lua_backend_test, test_call_function_getLightRadius){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLightRadius){
+TEST_F(lua_backend_test, test_call_function_setLightRadius) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1190,7 +1190,7 @@ TEST_F(lua_backend_test, test_call_function_setLightRadius){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_getLightBrightness){
+TEST_F(lua_backend_test, test_call_function_getLightBrightness) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1210,7 +1210,7 @@ TEST_F(lua_backend_test, test_call_function_getLightBrightness){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLightBrightness){
+TEST_F(lua_backend_test, test_call_function_setLightBrightness) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1227,7 +1227,7 @@ TEST_F(lua_backend_test, test_call_function_setLightBrightness){
     ASSERT_EQ(300, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_isLightStatic){
+TEST_F(lua_backend_test, test_call_function_isLightStatic) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1247,7 +1247,7 @@ TEST_F(lua_backend_test, test_call_function_isLightStatic){
     ASSERT_EQ(400, game_mngr->get_level()->lights.at(0).brightness);
 }
 
-TEST_F(lua_backend_test, test_call_function_setLightStatic){
+TEST_F(lua_backend_test, test_call_function_setLightStatic) {
     //Set up
     game_mngr->get_level()->lights.emplace_back(500, 600, 100, 50, 400);
 
@@ -1265,7 +1265,7 @@ TEST_F(lua_backend_test, test_call_function_setLightStatic){
     ASSERT_TRUE(game_mngr->get_level()->lights.at(0).is_static);
 }
 
-TEST_F(lua_backend_test, test_call_function_createTextObject){
+TEST_F(lua_backend_test, test_call_function_createTextObject) {
     test_subject.run_script(R"(createTextObject(500, 600, "SOME_TEXT", "SOME_FONT.ttf", 40))");
     //Check results
     ASSERT_EQ(1, game_mngr->get_level_calls);
@@ -1283,10 +1283,10 @@ TEST_F(lua_backend_test, test_call_function_createTextObject){
 }
 
 
-TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
+TEST_F(lua_backend_test, test_call_function_setTextObjectColor) {
     //Set up
-    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-            "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
+    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255, 255, 255, 255},
+                                                               "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
 
     //Test
     test_subject.run_script("setTextObjectColor(0, 100, 110, 120, 130)");
@@ -1306,10 +1306,10 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectColor){
     ASSERT_EQ(130, game_mngr->get_level()->text_objects.at(0).color.a);
 }
 
-TEST_F(lua_backend_test, test_call_function_setTextObjectText){
+TEST_F(lua_backend_test, test_call_function_setTextObjectText) {
     //Set up
-    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
+    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255, 255, 255, 255},
+                                                               "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectText(0, \"NEW_TEXT\")");
 
@@ -1328,10 +1328,10 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectText){
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.a);
 }
 
-TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
+TEST_F(lua_backend_test, test_call_function_setTextObjectFont) {
     //Set up
-    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
+    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255, 255, 255, 255},
+                                                               "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectFont(0, \"NEW_FONT.ttf 40\")");
 
@@ -1350,10 +1350,10 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectFont){
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.a);
 }
 
-TEST_F(lua_backend_test, test_call_function_setTextObjectX){
+TEST_F(lua_backend_test, test_call_function_setTextObjectX) {
     //Set up
     game_mngr->get_level()->text_objects.emplace_back(
-            ST::text(500, 600, {255,255,255,255}, "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
+            ST::text(500, 600, {255, 255, 255, 255}, "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectX(0, 123)");
 
@@ -1372,10 +1372,10 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectX){
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.a);
 }
 
-TEST_F(lua_backend_test, test_call_function_setTextObjectY){
+TEST_F(lua_backend_test, test_call_function_setTextObjectY) {
     //Set up
-    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
+    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255, 255, 255, 255},
+                                                               "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectY(0, 123)");
 
@@ -1394,10 +1394,10 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectY){
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.a);
 }
 
-TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
+TEST_F(lua_backend_test, test_call_function_setTextObjectVisible) {
     //Set up
-    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255,255,255,255},
-                                                                    "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
+    game_mngr->get_level()->text_objects.emplace_back(ST::text(500, 600, {255, 255, 255, 255},
+                                                               "SOME_TEXT", ST::hash_string("SOME_FONT.ttf 40")));
     //Test
     test_subject.run_script("setTextObjectVisible(0, false)");
 
@@ -1416,7 +1416,7 @@ TEST_F(lua_backend_test, test_call_function_setTextObjectVisible){
     ASSERT_EQ(255, game_mngr->get_level()->text_objects.at(0).color.a);
 }
 
-TEST_F(lua_backend_test, test_call_function_createEntity){
+TEST_F(lua_backend_test, test_call_function_createEntity) {
     test_subject.run_script("createEntity(0)");
 
     //Check results
@@ -1444,7 +1444,7 @@ TEST_F(lua_backend_test, test_call_function_createEntity){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityActive){
+TEST_F(lua_backend_test, test_call_function_setEntityActive) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1476,7 +1476,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityActive){
     ASSERT_FALSE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityX){
+TEST_F(lua_backend_test, test_call_function_setEntityX) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1508,7 +1508,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityX){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityY){
+TEST_F(lua_backend_test, test_call_function_setEntityY) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1540,7 +1540,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityY){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityX){
+TEST_F(lua_backend_test, test_call_function_getEntityX) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).x = 500;
@@ -1576,7 +1576,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityX){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityY){
+TEST_F(lua_backend_test, test_call_function_getEntityY) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).y = 500;
@@ -1612,7 +1612,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityY){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityStatic){
+TEST_F(lua_backend_test, test_call_function_setEntityStatic) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1644,7 +1644,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityStatic){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
+TEST_F(lua_backend_test, test_call_function_setEntityVelocityX) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1676,7 +1676,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityX){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
+TEST_F(lua_backend_test, test_call_function_setEntityVelocityY) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1708,7 +1708,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVelocityY){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
+TEST_F(lua_backend_test, test_call_function_getEntityVelocityX) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).velocity_x = 120;
@@ -1744,7 +1744,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityX){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
+TEST_F(lua_backend_test, test_call_function_getEntityVelocityY) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).velocity_y = 120;
@@ -1780,7 +1780,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityVelocityY){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
+TEST_F(lua_backend_test, test_call_function_setEntityTextureScale) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1812,7 +1812,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTextureScale){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityTexture){
+TEST_F(lua_backend_test, test_call_function_setEntityTexture) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1844,7 +1844,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexture){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityTexW){
+TEST_F(lua_backend_test, test_call_function_setEntityTexW) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1876,7 +1876,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexW){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityTexH){
+TEST_F(lua_backend_test, test_call_function_setEntityTexH) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -1908,7 +1908,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityTexH){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityTexW){
+TEST_F(lua_backend_test, test_call_function_getEntityTexW) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).tex_w = 500;
@@ -1944,7 +1944,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexW){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityTexH){
+TEST_F(lua_backend_test, test_call_function_getEntityTexH) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).tex_h = 500;
@@ -1980,7 +1980,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityTexH){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityVisible){
+TEST_F(lua_backend_test, test_call_function_setEntityVisible) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -2012,7 +2012,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityVisible){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox){
+TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -2044,7 +2044,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityCollisionBox){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_entityCollides){
+TEST_F(lua_backend_test, test_call_function_entityCollides) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.emplace_back();
@@ -2108,7 +2108,7 @@ TEST_F(lua_backend_test, test_call_function_entityCollides){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(1).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
+TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -2140,7 +2140,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAffectedByPhysics){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityColX){
+TEST_F(lua_backend_test, test_call_function_getEntityColX) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(0, 0, 500, 500);
@@ -2176,7 +2176,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColX){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityColY){
+TEST_F(lua_backend_test, test_call_function_getEntityColY) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(0, 0, 500, 500);
@@ -2212,7 +2212,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColY){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityColXOffset){
+TEST_F(lua_backend_test, test_call_function_getEntityColXOffset) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(6, 0, 0, 0);
@@ -2248,7 +2248,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColXOffset){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_getEntityColYOffset){
+TEST_F(lua_backend_test, test_call_function_getEntityColYOffset) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
     game_mngr->get_level()->entities.at(0).set_collision_box(0, 6, 0, 0);
@@ -2284,7 +2284,7 @@ TEST_F(lua_backend_test, test_call_function_getEntityColYOffset){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityAnimation){
+TEST_F(lua_backend_test, test_call_function_setEntityAnimation) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -2316,7 +2316,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimation){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum){
+TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -2348,7 +2348,7 @@ TEST_F(lua_backend_test, test_call_function_setEntityAnimationNum){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum){
+TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum) {
     //Set up
     game_mngr->get_level()->entities.emplace_back();
 
@@ -2380,7 +2380,7 @@ TEST_F(lua_backend_test, test_call_function_setEntitySpriteNum){
     ASSERT_TRUE(game_mngr->get_level()->entities.at(0).is_active());
 }
 
-TEST_F(lua_backend_test, test_call_function_setInternalResolutionLua){
+TEST_F(lua_backend_test, test_call_function_setInternalResolutionLua) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_INTERNAL_RESOLUTION, &subscriber1);
@@ -2390,7 +2390,7 @@ TEST_F(lua_backend_test, test_call_function_setInternalResolutionLua){
 
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_INTERNAL_RESOLUTION, result->msg_name);
@@ -2400,7 +2400,7 @@ TEST_F(lua_backend_test, test_call_function_setInternalResolutionLua){
     ASSERT_EQ((data >> 16U) & 0x0000ffffU, 2160);
 }
 
-TEST_F(lua_backend_test, test_call_function_setWindowResolutionLua){
+TEST_F(lua_backend_test, test_call_function_setWindowResolutionLua) {
     //Set up
     subscriber subscriber1;
     msg_bus->subscribe(SET_WINDOW_RESOLUTION, &subscriber1);
@@ -2410,7 +2410,7 @@ TEST_F(lua_backend_test, test_call_function_setWindowResolutionLua){
 
 
     //Check result - expect to see a message with appropriate content
-    message* result = subscriber1.get_next_message();
+    message *result = subscriber1.get_next_message();
 
     ASSERT_TRUE(result);
     ASSERT_EQ(SET_WINDOW_RESOLUTION, result->msg_name);
@@ -2420,7 +2420,7 @@ TEST_F(lua_backend_test, test_call_function_setWindowResolutionLua){
     ASSERT_EQ((data >> 16U) & 0x0000ffffU, 2160);
 }
 
-TEST_F(lua_backend_test, test_call_function_getInternalResolutionLua){
+TEST_F(lua_backend_test, test_call_function_getInternalResolutionLua) {
     //Test
     test_subject.run_script("return getInternalResolution()");
 
@@ -2429,7 +2429,7 @@ TEST_F(lua_backend_test, test_call_function_getInternalResolutionLua){
     ASSERT_EQ(1920, lua_tointeger(get_lua_state(), -2));
 }
 
-TEST_F(lua_backend_test, test_call_function_getWindowResolutionLua){
+TEST_F(lua_backend_test, test_call_function_getWindowResolutionLua) {
     //Test
     test_subject.run_script("return getWindowResolution()");
 

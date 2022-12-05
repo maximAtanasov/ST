@@ -20,7 +20,9 @@ namespace ST {
     /**
      * Enum representing the different log types.
      */
-    enum class log_type : uint8_t {ERROR = 0x01, SUCCESS = 0x02, INFO = 0x04};
+    enum class log_type : uint8_t {
+        ERROR = 0x01, SUCCESS = 0x02, INFO = 0x04
+    };
 
     /**
      *
@@ -28,7 +30,7 @@ namespace ST {
      * @param b A log_type enum.
      * @return The result of binary OR performed on <b>a</b> and <b>b</b>
      */
-    inline log_type operator | (log_type a, log_type b){
+    inline log_type operator|(log_type a, log_type b) {
         return static_cast<log_type>(static_cast<uint8_t>(a) | static_cast<uint8_t>(b));
     }
 
@@ -41,7 +43,7 @@ namespace ST {
         ST::log_type type;
         std::string text;
 
-        console_log(log_type type, const std::string &text){
+        console_log(log_type type, const std::string &text) {
             this->type = type;
             this->text = text;
         }

@@ -17,7 +17,7 @@
 #define chdir _chdir
 #endif
 
-TEST(loaders_tests, test_get_file_extension){
+TEST(loaders_tests, test_get_file_extension) {
     std::string test_wav = "sound.wav";
     std::string test_mp3 = "music.mp3";
     std::string test_ogg = "music.ogg";
@@ -34,7 +34,7 @@ TEST(loaders_tests, test_get_file_extension){
     EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension("no_extension"));
 }
 
-TEST(loaders_tests, test_get_file_extension_unknown){
+TEST(loaders_tests, test_get_file_extension_unknown) {
     std::string test_wav = "soundwav";
     std::string test_mp3 = "musicmp3";
     std::string test_ogg = "musicogg";
@@ -52,16 +52,17 @@ TEST(loaders_tests, test_get_file_extension_unknown){
     EXPECT_EQ(ST::asset_file_type::UNKNOWN, ST::get_file_extension("no_extension"));
 }
 
-TEST(loaders_tests, test_pack_to_binary){
+TEST(loaders_tests, test_pack_to_binary) {
 
     //Set up
     initialize_SDL();
-    std::vector<std::string> filenames = {"test_image_1.png", "test_image_3.webp", "test_sound_1.wav", "test_music_1.ogg"};
+    std::vector<std::string> filenames = {"test_image_1.png", "test_image_3.webp", "test_sound_1.wav",
+                                          "test_music_1.ogg"};
     std::string binary_name = "result_binary";
     ST::pack_to_binary(binary_name, filenames);
 
     long expected_size = get_file_size(filenames.at(0)) + get_file_size(filenames.at(1))
-            + get_file_size(filenames.at(2)) + get_file_size(filenames.at(3));
+                         + get_file_size(filenames.at(2)) + get_file_size(filenames.at(3));
     long binary_size = get_file_size(binary_name);
 
     //Tear Down
@@ -71,7 +72,7 @@ TEST(loaders_tests, test_pack_to_binary){
     ASSERT_NEAR(expected_size, binary_size, 200);
 }
 
-TEST(loaders_tests, test_unpack_binary_to_disk){
+TEST(loaders_tests, test_unpack_binary_to_disk) {
     //Set up
     initialize_SDL();
     ASSERT_EQ(0, chdir("unpack_test/"));
@@ -79,8 +80,8 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
 
     //Test
     ASSERT_EQ(0, ST::unpack_binary_to_disk(binary_name));
-    Mix_Music* test_music_1 = Mix_LoadMUS("test_music_1.ogg");
-    Mix_Music* test_music_2 = Mix_LoadMUS("test_music_1.ogg");
+    Mix_Music *test_music_1 = Mix_LoadMUS("test_music_1.ogg");
+    Mix_Music *test_music_2 = Mix_LoadMUS("test_music_1.ogg");
     ASSERT_TRUE(test_music_1);
     ASSERT_TRUE(test_music_2);
     ASSERT_TRUE(Mix_LoadWAV("test_sound_1.wav"));
@@ -104,14 +105,14 @@ TEST(loaders_tests, test_unpack_binary_to_disk){
 }
 
 
-TEST(loaders_tests, test_unpack_binary){
+TEST(loaders_tests, test_unpack_binary) {
     //Set up
     initialize_SDL();
     ASSERT_EQ(0, chdir("unpack_test/"));
     std::string binary_name = "test_binary_complex.bin";
 
     //Test
-    ST::assets_named* result = ST::unpack_binary(binary_name);
+    ST::assets_named *result = ST::unpack_binary(binary_name);
     ASSERT_TRUE(result);
     ASSERT_EQ(2, result->music.size());
     ASSERT_EQ(2, result->chunks.size());
@@ -137,15 +138,17 @@ TEST(loaders_tests, test_unpack_binary){
     ASSERT_EQ(0, chdir("../"));
 }
 
-TEST(loaders_tests, test_ignore_identical_file_when_packing_to_binary){
+TEST(loaders_tests, test_ignore_identical_file_when_packing_to_binary) {
 
     //Set up
     initialize_SDL();
-    std::vector<std::string> filenames = {"test_image_1.png", "test_image_1.png", "test_sound_1.wav", "test_music_1.ogg"};
+    std::vector<std::string> filenames = {"test_image_1.png", "test_image_1.png", "test_sound_1.wav",
+                                          "test_music_1.ogg"};
     std::string binary_name = "result_binary";
     ST::pack_to_binary(binary_name, filenames);
 
-    long expected_size = get_file_size(filenames.at(0)) + get_file_size(filenames.at(2)) + get_file_size(filenames.at(3));
+    long expected_size =
+            get_file_size(filenames.at(0)) + get_file_size(filenames.at(2)) + get_file_size(filenames.at(3));
     long binary_size = get_file_size(binary_name);
 
     //Tear Down
@@ -155,7 +158,7 @@ TEST(loaders_tests, test_ignore_identical_file_when_packing_to_binary){
     ASSERT_NEAR(expected_size, binary_size, 200);
 }
 
-TEST(loaders_tests, test_can_add_to_existing_binary){
+TEST(loaders_tests, test_can_add_to_existing_binary) {
 
     //Set up========================================
 
@@ -182,7 +185,7 @@ TEST(loaders_tests, test_can_add_to_existing_binary){
     ASSERT_NEAR(expected_size, binary_size, 200);
 
     //Check that everything is still there + the new assets
-    ST::assets_named* result = ST::unpack_binary(result_binary_name);
+    ST::assets_named *result = ST::unpack_binary(result_binary_name);
     ASSERT_TRUE(result);
     ASSERT_EQ(2, result->music.size());
     ASSERT_EQ(2, result->chunks.size());
@@ -233,7 +236,7 @@ TEST(loaders_tests, test_exit_when_duplicate_name_found_in_exisitng_library) {
     ASSERT_EQ(-2, ST::add_to_binary(result_binary_name, filenames));
 
     //Check that nothing was modified
-    ST::assets_named* result = ST::unpack_binary(result_binary_name);
+    ST::assets_named *result = ST::unpack_binary(result_binary_name);
     ASSERT_TRUE(result);
     ASSERT_EQ(2, result->music.size());
     ASSERT_EQ(2, result->chunks.size());
@@ -280,7 +283,7 @@ TEST(loaders_tests, test_exit_when_duplicate_name_in_different_directory_found_i
     ASSERT_EQ(-2, ST::add_to_binary(result_binary_name, filenames));
 
     //Check that nothing was modified
-    ST::assets_named* result = ST::unpack_binary(result_binary_name);
+    ST::assets_named *result = ST::unpack_binary(result_binary_name);
     ASSERT_TRUE(result);
     ASSERT_EQ(2, result->music.size());
     ASSERT_EQ(2, result->chunks.size());

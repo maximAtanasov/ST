@@ -16,12 +16,12 @@
 namespace ST::renderer_sdl {
 
     class texture {
-        public:
-            uint16_t height;
-            uint16_t width;
-            uint16_t atlas_h_offset;
-            uint16_t atlas_v_offset;
-            SDL_Texture* atlas;
+    public:
+        uint16_t height;
+        uint16_t width;
+        uint16_t atlas_h_offset;
+        uint16_t atlas_v_offset;
+        SDL_Texture *atlas;
     };
 }
 

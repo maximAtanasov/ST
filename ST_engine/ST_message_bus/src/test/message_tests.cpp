@@ -18,8 +18,8 @@ TEST(message_test, test_message_creation) {
 
 TEST(message_test, test_message_get_data) {
     auto test_subject = new message(1, make_data<bool>(true));
-    ASSERT_TRUE(*static_cast<bool*>(test_subject->get_data()));
-    delete(test_subject);
+    ASSERT_TRUE(*static_cast<bool *>(test_subject->get_data()));
+    delete (test_subject);
 }
 
 TEST(message_test, test_message_get_base_data) {
@@ -31,7 +31,7 @@ TEST(message_test, test_message_get_base_data) {
     ASSERT_EQ(30, test_subject->base_data0);
     ASSERT_EQ(100, test_subject->base_data1);
     ASSERT_EQ(150, test_subject->base_data2);
-    delete(test_subject);
+    delete (test_subject);
 }
 
 TEST(message_test, test_message_get_data_and_base_data) {
@@ -39,12 +39,12 @@ TEST(message_test, test_message_get_data_and_base_data) {
     test_subject->base_data1 = 100;
     test_subject->base_data2 = 150;
 
-    ASSERT_TRUE(*static_cast<bool*>(test_subject->get_data()));
+    ASSERT_TRUE(*static_cast<bool *>(test_subject->get_data()));
     ASSERT_EQ(30, test_subject->base_data0);
     ASSERT_EQ(100, test_subject->base_data1);
     ASSERT_EQ(150, test_subject->base_data2);
 
-    delete(test_subject);
+    delete (test_subject);
 }
 
 TEST(message_test, test_message_copy) {
@@ -61,8 +61,8 @@ TEST(message_test, test_message_copy) {
     ASSERT_EQ(test_subject->base_data1, copy->base_data1);
     ASSERT_EQ(test_subject->base_data2, copy->base_data2);
 
-    delete(test_subject);
-    delete(copy);
+    delete (test_subject);
+    delete (copy);
 }
 
 int main(int argc, char **argv) {
