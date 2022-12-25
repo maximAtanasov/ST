@@ -1,7 +1,7 @@
 var searchData=
 [
   ['game_5fis_5frunning_29',['game_is_running',['../classgame__manager.html#a8014f6dbc636d6c22ced54689a2094a8',1,'game_manager']]],
-  ['game_5fmanager_30',['game_manager',['../classgame__manager.html',1,'game_manager'],['../classgame__manager.html#ac43596fd3e5f8f28060137d79eb3121d',1,'game_manager::game_manager()']]],
+  ['game_5fmanager_30',['game_manager',['../classgame__manager.html#ac43596fd3e5f8f28060137d79eb3121d',1,'game_manager::game_manager()'],['../classgame__manager.html',1,'game_manager']]],
   ['get_5factive_5flevel_31',['get_active_level',['../classgame__manager.html#aceb0f658310da263ad02f14ef7d40044',1,'game_manager']]],
   ['get_5fcol_5fx_32',['get_col_x',['../classST_1_1entity.html#abf997873bac48cc78bc0697677107edb',1,'ST::entity']]],
   ['get_5fcol_5fx_5foffset_33',['get_col_x_offset',['../classST_1_1entity.html#a2bc0c832ca0b4eed917f511e37b0705d',1,'ST::entity']]],
