@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     gConsole.post_init();
 
     //time keeping variables
-    const double LOGIC_UPDATE_RATE = 13;
+    const double LOGIC_UPDATE_RATE = 16.66666;
     double total_time = 0;
     double current_time = gTimer.time_since_start();
     double frame_time;
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
         new_time = gTimer.time_since_start();
         frame_time = new_time - current_time;
         current_time = new_time;
-        total_time += frame_time;
+        total_time += frame_time;.
 
         gMetrics.reset_accumulators();
 
@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
             gAudio_manager.update();
         }
         gConsole.update();
-        gFps.update(current_time, 1000 / frame_time);
+        gFps.update(current_time, frame_time);
 
         gMetrics.frame_time = frame_time;
 

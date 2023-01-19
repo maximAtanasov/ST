@@ -1668,7 +1668,6 @@ extern "C" int keyReleasedLua(lua_State *L) {
     return 1;
 }
 
-
 extern "C" int setLeftStickVerticalThresholdLua(lua_State *L) {
     auto arg = static_cast<uint16_t>(lua_tointeger(L, 1));
     auto msg = new message(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, static_cast<uint32_t>(arg));
@@ -1781,7 +1780,6 @@ extern "C" int isAudioEnabledLua(lua_State *L) {
     lua_pushboolean(L, gGame_managerLua->audio_enabled);
     return 1;
 }
-
 
 /**
  * Sets the current music volume.

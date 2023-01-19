@@ -33,6 +33,10 @@ function newTextObject(self, x, y, fontSize, font)
     self.__index = self
     if(x ~= nil and y ~= nil) then
         o.ID = newTextID()
+		o.font = font
+		o.fontSize = fontSize
+		o.x = x
+		o.y = y
 		createTextObject(x, y, o.text, font, fontSize);
     end
     return o
@@ -52,7 +56,6 @@ function textObject:setFont(font)
 	setTextObjectFont(self.ID, font.." "..self.fontSize)
 end
 
-
 function textObject:setX(x)
 	self.x = x;
 	setTextObjectX(self.ID, x)
@@ -65,7 +68,7 @@ end
 
 function textObject:setFontSize(size)
 	self.fontSize = size;
-	setTextObjectFont(self.ID, font.." "..self.fontSize)
+	setTextObjectFont(self.ID, self.font.." "..self.fontSize)
 end
 
 function textObject:setTextColor(r, g, b, a)

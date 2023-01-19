@@ -15,7 +15,7 @@
  * @param frame_time The current frame time.
  */
 void fps::update(double time, double frame_time) {
-    average[counter++] = frame_time; //TODO: Fix
+    average[counter++] = 1000 / frame_time; //TODO: Fix:
     counter = (counter != 16) * counter;
     new_time = time;
     if (new_time - old_time > 64) {

@@ -66,7 +66,7 @@ namespace ST {
         uint8_t animation_num = 1;
 
         //2 bytes
-        uint16_t texture = 65535;
+        uint16_t texture = 0xffff;
 
         entity() {
             toggles |= (1U << 0U);
