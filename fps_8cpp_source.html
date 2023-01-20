@@ -82,7 +82,7 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;main/fps.hpp&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">   17</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">fps::update</a>(<span class="keywordtype">double</span> time, <span class="keywordtype">double</span> frame_time) {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    average[counter++] = frame_time; <span class="comment">//TODO: Fix</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    average[counter++] = 1000 / frame_time; <span class="comment">//TODO: Fix:</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    counter = (counter != 16) * counter;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    new_time = time;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordflow">if</span> (new_time - old_time &gt; 64) {</div>

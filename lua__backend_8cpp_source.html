@@ -1192,156 +1192,154 @@ $(function() {
 <div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160;}</div>
 <div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160; </div>
-<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160; </div>
-<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setLeftStickVerticalThresholdLua(lua_State *L) {</div>
-<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
-<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
-<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160;}</div>
-<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160; </div>
-<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setLeftStickHorizontalThresholdLua(lua_State *L) {</div>
-<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160;}</div>
-<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160; </div>
-<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setRightStickVerticalThresholdLua(lua_State *L) {</div>
-<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
-<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
-<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160;}</div>
-<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160; </div>
-<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setRightStickHorizontalThresholdLua(lua_State *L) {</div>
-<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
-<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
-<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;}</div>
-<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160; </div>
-<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setRightTriggerThresholdLua(lua_State *L) {</div>
-<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_RIGHT_TRIGGER_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
-<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
-<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;}</div>
-<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160; </div>
-<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setLeftTriggerThresholdLua(lua_State *L) {</div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_LEFT_TRIGGER_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160;}</div>
+<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setLeftStickVerticalThresholdLua(lua_State *L) {</div>
+<div class="line"><a name="l01672"></a><span class="lineno"> 1672</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_LEFT_JOYSTICK_VERTICAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
+<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
+<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;}</div>
+<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160; </div>
+<div class="line"><a name="l01678"></a><span class="lineno"> 1678</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setLeftStickHorizontalThresholdLua(lua_State *L) {</div>
+<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_LEFT_JOYSTICK_HORIZONTAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160;}</div>
+<div class="line"><a name="l01684"></a><span class="lineno"> 1684</span>&#160; </div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setRightStickVerticalThresholdLua(lua_State *L) {</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_RIGHT_JOYSTICK_VERTICAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
+<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
+<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160;}</div>
+<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160; </div>
+<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setRightStickHorizontalThresholdLua(lua_State *L) {</div>
+<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_RIGHT_JOYSTICK_HORIZONTAL_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
+<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;}</div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160; </div>
+<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setRightTriggerThresholdLua(lua_State *L) {</div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_RIGHT_TRIGGER_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
+<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
+<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;}</div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160; </div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setLeftTriggerThresholdLua(lua_State *L) {</div>
+<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    <span class="keyword">auto</span> msg = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_LEFT_TRIGGER_THRESHOLD, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(arg));</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg);</div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;}</div>
+<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160; </div>
 <div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160; </div>
-<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160; </div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;<span class="comment">//AUDIO</span></div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160; </div>
-<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setAudioEnabledLua(lua_State *L) {</div>
-<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
-<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_AUDIO_ENABLED, arg));</div>
-<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;}</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;<span class="comment">//AUDIO</span></div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160; </div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setAudioEnabledLua(lua_State *L) {</div>
+<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
+<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_AUDIO_ENABLED, arg));</div>
+<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;}</div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160; </div>
 <div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160; </div>
-<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160; </div>
-<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> playMusicLua(lua_State *L) {</div>
-<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;    <span class="keyword">auto</span> volume = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 2));</div>
-<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;    <span class="keyword">auto</span> loops = <span class="keyword">static_cast&lt;</span>int8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 3));</div>
-<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;    uint32_t result = arg | (volume &lt;&lt; 16U) | (static_cast&lt;uint8_t&gt;(loops) &lt;&lt; 24U);</div>
-<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(PLAY_MUSIC, result));</div>
-<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;}</div>
-<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160; </div>
-<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> playSoundLua(lua_State *L) {</div>
-<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    <span class="keyword">auto</span> volume = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 2));</div>
-<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;    <span class="keyword">auto</span> loops = <span class="keyword">static_cast&lt;</span>int8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 3));</div>
-<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;    uint32_t result = arg | (volume &lt;&lt; 16U) | (static_cast&lt;uint8_t&gt;(loops) &lt;&lt; 24U);</div>
-<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(PLAY_SOUND, result));</div>
-<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160;}</div>
-<div class="line"><a name="l01758"></a><span class="lineno"> 1758</span>&#160; </div>
-<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> stopMusicLua(lua_State *) {</div>
-<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;    <span class="keyword">auto</span> msg_temp = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(STOP_MUSIC);</div>
-<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg_temp);</div>
-<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160;}</div>
-<div class="line"><a name="l01769"></a><span class="lineno"> 1769</span>&#160; </div>
-<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> stopAllSoundsLua(lua_State *) {</div>
-<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(STOP_ALL_SOUNDS));</div>
-<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160;}</div>
-<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160; </div>
-<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> isAudioEnabledLua(lua_State *L) {</div>
-<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160;    lua_pushboolean(L, gGame_managerLua-&gt;audio_enabled);</div>
-<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160;}</div>
-<div class="line"><a name="l01784"></a><span class="lineno"> 1784</span>&#160; </div>
-<div class="line"><a name="l01785"></a><span class="lineno"> 1785</span>&#160; </div>
-<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setMusicVolumeLua(lua_State *L) {</div>
-<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_MUSIC_VOLUME, arg));</div>
-<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160;}</div>
-<div class="line"><a name="l01797"></a><span class="lineno"> 1797</span>&#160; </div>
-<div class="line"><a name="l01804"></a><span class="lineno"> 1804</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setSoundsVolumeLua(lua_State *L) {</div>
-<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_SOUNDS_VOLUME, arg));</div>
-<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01808"></a><span class="lineno"> 1808</span>&#160;}</div>
-<div class="line"><a name="l01809"></a><span class="lineno"> 1809</span>&#160; </div>
-<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> getSoundsVolumeLua(lua_State *L) {</div>
-<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;    lua_pushnumber(L, gGame_managerLua-&gt;sounds_volume_level);</div>
-<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160;}</div>
-<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160; </div>
-<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> getMusicVolumeLua(lua_State *L) {</div>
-<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;    lua_pushnumber(L, gGame_managerLua-&gt;music_volume_level);</div>
-<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l01830"></a><span class="lineno"> 1830</span>&#160;}</div>
-<div class="line"><a name="l01831"></a><span class="lineno"> 1831</span>&#160; </div>
-<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> pauseMusicLua(lua_State *) {</div>
-<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(PAUSE_MUSIC));</div>
-<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01840"></a><span class="lineno"> 1840</span>&#160;}</div>
-<div class="line"><a name="l01841"></a><span class="lineno"> 1841</span>&#160; </div>
-<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> showCollisionsLua(lua_State *L) {</div>
-<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
-<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SHOW_COLLISIONS, arg));</div>
-<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01852"></a><span class="lineno"> 1852</span>&#160;}</div>
-<div class="line"><a name="l01853"></a><span class="lineno"> 1853</span>&#160; </div>
-<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> logLua(lua_State *L) {</div>
-<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;    <span class="keyword">auto</span> type = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
-<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>std::string<span class="keyword">&gt;</span>(lua_tostring(L, 2));</div>
-<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;    <span class="keywordflow">if</span> (type == 1) {</div>
-<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;        gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_ERROR, make_data&lt;std::string&gt;(arg)));</div>
-<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 2) {</div>
-<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;        gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_SUCCESS, make_data&lt;std::string&gt;(arg)));</div>
-<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 4) {</div>
-<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;        gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_INFO, make_data&lt;std::string&gt;(arg)));</div>
-<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;    }</div>
-<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01872"></a><span class="lineno"> 1872</span>&#160;}</div>
-<div class="line"><a name="l01873"></a><span class="lineno"> 1873</span>&#160; </div>
-<div class="line"><a name="l01880"></a><span class="lineno"> 1880</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> showFpsLua(lua_State *L) {</div>
-<div class="line"><a name="l01881"></a><span class="lineno"> 1881</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
-<div class="line"><a name="l01882"></a><span class="lineno"> 1882</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SHOW_FPS, arg));</div>
-<div class="line"><a name="l01883"></a><span class="lineno"> 1883</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01884"></a><span class="lineno"> 1884</span>&#160;}</div>
-<div class="line"><a name="l01885"></a><span class="lineno"> 1885</span>&#160; </div>
-<div class="line"><a name="l01892"></a><span class="lineno"> 1892</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> showMetricsLua(lua_State *L) {</div>
-<div class="line"><a name="l01893"></a><span class="lineno"> 1893</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
-<div class="line"><a name="l01894"></a><span class="lineno"> 1894</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SHOW_METRICS, arg));</div>
-<div class="line"><a name="l01895"></a><span class="lineno"> 1895</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01896"></a><span class="lineno"> 1896</span>&#160;}</div>
-<div class="line"><a name="l01897"></a><span class="lineno"> 1897</span>&#160; </div>
-<div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> consoleClearLua(lua_State *) {</div>
-<div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(CONSOLE_CLEAR));</div>
-<div class="line"><a name="l01904"></a><span class="lineno"> 1904</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l01905"></a><span class="lineno"> 1905</span>&#160;}</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> playMusicLua(lua_State *L) {</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;    <span class="keyword">auto</span> volume = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 2));</div>
+<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;    <span class="keyword">auto</span> loops = <span class="keyword">static_cast&lt;</span>int8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 3));</div>
+<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;    uint32_t result = arg | (volume &lt;&lt; 16U) | (static_cast&lt;uint8_t&gt;(loops) &lt;&lt; 24U);</div>
+<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(PLAY_MUSIC, result));</div>
+<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;}</div>
+<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160; </div>
+<div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> playSoundLua(lua_State *L) {</div>
+<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint16_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;    <span class="keyword">auto</span> volume = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 2));</div>
+<div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;    <span class="keyword">auto</span> loops = <span class="keyword">static_cast&lt;</span>int8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 3));</div>
+<div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;    uint32_t result = arg | (volume &lt;&lt; 16U) | (static_cast&lt;uint8_t&gt;(loops) &lt;&lt; 24U);</div>
+<div class="line"><a name="l01754"></a><span class="lineno"> 1754</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(PLAY_SOUND, result));</div>
+<div class="line"><a name="l01755"></a><span class="lineno"> 1755</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01756"></a><span class="lineno"> 1756</span>&#160;}</div>
+<div class="line"><a name="l01757"></a><span class="lineno"> 1757</span>&#160; </div>
+<div class="line"><a name="l01763"></a><span class="lineno"> 1763</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> stopMusicLua(lua_State *) {</div>
+<div class="line"><a name="l01764"></a><span class="lineno"> 1764</span>&#160;    <span class="keyword">auto</span> msg_temp = <span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(STOP_MUSIC);</div>
+<div class="line"><a name="l01765"></a><span class="lineno"> 1765</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(msg_temp);</div>
+<div class="line"><a name="l01766"></a><span class="lineno"> 1766</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01767"></a><span class="lineno"> 1767</span>&#160;}</div>
+<div class="line"><a name="l01768"></a><span class="lineno"> 1768</span>&#160; </div>
+<div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> stopAllSoundsLua(lua_State *) {</div>
+<div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(STOP_ALL_SOUNDS));</div>
+<div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01777"></a><span class="lineno"> 1777</span>&#160;}</div>
+<div class="line"><a name="l01778"></a><span class="lineno"> 1778</span>&#160; </div>
+<div class="line"><a name="l01779"></a><span class="lineno"> 1779</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> isAudioEnabledLua(lua_State *L) {</div>
+<div class="line"><a name="l01780"></a><span class="lineno"> 1780</span>&#160;    lua_pushboolean(L, gGame_managerLua-&gt;audio_enabled);</div>
+<div class="line"><a name="l01781"></a><span class="lineno"> 1781</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01782"></a><span class="lineno"> 1782</span>&#160;}</div>
+<div class="line"><a name="l01783"></a><span class="lineno"> 1783</span>&#160; </div>
+<div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setMusicVolumeLua(lua_State *L) {</div>
+<div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_MUSIC_VOLUME, arg));</div>
+<div class="line"><a name="l01793"></a><span class="lineno"> 1793</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01794"></a><span class="lineno"> 1794</span>&#160;}</div>
+<div class="line"><a name="l01795"></a><span class="lineno"> 1795</span>&#160; </div>
+<div class="line"><a name="l01802"></a><span class="lineno"> 1802</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> setSoundsVolumeLua(lua_State *L) {</div>
+<div class="line"><a name="l01803"></a><span class="lineno"> 1803</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01804"></a><span class="lineno"> 1804</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SET_SOUNDS_VOLUME, arg));</div>
+<div class="line"><a name="l01805"></a><span class="lineno"> 1805</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01806"></a><span class="lineno"> 1806</span>&#160;}</div>
+<div class="line"><a name="l01807"></a><span class="lineno"> 1807</span>&#160; </div>
+<div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> getSoundsVolumeLua(lua_State *L) {</div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;    lua_pushnumber(L, gGame_managerLua-&gt;sounds_volume_level);</div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;}</div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160; </div>
+<div class="line"><a name="l01825"></a><span class="lineno"> 1825</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> getMusicVolumeLua(lua_State *L) {</div>
+<div class="line"><a name="l01826"></a><span class="lineno"> 1826</span>&#160;    lua_pushnumber(L, gGame_managerLua-&gt;music_volume_level);</div>
+<div class="line"><a name="l01827"></a><span class="lineno"> 1827</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l01828"></a><span class="lineno"> 1828</span>&#160;}</div>
+<div class="line"><a name="l01829"></a><span class="lineno"> 1829</span>&#160; </div>
+<div class="line"><a name="l01835"></a><span class="lineno"> 1835</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> pauseMusicLua(lua_State *) {</div>
+<div class="line"><a name="l01836"></a><span class="lineno"> 1836</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(PAUSE_MUSIC));</div>
+<div class="line"><a name="l01837"></a><span class="lineno"> 1837</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01838"></a><span class="lineno"> 1838</span>&#160;}</div>
+<div class="line"><a name="l01839"></a><span class="lineno"> 1839</span>&#160; </div>
+<div class="line"><a name="l01846"></a><span class="lineno"> 1846</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> showCollisionsLua(lua_State *L) {</div>
+<div class="line"><a name="l01847"></a><span class="lineno"> 1847</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
+<div class="line"><a name="l01848"></a><span class="lineno"> 1848</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SHOW_COLLISIONS, arg));</div>
+<div class="line"><a name="l01849"></a><span class="lineno"> 1849</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01850"></a><span class="lineno"> 1850</span>&#160;}</div>
+<div class="line"><a name="l01851"></a><span class="lineno"> 1851</span>&#160; </div>
+<div class="line"><a name="l01859"></a><span class="lineno"> 1859</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> logLua(lua_State *L) {</div>
+<div class="line"><a name="l01860"></a><span class="lineno"> 1860</span>&#160;    <span class="keyword">auto</span> type = <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(lua_tointeger(L, 1));</div>
+<div class="line"><a name="l01861"></a><span class="lineno"> 1861</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span>std::string<span class="keyword">&gt;</span>(lua_tostring(L, 2));</div>
+<div class="line"><a name="l01862"></a><span class="lineno"> 1862</span>&#160;    <span class="keywordflow">if</span> (type == 1) {</div>
+<div class="line"><a name="l01863"></a><span class="lineno"> 1863</span>&#160;        gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_ERROR, make_data&lt;std::string&gt;(arg)));</div>
+<div class="line"><a name="l01864"></a><span class="lineno"> 1864</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 2) {</div>
+<div class="line"><a name="l01865"></a><span class="lineno"> 1865</span>&#160;        gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_SUCCESS, make_data&lt;std::string&gt;(arg)));</div>
+<div class="line"><a name="l01866"></a><span class="lineno"> 1866</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 4) {</div>
+<div class="line"><a name="l01867"></a><span class="lineno"> 1867</span>&#160;        gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_INFO, make_data&lt;std::string&gt;(arg)));</div>
+<div class="line"><a name="l01868"></a><span class="lineno"> 1868</span>&#160;    }</div>
+<div class="line"><a name="l01869"></a><span class="lineno"> 1869</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01870"></a><span class="lineno"> 1870</span>&#160;}</div>
+<div class="line"><a name="l01871"></a><span class="lineno"> 1871</span>&#160; </div>
+<div class="line"><a name="l01878"></a><span class="lineno"> 1878</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> showFpsLua(lua_State *L) {</div>
+<div class="line"><a name="l01879"></a><span class="lineno"> 1879</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
+<div class="line"><a name="l01880"></a><span class="lineno"> 1880</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SHOW_FPS, arg));</div>
+<div class="line"><a name="l01881"></a><span class="lineno"> 1881</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01882"></a><span class="lineno"> 1882</span>&#160;}</div>
+<div class="line"><a name="l01883"></a><span class="lineno"> 1883</span>&#160; </div>
+<div class="line"><a name="l01890"></a><span class="lineno"> 1890</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> showMetricsLua(lua_State *L) {</div>
+<div class="line"><a name="l01891"></a><span class="lineno"> 1891</span>&#160;    <span class="keyword">auto</span> arg = <span class="keyword">static_cast&lt;</span><span class="keywordtype">bool</span><span class="keyword">&gt;</span>(lua_toboolean(L, 1));</div>
+<div class="line"><a name="l01892"></a><span class="lineno"> 1892</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(SHOW_METRICS, arg));</div>
+<div class="line"><a name="l01893"></a><span class="lineno"> 1893</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01894"></a><span class="lineno"> 1894</span>&#160;}</div>
+<div class="line"><a name="l01895"></a><span class="lineno"> 1895</span>&#160; </div>
+<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">int</span> consoleClearLua(lua_State *) {</div>
+<div class="line"><a name="l01901"></a><span class="lineno"> 1901</span>&#160;    gMessage_busLua-&gt;<a class="code" href="classmessage__bus.html#adc8fa0d20d60c09faf5762be919ca04a">send_msg</a>(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(CONSOLE_CLEAR));</div>
+<div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160;}</div>
 <div class="ttc" id="aclassST_1_1entity_html"><div class="ttname"><a href="classST_1_1entity.html">ST::entity</a></div><div class="ttdoc">This class represents all static or dynamic objects in the game (excluding text, see ST::text)</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00024">entity.hpp:24</a></div></div>
 <div class="ttc" id="aclassST_1_1entity_html_a074c9814bc2190d707ad619e91be3926"><div class="ttname"><a href="classST_1_1entity.html#a074c9814bc2190d707ad619e91be3926">ST::entity::get_col_y</a></div><div class="ttdeci">int32_t get_col_y() const</div><div class="ttdef"><b>Definition:</b> <a href="entity_8hpp_source.html#l00170">entity.hpp:170</a></div></div>
 <div class="ttc" id="aclassST_1_1level_html"><div class="ttname"><a href="classST_1_1level.html">ST::level</a></div><div class="ttdoc">This object contains all the data for a level and provides functions for loading and unloading a leve...</div><div class="ttdef"><b>Definition:</b> <a href="level_8hpp_source.html#l00029">level.hpp:29</a></div></div>

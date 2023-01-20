@@ -114,7 +114,7 @@ $(function() {
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    gConsole.post_init();</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">//time keeping variables</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> LOGIC_UPDATE_RATE = 13;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> LOGIC_UPDATE_RATE = 10;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">double</span> total_time = 0;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">double</span> current_time = gTimer.<a class="code" href="classtimer.html#a43cec204e5ec442598bf317d7f971132">time_since_start</a>();</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">double</span> frame_time;</div>
@@ -157,7 +157,7 @@ $(function() {
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            gAudio_manager.update();</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        }</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        gConsole.update();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        gFps.<a class="code" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">update</a>(current_time, 1000 / frame_time);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        gFps.<a class="code" href="classfps.html#a2c8c59b44f0ce9cde8b0a6265fcf0ca6">update</a>(current_time, frame_time);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        gMetrics.frame_time = frame_time;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
