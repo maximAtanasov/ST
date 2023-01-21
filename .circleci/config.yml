@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+        - image: ubuntu:focal
+    steps:
+      - checkout
+      - run:
+          name: dependencies_install
+          command:  export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y software-properties-common wget build-essential
+
+      - run:
+          name: cmake_install
+          command: apt-get install -y cmake
+    
+      - run:
+          name: sdl_install
+          command: apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+
+      - run:
+          name: build_debug
+          command: cmake CMakeLists.txt && SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy make all

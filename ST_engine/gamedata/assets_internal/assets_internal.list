@@ -1,0 +1,18 @@
+# This file is part of the "ST" project.
+# You may use, distribute or modify this code under the terms
+# of the GNU General Public License version 2.
+# See LICENCE.txt in the root directory of the project.
+#
+# Author: Maxim Atanasov
+# E-mail: maxim.atanasov@protonmail.com
+
+# These fonts are used by the engine
+# and must be loaded at all times
+
+assets_internal/fonts/OpenSans-Regular.ttf 100
+assets_internal/fonts/OpenSans-Regular.ttf 40
+assets_internal/fonts/OpenSans-Regular.ttf 25
+
+# UI assets
+
+assets_internal/ui/ui_assets.bin

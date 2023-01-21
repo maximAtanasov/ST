@@ -1,0 +1,80 @@
+# This file is part of the "ST" project.
+# You may use, distribute or modify this code under the terms
+# of the GNU General Public License version 2.
+# See LICENCE.txt in the root directory of the project.
+#
+# Author: Maxim Atanasov
+# E-mail: maxim.atanasov@protonmail.com
+
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
+project(ST_message_bus)
+
+set(CMAKE_CXX_STANDARD 20)
+
+include(GoogleTest)
+enable_testing()
+
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../../cmake)
+
+
+include_directories(${PROJECT_SOURCE_DIR}/src/main)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/../../ST_util/include)
+
+add_library(ST_message_bus STATIC
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp src/main/message.cpp)
+
+add_executable(message_test
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
+        ${PROJECT_SOURCE_DIR}/src/test/message_tests.cpp
+        src/main/message.cpp)
+
+target_link_libraries(message_test
+        ST_util
+        gtest)
+
+add_executable(subscriber_test
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
+        ${PROJECT_SOURCE_DIR}/src/test/subscriber_tests.cpp src/main/message.cpp)
+
+target_link_libraries(subscriber_test
+        ST_util
+        gtest)
+
+add_executable(message_bus_test
+        ${PROJECT_SOURCE_DIR}/src/main/message_bus.cpp
+        ${PROJECT_SOURCE_DIR}/include/message_bus.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/subscriber.hpp
+        ${PROJECT_SOURCE_DIR}/src/main/message.hpp
+        ${PROJECT_SOURCE_DIR}/src/test/message_bus_tests.cpp
+        src/main/message.cpp)
+
+target_link_libraries(message_bus_test
+        ST_util
+        gtest)
+
+
+set(RUN_ON_BUILD_TESTS
+        message_bus_test
+        subscriber_test
+        message_test    )
+
+
+#Run the tests on each build
+foreach(test ${RUN_ON_BUILD_TESTS})
+    add_test(NAME ${test} COMMAND ${test})
+    add_custom_command(
+            TARGET ST_message_bus
+            POST_BUILD
+            COMMAND ${test}
+    )
+endforeach()
