@@ -9,10 +9,10 @@
 # These fonts are used by the engine
 # and must be loaded at all times
 
-fonts/OpenSans-Regular.ttf 100
-fonts/OpenSans-Regular.ttf 40
-fonts/OpenSans-Regular.ttf 25
+assets_internal/fonts/OpenSans-Regular.ttf 100
+assets_internal/fonts/OpenSans-Regular.ttf 40
+assets_internal/fonts/OpenSans-Regular.ttf 25
 
 # UI assets
 
-assets/ui/ui_assets.bin
+assets_internal/ui/ui_assets.bin

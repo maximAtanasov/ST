@@ -28,8 +28,6 @@ game_manager::game_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus)
         singleton_initialized = true;
     }
 
-    gScript_backend.initialize(&gMessage_bus, this);
-
     //subscribe to messages
     gMessage_bus.subscribe(LOAD_LEVEL, &msg_sub);
     gMessage_bus.subscribe(START_LEVEL, &msg_sub);
@@ -60,9 +58,9 @@ game_manager::game_manager(message_bus &gMessageBus) : gMessage_bus(gMessageBus)
     //initialize initial states of keys
     reset_keys();
 
-    //Load the first level
-    load_level(FIRST_LEVEL_NAME);
-    start_level(FIRST_LEVEL_NAME);
+    //Initialize the Lua environment
+    gScript_backend.initialize(&gMessage_bus, this);
+
     game_is_running_ = true;
 }
 
@@ -298,7 +296,7 @@ void game_manager::start_level(const std::string &level_name) {
     current_level_pointer->camera.limitX2 = v_width;
     current_level_pointer->camera.limitY2 = v_height;
 
-    std::string temp = "levels/";
+    std::string temp = "game/levels/";
     temp = temp + active_level;
     temp = temp + "/level.lua";
     gScript_backend.run_file(temp);

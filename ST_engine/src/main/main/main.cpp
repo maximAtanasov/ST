@@ -48,9 +48,10 @@ int main(int argc, char *argv[]) {
 
     assets_manager gAssets_manager(gMessage_bus, gTask_manager);
     physics_manager gPhysics_manager(gMessage_bus);
-    game_manager gGame_manager(gMessage_bus);// will load "levels/main"
+    game_manager gGame_manager(gMessage_bus);
     timer gTimer;
 
+    gGame_manager.update();
     gConsole.post_init();
 
     //time keeping variables
@@ -61,8 +62,6 @@ int main(int argc, char *argv[]) {
     double new_time;
 
     ST::metrics gMetrics{};
-
-    //Temporary fix for an occasional startup crash
     assets_manager::update_task(&gAssets_manager);
     gDisplay_manager.update();
 
@@ -71,7 +70,7 @@ int main(int argc, char *argv[]) {
         new_time = gTimer.time_since_start();
         frame_time = new_time - current_time;
         current_time = new_time;
-        total_time += frame_time;.
+        total_time += frame_time;
 
         gMetrics.reset_accumulators();
 
@@ -80,6 +79,7 @@ int main(int argc, char *argv[]) {
                 gInput_manager.update();
 
                 double game_logic_begin = gTimer.time_since_start();
+
                 gGame_manager.update();
                 double game_logic_end = gTimer.time_since_start();
                 gMetrics.game_logic_time += game_logic_end - game_logic_begin;

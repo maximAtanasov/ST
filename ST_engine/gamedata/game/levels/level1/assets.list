@@ -1,0 +1,67 @@
+# This file is part of the "ST" project.
+# You may use, distribute or modify this code under the terms
+# of the GNU General Public License version 2.
+# See LICENCE.txt in the root directory of the project.
+#
+# Author: Maxim Atanasov
+# E-mail: maxim.atanasov@protonmail.com
+
+game/assets/fonts/font1.ttf 80
+game/assets/fonts/font1.ttf 50
+game/assets/fonts/font1.ttf 70
+game/assets/fonts/font2.ttf 80
+game/assets/fonts/font2.ttf 50
+game/assets/fonts/font2.ttf 70
+game/assets/audio/coin.wav
+game/assets/audio/switch.wav
+game/assets/audio/death.wav
+game/assets/audio/song1.ogg
+game/assets/coin.png
+game/assets/coin_hud.png
+game/assets/heart.png
+game/assets/water.png
+game/assets/ground_edge_water.png
+game/assets/water_bridge.png
+game/assets/crate1.png
+game/assets/crate2.png
+game/assets/crate3.png
+game/assets/crate4.png
+game/assets/ground_grass1.png
+game/assets/ground_grass2.png
+game/assets/ground_grass3.png
+game/assets/platform_grass.png
+game/assets/platform_stone.png
+game/assets/platform_grass2.png
+game/assets/planet_ground.png
+game/assets/platform.png
+game/assets/alien_blue.png
+game/assets/alien_green.png
+game/assets/alien_pink.png
+game/assets/alien_yellow.png
+game/assets/alien_beige.png
+game/assets/bg1.png
+game/assets/bg2_1.png
+game/assets/bg2_2.png
+game/assets/bg2_3.png
+game/assets/bg2_4.png
+game/assets/button01.png
+game/assets/button01_hover.png
+game/assets/fence.png
+game/assets/fenceBroken.png
+game/assets/rock.png
+game/assets/grass.png
+game/assets/mushroomRed.png
+game/assets/mushroomBrown.png
+game/assets/bush.png
+game/assets/infoBlock.png
+game/assets/blockGrey.png
+game/assets/blockBrown.png
+game/assets/spikes.png
+game/assets/player_switch.png
+game/assets/hudPlayer_green.png
+game/assets/hudPlayer_blue.png
+game/assets/hudPlayer_pink.png
+game/assets/hudPlayer_yellow.png
+game/assets/hudPlayer_beige.png
+game/assets/player_unknown.png
+game/assets/shadow.png

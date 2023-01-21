@@ -217,6 +217,9 @@ int lua_backend::initialize(message_bus *msg_bus, game_manager *game_mngr) {
     luaL_dofile(L, "lua/ui/label.lua");
     luaL_dofile(L, "lua/ui/checkbox.lua");
 
+    //bootstrap game
+    luaL_dofile(L, "lua/main.lua");
+
     return 0;
 }
 
@@ -1496,7 +1499,7 @@ extern "C" int delayLua(lua_State *L) {
  */
 extern "C" int useLua(lua_State *L) {
     std::string arg = static_cast<std::string>(lua_tostring(L, 1));
-    std::string temp = "levels/";
+    std::string temp = "game/levels/";
     temp = temp + gGame_managerLua->get_active_level();
     temp = temp + "/" + arg;
     gLua_backendLua->run_file(temp);

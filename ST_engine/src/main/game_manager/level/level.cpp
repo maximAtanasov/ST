@@ -39,7 +39,7 @@ int8_t ST::level::load() {
             }
         }
     }
-    std::string temp = "levels/" + name + "/assets.list";
+    std::string temp = "game/levels/" + name + "/assets.list";
     gMessage_bus->send_msg(new message(LOAD_LIST, make_data(temp)));
     return 0;
 }
@@ -48,7 +48,7 @@ int8_t ST::level::load() {
  * reloads the level.
  */
 void ST::level::reload() {
-    std::string temp = "levels/" + name + "/assets.list";
+    std::string temp = "game/levels/" + name + "/assets.list";
     gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
     for (const auto &i: actions_buttons) {
         for (const auto &key: i.second) {
@@ -108,7 +108,7 @@ void ST::level::unload() {
         }
     }
     //unload assets
-    std::string temp = "levels/" + name + "/assets.list";
+    std::string temp = "game/levels/" + name + "/assets.list";
     gMessage_bus->send_msg(new message(UNLOAD_LIST, make_data(temp)));
 
     //unload inputConf
@@ -131,7 +131,7 @@ void ST::level::unload() {
  */
 int8_t ST::level::load_input_conf() {
     std::ifstream file;
-    std::string temp = "levels/" + name + "/inputConf.cfg";
+    std::string temp = "game/levels/" + name + "/inputConf.cfg";
     file.open(temp.c_str());
     if (file.is_open()) {
         gMessage_bus->send_msg(new message(LOG_INFO, make_data<std::string>("Loading " + temp)));

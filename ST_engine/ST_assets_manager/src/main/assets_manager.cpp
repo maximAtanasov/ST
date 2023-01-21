@@ -14,7 +14,8 @@ static bool singleton_initialized = false;
 
 /**
  * Initializes the asset_manager.
- * Loads all assets declared in the file <b>levels/assets_global.list</b>.
+ * Loads all assets declared in the files
+ * <b>assets_internal/assets_internal.list</b> and <b>game/levels/assets_global.list</b>.
  * @param msg_bus - A pointer to the global message bus.
  * @param tsk_mngr - A pointer to the global task manager.
  */
@@ -34,8 +35,9 @@ assets_manager::assets_manager(message_bus &gMessageBus, task_manager &gTask_man
     gMessage_bus.subscribe(UNLOAD_ASSET, &msg_sub);
     gMessage_bus.subscribe(LOAD_BINARY, &msg_sub);
 
-    //load the global assets
-    load_assets_from_list("levels/assets_global.list");
+    //load the internal engine assets and the global game assets
+    load_assets_from_list("assets_internal/assets_internal.list");
+    load_assets_from_list("game/levels/assets_global.list");
 }
 
 /**
@@ -83,7 +85,6 @@ void assets_manager::handle_messages() {
         temp = msg_sub.get_next_message();
     }
 }
-
 
 /**
  * Loads assets contained within a binary.
