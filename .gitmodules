@@ -1,0 +1,3 @@
+[submodule "ST_engine/gamedata/game"]
+	path = ST_engine/gamedata/game
+	url = https://github.com/maximAtanasov/ST_game
