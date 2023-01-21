@@ -101,13 +101,13 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::string temp = <span class="stringliteral">&quot;levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::string temp = <span class="stringliteral">&quot;game/levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOAD_LIST, make_data(temp)));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classST_1_1level.html#aad3c9e551f1e87ef9e79797574de9ccb">ST::level::reload</a>() {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::string temp = <span class="stringliteral">&quot;levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::string temp = <span class="stringliteral">&quot;game/levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNLOAD_LIST, make_data(temp)));</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;i: actions_buttons) {</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;key: i.second) {</div>
@@ -155,7 +155,7 @@ $(function() {
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        }</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="comment">//unload assets</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    std::string temp = <span class="stringliteral">&quot;levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    std::string temp = <span class="stringliteral">&quot;game/levels/&quot;</span> + name + <span class="stringliteral">&quot;/assets.list&quot;</span>;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(UNLOAD_LIST, make_data(temp)));</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="comment">//unload inputConf</span></div>
@@ -173,7 +173,7 @@ $(function() {
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
 <div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">  132</a></span>&#160;int8_t <a class="code" href="classST_1_1level.html#a2d43f87cace11516ea5cf3b3ef3b91ec">ST::level::load_input_conf</a>() {</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    std::ifstream file;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    std::string temp = <span class="stringliteral">&quot;levels/&quot;</span> + name + <span class="stringliteral">&quot;/inputConf.cfg&quot;</span>;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    std::string temp = <span class="stringliteral">&quot;game/levels/&quot;</span> + name + <span class="stringliteral">&quot;/inputConf.cfg&quot;</span>;</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    file.open(temp.c_str());</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">if</span> (file.is_open()) {</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        gMessage_bus-&gt;send_msg(<span class="keyword">new</span> <a class="code" href="classmessage.html">message</a>(LOG_INFO, make_data&lt;std::string&gt;(<span class="stringliteral">&quot;Loading &quot;</span> + temp)));</div>
